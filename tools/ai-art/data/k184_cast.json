@@ -1509,7 +1509,14 @@
    "name": "음성",
    "role": "현대 진성 방송국",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, modern news anchor, tailored blazer, press badge, gentle kind smile"
+   "look": "adult, brown hair, light brown eyes, modern news anchor, tailored blazer, press badge, gentle kind smile",
+   "stand_pick": "js_eumseong_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "js_hyeonjang",
@@ -1517,7 +1524,14 @@
    "name": "현장",
    "role": "현대 현장 취재반",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, field reporter, khaki utility vest, camera strap over shoulder, fierce determined expression"
+   "look": "adult, brown hair, light brown eyes, field reporter, khaki utility vest, camera strap over shoulder, fierce determined expression",
+   "stand_pick": "js_hyeonjang_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "js_jamak",
@@ -1525,7 +1539,14 @@
    "name": "자막",
    "role": "현대 진성 방송국",
    "sex": "m",
-   "look": "adult, dark brown hair, grey eyes, modern news anchor, tailored blazer, press badge, calm clever gaze"
+   "look": "adult, dark brown hair, grey eyes, modern news anchor, tailored blazer, press badge, calm clever gaze",
+   "stand_pick": "js_jamak_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "js_jeonpa",
@@ -1533,7 +1554,14 @@
    "name": "전파",
    "role": "현대 진성 방송국",
    "sex": "f",
-   "look": "young adult, black hair, light brown eyes, modern news anchor, tailored blazer, press badge, calm clever gaze"
+   "look": "young adult, black hair, light brown eyes, modern news anchor, tailored blazer, press badge, calm clever gaze",
+   "stand_pick": "js_jeonpa_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "js_jomyeong",
@@ -1541,7 +1569,14 @@
    "name": "조명",
    "role": "현대 진성 방송국",
    "sex": "m",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, dark brown hair, blue eyes, modern news anchor, tailored blazer, press badge, gentle kind smile"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, dark brown hair, blue eyes, modern news anchor, tailored blazer, press badge, gentle kind smile",
+   "stand_pick": "js_jomyeong_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "js_saengbang",
@@ -1549,7 +1584,14 @@
    "name": "생방",
    "role": "현대 진성 방송국",
    "sex": "f",
-   "look": "young adult, blonde hair, grey eyes, modern news anchor, tailored blazer, press badge, gentle kind smile"
+   "look": "young adult, blonde hair, grey eyes, modern news anchor, tailored blazer, press badge, gentle kind smile",
+   "stand_pick": "js_saengbang_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "js_teukjong",
@@ -1557,7 +1599,14 @@
    "name": "특종",
    "role": "현대 현장 취재반",
    "sex": "m",
-   "look": "adult, auburn hair, grey eyes, field reporter, khaki utility vest, camera strap over shoulder, calm clever gaze"
+   "look": "adult, auburn hair, grey eyes, field reporter, khaki utility vest, camera strap over shoulder, calm clever gaze",
+   "stand_pick": "js_teukjong_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kd_cheolsim",
@@ -1565,7 +1614,14 @@
    "name": "철심",
    "role": "현대 로봇 동아리",
    "sex": "m",
-   "look": "elderly, wrinkles, gray beard, brown hair, grey eyes, robotics club member, team jacket, tool belt, robot arm patch, fierce determined expression"
+   "look": "elderly, wrinkles, gray beard, brown hair, grey eyes, robotics club member, team jacket, tool belt, robot arm patch, fierce determined expression",
+   "stand_pick": "kd_cheolsim_v02",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kd_cheongram",
@@ -1573,7 +1629,14 @@
    "name": "청람",
    "role": "현대 청람 공대",
    "sex": "f",
-   "look": "adult, black hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze"
+   "look": "adult, black hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze",
+   "stand_pick": "kd_cheongram_v03",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kd_hoero",
@@ -1581,7 +1644,14 @@
    "name": "회로",
    "role": "현대 로봇 동아리",
    "sex": "f",
-   "look": "adult, brown hair, teal eyes, robotics club member, team jacket, tool belt, robot arm patch, calm clever gaze"
+   "look": "adult, brown hair, teal eyes, robotics club member, team jacket, tool belt, robot arm patch, calm clever gaze",
+   "stand_pick": "kd_hoero_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kd_jeonji",
@@ -1589,7 +1659,14 @@
    "name": "전지",
    "role": "현대 청람 공대",
    "sex": "f",
-   "look": "young adult, auburn hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze"
+   "look": "young adult, auburn hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze",
+   "stand_pick": "kd_jeonji_v03",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kd_nalgae",
@@ -1597,7 +1674,14 @@
    "name": "날개",
    "role": "현대 로봇 동아리",
    "sex": "f",
-   "look": "adult, black hair, brown eyes, robotics club member, team jacket, tool belt, robot arm patch, gentle kind smile"
+   "look": "adult, black hair, brown eyes, robotics club member, team jacket, tool belt, robot arm patch, gentle kind smile",
+   "stand_pick": "kd_nalgae_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kd_seolgye",
@@ -1605,7 +1689,14 @@
    "name": "설계",
    "role": "현대 청람 공대",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze"
+   "look": "adult, brown hair, brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze",
+   "stand_pick": "kd_seolgye_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kd_seorim",
@@ -1613,7 +1704,14 @@
    "name": "서림",
    "role": "현대 청람 공대",
    "sex": "m",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, brown eyes, engineering university student, zip-up hoodie, lanyard id card, gentle kind smile"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, brown eyes, engineering university student, zip-up hoodie, lanyard id card, gentle kind smile",
+   "stand_pick": "kd_seorim_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kd_silheom",
@@ -1621,7 +1719,14 @@
    "name": "실험",
    "role": "현대 청람 공대",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze",
+   "stand_pick": "kd_silheom_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kd_yongjeop",
@@ -1629,7 +1734,14 @@
    "name": "용접",
    "role": "현대 로봇 동아리",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, robotics club member, team jacket, tool belt, robot arm patch, fierce determined expression"
+   "look": "adult, brown hair, brown eyes, robotics club member, team jacket, tool belt, robot arm patch, fierce determined expression",
+   "stand_pick": "kd_yongjeop_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "lg_baekgeom",
@@ -1637,7 +1749,14 @@
    "name": "백검",
    "role": "전설 전설",
    "sex": "f",
-   "look": "adult, brown hair, blue eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, fierce determined expression"
+   "look": "adult, brown hair, blue eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, fierce determined expression",
+   "stand_pick": "lg_baekgeom_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "lg_ilwol",
@@ -1645,7 +1764,14 @@
    "name": "일월",
    "role": "전설 전설",
    "sex": "f",
-   "look": "young adult, black hair, light brown eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, gentle kind smile"
+   "look": "young adult, black hair, light brown eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, gentle kind smile",
+   "stand_pick": "lg_ilwol_v02",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "lg_mugyeong",
@@ -1653,7 +1779,14 @@
    "name": "무경",
    "role": "전설 전설",
    "sex": "m",
-   "look": "young adult, brown hair, blue eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, calm clever gaze"
+   "look": "young adult, brown hair, blue eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, calm clever gaze",
+   "stand_pick": "lg_mugyeong_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "mh_bungdae",
@@ -1661,7 +1794,14 @@
    "name": "붕대",
    "role": "현대 무하 의료단",
    "sex": "f",
-   "look": "young adult, black hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile"
+   "look": "young adult, black hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile",
+   "stand_pick": "mh_bungdae_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "mh_gangin",
@@ -1669,7 +1809,14 @@
    "name": "강인",
    "role": "현대 응급 구조대",
    "sex": "f",
-   "look": "young adult, brown hair, light brown eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression"
+   "look": "young adult, brown hair, light brown eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression",
+   "stand_pick": "mh_gangin_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "mh_ganhui",
@@ -1677,7 +1824,14 @@
    "name": "간희",
    "role": "현대 무하 의료단",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile"
+   "look": "adult, black hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile",
+   "stand_pick": "mh_ganhui_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "mh_gugeup",
@@ -1685,7 +1839,14 @@
    "name": "구급",
    "role": "현대 응급 구조대",
    "sex": "m",
-   "look": "mature adult, brown hair, blue eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression"
+   "look": "mature adult, brown hair, blue eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression",
+   "stand_pick": "mh_gugeup_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "mh_maekbak",
@@ -1693,7 +1854,14 @@
    "name": "맥박",
    "role": "현대 무하 의료단",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, calm clever gaze"
+   "look": "adult, brown hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, calm clever gaze",
+   "stand_pick": "mh_maekbak_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "mh_muha",
@@ -1701,7 +1869,14 @@
    "name": "무하",
    "role": "현대 무하 의료단",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile"
+   "look": "young adult, black hair, brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile",
+   "stand_pick": "mh_muha_v01",
+   "face": [
+    384,
+    281,
+    203,
+    159
+   ]
   },
   {
    "id": "mh_onyu",
@@ -1709,7 +1884,14 @@
    "name": "온유",
    "role": "현대 무하 의료단",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile"
+   "look": "adult, brown hair, brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile",
+   "stand_pick": "mh_onyu_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "mh_sabang",
@@ -1717,7 +1899,14 @@
    "name": "사방",
    "role": "현대 응급 구조대",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression"
+   "look": "young adult, black hair, brown eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression",
+   "stand_pick": "mh_sabang_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "mh_yakseon",
@@ -1725,7 +1914,14 @@
    "name": "약선",
    "role": "현대 무하 의료단",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, hospital doctor, white coat, stethoscope around neck, calm clever gaze"
+   "look": "adult, brown hair, brown eyes, hospital doctor, white coat, stethoscope around neck, calm clever gaze",
+   "stand_pick": "mh_yakseon_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "mr_bakwi",
@@ -1733,7 +1929,14 @@
    "name": "바퀴",
    "role": "미래 붉은 사막 기지",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, black hair, blue eyes, mars base engineer, dusty red jumpsuit, utility harness, fierce determined expression"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, black hair, blue eyes, mars base engineer, dusty red jumpsuit, utility harness, fierce determined expression",
+   "stand_pick": "mr_bakwi_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "mr_bingha",
@@ -1741,7 +1944,14 @@
    "name": "빙하",
    "role": "미래 화성 개척단",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, teal eyes, mars colonist, rust orange environment suit, high collar, mission patch, calm clever gaze"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, teal eyes, mars colonist, rust orange environment suit, high collar, mission patch, calm clever gaze",
+   "stand_pick": "mr_bingha_v04",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "mr_cheolgu",
@@ -1749,7 +1959,14 @@
    "name": "철구",
    "role": "미래 화성 개척단",
    "sex": "f",
-   "look": "young adult, brown hair, light brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, calm clever gaze"
+   "look": "young adult, brown hair, light brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, calm clever gaze",
+   "stand_pick": "mr_cheolgu_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "mr_cheotbom",
@@ -1757,7 +1974,14 @@
    "name": "첫봄",
    "role": "미래 화성 개척단",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile"
+   "look": "adult, brown hair, light brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile",
+   "stand_pick": "mr_cheotbom_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "mr_gaecheok",
@@ -1765,7 +1989,14 @@
    "name": "개척",
    "role": "미래 화성 개척단",
    "sex": "f",
-   "look": "adult, brown hair, teal eyes, mars colonist, rust orange environment suit, high collar, mission patch, fierce determined expression"
+   "look": "adult, brown hair, teal eyes, mars colonist, rust orange environment suit, high collar, mission patch, fierce determined expression",
+   "stand_pick": "mr_gaecheok_v02",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "mr_gwangmul",
@@ -1773,7 +2004,14 @@
    "name": "광물",
    "role": "미래 붉은 사막 기지",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, mars base engineer, dusty red jumpsuit, utility harness, calm clever gaze"
+   "look": "adult, black hair, brown eyes, mars base engineer, dusty red jumpsuit, utility harness, calm clever gaze",
+   "stand_pick": "mr_gwangmul_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "mr_jeoksa",
@@ -1781,7 +2019,14 @@
    "name": "적사",
    "role": "미래 붉은 사막 기지",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, grey eyes, mars base engineer, dusty red jumpsuit, utility harness, fierce determined expression"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, grey eyes, mars base engineer, dusty red jumpsuit, utility harness, fierce determined expression",
+   "stand_pick": "mr_jeoksa_v02",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "mr_onsil",
@@ -1789,7 +2034,14 @@
    "name": "온실",
    "role": "미래 화성 개척단",
    "sex": "m",
-   "look": "young adult, brown hair, brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile"
+   "look": "young adult, brown hair, brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile",
+   "stand_pick": "mr_onsil_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "mr_sumteo",
@@ -1797,7 +2049,14 @@
    "name": "숨터",
    "role": "미래 화성 개척단",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, grey eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, grey eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile",
+   "stand_pick": "mr_sumteo_v04",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "nc_baekdo",
@@ -1805,7 +2064,14 @@
    "name": "백도",
    "role": "현대 네온 상가",
    "sex": "f",
-   "look": "young adult, blonde hair, grey eyes, neon market merchant, glossy jacket, holographic accessories, calm clever gaze"
+   "look": "young adult, blonde hair, grey eyes, neon market merchant, glossy jacket, holographic accessories, calm clever gaze",
+   "stand_pick": "nc_baekdo_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "nc_bitsal",
@@ -1813,7 +2079,14 @@
    "name": "빛살",
    "role": "현대 네온시 순찰대",
    "sex": "f",
-   "look": "young adult, brown hair, teal eyes, cyberpunk city patrol officer, armored jacket with neon trim, fierce determined expression"
+   "look": "young adult, brown hair, teal eyes, cyberpunk city patrol officer, armored jacket with neon trim, fierce determined expression",
+   "stand_pick": "nc_bitsal_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "nc_geori",
@@ -1821,7 +2094,14 @@
    "name": "거리",
    "role": "현대 네온 상가",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, neon market merchant, glossy jacket, holographic accessories, fierce determined expression"
+   "look": "adult, black hair, brown eyes, neon market merchant, glossy jacket, holographic accessories, fierce determined expression",
+   "stand_pick": "nc_geori_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "nc_hamseong",
@@ -1829,7 +2109,14 @@
    "name": "함성",
    "role": "현대 네온시 순찰대",
    "sex": "m",
-   "look": "elderly, wrinkles, gray beard, brown hair, light brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, gentle kind smile"
+   "look": "elderly, wrinkles, gray beard, brown hair, light brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, gentle kind smile",
+   "stand_pick": "nc_hamseong_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "nc_hwalgi",
@@ -1837,7 +2124,14 @@
    "name": "활기",
    "role": "현대 네온 상가",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, neon market merchant, glossy jacket, holographic accessories, gentle kind smile"
+   "look": "adult, black hair, light brown eyes, neon market merchant, glossy jacket, holographic accessories, gentle kind smile",
+   "stand_pick": "nc_hwalgi_v02",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "nc_jeongmyeong",
@@ -1845,7 +2139,14 @@
    "name": "정명",
    "role": "현대 네온시 순찰대",
    "sex": "m",
-   "look": "adult, blonde hair, grey eyes, cyberpunk city patrol officer, armored jacket with neon trim, calm clever gaze"
+   "look": "adult, blonde hair, grey eyes, cyberpunk city patrol officer, armored jacket with neon trim, calm clever gaze",
+   "stand_pick": "nc_jeongmyeong_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "nc_sinho",
@@ -1853,7 +2154,14 @@
    "name": "신호",
    "role": "현대 네온시 순찰대",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, calm clever gaze"
+   "look": "adult, black hair, light brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, calm clever gaze",
+   "stand_pick": "nc_sinho_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "nc_ullim",
@@ -1861,7 +2169,14 @@
    "name": "울림",
    "role": "현대 네온 상가",
    "sex": "m",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, grey eyes, neon market merchant, glossy jacket, holographic accessories, gentle kind smile"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, grey eyes, neon market merchant, glossy jacket, holographic accessories, gentle kind smile",
+   "stand_pick": "nc_ullim_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "nc_yagyeong",
@@ -1869,7 +2184,14 @@
    "name": "야경",
    "role": "현대 네온시 순찰대",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, fierce determined expression"
+   "look": "young adult, black hair, brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, fierce determined expression",
+   "stand_pick": "nc_yagyeong_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ns_banghwabyeok",
@@ -1877,7 +2199,14 @@
    "name": "방화벽",
    "role": "미래 접속자 연합",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, fierce determined expression"
+   "look": "adult, brown hair, brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, fierce determined expression",
+   "stand_pick": "ns_banghwabyeok_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ns_buho",
@@ -1885,7 +2214,14 @@
    "name": "부호",
    "role": "미래 접속자 연합",
    "sex": "f",
-   "look": "young adult, black hair, light brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, calm clever gaze"
+   "look": "young adult, black hair, light brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, calm clever gaze",
+   "stand_pick": "ns_buho_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ns_eungdap",
@@ -1893,7 +2229,14 @@
    "name": "응답",
    "role": "미래 신경망 도시",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile"
+   "look": "adult, brown hair, brown eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile",
+   "stand_pick": "ns_eungdap_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ns_gieok",
@@ -1901,7 +2244,14 @@
    "name": "기억",
    "role": "미래 신경망 도시",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile",
+   "stand_pick": "ns_gieok_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ns_hakseup",
@@ -1909,7 +2259,14 @@
    "name": "학습",
    "role": "미래 접속자 연합",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, virtual reality netrunner, long tech coat, visor hanging around neck, calm clever gaze"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, virtual reality netrunner, long tech coat, visor hanging around neck, calm clever gaze",
+   "stand_pick": "ns_hakseup_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ns_hwamyeon",
@@ -1917,7 +2274,14 @@
    "name": "화면",
    "role": "미래 신경망 도시",
    "sex": "m",
-   "look": "adult, brown hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile"
+   "look": "adult, brown hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile",
+   "stand_pick": "ns_hwamyeon_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ns_jeopsok",
@@ -1925,7 +2289,14 @@
    "name": "접속",
    "role": "미래 접속자 연합",
    "sex": "m",
-   "look": "young adult, black hair, brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, fierce determined expression"
+   "look": "young adult, black hair, brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, fierce determined expression",
+   "stand_pick": "ns_jeopsok_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ns_singyeong",
@@ -1933,7 +2304,14 @@
    "name": "신경",
    "role": "미래 신경망 도시",
    "sex": "f",
-   "look": "young adult, blonde hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, calm clever gaze"
+   "look": "young adult, blonde hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, calm clever gaze",
+   "stand_pick": "ns_singyeong_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ns_yeongyeol",
@@ -1941,7 +2319,14 @@
    "name": "연결",
    "role": "미래 신경망 도시",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile"
+   "look": "young adult, black hair, brown eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile",
+   "stand_pick": "ns_yeongyeol_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ob_byeolbit",
@@ -1949,7 +2334,14 @@
    "name": "별빛",
    "role": "미래 궤도 정거장",
    "sex": "f",
-   "look": "young adult, blonde hair, blue eyes, space station crew member, fitted crew uniform, mission patches, gentle kind smile"
+   "look": "young adult, blonde hair, blue eyes, space station crew member, fitted crew uniform, mission patches, gentle kind smile",
+   "stand_pick": "ob_byeolbit_v02",
+   "face": [
+    384,
+    284,
+    203,
+    159
+   ]
   },
   {
    "id": "ob_gongjeon",
@@ -1957,7 +2349,14 @@
    "name": "공전",
    "role": "미래 궤도 정거장",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, space station crew member, fitted crew uniform, mission patches, gentle kind smile"
+   "look": "young adult, black hair, brown eyes, space station crew member, fitted crew uniform, mission patches, gentle kind smile",
+   "stand_pick": "ob_gongjeon_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ob_jungnyeok",
@@ -1965,7 +2364,14 @@
    "name": "중력",
    "role": "미래 궤도 정거장",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, space station crew member, fitted crew uniform, mission patches, fierce determined expression"
+   "look": "adult, black hair, brown eyes, space station crew member, fitted crew uniform, mission patches, fierce determined expression",
+   "stand_pick": "ob_jungnyeok_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ob_mujung",
@@ -1973,7 +2379,14 @@
    "name": "무중",
    "role": "미래 우주 정비단",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, space mechanic, padded jumpsuit, tool harness, fierce determined expression"
+   "look": "adult, brown hair, light brown eyes, space mechanic, padded jumpsuit, tool harness, fierce determined expression",
+   "stand_pick": "ob_mujung_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ob_sanso",
@@ -1981,7 +2394,14 @@
    "name": "산소",
    "role": "미래 우주 정비단",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, space mechanic, padded jumpsuit, tool harness, gentle kind smile"
+   "look": "adult, black hair, brown eyes, space mechanic, padded jumpsuit, tool harness, gentle kind smile",
+   "stand_pick": "ob_sanso_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ob_seongun",
@@ -1989,7 +2409,14 @@
    "name": "성운",
    "role": "미래 궤도 정거장",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, space station crew member, fitted crew uniform, mission patches, calm clever gaze"
+   "look": "adult, black hair, light brown eyes, space station crew member, fitted crew uniform, mission patches, calm clever gaze",
+   "stand_pick": "ob_seongun_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ob_taeyang",
@@ -1997,7 +2424,14 @@
    "name": "태양",
    "role": "미래 우주 정비단",
    "sex": "f",
-   "look": "adult, brown hair, light brown eyes, space mechanic, padded jumpsuit, tool harness, calm clever gaze"
+   "look": "adult, brown hair, light brown eyes, space mechanic, padded jumpsuit, tool harness, calm clever gaze",
+   "stand_pick": "ob_taeyang_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ob_tongsin",
@@ -2005,7 +2439,14 @@
    "name": "통신",
    "role": "미래 궤도 정거장",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, light brown eyes, space station crew member, fitted crew uniform, mission patches, calm clever gaze"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, light brown eyes, space station crew member, fitted crew uniform, mission patches, calm clever gaze",
+   "stand_pick": "ob_tongsin_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ob_yeonryo",
@@ -2013,7 +2454,14 @@
    "name": "연료",
    "role": "미래 우주 정비단",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, space mechanic, padded jumpsuit, tool harness, fierce determined expression"
+   "look": "adult, brown hair, brown eyes, space mechanic, padded jumpsuit, tool harness, fierce determined expression",
+   "stand_pick": "ob_yeonryo_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rg_eungwon",
@@ -2021,7 +2469,14 @@
    "name": "응원",
    "role": "현대 질주 리그",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, gentle kind smile"
+   "look": "adult, brown hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, gentle kind smile",
+   "stand_pick": "rg_eungwon_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rg_gyeolseung",
@@ -2029,7 +2484,14 @@
    "name": "결승",
    "role": "현대 질주 리그",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, black hair, brown eyes, racing driver, racing suit with sponsor patches, high collar, fierce determined expression"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, black hair, brown eyes, racing driver, racing suit with sponsor patches, high collar, fierce determined expression",
+   "stand_pick": "rg_gyeolseung_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rg_gyesan",
@@ -2037,7 +2499,14 @@
    "name": "계산",
    "role": "현대 정비 팀",
    "sex": "f",
-   "look": "young adult, auburn hair, light brown eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze"
+   "look": "young adult, auburn hair, light brown eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze",
+   "stand_pick": "rg_gyesan_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rg_jagal",
@@ -2045,7 +2514,14 @@
    "name": "자갈",
    "role": "현대 정비 팀",
    "sex": "m",
-   "look": "adult, auburn hair, grey eyes, pit crew mechanic, team uniform, work gloves, fierce determined expression"
+   "look": "adult, auburn hair, grey eyes, pit crew mechanic, team uniform, work gloves, fierce determined expression",
+   "stand_pick": "rg_jagal_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rg_jilju",
@@ -2053,7 +2529,14 @@
    "name": "질주",
    "role": "현대 질주 리그",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, fierce determined expression"
+   "look": "adult, black hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, fierce determined expression",
+   "stand_pick": "rg_jilju_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rg_saekdong",
@@ -2061,7 +2544,14 @@
    "name": "색동",
    "role": "현대 정비 팀",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, pit crew mechanic, team uniform, work gloves, gentle kind smile"
+   "look": "young adult, black hair, brown eyes, pit crew mechanic, team uniform, work gloves, gentle kind smile",
+   "stand_pick": "rg_saekdong_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rg_singi",
@@ -2069,7 +2559,14 @@
    "name": "신기",
    "role": "현대 정비 팀",
    "sex": "m",
-   "look": "adult, black hair, teal eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze"
+   "look": "adult, black hair, teal eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze",
+   "stand_pick": "rg_singi_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rg_suri",
@@ -2077,7 +2574,14 @@
    "name": "수리",
    "role": "현대 정비 팀",
    "sex": "f",
-   "look": "young adult, brown hair, light brown eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze"
+   "look": "young adult, brown hair, light brown eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze",
+   "stand_pick": "rg_suri_v04",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rg_yeonseup",
@@ -2085,7 +2589,14 @@
    "name": "연습",
    "role": "현대 질주 리그",
    "sex": "m",
-   "look": "adult, auburn hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, gentle kind smile"
+   "look": "adult, auburn hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, gentle kind smile",
+   "stand_pick": "rg_yeonseup_v01",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sn_bitdol",
@@ -2093,7 +2604,14 @@
    "name": "빛돌",
    "role": "석남(가상) 석남",
    "sex": "m",
-   "look": "mature adult, brown hair, light brown eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, calm clever gaze"
+   "look": "mature adult, brown hair, light brown eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, calm clever gaze",
+   "stand_pick": "sn_bitdol_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sn_deonggul",
@@ -2101,7 +2619,14 @@
    "name": "덩굴",
    "role": "석남(가상) 밀림 촌락",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, teal eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, fierce determined expression"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, teal eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, fierce determined expression",
+   "stand_pick": "sn_deonggul_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sn_gojeok",
@@ -2109,7 +2634,14 @@
    "name": "고적",
    "role": "석남(가상) 석남",
    "sex": "m",
-   "look": "adult, dark brown hair, grey eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, calm clever gaze"
+   "look": "adult, dark brown hair, grey eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, calm clever gaze",
+   "stand_pick": "sn_gojeok_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sn_horang",
@@ -2117,7 +2649,14 @@
    "name": "호랑",
    "role": "석남(가상) 밀림 촌락",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, fierce determined expression"
+   "look": "young adult, black hair, brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, fierce determined expression",
+   "stand_pick": "sn_horang_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sn_milhyang",
@@ -2125,7 +2664,14 @@
    "name": "밀향",
    "role": "석남(가상) 밀림 촌락",
    "sex": "f",
-   "look": "young adult, blonde hair, grey eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, calm clever gaze"
+   "look": "young adult, blonde hair, grey eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, calm clever gaze",
+   "stand_pick": "sn_milhyang_v02",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sn_nuri",
@@ -2133,7 +2679,14 @@
    "name": "누리",
    "role": "석남(가상) 석남",
    "sex": "f",
-   "look": "adult, brown hair, teal eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, gentle kind smile"
+   "look": "adult, brown hair, teal eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, gentle kind smile",
+   "stand_pick": "sn_nuri_v01",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sn_ppuri",
@@ -2141,7 +2694,14 @@
    "name": "뿌리",
    "role": "석남(가상) 밀림 촌락",
    "sex": "m",
-   "look": "mature adult, brown hair, light brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, gentle kind smile"
+   "look": "mature adult, brown hair, light brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, gentle kind smile",
+   "stand_pick": "sn_ppuri_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sn_saessak",
@@ -2149,7 +2709,14 @@
    "name": "새싹",
    "role": "석남(가상) 밀림 촌락",
    "sex": "m",
-   "look": "elderly, wrinkles, gray beard, white hair, light brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, gentle kind smile"
+   "look": "elderly, wrinkles, gray beard, white hair, light brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, gentle kind smile",
+   "stand_pick": "sn_saessak_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sn_seokhwan",
@@ -2157,7 +2724,14 @@
    "name": "석환",
    "role": "석남(가상) 석남",
    "sex": "f",
-   "look": "young adult, dark brown hair, blue eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, fierce determined expression"
+   "look": "young adult, dark brown hair, blue eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, fierce determined expression",
+   "stand_pick": "sn_seokhwan_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tw_baekya",
@@ -2165,7 +2739,14 @@
    "name": "백야",
    "role": "미래 시계지기",
    "sex": "f",
-   "look": "young adult, brown hair, teal eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, calm clever gaze"
+   "look": "young adult, brown hair, teal eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, calm clever gaze",
+   "stand_pick": "tw_baekya_v01",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "tw_bunchim",
@@ -2173,7 +2754,14 @@
    "name": "분침",
    "role": "미래 시간 관측소",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, fierce determined expression"
+   "look": "adult, brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, fierce determined expression",
+   "stand_pick": "tw_bunchim_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tw_cheonryu",
@@ -2181,7 +2769,14 @@
    "name": "천류",
    "role": "미래 시간 관측소",
    "sex": "f",
-   "look": "young adult, black hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, calm clever gaze"
+   "look": "young adult, black hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, calm clever gaze",
+   "stand_pick": "tw_cheonryu_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "tw_girok",
@@ -2189,7 +2784,14 @@
    "name": "기록",
    "role": "미래 시계지기",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, gentle kind smile"
+   "look": "adult, black hair, brown eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, gentle kind smile",
+   "stand_pick": "tw_girok_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tw_hoegwi",
@@ -2197,7 +2799,14 @@
    "name": "회귀",
    "role": "미래 시간 관측소",
    "sex": "m",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, black hair, tied back hair, brown eyes, time observatory scholar, long dark coat, clockwork brooch, fierce determined expression"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, black hair, tied back hair, brown eyes, time observatory scholar, long dark coat, clockwork brooch, fierce determined expression",
+   "stand_pick": "tw_hoegwi_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tw_jogak",
@@ -2205,7 +2814,14 @@
    "name": "조각",
    "role": "미래 시간 관측소",
    "sex": "f",
-   "look": "young adult, brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, gentle kind smile"
+   "look": "young adult, brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, gentle kind smile",
+   "stand_pick": "tw_jogak_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tw_jongsori",
@@ -2213,7 +2829,14 @@
    "name": "종소리",
    "role": "미래 시계지기",
    "sex": "f",
-   "look": "young adult, blonde hair, light brown eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, gentle kind smile"
+   "look": "young adult, blonde hair, light brown eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, gentle kind smile",
+   "stand_pick": "tw_jongsori_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "tw_topni",
@@ -2221,7 +2844,14 @@
    "name": "톱니",
    "role": "미래 시계지기",
    "sex": "f",
-   "look": "adult, black hair, blue eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, calm clever gaze"
+   "look": "adult, black hair, blue eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, calm clever gaze",
+   "stand_pick": "tw_topni_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tw_yegyeon",
@@ -2229,7 +2859,14 @@
    "name": "예견",
    "role": "미래 시간 관측소",
    "sex": "f",
-   "look": "young adult, dark brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, calm clever gaze"
+   "look": "young adult, dark brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, calm clever gaze",
+   "stand_pick": "tw_yegyeon_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "yk_amsu",
@@ -2237,7 +2874,14 @@
    "name": "암수",
    "role": "운령(가상) 운령 관문",
    "sex": "m",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, black hair, brown eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, fierce determined expression"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, black hair, brown eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, fierce determined expression",
+   "stand_pick": "yk_amsu_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "yk_baekyeong",
@@ -2245,7 +2889,14 @@
    "name": "백영",
    "role": "운령(가상) 고원 유목",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, highland nomad, felt coat, sheepskin collar, fierce determined expression"
+   "look": "adult, brown hair, brown eyes, highland nomad, felt coat, sheepskin collar, fierce determined expression",
+   "stand_pick": "yk_baekyeong_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "yk_cheonro",
@@ -2253,7 +2904,14 @@
    "name": "천로",
    "role": "운령(가상) 운령 관문",
    "sex": "m",
-   "look": "adult, blonde hair, teal eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, calm clever gaze"
+   "look": "adult, blonde hair, teal eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, calm clever gaze",
+   "stand_pick": "yk_cheonro_v01",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "yk_hyangdo",
@@ -2261,7 +2919,14 @@
    "name": "향도",
    "role": "운령(가상) 고원 유목",
    "sex": "m",
-   "look": "adult, brown hair, green eyes, highland nomad, felt coat, sheepskin collar, calm clever gaze"
+   "look": "adult, brown hair, green eyes, highland nomad, felt coat, sheepskin collar, calm clever gaze",
+   "stand_pick": "yk_hyangdo_v01",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "yk_jinbaek",
@@ -2269,7 +2934,14 @@
    "name": "진백",
    "role": "운령(가상) 고원 유목",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, highland nomad, felt coat, sheepskin collar, fierce determined expression"
+   "look": "adult, brown hair, brown eyes, highland nomad, felt coat, sheepskin collar, fierce determined expression",
+   "stand_pick": "yk_jinbaek_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "yk_pungdeung",
@@ -2277,7 +2949,14 @@
    "name": "풍등",
    "role": "운령(가상) 운령 관문",
    "sex": "f",
-   "look": "young adult, brown hair, teal eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, calm clever gaze"
+   "look": "young adult, brown hair, teal eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, calm clever gaze",
+   "stand_pick": "yk_pungdeung_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "yk_sanyeom",
@@ -2285,7 +2964,14 @@
    "name": "산염",
    "role": "운령(가상) 운령 관문",
    "sex": "f",
-   "look": "young adult, black hair, blue eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, gentle kind smile"
+   "look": "young adult, black hair, blue eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, gentle kind smile",
+   "stand_pick": "yk_sanyeom_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "yk_seolmae",
@@ -2293,7 +2979,14 @@
    "name": "설매",
    "role": "운령(가상) 고원 유목",
    "sex": "f",
-   "look": "young adult, auburn hair, light brown eyes, highland nomad, felt coat, sheepskin collar, gentle kind smile"
+   "look": "young adult, auburn hair, light brown eyes, highland nomad, felt coat, sheepskin collar, gentle kind smile",
+   "stand_pick": "yk_seolmae_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "yk_unsu",
@@ -2301,7 +2994,14 @@
    "name": "운수",
    "role": "운령(가상) 운령 관문",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, fierce determined expression"
+   "look": "adult, brown hair, light brown eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, fierce determined expression",
+   "stand_pick": "yk_unsu_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   }
  ]
 }
