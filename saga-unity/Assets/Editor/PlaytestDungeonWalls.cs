@@ -50,6 +50,12 @@ namespace Saga.EditorTools
                     foreach (var kv in orig) kv.Key.SetWearTier(kv.Value);
                 }
                 if (_ok) Debug.Log($"{T} OK - MetricBox 윗면 (3,0.15)·옆면 (3,2)·끝면 (0.15,2)·캐시 같음 · PBR 빌더 {pbr}(방 {orig.Count}) 벽 {walls} 전부 MetricBox 면 UV(배칭된 벽은 합친 메시 윗면)·반복 (1,1) · 마모 바꾼 뒤도 같음 · 정적 배칭에 든 벽 {batched}");
+                // U-0198 천장 보이기 — 카메라가 천장 밑이면 보임·위면 그림자만(등장 컷 낮은 시점)
+                int ceil = CeilingView.Count, low = CeilingView.Apply(0.5f), high = CeilingView.Apply(100f);
+                var camNow = Camera.main;
+                CeilingView.Apply(camNow != null ? camNow.transform.position.y : 100f);
+                if (ceil == 0 || low != ceil || high != 0) Fail($"천장 보이기 — 등록 {ceil}·바닥 높이 보임 {low}·높이 100 보임 {high}");
+                else Debug.Log($"{T} ceiling OK - 천장 {ceil} 등록 · 카메라 0.5m 면 다 보임 · 100m 면 다 그림자만 · 게임 카메라 높이로 되돌림");
                 if (_ok) Debug.Log($"{T} slabs OK - 천장·바닥 판 {slabs} 전부 MetricBox 면 UV(배칭된 판 {slabsBatched} 은 합친 메시의 윗면·옆면 +X·+Z UV 폭 = 월드 m/2)·반복 (1,1) · 마모 바꾼 뒤도 같음");
             }
             catch (System.Exception e)

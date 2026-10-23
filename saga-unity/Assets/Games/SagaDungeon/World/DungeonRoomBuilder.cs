@@ -514,6 +514,7 @@ namespace Saga.Dungeon.World
         {
             var r = ceiling != null ? ceiling.GetComponent<MeshRenderer>() : null;
             if (r != null) r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            CeilingView.Register(r); // tasks U-0198 — 카메라가 천장 밑으로 내려오면(등장 컷 낮은 시점) 다시 보인다
         }
 
         private void UseMetricBox(Transform wall, Material repeat1)
