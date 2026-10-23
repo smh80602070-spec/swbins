@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://games/saga_story/ui/quest_label.gd" id="1"]
 [ext_resource type="Script" path="res://games/saga_story/ui/story_save_button.gd" id="2"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://saga_core/ui/save_transfer_button.gd" id="save_transfer_btn"]
 [ext_resource type="Script" path="res://saga_core/ui/graphics_button.gd" id="graphics_btn"]
 [ext_resource type="Script" path="res://games/saga_story/ui/constellation_button.gd" id="constellation_btn"]
+[ext_resource type="Script" path="res://games/saga_story/ui/guild_button.gd" id="guild_btn"]
 [ext_resource type="Script" path="res://saga_core/ui/menu_hud_hook.gd" id="menu_hook"]
 
 [node name="StoryHUD" type="CanvasLayer"]
@@ -197,6 +198,17 @@ offset_right = -450.0
 offset_bottom = -40.0
 script = ExtResource("constellation_btn")
 
+[node name="GuildButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -720.0
+offset_top = -100.0
+offset_right = -590.0
+offset_bottom = -40.0
+script = ExtResource("guild_btn")
+
 
 [node name="GoalBoard" type="Label" parent="."]
 anchor_left = 1.0
@@ -220,4 +232,4 @@ script = ExtResource("menu_hook")
 burger_top = 236.0
 game = "story"
 me_adapter = "res://games/saga_story/ui/me_adapter.gd"
-items = PackedStringArray("@me|👤|내 정보", "ConstellationButton|✨|성좌 (L)", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")
+items = PackedStringArray("@me|👤|내 정보", "ConstellationButton|✨|성좌 (L)", "GuildButton|🏯|문파", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")

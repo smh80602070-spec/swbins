@@ -5833,5 +5833,25 @@
   "ticket": "G-0332",
   "since": "2026-10-23",
   "note": "고돗 먼저(웹 짝 없음) · 세이브 v29 marriages · SAGA_MARRIAGE=0 · 촬영 shot_scene lg_rk_marry"
+ },
+ {
+  "id": "gd.story.guild",
+  "name": "4종횡 문파 — 검각(공격)·상단(금)·서원(경험) 중 하나, 처치로 공(보스 +10·오늘 의뢰 사냥터 두 배), 입문~문주 단계마다 +2%",
+  "files": [
+   "games/saga_story/data/story_guild.gd",
+   "games/saga_story/ui/guild_button.gd",
+   "games/saga_story/ui/StoryHUD.tscn",
+   "games/saga_story/data/story_save_state.gd",
+   "games/saga_story/player/story_player_base.gd"
+  ],
+  "tests": [
+   "story_guild"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0333",
+  "since": "2026-10-23",
+  "note": "고돗 먼저(웹 짝 없음) · 세이브 v27 guild · SAGA_GUILD=0 · 촬영 shot_scene lg_st_guild"
  }
 ]
