@@ -155,6 +155,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/village-props2d.js"></script>
 <script src="js/village-flag.js"></script>
 <script src="js/village-furn.js"></script>
+<script src="js/autotile2d.js"></script>
 <script src="js/village-view.js"></script>
 <script src="js/village3d-kinds.js"></script>
 <script src="js/autoq.js"></script>
@@ -4253,6 +4254,17 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         var I = DG.itemicon, ok3 = !!I.src('saga-forest', 'material', 'egg') && !!I.src('saga-forest', 'material', 'milk');
         return ok1 && ok2 && ok3 ? '풀 둘 · 울타리 둘 · draw2d true(시트 전엔 코드 그림) · 달걀·젖 아이콘 짝' : '실패 ' + [ok1, ok2, ok3, drew].join(' ');
       } finally { s.livestock = ls0; }
+    });
+    t('이음 타일(W-0390 ③, 공용 autotile2d) — 풀 네 종 → forest_grass·길/바닥 → forest_dirt_v2·모래·돌/바위풀·물 · 쌍 다섯 · i = NW1+NE2+SW4+SE8 칸 자리 · 겨울은 옛 길', function () {
+      var VV = DG.villageView, A = VV.autotile(), j0 = A.json();
+      A._set({ px: 256, stride: 272, gutter: 8, pairs: { grass_dirt: { atlas: 'grass_dirt/atlas.webp', a: 'forest_grass', b: 'forest_dirt_v2', kinds_a: ['grass', 'grass_meadow', 'grass_dark', 'grass_mush'], kinds_b: ['path', 'floor'] }, grass_sand: { atlas: 'grass_sand/atlas.webp', a: 'forest_grass', b: 'forest_sand_v2', kinds_a: ['grass'], kinds_b: ['sand'] }, grass_stone: { atlas: 'grass_stone/atlas.webp', a: 'forest_grass', b: 'forest_stone_v2', kinds_a: ['grass'], kinds_b: ['stone', 'grass_rocky'] }, grass_water: { atlas: 'grass_water/atlas.webp', a: 'forest_grass', b: 'forest_water', kinds_a: ['grass'], kinds_b: ['water'] }, sand_water: { atlas: 'sand_water/atlas.webp', a: 'forest_sand_v2', b: 'forest_water', kinds_a: ['sand'], kinds_b: ['water'] } } });
+      try {
+        var r = [A.ready(), A.baseOf('grass_meadow') === 'forest_grass', A.baseOf('path') === 'forest_dirt_v2', A.baseOf('grass_rocky') === 'forest_stone_v2', A.baseOf('water') === 'forest_water', A.baseOf('snow') === null];
+        var p1 = A.pairFor('forest_dirt_v2', 'forest_grass'); r.push(!!p1 && p1.key === 'grass_dirt' && p1.aFirst === false, A.pairFor('forest_sand_v2', 'forest_stone_v2') === null);
+        var c9 = A.cellOf(9); r.push(c9[0] === 1 * 272 + 8 && c9[1] === 2 * 272 + 8, A.dualIndex(true, false, false, true) === 9, A.seamed('grass_mush', 'floor'), !A.seamed('sand', 'stone'));
+        r.push(VV.autotileOn({ key: 'winter' }) === false, typeof VV.autotileOn({ key: 'summer' }) === 'boolean');
+        return r.every(Boolean) ? '바탕 다섯 · 쌍 뒤집기/없음 · 칸 9 = (280, 552) · 이음 변 · 겨울 옛 길' : '실패 ' + r.join(',');
+      } finally { A._set(j0); }
     });
     t('벽지·장판 — 갈아 끼우면 집 평가가 오른다', function () {
       var Hm = DG.home;

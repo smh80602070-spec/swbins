@@ -48,6 +48,7 @@ const FILES = [
   ['js/weather3d.js', 'js/weather3d.js', ['saga-go']],   // W-0310 ② 날씨·빛(GPU 비·눈·번개·빛줄기) — 지금은 1만리만   // W-0310 군중(인스턴싱+뼈 텍스처) — 시연·손잡이, 지금은 1만리만   // W-0302 자동 품질 FPS 내리기(기기 점수만 보던 두 판)
   ['js/sheetspec.js', 'js/sheetspec.js'],   // W-0311 — 2D 16방향·동작별 프레임 규격(mode2d 앞에 싣는다)
   ['js/mode2d.js', 'js/mode2d.js', ['saga-story', 'saga-dungeon', 'saga-go', 'saga-forest', 'saga-realm']],   // W-0019 — 2D 시트 부품(4종횡부터, 다른 판은 배선하며 판 목록에 추가)
+  ['js/autotile2d.js', 'js/autotile2d.js', ['saga-forest']],   // W-0390 — K-0162 이음 타일 공용 읽기(3마을부터, 1만리는 field2d 자체 길)
   ['js/vfx2d.js', 'js/vfx2d.js', ['saga-story', 'saga-dungeon']],   // W-0052 — 전투 이펙트 시트(K-0039), 다른 판은 그 판 전투 화면을 잇는 티켓에서 판 목록에 추가
   ['js/passive-web.js', 'js/passive-web.js', ['saga-dungeon', 'saga-go', 'saga-realm', 'saga-story', 'saga-forest']],       // W-0179 패시브 그물 엔진 — 판을 잇는 티켓(W-0180~)이 판을 더한다
   ['js/passive-web-ui.js', 'js/passive-web-ui.js', ['saga-dungeon', 'saga-go', 'saga-realm', 'saga-story', 'saga-forest']],

@@ -76,6 +76,7 @@
 
   global.DG = global.DG || {};
   global.DG.villageView = {
+    autotile: function () { return AT(); }, autotileOn: autotileOn,   // W-0390
     flagIcon: flagIcon, flagIconOf: flagIconOf,
     init: init, draw: draw, resize: resize,
     /** 3D 가 켜져 2D 를 안 그릴 때도 카메라(좌표 변환 기준)는 사람을 따라간다 — 발열 대책(2026-09-24) */

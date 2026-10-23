@@ -374,6 +374,21 @@
       구면 투영이라 넷째 꼭짓점(우하)은 근사다 — 타일이 작아 안 띈다.
       `ctx.transform`(누적)을 쓴다 — `setTransform`은 draw() 가 걸어 둔 DPR
       배율을 지워 버린다 */
+  /* W-0390 — K-0162 이음 타일(이중 격자, 공용 autotile2d): 가까운 칸 그림을 반 칸 밀린 격자로 — 네 모서리 땅 종류 → 바탕 타일 한 장 / 쌍 아틀라스 칸 / NW 바탕.
+     겨울(눈)은 옛 길. 손잡이 village.autotile(1 · 0 = 옛 overlay 그림) */
+  var at2 = null;
+  function AT() { if (!at2 && global.DG.autotile2d) { at2 = global.DG.autotile2d.make('assets/web2d/tile/'); } return at2; }
+  function autotileOn(se) { var C = global.DG.core, A = AT(); return !!(A && !(C && C.tuned && !+C.tuned('village.autotile', 1)) && !(se && se.key === 'winter') && A.ready()); }
+  /** 아틀라스 조각(sx, sy, sw, sh)을 칸 세 꼭짓점에 맞춰(아핀) 그린다 — 바탕 그대로(덧씌우기 아님) */
+  function drawTileRect(img, sx, sy, sw, sh, a0, a1, a3) {
+    if (!img || !img.complete || !img.naturalWidth) { return false; }
+    ctx.save();
+    ctx.imageSmoothingEnabled = true;
+    ctx.transform((a1.x - a0.x) / sw, (a1.y - a0.y) / sw, (a3.x - a0.x) / sh, (a3.y - a0.y) / sh, a0.x, a0.y);
+    ctx.drawImage(img, sx, sy, sw, sh, -0.5, -0.5, sw + 1, sh + 1);   // 0.5px 겹침 — 칸 사이 실금 방지
+    ctx.restore();
+    return true;
+  }
   function drawTileTexture(img, a0, a1, a3) {
     if (!img.complete || !img.naturalWidth) { return; }
     var iw = img.naturalWidth, ih = img.naturalHeight;
@@ -455,7 +470,12 @@
 
     /* 그림은 색칠 위에 얹는다 — 밑색이 늘 먼저 채워져 있으니 그림이 아직
        안 실려도(첫 프레임) 빈 칸이 되지 않는다 */
+    var useAT = autotileOn(se), A2 = useAT ? AT() : null;   // W-0390 이중 격자(가까운 칸)
     for (var ti = 0; ti < texList.length; ti++) {
+      if (useAT) {
+        var e2 = texList[ti], pk = A2.pick(V.tileAt(e2.tx, e2.ty), V.tileAt(e2.tx + 1, e2.ty), V.tileAt(e2.tx, e2.ty + 1), V.tileAt(e2.tx + 1, e2.ty + 1));
+        if (pk && drawTileRect(pk.img, pk.sx, pk.sy, pk.sw, pk.sh, project((e2.tx + 0.5) * T, (e2.ty + 0.5) * T), project((e2.tx + 1.5) * T, (e2.ty + 0.5) * T), project((e2.tx + 0.5) * T, (e2.ty + 1.5) * T))) { continue; }
+      }
       drawTileTexture(texList[ti].img, texList[ti].a0, texList[ti].a1, texList[ti].a3);
     }
 
@@ -1458,6 +1478,7 @@
 
   global.DG = global.DG || {};
   global.DG.villageView = {
+    autotile: function () { return AT(); }, autotileOn: autotileOn,   // W-0390
     flagIcon: flagIcon, flagIconOf: flagIconOf,
     init: init, draw: draw, resize: resize,
     /** 3D 가 켜져 2D 를 안 그릴 때도 카메라(좌표 변환 기준)는 사람을 따라간다 — 발열 대책(2026-09-24) */
