@@ -116,7 +116,8 @@
     '🧭': 'compass', '🗺': 'map', '📜': 'scroll', '📃': 'scroll_text', '📄': 'scroll_text', '📝': 'scroll_text', '📖': 'book_open', '📚': 'book_open', '📕': 'book_open',
     '🪙': 'coins', '💰': 'coins', '🏅': 'medal', '🎖': 'medal', '🏆': 'award', '🎒': 'backpack', '📦': 'box', '🎁': 'box', '❓': 'circle_question_mark', '❔': 'circle_question_mark',
     '📋': 'clipboard_list', '✉': 'mail', '📮': 'mail', '📬': 'mail', '👣': 'footprints', '🐾': 'footprints', '🍖': 'ham', '🍗': 'ham', '🎨': 'palette', '✨': 'sparkles', '🌟': 'sparkles',
-    '🏪': 'store', '🏬': 'store', '🛒': 'store', '👤': 'user', '❌': 'x', '✖': 'x', '🔄': 'rotate_ccw', '📡': 'satellite_dish', '🤖': 'bot'
+    '🏪': 'store', '🏬': 'store', '🛒': 'store', '👤': 'user', '❌': 'x', '✖': 'x', '🔄': 'rotate_ccw', '📡': 'satellite_dish', '🤖': 'bot',
+    '💧': 'spring', '⛩': 'shrine', '🪜': 'stairs', '💠': 'elite', '👹': 'boss', '⛏': 'mine', '🧺': 'merchant', '🧩': 'puzzle', '🙏': 'event', '🌿': 'herb', '🪧': 'signpost', '🕳': 'pit', '🪨': 'rock', '🌀': 'portal', '☠': 'skull', '↔': 'crossing', '🪦': 'gravestone', '🧎': 'worship', '🗿': 'statue', '🔔': 'bell', '🪞': 'mirror', '🔏': 'seal', '🍶': 'wine', '🧪': 'potion', '🏮': 'lantern'   // W-0391 K-0167 표식 25(장소·사건 — 지도·2D 이름표)
   };
   var markImgs = {}, markMiss = {}, EMO = /^(\p{Extended_Pictographic}(?:️|︎|‍\p{Extended_Pictographic}|[\u{1F3FB}-\u{1F3FF}])*)\s?/u;
   function markOn() { var Co = global.DG && global.DG.core; return !(Co && Co.tuned) || +Co.tuned('mode2d.markIcon', 1) > 0; }

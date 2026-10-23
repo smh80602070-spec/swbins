@@ -4,8 +4,8 @@
 - [ ] 10-21 · (K-0162 끝 알림) · **→ W-0390(10-24)** · 이음 타일 배선 W 필요 — 이웃 비트 규칙 `assets/web2d/tile/tiles.json`(이중 격자: 반 칸 밀린 격자, i=NW1+NE2+SW4+SE8 → 4×4 아틀라스 칸, stride 272·gutter 8), 쌍 폴더 `<쌍>/atlas.webp` — 1만리 5·2나락 4·3마을 5(K-0091 forest_edge 대체)·5천하 4 · 웹/1만리·2나락·3마을·5천하
 - [ ] 10-21 · (K-0161 끝 알림) · **→ U-0200(10-24)** · 같은 모션 30 팩을 유니티 Humanoid 리타깃(이름 = clips30.json game) + 판별 행동 상태 배선 · 유니티/다섯 판
 - [ ] 10-21 · (K-0163 끝 알림) · **→ 티켓 K-0183·0184·0185(10-23 R-0, K-0185 끝에 [x])** · (K-0178 뒤 그 길로 — 3D 몸 밑그림 금지) 나머지 인물 ~470 일러스트 — 같은 도구 `tools/ai-art/k163_illust.py`(cast 표만 판별로 새로) 로 판마다 한 티켓(3D 몸 있는 도감 인물 순, 원격 120장≈50분이라 판당 2~3회), 1만리·3마을 주역부터 · 자체툴
-- [ ] 10-21 · (K-0167 끝 알림) · **→ W-0391(10-24)** · mode2d MARK 표에 25 줄 — `shared/assets/icons/icon64/ui_<이름>_g0.png`, 이모지→이름 표는 `tasks/tools/done/K-0167.md` 메모 · 웹/다섯 판
-- [ ] 10-22 · (K-0169 끝) · **→ W-0391(10-24)** · 컷아웃 주역 둘 rig 에 무기·attack 끝 자세(코드 그대로) — cutout2d.on 기본값 볼지 · 웹
+- [x] 10-21 · (K-0167 끝 알림) · **→ W-0391(10-24)** · mode2d MARK 표에 25 줄 — `shared/assets/icons/icon64/ui_<이름>_g0.png`, 이모지→이름 표는 `tasks/tools/done/K-0167.md` 메모 · 웹/다섯 판 · 끝 W-0391(10-25)
+- [x] 10-22 · (K-0169 끝) · **→ W-0391(10-24)** · 컷아웃 주역 둘 rig 에 무기·attack 끝 자세(코드 그대로) — cutout2d.on 기본값 볼지 · 웹 · 끝 W-0391(10-25)
 - [ ] 10-22 · (K-0160 끝) · **→ W-0394(10-24)** · W-0370: 1만리 sprites2d_sheets beast_* 125(+factory_alias 4) · still 짐승(2나락 셋·4종횡 둘) · 도감 60 은 **shared/assets/sprites2d_sheets** 한 벌(mode2d base 자리 정하기) · 웹
 - [ ] 10-22 · (K-0170 끝) · **→ W-0392(10-24)** · 2나락 적 종 시트 42(+alias 6) — sheetOf 가 body 시트 씀, 코끼리병 body beast_big → `dg_elephant` 짝 한 줄(beast_big = 곰 still) · 웹/2나락
 - [ ] 10-22 · (K-0168·0172·0173·0174 끝) · **→ U-0200(10-24)** · 유니티 셋: ① sg_liubei 새 몸 → CharactersDex(U-0156 길) ② 소품 10 `World/<new id>`·rock_moss_01 → SelfPairs 10줄·재빌드·PolyHaven 지움 ③ UI 스킨 95 + 9-slice .meta `Resources/UI/` ④ 깨지는 조각 `World/<모델>_shard_0~3` 16·`Audio/Sfx/sfx_prop_break*` 4(K-0174, 진단 breakable `대신 False`) — 임포트 확인 · 유니티
