@@ -9,7 +9,14 @@
    "name": "발광",
    "role": "미래 심해 탐사대",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, calm clever gaze"
+   "look": "adult, black hair, light brown eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, calm clever gaze",
+   "stand_pick": "ac_balgwang_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ac_choeumpa",
@@ -17,7 +24,14 @@
    "name": "초음파",
    "role": "미래 아크 해저도시",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, calm clever gaze"
+   "look": "young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, calm clever gaze",
+   "stand_pick": "ac_choeumpa_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ac_gipo",
@@ -25,7 +39,14 @@
    "name": "기포",
    "role": "미래 아크 해저도시",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, calm clever gaze"
+   "look": "adult, brown hair, light brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, calm clever gaze",
+   "stand_pick": "ac_gipo_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ac_haebit",
@@ -33,7 +54,14 @@
    "name": "해빛",
    "role": "미래 아크 해저도시",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile"
+   "look": "young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile",
+   "stand_pick": "ac_haebit_v03",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ac_haecho",
@@ -41,7 +69,14 @@
    "name": "해초",
    "role": "미래 아크 해저도시",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile"
+   "look": "young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile",
+   "stand_pick": "ac_haecho_v04",
+   "face": [
+    384,
+    281,
+    203,
+    159
+   ]
   },
   {
    "id": "ac_haemun",
@@ -49,7 +84,14 @@
    "name": "해문",
    "role": "미래 아크 해저도시",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile"
+   "look": "adult, brown hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile",
+   "stand_pick": "ac_haemun_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ac_simyeon",
@@ -57,7 +99,14 @@
    "name": "심연",
    "role": "미래 심해 탐사대",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, dark brown hair, blue eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, calm clever gaze"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, dark brown hair, blue eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, calm clever gaze",
+   "stand_pick": "ac_simyeon_v01",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ac_suap",
@@ -65,7 +114,14 @@
    "name": "수압",
    "role": "미래 심해 탐사대",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, fierce determined expression"
+   "look": "adult, brown hair, light brown eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, fierce determined expression",
+   "stand_pick": "ac_suap_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ac_sumbi",
@@ -73,7 +129,14 @@
    "name": "숨비",
    "role": "미래 아크 해저도시",
    "sex": "f",
-   "look": "adult, brown hair, green eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, fierce determined expression"
+   "look": "adult, brown hair, green eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, fierce determined expression",
+   "stand_pick": "ac_sumbi_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "aq_byeolgil",
@@ -81,7 +144,14 @@
    "name": "별길",
    "role": "사하(가상) 모래 대상",
    "sex": "f",
-   "look": "young adult, brown hair, brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, calm clever gaze"
+   "look": "young adult, brown hair, brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, calm clever gaze",
+   "stand_pick": "aq_byeolgil_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "aq_cheongok",
@@ -89,7 +159,14 @@
    "name": "청옥",
    "role": "사하(가상) 사하 성읍",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, teal eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, calm clever gaze"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, teal eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, calm clever gaze",
+   "stand_pick": "aq_cheongok_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "aq_dalgu",
@@ -97,7 +174,14 @@
    "name": "달구",
    "role": "사하(가상) 모래 대상",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, gentle kind smile"
+   "look": "adult, brown hair, light brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, gentle kind smile",
+   "stand_pick": "aq_dalgu_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "aq_gyeongbong",
@@ -105,7 +189,14 @@
    "name": "경봉",
    "role": "사하(가상) 모래 대상",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, fierce determined expression"
+   "look": "young adult, black hair, brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, fierce determined expression",
+   "stand_pick": "aq_gyeongbong_v02",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "aq_nokju",
@@ -113,7 +204,14 @@
    "name": "녹주",
    "role": "사하(가상) 사하 성읍",
    "sex": "m",
-   "look": "adult, brown hair, grey eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, gentle kind smile"
+   "look": "adult, brown hair, grey eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, gentle kind smile",
+   "stand_pick": "aq_nokju_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "aq_saebom",
@@ -121,7 +219,14 @@
    "name": "새봄",
    "role": "사하(가상) 사하 성읍",
    "sex": "m",
-   "look": "adult, blonde hair, green eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, gentle kind smile"
+   "look": "adult, blonde hair, green eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, gentle kind smile",
+   "stand_pick": "aq_saebom_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "aq_sanghwa",
@@ -129,7 +234,14 @@
    "name": "상화",
    "role": "사하(가상) 모래 대상",
    "sex": "m",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, light brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, calm clever gaze"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, light brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, calm clever gaze",
+   "stand_pick": "aq_sanghwa_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "aq_sapung",
@@ -137,7 +249,14 @@
    "name": "사풍",
    "role": "사하(가상) 사하 성읍",
    "sex": "m",
-   "look": "adult, black hair, blue eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, fierce determined expression"
+   "look": "adult, black hair, blue eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, fierce determined expression",
+   "stand_pick": "aq_sapung_v02",
+   "face": [
+    384,
+    281,
+    203,
+    159
+   ]
   },
   {
    "id": "aq_yeolsa",
@@ -145,7 +264,14 @@
    "name": "열사",
    "role": "사하(가상) 사하 성읍",
    "sex": "m",
-   "look": "young adult, brown hair, brown eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, fierce determined expression"
+   "look": "young adult, brown hair, brown eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, fierce determined expression",
+   "stand_pick": "aq_yeolsa_v01",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "bw_bitnae",
@@ -153,7 +279,14 @@
    "name": "빛내",
    "role": "북원(가상) 설원 기마",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, calm clever gaze"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, calm clever gaze",
+   "stand_pick": "bw_bitnae_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "bw_cheolgi",
@@ -161,7 +294,14 @@
    "name": "철기",
    "role": "북원(가상) 설원 기마",
    "sex": "f",
-   "look": "adult, brown hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression"
+   "look": "adult, brown hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression",
+   "stand_pick": "bw_cheolgi_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "bw_gamu",
@@ -169,7 +309,14 @@
    "name": "가무",
    "role": "북원(가상) 북원 부족",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile"
+   "look": "adult, brown hair, brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile",
+   "stand_pick": "bw_gamu_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "bw_gomnae",
@@ -177,7 +324,14 @@
    "name": "곰내",
    "role": "북원(가상) 설원 기마",
    "sex": "m",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression",
+   "stand_pick": "bw_gomnae_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "bw_hwaro",
@@ -185,7 +339,14 @@
    "name": "화로",
    "role": "북원(가상) 북원 부족",
    "sex": "f",
-   "look": "young adult, auburn hair, light brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile"
+   "look": "young adult, auburn hair, light brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile",
+   "stand_pick": "bw_hwaro_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "bw_sangwol",
@@ -193,7 +354,14 @@
    "name": "상월",
    "role": "북원(가상) 북원 부족",
    "sex": "f",
-   "look": "young adult, brown hair, grey eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, calm clever gaze"
+   "look": "young adult, brown hair, grey eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, calm clever gaze",
+   "stand_pick": "bw_sangwol_v01",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "bw_seolgu",
@@ -201,7 +369,14 @@
    "name": "설구",
    "role": "북원(가상) 설원 기마",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, auburn hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, auburn hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression",
+   "stand_pick": "bw_seolgu_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "bw_sungeom",
@@ -209,7 +384,14 @@
    "name": "순검",
    "role": "북원(가상) 북원 부족",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, fierce determined expression"
+   "look": "adult, brown hair, brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, fierce determined expression",
+   "stand_pick": "bw_sungeom_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "bw_yanggil",
@@ -217,7 +399,14 @@
    "name": "양길",
    "role": "북원(가상) 북원 부족",
    "sex": "m",
-   "look": "adult, black hair, teal eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile"
+   "look": "adult, black hair, teal eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile",
+   "stand_pick": "bw_yanggil_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "cs_cheolgil",
@@ -225,7 +414,14 @@
    "name": "철길",
    "role": "현대 철로 상회",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile"
+   "look": "adult, brown hair, light brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile",
+   "stand_pick": "cs_cheolgil_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "cs_gijeok",
@@ -233,7 +429,14 @@
    "name": "기적",
    "role": "현대 기관사 조합",
    "sex": "m",
-   "look": "mature adult, brown hair, blue eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, fierce determined expression"
+   "look": "mature adult, brown hair, blue eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, fierce determined expression",
+   "stand_pick": "cs_gijeok_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "cs_gyeongjeok",
@@ -241,7 +444,14 @@
    "name": "경적",
    "role": "현대 기관사 조합",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, calm clever gaze"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, calm clever gaze",
+   "stand_pick": "cs_gyeongjeok_v01",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "cs_hwamul",
@@ -249,7 +459,14 @@
    "name": "화물",
    "role": "현대 철로 상회",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, calm clever gaze"
+   "look": "adult, black hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, calm clever gaze",
+   "stand_pick": "cs_hwamul_v02",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "cs_jeongbi",
@@ -257,7 +474,14 @@
    "name": "정비",
    "role": "현대 기관사 조합",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, calm clever gaze"
+   "look": "adult, brown hair, light brown eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, calm clever gaze",
+   "stand_pick": "cs_jeongbi_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "cs_noseon",
@@ -265,7 +489,14 @@
    "name": "노선",
    "role": "현대 철로 상회",
    "sex": "m",
-   "look": "young adult, brown hair, green eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, calm clever gaze"
+   "look": "young adult, brown hair, green eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, calm clever gaze",
+   "stand_pick": "cs_noseon_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "cs_seoktan",
@@ -273,7 +504,14 @@
    "name": "석탄",
    "role": "현대 기관사 조합",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, fierce determined expression"
+   "look": "adult, brown hair, brown eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, fierce determined expression",
+   "stand_pick": "cs_seoktan_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "cs_seungmu",
@@ -281,7 +519,14 @@
    "name": "승무",
    "role": "현대 철로 상회",
    "sex": "m",
-   "look": "young adult, brown hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile"
+   "look": "young adult, brown hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile",
+   "stand_pick": "cs_seungmu_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "cs_yeokjang",
@@ -289,7 +534,14 @@
    "name": "역장",
    "role": "현대 철로 상회",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile"
+   "look": "adult, brown hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile",
+   "stand_pick": "cs_yeokjang_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "dk_amgyeol",
@@ -297,7 +549,14 @@
    "name": "암결",
    "role": "대곡(가상) 계곡 수호대",
    "sex": "f",
-   "look": "young adult, black hair, brown eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression"
+   "look": "young adult, black hair, brown eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression",
+   "stand_pick": "dk_amgyeol_v03",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "dk_gulttuk",
@@ -305,7 +564,14 @@
    "name": "굴뚝",
    "role": "대곡(가상) 대곡",
    "sex": "f",
-   "look": "young adult, blonde hair, grey eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile"
+   "look": "young adult, blonde hair, grey eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile",
+   "stand_pick": "dk_gulttuk_v03",
+   "face": [
+    384,
+    284,
+    203,
+    159
+   ]
   },
   {
    "id": "dk_gyedo",
@@ -313,7 +579,14 @@
    "name": "계도",
    "role": "대곡(가상) 계곡 수호대",
    "sex": "m",
-   "look": "adult, brown hair, green eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression"
+   "look": "adult, brown hair, green eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression",
+   "stand_pick": "dk_gyedo_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "dk_jeoljeong",
@@ -321,7 +594,14 @@
    "name": "절정",
    "role": "대곡(가상) 계곡 수호대",
    "sex": "m",
-   "look": "adult, brown hair, blue eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression"
+   "look": "adult, brown hair, blue eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression",
+   "stand_pick": "dk_jeoljeong_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "dk_meari",
@@ -329,7 +609,14 @@
    "name": "메아리",
    "role": "대곡(가상) 계곡 수호대",
    "sex": "m",
-   "look": "adult, black hair, green eyes, valley guard, studded leather armor, green hooded cloak lowered, calm clever gaze"
+   "look": "adult, black hair, green eyes, valley guard, studded leather armor, green hooded cloak lowered, calm clever gaze",
+   "stand_pick": "dk_meari_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "dk_mullae",
@@ -337,7 +624,14 @@
    "name": "물레",
    "role": "대곡(가상) 대곡",
    "sex": "f",
-   "look": "young adult, auburn hair, green eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile"
+   "look": "young adult, auburn hair, green eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile",
+   "stand_pick": "dk_mullae_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "dk_pungnyeon",
@@ -345,7 +639,14 @@
    "name": "풍년",
    "role": "대곡(가상) 대곡",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile"
+   "look": "adult, black hair, brown eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile",
+   "stand_pick": "dk_pungnyeon_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "dk_saneum",
@@ -353,7 +654,14 @@
    "name": "산음",
    "role": "대곡(가상) 대곡",
    "sex": "f",
-   "look": "young adult, brown hair, light brown eyes, highland valley clan member, woven patterned tunic, wool shawl, calm clever gaze"
+   "look": "young adult, brown hair, light brown eyes, highland valley clan member, woven patterned tunic, wool shawl, calm clever gaze",
+   "stand_pick": "dk_saneum_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "dk_suro",
@@ -361,7 +669,14 @@
    "name": "수로",
    "role": "대곡(가상) 대곡",
    "sex": "m",
-   "look": "adult, dark brown hair, blue eyes, highland valley clan member, woven patterned tunic, wool shawl, calm clever gaze"
+   "look": "adult, dark brown hair, blue eyes, highland valley clan member, woven patterned tunic, wool shawl, calm clever gaze",
+   "stand_pick": "dk_suro_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "fy_baramgae",
@@ -369,7 +684,14 @@
    "name": "바람개",
    "role": "미래 하늘섬",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, gentle kind smile"
+   "look": "adult, black hair, brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, gentle kind smile",
+   "stand_pick": "fy_baramgae_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "fy_buyang",
@@ -377,7 +699,14 @@
    "name": "부양",
    "role": "미래 하늘섬",
    "sex": "f",
-   "look": "young adult, black hair, light brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, calm clever gaze"
+   "look": "young adult, black hair, light brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, calm clever gaze",
+   "stand_pick": "fy_buyang_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "fy_cheonggong",
@@ -385,7 +714,14 @@
    "name": "청공",
    "role": "미래 하늘섬",
    "sex": "f",
-   "look": "young adult, auburn hair, green eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, fierce determined expression"
+   "look": "young adult, auburn hair, green eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, fierce determined expression",
+   "stand_pick": "fy_cheonggong_v02",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "fy_gitteol",
@@ -393,7 +729,14 @@
    "name": "깃털",
    "role": "미래 구름 정원",
    "sex": "f",
-   "look": "young adult, blonde hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, calm clever gaze"
+   "look": "young adult, blonde hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, calm clever gaze",
+   "stand_pick": "fy_gitteol_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "fy_mujigae",
@@ -401,7 +744,14 @@
    "name": "무지개",
    "role": "미래 구름 정원",
    "sex": "f",
-   "look": "young adult, blonde hair, blue eyes, cloud garden keeper, futuristic pastel smock, flower pin, gentle kind smile"
+   "look": "young adult, blonde hair, blue eyes, cloud garden keeper, futuristic pastel smock, flower pin, gentle kind smile",
+   "stand_pick": "fy_mujigae_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "fy_paran",
@@ -409,7 +759,14 @@
    "name": "파란",
    "role": "미래 구름 정원",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, fierce determined expression"
+   "look": "adult, brown hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, fierce determined expression",
+   "stand_pick": "fy_paran_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "fy_seomgil",
@@ -417,7 +774,14 @@
    "name": "섬길",
    "role": "미래 하늘섬",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, calm clever gaze"
+   "look": "adult, black hair, brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, calm clever gaze",
+   "stand_pick": "fy_seomgil_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "fy_ttangkkeut",
@@ -425,7 +789,14 @@
    "name": "땅끝",
    "role": "미래 하늘섬",
    "sex": "f",
-   "look": "young adult, auburn hair, light brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, fierce determined expression"
+   "look": "young adult, auburn hair, light brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, fierce determined expression",
+   "stand_pick": "fy_ttangkkeut_v01",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "fy_unwon",
@@ -433,7 +804,14 @@
    "name": "운원",
    "role": "미래 구름 정원",
    "sex": "f",
-   "look": "young adult, brown hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, gentle kind smile"
+   "look": "young adult, brown hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, gentle kind smile",
+   "stand_pick": "fy_unwon_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "gm_cheolbu",
@@ -441,7 +819,14 @@
    "name": "철부",
    "role": "금마(가상) 광산 조합",
    "sex": "m",
-   "look": "young adult, blonde hair, green eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, fierce determined expression"
+   "look": "young adult, blonde hair, green eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, fierce determined expression",
+   "stand_pick": "gm_cheolbu_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "gm_dolbae",
@@ -449,7 +834,14 @@
    "name": "돌배",
    "role": "금마(가상) 광산 조합",
    "sex": "f",
-   "look": "adult, black hair, brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, gentle kind smile"
+   "look": "adult, black hair, brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, gentle kind smile",
+   "stand_pick": "gm_dolbae_v04",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gm_gaenghwa",
@@ -457,7 +849,14 @@
    "name": "갱화",
    "role": "금마(가상) 광산 조합",
    "sex": "f",
-   "look": "young adult, auburn hair, light brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze"
+   "look": "young adult, auburn hair, light brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze",
+   "stand_pick": "gm_gaenghwa_v02",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gm_geumhyeol",
@@ -465,7 +864,14 @@
    "name": "금혈",
    "role": "금마(가상) 금마성",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, golden fortress knight, gilded lamellar armor, horse crest, gentle kind smile"
+   "look": "adult, brown hair, brown eyes, golden fortress knight, gilded lamellar armor, horse crest, gentle kind smile",
+   "stand_pick": "gm_geumhyeol_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gm_hwangma",
@@ -473,7 +879,14 @@
    "name": "황마",
    "role": "금마(가상) 금마성",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, golden fortress knight, gilded lamellar armor, horse crest, fierce determined expression"
+   "look": "adult, brown hair, brown eyes, golden fortress knight, gilded lamellar armor, horse crest, fierce determined expression",
+   "stand_pick": "gm_hwangma_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gm_jeongdong",
@@ -481,7 +894,14 @@
    "name": "정동",
    "role": "금마(가상) 광산 조합",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze"
+   "look": "adult, black hair, brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze",
+   "stand_pick": "gm_jeongdong_v02",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gm_mahyang",
@@ -489,7 +909,14 @@
    "name": "마향",
    "role": "금마(가상) 금마성",
    "sex": "m",
-   "look": "mature adult, blonde hair, blue eyes, golden fortress knight, gilded lamellar armor, horse crest, gentle kind smile"
+   "look": "mature adult, blonde hair, blue eyes, golden fortress knight, gilded lamellar armor, horse crest, gentle kind smile",
+   "stand_pick": "gm_mahyang_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "gm_myeongseok",
@@ -497,7 +924,14 @@
    "name": "명석",
    "role": "금마(가상) 광산 조합",
    "sex": "f",
-   "look": "young adult, blonde hair, grey eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze"
+   "look": "young adult, blonde hair, grey eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze",
+   "stand_pick": "gm_myeongseok_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gm_sanul",
@@ -505,7 +939,14 @@
    "name": "산울",
    "role": "금마(가상) 금마성",
    "sex": "f",
-   "look": "adult, brown hair, teal eyes, golden fortress knight, gilded lamellar armor, horse crest, fierce determined expression"
+   "look": "adult, brown hair, teal eyes, golden fortress knight, gilded lamellar armor, horse crest, fierce determined expression",
+   "stand_pick": "gm_sanul_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gr_bangpung",
@@ -513,7 +954,14 @@
    "name": "방풍",
    "role": "미래 씨앗 은행",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, seed vault scientist, white lab coat, seed pouches on belt, fierce determined expression"
+   "look": "adult, black hair, brown eyes, seed vault scientist, white lab coat, seed pouches on belt, fierce determined expression",
+   "stand_pick": "gr_bangpung_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gr_haetbit",
@@ -521,7 +969,14 @@
    "name": "햇빛",
    "role": "미래 녹화 연합",
    "sex": "m",
-   "look": "adult, blonde hair, grey eyes, eco engineer, green field jacket, leaf emblem, utility pockets, calm clever gaze"
+   "look": "adult, blonde hair, grey eyes, eco engineer, green field jacket, leaf emblem, utility pockets, calm clever gaze",
+   "stand_pick": "gr_haetbit_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gr_iseul",
@@ -529,7 +984,14 @@
    "name": "이슬",
    "role": "미래 씨앗 은행",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, seed vault scientist, white lab coat, seed pouches on belt, calm clever gaze"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, seed vault scientist, white lab coat, seed pouches on belt, calm clever gaze",
+   "stand_pick": "gr_iseul_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gr_kkulbeol",
@@ -537,7 +999,14 @@
    "name": "꿀벌",
    "role": "미래 녹화 연합",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, eco engineer, green field jacket, leaf emblem, utility pockets, gentle kind smile"
+   "look": "adult, black hair, brown eyes, eco engineer, green field jacket, leaf emblem, utility pockets, gentle kind smile",
+   "stand_pick": "gr_kkulbeol_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "gr_mojong",
@@ -545,7 +1014,14 @@
    "name": "모종",
    "role": "미래 씨앗 은행",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, seed vault scientist, white lab coat, seed pouches on belt, gentle kind smile"
+   "look": "adult, brown hair, brown eyes, seed vault scientist, white lab coat, seed pouches on belt, gentle kind smile",
+   "stand_pick": "gr_mojong_v04",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gr_nokhwa",
@@ -553,7 +1029,14 @@
    "name": "녹화",
    "role": "미래 녹화 연합",
    "sex": "m",
-   "look": "adult, brown hair, blue eyes, eco engineer, green field jacket, leaf emblem, utility pockets, gentle kind smile"
+   "look": "adult, brown hair, blue eyes, eco engineer, green field jacket, leaf emblem, utility pockets, gentle kind smile",
+   "stand_pick": "gr_nokhwa_v02",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gr_ssiat",
@@ -561,7 +1044,14 @@
    "name": "씨앗",
    "role": "미래 씨앗 은행",
    "sex": "f",
-   "look": "young adult, brown hair, light brown eyes, seed vault scientist, white lab coat, seed pouches on belt, calm clever gaze"
+   "look": "young adult, brown hair, light brown eyes, seed vault scientist, white lab coat, seed pouches on belt, calm clever gaze",
+   "stand_pick": "gr_ssiat_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gr_supgil",
@@ -569,7 +1059,14 @@
    "name": "숲길",
    "role": "미래 씨앗 은행",
    "sex": "m",
-   "look": "adult, auburn hair, blue eyes, seed vault scientist, white lab coat, seed pouches on belt, fierce determined expression"
+   "look": "adult, auburn hair, blue eyes, seed vault scientist, white lab coat, seed pouches on belt, fierce determined expression",
+   "stand_pick": "gr_supgil_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "gr_toyang",
@@ -577,7 +1074,14 @@
    "name": "토양",
    "role": "미래 녹화 연합",
    "sex": "m",
-   "look": "adult, auburn hair, brown eyes, eco engineer, green field jacket, leaf emblem, utility pockets, calm clever gaze"
+   "look": "adult, auburn hair, brown eyes, eco engineer, green field jacket, leaf emblem, utility pockets, calm clever gaze",
+   "stand_pick": "gr_toyang_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "hb_bisang",
@@ -585,7 +1089,14 @@
    "name": "비상",
    "role": "현대 하늘 비행단",
    "sex": "m",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, brown eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, brown eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression",
+   "stand_pick": "hb_bisang_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "hb_gisang",
@@ -593,7 +1104,14 @@
    "name": "기상",
    "role": "현대 관제탑",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze"
+   "look": "adult, brown hair, brown eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze",
+   "stand_pick": "hb_gisang_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "hb_gwanje",
@@ -601,7 +1119,14 @@
    "name": "관제",
    "role": "현대 관제탑",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze"
+   "look": "adult, brown hair, brown eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze",
+   "stand_pick": "hb_gwanje_v01",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "hb_gyeongro",
@@ -609,7 +1134,14 @@
    "name": "경로",
    "role": "현대 관제탑",
    "sex": "f",
-   "look": "young adult, brown hair, grey eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze"
+   "look": "young adult, brown hair, grey eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze",
+   "stand_pick": "hb_gyeongro_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hb_hwaljuro",
@@ -617,7 +1149,14 @@
    "name": "활주로",
    "role": "현대 관제탑",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, air traffic controller, navy uniform, headset around neck, gentle kind smile"
+   "look": "adult, black hair, light brown eyes, air traffic controller, navy uniform, headset around neck, gentle kind smile",
+   "stand_pick": "hb_hwaljuro_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hb_jeomgeom",
@@ -625,7 +1164,14 @@
    "name": "점검",
    "role": "현대 하늘 비행단",
    "sex": "m",
-   "look": "adult, blonde hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, gentle kind smile"
+   "look": "adult, blonde hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, gentle kind smile",
+   "stand_pick": "hb_jeomgeom_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "hb_mangwon",
@@ -633,7 +1179,14 @@
    "name": "망원",
    "role": "현대 하늘 비행단",
    "sex": "f",
-   "look": "young adult, black hair, light brown eyes, aviator pilot, leather flight jacket, white scarf, wings badge, calm clever gaze"
+   "look": "young adult, black hair, light brown eyes, aviator pilot, leather flight jacket, white scarf, wings badge, calm clever gaze",
+   "stand_pick": "hb_mangwon_v02",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "hb_sangae",
@@ -641,7 +1194,14 @@
    "name": "산개",
    "role": "현대 하늘 비행단",
    "sex": "m",
-   "look": "adult, brown hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression"
+   "look": "adult, brown hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression",
+   "stand_pick": "hb_sangae_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "hb_seonhoe",
@@ -649,7 +1209,14 @@
    "name": "선회",
    "role": "현대 하늘 비행단",
    "sex": "m",
-   "look": "adult, black hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression"
+   "look": "adult, black hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression",
+   "stand_pick": "hb_seonhoe_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "hl_baekhwa",
@@ -657,7 +1224,14 @@
    "name": "백화",
    "role": "화림(가상) 화림 궁",
    "sex": "m",
-   "look": "adult, brown hair, green eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile"
+   "look": "adult, brown hair, green eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile",
+   "stand_pick": "hl_baekhwa_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hl_damhwa",
@@ -665,7 +1239,14 @@
    "name": "담화",
    "role": "화림(가상) 화림 서원",
    "sex": "m",
-   "look": "young adult, brown hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze"
+   "look": "young adult, brown hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze",
+   "stand_pick": "hl_damhwa_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hl_geumsil",
@@ -673,7 +1254,14 @@
    "name": "금실",
    "role": "화림(가상) 화림 궁",
    "sex": "f",
-   "look": "young adult, blonde hair, grey eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile"
+   "look": "young adult, blonde hair, grey eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile",
+   "stand_pick": "hl_geumsil_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "hl_gyeongun",
@@ -681,7 +1269,14 @@
    "name": "경운",
    "role": "화림(가상) 화림 서원",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze"
+   "look": "adult, brown hair, brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze",
+   "stand_pick": "hl_gyeongun_v04",
+   "face": [
+    384,
+    284,
+    203,
+    159
+   ]
   },
   {
    "id": "hl_hwaseo",
@@ -689,7 +1284,14 @@
    "name": "화서",
    "role": "화림(가상) 화림 서원",
    "sex": "f",
-   "look": "adult, black hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze"
+   "look": "adult, black hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze",
+   "stand_pick": "hl_hwaseo_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hl_jeongwon",
@@ -697,7 +1299,14 @@
    "name": "정원",
    "role": "화림(가상) 화림 궁",
    "sex": "f",
-   "look": "young adult, black hair, light brown eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile"
+   "look": "young adult, black hair, light brown eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile",
+   "stand_pick": "hl_jeongwon_v02",
+   "face": [
+    384,
+    281,
+    203,
+    159
+   ]
   },
   {
    "id": "hl_kkotbi",
@@ -705,7 +1314,14 @@
    "name": "꽃비",
    "role": "화림(가상) 화림 궁",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, fierce determined expression"
+   "look": "adult, brown hair, light brown eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, fierce determined expression",
+   "stand_pick": "hl_kkotbi_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hl_noeul",
@@ -713,7 +1329,14 @@
    "name": "노을",
    "role": "화림(가상) 화림 서원",
    "sex": "m",
-   "look": "mature adult, blonde hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze"
+   "look": "mature adult, blonde hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze",
+   "stand_pick": "hl_noeul_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hq_dotdae",
@@ -721,7 +1344,14 @@
    "name": "돛대",
    "role": "해궁(가상) 진주 선단",
    "sex": "f",
-   "look": "young adult, auburn hair, light brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, fierce determined expression"
+   "look": "young adult, auburn hair, light brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, fierce determined expression",
+   "stand_pick": "hq_dotdae_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hq_eodeok",
@@ -729,7 +1359,14 @@
    "name": "어덕",
    "role": "해궁(가상) 진주 선단",
    "sex": "f",
-   "look": "young adult, black hair, blue eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile"
+   "look": "young adult, black hair, blue eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile",
+   "stand_pick": "hq_eodeok_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hq_gaebeol",
@@ -737,7 +1374,14 @@
    "name": "갯벌",
    "role": "해궁(가상) 진주 선단",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile"
+   "look": "adult, brown hair, brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile",
+   "stand_pick": "hq_gaebeol_v04",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hq_haeryeong",
@@ -745,7 +1389,14 @@
    "name": "해령",
    "role": "해궁(가상) 해궁",
    "sex": "m",
-   "look": "adult, brown hair, teal eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze"
+   "look": "adult, brown hair, teal eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze",
+   "stand_pick": "hq_haeryeong_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hq_jamsu",
@@ -753,7 +1404,14 @@
    "name": "잠수",
    "role": "해궁(가상) 진주 선단",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, fierce determined expression"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, fierce determined expression",
+   "stand_pick": "hq_jamsu_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hq_jugwang",
@@ -761,7 +1419,14 @@
    "name": "주광",
    "role": "해궁(가상) 진주 선단",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile"
+   "look": "adult, black hair, light brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile",
+   "stand_pick": "hq_jugwang_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "hq_mulgyeol",
@@ -769,7 +1434,14 @@
    "name": "물결",
    "role": "해궁(가상) 해궁",
    "sex": "m",
-   "look": "adult, brown hair, blue eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze"
+   "look": "adult, brown hair, blue eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze",
+   "stand_pick": "hq_mulgyeol_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "hq_sanho",
@@ -777,7 +1449,14 @@
    "name": "산호",
    "role": "해궁(가상) 해궁",
    "sex": "m",
-   "look": "young adult, brown hair, light brown eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze"
+   "look": "young adult, brown hair, light brown eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze",
+   "stand_pick": "hq_sanho_v02",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "hq_yongpa",
@@ -785,7 +1464,14 @@
    "name": "용파",
    "role": "해궁(가상) 해궁",
    "sex": "m",
-   "look": "adult, brown hair, teal eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, fierce determined expression"
+   "look": "adult, brown hair, teal eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, fierce determined expression",
+   "stand_pick": "hq_yongpa_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "js_bodo",
@@ -793,7 +1479,14 @@
    "name": "보도",
    "role": "현대 진성 방송국",
    "sex": "f",
-   "look": "adult, black hair, light brown eyes, modern news anchor, tailored blazer, press badge, calm clever gaze"
+   "look": "adult, black hair, light brown eyes, modern news anchor, tailored blazer, press badge, calm clever gaze",
+   "stand_pick": "js_bodo_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "js_dalli",
@@ -801,7 +1494,14 @@
    "name": "달리",
    "role": "현대 현장 취재반",
    "sex": "f",
-   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, black hair, brown eyes, field reporter, khaki utility vest, camera strap over shoulder, fierce determined expression"
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, black hair, brown eyes, field reporter, khaki utility vest, camera strap over shoulder, fierce determined expression",
+   "stand_pick": "js_dalli_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "js_eumseong",
