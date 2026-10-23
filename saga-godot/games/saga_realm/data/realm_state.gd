@@ -152,6 +152,8 @@ var wonders: Dictionary = {"built": {}, "jobs": {}}
 var trade: Array = []
 ## G-0316 장수 관계망 — 스승을 잃고 능력을 받은 제자 {제자 id: 스승 id}(저장 키 "rel_master", 25→26). 규칙 data/realm_relation.gd.
 var rel_master: Dictionary = {}
+## G-0321 법령 — {list: [key…], next: 해×12+달}(저장 키 "laws", 26→27). 규칙 data/realm_laws.gd · 곱은 _sc 에서.
+var laws: Dictionary = {}
 
 ## **2026-09-17 추가 — PLAN 101-2 REALM ③후보(웹판 §5-1 "인물 특성·야망").**
 ## `officer_growth`와 같은 지연 초기화 패턴 — officer_id -> {k, prog, done,
@@ -430,6 +432,7 @@ func start_scenario(id: String) -> void:
 	camps = []   # G-0239
 	trade = []   # G-0310 새 판은 상단 없음
 	rel_master = {}   # G-0316
+	laws = {}   # G-0321
 	wonders = {"built": {}, "jobs": {}}   # G-0243 새 판은 아무도 안 지었다(웹 버그 ① — 웹은 옛 판 것이 남았다)
 	preload("res://games/saga_realm/data/realm_wonder.gd").bump()
 	_done_this_month.clear()
@@ -479,7 +482,7 @@ func passive_api() -> RefCounted:
 
 ## G-0216 경륜도 배수 하나(빈 경륜도면 1 — 곱하는 자리는 1 이 아닐 때만 손대 golden 이 비트 그대로)
 func _sc(key: String) -> float:
-	return float((load("res://games/saga_realm/data/realm_statecraft.gd") as GDScript).call("mul", key))
+	return float((load("res://games/saga_realm/data/realm_statecraft.gd") as GDScript).call("mul", key)) * preload("res://games/saga_realm/data/realm_laws.gd").mul(self, key)   # G-0321 법령 곱(빈 법전 1)
 
 
 func _sc_apply(v: int, key: String) -> int:

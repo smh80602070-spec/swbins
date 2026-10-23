@@ -178,7 +178,7 @@ func _check_defection() -> void:
 		## PLAN 101-2 REALM ③후보 — 충직(자기 이탈 확률을 낮춘다, `realm_
 		## traits.gd` TRAIT_LOYAL_DEFECT_MUL 머리말 참고)과 야망 좌절
 		## "이간 취약 ×1.5"(재해석 — 자기 이탈 확률에 건다) 둘 다 여기서 곱한다.
-		var chance := RealmDiplo.DEFECT_CHANCE
+		var chance := RealmDiplo.DEFECT_CHANCE * _sc("defect")   # G-0321 엄법령
 		if RealmTraits.has_trait(id, "loyal_heart"):
 			chance *= RealmTraits.TRAIT_LOYAL_DEFECT_MUL
 		var amb: Dictionary = officer_ambition.get(id, {})

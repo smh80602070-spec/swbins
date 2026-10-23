@@ -5718,5 +5718,27 @@
   "ticket": "G-0320",
   "since": "2026-10-23",
   "note": "고돗 먼저(웹 짝 없음) · 순수 추가 칸 brew · SAGA_BREW=0"
+ },
+ {
+  "id": "gd.realm.laws",
+  "name": "5천하 법령 — 거둘 수 없는 법 넷(상업령·둔전령·징병령·엄법령, 득·실 함께), 내릴 수 = 1 + 최고 관직, 내린 뒤 6달 틈 · ☰ 「📜 법령」",
+  "files": [
+   "games/saga_realm/data/realm_laws.gd",
+   "games/saga_realm/ui/realm_law_button.gd",
+   "games/saga_realm/ui/RealmHUD.tscn",
+   "games/saga_realm/data/realm_state.gd",
+   "games/saga_realm/data/realm_save_state.gd",
+   "games/saga_realm/data/realm_rules.gd",
+   "games/saga_realm/data/realm_rules_month.gd"
+  ],
+  "tests": [
+   "realm_laws"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0321",
+  "since": "2026-10-23",
+  "note": "고돗 먼저(웹 짝 없음) · 곱은 _sc 자리(빈 법전 1) · 세이브 v27 laws · SAGA_LAWS=0"
  }
 ]
