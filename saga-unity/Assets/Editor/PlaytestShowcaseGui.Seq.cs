@@ -515,6 +515,94 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] lgworkers 칸 {slots} · 일꾼 {Saga.Go.Data.GoHomeWorkers.Workers.Count} · 몸 {hf.WorkerBodies} · 창 {hu.IsOpen}");
                         break;
                     }
+                    case "lgauto":   // U-0188 자동 퀘스트 다섯 판 — 판에 있는 어댑터(AutoQuestHud·GoAutoQuest)의 Q.Start() — 걸어가는 것을 장마다
+                    {
+                        int started = 0;
+                        if (Object.FindFirstObjectByType<Saga.Dungeon.Player.PlayerCombat>() != null) Saga.Dungeon.Data.HeroState.FullHeal(); // 세이브 체력이 30% 밑이면 자동 퀘스트가 곧바로 멈춘다
+                        foreach (var mb in Object.FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None))
+                        {
+                            if (!(mb is Saga.Core.AutoQuest.IAutoQuestAdapter)) continue;
+                            var qp = mb.GetType().GetProperty("Q");
+                            var q = qp != null ? qp.GetValue(mb) as Saga.Core.AutoQuest : null;
+                            if (q != null && !q.On && q.Start()) started++;
+                        }
+                        var rule = Saga.Realm.UI.RealmAutoRule.Instance;
+                        if (rule != null) { rule.SetOn(true); started++; }
+                        if (started == 0) { Skip(act); return; }
+                        Debug.Log($"[ShowcaseGui] lgauto 켬 {started}");
+                        break;
+                    }
+                    case "lgrest":   // U-0188 1만리 모닥불 쉼터 — 첫 쉼터 곁으로 옮겨 앉힌다
+                    {
+                        var who = GameObject.FindWithTag("Player");
+                        var sites = Saga.Go.Data.GoRestSites.Sites;
+                        if (who == null || sites.Length == 0) { Skip(act); return; }
+                        var st = sites[0];
+                        Teleport(who.transform, st.Pos + Saga.Go.Data.GoRestSites.SideOffset + new Vector3(-3f, 1f, -3f));
+                        bool sat = Saga.Go.Data.GoRestSites.Sit(st.Id);
+                        Saga.Go.World.RestSiteField.Instance?.Refresh(); // 데이터만 바꿨으니 불 모습도 다시(게임은 앉는 길이 부른다)
+                        Debug.Log($"[ShowcaseGui] lgrest {st.Id} @ {st.Pos} 앉음 {sat} · 켠 곳 {Saga.Go.Data.GoRestSites.LitCount}");
+                        break;
+                    }
+                    case "lgfire":   // U-0188 1만리 환경 연쇄 — 주인공 앞 4m 풀 땅에 불길을 놓아 번지게
+                    {
+                        var ff = Saga.Go.Combat.FieldFire.Instance;
+                        var who = GameObject.FindWithTag("Player");
+                        if (ff == null || who == null) { Skip(act); return; }
+                        var p0 = who.transform.position + who.transform.forward * 4f;
+                        ff.Ignite(p0, 10f, true);
+                        Debug.Log($"[ShowcaseGui] lgfire 불길 @ {p0}");
+                        break;
+                    }
+                    case "lgstock":   // U-0188 3마을 가축 — 열매를 채워 우리를 짓고 둘을 들여 우리 앞 5m 로
+                    {
+                        var lr = Saga.Forest.World.ForestLivestockRunner.Instance;
+                        var who = GameObject.FindWithTag("Player");
+                        if (lr == null || who == null) { Skip(act); return; }
+                        Saga.Forest.Data.ForestState.Restore(Mathf.Max(500, Saga.Forest.Data.ForestState.FruitCount));
+                        Saga.Forest.Data.ForestLivestock.BuildPen();
+                        foreach (var k in Saga.Forest.Data.ForestLivestock.Kinds) Saga.Forest.Data.ForestLivestock.Buy(k.Key);
+                        Teleport(who.transform, lr.Center + new Vector3(0f, 0.3f, -5f));
+                        Debug.Log($"[ShowcaseGui] lgstock 우리 {Saga.Forest.Data.ForestLivestock.HasPen} · 마리 {Saga.Forest.Data.ForestLivestock.Count} · 몸 {lr.Bodies.Count}");
+                        break;
+                    }
+                    case "lgcamp":   // U-0188 4종횡 모닥불 — 멀리 갔다 와서(앉을 준비) 불 곁에 세워 앉힌다
+                    {
+                        var cs = Saga.Story.World.StoryCampfireSpot.Instance;
+                        var who = GameObject.FindWithTag("Player");
+                        var pc = who != null ? who.GetComponent<Saga.Story.Player.StoryPlayerController>() : null;
+                        if (cs == null || pc == null) { Skip(act); return; }
+                        Saga.Story.Data.StoryRunRank.ClearForTest();
+                        pc.Teleport(new Vector3(Saga.Story.World.StoryCampfireSpot.FireX + 8f, 0.1f, who.transform.position.z));
+                        cs.Sense();
+                        pc.Teleport(new Vector3(Saga.Story.World.StoryCampfireSpot.FireX + 0.6f, 0.1f, who.transform.position.z));
+                        bool sat = cs.Sense();
+                        Debug.Log($"[ShowcaseGui] lgcamp 앉음 {sat}");
+                        break;
+                    }
+                    case "lglaunch":   // U-0188 4종횡 띄우기 — 가장 가까운 잡졸 곁으로 가 ↑ 근접 한 대(공개 OnStrike)
+                    {
+                        var who = GameObject.FindWithTag("Player");
+                        var pc = who != null ? who.GetComponent<Saga.Story.Player.StoryPlayerController>() : null;
+                        Saga.Story.World.StoryEnemy foe = null;
+                        foreach (var e in Saga.Story.World.StoryEnemy.All) if (e != null && !e.IsDead && !e.IsBoss && !e.IsLabyrinthEnemy && e.gameObject.activeInHierarchy) { foe = e; break; }
+                        if (pc == null || foe == null) { Skip(act); return; }
+                        pc.Teleport(foe.transform.position + new Vector3(-1.6f, 0.1f, 0f));
+                        bool up = foe.OnStrike(true, 5f);
+                        Debug.Log($"[ShowcaseGui] lglaunch 뜸 {up} · {foe.name} @ {foe.transform.position}");
+                        break;
+                    }
+                    case "lgtrade":   // U-0188 5천하 교역로 — 결과 카드 닫고 허창→복양 상단을 띄운 채 교역 창
+                    {
+                        foreach (var card in Object.FindObjectsByType<Saga.Core.SessionCard>(FindObjectsSortMode.None)) card.Hide();
+                        Saga.Realm.Data.RealmCityState.AddGold(5000);
+                        string why = Saga.Realm.Data.RealmTrade.Start("xuchang", "puyang");
+                        Saga.Realm.Data.RealmCityState.SetCurrentCity("xuchang");
+                        var tu = Saga.Realm.UI.RealmTradeUi.Install();
+                        tu.Open();
+                        Debug.Log($"[ShowcaseGui] lgtrade 띄움 {why ?? "OK"} · 상단 {Saga.Realm.Data.RealmTrade.Routes.Count}");
+                        break;
+                    }
                     case "lglaws":   // U-0185 5천하 법령 — 상업령 하나 반포한 채 창을 연다
                     {
                         var lu = Saga.Realm.UI.RealmLawUi.Instance;

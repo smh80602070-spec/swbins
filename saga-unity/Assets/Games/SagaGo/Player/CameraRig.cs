@@ -46,6 +46,12 @@ namespace Saga.Go.Player
         // 사람·짐승·나무 줄기(캡슐·구·CharacterController)는 지나가고(곁을 지날 때 카메라가 들썩이지 않게),
         // 밟지 않는 지붕은 `CameraOccluder` 트리거로 막는다(지붕 너머로 가서 캐릭터가 가려지던 문제).
         public const float CastRadius = 0.35f;
+        /// <summary>tasks U-0188 — 카메라가 이만큼 안으로 당겨지면 주인공 몸을 감춘다(자동 퀘스트 촬영: 건물 모서리에서 카메라가 0.6m 까지 와 머리카락·옷 안쪽만 보였다).</summary>
+        public const float HideBodyM = 1.2f;
+        private bool _bodyHidden;
+        private Renderer[] _bodyRenderers;
+        private UnityEngine.Rendering.ShadowCastingMode[] _bodyModes;
+        public bool BodyHidden => _bodyHidden;
         private static readonly RaycastHit[] _hits = new RaycastHit[32];
 
         [SerializeField] private Camera cam;
@@ -300,12 +306,36 @@ namespace Saga.Go.Player
             Transform target = view != null ? view : cam != null ? cam.transform : null;
             if (target == null) return;
             float clippedZoom = ResolveCollisionZoom(_zoom);
+            SetBodyHidden(clippedZoom < HideBodyM); // tasks U-0188 — 벽에 밀려 몸속까지 당겨지면 몸을 감춘다
             target.localPosition = new Vector3(_aim ? AimShoulder : 0f, _aim ? 0.6f : 0f, -clippedZoom); // 109-14-22 어깨 너머
             if (_shakeLeft > 0f)
             {
                 _shakeLeft = Mathf.Max(0f, _shakeLeft - Time.deltaTime);
                 target.localPosition += Random.insideUnitSphere * (_shakeMag * (_shakeLeft / Mathf.Max(_shakeDur, 1e-4f)));
             }
+        }
+
+        /// <summary>tasks U-0188 — 몸 감추기/보이기(바뀔 때만 렌더러를 새로 모은다 — 옷·무기 바꿈에도 맞게). 그림자는 남긴다.</summary>
+        public void SetBodyHidden(bool hide)
+        {
+            if (hide == _bodyHidden) return;
+            _bodyHidden = hide;
+            var body = transform.parent;
+            if (body == null) return;
+            if (hide)
+            {
+                _bodyRenderers = body.GetComponentsInChildren<Renderer>();
+                _bodyModes = new UnityEngine.Rendering.ShadowCastingMode[_bodyRenderers.Length];
+                for (int i = 0; i < _bodyRenderers.Length; i++)
+                {
+                    _bodyModes[i] = _bodyRenderers[i].shadowCastingMode;
+                    _bodyRenderers[i].shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                }
+                return;
+            }
+            if (_bodyRenderers == null) return;
+            for (int i = 0; i < _bodyRenderers.Length; i++) if (_bodyRenderers[i] != null) _bodyRenderers[i].shadowCastingMode = _bodyModes[i]; // 원래 그림자 설정으로
+            _bodyRenderers = null; _bodyModes = null;
         }
 
         /// <summary>벽에 카메라가 파고들지 않도록 원하는 줌 거리 안에서

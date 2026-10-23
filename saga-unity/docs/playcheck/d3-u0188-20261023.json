@@ -1,0 +1,61 @@
+{
+ "date": "2026-10-23",
+ "ticket": "U-0188",
+ "how": "PlaytestShowcaseGui GUI 촬영(SAGA_SHOT_ACT lgauto·lgrest·lgfire·lgstock·lgcamp·lglaunch·lgtrade·lgworkers·lglaws, 1280×720, 정오) → Claude 가 PNG 를 Read 로 판정. PNG 커밋 안 함.",
+ "shots": {
+  "un.fs.autoquest": {
+   "verdict": "○",
+   "seen": "▶ 켠 뒤 6장(1초 간격) 동안 주인공이 들판을 가로질러 목표 쪽으로 움직임"
+  },
+  "un.st.autoquest": {
+   "verdict": "○",
+   "seen": "▶ 켠 뒤 주인공이 들판 줄을 따라 오른쪽으로 가며 잡졸과 싸움(장마다 자리 바뀜)"
+  },
+  "un.rl.autorule": {
+   "verdict": "○",
+   "seen": "「위임 ■」·「시정 위임 켬 — 금 900 밑으로는 안 쓴다 · 이 달 5곳」(통일 세이브라 정복 승리 카드가 가운데를 덮음)"
+  },
+  "un.go.restsite": {
+   "verdict": "○",
+   "first": "△ — 촬영 동작이 데이터만 앉혀 불 모습이 꺼진 채(게임 고장 아님)",
+   "fix": "촬영 동작이 RestSiteField.Refresh",
+   "seen": "다시 찍음: 서쪽 숲 쉼터 모닥불에 주황 불꽃·켜진 이름표"
+  },
+  "un.go.field-env": {
+   "verdict": "○",
+   "seen": "주인공 둘레 그을린 땅·주황 불꽃 덩이가 장마다 번짐"
+  },
+  "un.fs.livestock": {
+   "verdict": "○",
+   "seen": "집 남서쪽 울타리 우리 안에 짐승 둘(위에서 본 게임 카메라라 작게)"
+  },
+  "un.st.campfire": {
+   "verdict": "○",
+   "seen": "들머리 모닥불에 앉아 「🔥 호법: 등 뒤는 걱정 마… / 모닥불 온기 — 최대 체력 +10%(다음 한 판)」"
+  },
+  "un.st.launch": {
+   "verdict": "○",
+   "seen": "↑ 근접 한 대 뒤 붉은 잡졸이 장마다 위로 떠오름"
+  },
+  "un.rk.trade": {
+   "verdict": "○",
+   "seen": "교역로 창 — 허창 ↔ 복양 달마다 금 65·12달 남음 · 띄울 만한 길 셋(낙양·장안·성도)"
+  },
+  "un.go.home-workers": {
+   "verdict": "○",
+   "seen": "(U-0186 촬영) 쉼터 창 「🐾 신수 일꾼 1/1 … ⛏️ 캐기 도깨비 2/6」·앉히기·내보내기 · 마당에 몸"
+  },
+  "un.rk.ages": {
+   "verdict": "○",
+   "seen": "(U-0187 촬영) 법령 창 맨 위 「국세 난세 · 금·수확 ×1.00 / ▶ 기틀 올리기 …(모자람 — 성·기술·금)」·단추 흐림"
+  },
+  "un.go.autoquest": {
+   "verdict": "△",
+   "seen": "켜면 목표 쪽으로 곧장 걷다 나무 건물 모서리에 막혀 6초 서 있음(길찾기 없음) · 벽에 밀린 카메라가 몸속까지 들어가 옷 안쪽만 보였다 → 카메라는 고침(몸 감추기), 막힘은 후속 후보"
+  },
+  "un.dg.autoquest": {
+   "verdict": "△",
+   "seen": "자동 퀘스트는 돈다(황건적 처치·몬스터 1/10, 처음 판은 세이브 체력 19/78 이라 규칙대로 「체력 낮음」 멈춤) · 이 세이브 자리에서 게임 카메라가 돌바닥만 비춰 주인공이 안 보임 → 후속 후보"
+  }
+ }
+}
