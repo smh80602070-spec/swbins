@@ -150,13 +150,34 @@
     var A3s = (kind === 'hero' || kind === 'pet') && global.DG.assets3d, hb = A3s && A3s.sharedUrl ? A3s.sharedUrl('portraits/' + kind + '/') : null;   // W-0359 인물·펫 초상은 다섯 판 한 벌(shared)
     return diskSet[kind + ':' + t + ':' + id] ? (hb || M.base + kind + '/') + id + '_' + t + '.webp' : null;
   }
+  /* W-0389 ③-3 — 절차 인물·펫(kr_·ptgen*_)은 id 마다 달라 디스크 초상이 없고, 걷다 만날 때마다 GLB 를 받아 live 로 구웠다
+     (폰 2D 걷기 프로파일의 three 뼈 갱신·toonify 범인). 몸이 정해지는 길(asset3d.urlOf)이 같으니 **그 모델의 도감 초상**을 쓴다 —
+     characters3d/<id>.glb → hero <id> · creatures3d/<이름>.glb → pet pt_<이름>. 옷 색 변형은 초상엔 안 실린다(폰 2D 시트와 같은 타협) */
+  function diskOfModel(kind, ref, w, h) {
+    var A3 = global.DG.asset3d, u = null, m;
+    if (!A3 || !A3.urlOf || (kind !== 'hero' && kind !== 'pet')) { return null; }
+    try { u = A3.urlOf(kind, ref); } catch (e) { u = null; }
+    m = u ? String(u).split('/').pop().replace(/\.(glb|gltf|vrm)(\?.*)?$/i, '').toLowerCase() : '';   // characters3d/<id>.glb → id · 진단처럼 표 열쇠(qrpg_monk)만 와도 그대로
+    if (!m || !/^[a-z0-9_]+$/.test(m)) { return null; }
+    return diskById(kind, m, w, h) || (kind === 'pet' ? diskById('pet', 'pt_' + m, w, h) : null);
+  }
   function diskOf(kind, ref, w, h) {
     var id = ref && (ref.id || ref.key || ref.name);
-    return id ? diskById(kind, id, Math.round(w), Math.round(h)) : null;
+    return id ? (diskById(kind, id, Math.round(w), Math.round(h)) || diskOfModel(kind, ref, Math.round(w), Math.round(h))) : null;
   }
   function diskOfKey(k) {
-    var p = parseKey(k);
-    return p ? diskById(p.kind, p.id, p.w, p.h) : null;
+    var p = parseKey(k), D = global.DG.data, ref;
+    if (!p) { return null; }
+    ref = D && D.find ? D.find(p.id) : null;
+    return diskById(p.kind, p.id, p.w, p.h) || (ref ? diskOfModel(p.kind, ref, p.w, p.h) : null);
+  }
+  /** W-0389 ③-3 — 폰 2D 들판에선 live 굽기(GLB 받기·툰 변환·뼈 상자)를 안 한다: 디스크 초상이 없으면 코드 그림으로 남는다.
+   *  손잡이 portrait3d.liveOnPhone2d=1 로 되돌림 */
+  function liveAllowed() {
+    var DM = global.DG.deviceMode, W3 = global.DG.world3d;
+    if (!DM || !DM.phone || !DM.phone()) { return true; }
+    if (W3 && W3.active && W3.active()) { return true; }
+    return core().tuned('portrait3d.liveOnPhone2d', 0) ? true : false;
   }
 
   function ready() { return !!(three() && ON() && !failed); }
@@ -355,7 +376,7 @@
    *  갈리는데, 그 순간을 알려 주지 않으므로 잠깐씩 다시 본다(최대 여남은 번) */
   function warm(kind, ref, w, h) {
     if (diskOf(kind, ref, w, h)) { return false; }      // 구워 둔 파일이 있으면 다시 안 굽는다
-    if (!ready() || !ref || (kind !== 'hero' && kind !== 'pet')) { return false; }
+    if (!ready() || !ref || (kind !== 'hero' && kind !== 'pet') || !liveAllowed()) { return false; }   // W-0389 ③-3 폰 2D 는 live 굽기 없음
     var key = keyOf(kind, ref, w, h);
     if (has(key) || pending[key]) { return false; }
     var A3 = global.DG.asset3d;
@@ -394,6 +415,7 @@
   function willSwap(kind, ref, w, h) {
     if (!ready() || !ref || (kind !== 'hero' && kind !== 'pet')) { return false; }
     if (typeof supports === 'function' && !supports(kind, ref)) { return false; }
+    if (!liveAllowed()) { return false; }   // W-0389 ③-3 폰 2D — 자리표시도 안 걸고 바로 옛 그림
     var key = keyOf(kind, ref, w, h), p = parseKey(key), D = global.DG.data;
     if (cache[key] === false) { return false; }
     return !!(p && D && D.find && D.find(p.id));
@@ -414,7 +436,7 @@
   var holderTimer = null;
   function sweep() {
     if (!global.document) { return 0; }
-    var live = ready();
+    var live = ready() && liveAllowed();   // W-0389 ③-3
     var list = document.querySelectorAll('img[data-p3]');
     var n = 0, i, waiting = false;
     for (i = 0; i < list.length; i++) {

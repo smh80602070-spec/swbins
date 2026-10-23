@@ -9589,6 +9589,34 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       if (bad.length) { throw new Error('실패: ' + bad.join(', ')); }
       return '정사각 _s · 카드 _c · 목록 밖은 굽는 쪽 · 있으면 안 굽고 sweep 이 파일로 교체';
     });
+    t('절차 인물 초상(W-0389 ③-3) — kr_·ptgen_ 는 id 마다 달라 디스크에 없으니 몸이 정해지는 모델(asset3d.urlOf)의 도감 초상을 쓰고, 폰 2D 들판에선 live 굽기를 안 한다', function () {
+      var P3 = DG.portrait3d, G = DG.genchar, A3 = DG.asset3d, D = DG.data, keep = DG.portraitDisk, keepDM = DG.deviceMode, res;
+      if (!G || !G.find || !A3 || !A3.urlOf) { return false; }
+      var h = G.find('kr_gyeonggi_1_663402'), pt = G.find('ptgen_gyeonggi_2_993209');
+      if (!h || !pt) { return false; }
+      var hu = String(A3.urlOf('hero', h) || ''), pu = String(A3.urlOf('pet', pt) || '');
+      function mid(u) { return u.split('/').pop().replace(/\.(glb|gltf|vrm)(\?.*)?$/i, '').toLowerCase(); }
+      var hm = mid(hu), pm = mid(pu);
+      if (!hm || !pm) { throw new Error('모델 못 정함: ' + hu + ' · ' + pu); }
+      var base = 'assets/portraits/';
+      DG.portraitDisk = { v: 1, base: base, ids: { hero: { s: hm, c: hm }, pet: { s: 'pt_' + pm, c: 'pt_' + pm } } };
+      try {
+        var heroOk = String(P3.of('hero', h, 96, 96) || '').indexOf('/hero/' + hm + '_s.webp') > 0;         // 절차 인물 → 모델 초상
+        var petOk = String(P3.of('pet', pt, 96, 96) || '').indexOf('/pet/pt_' + pm + '_s.webp') > 0;       // 절차 펫 → creatures3d 이름 → pt_<이름>
+        var nowarm = P3.warm('hero', h, 96, 96) === false && P3.warm('pet', pt, 96, 96) === false;          // 파일이 있으니 안 굽는다
+        /* 폰 2D(deviceMode.phone · world3d 비활성)에선 목록 밖 인물도 live 로 안 굽고 자리표시도 안 건다 */
+        DG.deviceMode = { phone: function () { return true; }, want3d: keepDM && keepDM.want3d, mark: keepDM && keepDM.mark, test: keepDM && keepDM.test };
+        var other = D.heroes[1], w3 = DG.world3d && DG.world3d.active && DG.world3d.active();
+        var phoneGate = w3 || (P3.warm('hero', other, 53, 53) === false && !P3.willSwap('hero', other, 53, 53));
+        DG.core.setTune('portrait3d.liveOnPhone2d', 1);
+        var knob = w3 || !P3.ready() || P3.willSwap('hero', other, 53, 53) === true;                        // 손잡이로 되돌릴 수 있다
+        DG.core.setTune('portrait3d.liveOnPhone2d', 0);
+        res = { heroOk: heroOk, petOk: petOk, nowarm: nowarm, phoneGate: phoneGate, knob: knob };
+      } finally { DG.portraitDisk = keep; DG.deviceMode = keepDM; }
+      var bad = Object.keys(res).filter(function (k) { return !res[k]; });
+      if (bad.length) { throw new Error('실패: ' + bad.join(', ') + ' (' + hm + '·' + pm + ')'); }
+      return '절차 인물 ' + hm + ' · 절차 펫 pt_' + pm + ' 디스크 초상 · 폰 2D live 굽기 없음';
+    });
 
     /* ── ⑯ 싸워서 등용 (field-combat.js duelCamp·challenge, encounter.js duelResult) ── */
     t('싸워서 등용 ⑯ — 희귀도로 체력·졸개·방패가 서고, 굴복하면 1초 무릎 꿇은 뒤 win · 전멸이면 lose · 등용 카드가 도감·동행에 넣는다', function () {
