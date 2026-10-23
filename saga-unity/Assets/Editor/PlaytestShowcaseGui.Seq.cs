@@ -432,6 +432,84 @@ namespace Saga.EditorTools
                         break;
                     case "weatherprobe": _wxProbe = true; WeatherProbe(); break;
                     case "weaponglow": if (!WeaponGlow(act)) { Skip(act); return; } break;   // U-0120 1만리 무기 빛 단계 n — 기록을 그 단계로, 무기 곁에서 찍는다   // U-0117 4종횡 눈 안 보임 — 촬영 프로세스 안에서 입자 상태를 숫자로
+                    case "lgwind":   // U-0185 1만리 바람 길잡이 — 따라가는 목표 쪽(없으면 앞)으로 줄기를 한 번 불린다
+                    {
+                        var wg = Saga.Go.World.GoWindGuide.Instance;
+                        var who = GameObject.FindWithTag("Player");
+                        if (wg == null || who == null) { Skip(act); return; }
+                        Vector3 p0 = who.transform.position, dir = who.transform.forward;
+                        if (Saga.Go.World.StoryField.Target(out var tgt, out _) && Saga.Go.World.GoWindGuide.Dir(p0, tgt, out var d)) dir = d;
+                        dir.y = 0f; dir.Normalize();
+                        wg.Blow(p0, dir);
+                        Debug.Log($"[ShowcaseGui] lgwind 줄기 {wg.Live} · 방향 {dir}");
+                        break;
+                    }
+                    case "lgmastery":   // U-0185 2나락 장비 숙련 — 쇠도끼 30 처치(2단)·10번 맞음(갑주 1단) → HUD ★2·🛡1
+                    {
+                        Saga.Dungeon.Data.HeroState.Restore(5, 0, 999, 100, "wp_axe", null, null);
+                        for (int i = 0; i < 30; i++) Saga.Dungeon.Data.DungeonMastery.OnKill();
+                        for (int i = 0; i < 10; i++) { Saga.Dungeon.Data.HeroState.Restore(5, 0, 999, 100, "wp_axe", null, null); Saga.Dungeon.Data.HeroState.TakeDamage(1f); }
+                        Saga.Dungeon.Data.HeroState.Restore(5, 0, 999, 100, "wp_axe", null, null);
+                        Debug.Log($"[ShowcaseGui] lgmastery 무기 {Saga.Dungeon.Data.DungeonMastery.WeaponTier("wp_axe")}단 · 갑주 {Saga.Dungeon.Data.DungeonMastery.GuardTier}단");
+                        break;
+                    }
+                    case "lgbrew":   // U-0185 3마을 물약 — 주머니를 채우고 꽃 한 번 달여(꽃향·이름 밝힘) 창을 연 채
+                    {
+                        var bp = Saga.Forest.World.ForestBrewPanel.Instance;
+                        if (bp == null) { Skip(act); return; }
+                        Saga.Forest.Data.ForestState.Restore(Mathf.Max(20, Saga.Forest.Data.ForestState.FruitCount));
+                        Saga.Forest.Data.ForestBrew.SetPouchForTest(4, 3, 2, 0);
+                        Saga.Forest.Data.ForestBrew.Brew(Saga.Forest.Data.ForestBrew.Mat.Flower, Saga.Forest.Data.ForestVisitors.Today);
+                        bp.Open();
+                        Debug.Log($"[ShowcaseGui] lgbrew 창 {bp.IsOpen} · 오늘 {Saga.Forest.Data.ForestBrew.Active}");
+                        break;
+                    }
+                    case "lgrelics":   // U-0185 3마을 유적 — 셋 다 되살려 전시대 셋을 세우고 화석 자리 곁으로
+                    {
+                        var who = GameObject.FindWithTag("Player");
+                        if (who == null) { Skip(act); return; }
+                        int day = 95000, guard = 0;
+                        while (!Saga.Forest.Data.ForestRelics.Feasted && guard++ < 400) Saga.Forest.Data.ForestRelics.OnGather(Saga.Forest.Data.ForestMuseumState.Category.Fossil, day++);
+                        var fp = Saga.Forest.World.ForestCollectSpot.PositionOf(Saga.Forest.Data.ForestMuseumState.Category.Fossil);
+                        Teleport(who.transform, fp + new Vector3(-3.5f, 0.3f, -3f));
+                        Debug.Log($"[ShowcaseGui] lgrelics 복원 {Saga.Forest.Data.ForestRelics.Restored.Count} · 전시대 {Saga.Forest.World.ForestRelicStands.Count} · 화석 자리 {fp}");
+                        break;
+                    }
+                    case "lgclue":   // U-0185 4종횡 옛 비문 — 비문 2m 앞으로
+                    {
+                        var who = GameObject.FindWithTag("Player");
+                        if (who == null || Saga.Story.World.StoryHiddenClue.Instance == null) { Skip(act); return; }
+                        Teleport(who.transform, new Vector3(Saga.Story.World.StoryHiddenClue.ClueX - 2f, who.transform.position.y, who.transform.position.z));
+                        Debug.Log($"[ShowcaseGui] lgclue 비문 x {Saga.Story.World.StoryHiddenClue.ClueX:0.0}");
+                        break;
+                    }
+                    case "lghidden":   // U-0185 4종횡 숨은 우두머리 — 들판 두목 몸으로 두목 자리에 세우고 4m 앞으로
+                    {
+                        var who = GameObject.FindWithTag("Player");
+                        Saga.Story.World.StoryEnemy boss = null;
+                        foreach (var e in Saga.Story.World.StoryEnemy.All) if (e != null && e.IsBoss && !e.IsLabyrinthEnemy && !e.IsHidden) { boss = e; break; }
+                        if (who == null || boss == null) { Skip(act); return; }
+                        var bf = BindingFlags.NonPublic | BindingFlags.Instance;
+                        var ty = typeof(Saga.Story.World.StoryEnemy);
+                        var hb = Saga.Story.World.StoryEnemy.SpawnHidden(boss.transform.parent, boss.transform.position + new Vector3(-3f, 0f, 0f),
+                            (GameObject)ty.GetField("modelPrefab", bf).GetValue(boss), (GameObject)ty.GetField("bossModelPrefab", bf).GetValue(boss), (float)ty.GetField("riggedBossVisualScale", bf).GetValue(boss));
+                        boss.gameObject.SetActive(false);
+                        Teleport(who.transform, new Vector3(hb.transform.position.x - 4f, who.transform.position.y, who.transform.position.z));
+                        Debug.Log($"[ShowcaseGui] lghidden {hb.DisplayName} 체력 {hb.Hp:0}/{hb.MaxHp:0} @ {hb.transform.position}");
+                        break;
+                    }
+                    case "lglaws":   // U-0185 5천하 법령 — 상업령 하나 반포한 채 창을 연다
+                    {
+                        var lu = Saga.Realm.UI.RealmLawUi.Instance;
+                        if (lu == null) { Skip(act); return; }
+                        Saga.Realm.Data.RealmLaws.ResetForTest();
+                        Saga.Realm.Data.RealmLaws.CitiesForTest = 3;
+                        Saga.Realm.Data.RealmLaws.Enact("commerce", Saga.Realm.Data.RealmLaws.NowIndex);
+                        foreach (var card in Object.FindObjectsByType<Saga.Core.SessionCard>(FindObjectsSortMode.None)) card.Hide(); // 통일한 세이브면 정복 승리 카드가 창을 덮는다
+                        lu.Open();
+                        Debug.Log($"[ShowcaseGui] lglaws 창 {lu.PanelOpen} · 법전 {Saga.Realm.Data.RealmLaws.Enacted.Count}/{Saga.Realm.Data.RealmLaws.Slots}");
+                        break;
+                    }
                     default: Skip(act); return;
                 }
                 Debug.Log($"[ShowcaseGui] act {act}");

@@ -2342,12 +2342,12 @@
   "tests": [
    "PlaytestGoWind"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0179",
   "since": "2026-10-23",
-  "note": "D2(R-3 10-23): PlaytestHeadless wind OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0179): PlaytestHeadless wind rule·blow·cool·none·windonly·off OK"
+  "note": "D3(qc+claude, U-0185): docs/playcheck/d3-u0185-20261023.json — 다시 찍음: 주인공 둘레에서 하늘빛 줄기 일곱이 한쪽으로 흘러가며 4장째 멀어짐 · 고침: 줄기 옅은 하늘빛(0.72,0.9,1)·굵기 0.11×0.07·길이 2.4 · 앞 D2(R-3 10-23): PlaytestHeadless wind OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0179): PlaytestHeadless wind rule·blow·cool·none·windonly·off OK"
  },
  {
   "id": "un.core.shader-keep",
@@ -2463,12 +2463,12 @@
   "tests": [
    "PlaytestDungeonMastery"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0178",
   "since": "2026-10-23",
-  "note": "D2(R-3 10-23): PlaytestDungeonHeadless mastery OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0178): PlaytestDungeonHeadless mastery tier·kill·atk·guard·save·off OK(쇠도끼 30 처치 2단 한 타 ×1.06 · 10번 맞고 갑주 1단 100 → 98 · masteryJson 왕복)"
+  "note": "D3(qc+claude, U-0185): docs/playcheck/d3-u0185-20261023.json — HUD 「쇠도끼 ★2 (공격력 68)」·체력 뒤 「🛡1」·토스트 「🛡️ 갑주 숙련 1단 — 받는 피해 −2%」 · 앞 D2(R-3 10-23): PlaytestDungeonHeadless mastery OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0178): PlaytestDungeonHeadless mastery tier·kill·atk·guard·save·off OK(쇠도끼 30 처치 2단 한 타 ×1.06 · 10번 맞고 갑주 1단 100 → 98 · masteryJson 왕복)"
  },
  {
   "id": "un.fs.move-in",
@@ -2516,12 +2516,12 @@
   "tests": [
    "PlaytestForestRelics"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0177",
   "since": "2026-10-23",
-  "note": "D2(R-3 10-23): PlaytestForestHeadless relics OK 5줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0177): PlaytestForestHeadless relics roll·gather·restore·save·off OK(60일 중 27일 조각 · 화석·하루 첫 번만 · 셋 복원 열매 +39 · 전시대 3 충돌체 0 · relicsJson 왕복)"
+  "note": "D3(qc+claude, U-0185): docs/playcheck/d3-u0185-20261023.json — 화석 자리 곁 받침 셋(머리 색 셋 다름)·이름표 셋이 한 줄로, 땅에 박힘 없음(위에서 본 게임 카메라라 작게 보임) · 앞 D2(R-3 10-23): PlaytestForestHeadless relics OK 5줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0177): PlaytestForestHeadless relics roll·gather·restore·save·off OK(60일 중 27일 조각 · 화석·하루 첫 번만 · 셋 복원 열매 +39 · 전시대 3 충돌체 0 · relicsJson 왕복)"
  },
  {
   "id": "un.fs.brew",
@@ -2533,12 +2533,12 @@
   "tests": [
    "PlaytestForestBrew"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0180",
   "since": "2026-10-23",
-  "note": "D2(R-3 10-23): PlaytestForestHeadless brew OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0180): PlaytestForestHeadless brew pouch·rule·effect·panel·save·off OK"
+  "note": "D3(qc+claude, U-0185): docs/playcheck/d3-u0185-20261023.json — 물약 창 — 약초 3·오늘 꽃향 · 꽃 줄만 이름(꽃향 물약) 나머지 ❔ · 화석 ×0 단추 흐림 · 닫기 · 앞 D2(R-3 10-23): PlaytestForestHeadless brew OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0180): PlaytestForestHeadless brew pouch·rule·effect·panel·save·off OK"
  },
  {
   "id": "un.fs.cave-depth",
@@ -2619,12 +2619,12 @@
   "tests": [
    "PlaytestStoryHidden"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0181",
   "since": "2026-10-23",
-  "note": "D2(R-3 10-23): PlaytestStorySlice hidden OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0181): PlaytestStorySlice hidden rule·clue·summon·kill·save·off OK"
+  "note": "D3(qc+claude, U-0185): docs/playcheck/d3-u0185-20261023.json — 비문: 들판 끝 돌판·보라 글줄「📜 옛 비문」 / 다시 찍음: 보랏빛 몸의 숨은 우두머리가 두목 자리 곁에 섬 · 고침: 숨은 우두머리는 리깅 몸에도 짙은 보라(맞은 뒤에도 보라로 되돌림) · 앞 D2(R-3 10-23): PlaytestStorySlice hidden OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0181): PlaytestStorySlice hidden rule·clue·summon·kill·save·off OK"
  },
  {
   "id": "un.rk.supply",
@@ -2690,12 +2690,12 @@
   "tests": [
    "PlaytestRealmLaws"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0182",
   "since": "2026-10-23",
-  "note": "D2(R-3 10-23): PlaytestRealmSlice laws OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0182): PlaytestRealmSlice laws mul·rule·month·panel·save·off OK · 충성·관직이 없어 엄법령 뺌·법전 칸은 성 수"
+  "note": "D3(qc+claude, U-0185): docs/playcheck/d3-u0185-20261023.json — 법령 창 — 법전 1/3·다음 법령까지 6달 · 상업령 시행 중(금빛 태그)·둔전령·징병령 반포 단추 · 고침: 촬영 동작이 결과 카드를 닫음 · 법령 창 알파 0.86 → 0.95 · 앞 D2(R-3 10-23): PlaytestRealmSlice laws OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0182): PlaytestRealmSlice laws mul·rule·month·panel·save·off OK · 충성·관직이 없어 엄법령 뺌·법전 칸은 성 수"
  },
  {
   "id": "un.rk.tech-tree",

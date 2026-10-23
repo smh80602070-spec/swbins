@@ -56,7 +56,7 @@ namespace Saga.Realm.UI
             _toggle = RealmUiKit.NewButton(canvas.transform, "", new Vector2(0f, 0f), new Vector2(20f, 466f), new Vector2(180f, 110f), Toggle);
             _toggleLabel = _toggle.GetComponentInChildren<TextMeshProUGUI>();
 
-            _panel = RealmUiKit.NewPanel(canvas.transform, new Vector2(0.5f, 0.5f), new Vector2(1000f, 640f), new Color(0f, 0f, 0f, 0.86f));
+            _panel = RealmUiKit.NewPanel(canvas.transform, new Vector2(0.5f, 0.5f), new Vector2(1000f, 640f), new Color(0f, 0f, 0f, 0.95f)); // tasks U-0185 — 0.86 이면 뒤 안내 글이 법령 줄 밑으로 비쳤다(촬영)
             _panel.SetActive(false);
             _title = RealmUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -30f), new Vector2(900f, 56f), 30);
             _info = RealmUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -88f), new Vector2(900f, 44f), 22);

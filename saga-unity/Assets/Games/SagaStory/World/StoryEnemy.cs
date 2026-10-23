@@ -441,6 +441,8 @@ namespace Saga.Story.World
             {
                 _visualGo = CharacterVisual.SpawnFallbackCapsule(transform, height, TintColor).gameObject;
             }
+            // tasks U-0185 — 숨은 우두머리는 리깅 몸이어도 짙은 보라를 입힌다(촬영에서 두목과 구별이 안 됐다)
+            if (_hidden && _visualGo != null) CharacterVisual.Tint(_visualGo, HiddenColor);
         }
 
         /// <summary>PLAN.md 101-2 STORY "5-7 손맛 표준"(2026-09-17) — DUNGEON
@@ -486,8 +488,8 @@ namespace Saga.Story.World
             // 실제 텍스처를 곱색으로 오염시키지 않으려고) — ClearTint로
             // 되돌려야 진짜 텍스처가 돌아온다. 비리깅(primitive)은 원래
             // BodyColor로 칠해져 있었으니 그 색으로 되돌린다.
-            if (_isRiggedVisual) CharacterVisual.ClearTint(_visualGo);
-            else CharacterVisual.Tint(_visualGo, TintColor);
+            if (_isRiggedVisual && !_hidden) CharacterVisual.ClearTint(_visualGo);
+            else CharacterVisual.Tint(_visualGo, TintColor); // tasks U-0185 숨은 우두머리는 보라로 되돌림
         }
 
         private void Die()

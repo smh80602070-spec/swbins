@@ -98,7 +98,7 @@ namespace Saga.Go.World
             Vector3 side = Vector3.Cross(Vector3.up, dir);
             if (_mat == null)
             {
-                _mat = new Material(Shader.Find("Universal Render Pipeline/Unlit")) { name = "WindGuide (generated)", color = new Color(0.92f, 0.96f, 1f) };
+                _mat = new Material(Shader.Find("Universal Render Pipeline/Unlit")) { name = "WindGuide (generated)", color = new Color(0.72f, 0.9f, 1f) }; // tasks U-0185 — 흰색은 밝은 모래·눈 위에서 안 보였다(촬영) → 옅은 하늘빛
             }
             for (int i = 0; i < Streaks; i++)
             {
@@ -134,7 +134,7 @@ namespace Saga.Go.World
                 float k = Mathf.Clamp01((s.Age - s.Delay) / Life);
                 float w = Mathf.Sin(k * Mathf.PI); // 커졌다 줄며 사라진다
                 s.T.position = s.From + s.Dir * (LenM * k) + Vector3.up * Mathf.Sin(k * Mathf.PI * 2f) * 0.25f;
-                s.T.localScale = new Vector3(0.05f * w, 0.05f * w, 1.8f * w);
+                s.T.localScale = new Vector3(0.11f * w, 0.07f * w, 2.4f * w); // tasks U-0185 — 0.05 는 화면에서 실선 한 줄로 흐렸다
                 _live[i] = s;
             }
         }
