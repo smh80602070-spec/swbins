@@ -451,7 +451,7 @@ namespace Saga.Story.World
         public void TakeDamage(float amount, bool crit = false)
         {
             if (_dead || amount <= 0f) return;
-            if (!isLabyrinthEnemy) StoryRunRank.OnHit(Time.time);   // tasks U-0093 판 등급 — 연타(미궁은 따로)
+            if (!isLabyrinthEnemy && !_hidden) StoryRunRank.OnHit(Time.time);   // tasks U-0093 판 등급 — 연타(미궁은 따로) · U-0181 R-5 숨은 우두머리는 판 밖(치면 판이 열리고 닫을 두목이 없어 모닥불이 막혔다)
             if (isBoss && float.IsNaN(_firstHitAt)) _firstHitAt = Time.time; // tasks U-0181 빨리 잡기 셈
             StorySummonState.OnEnemyHit(); // PLAN.md 106-10 — 소환 게이지(플레이어 +3 · 동료 +1 · 소환 자체는 0).
             float applied = _isChampion && _shieldBroken ? amount * ShieldVulnerableMul : amount;

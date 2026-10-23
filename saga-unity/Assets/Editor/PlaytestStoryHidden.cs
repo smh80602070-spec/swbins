@@ -100,6 +100,9 @@ namespace Saga.EditorTools
                 Begin();
                 if (hb != null)
                 {
+                    StoryRunRank.ClearForTest();
+                    hb.TakeDamage(1f);
+                    if (StoryRunRank.Active) Fail("숨은 우두머리를 쳤더니 판이 열림(닫을 두목이 없어 모닥불이 막힌다)");
                     int bk = StoryQuestState.BossKills, hk = StoryHidden.Kills;
                     float e0 = StoryJobState.Exp;
                     hb.TakeDamage(1e9f);
@@ -107,7 +110,7 @@ namespace Saga.EditorTools
                     if (!hb.IsDead || StoryHidden.Kills != hk + 1) Fail($"처치 기록 {StoryHidden.Kills} ≠ {hk + 1}");
                     if (Mathf.Abs(gain - wantGain) > 0.5f) Fail($"경험치 +{gain} ≠ {wantGain}");
                     if (StoryQuestState.BossKills != bk) Fail("두목 사명이 또 셈");
-                    End($"kill OK - 경험치 +{gain:0}(두목 ×{StoryHidden.ExpMul}) · 처치 기록 1 · 두목 사명 그대로");
+                    End($"kill OK - 쳐도 판 안 열림 · 경험치 +{gain:0}(두목 ×{StoryHidden.ExpMul}) · 처치 기록 1 · 두목 사명 그대로");
                 }
 
                 // ⑤ 세이브
