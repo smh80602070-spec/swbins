@@ -497,7 +497,7 @@ namespace Saga.Realm.Data
                 var r = _cities[cityId];
                 income += Mathf.RoundToInt(r.Comm * 0.55f * SecMul(r.Sec) * RealmTechData.Mul("goldPct")); // tasks U-0129 기술 나무(연구 0 = ×1)
             }
-            income = Mathf.RoundToInt(income * RealmLaws.GoldMul); // tasks U-0182 상업령·둔전령
+            income = Mathf.RoundToInt(income * RealmLaws.GoldMul * RealmAges.Mul); // tasks U-0182 상업령·둔전령 · U-0187 국세
             int upkeep = _roster.Count * UpkeepPerOfficer;
             Gold = Mathf.Max(0, Gold + income - upkeep);
 
@@ -506,7 +506,7 @@ namespace Saga.Realm.Data
             foreach (var cityId in _activeCityIds)
             {
                 var r = _cities[cityId];
-                if (harvest) r.Food += Mathf.RoundToInt(r.Agri * 6f * SecMul(r.Sec) * RealmTechData.Mul("foodPct") * RealmLaws.HarvestMul); // tasks U-0182 상업령 수확 −10%
+                if (harvest) r.Food += Mathf.RoundToInt(r.Agri * 6f * SecMul(r.Sec) * RealmTechData.Mul("foodPct") * RealmLaws.HarvestMul * RealmAges.Mul); // tasks U-0182 상업령 수확 −10% · U-0187 국세
 
                 int eat = Mathf.RoundToInt(r.Troops / 1000f * FoodPer1000 * RealmLaws.EatMul); // tasks U-0182 둔전령
                 r.Food -= eat;

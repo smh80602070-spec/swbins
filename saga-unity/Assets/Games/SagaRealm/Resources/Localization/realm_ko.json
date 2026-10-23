@@ -1122,6 +1122,21 @@
     { "key": "law.ready", "value": "지금 내릴 수 있다" },
     { "key": "law.has_tag", "value": " <color=#ffd060>· 시행 중</color>" },
     { "key": "law.in_force", "value": "시행 중" },
-    { "key": "law.enact", "value": "반포" }
+    { "key": "law.enact", "value": "반포" },
+    { "key": "age.chaos", "value": "난세" },
+    { "key": "age.base", "value": "기틀" },
+    { "key": "age.order", "value": "치세" },
+    { "key": "age.golden", "value": "성세" },
+    { "key": "age.head", "value": "{0} 국세 {1} · 금·수확 ×{2:0.00}" },
+    { "key": "age.top", "value": "가장 높은 국세다" },
+    { "key": "age.need", "value": "▶ {0} 올리기 — 성 {1} · 기술 {2} · 금 {3}" },
+    { "key": "age.short", "value": " (모자람 — 성 {0}/{1} · 기술 {2}/{3} · 금 {4}/{5})" },
+    { "key": "age.why_top", "value": "가장 높은 국세다" },
+    { "key": "age.why_short", "value": "성이나 기술이 모자란다" },
+    { "key": "age.why_gold", "value": "금이 모자란다" },
+    { "key": "age.why_off", "value": "국세가 꺼져 있다" },
+    { "key": "age.why_none", "value": "올릴 수 없다" },
+    { "key": "age.up", "value": "{0} 국세가 {1}(으)로 올랐다 — 금·수확 ×{2:0.00}" },
+    { "key": "age.btn", "value": "{0} 올리기" }
   ]
 }

@@ -24,6 +24,10 @@ namespace Saga.Realm.UI
         public bool PanelOpen => _panel != null && _panel.activeSelf;
         public string RowText(int i) => _rowText[i] != null ? _rowText[i].text : "";
         public Button RowButton(int i) => _rowButton[i];
+        private TextMeshProUGUI _ageText, _ageButtonLabel;   // tasks U-0187
+        private Button _ageButton;
+        public string AgeText => _ageText != null ? _ageText.text : "";
+        public Button AgeButton => _ageButton;
 
         public static RealmLawUi Install()
         {
@@ -37,12 +41,14 @@ namespace Saga.Realm.UI
             Build();
             RealmLaws.Changed += Refresh;
             RealmCityState.Changed += Refresh;
+            RealmAges.Changed += Refresh;
         }
 
         private void OnDestroy()
         {
             RealmLaws.Changed -= Refresh;
             RealmCityState.Changed -= Refresh;
+            RealmAges.Changed -= Refresh;
             if (Instance == this) Instance = null;
         }
 
@@ -56,13 +62,19 @@ namespace Saga.Realm.UI
             _toggle = RealmUiKit.NewButton(canvas.transform, "", new Vector2(0f, 0f), new Vector2(20f, 466f), new Vector2(180f, 110f), Toggle);
             _toggleLabel = _toggle.GetComponentInChildren<TextMeshProUGUI>();
 
-            _panel = RealmUiKit.NewPanel(canvas.transform, new Vector2(0.5f, 0.5f), new Vector2(1000f, 640f), new Color(0f, 0f, 0f, 0.95f)); // tasks U-0185 — 0.86 이면 뒤 안내 글이 법령 줄 밑으로 비쳤다(촬영)
+            _panel = RealmUiKit.NewPanel(canvas.transform, new Vector2(0.5f, 0.5f), new Vector2(1000f, 760f), new Color(0f, 0f, 0f, 0.95f)); // U-0187 국세 줄 하나 더 // tasks U-0185 — 0.86 이면 뒤 안내 글이 법령 줄 밑으로 비쳤다(촬영)
             _panel.SetActive(false);
             _title = RealmUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -30f), new Vector2(900f, 56f), 30);
             _info = RealmUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -88f), new Vector2(900f, 44f), 22);
+            // tasks U-0187 국세 — 법령 창 맨 위 줄(고돗과 같은 자리)
+            _ageText = RealmUiKit.NewText(_panel.transform, "", new Vector2(0f, 1f), new Vector2(30f, -140f), new Vector2(680f, 100f), 21);
+            _ageText.alignment = TextAlignmentOptions.Left;
+            _ageButton = RealmUiKit.NewButton(_panel.transform, "", new Vector2(1f, 1f), new Vector2(-30f, -152f), new Vector2(240f, 80f), PressAge);
+            _ageButtonLabel = _ageButton.GetComponentInChildren<TextMeshProUGUI>();
+            _ageButtonLabel.fontSize = 22;
             for (int i = 0; i < 3; i++)
             {
-                float y = -150f - 130f * i;
+                float y = -262f - 130f * i;
                 _rowText[i] = RealmUiKit.NewText(_panel.transform, "", new Vector2(0f, 1f), new Vector2(30f, y), new Vector2(680f, 114f), 22);
                 _rowText[i].alignment = TextAlignmentOptions.Left;
                 string key = RealmLaws.All[i].Key;
@@ -96,6 +108,17 @@ namespace Saga.Realm.UI
             Refresh();
         }
 
+        /// <summary>tasks U-0187 — 국세 올리기(금을 낸다).</summary>
+        public void PressAge()
+        {
+            string why = RealmAges.Advance();
+            var a = RealmAges.Current;
+            RealmToast.Instance?.Show(why == null
+                ? string.Format(RealmLocalization.T("age.up", "{0} 국세가 {1}(으)로 올랐다 — 금·수확 ×{2:0.00}"), a.Emoji, a.Name, RealmAges.Mul)
+                : RealmAges.WhyText(why), 3f);
+            Refresh();
+        }
+
         public void Refresh()
         {
             if (_toggleLabel == null) return;
@@ -106,6 +129,10 @@ namespace Saga.Realm.UI
             int wait = RealmLaws.WaitMonths(now);
             _info.text = string.Format(RealmLocalization.T("law.info", "법전 {0}/{1}(다스리는 성 수, 최대 {2}) · {3}"), RealmLaws.Enacted.Count, RealmLaws.Slots, RealmLaws.MaxSlots,
                 wait > 0 ? string.Format(RealmLocalization.T("law.wait", "다음 법령까지 {0}달"), wait) : RealmLocalization.T("law.ready", "지금 내릴 수 있다"));
+            _ageText.text = RealmAges.Line();
+            _ageButton.gameObject.SetActive(RealmAges.Next != null);
+            _ageButton.interactable = RealmAges.Why() == null;
+            _ageButtonLabel.text = RealmAges.Next != null ? string.Format(RealmLocalization.T("age.btn", "{0} 올리기"), RealmAges.Next.Name) : "";
             for (int i = 0; i < 3; i++)
             {
                 var l = RealmLaws.All[i];

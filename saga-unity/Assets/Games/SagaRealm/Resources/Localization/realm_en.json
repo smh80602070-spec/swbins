@@ -1122,6 +1122,21 @@
     { "key": "law.ready", "value": "A law can be enacted now" },
     { "key": "law.has_tag", "value": " <color=#ffd060>· in force</color>" },
     { "key": "law.in_force", "value": "In force" },
-    { "key": "law.enact", "value": "Enact" }
+    { "key": "law.enact", "value": "Enact" },
+    { "key": "age.chaos", "value": "Chaos" },
+    { "key": "age.base", "value": "Foundation" },
+    { "key": "age.order", "value": "Order" },
+    { "key": "age.golden", "value": "Golden Age" },
+    { "key": "age.head", "value": "{0} Realm {1} · gold·harvest ×{2:0.00}" },
+    { "key": "age.top", "value": "Highest realm stage" },
+    { "key": "age.need", "value": "▶ Rise to {0} — cities {1} · techs {2} · gold {3}" },
+    { "key": "age.short", "value": " (short — cities {0}/{1} · techs {2}/{3} · gold {4}/{5})" },
+    { "key": "age.why_top", "value": "Highest realm stage" },
+    { "key": "age.why_short", "value": "Not enough cities or techs" },
+    { "key": "age.why_gold", "value": "Not enough gold" },
+    { "key": "age.why_off", "value": "Realm stages are off" },
+    { "key": "age.why_none", "value": "Cannot rise" },
+    { "key": "age.up", "value": "{0} The realm rose to {1} — gold·harvest ×{2:0.00}" },
+    { "key": "age.btn", "value": "Rise to {0}" }
   ]
 }

@@ -2714,6 +2714,22 @@
   "note": "D3(qc+claude, U-0185): docs/playcheck/d3-u0185-20261023.json — 법령 창 — 법전 1/3·다음 법령까지 6달 · 상업령 시행 중(금빛 태그)·둔전령·징병령 반포 단추 · 고침: 촬영 동작이 결과 카드를 닫음 · 법령 창 알파 0.86 → 0.95 · 앞 D2(R-3 10-23): PlaytestRealmSlice laws OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0182): PlaytestRealmSlice laws mul·rule·month·panel·save·off OK · 충성·관직이 없어 엄법령 뺌·법전 칸은 성 수"
  },
  {
+  "id": "un.rk.ages",
+  "name": "U-0187 5천하 국세 올리기 — 법령 창 맨 위 「국세」 난세→기틀→치세→성세, 다음 = 성 4·7·12 + 기술 마디 4·9·15 + 금 1500·3000·6000(냄), 단계마다 금 수입·수확 ×1.05(고돗 G-0329)",
+  "files": [
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmAges.cs"
+  ],
+  "tests": [
+   "PlaytestRealmAges"
+  ],
+  "level": "D2",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0187",
+  "since": "2026-10-23",
+  "note": "D2(U-0187): PlaytestRealmSlice ages table·rule·month·panel·save·off OK · 무장 경험이 없는 트랙이라 성세 경험 ×1.1 은 뺌"
+ },
+ {
   "id": "un.rk.tech-tree",
   "name": "U-0129 기술 나무 — 세력 연구 네 갈래(농·상·군·학) × 6마디(웹 W-0290 이식)",
   "files": [
