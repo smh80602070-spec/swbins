@@ -1,0 +1,1851 @@
+{
+ "name": "k185_stand",
+ "spec": "character_tall",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0185 전신 스탠딩 — 밑그림 없이 txt2img, 주제 = 초상(portraits-hero _c)을 보고 적은 묘사(data\\k185_desc.json), 그림체 C",
+ "items": [
+  {
+   "id": "dj_doseo",
+   "subject": "1boy, male focus, adult man, short black hair, blue eyes, friendly smile, ancient far west merchant noble, white collar with amber bead chain, maroon brocade robe, leather sandals",
+   "subject_ko": "대진(가상) 택산",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102200
+  },
+  {
+   "id": "dj_gapju",
+   "subject": "1boy, male focus, adult man, short blonde hair, green eyes, calm, ancient far west noble, dark maroon and gold patterned robe, leather sandals",
+   "subject_ko": "대진(가상) 려건",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102301
+  },
+  {
+   "id": "dj_gijang",
+   "subject": "1boy, male focus, adult man, messy blonde hair, light brown eyes, stern, ancient far west official, white scarf, dark purple robe, leather sandals",
+   "subject_ko": "대진(가상) 사복",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102402
+  },
+  {
+   "id": "dj_haean",
+   "subject": "1boy, male focus, young man, short dark brown hair, grey eyes, confident smirk, ancient far west sailor merchant, white scarf, deep red draped cloak, leather sandals",
+   "subject_ko": "대진(가상) 차란",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102503
+  },
+  {
+   "id": "dj_hopak",
+   "subject": "1girl, young woman, black bob hair, green eyes, calm, ancient far west townsperson, white lace shawl, red bead necklace, cream robe, sandals",
+   "subject_ko": "대진(가상) 조지",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102604
+  },
+  {
+   "id": "dj_hwanggeum",
+   "subject": "1boy, male focus, adult man, blonde hair tied back, blue eyes, serious, ancient far west royal noble, white robe with gold embroidery, amber bead chains, sandals",
+   "subject_ko": "대진(가상) 대진",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102705
+  },
+  {
+   "id": "dj_seohae",
+   "subject": "1boy, male focus, adult man, short dark hair with small topknot, grey eyes, smile, ancient far west traveler, white tunic with black trim, bead necklace, sandals",
+   "subject_ko": "대진(가상) 안식",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102806
+  },
+  {
+   "id": "dj_seoncheok",
+   "subject": "1girl, young woman, long dark brown hair, blue eyes, hoop earrings, confident, ancient far west traveler, dark red high-collar robe, bead necklace, black cloak",
+   "subject_ko": "대진(가상) 안식",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026102907
+  },
+  {
+   "id": "dj_yuri",
+   "subject": "1boy, male focus, adult man, long wavy black hair, green eyes, smile, earrings, ancient far west glass merchant, white robe, bead necklace, sandals",
+   "subject_ko": "대진(가상) 조지",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103008
+  },
+  {
+   "id": "fu_gangma",
+   "subject": "1boy, male focus, adult man, blonde hair tied back, grey eyes, slight smile, dimensional rift warrior, dark armored coat with glowing blue gem emblem, boots",
+   "subject_ko": "균열(가상) 강철",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103109
+  },
+  {
+   "id": "fu_hwanryeong",
+   "subject": "1boy, male focus, adult man, spiky auburn hair, stubble, brown eyes, smile, dimensional rift mage, white fur collar, glowing blue robe with crystal pattern, boots",
+   "subject_ko": "균열(가상) 환영",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103210
+  },
+  {
+   "id": "fu_janhon",
+   "subject": "1girl, young woman, blonde bob hair with tiny star sparkles, blue eyes, calm, dimensional rift wanderer, royal blue bodysuit, dark green cloak, boots",
+   "subject_ko": "균열(가상) 잔영",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103311
+  },
+  {
+   "id": "fu_myeongje",
+   "subject": "1boy, male focus, adult man, spiky black hair, brown eyes, glowing cyan marks on forehead, smile, dimensional rift warrior, black armored tunic with glowing teal crystal trim, boots",
+   "subject_ko": "균열(가상) 종말",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103412
+  },
+  {
+   "id": "fu_noejang",
+   "subject": "1boy, male focus, adult man, wild brown hair with silver circlet, brown eyes, glowing scar marks, smile, dimensional rift thunder warrior, white robe with gold lightning pattern",
+   "subject_ko": "균열(가상) 뇌성",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103513
+  },
+  {
+   "id": "fu_seonghon",
+   "subject": "1girl, young woman, short light brown hair, grey eyes, calm, dimensional rift astrologer, royal blue robe with gold star trim, gold collar with round green gem",
+   "subject_ko": "균열(가상) 천궤",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103614
+  },
+  {
+   "id": "fu_yugwi",
+   "subject": "1boy, male focus, adult man, short dark hair, navy beret, light brown eyes, calm, dimensional rift glassworker, white shirt with blue crack pattern, boots",
+   "subject_ko": "균열(가상) 유리",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103715
+  },
+  {
+   "id": "fu_yuseong",
+   "subject": "1boy, male focus, adult man, short brown hair, blue eyes, smile, dimensional rift wanderer, white tunic with navy trim, floating ice crystal shards around shoulders",
+   "subject_ko": "균열(가상) 천궤",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103816
+  },
+  {
+   "id": "jiao_banrok",
+   "subject": "1girl, young woman, ash brown hair in bun, brown eyes, calm, ancient southern jungle province noble, dark green robe with gold pattern, round bronze shield",
+   "subject_ko": "교주(가상) 일남",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026103917
+  },
+  {
+   "id": "jiao_botran",
+   "subject": "1boy, male focus, adult man, short brown hair, green eyes, smile, ancient southern province pearl diver, white tunic with teal trim, sandals",
+   "subject_ko": "교주(가상) 합포",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104018
+  },
+  {
+   "id": "jiao_dinggo",
+   "subject": "1boy, male focus, adult man, long brown hair in high ponytail, blue eyes, calm, ancient southern province warrior, white tunic with dark leather strap, sandals",
+   "subject_ko": "교주(가상) 울림",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104119
+  },
+  {
+   "id": "jiao_hoangmi",
+   "subject": "1boy, male focus, adult man, short brown hair, white headband, green eyes, warm smile, ancient southern province farmer elder, white collar, green robe with gold pattern, sandals",
+   "subject_ko": "교주(가상) 남해",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104220
+  },
+  {
+   "id": "jiao_jinja",
+   "subject": "1girl, young woman, long black hair with bronze round hair ornaments, teal eyes, gentle smile, ancient southern province noble, white robe, green robe with fur trim",
+   "subject_ko": "교주(가상) 교지",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104321
+  },
+  {
+   "id": "jiao_luyan",
+   "subject": "1boy, male focus, young man, swept light brown hair, brown eyes, calm, ancient southern province official, white robe with green stripe trim, sandals",
+   "subject_ko": "교주(가상) 남해",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104422
+  },
+  {
+   "id": "jiao_madang",
+   "subject": "1boy, male focus, adult man, short dark brown hair, green eyes, calm, ancient southern province hunter, black tunic with green palm leaf pattern, sandals",
+   "subject_ko": "교주(가상) 창오",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104523
+  },
+  {
+   "id": "jiao_muya",
+   "subject": "1girl, young woman, brown hair in loose updo, grey eyes, calm, ancient southern province noble, black robe with teal and gold floral embroidery, white shawl, sandals",
+   "subject_ko": "교주(가상) 구진",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104624
+  },
+  {
+   "id": "jiao_riquan",
+   "subject": "1boy, male focus, adult man, brown hair slicked back long, brown eyes, stern, ancient southern province noble, white silk robe with white floral pattern, green inner robe, sandals",
+   "subject_ko": "교주(가상) 교지",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104725
+  },
+  {
+   "id": "jp_asahime",
+   "subject": "1girl, young woman, long black hair with bangs, brown eyes, calm, ancient japanese noble lady, layered dark navy kimono with white collar, purple striped sash",
+   "subject_ko": "일본(가상) 길비",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104826
+  },
+  {
+   "id": "jp_hikoyama",
+   "subject": "1boy, male focus, adult man, balding short dark hair, brown eyes, slight smile, ancient japanese provincial lord, dark brown robe over blue kimono, straw shoulder cape",
+   "subject_ko": "일본(가상) 일향",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026104927
+  },
+  {
+   "id": "jp_himetsu",
+   "subject": "1girl, young woman, short black hair, brown eyes, gentle smile, ancient japanese village woman, teal kimono with gold leaf pattern, white cord ties",
+   "subject_ko": "일본(가상) 축자",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105028
+  },
+  {
+   "id": "jp_kazenari",
+   "subject": "1boy, male focus, adult man, brown hair, light brown eyes, smile, tall black lacquered court hat tied with cord, ancient japanese court official, dark robe",
+   "subject_ko": "일본(가상) 출운",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105129
+  },
+  {
+   "id": "jp_shioji",
+   "subject": "1boy, male focus, adult man, long wavy black hair, brown eyes, smile, ancient japanese island sailor, cream fur-trimmed coat over blue kimono with cord",
+   "subject_ko": "일본(가상) 일기도",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105230
+  },
+  {
+   "id": "jp_taketsumi",
+   "subject": "1boy, male focus, adult man, short dark hair, black flat cap, brown eyes, calm, ancient japanese warrior, dark brown robe over black armor, straw shoulder cape",
+   "subject_ko": "일본(가상) 축자",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105331
+  },
+  {
+   "id": "jp_tamakiri",
+   "subject": "1boy, male focus, adult man, black hair with side bangs, brown eyes, smile, ancient japanese noble, navy kimono with tiny white star pattern, black cord sash",
+   "subject_ko": "일본(가상) 야마토",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105432
+  },
+  {
+   "id": "jp_umihiko",
+   "subject": "1boy, male focus, adult man, short black hair, brown flat cap, brown eyes, smile, ancient japanese island fisherman, dark brown scarf, blue robe",
+   "subject_ko": "일본(가상) 대마도",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105533
+  },
+  {
+   "id": "jp_wakahiko",
+   "subject": "1girl, young woman, black bob hair, brown eyes, calm, ancient japanese noble, royal blue kimono with gold leaf pattern",
+   "subject_ko": "일본(가상) 야마토",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105634
+  },
+  {
+   "id": "kr2_ajinsa",
+   "subject": "1boy, male focus, adult man, short brown hair, small black cloth cap with knob, brown eyes, smile, ancient korean official, mustard yellow robe with black collar, leather strap",
+   "subject_ko": "한국(가상) 대방",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105735
+  },
+  {
+   "id": "kr2_dokgaru",
+   "subject": "1boy, male focus, adult man, short black hair, brown leather cap, brown eyes, smile, ancient korean warrior, white robe, golden quilted vest with leaf pattern, boots",
+   "subject_ko": "한국(가상) 국내성",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105836
+  },
+  {
+   "id": "kr2_gokdol",
+   "subject": "1girl, young woman, long black hair tied back, brown eyes, calm smile, ancient korean warrior, black collar, mustard robe, silver lamellar armor on shoulder",
+   "subject_ko": "한국(가상) 양평",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026105937
+  },
+  {
+   "id": "kr2_jimasol",
+   "subject": "1boy, male focus, adult man, short black hair, bronze and black cap, brown eyes, smile, ancient korean official, white robe with brown woven vest, boots",
+   "subject_ko": "한국(가상) 위례성",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026106038
+  },
+  {
+   "id": "kr2_mokrihae",
+   "subject": "1boy, male focus, adult man, short black hair, dark knit cap with point, brown eyes, calm, ancient korean warrior, black collar, golden quilted vest, silver lamellar armor",
+   "subject_ko": "한국(가상) 낙랑",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026106139
+  },
+  {
+   "id": "kr2_pasodan",
+   "subject": "1boy, male focus, young man, short brown hair, round dark leather cap, brown eyes, smile, ancient korean warrior, white robe, ornate golden lamellar chest armor",
+   "subject_ko": "한국(가상) 양평",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026106240
+  },
+  {
+   "id": "kr2_seolharan",
+   "subject": "1boy, male focus, young man, brown hair, brown eyes, calm smile, silver lamellar helmet with neck guard, ancient korean warrior, mustard robe, boots",
+   "subject_ko": "한국(가상) 김해",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026106341
+  },
+  {
+   "id": "kr2_sogaram",
+   "subject": "1girl, young woman, short black hair, brown eyes, gentle smile, ancient korean noble, white robe with faint flower pattern, round bronze brooch, dark leather arm guard",
+   "subject_ko": "한국(가상) 국내성",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026106442
+  },
+  {
+   "id": "kr2_umorin",
+   "subject": "1boy, male focus, adult man, short dark hair, brown eyes, stern, tall white layered cloth cap with flaps, ancient korean official, dark and orange robe",
+   "subject_ko": "한국(가상) 금성",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026106543
+  },
+  {
+   "id": "kr2_yeonuru",
+   "subject": "1girl, young woman, short black hair over one eye, brown eyes, gentle smile, ancient korean noble, white high-collar robe with subtle pattern",
+   "subject_ko": "한국(가상) 위례성",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026106644
+  },
+  {
+   "id": "kr2_yeoyul",
+   "subject": "1boy, male focus, adult man, short black hair, brown eyes, smile, ancient korean warrior, white scarf, golden lamellar chest armor with dark trim, boots",
+   "subject_ko": "한국(가상) 양평",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026106745
+  },
+  {
+   "id": "ly_byeokjeon",
+   "subject": "1boy, male focus, young man, short blonde hair, thin gold circlet with gem, green eyes, gentle smile, ancient southeast kingdom noble, white robe with blue woven trim, sandals",
+   "subject_ko": "임읍(가상) 전충",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026106846
+  },
+  {
+   "id": "ly_heuksang",
+   "subject": "1boy, male focus, adult man, short brown hair, brown eyes, smile, ancient southeast kingdom noble, white robe with gold buttons, blue and green woven sash, sandals",
+   "subject_ko": "임읍(가상) 구속",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026106947
+  },
+  {
+   "id": "ly_jeonchung",
+   "subject": "1boy, male focus, adult man, short blonde hair, blue eyes, stern, olive and gold round cap, white head cloth, ancient southeast kingdom guard, white robe with green inner layer, sandals",
+   "subject_ko": "임읍(가상) 전충",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026107048
+  },
+  {
+   "id": "ly_jinju",
+   "subject": "1girl, young woman, long black hair with gold diamond hair clip, brown eyes, calm, ancient southeast kingdom noble, gold collar, green robe with gold geometric pattern, sandals",
+   "subject_ko": "임읍(가상) 비경",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026107149
+  },
+  {
+   "id": "ly_juoh",
+   "subject": "1boy, male focus, elderly man, swept white hair, short white beard, brown eyes, calm, ancient southeast kingdom elder, gold brocade collar, green patterned robe, sandals",
+   "subject_ko": "임읍(가상) 주오",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026107250
+  },
+  {
+   "id": "ly_nogyong",
+   "subject": "1boy, male focus, adult man, short spiky light brown hair, brown eyes, slight smile, ancient southeast kingdom warrior, dark navy robe with gold woven trim, sandals",
+   "subject_ko": "임읍(가상) 노용",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026107351
+  },
+  {
+   "id": "ly_sanga",
+   "subject": "1boy, male focus, adult man, long black hair, brown eyes, calm smile, ancient southeast kingdom noble, black robe with gold and blue jeweled collar, sandals",
+   "subject_ko": "임읍(가상) 서권",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026107452
+  },
+  {
+   "id": "ly_sangnim",
+   "subject": "1boy, male focus, adult man, messy black hair, brown eyes, smile, ancient southeast kingdom official, white robe with gold buttons, olive green sash, blue woven trim, sandals",
+   "subject_ko": "임읍(가상) 상림",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026107553
+  },
+  {
+   "id": "ly_uhwa",
+   "subject": "1girl, young woman, brown bob hair in small bun with gold pin, green eyes, gentle smile, gold earrings, ancient southeast kingdom noble, pale yellow scarf, green patterned robe",
+   "subject_ko": "임읍(가상) 상림",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026107654
+  },
+  {
+   "id": "mb_baekwoon",
+   "subject": "1boy, male focus, adult man, short auburn hair, brown eyes, slight smile, northern frontier rider, thick white fur collar, brown leather coat, fur boots",
+   "subject_ko": "막북(가상) 안문",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026107755
+  },
+  {
+   "id": "mb_cheolgak",
+   "subject": "1boy, male focus, adult man, brown hair, light brown eyes, calm, brown fur cap, northern frontier rider, tan fur collar, brown leather coat, fur boots",
+   "subject_ko": "막북(가상) 운중",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026107856
+  },
+  {
+   "id": "mb_gangho",
+   "subject": "1boy, male focus, young man, messy dark grey hair, brown eyes, calm smile, northern frontier rider, white fur collar, brown leather coat, fur boots",
+   "subject_ko": "막북(가상) 북지",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026107957
+  },
+  {
+   "id": "mb_hanam",
+   "subject": "1boy, male focus, adult man, short dark brown hair, brown eyes, smile, northern frontier rider, cream fur collar, brown leather coat with tan stitching, fur boots",
+   "subject_ko": "막북(가상) 삭방",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026108058
+  },
+  {
+   "id": "mb_hanpung",
+   "subject": "1girl, young woman, blonde hair in low bun, grey eyes, calm, northern frontier rider, white fur cloak, brown leather vest with diamond stitching, fur boots",
+   "subject_ko": "막북(가상) 정양",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026108159
+  },
+  {
+   "id": "mb_hoja",
+   "subject": "1girl, young woman, auburn red bob hair, brown eyes, smile, white feather earrings, northern frontier rider, white fur cape, brown leather tunic, fur boots",
+   "subject_ko": "막북(가상) 운중",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026108260
+  },
+  {
+   "id": "mb_hwangto",
+   "subject": "1girl, young woman, light brown hair, brown eyes, calm, northern frontier rider, brown leather coat with red trim collar, black fur stole, fur boots",
+   "subject_ko": "막북(가상) 상군",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026108361
+  },
+  {
+   "id": "mb_janggwang",
+   "subject": "1boy, male focus, young man, messy blonde hair, grey eyes, sly smile, northern frontier rider, cream fur collar, brown leather coat with straps, fur boots",
+   "subject_ko": "막북(가상) 오원",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026108462
+  },
+  {
+   "id": "mb_seonwoo",
+   "subject": "1boy, male focus, young man, short dark hair, brown fur cap, brown eyes, stern, northern frontier rider, dark patterned fur coat, fur boots",
+   "subject_ko": "막북(가상) 운중",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026108563
+  },
+  {
+   "id": "nh_bandoja",
+   "subject": "1girl, young woman, brown hair, brown eyes, smile, earrings, southern sea islander, black quilted armor shoulder, mustard robe, sandals",
+   "subject_ko": "남해(가상) 돈손",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026108664
+  },
+  {
+   "id": "nh_daemo",
+   "subject": "1boy, male focus, adult man, short brown hair, grey eyes, smile, southern sea pearl trader, white scarf with pearl buttons, golden brocade robe, sandals",
+   "subject_ko": "남해(가상) 담이",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026108765
+  },
+  {
+   "id": "nh_jinju",
+   "subject": "1girl, adult woman, dark brown bob hair over one eye, brown eyes, calm, southern sea pearl trader, cream ruffled collar, pearl necklace, golden robe",
+   "subject_ko": "남해(가상) 주애",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026108866
+  },
+  {
+   "id": "nh_metong",
+   "subject": "1boy, male focus, adult man, light brown hair, teal eyes, smile, pearl earring, black flat cap with pearls, southern sea merchant, white scarf, golden brocade robe with pearl strands",
+   "subject_ko": "남해(가상) 부남",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026108967
+  },
+  {
+   "id": "nh_migyeon",
+   "subject": "1boy, male focus, young man, short blonde hair, green eyes, calm, southern sea noble, cream lace collar, golden brocade robe, sandals",
+   "subject_ko": "남해(가상) 단주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026109068
+  },
+  {
+   "id": "nh_sasin",
+   "subject": "1girl, young woman, light brown hair in bun with pearl strand, blue eyes, calm, earrings, southern sea islander, white flowing dress, sandals",
+   "subject_ko": "남해(가상) 부남",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026109169
+  },
+  {
+   "id": "nh_torak",
+   "subject": "1boy, male focus, adult man, short black hair, blue eyes, smile, southern sea pearl trader, white draped robe with orange sash, big pearl strands, sandals",
+   "subject_ko": "남해(가상) 이주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026109270
+  },
+  {
+   "id": "nh_wion",
+   "subject": "1boy, male focus, adult man, short dark hair, dark brown beret, brown eyes, calm, southern sea pearl trader, orange inner robe, white draped robe with pearl strands",
+   "subject_ko": "남해(가상) 이주",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026109371
+  },
+  {
+   "id": "nh_yeombun",
+   "subject": "1girl, young woman, brown hair with silver and pearl beaded headdress, teal eyes, smirk, southern sea salt trader, mustard top, black quilted armor shoulder, sandals",
+   "subject_ko": "남해(가상) 주애",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026109472
+  },
+  {
+   "id": "nz_ahyang",
+   "subject": "1boy, male focus, young man, messy brown hair, silver headband with pearl and teal feathers, brown eyes, smile, southern highland tribesman, white tunic with colorful geometric pattern, sandals",
+   "subject_ko": "남중(가상) 주제",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026109573
+  },
+  {
+   "id": "nz_eunga",
+   "subject": "1boy, male focus, young man, short brown hair, single teal feather, brown eyes, smile, southern highland tribesman, white tunic with blue and orange geometric embroidery, sandals",
+   "subject_ko": "남중(가상) 건녕",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026109674
+  },
+  {
+   "id": "nz_geumsang",
+   "subject": "1boy, male focus, adult man, long dark brown hair slicked back, grey eyes, stern, southern highland chief, red inner robe, white robe with teal geometric pattern",
+   "subject_ko": "남중(가상) 영창",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026109775
+  },
+  {
+   "id": "nz_heukwol",
+   "subject": "1boy, male focus, adult man, messy blonde hair, brown eyes, smirk, southern highland tribesman, black tunic, cream fur shawl, sandals",
+   "subject_ko": "남중(가상) 흥고",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026109876
+  },
+  {
+   "id": "nz_hyeoncheon",
+   "subject": "1boy, male focus, young man, black hair, brown eyes, smile, southern highland tribesman, white tunic with dark bead necklace and small white patterns, sandals",
+   "subject_ko": "남중(가상) 장가",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026109977
+  },
+  {
+   "id": "nz_jeokpyo",
+   "subject": "1girl, adult woman, dark brown hair tied back, brown eyes, calm, southern highland noble, black robe, teal and orange feather beaded collar with silver ornaments",
+   "subject_ko": "남중(가상) 월수",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026110078
+  },
+  {
+   "id": "nz_mokro",
+   "subject": "1girl, young woman, blonde bob hair over one eye, thin silver circlet, grey eyes, calm, southern highland mystic, brown robe with blue pattern, dark cloak, pendant",
+   "subject_ko": "남중(가상) 건녕",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026110179
+  },
+  {
+   "id": "nz_soman",
+   "subject": "1boy, male focus, adult man, dark brown hair tied back, brown eyes, smirk, southern highland warrior, black sleeveless tunic with colorful woven trim, sandals",
+   "subject_ko": "남중(가상) 주제",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026110280
+  },
+  {
+   "id": "nz_unhwa",
+   "subject": "1boy, male focus, young man, messy dark auburn hair, brown eyes, smile, southern highland tribesman, cream collar, red tunic with colorful woven geometric pattern",
+   "subject_ko": "남중(가상) 운남",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026110381
+  },
+  {
+   "id": "rf_caimao",
+   "subject": "1boy, male focus, adult man, short black hair, black flat cap, brown eyes, calm, ancient chinese naval commander, red lamellar armor robe, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026110482
+  },
+  {
+   "id": "rf_caohong",
+   "subject": "1boy, male focus, young man, short dark hair, black cloth cap with topknot, brown eyes, calm, ancient chinese general, red quilted lamellar armor, boots",
+   "subject_ko": "삼국지 위",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026110583
+  },
+  {
+   "id": "rf_caoren",
+   "subject": "1boy, male focus, adult man, dark brown hair in topknot with small crown, brown eyes, stern, ancient chinese general, red and gold robe, silver lamellar armor shoulder, boots",
+   "subject_ko": "삼국지 위",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026110684
+  },
+  {
+   "id": "rf_chengong",
+   "subject": "1boy, male focus, young man, short brown hair, black soft cap, brown eyes, smile, ancient chinese strategist, red robe with gold pattern, cloth shoes",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026110785
+  },
+  {
+   "id": "rf_chengpu",
+   "subject": "1boy, male focus, adult man, short dark hair, black cap with gold emblem, brown eyes, stern, ancient chinese veteran general, black and red armor, silver lamellar shoulder, boots",
+   "subject_ko": "삼국지 오",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026110886
+  },
+  {
+   "id": "rf_chengyu",
+   "subject": "1boy, male focus, adult man, long black hair, brown eyes, sly smile, ancient chinese strategist, red patterned robe with black collar, cloth shoes",
+   "subject_ko": "삼국지 위",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026110987
+  },
+  {
+   "id": "rf_dianwei",
+   "subject": "1boy, male focus, adult man, short dark hair, black cloth cap with topknot, brown eyes, stern, ancient chinese bodyguard warrior, black lamellar armor with spiked pauldrons, red round shield",
+   "subject_ko": "삼국지 위",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026111088
+  },
+  {
+   "id": "rf_fazheng",
+   "subject": "1boy, male focus, young man, short dark hair, black flat-topped samo cap, brown eyes, calm, ancient chinese strategist, white robe, cloth shoes",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026111189
+  },
+  {
+   "id": "rf_gaolan",
+   "subject": "1boy, male focus, adult man, black hair in topknot, brown eyes, smile, ancient chinese general, navy robe with small dot pattern, round wooden shield, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026111290
+  },
+  {
+   "id": "rf_gaoshun",
+   "subject": "1girl, adult woman, black hair slicked back, brown eyes, calm, ancient chinese elite commander, navy robe with white collar trim, round bronze emblem, armor shoulder, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026111391
+  },
+  {
+   "id": "rf_guojia",
+   "subject": "1girl, young woman, black bob hair, brown eyes, calm, ancient chinese strategist, white quilted robe with silver pattern, cloth shoes",
+   "subject_ko": "삼국지 위",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026111492
+  },
+  {
+   "id": "rf_guosi",
+   "subject": "1girl, young woman, black hair in bun with wooden comb ornament, brown eyes, smile, ancient chinese warlord, black and brown patterned robe with white collar, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026111593
+  },
+  {
+   "id": "rf_handang",
+   "subject": "1boy, male focus, adult man, short dark hair, black cloth cap with topknot, brown eyes, calm, ancient chinese veteran general, white robe with red underlayer, boots",
+   "subject_ko": "삼국지 오",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026111694
+  },
+  {
+   "id": "rf_hansui",
+   "subject": "1boy, male focus, adult man, dark hair in topknot with thin pin, brown eyes, stern, ancient chinese frontier warlord, white robe, silver arm guard, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026111795
+  },
+  {
+   "id": "rf_huanggai",
+   "subject": "1boy, male focus, adult man, short dark hair, black flat-topped woven samo cap, brown eyes, stern, ancient chinese veteran general, cream robe with white floral pattern, boots",
+   "subject_ko": "삼국지 오",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026111896
+  },
+  {
+   "id": "rf_huangzu",
+   "subject": "1boy, male focus, adult man, messy brown hair, black pointed cloth cap with red mark, brown eyes, calm, ancient chinese provincial commander, beige robe, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026111997
+  },
+  {
+   "id": "rf_jianyong",
+   "subject": "1boy, male focus, adult man, black hair, brown eyes, friendly smile, ancient chinese envoy, silver-white lamellar robe armor, cloth shoes",
+   "subject_ko": "삼국지 촉",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026112098
+  },
+  {
+   "id": "rf_jiaxu",
+   "subject": "1boy, male focus, adult man, long black hair, brown eyes, faint smile, ancient chinese strategist, white ornate armor with silver studs, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026112199
+  },
+  {
+   "id": "rf_jiling",
+   "subject": "1boy, male focus, adult man, brown eyes, smile, red and silver conical scale helmet with neck guard, ancient chinese general, white and pink robe, silver lamellar armor, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026112300
+  },
+  {
+   "id": "rf_jushou",
+   "subject": "1girl, young woman, black hair in low bun, brown eyes, calm, ancient chinese advisor, white and pale blue quilted robe with diamond pattern, cloth shoes",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026112401
+  },
+  {
+   "id": "rf_kuailiang",
+   "subject": "1boy, male focus, young man, short dark hair, black flat-topped woven samo cap, brown eyes, smile, ancient chinese advisor, cream robe with black outer robe, cloth shoes",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026112502
+  },
+  {
+   "id": "rf_lidian",
+   "subject": "1girl, young woman, black bob hair over one eye, brown eyes, calm, ancient chinese general, silver-white lamellar armor robe with flower clasps, boots",
+   "subject_ko": "삼국지 위",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026112603
+  },
+  {
+   "id": "rf_liuzhang",
+   "subject": "1girl, young woman, black hair over one eye, brown eyes, gentle smile, ancient chinese provincial governor, white robe with silver lamellar armor plates",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026112704
+  },
+  {
+   "id": "rf_mateng",
+   "subject": "1boy, male focus, adult man, short spiky black hair, brown eyes, calm smile, ancient chinese frontier warlord, white quilted lamellar armor, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026112805
+  },
+  {
+   "id": "rf_mizhu",
+   "subject": "1boy, male focus, adult man, short brown hair in topknot with dark headband, brown eyes, smile, ancient chinese merchant official, beige layered robe, cloth shoes",
+   "subject_ko": "삼국지 촉",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026112906
+  },
+  {
+   "id": "rf_pangde",
+   "subject": "1boy, male focus, adult man, black hair in topknot with dark headband, brown eyes, fierce grin, ancient chinese frontier general, tan robe, leather armor, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026113007
+  },
+  {
+   "id": "rf_shenpei",
+   "subject": "1girl, young woman, black bob hair over one eye, brown eyes, calm, ancient chinese advisor, white silver scale robe armor, cloth shoes",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026113108
+  },
+  {
+   "id": "rf_tianfeng",
+   "subject": "1boy, male focus, adult man, brown hair in topknot with black headband with gold leaf, brown eyes, smile, ancient chinese advisor, beige high-collar robe, cloth shoes",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026113209
+  },
+  {
+   "id": "rf_wenchou",
+   "subject": "1girl, young woman, black bob hair, brown eyes, calm, ancient chinese general, white scarf, silver-white lamellar armor with red cord, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026113310
+  },
+  {
+   "id": "rf_wenpin",
+   "subject": "1boy, male focus, adult man, short brown hair, black cloth cap with topknot, brown eyes, calm, ancient chinese general, ornate white silver lamellar armor, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026113411
+  },
+  {
+   "id": "rf_wuanguo",
+   "subject": "1girl, young woman, black hair over one eye in low bun, brown eyes, calm, ancient chinese warrior, white robe, silver shoulder armor with red cord, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026113512
+  },
+  {
+   "id": "rf_wuyi",
+   "subject": "1girl, young woman, black bob hair, brown eyes, calm, ancient chinese general, white silver scale robe armor with red cord, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026113613
+  },
+  {
+   "id": "rf_xiahouyuan",
+   "subject": "1boy, male focus, adult man, black hair, brown eyes, sly smile, dark bronze helmet, ancient chinese swift general, cream fur shawl, leather armor, boots",
+   "subject_ko": "삼국지 위",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026113714
+  },
+  {
+   "id": "rf_xuchu",
+   "subject": "1boy, male focus, adult man, short dark hair, black cloth head wrap, brown eyes, smirk, ancient chinese bodyguard warrior, cream robe, black lamellar armor shoulders, boots",
+   "subject_ko": "삼국지 위",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026113815
+  },
+  {
+   "id": "rf_yangang",
+   "subject": "1boy, male focus, adult man, spiky black hair, brown eyes, smirk, ancient chinese warlord officer, cream robe with gold trim, open collar, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026113916
+  },
+  {
+   "id": "rf_yanghong",
+   "subject": "1boy, male focus, young man, short black hair, brown eyes, calm, ancient chinese advisor, white collar, black quilted robe, cloth shoes",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026114017
+  },
+  {
+   "id": "rf_yangren",
+   "subject": "1boy, male focus, adult man, brown hair tied back, grey eyes, sly smile, ancient chinese general, white robe with dark brown fur-trimmed armor, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026114118
+  },
+  {
+   "id": "rf_yangsong",
+   "subject": "1boy, male focus, adult man, short brown hair, black cloth cap with topknot, brown eyes, smile, ancient chinese advisor, silver-white lamellar robe, cloth shoes",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026114219
+  },
+  {
+   "id": "rf_yanliang",
+   "subject": "1boy, male focus, adult man, short dark hair, black cloth cap, brown eyes, slight smile, ancient chinese general, cream robe, black lamellar armor, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026114320
+  },
+  {
+   "id": "rf_yanyan",
+   "subject": "1girl, adult woman, black bob hair over one eye, brown eyes, calm, ancient chinese veteran general, white robe, silver-white scale armor, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026114421
+  },
+  {
+   "id": "rf_yuejin",
+   "subject": "1boy, male focus, adult man, black hair slicked back, brown eyes, smirk, ancient chinese vanguard general, olive and cream robe, leather armor, boots",
+   "subject_ko": "삼국지 위",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026114522
+  },
+  {
+   "id": "rf_yujin",
+   "subject": "1boy, male focus, adult man, black hair, brown eyes, stern, ancient chinese general, navy collar, black lamellar armor, boots",
+   "subject_ko": "삼국지 위",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026114623
+  },
+  {
+   "id": "rf_zhanghe",
+   "subject": "1boy, male focus, adult man, dark green pointed cloth cap, brown eyes, stern, ancient chinese general, red collar, black lamellar armor, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026114724
+  },
+  {
+   "id": "rf_zhangji",
+   "subject": "1boy, male focus, adult man, brown hair, black cloth cap with topknot, brown eyes, sly smile, ancient chinese warlord, white collar, black lamellar armor, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026114825
+  },
+  {
+   "id": "rf_zhanglu",
+   "subject": "1boy, male focus, young man, black hair tied back, brown eyes, gentle smile, ancient chinese religious leader, cream robe, black cross-tied vest, cloth shoes",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026114926
+  },
+  {
+   "id": "rf_zhangren",
+   "subject": "1girl, young woman, black bob hair, grey eyes, calm, ancient chinese general, white robe, white silver lamellar armor, boots",
+   "subject_ko": "삼국지 군웅",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026115027
+  },
+  {
+   "id": "rf_zhoutai",
+   "subject": "1girl, young woman, black hair in bun with red tie, brown eyes, calm, ancient chinese guard general, white robe with red sash, boots",
+   "subject_ko": "삼국지 오",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026115128
+  },
+  {
+   "id": "ru_busaeng",
+   "subject": "1boy, male focus, young man, black hair over one eye, brown eyes, smile, post-apocalyptic ruins survivor, white worn cloak, dark inner shirt, boots",
+   "subject_ko": "폐허(가상) 폐도",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026115229
+  },
+  {
+   "id": "ru_doksi",
+   "subject": "1girl, young woman, light brown hair in bun with moss, green eyes, calm, post-apocalyptic ruins survivor, cream worn cloak with moss patches, dark trousers, boots",
+   "subject_ko": "폐허(가상) 잔향",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026115330
+  },
+  {
+   "id": "ru_gogol",
+   "subject": "1boy, male focus, adult man, messy dark hair, blue eyes, smile, post-apocalyptic ruins survivor, white worn coat with green moss patches, boots",
+   "subject_ko": "폐허(가상) 잔재",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026115431
+  },
+  {
+   "id": "ru_mangdok",
+   "subject": "1boy, male focus, adult man, blonde hair, brown eyes, smile, post-apocalyptic ruins knight, silver plate collar armor with moss, cream worn cloak, boots",
+   "subject_ko": "폐허(가상) 잔재",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026115532
+  },
+  {
+   "id": "ru_sanaek",
+   "subject": "1boy, male focus, young man, dark brown hair over one eye, brown eyes, calm, post-apocalyptic ruins survivor, rusty metal neck plate with moss, brown cloak, boots",
+   "subject_ko": "폐허(가상) 오염",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026115633
+  },
+  {
+   "id": "ru_sayeong",
+   "subject": "1girl, young woman, short blonde hair, brown eyes, gentle smile, post-apocalyptic ruins survivor, cream blouse, dark leather vest with moss, boots",
+   "subject_ko": "폐허(가상) 침묵",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026115734
+  },
+  {
+   "id": "ru_seogun",
+   "subject": "1girl, young woman, auburn red hair over one eye, brown eyes, calm, post-apocalyptic ruins survivor, black shirt, leather strap, mossy shoulder cloak, boots",
+   "subject_ko": "폐허(가상) 회곡",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026115835
+  },
+  {
+   "id": "ru_wadok",
+   "subject": "1boy, male focus, young man, black hair over one eye, brown eyes, smile, post-apocalyptic ruins survivor, white high-collar coat with small green leaves, boots",
+   "subject_ko": "폐허(가상) 역병",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026115936
+  },
+  {
+   "id": "sl_cheonsan",
+   "subject": "1boy, male focus, young man, messy light brown hair, brown eyes, sly smile, silk road nomad, white scarf with lace pattern, cream robe, boots",
+   "subject_ko": "실크로드(가상) 오손",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026116037
+  },
+  {
+   "id": "sl_daetaek",
+   "subject": "1girl, adult woman, black and auburn hair in bun, brown eyes, calm, silk road merchant, cream scarf, blue robe with gold flower embroidery, boots",
+   "subject_ko": "실크로드(가상) 엄채",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026116138
+  },
+  {
+   "id": "sl_geumhwa",
+   "subject": "1girl, young woman, blonde hair in bun, grey eyes, calm, silk road noble, cream scarf, teal robe with blue trim, sandals",
+   "subject_ko": "실크로드(가상) 귀상",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026116239
+  },
+  {
+   "id": "sl_heupu",
+   "subject": "1boy, male focus, mature man, short grey hair, short beard, blue eyes, warm smile, silk road caravan elder, yellow scarf, teal patterned robe, boots",
+   "subject_ko": "실크로드(가상) 휴밀",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026116340
+  },
+  {
+   "id": "sl_hosang",
+   "subject": "1boy, male focus, young man, black hair over one eye, gold forehead ornament, teal eyes, calm, silk road traveler, cream scarf over mouth, black robe, boots",
+   "subject_ko": "실크로드(가상) 강거",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026116441
+  },
+  {
+   "id": "sl_hwachin",
+   "subject": "1boy, male focus, young man, shaved head, green eyes, teal earrings, calm, silk road warrior monk, dark robe with colorful beaded sash, boots",
+   "subject_ko": "실크로드(가상) 오손",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026116542
+  },
+  {
+   "id": "sl_josang",
+   "subject": "1girl, young woman, black bob hair, blue eyes, gentle smile, silk road townswoman, cream buttoned blouse, long cream skirt, sandals",
+   "subject_ko": "실크로드(가상) 귀상",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026116643
+  },
+  {
+   "id": "sl_nakta",
+   "subject": "1boy, male focus, young man, short white hair, blue eyes, smile, silk road camel caravan driver, golden yellow scarf, blue robe with fine silver pattern, boots",
+   "subject_ko": "실크로드(가상) 강거",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026116744
+  },
+  {
+   "id": "sl_wangjeong",
+   "subject": "1girl, young woman, dark brown bob hair over one eye, brown eyes, calm, silk road noble, golden scarf, teal blue robe with silver embroidery, sandals",
+   "subject_ko": "실크로드(가상) 감씨",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026116845
+  },
+  {
+   "id": "tb_amseup",
+   "subject": "1boy, male focus, young man, black hair, blue eyes, smile, ancient tomb guardian, dark grey hooded cowl, black robe, white bone shoulder guard, boots",
+   "subject_ko": "묘역(가상) 혼로",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026116946
+  },
+  {
+   "id": "tb_ganghae",
+   "subject": "1boy, male focus, adult man, ash brown hair over eyes, blue eyes, sly smile, ancient tomb guardian, black tunic, pale grey shoulder cloak, boots",
+   "subject_ko": "묘역(가상) 백골",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026117047
+  },
+  {
+   "id": "tb_gojeon",
+   "subject": "1boy, male focus, young man, ash brown hair, green eyes, smile, ancient tomb guardian, white angular armor collar, black tunic, boots",
+   "subject_ko": "묘역(가상) 침관",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026117148
+  },
+  {
+   "id": "tb_heukju",
+   "subject": "1girl, young woman, black bob hair over one eye, brown eyes, calm, ancient tomb priestess, cream blouse with round clasp, blue robe, silver shoulder guard",
+   "subject_ko": "묘역(가상) 심연",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026117249
+  },
+  {
+   "id": "tb_jamhon",
+   "subject": "1boy, male focus, adult man, black hair, grey eyes, smile, ancient tomb guardian, yellow scarf with blue gem clasp, blue and silver ornate armor, boots",
+   "subject_ko": "묘역(가상) 진혼",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026117350
+  },
+  {
+   "id": "tb_japgol",
+   "subject": "1boy, male focus, young man, dark brown hair over one eye, brown eyes, calm, ancient tomb guardian, gold-trimmed yellow collar, blue silk cloak with pattern, boots",
+   "subject_ko": "묘역(가상) 백골",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026117451
+  },
+  {
+   "id": "tb_jongja",
+   "subject": "1girl, young woman, ash brown hair in low bun with hairpin, brown eyes, calm, ancient tomb priestess, black dress, white and gold shoulder armor, boots",
+   "subject_ko": "묘역(가상) 침관",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026117552
+  },
+  {
+   "id": "tb_saryeong",
+   "subject": "1boy, male focus, adult man, short black hair, brown eyes, smile, ancient tomb guardian, white robe with dark teal center panel, boots",
+   "subject_ko": "묘역(가상) 유골",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026117653
+  },
+  {
+   "id": "tz_beonwang",
+   "subject": "1boy, male focus, young man, wavy light brown hair, small gold forehead mark, brown eyes, calm, ancient indian prince, green silk robe with gold pattern, gold collar, sandals",
+   "subject_ko": "천축(가상) 신독",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026117754
+  },
+  {
+   "id": "tz_daehacheon",
+   "subject": "1boy, male focus, adult man, short dark hair, white turban with gold jewel, brown eyes, smile, ancient indian river noble, teal silk robe, sandals",
+   "subject_ko": "천축(가상) 대하",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026117855
+  },
+  {
+   "id": "tz_ganda",
+   "subject": "1boy, male focus, young man, messy brown hair, gold forehead jewel, green eyes, smile, ancient indian traveler, green draped silk shawl over one shoulder, sandals",
+   "subject_ko": "천축(가상) 건타라",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026117956
+  },
+  {
+   "id": "tz_hangha",
+   "subject": "1boy, male focus, adult man, brown hair, gold headband with round jewel, gold earrings, brown eyes, stern, ancient indian warrior, white draped robe, sandals",
+   "subject_ko": "천축(가상) 마게타",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026118057
+  },
+  {
+   "id": "tz_hyanggae",
+   "subject": "1boy, male focus, young man, white head wrap, gold forehead mark, brown eyes, smile, ancient indian incense merchant, green plaid draped shawl, sandals",
+   "subject_ko": "천축(가상) 신독",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026118158
+  },
+  {
+   "id": "tz_sanri",
+   "subject": "1boy, male focus, adult man, short light brown hair, white forehead mark, brown eyes, smile, ancient indian scholar, pale blue and white embroidered robe, sandals",
+   "subject_ko": "천축(가상) 오익산리",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026118259
+  },
+  {
+   "id": "tz_sawi",
+   "subject": "1boy, male focus, young man, short light brown hair, blue forehead mark, grey eyes, calm, ancient indian monk scholar, pale blue brocade robe, white shawl, sandals",
+   "subject_ko": "천축(가상) 사위",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026118360
+  },
+  {
+   "id": "tz_seoksang",
+   "subject": "1girl, young woman, brown hair in bun with gold ornaments, gold forehead jewel, grey eyes, gentle smile, ancient indian noble, yellow scarf, teal silk robe, sandals",
+   "subject_ko": "천축(가상) 건타라",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026118461
+  },
+  {
+   "id": "tz_seolsan",
+   "subject": "1boy, male focus, adult man, short light brown hair, blue forehead dots, blue eyes, smirk, ancient indian mountain warrior, black sleeveless vest, gold neck ring, sandals",
+   "subject_ko": "천축(가상) 계빈",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026118562
+  },
+  {
+   "id": "xb_bonghwa",
+   "subject": "1boy, male focus, young man, short black hair, black fur cap, brown eyes, smile, ancient xianbei steppe rider, thick green fur cape, leather boots",
+   "subject_ko": "선비(가상) 고류",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026118663
+  },
+  {
+   "id": "xb_daein",
+   "subject": "1boy, male focus, adult man, brown fur cap with ear flaps, brown eyes, frown, ancient xianbei steppe chief, mustard robe, brown fur cape, leather boots",
+   "subject_ko": "선비(가상) 탄한산",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026118764
+  },
+  {
+   "id": "xb_eoryang",
+   "subject": "1boy, male focus, young man, short dark hair, black fur cap with small red mark, brown eyes, smile, ancient xianbei steppe rider, white collar, black leather vest, boots",
+   "subject_ko": "선비(가상) 요락수",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026118865
+  },
+  {
+   "id": "xb_gaseul",
+   "subject": "1boy, male focus, young man, short dark hair, black fur cap with gold badge, brown eyes, calm smile, ancient xianbei steppe rider, white collar, black vest with gold buttons, boots",
+   "subject_ko": "선비(가상) 탄한산",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026118966
+  },
+  {
+   "id": "xb_gyeon",
+   "subject": "1boy, male focus, adult man, dark fur cap, brown eyes, smirk, ancient xianbei steppe rider, thick white fur collar, dark leather coat with strap, boots",
+   "subject_ko": "선비(가상) 고류",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026119067
+  },
+  {
+   "id": "xb_hoja",
+   "subject": "1boy, male focus, adult man, short dark hair, big brown fur hat, brown eyes, smirk, ancient xianbei steppe rider, thick white fur coat, leather boots",
+   "subject_ko": "선비(가상) 선비산",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026119168
+  },
+  {
+   "id": "xb_hondo",
+   "subject": "1boy, male focus, young man, messy brown hair, dark brown round cap, grey eyes, smile, ancient xianbei steppe herder, dark brown sleeveless tunic, leather boots",
+   "subject_ko": "선비(가상) 적산",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026119269
+  },
+  {
+   "id": "xb_honin",
+   "subject": "1boy, male focus, adult man, short light brown hair, blue eyes, calm, ancient xianbei steppe noble, golden fur collar, dark green coat, leather boots",
+   "subject_ko": "선비(가상) 요락수",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026119370
+  },
+  {
+   "id": "xb_yong",
+   "subject": "1boy, male focus, adult man, short black hair, black fur cap, brown eyes, calm smile, ancient xianbei steppe rider, golden fur collar, grey green coat, leather boots",
+   "subject_ko": "선비(가상) 용성",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026119471
+  },
+  {
+   "id": "xiyu_banwol",
+   "subject": "1boy, male focus, mature man, cream head wrap, short grey beard, brown eyes, slight smile, western regions oasis elder, black and cream robe with gold trim, boots",
+   "subject_ko": "서역(가상) 소륵",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026119572
+  },
+  {
+   "id": "xiyu_cheonma",
+   "subject": "1boy, male focus, adult man, cream turban, brown eyes, smile, western regions horse breeder noble, golden yellow brocade robe with red swirl pattern, boots",
+   "subject_ko": "서역(가상) 대완",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026119673
+  },
+  {
+   "id": "xiyu_chongryeong",
+   "subject": "1boy, male focus, young man, white turban, brown eyes, determined, western regions mountain traveler, black hooded robe, boots",
+   "subject_ko": "서역(가상) 사차",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026119774
+  },
+  {
+   "id": "xiyu_dansu",
+   "subject": "1boy, male focus, young man, short brown hair, tan skullcap, green eyes, smile, western regions oasis townsman, yellow scarf, royal blue patterned robe, boots",
+   "subject_ko": "서역(가상) 언기",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026119875
+  },
+  {
+   "id": "xiyu_gumo",
+   "subject": "1girl, young woman, dark hair, navy turban cap with gold dots and tassel earring, blue eyes, calm, western regions oasis musician, magenta robe with cream sash",
+   "subject_ko": "서역(가상) 구자",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026119976
+  },
+  {
+   "id": "xiyu_gyoha",
+   "subject": "1boy, male focus, adult man, black head wrap covering neck, brown eyes, stern, western regions oasis guard, cream robe with bronze discs, dark tunic, boots",
+   "subject_ko": "서역(가상) 차사",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026120077
+  },
+  {
+   "id": "xiyu_jeongcheon",
+   "subject": "1boy, male focus, elderly man, dark hood, white headband, white beard, grey eyes, stern, western regions oasis sage, gold embroidered collar, royal blue robe",
+   "subject_ko": "서역(가상) 정절",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026120178
+  },
+  {
+   "id": "xiyu_mokjil",
+   "subject": "1girl, young woman, auburn hair, black turban with teal jewel, green eyes, green earrings, smile, western regions desert city noble, black robe",
+   "subject_ko": "서역(가상) 누란",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026120279
+  },
+  {
+   "id": "xiyu_ochi",
+   "subject": "1girl, young woman, auburn hair, black patterned turban with teal and white gem, brown eyes, gentle smile, western regions jade town woman, cream scarf, golden woven robe",
+   "subject_ko": "서역(가상) 우전",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026120380
+  },
+  {
+   "id": "xiyu_sarim",
+   "subject": "1boy, male focus, adult man, dark head wrap covering neck, brown eyes, stern, western regions oasis rider, yellow scarf, blue robe with thin pattern, boots",
+   "subject_ko": "서역(가상) 소륵",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026120481
+  },
+  {
+   "id": "xiyu_talban",
+   "subject": "1boy, male focus, adult man, dark head wrap covering neck, blue eyes, sly smile, western regions caravan guard, black tunic with bronze collar, floral patterned shoulder pack, boots",
+   "subject_ko": "서역(가상) 돈황",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026120582
+  },
+  {
+   "id": "xiyu_yeoje",
+   "subject": "1boy, male focus, adult man, curly dark hair, black skullcap and neck wrap, brown eyes, calm, western regions caravan trader, yellow scarf, blue patterned robe, boots",
+   "subject_ko": "서역(가상) 돈황",
+   "view": "front",
+   "extra": "arms at sides, feet visible, looking at viewer",
+   "width": 768,
+   "height": 1152,
+   "seed": 2026120683
+  }
+ ],
+ "out": "k178_stand"
+}

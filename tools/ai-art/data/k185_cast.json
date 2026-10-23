@@ -1,0 +1,1295 @@
+{
+ "note": "K-0185 초상 있는 인물 중 web_heroes_105·k27_late201·shared·K-0183·K-0184 에 없는 것 — 정본 한 벌 saga-assets/illust/shared. 이름·role = data.js HEROES(가명). 묘사 프롬프트 없음 — sex·묘사는 초상 보고(data/k185_desc.json).",
+ "ticket": "K-0185",
+ "eye_rule": "○ = 초상 _c 와 성별·나이·머리·옷 색·시대 같음 + 스탠딩·반신·표정 넷이 서로 같은 사람",
+ "cast": [
+  {
+   "id": "dj_doseo",
+   "game": "shared",
+   "name": "도서",
+   "role": "대진(가상) 택산",
+   "sex": "m"
+  },
+  {
+   "id": "dj_gapju",
+   "game": "shared",
+   "name": "갑주",
+   "role": "대진(가상) 려건",
+   "sex": "m"
+  },
+  {
+   "id": "dj_gijang",
+   "game": "shared",
+   "name": "기장",
+   "role": "대진(가상) 사복",
+   "sex": "m"
+  },
+  {
+   "id": "dj_haean",
+   "game": "shared",
+   "name": "해안",
+   "role": "대진(가상) 차란",
+   "sex": "m"
+  },
+  {
+   "id": "dj_hopak",
+   "game": "shared",
+   "name": "호박",
+   "role": "대진(가상) 조지",
+   "sex": "f"
+  },
+  {
+   "id": "dj_hwanggeum",
+   "game": "shared",
+   "name": "황금",
+   "role": "대진(가상) 대진",
+   "sex": "m"
+  },
+  {
+   "id": "dj_seohae",
+   "game": "shared",
+   "name": "서해",
+   "role": "대진(가상) 안식",
+   "sex": "m"
+  },
+  {
+   "id": "dj_seoncheok",
+   "game": "shared",
+   "name": "선척",
+   "role": "대진(가상) 안식",
+   "sex": "f"
+  },
+  {
+   "id": "dj_yuri",
+   "game": "shared",
+   "name": "유리",
+   "role": "대진(가상) 조지",
+   "sex": "m"
+  },
+  {
+   "id": "fu_gangma",
+   "game": "shared",
+   "name": "강마",
+   "role": "균열(가상) 강철",
+   "sex": "m"
+  },
+  {
+   "id": "fu_hwanryeong",
+   "game": "shared",
+   "name": "환령",
+   "role": "균열(가상) 환영",
+   "sex": "m"
+  },
+  {
+   "id": "fu_janhon",
+   "game": "shared",
+   "name": "잔혼",
+   "role": "균열(가상) 잔영",
+   "sex": "f"
+  },
+  {
+   "id": "fu_myeongje",
+   "game": "shared",
+   "name": "명제",
+   "role": "균열(가상) 종말",
+   "sex": "m"
+  },
+  {
+   "id": "fu_noejang",
+   "game": "shared",
+   "name": "뇌장",
+   "role": "균열(가상) 뇌성",
+   "sex": "m"
+  },
+  {
+   "id": "fu_seonghon",
+   "game": "shared",
+   "name": "성혼",
+   "role": "균열(가상) 천궤",
+   "sex": "f"
+  },
+  {
+   "id": "fu_yugwi",
+   "game": "shared",
+   "name": "유귀",
+   "role": "균열(가상) 유리",
+   "sex": "m"
+  },
+  {
+   "id": "fu_yuseong",
+   "game": "shared",
+   "name": "유성",
+   "role": "균열(가상) 천궤",
+   "sex": "m"
+  },
+  {
+   "id": "jiao_banrok",
+   "game": "shared",
+   "name": "반록",
+   "role": "교주(가상) 일남",
+   "sex": "f"
+  },
+  {
+   "id": "jiao_botran",
+   "game": "shared",
+   "name": "보진",
+   "role": "교주(가상) 합포",
+   "sex": "m"
+  },
+  {
+   "id": "jiao_dinggo",
+   "game": "shared",
+   "name": "정고",
+   "role": "교주(가상) 울림",
+   "sex": "m"
+  },
+  {
+   "id": "jiao_hoangmi",
+   "game": "shared",
+   "name": "황미",
+   "role": "교주(가상) 남해",
+   "sex": "m"
+  },
+  {
+   "id": "jiao_jinja",
+   "game": "shared",
+   "name": "진자",
+   "role": "교주(가상) 교지",
+   "sex": "f"
+  },
+  {
+   "id": "jiao_luyan",
+   "game": "shared",
+   "name": "노언",
+   "role": "교주(가상) 남해",
+   "sex": "m"
+  },
+  {
+   "id": "jiao_madang",
+   "game": "shared",
+   "name": "마당",
+   "role": "교주(가상) 창오",
+   "sex": "m"
+  },
+  {
+   "id": "jiao_muya",
+   "game": "shared",
+   "name": "무아",
+   "role": "교주(가상) 구진",
+   "sex": "f"
+  },
+  {
+   "id": "jiao_riquan",
+   "game": "shared",
+   "name": "이권",
+   "role": "교주(가상) 교지",
+   "sex": "m"
+  },
+  {
+   "id": "jp_asahime",
+   "game": "shared",
+   "name": "아사히메",
+   "role": "일본(가상) 길비",
+   "sex": "f"
+  },
+  {
+   "id": "jp_hikoyama",
+   "game": "shared",
+   "name": "히코야마",
+   "role": "일본(가상) 일향",
+   "sex": "m"
+  },
+  {
+   "id": "jp_himetsu",
+   "game": "shared",
+   "name": "히메쓰",
+   "role": "일본(가상) 축자",
+   "sex": "f"
+  },
+  {
+   "id": "jp_kazenari",
+   "game": "shared",
+   "name": "가제나리",
+   "role": "일본(가상) 출운",
+   "sex": "m"
+  },
+  {
+   "id": "jp_shioji",
+   "game": "shared",
+   "name": "시오지",
+   "role": "일본(가상) 일기도",
+   "sex": "m"
+  },
+  {
+   "id": "jp_taketsumi",
+   "game": "shared",
+   "name": "다케쓰미",
+   "role": "일본(가상) 축자",
+   "sex": "m"
+  },
+  {
+   "id": "jp_tamakiri",
+   "game": "shared",
+   "name": "다마키리",
+   "role": "일본(가상) 야마토",
+   "sex": "m"
+  },
+  {
+   "id": "jp_umihiko",
+   "game": "shared",
+   "name": "우미히코",
+   "role": "일본(가상) 대마도",
+   "sex": "m"
+  },
+  {
+   "id": "jp_wakahiko",
+   "game": "shared",
+   "name": "와카히코",
+   "role": "일본(가상) 야마토",
+   "sex": "f"
+  },
+  {
+   "id": "kr2_ajinsa",
+   "game": "shared",
+   "name": "아진사",
+   "role": "한국(가상) 대방",
+   "sex": "m"
+  },
+  {
+   "id": "kr2_dokgaru",
+   "game": "shared",
+   "name": "독가루",
+   "role": "한국(가상) 국내성",
+   "sex": "m"
+  },
+  {
+   "id": "kr2_gokdol",
+   "game": "shared",
+   "name": "곡돌",
+   "role": "한국(가상) 양평",
+   "sex": "f"
+  },
+  {
+   "id": "kr2_jimasol",
+   "game": "shared",
+   "name": "지마솔",
+   "role": "한국(가상) 위례성",
+   "sex": "m"
+  },
+  {
+   "id": "kr2_mokrihae",
+   "game": "shared",
+   "name": "목리해",
+   "role": "한국(가상) 낙랑",
+   "sex": "m"
+  },
+  {
+   "id": "kr2_pasodan",
+   "game": "shared",
+   "name": "파소단",
+   "role": "한국(가상) 양평",
+   "sex": "m"
+  },
+  {
+   "id": "kr2_seolharan",
+   "game": "shared",
+   "name": "설하란",
+   "role": "한국(가상) 김해",
+   "sex": "m"
+  },
+  {
+   "id": "kr2_sogaram",
+   "game": "shared",
+   "name": "소가람",
+   "role": "한국(가상) 국내성",
+   "sex": "f"
+  },
+  {
+   "id": "kr2_umorin",
+   "game": "shared",
+   "name": "우모린",
+   "role": "한국(가상) 금성",
+   "sex": "m"
+  },
+  {
+   "id": "kr2_yeonuru",
+   "game": "shared",
+   "name": "연우루",
+   "role": "한국(가상) 위례성",
+   "sex": "f"
+  },
+  {
+   "id": "kr2_yeoyul",
+   "game": "shared",
+   "name": "여율",
+   "role": "한국(가상) 양평",
+   "sex": "m"
+  },
+  {
+   "id": "ly_byeokjeon",
+   "game": "shared",
+   "name": "벽전",
+   "role": "임읍(가상) 전충",
+   "sex": "m"
+  },
+  {
+   "id": "ly_heuksang",
+   "game": "shared",
+   "name": "흑상",
+   "role": "임읍(가상) 구속",
+   "sex": "m"
+  },
+  {
+   "id": "ly_jeonchung",
+   "game": "shared",
+   "name": "전충",
+   "role": "임읍(가상) 전충",
+   "sex": "m"
+  },
+  {
+   "id": "ly_jinju",
+   "game": "shared",
+   "name": "진주",
+   "role": "임읍(가상) 비경",
+   "sex": "f"
+  },
+  {
+   "id": "ly_juoh",
+   "game": "shared",
+   "name": "주오",
+   "role": "임읍(가상) 주오",
+   "sex": "m"
+  },
+  {
+   "id": "ly_nogyong",
+   "game": "shared",
+   "name": "노경",
+   "role": "임읍(가상) 노용",
+   "sex": "m"
+  },
+  {
+   "id": "ly_sanga",
+   "game": "shared",
+   "name": "산아",
+   "role": "임읍(가상) 서권",
+   "sex": "m"
+  },
+  {
+   "id": "ly_sangnim",
+   "game": "shared",
+   "name": "상님",
+   "role": "임읍(가상) 상림",
+   "sex": "m"
+  },
+  {
+   "id": "ly_uhwa",
+   "game": "shared",
+   "name": "우화",
+   "role": "임읍(가상) 상림",
+   "sex": "f"
+  },
+  {
+   "id": "mb_baekwoon",
+   "game": "shared",
+   "name": "백운",
+   "role": "막북(가상) 안문",
+   "sex": "m"
+  },
+  {
+   "id": "mb_cheolgak",
+   "game": "shared",
+   "name": "철각",
+   "role": "막북(가상) 운중",
+   "sex": "m"
+  },
+  {
+   "id": "mb_gangho",
+   "game": "shared",
+   "name": "강호",
+   "role": "막북(가상) 북지",
+   "sex": "m"
+  },
+  {
+   "id": "mb_hanam",
+   "game": "shared",
+   "name": "하남",
+   "role": "막북(가상) 삭방",
+   "sex": "m"
+  },
+  {
+   "id": "mb_hanpung",
+   "game": "shared",
+   "name": "한풍",
+   "role": "막북(가상) 정양",
+   "sex": "f"
+  },
+  {
+   "id": "mb_hoja",
+   "game": "shared",
+   "name": "호자",
+   "role": "막북(가상) 운중",
+   "sex": "f"
+  },
+  {
+   "id": "mb_hwangto",
+   "game": "shared",
+   "name": "황토",
+   "role": "막북(가상) 상군",
+   "sex": "f"
+  },
+  {
+   "id": "mb_janggwang",
+   "game": "shared",
+   "name": "장광",
+   "role": "막북(가상) 오원",
+   "sex": "m"
+  },
+  {
+   "id": "mb_seonwoo",
+   "game": "shared",
+   "name": "선우",
+   "role": "막북(가상) 운중",
+   "sex": "m"
+  },
+  {
+   "id": "nh_bandoja",
+   "game": "shared",
+   "name": "반도자",
+   "role": "남해(가상) 돈손",
+   "sex": "f"
+  },
+  {
+   "id": "nh_daemo",
+   "game": "shared",
+   "name": "대모",
+   "role": "남해(가상) 담이",
+   "sex": "m"
+  },
+  {
+   "id": "nh_jinju",
+   "game": "shared",
+   "name": "진주",
+   "role": "남해(가상) 주애",
+   "sex": "f"
+  },
+  {
+   "id": "nh_metong",
+   "game": "shared",
+   "name": "메콩",
+   "role": "남해(가상) 부남",
+   "sex": "m"
+  },
+  {
+   "id": "nh_migyeon",
+   "game": "shared",
+   "name": "미견",
+   "role": "남해(가상) 단주",
+   "sex": "m"
+  },
+  {
+   "id": "nh_sasin",
+   "game": "shared",
+   "name": "사신",
+   "role": "남해(가상) 부남",
+   "sex": "f"
+  },
+  {
+   "id": "nh_torak",
+   "game": "shared",
+   "name": "토착",
+   "role": "남해(가상) 이주",
+   "sex": "m"
+  },
+  {
+   "id": "nh_wion",
+   "game": "shared",
+   "name": "위선",
+   "role": "남해(가상) 이주",
+   "sex": "m"
+  },
+  {
+   "id": "nh_yeombun",
+   "game": "shared",
+   "name": "염분",
+   "role": "남해(가상) 주애",
+   "sex": "f"
+  },
+  {
+   "id": "nz_ahyang",
+   "game": "shared",
+   "name": "아향",
+   "role": "남중(가상) 주제",
+   "sex": "m"
+  },
+  {
+   "id": "nz_eunga",
+   "game": "shared",
+   "name": "은가",
+   "role": "남중(가상) 건녕",
+   "sex": "m"
+  },
+  {
+   "id": "nz_geumsang",
+   "game": "shared",
+   "name": "금상",
+   "role": "남중(가상) 영창",
+   "sex": "m"
+  },
+  {
+   "id": "nz_heukwol",
+   "game": "shared",
+   "name": "흑월",
+   "role": "남중(가상) 흥고",
+   "sex": "m"
+  },
+  {
+   "id": "nz_hyeoncheon",
+   "game": "shared",
+   "name": "현천",
+   "role": "남중(가상) 장가",
+   "sex": "m"
+  },
+  {
+   "id": "nz_jeokpyo",
+   "game": "shared",
+   "name": "적표",
+   "role": "남중(가상) 월수",
+   "sex": "f"
+  },
+  {
+   "id": "nz_mokro",
+   "game": "shared",
+   "name": "목로",
+   "role": "남중(가상) 건녕",
+   "sex": "f"
+  },
+  {
+   "id": "nz_soman",
+   "game": "shared",
+   "name": "소만",
+   "role": "남중(가상) 주제",
+   "sex": "m"
+  },
+  {
+   "id": "nz_unhwa",
+   "game": "shared",
+   "name": "운화",
+   "role": "남중(가상) 운남",
+   "sex": "m"
+  },
+  {
+   "id": "rf_caimao",
+   "game": "shared",
+   "name": "수사",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_caohong",
+   "game": "shared",
+   "name": "충보",
+   "role": "삼국지 위",
+   "sex": "m"
+  },
+  {
+   "id": "rf_caoren",
+   "game": "shared",
+   "name": "철벽",
+   "role": "삼국지 위",
+   "sex": "m"
+  },
+  {
+   "id": "rf_chengong",
+   "game": "shared",
+   "name": "현모",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_chengpu",
+   "game": "shared",
+   "name": "삼조",
+   "role": "삼국지 오",
+   "sex": "m"
+  },
+  {
+   "id": "rf_chengyu",
+   "game": "shared",
+   "name": "직언",
+   "role": "삼국지 위",
+   "sex": "m"
+  },
+  {
+   "id": "rf_dianwei",
+   "game": "shared",
+   "name": "호극",
+   "role": "삼국지 위",
+   "sex": "m"
+  },
+  {
+   "id": "rf_fazheng",
+   "game": "shared",
+   "name": "촉로",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_gaolan",
+   "game": "shared",
+   "name": "석주",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_gaoshun",
+   "game": "shared",
+   "name": "철진",
+   "role": "삼국지 군웅",
+   "sex": "f"
+  },
+  {
+   "id": "rf_guojia",
+   "game": "shared",
+   "name": "십책",
+   "role": "삼국지 위",
+   "sex": "f"
+  },
+  {
+   "id": "rf_guosi",
+   "game": "shared",
+   "name": "낙하",
+   "role": "삼국지 군웅",
+   "sex": "f"
+  },
+  {
+   "id": "rf_handang",
+   "game": "shared",
+   "name": "조수",
+   "role": "삼국지 오",
+   "sex": "m"
+  },
+  {
+   "id": "rf_hansui",
+   "game": "shared",
+   "name": "반맹",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_huanggai",
+   "game": "shared",
+   "name": "화신",
+   "role": "삼국지 오",
+   "sex": "m"
+  },
+  {
+   "id": "rf_huangzu",
+   "game": "shared",
+   "name": "강수",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_jianyong",
+   "game": "shared",
+   "name": "언변",
+   "role": "삼국지 촉",
+   "sex": "m"
+  },
+  {
+   "id": "rf_jiaxu",
+   "game": "shared",
+   "name": "생책",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_jiling",
+   "game": "shared",
+   "name": "중극",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_jushou",
+   "game": "shared",
+   "name": "존왕",
+   "role": "삼국지 군웅",
+   "sex": "f"
+  },
+  {
+   "id": "rf_kuailiang",
+   "game": "shared",
+   "name": "향로",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_lidian",
+   "game": "shared",
+   "name": "공심",
+   "role": "삼국지 위",
+   "sex": "f"
+  },
+  {
+   "id": "rf_liuzhang",
+   "game": "shared",
+   "name": "인목",
+   "role": "삼국지 군웅",
+   "sex": "f"
+  },
+  {
+   "id": "rf_mateng",
+   "game": "shared",
+   "name": "노기",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_mizhu",
+   "game": "shared",
+   "name": "재헌",
+   "role": "삼국지 촉",
+   "sex": "m"
+  },
+  {
+   "id": "rf_pangde",
+   "game": "shared",
+   "name": "관전",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_shenpei",
+   "game": "shared",
+   "name": "북향",
+   "role": "삼국지 군웅",
+   "sex": "f"
+  },
+  {
+   "id": "rf_tianfeng",
+   "game": "shared",
+   "name": "직간",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_wenchou",
+   "game": "shared",
+   "name": "쌍극",
+   "role": "삼국지 군웅",
+   "sex": "f"
+  },
+  {
+   "id": "rf_wenpin",
+   "game": "shared",
+   "name": "북수",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_wuanguo",
+   "game": "shared",
+   "name": "철퇴",
+   "role": "삼국지 군웅",
+   "sex": "f"
+  },
+  {
+   "id": "rf_wuyi",
+   "game": "shared",
+   "name": "익병",
+   "role": "삼국지 군웅",
+   "sex": "f"
+  },
+  {
+   "id": "rf_xiahouyuan",
+   "game": "shared",
+   "name": "표기",
+   "role": "삼국지 위",
+   "sex": "m"
+  },
+  {
+   "id": "rf_xuchu",
+   "game": "shared",
+   "name": "맹호",
+   "role": "삼국지 위",
+   "sex": "m"
+  },
+  {
+   "id": "rf_yangang",
+   "game": "shared",
+   "name": "백봉",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_yanghong",
+   "game": "shared",
+   "name": "개창",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_yangren",
+   "game": "shared",
+   "name": "산로",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_yangsong",
+   "game": "shared",
+   "name": "탐금",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_yanliang",
+   "game": "shared",
+   "name": "북창",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_yanyan",
+   "game": "shared",
+   "name": "노장",
+   "role": "삼국지 군웅",
+   "sex": "f"
+  },
+  {
+   "id": "rf_yuejin",
+   "game": "shared",
+   "name": "첨병",
+   "role": "삼국지 위",
+   "sex": "m"
+  },
+  {
+   "id": "rf_yujin",
+   "game": "shared",
+   "name": "엄율",
+   "role": "삼국지 위",
+   "sex": "m"
+  },
+  {
+   "id": "rf_zhanghe",
+   "game": "shared",
+   "name": "산략",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_zhangji",
+   "game": "shared",
+   "name": "양도",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_zhanglu",
+   "game": "shared",
+   "name": "선치",
+   "role": "삼국지 군웅",
+   "sex": "m"
+  },
+  {
+   "id": "rf_zhangren",
+   "game": "shared",
+   "name": "충절",
+   "role": "삼국지 군웅",
+   "sex": "f"
+  },
+  {
+   "id": "rf_zhoutai",
+   "game": "shared",
+   "name": "상흔",
+   "role": "삼국지 오",
+   "sex": "f"
+  },
+  {
+   "id": "ru_busaeng",
+   "game": "shared",
+   "name": "부생",
+   "role": "폐허(가상) 폐도",
+   "sex": "m"
+  },
+  {
+   "id": "ru_doksi",
+   "game": "shared",
+   "name": "독시",
+   "role": "폐허(가상) 잔향",
+   "sex": "f"
+  },
+  {
+   "id": "ru_gogol",
+   "game": "shared",
+   "name": "고골",
+   "role": "폐허(가상) 잔재",
+   "sex": "m"
+  },
+  {
+   "id": "ru_mangdok",
+   "game": "shared",
+   "name": "망독",
+   "role": "폐허(가상) 잔재",
+   "sex": "m"
+  },
+  {
+   "id": "ru_sanaek",
+   "game": "shared",
+   "name": "산액",
+   "role": "폐허(가상) 오염",
+   "sex": "m"
+  },
+  {
+   "id": "ru_sayeong",
+   "game": "shared",
+   "name": "사영",
+   "role": "폐허(가상) 침묵",
+   "sex": "f"
+  },
+  {
+   "id": "ru_seogun",
+   "game": "shared",
+   "name": "서군",
+   "role": "폐허(가상) 회곡",
+   "sex": "f"
+  },
+  {
+   "id": "ru_wadok",
+   "game": "shared",
+   "name": "와독",
+   "role": "폐허(가상) 역병",
+   "sex": "m"
+  },
+  {
+   "id": "sl_cheonsan",
+   "game": "shared",
+   "name": "천산",
+   "role": "실크로드(가상) 오손",
+   "sex": "m"
+  },
+  {
+   "id": "sl_daetaek",
+   "game": "shared",
+   "name": "대택",
+   "role": "실크로드(가상) 엄채",
+   "sex": "f"
+  },
+  {
+   "id": "sl_geumhwa",
+   "game": "shared",
+   "name": "금화",
+   "role": "실크로드(가상) 귀상",
+   "sex": "f"
+  },
+  {
+   "id": "sl_heupu",
+   "game": "shared",
+   "name": "흡후",
+   "role": "실크로드(가상) 휴밀",
+   "sex": "m"
+  },
+  {
+   "id": "sl_hosang",
+   "game": "shared",
+   "name": "호상",
+   "role": "실크로드(가상) 강거",
+   "sex": "m"
+  },
+  {
+   "id": "sl_hwachin",
+   "game": "shared",
+   "name": "화친",
+   "role": "실크로드(가상) 오손",
+   "sex": "m"
+  },
+  {
+   "id": "sl_josang",
+   "game": "shared",
+   "name": "조상",
+   "role": "실크로드(가상) 귀상",
+   "sex": "f"
+  },
+  {
+   "id": "sl_nakta",
+   "game": "shared",
+   "name": "낙타",
+   "role": "실크로드(가상) 강거",
+   "sex": "m"
+  },
+  {
+   "id": "sl_wangjeong",
+   "game": "shared",
+   "name": "왕정",
+   "role": "실크로드(가상) 감씨",
+   "sex": "f"
+  },
+  {
+   "id": "tb_amseup",
+   "game": "shared",
+   "name": "암습",
+   "role": "묘역(가상) 혼로",
+   "sex": "m"
+  },
+  {
+   "id": "tb_ganghae",
+   "game": "shared",
+   "name": "강해",
+   "role": "묘역(가상) 백골",
+   "sex": "m"
+  },
+  {
+   "id": "tb_gojeon",
+   "game": "shared",
+   "name": "고전",
+   "role": "묘역(가상) 침관",
+   "sex": "m"
+  },
+  {
+   "id": "tb_heukju",
+   "game": "shared",
+   "name": "흑주",
+   "role": "묘역(가상) 심연",
+   "sex": "f"
+  },
+  {
+   "id": "tb_jamhon",
+   "game": "shared",
+   "name": "잠혼",
+   "role": "묘역(가상) 진혼",
+   "sex": "m"
+  },
+  {
+   "id": "tb_japgol",
+   "game": "shared",
+   "name": "잡골",
+   "role": "묘역(가상) 백골",
+   "sex": "m"
+  },
+  {
+   "id": "tb_jongja",
+   "game": "shared",
+   "name": "종자",
+   "role": "묘역(가상) 침관",
+   "sex": "f"
+  },
+  {
+   "id": "tb_saryeong",
+   "game": "shared",
+   "name": "사령",
+   "role": "묘역(가상) 유골",
+   "sex": "m"
+  },
+  {
+   "id": "tz_beonwang",
+   "game": "shared",
+   "name": "번왕",
+   "role": "천축(가상) 신독",
+   "sex": "m"
+  },
+  {
+   "id": "tz_daehacheon",
+   "game": "shared",
+   "name": "대하천",
+   "role": "천축(가상) 대하",
+   "sex": "m"
+  },
+  {
+   "id": "tz_ganda",
+   "game": "shared",
+   "name": "간다",
+   "role": "천축(가상) 건타라",
+   "sex": "m"
+  },
+  {
+   "id": "tz_hangha",
+   "game": "shared",
+   "name": "항하",
+   "role": "천축(가상) 마게타",
+   "sex": "m"
+  },
+  {
+   "id": "tz_hyanggae",
+   "game": "shared",
+   "name": "향개",
+   "role": "천축(가상) 신독",
+   "sex": "m"
+  },
+  {
+   "id": "tz_sanri",
+   "game": "shared",
+   "name": "산리",
+   "role": "천축(가상) 오익산리",
+   "sex": "m"
+  },
+  {
+   "id": "tz_sawi",
+   "game": "shared",
+   "name": "사위",
+   "role": "천축(가상) 사위",
+   "sex": "m"
+  },
+  {
+   "id": "tz_seoksang",
+   "game": "shared",
+   "name": "석상",
+   "role": "천축(가상) 건타라",
+   "sex": "f"
+  },
+  {
+   "id": "tz_seolsan",
+   "game": "shared",
+   "name": "설산",
+   "role": "천축(가상) 계빈",
+   "sex": "m"
+  },
+  {
+   "id": "xb_bonghwa",
+   "game": "shared",
+   "name": "봉화",
+   "role": "선비(가상) 고류",
+   "sex": "m"
+  },
+  {
+   "id": "xb_daein",
+   "game": "shared",
+   "name": "대인",
+   "role": "선비(가상) 탄한산",
+   "sex": "m"
+  },
+  {
+   "id": "xb_eoryang",
+   "game": "shared",
+   "name": "어량",
+   "role": "선비(가상) 요락수",
+   "sex": "m"
+  },
+  {
+   "id": "xb_gaseul",
+   "game": "shared",
+   "name": "가슬",
+   "role": "선비(가상) 탄한산",
+   "sex": "m"
+  },
+  {
+   "id": "xb_gyeon",
+   "game": "shared",
+   "name": "견마",
+   "role": "선비(가상) 고류",
+   "sex": "m"
+  },
+  {
+   "id": "xb_hoja",
+   "game": "shared",
+   "name": "호각",
+   "role": "선비(가상) 선비산",
+   "sex": "m"
+  },
+  {
+   "id": "xb_hondo",
+   "game": "shared",
+   "name": "혼도",
+   "role": "선비(가상) 적산",
+   "sex": "m"
+  },
+  {
+   "id": "xb_honin",
+   "game": "shared",
+   "name": "혼인",
+   "role": "선비(가상) 요락수",
+   "sex": "m"
+  },
+  {
+   "id": "xb_yong",
+   "game": "shared",
+   "name": "용맹",
+   "role": "선비(가상) 용성",
+   "sex": "m"
+  },
+  {
+   "id": "xiyu_banwol",
+   "game": "shared",
+   "name": "반월",
+   "role": "서역(가상) 소륵",
+   "sex": "m"
+  },
+  {
+   "id": "xiyu_cheonma",
+   "game": "shared",
+   "name": "천마",
+   "role": "서역(가상) 대완",
+   "sex": "m"
+  },
+  {
+   "id": "xiyu_chongryeong",
+   "game": "shared",
+   "name": "총령",
+   "role": "서역(가상) 사차",
+   "sex": "m"
+  },
+  {
+   "id": "xiyu_dansu",
+   "game": "shared",
+   "name": "단수",
+   "role": "서역(가상) 언기",
+   "sex": "m"
+  },
+  {
+   "id": "xiyu_gumo",
+   "game": "shared",
+   "name": "구모",
+   "role": "서역(가상) 구자",
+   "sex": "f"
+  },
+  {
+   "id": "xiyu_gyoha",
+   "game": "shared",
+   "name": "교하",
+   "role": "서역(가상) 차사",
+   "sex": "m"
+  },
+  {
+   "id": "xiyu_jeongcheon",
+   "game": "shared",
+   "name": "정천",
+   "role": "서역(가상) 정절",
+   "sex": "m"
+  },
+  {
+   "id": "xiyu_mokjil",
+   "game": "shared",
+   "name": "목질",
+   "role": "서역(가상) 누란",
+   "sex": "f"
+  },
+  {
+   "id": "xiyu_ochi",
+   "game": "shared",
+   "name": "오지",
+   "role": "서역(가상) 우전",
+   "sex": "f"
+  },
+  {
+   "id": "xiyu_sarim",
+   "game": "shared",
+   "name": "사림",
+   "role": "서역(가상) 소륵",
+   "sex": "m"
+  },
+  {
+   "id": "xiyu_talban",
+   "game": "shared",
+   "name": "탈반",
+   "role": "서역(가상) 돈황",
+   "sex": "m"
+  },
+  {
+   "id": "xiyu_yeoje",
+   "game": "shared",
+   "name": "여저",
+   "role": "서역(가상) 돈황",
+   "sex": "m"
+  }
+ ]
+}
