@@ -593,6 +593,7 @@ func apply_damage(amount: float, crit: bool, from_dir: Vector3 = Vector3.ZERO, i
 		_refresh_bar()
 		return dealt
 	hp -= amount
+	if FeelTuning.kind != "dot" and amount > 0.0: preload("res://games/saga_go/data/go_rank.gd").hit(self)   # G-0313 무리 토벌 등급 — 내 타격(지속 피해 틱 빼고)
 	CombatFeel.hit(_visual, amount, crit, FeelTuning.tune())
 	if from_dir.length() > 0.01:
 		_knock = from_dir.normalized() * 4.0
@@ -794,6 +795,7 @@ func _die() -> void:
 	visible = false
 	collision_layer = 0
 	if not drops:
+		preload("res://games/saga_go/data/go_rank.gd").kill(self)   # G-0313 무리 토벌 등급
 		died.emit(self)
 		if not respawns:
 			queue_free()
@@ -809,6 +811,7 @@ func _die() -> void:
 			PartyState.add_artifact(4)
 			art_text = " · 성유물"
 		CombatFeel.pickup(self, "냥 +%d%s" % [int(loot.get("mora", 0)), art_text])
+	preload("res://games/saga_go/data/go_rank.gd").kill(self)   # G-0313 무리 전원이 쓰러지면 토벌 등급(이 적 냥까지 센 뒤)
 	died.emit(self)
 	if not respawns:
 		queue_free()

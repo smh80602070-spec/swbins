@@ -71,7 +71,7 @@ func _initialize() -> void:
 	check(String(d1.rank) == "S" and int(d1.bonus_gold) == 500 and int(G.gold) == 2000 and bool(d1.best) and String((DR.get("best") as Dictionary).get("hard", "")) == "S",
 		"③ 한 판 S · 덤 +500 지갑에 · 험 첫 기록 S")
 	var tx: String = DR.text(d1)
-	check(tx.contains("⭐ 이번 판 등급 S") and tx.contains("🪙 등급 덤 +500") and tx.contains("🏆 첫 기록 S"), "③ 글: %s" % tx.replace("\n", " / "))
+	check(tx.contains("⭐ 이번 판 등급 S") and tx.contains("💰 등급 덤 +500") and tx.contains("🏆 첫 기록 S"), "③ 글: %s" % tx.replace("\n", " / "))
 	DR.begin()
 	for i in 3:
 		DR.kill()

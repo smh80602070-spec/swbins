@@ -1,6 +1,6 @@
 extends RefCounted
 
-## G-0310 5천하 교역로 — 웹 saga-web/saga-realm/js/traderoute.js(W-0301) 이식, 수치 그대로(🪙300·12달·둘까지·상업 합 × 0.1).
+## G-0310 5천하 교역로 — 웹 saga-web/saga-realm/js/traderoute.js(W-0301) 이식, 수치 그대로(💰300·12달·둘까지·상업 합 × 0.1).
 ##   상단  우리 성(from)에서 우리 성 또는 화친 중인 세력의 성(to)까지 길이 있으면 금 300 을 내고 띄운다(12달, 둘까지).
 ##   길    우리 땅·화친 세력 땅만, 적 진이 선 성은 못 지난다 — 보급선(realm_supply.gd)과 같은 성 이웃 그래프 BFS.
 ##   한 달 이어지면 (상업 from + 상업 to) × 0.1 × 경륜도 금 배율 · 끊기면 그 상단을 잃는다(돈 안 돌려줌) · 달이 다 되면 끝.
@@ -96,7 +96,7 @@ static func why(rs: Object, from: String, to: String) -> String:
 	if path(rs, from, to).is_empty():
 		return "길이 없다(우리·화친 땅만, 적 진 못 지남)"
 	if int(rs.get("gold")) < COST:
-		return "금이 모자란다(🪙%d)" % COST
+		return "금이 모자란다(💰%d)" % COST
 	return ""
 
 
@@ -146,6 +146,6 @@ static func monthly(rs: Object) -> Array:
 			keep.append(r)
 	if earned > 0:
 		rs.set("gold", int(rs.get("gold")) + earned)
-		msgs.append("🐫 교역 +🪙%d" % earned)
+		msgs.append("🐫 교역 +💰%d" % earned)
 	rs.set("trade", keep)
 	return msgs

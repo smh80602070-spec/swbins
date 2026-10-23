@@ -1354,7 +1354,7 @@ func take_damage(amount: float, source: Node) -> void:
 			get_tree().call_group("go_sfx", "play", "block")   # G-0177
 			_refresh_hud()
 			return
-	hp = maxf(hp - dmg, 0.0)
+	hp = maxf(hp - dmg, 0.0); preload("res://games/saga_go/data/go_rank.gd").hurt()   # G-0313 무리 등급 피격(줄 상한 — 같은 줄)
 	if has_node("FieldMount"): get_node("FieldMount").call("on_hurt")   # G-0306 탄 채 맞으면 낙마
 	_since_hurt = 0.0
 	CombatFeel.hit(_player.get_node("Visual"), dmg, false)

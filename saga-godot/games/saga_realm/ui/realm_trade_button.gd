@@ -29,12 +29,12 @@ func lines() -> Array:
 	var out: Array = []
 	for r: Dictionary in Trade.routes(rs):
 		var alive := not Trade.path(rs, String(r.from), String(r.to)).is_empty()
-		out.append({"to": "", "label": "🐫 %s ↔ %s — %d달 남음 · 달마다 🪙%d%s" % [Trade.city_name(String(r.from)), Trade.city_name(String(r.to)),
+		out.append({"to": "", "label": "🐫 %s ↔ %s — %d달 남음 · 달마다 💰%d%s" % [Trade.city_name(String(r.from)), Trade.city_name(String(r.to)),
 			int(r.left), Trade.base_gold(rs, String(r.from), String(r.to)), "" if alive else " · ⚠️ 길 끊김(다음 달 잃음)"]})
 	var from := String(rs.current_city)
 	for c: Dictionary in Trade.candidates(rs, from):
 		var w := Trade.why(rs, from, String(c.to))
-		out.append({"to": String(c.to), "label": "▶ %s → %s 상단 띄우기 🪙%d · %d달 · 달마다 🪙%d(%d칸)%s" % [Trade.city_name(from), Trade.city_name(String(c.to)),
+		out.append({"to": String(c.to), "label": "▶ %s → %s 상단 띄우기 💰%d · %d달 · 달마다 💰%d(%d칸)%s" % [Trade.city_name(from), Trade.city_name(String(c.to)),
 			Trade.COST, Trade.MONTHS, int(c.gold), int(c.hops), "" if w == "" else "\n" + w]})
 	return out
 
@@ -54,7 +54,7 @@ func open_screen() -> bool:
 func _start(to: String) -> void:
 	var r := Trade.start(RealmSaveState, String(RealmSaveState.current_city), to)
 	if bool(r.ok):
-		Toast.show(self, "🐫 상단이 떠났다 — %s, 달마다 🪙%d" % [Trade.city_name(to), int(r.gold)], 3.0)
+		Toast.show(self, "🐫 상단이 떠났다 — %s, 달마다 💰%d" % [Trade.city_name(to), int(r.gold)], 3.0)
 	else:
 		Toast.show(self, String(r.why), 2.0)
 	open_screen()

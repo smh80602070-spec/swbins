@@ -39,7 +39,7 @@ static func line2(r: Dictionary, extra: Array = []) -> String:
 		return ""
 	var p: Array = []
 	if int(r.get("bonus_gold", 0)) > 0:
-		p.append("🪙 등급 덤 +%d" % int(r.bonus_gold))
+		p.append("💰 등급 덤 +%d" % int(r.bonus_gold))
 	p.append_array(extra)
 	if bool(r.get("best", false)):
 		var pb := String(r.get("prev_best", ""))
@@ -89,13 +89,13 @@ class Counter:
 		if t0_ms > 0:
 			kills += 1
 
-	## 판을 닫는다 — 덤 금은 돌려주기만(더하는 건 부르는 쪽). 처치 MIN_KILLS 미만이면 {}.
-	func finish(gold_now: int, dead: bool = false) -> Dictionary:
+	## 판을 닫는다 — 덤 금은 돌려주기만(더하는 건 부르는 쪽). 처치 min_kills(기본 MIN_KILLS) 미만이면 {}.
+	func finish(gold_now: int, dead: bool = false, min_kills: int = MIN_KILLS) -> Dictionary:
 		if t0_ms <= 0:
 			return {}
 		var sec := float(Time.get_ticks_msec() - t0_ms) / 1000.0
 		t0_ms = 0
-		if kills < MIN_KILLS:
+		if kills < min_kills:
 			return {}
 		var rk: String = (load("res://saga_core/data/runrank.gd") as GDScript).call("rank_of", sec, hits, combo_max, kills, tier)
 		var bonus := 0 if dead else int(round(float(maxi(0, gold_now - gold0)) * float(BONUS.get(rk, 0.0))))

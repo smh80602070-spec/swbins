@@ -58,7 +58,11 @@ const SPREAD := 5.0
 
 func _ready() -> void:
 	var n := 0
+	var ci := 0
 	for camp in CAMPS:
+		var camp_id := "%s#%d" % [camp[0], ci]   # G-0313 무리 한 판 등급(data/go_rank.gd)
+		var camp_list: Array = []
+		ci += 1
 		var region: String = camp[0]
 		var grid: Vector2i = camp[1]
 		var kinds: Array = camp[2]
@@ -71,8 +75,11 @@ func _ready() -> void:
 			e.name = "FieldEnemy_%s_%d" % [region, n]
 			e.setup(kinds[i], p, 20260824 + n)
 			e.apply_world_level(Adventure.world_level())
+			e.set_meta("go_camp", camp_id)
+			camp_list.append(e)
 			add_child(e)
 			n += 1
+		preload("res://games/saga_go/data/go_rank.gd").register(camp_id, camp_list)
 	PartyState.world_changed.connect(reapply_world_level)
 
 ## 106장 ㉒ — 세계 등급이 바뀌면(모험 등급이 오르거나 낮추면) 들판 적 전부에 다시 앉힌다.

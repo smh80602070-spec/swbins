@@ -5566,5 +5566,23 @@
   "ticket": "G-0312",
   "since": "2026-10-23",
   "note": "웹 W-0378 짝 · 4종횡 rank_of 위임 · S 보석 덤 없음 · SAGA_RUNRANK=0"
+ },
+ {
+  "id": "gd.go.runrank",
+  "name": "1만리 무리 토벌 한 판 등급 — 첫 타격부터 무리 전원 토벌까지 S~D·냥 덤·무리별 최고 기록(무리마다 따로 셈)",
+  "files": [
+   "games/saga_go/data/go_rank.gd",
+   "games/saga_go/combat/field_spawner.gd",
+   "games/saga_go/combat/field_enemy.gd"
+  ],
+  "tests": [
+   "go_rank"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0313",
+  "since": "2026-10-23",
+  "note": "웹 W-0379 짝 · 공용 runrank(G-0312) · S 단사 덤 없음 · SAGA_RUNRANK=0"
  }
 ]
