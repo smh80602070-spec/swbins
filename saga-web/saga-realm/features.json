@@ -1047,12 +1047,12 @@
   "tests": [
    "보급선(W-0278)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0278",
   "since": "2026-10-17",
-  "note": "하츠 오브 아이언식(구조만). 장부 tasks/gameplay/realm.md"
+  "note": "D2(claude 10-23 R-3): 내 성 완에서 출진 → 낙양 밖 진, 지도 확대 — 완→낙양 초록 길 · cutT 2 면 빨강 점선 · 하츠 오브 아이언식(구조만). 장부 tasks/gameplay/realm.md"
  },
  {
   "id": "rk.wonder",
@@ -1261,12 +1261,12 @@
   "tests": [
    "W-0330 지도 표식 그림 — 표에 mapmark 다섯 · 원정 깃발이 map_flag 그림(없으면 🚩 글자)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0330",
   "since": "2026-10-20",
-  "note": "10-20: battle·port·guard 는 지도에 그리는 글자가 없어 안 씀 · 새 판 화면엔 포위·원정이 없어 진단으로만 확인"
+  "note": "D2(claude 10-23 R-3): 같은 장면 낙양(포위) 옆 진 그림 map_camp 보임 — 깃발(원정)은 원정이 없어 안 봄 · 10-20: battle·port·guard 는 지도에 그리는 글자가 없어 안 씀 · 새 판 화면엔 포위·원정이 없어 진단으로만 확인"
  },
  {
   "id": "rl.own-k126",
