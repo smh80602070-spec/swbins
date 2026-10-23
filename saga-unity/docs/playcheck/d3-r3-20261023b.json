@@ -1,0 +1,23 @@
+{
+ "date": "2026-10-23",
+ "ticket": "R-3 (U-0190·U-0191 뒤 다시 촬영)",
+ "how": "PlaytestShowcaseGui GUI 촬영(SAGA_SHOT_ACT lgauto, gamecam 6장 10초 간격, 1280×720, 정오) → Claude 가 PNG 를 Read 로 판정. PNG 커밋 안 함.",
+ "shots": {
+  "un.dg.autoquest": {
+   "verdict": "○",
+   "first": "△(U-0188) — 게임 카메라가 돌바닥만",
+   "fix": "U-0191 천장 그림자만",
+   "seen": "모루골 방 바닥·벽·나무·깃발 위로 주인공이 걸어 나가 황건적과 싸움(피해 숫자 42·19·5), 장마다 자리 바뀜"
+  },
+  "un.go.autoquest": {
+   "verdict": "○",
+   "first": "△(U-0188) — 나무 건물 모서리에 6초 막힘",
+   "fix": "U-0190 둘레 격자 길찾기",
+   "seen": "건물 옆을 따라 돌아(2~4장) 건물 너머 들판으로 나가 계속 걸음(5~6장) — 막혀 서는 장 없음"
+  },
+  "un.go.autopath": {
+   "verdict": "○",
+   "seen": "위 1만리 촬영과 같은 판 — 모서리에서 돌아가는 길"
+  }
+ }
+}

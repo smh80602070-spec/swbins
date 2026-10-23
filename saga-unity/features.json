@@ -2241,12 +2241,12 @@
   "tests": [
    "PlaytestGoAutoQuest"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0163",
   "since": "2026-10-22",
-  "note": "D2(R-3 10-23): PlaytestHeadless autoquest OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0163): PlaytestHeadless autoquest OK(틀 막힘·멈춤 · 1만리 1장 첫 단계 25m 걸어가 말 걸어 단계 넘김 · 체력 낮음 · 손 조작 · ▶) · UiLayoutCheck 0(▶ 목표판 왼쪽, 검사가 ▶ 건너뜀) · 나머지 넷 U-0164"
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261023b.json — 건물 옆을 따라 돌아(2~4장) 건물 너머 들판으로 나가 계속 걸음(5~6장) — 막혀 서는 장 없음 · 앞 D2(R-3 10-23): PlaytestHeadless autoquest OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0163): PlaytestHeadless autoquest OK(틀 막힘·멈춤 · 1만리 1장 첫 단계 25m 걸어가 말 걸어 단계 넘김 · 체력 낮음 · 손 조작 · ▶) · UiLayoutCheck 0(▶ 목표판 왼쪽, 검사가 ▶ 건너뜀) · 나머지 넷 U-0164"
  },
  {
   "id": "un.go.autopath",
@@ -2258,12 +2258,12 @@
   "tests": [
    "PlaytestGoAutoPath"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0190",
   "since": "2026-10-23",
-  "note": "D2(U-0190): PlaytestHeadless autopath OK — 가짜 격자(곧은 들판 경유점 하나·담 돌아감 3·갇힘 null·3m 턱 안 오름)·앞 막힘·진짜 임시 벽 돌아감 3 · autoquest OK 그대로"
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261023b.json — 위 1만리 촬영과 같은 판 — 모서리에서 돌아가는 길 · 앞 D2(U-0190): PlaytestHeadless autopath OK — 가짜 격자(곧은 들판 경유점 하나·담 돌아감 3·갇힘 null·3m 턱 안 오름)·앞 막힘·진짜 임시 벽 돌아감 3 · autoquest OK 그대로"
  },
  {
   "id": "un.dg.autoquest",
@@ -2275,12 +2275,12 @@
   "tests": [
    "PlaytestDungeonAutoQuest"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0164",
   "since": "2026-10-22",
-  "note": "D2(R-3 10-23): PlaytestDungeonHeadless autoquest OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0164): PlaytestDungeonHeadless autoquest OK(2층 전투방 적 12 치우고 문 밟아 방 0→1 · 체력 낮음 · 손 조작 · ▶) · 나머지 셋 U-0165~0167"
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261023b.json — 모루골 방 바닥·벽·나무·깃발 위로 주인공이 걸어 나가 황건적과 싸움(피해 숫자 42·19·5), 장마다 자리 바뀜 · 앞 D2(R-3 10-23): PlaytestDungeonHeadless autoquest OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0164): PlaytestDungeonHeadless autoquest OK(2층 전투방 적 12 치우고 문 밟아 방 0→1 · 체력 낮음 · 손 조작 · ▶) · 나머지 셋 U-0165~0167"
  },
  {
   "id": "un.dg.ceiling-cam",
