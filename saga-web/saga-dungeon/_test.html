@@ -8705,22 +8705,6 @@ window.requestAnimationFrame = function () { return 0; };
         ('흔적 (' + Math.round(c1.x) + ',' + Math.round(c1.y) + ') · 층 모자라면 우두머리 미룸 · 닿으면 (' + Math.round(b3.x) + ',' + Math.round(b3.y) + ') · 끝나면 없음');
     });
 
-    t('자동 📜 퀘스트 토벌 — 그 지역 안인데 가까운 적이 900보 밖이면 쫓지 않고 지역 안을 돈다 · 600보면 그 적(W-0382)', function () {
-      var A = DG.auto, WM = DG.worldMap, q = C.save.quest || (C.save.quest = {}), keepCh = q.chain;
-      var key = WM.REGIONS[0].key, c = WM.clueSpot(key), far = null, near = null, a, k;
-      for (k = 0; k < 64 && (!far || !near); k++) {
-        a = k / 64 * Math.PI * 2;
-        if (!far && WM.regionAt(c.x + Math.cos(a) * 1500, c.y + Math.sin(a) * 1500).key === key) { far = { x: c.x + Math.cos(a) * 1500, y: c.y + Math.sin(a) * 1500 }; }
-        if (!near && WM.regionAt(c.x + Math.cos(a) * 600, c.y + Math.sin(a) * 600).key === key) { near = { x: c.x + Math.cos(a) * 600, y: c.y + Math.sin(a) * 600 }; }
-      }
-      if (!far || !near || WM.regionAt(c.x, c.y).key !== key) { return '지역이 좁아 건너뜀'; }
-      q.chain = {}; q.chain[key] = { step: 0, have: 0, done: false, at: 0 };
-      var mk = function (s) { return { player: { x: c.x, y: c.y }, room: { enemies: [{ x: s.x, y: s.y, hp: 10, field: true }] } }; };
-      var gF = A._questFieldGoal(mk(far)), gN = A._questFieldGoal(mk(near));
-      q.chain = keepCh;
-      return !!gF && !(gF.x === far.x && gF.y === far.y) && !!gN && gN.x === near.x && gN.y === near.y &&
-        ('1500보 적 → 지역 안 돌기 (' + Math.round(gF.x) + ',' + Math.round(gF.y) + ') · 600보 적 → 그 적');
-    });
     t('자동 📜 퀘스트 막힘 — 같은 쪽으로 400·800·1200 비킨 뒤 반대쪽, 여섯 번이면 null · 미룬 사연은 목표에서 빠짐(W-0382)', function () {
       var A = DG.auto, WM = DG.worldMap, q = C.save.quest || (C.save.quest = {}), keepCh = q.chain;
       var p = { x: 0, y: 0 }, g = { x: 1000, y: 0, d: 1000 }, s = [];

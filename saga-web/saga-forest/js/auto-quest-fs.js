@@ -41,7 +41,9 @@
     });
     Object.keys((VD && VD.QUESTS) || {}).forEach(function (k) {
       var p = V().questProgress(k);
-      if (p && !p.done) { out.push({ id: 'vq:' + k, type: VD.QUESTS[k].type === 'meetnpc' ? 'talk' : 'collect', label: '📜 ' + (VD.QUESTS[k].title || k) + ' ' + Math.min(p.have, p.need) + '/' + p.need, x: null, y: null, left: Math.max(0, p.need - p.have), o: 2 }); }
+      if (!p || p.done) { return; }
+      var Qk = VD.QUESTS[k], can = Qk.type !== 'bagcat' || canGet(Qk.cat, raw), oldV = can && stale('vq:' + k, p.have);   // 마을 일도 못 구함(버섯숲 밖 약초)·오래 그대로면 뒤로(첫 10분 다섯 판 점검)
+      out.push({ id: 'vq:' + k, type: Qk.type === 'meetnpc' ? 'talk' : 'collect', label: '📜 ' + (Qk.title || k) + ' ' + Math.min(p.have, p.need) + '/' + p.need + (can ? (oldV ? ' (2분째 그대로 — 뒤로)' : '') : ' (지금 자동으로 못 구함 — 뒤로)'), x: null, y: null, left: Math.max(0, p.need - p.have), o: can && !oldV ? 2 : 4 });
     });
     lastAt = Date.now();
     return out.sort(function (a, b) { return a.o - b.o; });

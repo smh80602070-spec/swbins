@@ -294,9 +294,6 @@
           var dd = Math.hypot(e.x - p.x, e.y - p.y);
           if (dd < ed) { ed = dd; spot = { x: e.x, y: e.y }; }
         });
-        /* W-0382 — 이미 그 지역 안인데 가장 가까운 적이 900보 밖이면 쫓지 않고 지역 안을 돈다. 들판 적은 내 둘레 고리에 생기므로
-           돌면 곁에 무리가 선다 — 다섯 마리 잡은 뒤 남은 적을 2천 보 쫓느라 첫 10분이 다 갔다(첫 10분 점검) */
-        if (spot && ed > 900 && WM.regionAt(p.x, p.y).key === ch.key) { spot = null; }
         if (!spot) { spot = roamSpot(ch, p, WM); }
       }
       if (!spot) { return; }
