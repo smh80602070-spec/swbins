@@ -343,6 +343,7 @@ func _melee_hit(range_m: float, mul: float) -> void:
 			continue  # 등 뒤는 안 맞는다(바로 겹친 자리 정도는 봐준다)
 		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
 		e.take_damage(float(roll.dmg))
+		preload("res://games/saga_story/data/story_launch.gd").on_strike(e, Input.is_action_pressed("move_forward"), float(roll.dmg))   # G-0314 ↑ 누른 채 치면 띄우기 · 떠 있으면 저글
 		if StoryConstellation.has_rule("manadrink"):   # G-0214 마력 흡수 — 맞힐 때마다 최대 마나 5%
 			mp = minf(max_mp, mp + max_mp * StoryConstellation.MANA_HIT)
 		StorySaveState.note_player_hit()   # G-0197 연속 타격

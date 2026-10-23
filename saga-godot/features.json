@@ -5584,5 +5584,23 @@
   "ticket": "G-0313",
   "since": "2026-10-23",
   "note": "웹 W-0379 짝 · 공용 runrank(G-0312) · S 단사 덤 없음 · SAGA_RUNRANK=0"
+ },
+ {
+  "id": "gd.story.launch",
+  "name": "4종횡 띄우기·공중 콤보 — W(↑)+평타 올려치기, 떠 있는 적 저글 4타, 떨어짐 피해(보스·관문 대장·탱커 제외)",
+  "files": [
+   "games/saga_story/data/story_launch.gd",
+   "games/saga_story/world/story_enemy.gd",
+   "games/saga_story/player/story_player_base.gd"
+  ],
+  "tests": [
+   "story_launch"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0314",
+  "since": "2026-10-23",
+  "note": "웹 W-0345 짝 · move_forward 재사용 · SAGA_LAUNCH=0"
  }
 ]

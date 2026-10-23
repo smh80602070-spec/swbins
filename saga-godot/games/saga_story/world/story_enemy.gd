@@ -149,6 +149,12 @@ var walking := false         # 이 틱에 걸었는지(점검·몸짓)
 var _anim := ""
 var role := ""               # G-0210 — ranged|dash|tank|melee|magic(spawner 가 넣음, 비면 종으로)
 var is_rare := false         # G-0210 — 희귀형(spawner 굴림)
+## G-0314 띄우기·공중 콤보(data/story_launch.gd) — 런타임 칸, 세이브 없음
+var launch_air := false
+var launch_hits := 0
+var launch_ground_y := 0.0
+var launch_vy := 0.0
+var launch_dmg := 0.0
 var role_seed := 0           # G-0210 — 돌진 쿨·마법 쿨 흔들림용(spawner RNG 에서 — 전역 randf 안 씀)
 var is_mini := false         # G-0211 — 미니보스(spawner boost). is_boss 는 false 그대로(보스 처치 수·사제 유대 불변)
 var mini_hp_mul := 1.0
@@ -215,6 +221,8 @@ func _spawn_visual() -> void:
 
 func _physics_process(delta: float) -> void:
 	if _dead:
+		return
+	if preload("res://games/saga_story/data/story_launch.gd").tick(self, delta):   # G-0314 떠 있는 동안 걷기·몸 닿기·패턴 없음
 		return
 	_attack_cd_left = maxf(0.0, _attack_cd_left - delta)
 	_shot_cd_left = maxf(0.0, _shot_cd_left - delta)

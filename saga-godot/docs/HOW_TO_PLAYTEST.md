@@ -191,6 +191,7 @@ GODOT=<콘솔 exe> bash saga-godot/tools/probe_all.sh --only=save_dungeon,save_f
 | 키 | 동작 |
 |---|---|
 | J | 평타 연참(`combat_quick`) |
+| W(↑) + J | **올려치기**(G-0314) — 잡졸이 떠오르고, 떠 있는 동안 치면 다시 튕김(4타까지)·내려와 닿으면 떨어짐 피해. 보스·관문 대장·탱커는 안 뜸(`move_forward` 재사용, 새 키 없음) |
 | U | 횡소(`story_skill_sweep`, aoe) |
 | I | 기탄(`story_skill_bolt`, 관통) |
 | O | 기합(`story_skill_brace`, 버프) |
