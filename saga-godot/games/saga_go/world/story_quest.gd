@@ -277,7 +277,7 @@ func _fighting_at(t: Vector3) -> bool:
 
 func _refresh_marker() -> void:
 	var t := target_pos()
-	_marker.visible = t != Vector3.INF and not _dlg_open and not _fighting_at(t)   # G-0075 싸우는 자리에선 숨김 · G-0044 — 대화 중엔 빛기둥이 말하는 인물을 덮지 않게 숨긴다
+	_marker.visible = t != Vector3.INF and not _dlg_open and not _fighting_at(t) and not preload("res://games/saga_go/world/wind_guide.gd").wind_only()   # G-0318 SAGA_WIND_ONLY=1 기둥 끔 · G-0075 싸우는 자리에선 숨김 · G-0044 — 대화 중엔 빛기둥이 말하는 인물을 덮지 않게 숨긴다
 	if not _marker.visible:
 		## G-0075 — 싸우는 자리에선 거리 글자를 떼어 둔다(숨기기 전 거리가 남지 않게).
 		if t != Vector3.INF and not _dlg_open and track() == "":

@@ -445,6 +445,7 @@ func _ready() -> void:
 		hud_menu.set("grid_menu", true)
 		(func() -> void: preload("res://games/saga_go/ui/go_menu.gd").apply_theme(self)).call_deferred()
 	preload("res://games/saga_go/world/auto_quest_go.gd").attach_go(self)   # G-0298 자동 퀘스트 ▶(목표판 밑)
+	preload("res://games/saga_go/world/wind_guide.gd").attach(self)   # G-0318 바람 길잡이(가만히 서면 목표 쪽 바람)
 
 	## 그리기 부담 — 다 지은 뒤 지도 전체 MultiMesh 를 칸으로 쪼개고 카메라 far 를 안개에 맞춘다(보이는 것은 그대로, render_budget.gd).
 	(func() -> void: preload("res://saga_core/world/render_budget.gd").apply(self)).call_deferred()
