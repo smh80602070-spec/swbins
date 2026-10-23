@@ -562,7 +562,7 @@
 
   function castLine(prop) {
     fishing = { propId: prop.id, biteAt: Date.now() + CAST_MIN + Math.random() * CAST_VAR, ends: 0 };
-    fishing.ends = fishing.biteAt + BITE_WINDOW * (global.DG.workshop ? global.DG.workshop.fishWin() : 1);   // 솜씨도 입질 창
+    fishing.ends = fishing.biteAt + BITE_WINDOW * (global.DG.workshop ? global.DG.workshop.fishWin() : 1) * (global.DG.brew ? global.DG.brew.mul('bite') : 1);   // W-0397 물빛   // 솜씨도 입질 창
     core.emit('village:fish', { state: 'cast' });
     return { kind: 'cast', text: '🎣 찌를 던졌다 — 입질을 기다린다' };
   }
@@ -725,7 +725,7 @@
     if (!got) { return null; }
     var streak = bumpGatherStreak(def.tool && global.DG.craft ? global.DG.craft.perk(def.tool).timeMul : 1), CRg = def.tool && global.DG.craft;   // '속도' 축 — 리듬 틈 ÷timeMul
     var bonus = streak > 0 && streak % 3 === 0;         // 리듬 보너스 — 3연속마다
-    var n = 1 + (Math.random() < 0.25 ? 1 : 0) + (bonus ? 1 : 0) + (CRg ? CRg.bonusN(def.tool) : 0) +   // '수확' 축
+    var n = 1 + (Math.random() < 0.25 ? 1 : 0) + (bonus ? 1 : 0) + (global.DG.brew ? global.DG.brew.bonus('gather') : 0) + (CRg ? CRg.bonusN(def.tool) : 0) +   // '수확' 축
             (global.DG.festival && global.DG.festival.gatherBoost() && Math.random() < 0.5 ? 1 : 0);   // 칠석 소원의 답례(PLAN §5.6)
     if (global.DG.workshop) { n = global.DG.workshop.gatherN(n, prop.kind); } /* 솜씨도 채집 수 */ bagAdd(got, n);
     if (def.reset) { st().used[prop.id] = st().day; }
@@ -925,7 +925,7 @@
     s.bag[key] -= 1;
     s.gifted[heroId] = s.day;
     s.giftTotal = (s.giftTotal || 0) + 1;   // 팔아도 안 주는 것과 달리 늘 앞으로만 간다(§5.1)
-    s.friend[heroId] = friendOf(heroId) + up;
+    up += (global.DG.brew ? global.DG.brew.bonus('heart') : 0); s.friend[heroId] = friendOf(heroId) + up;   // W-0397 꽃향
     core.save.player.fame += up * 5;
     core.gainFeat(3, '선물');
     core.gainExp(10);

@@ -118,6 +118,8 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/village-tasks.js"></script>
 <script src="js/bug.js"></script>
 <script src="js/home.js"></script>
+<script src="js/home-judge.js"></script>
+<script src="js/brew.js"></script>
 <script src="js/lots.js"></script>
 <script src="js/livestock.js"></script>
 <script src="js/cave-depth.js"></script>
@@ -4209,6 +4211,35 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       return notYet.kind === 'no' && no.kind === 'no' && ok.kind === 'buy' &&
         set.kind === 'finish' && Hm.wallNow().key === fin.wall.key &&
         ('오늘 벽지 ' + fin.wall.name + ' · 장판 ' + fin.floor.name);
+    });
+
+    /* ── W-0397 3마을 웹 역이식(정본 고돗 G-0320·G-0330) — 물약 양조 · 집 꾸미기 계절 심사 ── */
+    t('물약 양조(W-0397 ①) — 약초 1 + 재료 하나 · 처음은 ❔, 달이면 밝혀짐 · 열매 = 기운(채집 +1) · 재료 떨어지면 못 함 · 약초 없으면 못 함', function () {
+      var B = DG.brew, V = DG.village, s = V.state(), bag0 = s.bag, brew0 = s.brew;
+      s.bag = { mugwort: 2, apple: 1, peach: 1 }; delete s.brew;
+      try {
+        if (!B.herb() || B.herb().key !== 'mugwort' || B.known('fruit')) { return '실패 약초/모름'; }
+        var h = B.cardHtml(); if (h.indexOf('data-brew="apple"') < 0 || h.indexOf('❔ 열매') < 0) { return '실패 카드 ' + h.slice(0, 80); }
+        var r = B.brew('apple'); if (!r.ok || !r.first || r.recipe.kind !== 'vigor' || s.bag.mugwort !== 1 || s.bag.apple !== 0) { return '실패 달이기 ' + JSON.stringify(r); }
+        if (B.bonus('gather') !== 1 || B.mul('bite') !== 1 || B.bonus('heart') !== 0 || !B.known('fruit')) { return '실패 효과'; }
+        var r2 = B.brew('peach'); if (!r2.ok || r2.first) { return '실패 둘째'; }
+        if (B.brew('peach').ok) { return '실패 재료 없는데 됨'; }
+        s.bag.mugwort = 0; s.bag.peach = 3; if (B.brew('peach').ok) { return '실패 약초 없는데 됨'; }
+        return '약초+열매 → 🍯 기운(처음 ❔) · 채집 +1 · 둘째 이미 앎 · 재료·약초 없으면 ×';
+      } finally { s.bag = bag0; if (brew0) { s.brew = brew0; } else { delete s.brew; } }
+    });
+    t('계절 심사(W-0397 ②) — 주제 가구 하나 +25·둘 +40 · 문턱 30·80·160·280·450 ★ · 금 = 별×300, 같은 계절은 오른 차이만', function () {
+      var HJ = DG.homeJudge, Hm = DG.home, C = DG.core, p = C.save.player, g0 = p.gold, hs = Hm.state(), items0 = hs.items, judge0 = hs.judge;
+      try {
+        if (HJ.bonusOf([], 'summer') !== 0 || HJ.bonusOf(['mulhang'], 'summer') !== 25 || HJ.bonusOf(['mulhang', 'mulhang'], 'summer') !== 40 || HJ.bonusOf(['mulhang'], 'winter') !== 0) { return '실패 덤'; }
+        if (HJ.starOf(29) !== 0 || HJ.starOf(30) !== 1 || HJ.starOf(450) !== 5 || HJ.nextOf(30) !== 80) { return '실패 문턱'; }
+        hs.items = [{ key: 'mulhang', x: 0, y: 0 }, { key: 'mulhang', x: 1, y: 0 }]; delete hs.judge;
+        var pv = HJ.preview(), r = HJ.judge();
+        if (!r.ok || r.star !== pv.star || r.gold !== pv.star * 300 || p.gold !== g0 + r.gold) { return '실패 심사 ' + JSON.stringify(r) + ' ' + pv.star; }
+        var r2 = HJ.judge(); if (r2.gold !== 0 || p.gold !== g0 + r.gold) { return '실패 두 번째 금 ' + r2.gold; }
+        var row = HJ.rowHtml(); if (row.indexOf('data-judge') < 0 || row.indexOf('받음') < 0) { return '실패 줄 ' + row.slice(0, 80); }
+        return '덤 25/40 · 문턱 ★ · 심사 ' + pv.total + '점 ★' + r.star + ' 금 +' + r.gold + ' · 다시는 0 · 줄 ○';
+      } finally { hs.items = items0; if (judge0) { hs.judge = judge0; } else { delete hs.judge; } p.gold = g0; }
     });
 
     t('벽지·장판 — 갈아 끼우면 집 평가가 오른다', function () {

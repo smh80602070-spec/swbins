@@ -1181,10 +1181,10 @@
   function viewHome() {
     var Hm = global.DG.home, V = global.DG.village, VD = global.DG.villageData;
     var stt = Hm.status(), html = '', i;
-    var can = Hm.canPlaceHere();
+    var can = Hm.canPlaceHere(); html += (global.DG.brew ? global.DG.brew.cardHtml() : '');   // W-0397 물약 달이기
 
     html += '<div class="sec"><h4>' + esc(stt.room.name) + '</h4><div class="card">' +
-      '<div class="stat-row"><span>집 평가</span><b>' + esc(stt.grade) + ' · ' + stt.score + '점</b></div>' +
+      '<div class="stat-row"><span>집 평가</span><b>' + esc(stt.grade) + ' · ' + stt.score + '점</b></div>' + (global.DG.homeJudge ? global.DG.homeJudge.rowHtml() : '') +   // W-0397 계절 심사
       '<div class="stat-row"><span>놓은 것</span><b>🪑 ' + stt.n + '점 · 어울림 ' + stt.bonus + '</b></div>' +
       '<div class="stat-row"><span>방 크기</span><b>' + stt.room.tw + ' × ' + stt.room.th + '</b></div>' +
       (stt.debt
