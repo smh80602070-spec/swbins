@@ -1429,12 +1429,12 @@
   "tests": [
    "test-web n/n"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0358",
   "since": "2026-10-21",
-  "note": "10-21: 화로 brazier_01 · 하늘 때 밤 1·새벽/해질녘 0.4(자동은 밤 거의 없음, realm3d.skyTime night 로 봄) · 촬영 없음"
+  "note": "D2(claude 10-23 R-3): 3D 지도 skyTime night — W-0386 고친 뒤 nightglow3d.stats { mats 1, spots 153, lit 4 }(전엔 0·0·0, 지도 사본 PBR 이 glow_ 를 버림) · 10-21: 화로 brazier_01 · 하늘 때 밤 1·새벽/해질녘 0.4(자동은 밤 거의 없음, realm3d.skyTime night 로 봄) · 촬영 없음"
  },
  {
   "id": "rk.phone-hud-diet",

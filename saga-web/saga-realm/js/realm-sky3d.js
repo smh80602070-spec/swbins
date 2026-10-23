@@ -129,8 +129,11 @@
   /* 값 지문으로 모은다 — 성은 달마다 다시 지어지며(rebuild) 세력 색 사본을 새로 받으므로 uuid 로 모으면 끝없이 쌓인다 */
   var realMats = {};
   function sigOf(m) {
-    return [m.color ? m.color.getHex() : -1, m.map ? m.map.uuid : '-', m.vertexColors ? 1 : 0, m.transparent ? 1 : 0, m.opacity, m.alphaTest || 0, m.side].join(',');
+    return [m.color ? m.color.getHex() : -1, m.map ? m.map.uuid : '-', m.vertexColors ? 1 : 0, m.transparent ? 1 : 0, m.opacity, m.alphaTest || 0, m.side,
+      glowName(m)].join(',');
   }
+  /* W-0386 빛남 재질(glow_*)만 이름·emissive 를 옮긴다 — 버리면 화로 불꽃이 안 빛나고 nightglow3d 가 못 찾는다(나머지 재질은 그대로) */
+  function glowName(m) { return m.emissive && m.name && m.name.indexOf('glow_') === 0 ? m.name : ''; }
   function realMat(m) {
     if (!m || m.isMeshStandardMaterial || (!m.isMeshToonMaterial && !m.isMeshLambertMaterial)) { return m; }
     var sg = sigOf(m), r = realMats[sg];
@@ -141,6 +144,8 @@
         roughness: core.tuned('realm3d.roughness', 0.8), metalness: 0
       });
       r.userData.srcName = (m.userData && m.userData.srcName) || m.name || '';
+      r.name = glowName(m);
+      if (r.name) { r.emissive.copy(m.emissive); r.emissiveMap = m.emissiveMap || null; r.emissiveIntensity = m.emissiveIntensity; }
     }
     return r;
   }
@@ -162,7 +167,7 @@
     /* 값 층 — 자가진단이 본다 */
     eraOf: eraOf, todOf: todOf, skyKey: skyKey, skyFile: skyFile, sunDir: sunDir, light: light, current: current, SUN_UV: SUN_UV,
     /* 그림 층 */
-    attach: attach, refresh: refresh, tick: tick, realify: realify, lights: function () { return { sun: sun, hemi: hemi }; },
+    attach: attach, refresh: refresh, tick: tick, realify: realify, _realMat: function (three, m) { var t0 = T; T = T || three; try { return realMat(m); } finally { T = t0; } },   // W-0386 진단 lights: function () { return { sun: sun, hemi: hemi }; },
     stats: function () { var n = 0, k; for (k in realMats) { if (Object.prototype.hasOwnProperty.call(realMats, k)) { n++; } } var ss = sky.stats(); return { on: ON(), shown: shown, why: why, dome: ss.dome, realMats: n }; }
   };
 })(window);

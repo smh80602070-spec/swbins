@@ -5520,6 +5520,15 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         ' · elevAt=' + elev + '(바다) · 먼 뭍 straitFactor=' + farAway);
     });
 
+    t('realm3d — 지도 사본 PBR(W-0386): 빛남 재질 glow_* 는 이름·emissive 를 옮기고 몸통은 이름 없이 그대로 · 같은 색이라도 둘이 안 섞인다', function () {
+      var RS = DG.realmSky3d, T3 = window.THREE; if (!RS || !RS._realMat || !T3) { return '실패 realmSky3d/THREE 없음'; }
+      var body = new T3.MeshToonMaterial({ color: 0xffffff }); body.name = 'concrete_wall_001';
+      var fire = new T3.MeshToonMaterial({ color: 0xffffff, emissive: 0xffaa00 }); fire.name = 'glow_fire'; fire.emissiveIntensity = 1.5;
+      var a = RS._realMat(T3, body), b = RS._realMat(T3, fire);
+      var ok = a && b && a !== b && b.isMeshStandardMaterial && b.name === 'glow_fire' && b.emissive.getHex() === 0xffaa00 && b.emissiveIntensity === 1.5 && a.name === '' && a.emissive.getHex() === 0;
+      return ok ? '불꽃 glow_fire · emissive ffaa00 ×1.5 · 몸통 따로(이름 없음)' : ('실패 ' + JSON.stringify({ a: a && a.name, b: b && b.name, e: b && b.emissive.getHex() }));
+    });
+
     t('realm3d — 하늘 그림 고르기(W-0141): 막 1~3 과거·4~6 현재·7~9 미래, 균열·혼돈은 미래 · 달로 시각(봄여름 낮·가을 노을·겨울 새벽) · 손잡이로 밤 · 해 방향은 그림 속 자리', function () {
       var RS = DG.realmSky3d, C = DG.core, k0 = C.tuned('realm3d.skyTime', 'auto'), r = {}, d;
       try {
