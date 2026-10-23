@@ -162,6 +162,7 @@ namespace Saga.EditorTools
                 if (!PlaytestDungeonSkillTree.Run()) _hadError = true; // tasks U-0135 무예 나무 — 경험·레벨·찍기 규칙·효과·되돌리기·저장·창(영웅·비결·나무 되돌림)
                 if (!PlaytestDungeonMastery.Run()) _hadError = true; // tasks U-0178 장비 숙련 — 문턱·처치·공격·갑주·저장·손잡이(영웅·숙련·무적 되돌림)
                 if (!PlaytestDungeonFavor.Run()) _hadError = true; // tasks U-0194 신의 가호 — 단·덤·보스층 고르기·카드 줄·저장·손잡이(축복·가호 되돌림)
+                if (!PlaytestDungeonSeason.Run()) _hadError = true; // tasks U-0195 시즌·래더 — 번호·래더·넘어감·판 등급 잇기·창·저장·손잡이(시즌·금·판 등급 되돌림)
                 if (!PlaytestDungeonMode.Run()) _hadError = true; // tasks U-0137 난도 — 표·문턱·들머리·실제 방 배율·부적 곱·저장·단추(난도·층·난수 되돌림)
                 if (!PlaytestDungeonBreakable.Run()) _hadError = true; // tasks U-0158 부서지는 통·항아리 — 방 짓기·평타·회전베기·보상·조각(층·영웅·자리 되돌림, 조각 지움)
                 if (!PlaytestDungeonHitFx.Run()) _hadError = true; // tasks U-0159 흔들림 규격·무기 등급 잔광(무기 되돌림)

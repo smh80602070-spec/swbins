@@ -651,6 +651,17 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] lgtrade 띄움 {why ?? "OK"} · 상단 {Saga.Realm.Data.RealmTrade.Routes.Count}");
                         break;
                     }
+                    case "lgseason":   // U-0195 2나락 시즌 — 이번 주 판 넷(B3·A2·S1·C1)과 지난 시즌 둘을 넣고 🏆 창을 연다
+                    {
+                        var su = Saga.Dungeon.UI.DungeonSeasonUi.Instance;
+                        if (su == null) { Skip(act); return; }
+                        int id = Saga.Dungeon.World.DungeonSeason.NowId;
+                        Saga.Dungeon.World.DungeonSeason.Restore("{\"id\":" + id + ",\"runs\":[{\"pts\":9,\"rank\":\"B\",\"tier\":3},{\"pts\":8,\"rank\":\"A\",\"tier\":2},{\"pts\":5,\"rank\":\"S\",\"tier\":1},{\"pts\":2,\"rank\":\"C\",\"tier\":1}],\"past\":[{\"id\":" + (id - 1) + ",\"score\":31,\"tierIdx\":1},{\"id\":" + (id - 2) + ",\"score\":12,\"tierIdx\":0}]}");
+                        Object.FindFirstObjectByType<Saga.Dungeon.UI.DungeonScenarioUi>()?.Hide(); // 세이브 자리 장면 상자가 창을 덮는다
+                        su.Open();
+                        Debug.Log($"[ShowcaseGui] lgseason 창 {su.IsOpen} · {Saga.Dungeon.World.DungeonSeason.Score}점");
+                        break;
+                    }
                     case "lgfavor":   // U-0194 2나락 신의 가호 — 무신 2번·풍신 5번 고른 채 보스층 3택 카드를 띄운다
                     {
                         var bu = Object.FindFirstObjectByType<Saga.Dungeon.UI.BlessingChoiceUi>();

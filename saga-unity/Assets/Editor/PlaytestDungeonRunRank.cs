@@ -31,6 +31,7 @@ namespace Saga.EditorTools
             string scen0 = DungeonScenario.Snapshot();
             int[] tiers0 = DungeonRunRank.SnapshotTiers();
             string[] grades0 = DungeonRunRank.SnapshotGrades(tiers0);
+            string season0 = DungeonSeason.Snapshot(); // tasks U-0195 — 살아 나온 판이 시즌에도 기록된다
             Vector3 pos = playerGo.transform.position;
             string m = "";
             try
@@ -43,6 +44,7 @@ namespace Saga.EditorTools
             finally
             {
                 DungeonRunRank.Restore(tiers0, grades0);
+                DungeonSeason.Restore(season0);
                 DungeonRunRank.ClearForTest();
                 runner.JumpToFloor(floor0 >= 2 ? floor0 : 2);
                 HeroState.Restore(lv, exp, hp, gold, weapon, gem);

@@ -130,6 +130,7 @@ namespace Saga.Dungeon.World
             if (best) _best[tier] = b.Rank;
             var r = new Result(b.Rank, b.Pt, b.Hits, b.ComboMax, b.Sec, b.Kills, tier, bonus, gem, best, dead, prev);
             Last = r;
+            if (dead) DungeonSeason.Skip(); else DungeonSeason.Record(r.Rank, tier); // tasks U-0195 시즌 — 살아 나온 판만
             return r;
         }
 
@@ -155,7 +156,8 @@ namespace Saga.Dungeon.World
         {
             if (!r.HasValue) return "";
             string l2 = Line2(r.Value);
-            return "\n" + Line(r.Value) + (l2.Length > 0 ? "\n" + l2 : "");
+            string l3 = !r.Value.Dead ? DungeonSeason.LastLine : ""; // tasks U-0195 시즌 셋째 줄
+            return "\n" + Line(r.Value) + (l2.Length > 0 ? "\n" + l2 : "") + (l3.Length > 0 ? "\n" + l3 : "");
         }
 
         // ── 세이브(버전 그대로 — 옛 세이브는 null → 빈 기록)

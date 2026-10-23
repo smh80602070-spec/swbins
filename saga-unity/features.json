@@ -2522,6 +2522,23 @@
   "note": "D2(U-0194): PlaytestDungeonHeadless favor tier·pick·card·save·off OK · 촬영 lgfavor 카드 ○ · 축마다 하나만 드는 트랙이라 '은사 수' 대신 '고른 횟수' · 선인·재신은 축이 없어 뺌 · 무리 사냥 3택은 안 셈"
  },
  {
+  "id": "un.dg.season",
+  "name": "U-0195 2나락 로컬 시즌·래더 — 한 주(월요일 0시) = 한 시즌, 살아 나온 등급 판 (D1~S5 × 급) 좋은 판 다섯 합 → 청동 10·백은 25·황금 45·백금 70·왕좌 100, 넘어가면 단계 금 100~3000·지난 기록 넷, 🏆 창·판 등급 알림 셋째 줄(고돗 G-0334)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/World/DungeonSeason.cs",
+   "saga-unity/Assets/Games/SagaDungeon/UI/DungeonSeasonUi.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonSeason"
+  ],
+  "level": "D2",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0195",
+  "since": "2026-10-23",
+  "note": "D2(U-0195): PlaytestDungeonHeadless season week·ladder·roll·runrank·ui·save·off OK · 촬영 lgseason 창 ○ · 시계를 뒤로 돌리면 아무것도 안 함(고돗 R-5 구멍을 처음부터 막음) · 넘어감은 판 기록·켤 때·창 열 때"
+ },
+ {
   "id": "un.dg.mastery",
   "name": "U-0178 2나락 장비 숙련 — 든 무기는 처치로·갑주는 맞아서 숙련, 문턱 10·30·60·100·150 에서 단계(최고 5), 무기 단계마다 공격 +3%·갑주 단계마다 받는 피해 −2%(고돗 G-0317)",
   "files": [
