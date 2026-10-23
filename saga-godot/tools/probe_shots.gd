@@ -62,6 +62,7 @@ const SHOTS := [
 	["o_sunken_field", "sunken", Vector2(4.0, 4.5), Vector3.ZERO, Vector2(5.0, 3.5), -2.0, 12.0, ""],
 	# G-0040 — 못 본 화면 넷(인물 조우·일과판 카드·7부 하늘 섬·8부 먹구름 눈과 매듭). ch:<장 0부터>:<단계> 는 컷 동안만 이야기 진행을 바꾼다
 	["g40_hero", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 9.0, "touch:go_heroes:_flee"],
+	["lg_go_wind", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(5.5, 3.0), -10.0, 7.0, "wind"],   # G-0322 바람 길잡이 줄기
 	["g40_daycard", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 9.0, "card"],
 	["g40_sky_shrine", "sunken", "isle:shrine", Vector3(10, 0, 8), "isle:shrine", -14.0, 12.0, "ch:25:0"],
 	["g40_sky_orbit", "sunken", "isle:orbit", Vector3(6, 0, 6), "isle:orbit", -10.0, 12.0, "ch:25:0"],
@@ -499,6 +500,23 @@ func _act(a: String) -> void:
 			if tn:
 				tn.call("_on_body_entered", _p)
 				_close_call = [tn, tp[2] if tp.size() > 2 else ""]
+		"wind":   # G-0322 바람 길잡이(G-0318) — 할 일 뒤 40프레임에 한 줄기(창 모드는 프레임이 느려 초로 재면 다 사라진다)(목표 쪽, 없으면 북쪽)
+			var wn := [0]
+			var wcb := [Callable()]
+			wcb[0] = func() -> void:
+				wn[0] += 1
+				if wn[0] != 30:
+					return
+				get_tree().process_frame.disconnect(wcb[0])
+				var g := get_tree().current_scene.find_child("WindGuide", true, false)
+				var sq := get_tree().get_first_node_in_group("go_story")
+				if g == null or _p == null:
+					return
+				var d: Vector3 = g.call("dir_to", _p.global_position, sq.call("target_pos")) if sq != null else Vector3.ZERO
+				g.call("gust", _p.global_position, d if d != Vector3.ZERO else Vector3(0, 0, -1))
+				Engine.time_scale = 0.05   # 창 모드는 프레임이 느려 줄기가 찍기 전에 사라진다 — 이 컷만 느리게(한 컷짜리 실행 전제)
+				print("SHOT_WIND gust dir=%s" % str(d))
+			get_tree().process_frame.connect(wcb[0])
 		"card":   # 저장 마무리 카드 — 저장은 안 하고 카드만(save_button.gd 와 같은 줄)
 			SessionCard.show(get_tree().current_scene, "저장했다 — 이번 세션", ["경험치 +%.0f" % PartyState.session_exp_gained(), "발견 +%d" % CodexState.session_discovered(), "부대 %d명" % PartyState.members.size()])
 		_ when a.begins_with("bosshp:"):

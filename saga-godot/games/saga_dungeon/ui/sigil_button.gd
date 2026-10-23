@@ -28,9 +28,8 @@ func _refresh_look() -> void:
 func _on_pressed() -> void:
 	if DungeonSigilState.is_active():
 		var s := DungeonSigilState.active_sigil()
-		var mods: Array = DungeonSigilState.all_mods(s)
 		Toast.show(self, "부적 던전 진행 중(티어 %d) — %s. 마지막 방까지 못 끈다." %
-			[int(s.get("tier", 0)), ", ".join(mods)], 4.0)
+			[int(s.get("tier", 0)), DungeonSigilState.mods_text(s)], 4.0)
 		return
 	if DungeonSigilState.sigils.is_empty():
 		Toast.show(self, "부적이 없다 — 보스를 잡으면 나온다.", 3.0)
@@ -46,7 +45,7 @@ func _on_pressed() -> void:
 	choices.append({"label": "그만둔다", "cb": func() -> void: pass})
 	ChoicePrompt.build(get_tree().current_scene,
 		"부적 던전(티어 %d)을 켭니다.\n변형자: %s\n적이 세지는 대신 보상이 늘고, 마지막 방까지 못 끕니다." %
-			[int(s.get("tier", 0)), ", ".join(DungeonSigilState.all_mods(s))], choices)
+			[int(s.get("tier", 0)), DungeonSigilState.mods_text(s)], choices)
 
 
 ## G-0308 지도 장치 — 켜기 전 고르기 창의 ✒️ 줄(새길 수 없으면 "" — 줄을 안 만든다)
@@ -83,4 +82,4 @@ func _on_confirm(idx: int) -> void:
 	if DungeonSigilState.activate(idx):
 		var s: Dictionary = DungeonSigilState.active_sigil()
 		Toast.show(self, "🔺 부적 던전 시작 — 티어 %d(%s)." %
-			[int(s.get("tier", 0)), ", ".join(DungeonSigilState.all_mods(s))], 4.0)
+			[int(s.get("tier", 0)), DungeonSigilState.mods_text(s)], 4.0)

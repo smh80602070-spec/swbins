@@ -89,3 +89,31 @@ static func wind(tree: SceneTree) -> void:
 				dir = d
 		g.call("gust", p.global_position, dir)
 	tree.process_frame.connect(cb[0])
+
+
+## 2나락 지도 장치 — 티어 3 부적 하나에 변형자 하나를 새긴 뒤 켜기 전 고르기 창(✒️ 줄·금 배율)
+static func atlas(tree: SceneTree) -> void:
+	var S: Node = tree.root.get_node("DungeonSigilState")
+	S.add_sigil(3)
+	tree.root.get_node("DungeonGoldState").set("gold", 5000)
+	S.inscribe(S.sigils.size() - 1)
+	var b := tree.current_scene.find_child("SigilButton", true, false)
+	if b != null:
+		b.call("_on_pressed")
+
+
+## 3마을 가축 우리 — 꼬꼬 둘·매매 하나(울타리 GLB·코드 몸), 우리 앞에 선다
+static func pen(tree: SceneTree) -> void:
+	var F: Node = tree.root.get_node("ForestSaveState")
+	F.livestock = {"pen": true, "roll": -1, "list": [
+		{"kind": "chick", "name": "꼬꼬", "fed": true, "petted": true, "heart": 3, "hungry": 0},
+		{"kind": "chick", "name": "꼬순", "fed": false, "petted": false, "heart": 1, "hungry": 0},
+		{"kind": "goat", "name": "매매", "fed": true, "petted": false, "heart": 2, "hungry": 0}]}
+	var v := tree.current_scene.find_child("LivestockView", true, false) as Node3D
+	var p := _player(tree)
+	if v == null:
+		print("SHOT_PEN 없음")
+		return
+	v.call("sync")
+	if p != null:
+		p.global_position = v.global_position + Vector3(0, 0.3, 6.0)

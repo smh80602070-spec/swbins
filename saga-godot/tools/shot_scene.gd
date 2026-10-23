@@ -147,6 +147,8 @@ const CUTS := [
 	["lg_st_clue", STORY_CAVE, [["free_modal"], ["near", "HiddenClue", -1.6, 0.0]]],   # G-0322 ← G-0319 굴혈 끝 옛 비문
 	["lg_st_piece", STORY_CAVE, [["free_modal"], ["near", "MapPiece0", -1.6, 0.0]]],   # G-0322 ← G-0309 지도 조각
 	["lg_dg_mastery", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "mastery", ["@tree"]], ["call", "MenuHook", "open_me"]]],   # G-0322 ← G-0317 「내 정보」 ★
+	["lg_dg_atlas", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "atlas", ["@tree"]]]],   # G-0323 ← G-0308 부적 켜기 창 ✒️ 새기기 줄
+	["lg_fs_pen", FOREST, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "pen", ["@tree"]]]],   # G-0323 ← G-0311 가축 우리
 	["lg_go_wind", GO, [["static", "res://tools/shot_ledger.gd", "wind", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0322 ← G-0318 바람 길잡이(촬영 70프레임 전 한 줄기)
 	["dg_room_wide", DUNGEON, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 14.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-40.0, 0.0, 0.0)]]],   # G-0112 첫 방 전체(어두움 판정)   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)
 	["go_cave_dirt", GO, [["call", "CaveInterior", "enter"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-25.0, 180.0, 0.0)]]],   # G-0098 굴 안 흙 복도

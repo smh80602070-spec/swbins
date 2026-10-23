@@ -91,7 +91,7 @@ func gust(at: Vector3, dir: Vector3) -> void:
 	mat.albedo_color = Color(1.0, 1.0, 0.96, 0.0)
 	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	var mesh := BoxMesh.new()
-	mesh.size = Vector3(0.035, 0.035, 1.8)
+	mesh.size = Vector3(0.05, 0.05, 2.4)
 	for i in STREAKS:
 		var s := MeshInstance3D.new()
 		s.name = "WindStreak"
@@ -108,6 +108,6 @@ func gust(at: Vector3, dir: Vector3) -> void:
 		tw.tween_interval(delay)
 		tw.set_parallel(true)
 		tw.tween_property(s, "global_position", start + dir * TRAVEL_M, LIFE_SEC)
-		tw.tween_property(m, "albedo_color:a", 0.55, LIFE_SEC * 0.3)
+		tw.tween_property(m, "albedo_color:a", 0.7, LIFE_SEC * 0.3)
 		tw.tween_property(m, "albedo_color:a", 0.0, LIFE_SEC * 0.7).set_delay(LIFE_SEC * 0.3)
 		tw.chain().tween_callback(s.queue_free)

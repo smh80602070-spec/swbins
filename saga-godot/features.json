@@ -5481,12 +5481,12 @@
   "tests": [
    "dungeon_atlas"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0308",
   "since": "2026-10-23",
-  "note": "웹 W-0298 짝 · SAGA_ATLAS=0"
+  "note": "웹 W-0298 짝 · SAGA_ATLAS=0 · D2 G-0323 촬영 shot_scene lg_dg_atlas"
  },
  {
   "id": "gd.story.stagemap",
@@ -5540,12 +5540,12 @@
    "forest_livestock",
    "forest_craft"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0311",
   "since": "2026-10-23",
-  "note": "웹 W-0299 짝 · 울타리 K-0181 · 닭·염소 몸은 코드 대역(K 수신함) · SAGA_LIVESTOCK=0"
+  "note": "웹 W-0299 짝 · 울타리 K-0181 · 닭·염소 몸은 코드 대역(K 수신함) · SAGA_LIVESTOCK=0 · D2 G-0323 촬영 shot_scene lg_fs_pen"
  },
  {
   "id": "gd.dungeon.runrank",
@@ -5672,12 +5672,12 @@
   "tests": [
    "go_wind"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0318",
   "since": "2026-10-23",
-  "note": "고돗 먼저(웹 짝 없음) · 새 키 없음 · SAGA_WIND_GUIDE=0"
+  "note": "고돗 먼저(웹 짝 없음) · 새 키 없음 · SAGA_WIND_GUIDE=0 · D2 G-0323 촬영 probe_shots lg_go_wind(줄 7·목표 쪽)"
  },
  {
   "id": "gd.story.hidden-boss",

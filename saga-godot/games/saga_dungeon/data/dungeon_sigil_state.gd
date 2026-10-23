@@ -37,6 +37,9 @@ const BOSS_SIGIL_DROP_CHANCE := 0.5  # 원작 "층 10+ 보스" 드랍 — 이 �
 ## resist_boost(지정 원소 저항 +40%)·glass_cannon(공격력 +50%·받는
 ## 피해 +50%, dungeon_run_state.gd `_sum_eff()`에 여섯 번째 채널로 붙는다).
 const MOD_POOL: Array[String] = ["swift", "elite_double", "treasure", "regen", "resist_boost", "glass_cannon"]
+## G-0323 — 창에 쓰는 이름(키를 그대로 보이던 것을 바로잡음)
+const MOD_LABEL := {"swift": "날쌘 적", "elite_double": "정예 둘배", "treasure": "보물 +50%", "regen": "적 재생", "resist_boost": "원소 저항", "glass_cannon": "유리 칼(공·피해 +50%)"}
+
 const RESIST_BOOST_ELEMENTS: Array[String] = ["fire", "cold", "lit", "pois", "chi", "emp"]
 
 ## G-0308 지도 장치(웹 W-0298 atlas.js 짝) — 켜기 전 부적에 금을 내고 변형자를
@@ -189,6 +192,10 @@ static func all_mods(sig: Dictionary) -> Array:
 			if not out.has(k):
 				out.append(k)
 	return out
+
+
+static func mods_text(sig: Dictionary) -> String:
+	return ", ".join(all_mods(sig).map(func(m: Variant) -> String: return String(MOD_LABEL.get(String(m), String(m)))))
 
 
 static func inscribe_cost(sig: Dictionary) -> int:
