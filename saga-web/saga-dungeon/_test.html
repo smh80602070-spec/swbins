@@ -8705,6 +8705,23 @@ window.requestAnimationFrame = function () { return 0; };
         ('흔적 (' + Math.round(c1.x) + ',' + Math.round(c1.y) + ') · 층 모자라면 우두머리 미룸 · 닿으면 (' + Math.round(b3.x) + ',' + Math.round(b3.y) + ') · 끝나면 없음');
     });
 
+    t('자동 📜 퀘스트 막힘 — 같은 쪽으로 400·800·1200 비킨 뒤 반대쪽, 여섯 번이면 null · 미룬 사연은 목표에서 빠짐(W-0382)', function () {
+      var A = DG.auto, WM = DG.worldMap, q = C.save.quest || (C.save.quest = {}), keepCh = q.chain;
+      var p = { x: 0, y: 0 }, g = { x: 1000, y: 0, d: 1000 }, s = [];
+      for (var n = 0; n < 7; n++) { s.push(A._sideSpot(p, g, n)); }
+      var ys = s.slice(0, 6).map(function (v) { return Math.round(v.y); });
+      var key = WM.REGIONS[0].key, tr = { player: { x: 0, y: 0 }, room: { enemies: [] } };
+      q.chain = {}; q.chain[key] = { step: 1, have: 0, done: false, at: 0 };
+      var g0 = A._questFieldGoal(tr);
+      A._qDefer[key] = Date.now() + 60000; var gD = A._questFieldGoal(tr); delete A._qDefer[key];
+      q.chain = keepCh;
+      var wall = function (x, y) { return x > 280 && x < 340 && y > -600 && y < 600; };   // 긴 담(세로 1200)
+      var gp = A._gridPath({ x: 0, y: 0 }, { x: 700, y: 0 }, wall), gpHit = !gp || gp.some(function (v) { return wall(v.x, v.y); });
+      var gpNone = A._gridPath({ x: 0, y: 0 }, { x: 700, y: 0 }, function (x) { return x > 280 && x < 340; });   // 끝없는 담 = 길 없음
+      return ys.join() === '400,800,1200,-400,-800,-1200' && s[6] === null && !!g0 && g0.key === key && gD === null && !gpHit && gpNone === null &&
+        ('비킴 y ' + ys.join('·') + ' · 일곱째 null · 미루면 목표 없음 · 긴 담 돌아가는 길 ' + gp.length + '점 · 끝없는 담 null');
+    });
+
     /* ── 탈것(mount.js, SAGA-DESIGN §15) — 열린 세계에서만 · 말 셋 + 학·용(소품을 넘는다) ── */
     t('탈것 — 카탈로그 5(농마 5·갈색 말 14·흰 말 26 · 학 18 · 용 34 또는 도감 등록) · 열린 세계(마을·들판)에서만 타기 · 던전 안·자동 전투 중 ✕ · 고르기 · 저장 sel 한 칸 · 손잡이', function () {
       var MT = DG.mount, T = DG.town, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;

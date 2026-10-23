@@ -275,7 +275,7 @@
     var p = tr.player, st = Q.status(), best = null, bd = Infinity;
     questWait = '';
     (st.chains || []).forEach(function (ch) {
-      if (ch.locked || ch.done) { return; }
+      if (ch.locked || ch.done || qDefer[ch.key] > Date.now()) { return; }   // 길이 막혀 미룬 사연은 1분 뒤(W-0382)
       var spot = null;
       if (ch.step === 1) { spot = WM.clueSpot(ch.key); }
       else if (ch.step === 3) {
@@ -298,9 +298,68 @@
       }
       if (!spot) { return; }
       var d = Math.hypot(spot.x - p.x, spot.y - p.y);
-      if (d < bd) { bd = d; best = { x: spot.x, y: spot.y, d: d, label: (ch.emoji || '📜') + ' ' + ch.title + ' · ' + ch.stepName + (ch.need ? ' ' + ch.have + '/' + ch.need : '') }; }
+      if (d < bd) { bd = d; best = { x: spot.x, y: spot.y, d: d, key: ch.key, label: (ch.emoji || '📜') + ' ' + ch.title + ' · ' + ch.stepName + (ch.need ? ' ' + ch.have + '/' + ch.need : '') }; }
     });
     return best;
+  }
+
+  /** 막혔을 때 거친 격자 길찾기(W-0382) — blocked(x,y) 로 cell 보 칸을 보고 p→g 를 너비 우선(8방). 경유점 배열(g 포함) · 못 찾으면 null.
+      상자는 p·g 를 감싸고 pad 만큼 넓힘, 한 변 칸 수 상한 max(넘으면 null — 너무 먼 목표는 옆 비키기로) */
+  function gridPath(p, g, blocked, cell, pad, max) {
+    cell = cell || 60; pad = pad == null ? 900 : pad; max = max || 90;
+    var x0 = Math.min(p.x, g.x) - pad, y0 = Math.min(p.y, g.y) - pad;
+    var W = Math.ceil((Math.max(p.x, g.x) + pad - x0) / cell), H = Math.ceil((Math.max(p.y, g.y) + pad - y0) / cell);
+    if (W > max || H > max) { return null; }
+    var cx = function (x) { return Math.max(0, Math.min(W - 1, Math.floor((x - x0) / cell))); }, cy = function (y) { return Math.max(0, Math.min(H - 1, Math.floor((y - y0) / cell))); };
+    var s = cy(p.y) * W + cx(p.x), t = cy(g.y) * W + cx(g.x), from = new Int32Array(W * H).fill(-2), bl = new Int8Array(W * H), q = [s], qi = 0;
+    var isB = function (i) {   // 칸 가운데 + 네 모서리 쪽(0.4칸) 다섯 점 중 하나라도 막히면 막힌 칸(가운데만 보면 칸 끝 나무에 걸려 길 따라가다 또 섰다)
+      if (!bl[i]) {
+        var mx = x0 + (i % W + 0.5) * cell, my = y0 + (Math.floor(i / W) + 0.5) * cell, e = cell * 0.4;
+        bl[i] = blocked(mx, my) || blocked(mx - e, my - e) || blocked(mx + e, my - e) || blocked(mx - e, my + e) || blocked(mx + e, my + e) ? 2 : 1;
+      }
+      return bl[i] === 2;
+    };
+    from[s] = -1;
+    while (qi < q.length) {
+      var c = q[qi++];
+      if (c === t) { break; }
+      var ix = c % W, iy = (c - ix) / W;
+      for (var dy = -1; dy <= 1; dy++) {
+        for (var dx = -1; dx <= 1; dx++) {
+          var nx = ix + dx, ny = iy + dy, n = ny * W + nx;
+          if ((!dx && !dy) || nx < 0 || ny < 0 || nx >= W || ny >= H || from[n] !== -2) { continue; }
+          if (n !== t && isB(n)) { continue; }
+          if (dx && dy && (isB(iy * W + nx) || isB(ny * W + ix))) { continue; }   // 모서리 깎기 금지
+          from[n] = c; q.push(n);
+        }
+      }
+    }
+    if (from[t] === -2) { return null; }
+    var cells = [];
+    for (var k = t; k !== s && k >= 0; k = from[k]) { cells.unshift(k); }
+    var out = [];
+    for (var j = 0; j < cells.length; j++) {
+      if (j === cells.length - 1 || j % 3 === 2) { out.push(j === cells.length - 1 ? { x: g.x, y: g.y } : { x: x0 + (cells[j] % W + 0.5) * cell, y: y0 + (Math.floor(cells[j] / W) + 0.5) * cell }); }
+    }
+    return out;
+  }
+  /** 마을·들판 막힘 — dungeon.js 충돌 그대로(마을 발판 안은 늘 열림) */
+  function townBlocked(tr) {
+    var D = global.DG.dungeon, fb = D && D._fieldBlockedAt;
+    if (!fb) { return null; }
+    return function (x, y) {
+      var a = tr.anchor, lo = (tr.wall || 0) + (tr.pr || 0);
+      if (a && !tr.noRoom && x >= a.x + lo && x <= a.x + tr.roomW - lo && y >= a.y + lo && y <= a.y + tr.roomH - lo) { return false; }
+      return fb(x, y, tr);
+    };
+  }
+
+  /** 막혀서 비킬 자리 — 같은 자리에서 n 번째(0부터): 한쪽으로 400·800·1200 뒤 반대쪽 400·800·1200, 여섯 번 넘으면 null(그 목표 미룸).
+      예전엔 비킬 때마다 좌·우를 번갈아 긴 담 앞에서 제자리로 오갔다(W-0382 첫 10분 점검) */
+  function sideSpot(p, g, n) {
+    if (n >= 6) { return null; }
+    var ux = (g.x - p.x) / g.d, uy = (g.y - p.y) / g.d, sg = n < 3 ? 1 : -1, r = 400 * (n % 3 + 1);
+    return { x: p.x - uy * r * sg - ux * 80, y: p.y + ux * r * sg - uy * 80, lim: 2.5 * (n % 3 + 1) };
   }
 
   /** 📜 마을·들판 한 박자 — 맡았으면 true(던전에 안 내려간다) */
@@ -314,15 +373,27 @@
     if (!g) { questDoing = ''; return false; }
     /* 막힘 풀기 — 길 찾기가 없어 나무·바위·담에 붙으면 제자리. 2초 동안 30보도 못 가면 옆으로 400보 비켰다가 다시 */
     var p = tr.player;
+    if (qStuck.path && (qStuck.path.key !== g.key || Date.now() > qStuck.path.until)) { qStuck.path = null; }
+    if (qStuck.path) {
+      var wp = qStuck.path.pts[0];
+      while (wp && Math.hypot(wp.x - p.x, wp.y - p.y) < 40) { qStuck.path.pts.shift(); wp = qStuck.path.pts[0]; }
+      if (Math.hypot(p.x - qStuck.x, p.y - qStuck.y) > 30) { qStuck.x = p.x; qStuck.y = p.y; qStuck.t = 0; } else if ((qStuck.t += 0.5) >= 2) { wp = null; }   // 길 따라가다 또 서면 길 버림 → 아래 막힘 처리(다음 길찾기·옆 비키기·미룸)
+      if (wp && qStuck.path.pts.length > 1) { T.moveTo(wp.x, wp.y); doing = '📜 막혀서 길을 찾아 돌아가는 중 (' + qStuck.path.pts.length + ')'; return true; }
+      qStuck.path = null;
+    }
     if (qStuck.side) {
       qStuck.t += 0.5;
-      if (qStuck.t < 2.5 && Math.hypot(qStuck.side.x - p.x, qStuck.side.y - p.y) > 20) { T.moveTo(qStuck.side.x, qStuck.side.y); doing = '📜 막혀서 옆으로 돌아가는 중'; return true; }
+      if (qStuck.t < qStuck.side.lim && Math.hypot(qStuck.side.x - p.x, qStuck.side.y - p.y) > 20) { T.moveTo(qStuck.side.x, qStuck.side.y); doing = '📜 막혀서 옆으로 돌아가는 중'; return true; }
       qStuck.side = null; qStuck.t = 0;
     }
     if (Math.hypot(p.x - qStuck.x, p.y - qStuck.y) > 30) { qStuck.x = p.x; qStuck.y = p.y; qStuck.t = 0; } else { qStuck.t += 0.5; }
     if (qStuck.t >= 2 && g.d > 60) {
-      var ux = (g.x - p.x) / g.d, uy = (g.y - p.y) / g.d, sg = (qStuck.n = (qStuck.n || 0) + 1) % 2 ? 1 : -1;
-      qStuck.side = { x: p.x - uy * 400 * sg - ux * 80, y: p.y + ux * 400 * sg - uy * 80 }; qStuck.t = 0;
+      if (qStuck.key !== g.key || g.d < qStuck.bestD - 150) { qStuck.n = 0; qStuck.key = g.key; qStuck.bestD = g.d; }   // 다른 목표거나 목표에 150보 넘게 다가섰으면 처음부터(자리로 세면 비켰다 돌아온 자리가 늘 "새 자리")
+      var bf = townBlocked(tr), path = bf && qStuck.n < 3 ? gridPath(p, g, bf) : null;
+      qStuck.t = 0;
+      if (path && path.length > 1) { qStuck.n++; qStuck.path = { key: g.key, pts: path, until: Date.now() + 40000 }; T.moveTo(path[0].x, path[0].y); doing = '📜 막혀서 길을 찾아 돌아가는 중'; return true; }
+      qStuck.side = sideSpot(p, g, qStuck.n++);
+      if (!qStuck.side) { qDefer[g.key] = Date.now() + 60000; qStuck.n = 0; doing = questDoing = '📜 ' + g.label + ' — 길이 막혀 1분 미룸'; return true; }
       T.moveTo(qStuck.side.x, qStuck.side.y);
       doing = '📜 막혀서 옆으로 돌아가는 중';
       return true;
@@ -332,7 +403,7 @@
     doing = questDoing;
     return true;
   }
-  var questWait = '', questDoing = '', qStuck = { x: 0, y: 0, t: 0, side: null, n: 0 };
+  var questWait = '', questDoing = '', qStuck = { x: 0, y: 0, t: 0, side: null, n: 0, key: '', bestD: Infinity, path: null }, qDefer = {};
 
   /** 본영에 있을 때 — 다시 내려간다 */
   function tickEntry(dt) {
@@ -372,6 +443,6 @@
     update: update, status: status,
     /** 자가진단용 */
     _tickDungeon: tickDungeon, _tickEntry: tickEntry,
-    _autoRankUp: autoRankUp, _doorScore: doorScore, _mainReq: mainReq, _questFieldGoal: questFieldGoal
+    _autoRankUp: autoRankUp, _doorScore: doorScore, _mainReq: mainReq, _questFieldGoal: questFieldGoal, _sideSpot: sideSpot, _qDefer: qDefer, _gridPath: gridPath
   };
 })(window);

@@ -66,7 +66,7 @@ async function runGame(game) {
     }
     res.today0 = await todayDone(page);
     const aqName = AQ[game];
-    let lastGoal = null, goalSince = Date.now();
+    let lastGoal = null, lastProg = null, minDist = Infinity, goalSince = Date.now();
     const end = t0 + MIN * 60000;
     while (Date.now() < end) {
       { const ch = await choices(page); if (ch) { res.log.push('고름 ' + ch); await sleep(2000); } }
@@ -75,7 +75,10 @@ async function runGame(game) {
         const s = await page.evaluate((n) => { const A = DG[n]; if (!A) { return { none: true }; } let st = A.status(); if (!st.on) { A.start(); st = A.status(); } var D = DG.dungeon, extra = D && D.active ? (D.active() ? ' [던전 ' + ((D.status && D.status().floor) || '?') + '층]' : ' [마을]') : ''; var SD = DG.story, so = SD && SD.isOpen && SD.isOpen() ? ' [이야기 창]' : ''; return { on: st.on, goal: st.goal ? (st.goal.id || st.goal.label) : null, label: st.goal ? st.goal.label : '', why: st.why, stuck: st.stuck, done: st.done, extra: extra + so + (st.doing ? ' · ' + String(st.doing).slice(0, 40) : '') }; }, aqName);
         if (s.none) { res.stuck.push('자동 퀘스트 어댑터 없음'); break; }
         res.steps = Math.max(res.steps, s.done || 0);
-        if (s.goal !== lastGoal) { lastGoal = s.goal; goalSince = Date.now(); }
+        const pc = (/(\d+)\/\d+/.exec((s.label || '') + ' ' + (s.extra || '')) || [])[1], dist = +((/ (\d+)보/.exec(s.extra || '') || [])[1] || NaN);
+        if (s.goal === lastGoal && dist < minDist - 300) { minDist = dist; goalSince = Date.now(); }   // 목표에 300보 넘게 다가섰으면 걷는 중(첫 목표가 3천 보 밖 — W-0382), 막힘 아님
+        if (s.goal !== lastGoal) { minDist = isNaN(dist) ? Infinity : dist; }   // 같은 목표라도 셈(0/10 → 2/10)이 늘면 막힘 아님(W-0382 — 토벌은 10마리에 몇 분)
+        if (s.goal !== lastGoal || (pc != null && pc !== lastProg)) { if (s.goal === lastGoal) { res.progress = (res.progress || 0) + 1; } lastGoal = s.goal; lastProg = pc; goalSince = Date.now(); }
         const held = Math.round((Date.now() - goalSince) / 1000);
         res.log.push(`${Math.round((Date.now() - t0) / 1000)}s ${s.on ? '▶' : '■'} ${s.label || '-'} ${s.why || ''} 멈춤${s.stuck}${s.extra || ''}`.trim());
         if (!s.on && /막힘/.test(s.why || '')) { res.stuck.push(`자동 멈춤 '${s.why}' (${s.label || '-'})`); }
@@ -98,9 +101,9 @@ async function runGame(game) {
   res.consoleErr = r.errors.length - res.exc;
   res.excSample = r.errors.filter((x) => x.startsWith('EXC')).slice(0, 3);
   await r.close();
-  const prog = res.steps > 0 || (res.today1 || 0) > (res.today0 || 0);
+  const prog = res.steps > 0 || res.progress > 0 || (res.today1 || 0) > (res.today0 || 0);
   res.ok = res.exc === 0 && res.stuck.length === 0 && prog;
-  res.detail = `${res.ok ? 'PASS' : 'FAIL'} 진척 ${game === 'saga-realm' ? '달 ' : '목표 '}${res.steps} · 「오늘」 ${res.today0}→${res.today1} · 예외 ${res.exc} · 막힘 ${res.stuck.length ? res.stuck.join(' / ') : 0}` + (res.overlays.length ? ' · 남은 창 ' + res.overlays.join(',') : '');
+  res.detail = `${res.ok ? 'PASS' : 'FAIL'} 진척 ${game === 'saga-realm' ? '달 ' : '목표 '}${res.steps}${res.progress ? ' · 셈 +' + res.progress : ''} · 「오늘」 ${res.today0}→${res.today1} · 예외 ${res.exc} · 막힘 ${res.stuck.length ? res.stuck.join(' / ') : 0}` + (res.overlays.length ? ' · 남은 창 ' + res.overlays.join(',') : '');
   return res;
 }
 
@@ -113,6 +116,6 @@ for (const g of LIST) {
 if (server) { try { process.kill(server.pid); } catch (e) { /* 이미 꺼짐 */ } }
 const pass = out.filter((r) => r.ok).length;
 fs.writeFileSync(path.join(HERE, 'results', 'pw-first10.json'), JSON.stringify({ script: 'pw-first10.mjs', game: LIST.length === 5 ? 'all' : LIST.join(','), min: MIN, pass, total: out.length,
-  checks: out.map((r) => ({ name: r.game + ' 첫 ' + MIN + '분', ok: r.ok, detail: r.detail, log: r.log.slice(-12), exc: r.excSample })) }, null, 1) + '\n');
+  checks: out.map((r) => ({ name: r.game + ' 첫 ' + MIN + '분', ok: r.ok, detail: r.detail, log: r.log.slice(-40), exc: r.excSample })) }, null, 1) + '\n');
 console.log('요약 ' + pass + '/' + out.length);
 process.exit(out.length - pass);
