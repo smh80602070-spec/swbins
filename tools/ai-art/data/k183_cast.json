@@ -17,7 +17,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_alexander_v01"
+   "bust_pick": "eu_alexander_v01",
+   "expr_pick": {
+    "happy": "eu_alexander__happy_v02",
+    "angry": "eu_alexander__angry_v01",
+    "sad": "eu_alexander__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_augustus",
@@ -33,7 +39,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_augustus_v01"
+   "bust_pick": "eu_augustus_v01",
+   "expr_pick": {
+    "happy": "eu_augustus__happy_v01",
+    "angry": "eu_augustus__angry_v01",
+    "sad": "eu_augustus__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_aurelius",
@@ -49,7 +61,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_aurelius_v01"
+   "bust_pick": "eu_aurelius_v01",
+   "expr_pick": {
+    "happy": "eu_aurelius__happy_v01",
+    "angry": "eu_aurelius__angry_v01",
+    "sad": "eu_aurelius__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_caesar",
@@ -65,7 +83,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_caesar_v02"
+   "bust_pick": "eu_caesar_v02",
+   "expr_pick": {
+    "happy": "eu_caesar__happy_v01",
+    "angry": "eu_caesar__angry_v01",
+    "sad": "eu_caesar__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_charlemagne",
@@ -81,7 +105,11 @@
     203,
     159
    ],
-   "bust_pick": "eu_charlemagne_v02"
+   "bust_pick": "eu_charlemagne_v02",
+   "face_xy": [
+    384,
+    340
+   ]
   },
   {
    "id": "eu_eleanor",
@@ -97,7 +125,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_eleanor_v01"
+   "bust_pick": "eu_eleanor_v01",
+   "expr_pick": {
+    "happy": "eu_eleanor__happy_v01",
+    "angry": "eu_eleanor__angry_v01",
+    "sad": "eu_eleanor__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_elizabeth",
@@ -113,7 +147,11 @@
     203,
     159
    ],
-   "bust_pick": "eu_elizabeth_v01"
+   "bust_pick": "eu_elizabeth_v01",
+   "face_xy": [
+    384,
+    396
+   ]
   },
   {
    "id": "eu_frederick",
@@ -129,7 +167,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_frederick_v01"
+   "bust_pick": "eu_frederick_v01",
+   "expr_pick": {
+    "happy": "eu_frederick__happy_v01",
+    "angry": "eu_frederick__angry_v01",
+    "sad": "eu_frederick__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_hannibal",
@@ -145,7 +189,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_hannibal_v01"
+   "bust_pick": "eu_hannibal_v01",
+   "expr_pick": {
+    "happy": "eu_hannibal__happy_v01",
+    "angry": "eu_hannibal__angry_v01",
+    "sad": "eu_hannibal__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_harald",
@@ -161,7 +211,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_harald_v01"
+   "bust_pick": "eu_harald_v01",
+   "expr_pick": {
+    "happy": "eu_harald__happy_v01",
+    "angry": "eu_harald__angry_v01",
+    "sad": "eu_harald__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_joan",
@@ -177,7 +233,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_joan_v02"
+   "bust_pick": "eu_joan_v02",
+   "expr_pick": {
+    "happy": "eu_joan__happy_v01",
+    "angry": "eu_joan__angry_v01",
+    "sad": "eu_joan__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_machiavelli",
@@ -193,7 +255,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_machiavelli_v01"
+   "bust_pick": "eu_machiavelli_v01",
+   "expr_pick": {
+    "happy": "eu_machiavelli__happy_v01",
+    "angry": "eu_machiavelli__angry_v01",
+    "sad": "eu_machiavelli__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_michelangelo",
@@ -209,7 +277,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_michelangelo_v01"
+   "bust_pick": "eu_michelangelo_v01",
+   "expr_pick": {
+    "happy": "eu_michelangelo__happy_v01",
+    "angry": "eu_michelangelo__angry_v01",
+    "sad": "eu_michelangelo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_napoleon",
@@ -225,7 +299,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_napoleon_v01"
+   "bust_pick": "eu_napoleon_v01",
+   "expr_pick": {
+    "happy": "eu_napoleon__happy_v01",
+    "angry": "eu_napoleon__angry_v01",
+    "sad": "eu_napoleon__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_nelson",
@@ -241,7 +321,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_nelson_v01"
+   "bust_pick": "eu_nelson_v01",
+   "expr_pick": {
+    "happy": "eu_nelson__happy_v01",
+    "angry": "eu_nelson__angry_v01",
+    "sad": "eu_nelson__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_newton",
@@ -257,7 +343,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_newton_v01"
+   "bust_pick": "eu_newton_v01",
+   "expr_pick": {
+    "happy": "eu_newton__happy_v01",
+    "angry": "eu_newton__angry_v01",
+    "sad": "eu_newton__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_peter",
@@ -273,7 +365,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_peter_v01"
+   "bust_pick": "eu_peter_v01",
+   "expr_pick": {
+    "happy": "eu_peter__happy_v01",
+    "angry": "eu_peter__angry_v01",
+    "sad": "eu_peter__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_richard",
@@ -289,7 +387,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_richard_v01"
+   "bust_pick": "eu_richard_v01",
+   "expr_pick": {
+    "happy": "eu_richard__happy_v01",
+    "angry": "eu_richard__angry_v01",
+    "sad": "eu_richard__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_scipio",
@@ -305,7 +409,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_scipio_v01"
+   "bust_pick": "eu_scipio_v01",
+   "expr_pick": {
+    "happy": "eu_scipio__happy_v01",
+    "angry": "eu_scipio__angry_v01",
+    "sad": "eu_scipio__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_william",
@@ -321,7 +431,13 @@
     203,
     159
    ],
-   "bust_pick": "eu_william_v01"
+   "bust_pick": "eu_william_v01",
+   "expr_pick": {
+    "happy": "eu_william__happy_v01",
+    "angry": "eu_william__angry_v02",
+    "sad": "eu_william__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_hideyoshi",
@@ -337,7 +453,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_hideyoshi_v01"
+   "bust_pick": "jp_hideyoshi_v01",
+   "expr_pick": {
+    "happy": "jp_hideyoshi__happy_v01",
+    "angry": "jp_hideyoshi__angry_v01",
+    "sad": "jp_hideyoshi__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_ieyasu",
@@ -353,7 +475,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_ieyasu_v01"
+   "bust_pick": "jp_ieyasu_v01",
+   "expr_pick": {
+    "happy": "jp_ieyasu__happy_v01",
+    "angry": "jp_ieyasu__angry_v01",
+    "sad": "jp_ieyasu__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_kenshin",
@@ -369,7 +497,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_kenshin_v01"
+   "bust_pick": "jp_kenshin_v01",
+   "expr_pick": {
+    "happy": "jp_kenshin__happy_v01",
+    "angry": "jp_kenshin__angry_v01",
+    "sad": "jp_kenshin__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_masamune",
@@ -385,7 +519,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_masamune_v02"
+   "bust_pick": "jp_masamune_v02",
+   "expr_pick": {
+    "happy": "jp_masamune__happy_v01",
+    "angry": "jp_masamune__angry_v01",
+    "sad": "jp_masamune__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_mitsukuni",
@@ -401,7 +541,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_mitsukuni_v01"
+   "bust_pick": "jp_mitsukuni_v01",
+   "expr_pick": {
+    "happy": "jp_mitsukuni__happy_v01",
+    "angry": "jp_mitsukuni__angry_v01",
+    "sad": "jp_mitsukuni__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_murasaki",
@@ -417,7 +563,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_murasaki_v01"
+   "bust_pick": "jp_murasaki_v01",
+   "expr_pick": {
+    "happy": "jp_murasaki__happy_v01",
+    "angry": "jp_murasaki__angry_v01",
+    "sad": "jp_murasaki__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_naosuke",
@@ -433,7 +585,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_naosuke_v01"
+   "bust_pick": "jp_naosuke_v01",
+   "expr_pick": {
+    "happy": "jp_naosuke__happy_v01",
+    "angry": "jp_naosuke__angry_v01",
+    "sad": "jp_naosuke__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_nobunaga",
@@ -449,7 +607,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_nobunaga_v01"
+   "bust_pick": "jp_nobunaga_v01",
+   "expr_pick": {
+    "happy": "jp_nobunaga__happy_v01",
+    "angry": "jp_nobunaga__angry_v01",
+    "sad": "jp_nobunaga__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_ryoma",
@@ -465,7 +629,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_ryoma_v01"
+   "bust_pick": "jp_ryoma_v01",
+   "expr_pick": {
+    "happy": "jp_ryoma__happy_v01",
+    "angry": "jp_ryoma__angry_v01",
+    "sad": "jp_ryoma__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_saigo",
@@ -481,7 +651,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_saigo_v01"
+   "bust_pick": "jp_saigo_v01",
+   "expr_pick": {
+    "happy": "jp_saigo__happy_v01",
+    "angry": "jp_saigo__angry_v01",
+    "sad": "jp_saigo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_seishonagon",
@@ -497,7 +673,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_seishonagon_v01"
+   "bust_pick": "jp_seishonagon_v01",
+   "expr_pick": {
+    "happy": "jp_seishonagon__happy_v01",
+    "angry": "jp_seishonagon__angry_v01",
+    "sad": "jp_seishonagon__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_shingen",
@@ -513,7 +695,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_shingen_v01"
+   "bust_pick": "jp_shingen_v01",
+   "expr_pick": {
+    "happy": "jp_shingen__happy_v01",
+    "angry": "jp_shingen__angry_v01",
+    "sad": "jp_shingen__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_taira",
@@ -529,7 +717,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_taira_v01"
+   "bust_pick": "jp_taira_v01",
+   "expr_pick": {
+    "happy": "jp_taira__happy_v01",
+    "angry": "jp_taira__angry_v01",
+    "sad": "jp_taira__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_yoritomo",
@@ -545,7 +739,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_yoritomo_v01"
+   "bust_pick": "jp_yoritomo_v01",
+   "expr_pick": {
+    "happy": "jp_yoritomo__happy_v01",
+    "angry": "jp_yoritomo__angry_v01",
+    "sad": "jp_yoritomo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "jp_yukimura",
@@ -561,7 +761,13 @@
     203,
     159
    ],
-   "bust_pick": "jp_yukimura_v02"
+   "bust_pick": "jp_yukimura_v02",
+   "expr_pick": {
+    "happy": "jp_yukimura__happy_v01",
+    "angry": "jp_yukimura__angry_v01",
+    "sad": "jp_yukimura__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_ahnjunggeun",
@@ -577,7 +783,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_ahnjunggeun_v01"
+   "bust_pick": "kr_ahnjunggeun_v01",
+   "expr_pick": {
+    "happy": "kr_ahnjunggeun__happy_v01",
+    "angry": "kr_ahnjunggeun__angry_v01",
+    "sad": "kr_ahnjunggeun__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_choemuseon",
@@ -593,7 +805,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_choemuseon_v01"
+   "bust_pick": "kr_choemuseon_v01",
+   "expr_pick": {
+    "happy": "kr_choemuseon__happy_v01",
+    "angry": "kr_choemuseon__angry_v01",
+    "sad": "kr_choemuseon__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_daejoyeong",
@@ -609,7 +827,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_daejoyeong_v02"
+   "bust_pick": "kr_daejoyeong_v02",
+   "expr_pick": {
+    "happy": "kr_daejoyeong__happy_v01",
+    "angry": "kr_daejoyeong__angry_v01",
+    "sad": "kr_daejoyeong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_euljimundeok",
@@ -625,7 +849,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_euljimundeok_v01"
+   "bust_pick": "kr_euljimundeok_v01",
+   "expr_pick": {
+    "happy": "kr_euljimundeok__happy_v01",
+    "angry": "kr_euljimundeok__angry_v01",
+    "sad": "kr_euljimundeok__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_ganggamchan",
@@ -641,7 +871,11 @@
     203,
     159
    ],
-   "bust_pick": "kr_ganggamchan_v02"
+   "bust_pick": "kr_ganggamchan_v02",
+   "face_xy": [
+    388,
+    357
+   ]
   },
   {
    "id": "kr_gwakjaeu",
@@ -657,7 +891,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_gwakjaeu_v01"
+   "bust_pick": "kr_gwakjaeu_v01",
+   "expr_pick": {
+    "happy": "kr_gwakjaeu__happy_v01",
+    "angry": "kr_gwakjaeu__angry_v01",
+    "sad": "kr_gwakjaeu__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_gwanggaeto",
@@ -673,7 +913,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_gwanggaeto_v01"
+   "bust_pick": "kr_gwanggaeto_v01",
+   "expr_pick": {
+    "happy": "kr_gwanggaeto__happy_v01",
+    "angry": "kr_gwanggaeto__angry_v01",
+    "sad": "kr_gwanggaeto__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_heojun",
@@ -689,7 +935,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_heojun_v01"
+   "bust_pick": "kr_heojun_v01",
+   "expr_pick": {
+    "happy": "kr_heojun__happy_v01",
+    "angry": "kr_heojun__angry_v01",
+    "sad": "kr_heojun__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_hwanghui",
@@ -705,7 +957,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_hwanghui_v01"
+   "bust_pick": "kr_hwanghui_v01",
+   "expr_pick": {
+    "happy": "kr_hwanghui__happy_v01",
+    "angry": "kr_hwanghui__angry_v01",
+    "sad": "kr_hwanghui__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_jangyeongsil",
@@ -721,7 +979,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_jangyeongsil_v01"
+   "bust_pick": "kr_jangyeongsil_v01",
+   "expr_pick": {
+    "happy": "kr_jangyeongsil__happy_v01",
+    "angry": "kr_jangyeongsil__angry_v01",
+    "sad": "kr_jangyeongsil__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_jeongmongju",
@@ -737,7 +1001,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_jeongmongju_v01"
+   "bust_pick": "kr_jeongmongju_v01",
+   "expr_pick": {
+    "happy": "kr_jeongmongju__happy_v01",
+    "angry": "kr_jeongmongju__angry_v01",
+    "sad": "kr_jeongmongju__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_jeongyakyong",
@@ -753,7 +1023,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_jeongyakyong_v01"
+   "bust_pick": "kr_jeongyakyong_v01",
+   "expr_pick": {
+    "happy": "kr_jeongyakyong__happy_v02",
+    "angry": "kr_jeongyakyong__angry_v01",
+    "sad": "kr_jeongyakyong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_kimgu",
@@ -769,7 +1045,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_kimgu_v01"
+   "bust_pick": "kr_kimgu_v01",
+   "expr_pick": {
+    "happy": "kr_kimgu__happy_v01",
+    "angry": "kr_kimgu__angry_v01",
+    "sad": "kr_kimgu__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_kimjeongho",
@@ -785,7 +1067,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_kimjeongho_v01"
+   "bust_pick": "kr_kimjeongho_v01",
+   "expr_pick": {
+    "happy": "kr_kimjeongho__happy_v01",
+    "angry": "kr_kimjeongho__angry_v01",
+    "sad": "kr_kimjeongho__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_kimyusin",
@@ -801,7 +1089,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_kimyusin_v01"
+   "bust_pick": "kr_kimyusin_v01",
+   "expr_pick": {
+    "happy": "kr_kimyusin__happy_v01",
+    "angry": "kr_kimyusin__angry_v01",
+    "sad": "kr_kimyusin__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_nongae",
@@ -817,7 +1111,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_nongae_v01"
+   "bust_pick": "kr_nongae_v01",
+   "expr_pick": {
+    "happy": "kr_nongae__happy_v01",
+    "angry": "kr_nongae__angry_v01",
+    "sad": "kr_nongae__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_sejong",
@@ -833,7 +1133,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_sejong_v01"
+   "bust_pick": "kr_sejong_v01",
+   "expr_pick": {
+    "happy": "kr_sejong__happy_v01",
+    "angry": "kr_sejong__angry_v01",
+    "sad": "kr_sejong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_sinsaimdang",
@@ -849,7 +1155,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_sinsaimdang_v01"
+   "bust_pick": "kr_sinsaimdang_v01",
+   "expr_pick": {
+    "happy": "kr_sinsaimdang__happy_v01",
+    "angry": "kr_sinsaimdang__angry_v01",
+    "sad": "kr_sinsaimdang__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_wanggeon",
@@ -865,7 +1177,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_wanggeon_v01"
+   "bust_pick": "kr_wanggeon_v01",
+   "expr_pick": {
+    "happy": "kr_wanggeon__happy_v01",
+    "angry": "kr_wanggeon__angry_v01",
+    "sad": "kr_wanggeon__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_wonhyo",
@@ -881,7 +1199,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_wonhyo_v01"
+   "bust_pick": "kr_wonhyo_v01",
+   "expr_pick": {
+    "happy": "kr_wonhyo__happy_v01",
+    "angry": "kr_wonhyo__angry_v01",
+    "sad": "kr_wonhyo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_yeongaesomun",
@@ -897,7 +1221,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_yeongaesomun_v02"
+   "bust_pick": "kr_yeongaesomun_v02",
+   "expr_pick": {
+    "happy": "kr_yeongaesomun__happy_v01",
+    "angry": "kr_yeongaesomun__angry_v01",
+    "sad": "kr_yeongaesomun__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_yihwang",
@@ -913,7 +1243,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_yihwang_v01"
+   "bust_pick": "kr_yihwang_v01",
+   "expr_pick": {
+    "happy": "kr_yihwang__happy_v01",
+    "angry": "kr_yihwang__angry_v01",
+    "sad": "kr_yihwang__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_yii",
@@ -929,7 +1265,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_yii_v01"
+   "bust_pick": "kr_yii_v01",
+   "expr_pick": {
+    "happy": "kr_yii__happy_v01",
+    "angry": "kr_yii__angry_v01",
+    "sad": "kr_yii__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_yisunsin",
@@ -945,7 +1287,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_yisunsin_v02"
+   "bust_pick": "kr_yisunsin_v02",
+   "expr_pick": {
+    "happy": "kr_yisunsin__happy_v01",
+    "angry": "kr_yisunsin__angry_v01",
+    "sad": "kr_yisunsin__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_yugwansun",
@@ -961,7 +1309,13 @@
     203,
     159
    ],
-   "bust_pick": "kr_yugwansun_v01"
+   "bust_pick": "kr_yugwansun_v01",
+   "expr_pick": {
+    "happy": "kr_yugwansun__happy_v01",
+    "angry": "kr_yugwansun__angry_v01",
+    "sad": "kr_yugwansun__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_diaochan",
@@ -977,7 +1331,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_diaochan_v01"
+   "bust_pick": "sg_diaochan_v01",
+   "expr_pick": {
+    "happy": "sg_diaochan__happy_v01",
+    "angry": "sg_diaochan__angry_v02",
+    "sad": "sg_diaochan__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_guanyu",
@@ -993,7 +1353,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_guanyu_v01"
+   "bust_pick": "sg_guanyu_v01",
+   "expr_pick": {
+    "happy": "sg_guanyu__happy_v01",
+    "angry": "sg_guanyu__angry_v01",
+    "sad": "sg_guanyu__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_huatuo",
@@ -1009,7 +1375,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_huatuo_v01"
+   "bust_pick": "sg_huatuo_v01",
+   "expr_pick": {
+    "happy": "sg_huatuo__happy_v01",
+    "angry": "sg_huatuo__angry_v01",
+    "sad": "sg_huatuo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_luxun",
@@ -1025,7 +1397,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_luxun_v01"
+   "bust_pick": "sg_luxun_v01",
+   "expr_pick": {
+    "happy": "sg_luxun__happy_v01",
+    "angry": "sg_luxun__angry_v01",
+    "sad": "sg_luxun__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_machao",
@@ -1041,7 +1419,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_machao_v01"
+   "bust_pick": "sg_machao_v01",
+   "expr_pick": {
+    "happy": "sg_machao__happy_v01",
+    "angry": "sg_machao__angry_v01",
+    "sad": "sg_machao__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_menghuo",
@@ -1057,7 +1441,11 @@
     203,
     159
    ],
-   "bust_pick": "sg_menghuo_v02"
+   "bust_pick": "sg_menghuo_v02",
+   "face_xy": [
+    390,
+    70
+   ]
   },
   {
    "id": "sg_pangtong",
@@ -1073,7 +1461,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_pangtong_v01"
+   "bust_pick": "sg_pangtong_v01",
+   "expr_pick": {
+    "happy": "sg_pangtong__happy_v01",
+    "angry": "sg_pangtong__angry_v01",
+    "sad": "sg_pangtong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_simayi",
@@ -1089,7 +1483,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_simayi_v01"
+   "bust_pick": "sg_simayi_v01",
+   "expr_pick": {
+    "happy": "sg_simayi__happy_v01",
+    "angry": "sg_simayi__angry_v01",
+    "sad": "sg_simayi__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_xiahoudun",
@@ -1105,7 +1505,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_xiahoudun_v02"
+   "bust_pick": "sg_xiahoudun_v02",
+   "expr_pick": {
+    "happy": "sg_xiahoudun__happy_v01",
+    "angry": "sg_xiahoudun__angry_v01",
+    "sad": "sg_xiahoudun__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_xunyu",
@@ -1121,7 +1527,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_xunyu_v01"
+   "bust_pick": "sg_xunyu_v01",
+   "expr_pick": {
+    "happy": "sg_xunyu__happy_v01",
+    "angry": "sg_xunyu__angry_v01",
+    "sad": "sg_xunyu__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_zhangfei",
@@ -1137,7 +1549,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_zhangfei_v02"
+   "bust_pick": "sg_zhangfei_v02",
+   "expr_pick": {
+    "happy": "sg_zhangfei__happy_v01",
+    "angry": "sg_zhangfei__angry_v01",
+    "sad": "sg_zhangfei__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_zhangliao",
@@ -1153,7 +1571,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_zhangliao_v01"
+   "bust_pick": "sg_zhangliao_v01",
+   "expr_pick": {
+    "happy": "sg_zhangliao__happy_v01",
+    "angry": "sg_zhangliao__angry_v01",
+    "sad": "sg_zhangliao__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_zhaoyun",
@@ -1169,7 +1593,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_zhaoyun_v01"
+   "bust_pick": "sg_zhaoyun_v01",
+   "expr_pick": {
+    "happy": "sg_zhaoyun__happy_v01",
+    "angry": "sg_zhaoyun__angry_v01",
+    "sad": "sg_zhaoyun__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_zhouyu",
@@ -1185,7 +1615,13 @@
     203,
     159
    ],
-   "bust_pick": "sg_zhouyu_v01"
+   "bust_pick": "sg_zhouyu_v01",
+   "expr_pick": {
+    "happy": "sg_zhouyu__happy_v01",
+    "angry": "sg_zhouyu__angry_v01",
+    "sad": "sg_zhouyu__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_akbar",
@@ -1201,7 +1637,13 @@
     203,
     159
    ],
-   "bust_pick": "wd_akbar_v01"
+   "bust_pick": "wd_akbar_v01",
+   "expr_pick": {
+    "happy": "wd_akbar__happy_v01",
+    "angry": "wd_akbar__angry_v01",
+    "sad": "wd_akbar__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_ashoka",
@@ -1217,7 +1659,13 @@
     203,
     159
    ],
-   "bust_pick": "wd_ashoka_v01"
+   "bust_pick": "wd_ashoka_v01",
+   "expr_pick": {
+    "happy": "wd_ashoka__happy_v01",
+    "angry": "wd_ashoka__angry_v01",
+    "sad": "wd_ashoka__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_attila",
@@ -1233,7 +1681,13 @@
     203,
     159
    ],
-   "bust_pick": "wd_attila_v01"
+   "bust_pick": "wd_attila_v01",
+   "expr_pick": {
+    "happy": "wd_attila__happy_v01",
+    "angry": "wd_attila__angry_v01",
+    "sad": "wd_attila__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_cleopatra",
@@ -1249,7 +1703,13 @@
     203,
     159
    ],
-   "bust_pick": "wd_cleopatra_v01"
+   "bust_pick": "wd_cleopatra_v01",
+   "expr_pick": {
+    "happy": "wd_cleopatra__happy_v01",
+    "angry": "wd_cleopatra__angry_v01",
+    "sad": "wd_cleopatra__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_hammurabi",
@@ -1265,7 +1725,13 @@
     203,
     159
    ],
-   "bust_pick": "wd_hammurabi_v01"
+   "bust_pick": "wd_hammurabi_v01",
+   "expr_pick": {
+    "happy": "wd_hammurabi__happy_v01",
+    "angry": "wd_hammurabi__angry_v01",
+    "sad": "wd_hammurabi__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_ibnbattuta",
@@ -1281,7 +1747,13 @@
     203,
     159
    ],
-   "bust_pick": "wd_ibnbattuta_v01"
+   "bust_pick": "wd_ibnbattuta_v01",
+   "expr_pick": {
+    "happy": "wd_ibnbattuta__happy_v01",
+    "angry": "wd_ibnbattuta__angry_v01",
+    "sad": "wd_ibnbattuta__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_khubilai",
@@ -1297,7 +1769,11 @@
     203,
     159
    ],
-   "bust_pick": "wd_khubilai_v01"
+   "bust_pick": "wd_khubilai_v01",
+   "face_xy": [
+    384,
+    350
+   ]
   },
   {
    "id": "wd_mansamusa",
@@ -1313,7 +1789,13 @@
     203,
     159
    ],
-   "bust_pick": "wd_mansamusa_v01"
+   "bust_pick": "wd_mansamusa_v01",
+   "expr_pick": {
+    "happy": "wd_mansamusa__happy_v01",
+    "angry": "wd_mansamusa__angry_v01",
+    "sad": "wd_mansamusa__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_moctezuma",
@@ -1329,7 +1811,13 @@
     203,
     159
    ],
-   "bust_pick": "wd_moctezuma_v01"
+   "bust_pick": "wd_moctezuma_v01",
+   "expr_pick": {
+    "happy": "wd_moctezuma__happy_v01",
+    "angry": "wd_moctezuma__angry_v01",
+    "sad": "wd_moctezuma__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_pachacuti",
@@ -1345,7 +1833,11 @@
     203,
     159
    ],
-   "bust_pick": "wd_pachacuti_v01"
+   "bust_pick": "wd_pachacuti_v01",
+   "face_xy": [
+    384,
+    429
+   ]
   },
   {
    "id": "wd_saladin",
@@ -1361,7 +1853,13 @@
     203,
     159
    ],
-   "bust_pick": "wd_saladin_v01"
+   "bust_pick": "wd_saladin_v01",
+   "expr_pick": {
+    "happy": "wd_saladin__happy_v01",
+    "angry": "wd_saladin__angry_v01",
+    "sad": "wd_saladin__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_suleiman",
@@ -1377,7 +1875,13 @@
     203,
     159
    ],
-   "bust_pick": "wd_suleiman_v01"
+   "bust_pick": "wd_suleiman_v01",
+   "expr_pick": {
+    "happy": "wd_suleiman__happy_v01",
+    "angry": "wd_suleiman__angry_v01",
+    "sad": "wd_suleiman__sad_v01"
+   },
+   "eye": "o"
   }
  ]
 }
