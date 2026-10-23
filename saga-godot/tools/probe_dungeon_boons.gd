@@ -29,6 +29,7 @@ func _axis_of(k: String) -> String:
 func _initialize() -> void:
 	await process_frame  # DungeonRunState·DungeonGoldState autoload 가 올라온 뒤
 	seed(20260824)
+	OS.set_environment("SAGA_BLESSING", "0")   # G-0335 신의 가호 덤은 probe_dungeon_blessing 몫 — 여기선 은사 날 수치만
 	var R: Node = root.get_node("DungeonRunState")
 	var G: Node = root.get_node("DungeonGoldState")
 	var saved_boons: Dictionary = R.boons.duplicate()

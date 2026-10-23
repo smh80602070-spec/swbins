@@ -252,3 +252,11 @@ static func realm_marry(tree: SceneTree) -> void:
 	RS.gold = 5000
 	RS.roster = ["sg_zhugeliang", "sg_guanyu", "sg_zhangfei"]
 	b.call("_pick_bride", eid, {"layer": CanvasLayer.new()})
+
+
+## G-0335 2나락 신의 가호 — 신마다 은사를 겹쳐 둔 채 첫 방 출구 3택(카드 끝 신 계보 글)
+static func dg_bless(tree: SceneTree) -> void:
+	tree.root.get_node("DungeonRunState").set("boons", {"fury": 3, "crit": 1, "wall": 2, "dash": 1, "reach": 1, "skillamp1": 2, "greed": 1})
+	_later(tree, 20, func() -> void:
+		(tree.current_scene.get("_exit_used") as Array)[0] = false   # 세이브에서 깬 방이면 출구가 닫혀 있다
+		tree.current_scene.call("_on_exit_entered", _player(tree), 0))

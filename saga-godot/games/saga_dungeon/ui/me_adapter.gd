@@ -22,6 +22,9 @@ static func model(hud: Node) -> Dictionary:
 		{"label": "받는 피해", "value": "×%.2f" % guard},
 		{"label": "치명", "value": "%d%%" % roundi(DungeonRunState.crit_chance())},
 	]
+	var bless: String = preload("res://games/saga_dungeon/data/dungeon_blessing.gd").summary(DungeonRunState.boons)   # G-0335 신의 가호
+	if bless != "":
+		stats.append({"label": "가호", "value": bless})
 	var skill := hud.get_node_or_null("SkillButton") if hud != null else null
 	var grow := {}
 	if skill != null and skill.has_method("open_meridian"):

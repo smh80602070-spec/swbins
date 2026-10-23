@@ -508,8 +508,9 @@ func _on_exit_entered(body: Node3D, room_index: int) -> void:
 		var b := DungeonBoons.by_key(key)
 		var axis_icon: String = axis_icons.get(str(b.get("axis", "")), "")
 		var rarity_tag: String = rarity_tags.get(str(b.get("rarity", "common")), "")
+		var god_tag: String = preload("res://games/saga_dungeon/data/dungeon_blessing.gd").tag(key, DungeonRunState.boons)   # G-0335 신 계보 진행
 		choices.append({
-			"label": "%s %s%s %s — %s" % [axis_icon, rarity_tag, b.emoji, b.name, b.desc],
+			"label": "%s %s%s %s — %s%s" % [axis_icon, rarity_tag, b.emoji, b.name, b.desc, (" · " + god_tag) if god_tag != "" else ""],
 			"cb": func() -> void: _on_boon_picked(key, body, layer_box, room_index, is_final),
 		})
 	## 5.1 "거절" — 골드를 즉시 넣고 라벨에 그 값을 미리 보여 준다.
@@ -523,7 +524,11 @@ func _on_exit_entered(body: Node3D, room_index: int) -> void:
 
 func _on_boon_picked(key: String, body: Node3D, layer_box: Dictionary, room_index: int, is_final: bool) -> void:
 	(layer_box["layer"] as CanvasLayer).queue_free()
+	var before: Dictionary = DungeonRunState.boons.duplicate()
 	DungeonRunState.apply_boon(key)
+	var up: String = preload("res://games/saga_dungeon/data/dungeon_blessing.gd").up_text(before, DungeonRunState.boons)   # G-0335 가호 단 오름
+	if up != "":
+		Toast.show(self, up, 4.0)
 	_finish_exit(body, room_index, is_final)
 
 

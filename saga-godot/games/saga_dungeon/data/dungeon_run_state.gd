@@ -23,6 +23,7 @@ extends Node
 signal boons_changed
 
 const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")   # G-0217 경락도
+const Blessing := preload("res://games/saga_dungeon/data/dungeon_blessing.gd")   # G-0335 신의 가호
 
 var boons: Dictionary = {} # key(String) -> count(int)
 
@@ -146,6 +147,7 @@ func _sum_eff(eff_key: String) -> float:
 	## 일곱 번째 자리, 난입이 꺼져 있으면 0.
 	total += DungeonHordeState.world_eff_sum(eff_key)
 	total += Meridian.val(eff_key)   # G-0217 경락도 — 지금 직업 그물의 능력치 합(여덟 번째 자리)
+	total += Blessing.eff(boons, eff_key)   # G-0335 신의 가호 — 한 신 은사 3·6개 덤(아홉 번째 자리, 영구 boons 만)
 	var buf: Dictionary = _temp_buffs.get(eff_key, {})
 	if not buf.is_empty() and Time.get_ticks_msec() < int(buf.until_msec):
 		total += float(buf.v)
