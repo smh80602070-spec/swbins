@@ -715,12 +715,22 @@ namespace Saga.Go.Player
 
         // ---- 도움 --------------------------------------------------------------
 
+        private static readonly RaycastHit[] _groundHits = new RaycastHit[8];
+
         public float HeightAboveGround()
         {
+            // tasks U-0184 — 제 몸(CharacterController 등 내 트랜스폼 아래 충돌체)은 뺀다. 2나락 U-0123 과 같은 고침: autoSyncTransforms 꺼짐이면
+            // CC 물리 자세가 옛 자리에 남아, 레이가 그것을 맞혀 높이 ~0 이 나올 수 있다(탈것 오름·활공·내리꽂기 판정).
             Vector3 origin = transform.position + Vector3.up * 0.5f;
-            if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 300f, ~0, QueryTriggerInteraction.Ignore))
-                return hit.distance - 0.5f;
-            return 300f;
+            int n = Physics.RaycastNonAlloc(origin, Vector3.down, _groundHits, 300f, ~0, QueryTriggerInteraction.Ignore);
+            float best = float.MaxValue;
+            for (int i = 0; i < n; i++)
+            {
+                var c = _groundHits[i].collider;
+                if (c == null || c.transform.IsChildOf(transform)) continue;
+                if (_groundHits[i].distance < best) best = _groundHits[i].distance;
+            }
+            return best < float.MaxValue ? best - 0.5f : 300f;
         }
 
         private void SetModeParams()
