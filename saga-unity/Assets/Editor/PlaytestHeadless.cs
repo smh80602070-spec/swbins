@@ -187,6 +187,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoAim.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-22 활 조준·과녁 잠금(동행·상자·이야기 되돌림)
                 if (!PlaytestCameraZoom.Run("PlaytestHeadless", "go")) _hadError = true; // tasks U-0161 휠 줌 한계(줌 되돌림)
                 if (!PlaytestGoAutoQuest.Run("PlaytestHeadless")) _hadError = true; // tasks U-0163 자동 퀘스트(이야기·체력·자리 되돌림)
+                if (!PlaytestGoAutoPath.Run()) _hadError = true; // tasks U-0190 자동 퀘스트 길찾기(가짜 격자·임시 벽 치움)
                 if (!PlaytestGoRestSites.Run()) _hadError = true; // tasks U-0168 모닥불 쉼터(쉼터·체력·적·자리·부활 자리 되돌림)
                 if (!PlaytestGoMountFight.Run()) _hadError = true; // tasks U-0171 말 위 전투 — 배율·평타·돌진·막는 손·낙마·안 내림(탈것·적·전투·자리 되돌림)
                 if (!PlaytestGoRunRank.Run()) _hadError = true; // tasks U-0174 무리 토벌 등급 — S·장판·버림·세이브(기록·레벨·적 되돌림)

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -31,6 +32,15 @@ namespace Saga.Go.UI
         private float _talkT, _sideT;
         private Vector3 _side;
         private float _paint;
+        // tasks U-0190 길찾기 — 앞이 막히면 GoAutoPath 로 돌아갈 경유점을 따라간다
+        public const float PlanCd = 1.5f, WayR = 1f, PathStillSec = 2f;
+        private List<Vector3> _path;
+        private int _pi;
+        private float _planCd, _pathStillT;
+        private Vector3 _pathFor, _pathLast;
+        /// <summary>진단 — 길을 낸 횟수 · 지금 따라가는 길(없으면 null).</summary>
+        public int Plans { get; private set; }
+        public IReadOnlyList<Vector3> Path => _path;
 
         /// <summary>진단 — 손 조작 감시를 끈다(진단이 SetTestInput 을 쓰므로) · 손 조작 한 번을 흉내 낸다.</summary>
         public static bool WatchOffForTest;
@@ -147,7 +157,7 @@ namespace Saga.Go.UI
 
         public void Begin(AutoQuest.Goal g)
         {
-            _sideT = 0f; _talkT = 0f;
+            _sideT = 0f; _talkT = 0f; _path = null; _planCd = 0f;
             DialogueLabel.Instance?.Show("▶ " + GoLocalization.T("aq.title", "자동 퀘스트") + " — " + g.Label, 2.5f);
         }
 
@@ -162,6 +172,8 @@ namespace Saga.Go.UI
             var p = Pos();
             if (p == null || g.At == null) return;
             Vector3 to = g.At.Value - p.Value; to.y = 0f;
+            var fc = FieldCombat.Instance;
+            if (fc != null && TryPlan(p.Value, g.At.Value, fc.transform)) { _sideT = 0f; Pc?.RequestJump(); return; } // tasks U-0190 — 길이 나면 비켜 걷기 대신 그 길
             _side = Vector3.Cross(Vector3.up, to.sqrMagnitude > 0.01f ? to.normalized : Vector3.forward) * (n % 2 == 0 ? -1f : 1f);
             _sideT = SideSec + n;
             Pc?.RequestJump();
@@ -173,6 +185,7 @@ namespace Saga.Go.UI
             var fc = FieldCombat.Instance;
             var ui = StoryUi.Instance;
             if (pc == null || fc == null) return "";
+            _planCd -= dt;
             if (GoCutscenes.Playing) { pc.ClearTestInput(); return GoLocalization.T("aq.scene", "장면"); }
             // 대화 — 줄을 넘긴다(고르기 줄은 첫 답)
             if (ui != null && ui.TalkOpen)
@@ -199,9 +212,50 @@ namespace Saga.Go.UI
             Vector3 to = g.At.Value - me; to.y = 0f;
             float dist = to.magnitude;
             if (g.Type == "talk" && dist <= GoStory.TalkR && ui != null && ui.StartTalk()) { pc.ClearTestInput(); return GoLocalization.T("aq.talk", "대화"); }
-            if (dist > g.Radius * ArriveFrac) { Walk(pc, to / Mathf.Max(dist, 0.001f), dist > SprintFar); return $"{GoLocalization.T("aq.walk", "걷는 중")} {Mathf.RoundToInt(dist)}m"; }
+            if (dist > g.Radius * ArriveFrac)
+            {
+                Vector3 dir = to / Mathf.Max(dist, 0.001f);
+                if (FollowPath(me, g.At.Value, dt, out var pd)) dir = pd;
+                else if (_planCd <= 0f && GoAutoPath.BlockedAhead(me, dir, fc.transform))
+                {
+                    _planCd = PlanCd;
+                    if (TryPlan(me, g.At.Value, fc.transform) && FollowPath(me, g.At.Value, 0f, out pd)) dir = pd;
+                }
+                Walk(pc, dir, dist > SprintFar);
+                return $"{(_path != null ? "🧭 " : "")}{GoLocalization.T("aq.walk", "걷는 중")} {Mathf.RoundToInt(dist)}m";
+            }
             pc.ClearTestInput();
             return GoLocalization.T("aq.wait", "도착");
+        }
+
+        /// <summary>tasks U-0190 — 둘레 격자로 목표까지(못 닿으면 가장 가까운 데까지) 길을 낸다.</summary>
+        public bool TryPlan(Vector3 me, Vector3 goal, Transform self)
+        {
+            var way = GoAutoPath.Plan(me, goal, self);
+            if (way == null || way.Count == 0) { _path = null; return false; }
+            _path = way; _pi = 0; _pathFor = goal; _pathLast = me; _pathStillT = 0f;
+            Plans++;
+            return true;
+        }
+
+        /// <summary>경유점 따라가기 — 닿으면 다음 · 다 오면 버림 · 목표가 바뀌었거나 2초 제자리면 버림.</summary>
+        private bool FollowPath(Vector3 me, Vector3 goal, float dt, out Vector3 dir)
+        {
+            dir = Vector3.zero;
+            if (_path == null) return false;
+            Vector3 gd = goal - _pathFor; gd.y = 0f;
+            if (gd.sqrMagnitude > 1f) { _path = null; return false; }
+            Vector3 mv = me - _pathLast; mv.y = 0f;
+            if (mv.sqrMagnitude > 0.25f) { _pathLast = me; _pathStillT = 0f; }
+            else if ((_pathStillT += dt) > PathStillSec) { _path = null; return false; }
+            while (_pi < _path.Count)
+            {
+                Vector3 d = _path[_pi] - me; d.y = 0f;
+                if (d.magnitude > WayR) { dir = d.normalized; return true; }
+                _pi++;
+            }
+            _path = null;
+            return false;
         }
 
         private static void Walk(PlayerController pc, Vector3 dir, bool sprint) => pc.SetTestInput(new Vector2(dir.x, dir.z), sprint);

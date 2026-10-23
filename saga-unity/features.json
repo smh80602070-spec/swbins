@@ -2249,6 +2249,23 @@
   "note": "D2(R-3 10-23): PlaytestHeadless autoquest OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0163): PlaytestHeadless autoquest OK(틀 막힘·멈춤 · 1만리 1장 첫 단계 25m 걸어가 말 걸어 단계 넘김 · 체력 낮음 · 손 조작 · ▶) · UiLayoutCheck 0(▶ 목표판 왼쪽, 검사가 ▶ 건너뜀) · 나머지 넷 U-0164"
  },
  {
+  "id": "un.go.autopath",
+  "name": "U-0190 1만리 자동 퀘스트 길찾기 — 가는 쪽 2.2m 안에 벽이 있으면 둘레 61×61 칸(1.5m) 격자를 너비 우선으로 훑어 경유점을 따라 돌아간다(턱 0.9m·모서리 깎기 금지·못 닿으면 가장 가까운 칸), 막힘 비켜 가기도 먼저 길을 내 본다(웹 W-0382 짝)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/UI/GoAutoPath.cs",
+   "saga-unity/Assets/Games/SagaGo/UI/GoAutoQuest.cs"
+  ],
+  "tests": [
+   "PlaytestGoAutoPath"
+  ],
+  "level": "D2",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0190",
+  "since": "2026-10-23",
+  "note": "D2(U-0190): PlaytestHeadless autopath OK — 가짜 격자(곧은 들판 경유점 하나·담 돌아감 3·갇힘 null·3m 턱 안 오름)·앞 막힘·진짜 임시 벽 돌아감 3 · autoquest OK 그대로"
+ },
+ {
   "id": "un.dg.autoquest",
   "name": "U-0164 자동 퀘스트 2나락 — 목표판 왼쪽 ▶ 로 방 클리어 단위 대신(방 적 걸어가 평타 → 인영 구출 → 문 밟아 다음 방·계단, 장면 줄 넘김), 손 조작·체력 낮음·막힘에 멈춤(웹 W-0338, 공용 몸 SagaCore/AutoQuestHud)",
   "files": [
