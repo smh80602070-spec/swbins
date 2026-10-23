@@ -280,7 +280,9 @@ func _ready() -> void:
 	add_child(companions)
 	companions.setup(get_tree().get_first_node_in_group("player"))
 	companions.set_count(DungeonPartyState.members.size())
-	DungeonPartyState.party_changed.connect(func() -> void: companions.set_count(DungeonPartyState.members.size()))
+	DungeonPartyState.party_changed.connect(func() -> void:   # G-0325 방 씬이 내려간 뒤에도 autoload 신호에 남는다 — 지워진 동행은 건너뜀
+		if is_instance_valid(companions):
+			companions.set_count(DungeonPartyState.members.size()))
 	## G-0269 그리기 부담 — 1만리·3마을과 같은 render_budget(saga_core). 2나락은 해 그림자가 없고 횃불 7개가 그림자 빛이라
 	## 몫은 작은 것 그림자 끔(처음 놓인 줍기·우물 — 나중 떨어지는 줍기는 loot_pickup._no_cast). far 1000 은 방 안이라 그대로 보임.
 	(func() -> void: preload("res://saga_core/world/render_budget.gd").apply(self, preload("res://saga_core/world/render_budget.gd").CHUNK_M,

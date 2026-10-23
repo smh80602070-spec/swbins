@@ -149,6 +149,15 @@ const CUTS := [
 	["lg_dg_mastery", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "mastery", ["@tree"]], ["call", "MenuHook", "open_me"]]],   # G-0322 ← G-0317 「내 정보」 ★
 	["lg_dg_atlas", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "atlas", ["@tree"]]]],   # G-0323 ← G-0308 부적 켜기 창 ✒️ 새기기 줄
 	["lg_fs_pen", FOREST, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "pen", ["@tree"]]]],   # G-0323 ← G-0311 가축 우리
+	["lg_st_job", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_ledger.gd", "story_job", ["@tree"]]]],   # G-0325 ← G-0289 전직 발밑 표식
+	["lg_st_fall", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_ledger.gd", "story_fall", ["@tree"]]]],   # G-0325 ← G-0292 쓰러짐 글
+	["lg_st_monthly", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_ledger.gd", "story_monthly", ["@tree"]]]],   # G-0325 ← G-0296 저장 카드 달 사명 줄
+	["lg_st_launch", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_ledger.gd", "story_launch", ["@tree"]]]],   # G-0325 ← G-0314 띄우기(한 컷씩 — time_scale)
+	["lg_dg_rank", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rank", ["@tree"]]]],   # G-0325 ← G-0312 한 판 등급 알림
+	["lg_dg_trail", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_legend", ["@tree"]], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0325 ← G-0290 전설 잔광
+	["lg_dg_rise", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rise", ["@tree"]]]],   # G-0325 ← G-0293 난입 솟음(한 컷씩 — time_scale)
+	["lg_dg_break", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_breakables", ["@tree"]]]],   # G-0325 ← G-0307 부서지는 통
+	["lg_rk_me", REALM, [["free_modal"], ["call", "MenuHook", "open_me"]]],   # G-0325 ← G-0295 군주 움직이는 초상
 	["lg_go_wind", GO, [["static", "res://tools/shot_ledger.gd", "wind", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0322 ← G-0318 바람 길잡이(촬영 70프레임 전 한 줄기)
 	["dg_room_wide", DUNGEON, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 14.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-40.0, 0.0, 0.0)]]],   # G-0112 첫 방 전체(어두움 판정)   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)
 	["go_cave_dirt", GO, [["call", "CaveInterior", "enter"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-25.0, 180.0, 0.0)]]],   # G-0098 굴 안 흙 복도

@@ -117,3 +117,103 @@ static func pen(tree: SceneTree) -> void:
 	v.call("sync")
 	if p != null:
 		p.global_position = v.global_position + Vector3(0, 0.3, 6.0)
+
+
+## 프레임 지연(창 모드는 프레임이 느리다 — 초 타이머 말고 프레임으로)
+static func _later(tree: SceneTree, n: int, cb: Callable) -> void:
+	var k := [0]
+	var w := [Callable()]
+	w[0] = func() -> void:
+		k[0] += 1
+		if k[0] >= n:
+			tree.process_frame.disconnect(w[0])
+			cb.call()
+	tree.process_frame.connect(w[0])
+
+
+## G-0325 4종횡 전직 발밑 표식 — 3차(장수 갈래) 테·별, 팔 가까이
+static func story_job(tree: SceneTree) -> void:
+	var S: Node = tree.root.get_node("StorySaveState")
+	S.set("job", "marshal")
+	var p := _player(tree)
+	if p != null:
+		p.call("_refresh_job_ring")
+
+
+## G-0325 4종횡 쓰러짐 글(잃은 것·남은 것)
+static func story_fall(tree: SceneTree) -> void:
+	var f := tree.current_scene
+	_later(tree, 20, func() -> void: (load("res://saga_core/ui/toast.gd") as GDScript).call("show", f, f.call("fall_text", 120), 6.0))
+
+
+## G-0325 4종횡 달 사명 — 저장 카드 줄(저장은 안 함, 카드만)
+static func story_monthly(tree: SceneTree) -> void:
+	var M: GDScript = load("res://games/saga_story/data/story_monthly.gd")
+	var key: String = M.call("now_key")
+	var st := {"key": key, "n": 214, "badges": ["2026-09"]}
+	var names: Dictionary = (load("res://games/saga_story/data/scenario.gd") as GDScript).get("STAGE_NAMES")
+	(load("res://saga_core/ui/session_card.gd") as GDScript).call("show", tree.current_scene, "저장했다 — 이번 세션", ["처치 +38", "골드 +420", "Lv.12", M.call("line", st, key, names)])
+
+
+## G-0325 4종횡 띄우기 — 가장 가까운 잡졸을 띄워 공중에 멈춘 순간
+static func story_launch(tree: SceneTree) -> void:
+	_later(tree, 25, func() -> void:
+		var p := _player(tree)
+		var L: GDScript = load("res://games/saga_story/data/story_launch.gd")
+		var best: Node3D = null
+		var bd := INF
+		for e in tree.get_nodes_in_group("story_enemy"):
+			if L.call("immune", e):
+				continue
+			var d := (e as Node3D).global_position.distance_to(p.global_position)
+			if d < bd:
+				bd = d
+				best = e
+		if best == null:
+			print("SHOT_LAUNCH 적 없음")
+			return
+		p.global_position = best.global_position + Vector3(-1.4, 0.2, 0)
+		print("SHOT_LAUNCH ", L.call("launch", best, 40.0))
+		_later(tree, 8, func() -> void: Engine.time_scale = 0.02))
+
+
+## G-0325 2나락 한 판 등급 알림(보기 값)
+static func dg_rank(tree: SceneTree) -> void:
+	var r := {"rank": "A", "sec": 154.0, "hits": 2, "combo": 11, "kills": 23, "bonus_gold": 84, "best": true, "prev_best": "B"}
+	_later(tree, 20, func() -> void: (load("res://saga_core/ui/toast.gd") as GDScript).call("show", tree.current_scene, (load("res://games/saga_dungeon/data/dungeon_rank.gd") as GDScript).call("text", r), 6.0))
+
+
+## G-0325 2나락 전설 무기 잔광 — 전설 무기를 들려 둔다(휘두름은 shot_action dg_attack)
+static func dg_legend(tree: SceneTree) -> void:
+	var EQ: Node = tree.root.get_node("DungeonEquipmentState")
+	EQ.equip("weapon", DungeonItems.roll(20, "weapon", 4, true))
+
+
+## G-0325 2나락 난입 등장 — 곁에 잡졸 셋이 땅에서 솟는 한가운데
+static func dg_rise(tree: SceneTree) -> void:
+	_later(tree, 20, func() -> void:
+		var p := _player(tree)
+		var E: GDScript = load("res://games/saga_dungeon/world/dungeon_enemy.gd")
+		for i in 3:
+			var e: Node3D = E.new()
+			e.set("rise_in", true)
+			e.set_physics_process(false)
+			tree.current_scene.add_child(e)
+			e.global_position = p.global_position + Vector3(-2.5 + 2.5 * i, 0.0, -3.0)
+		_later(tree, 6, func() -> void: Engine.time_scale = 0.03))
+
+
+## G-0325 2나락 부서지는 통 — 가장 가까운 통 곁에 선다
+static func dg_breakables(tree: SceneTree) -> void:
+	var p := _player(tree)
+	var best: Node3D = null
+	var bd := INF
+	for b in tree.get_nodes_in_group("dungeon_breakable"):
+		var d := (b as Node3D).global_position.distance_to(p.global_position)
+		if d < bd:
+			bd = d
+			best = b
+	if best != null:
+		p.global_position = best.global_position + Vector3(1.6, 0.3, 1.6)
+	else:
+		print("SHOT_BREAK 없음")

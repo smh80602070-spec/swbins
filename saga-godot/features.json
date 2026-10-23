@@ -5112,12 +5112,12 @@
   "tests": [
    "rank_ring"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0289",
   "since": "2026-10-22",
-  "note": "job_changed 신호(세이브 키 아님) · 옆보기라 얇은 타원"
+  "note": "job_changed 신호(세이브 키 아님) · 옆보기라 얇은 타원 · D2 G-0325 촬영 lg_st_job"
  },
  {
   "id": "gd.dungeon.tier-trail",
@@ -5130,12 +5130,12 @@
   "tests": [
    "dungeon_trail"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0290",
   "since": "2026-10-22",
-  "note": "combat_fx.slash fade_sec 기본 0.16 = 전과 같음"
+  "note": "combat_fx.slash fade_sec 기본 0.16 = 전과 같음 · D2 G-0325 촬영 lg_dg_trail"
  },
  {
   "id": "gd.core.shake-spec",
@@ -5166,12 +5166,12 @@
    "story_fall",
    "story_rank"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0292",
   "since": "2026-10-22",
-  "note": "금 절반 규칙 그대로"
+  "note": "금 절반 규칙 그대로 · D2 G-0325 촬영 lg_st_fall"
  },
  {
   "id": "gd.dungeon.rise-in",
@@ -5220,12 +5220,12 @@
   "tests": [
    "me_panel"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0295",
   "since": "2026-10-22",
-  "note": "무장 상세 시트가 고돗엔 없어 내 정보 창에"
+  "note": "무장 상세 시트가 고돗엔 없어 내 정보 창에 · D2 G-0325 촬영 lg_rk_me(정지 컷)"
  },
  {
   "id": "gd.story.monthly",
@@ -5239,12 +5239,12 @@
   "tests": [
    "story_monthly"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0296",
   "since": "2026-10-22",
-  "note": "세이브 판 23(monthly 칸) · 기기 날짜"
+  "note": "세이브 판 23(monthly 칸) · 기기 날짜 · D2 G-0325 촬영 lg_st_monthly"
  },
  {
   "id": "gd.core.hud-kit",
@@ -5295,12 +5295,12 @@
   "tests": [
    "autoquest"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0299",
   "since": "2026-10-22",
-  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338"
+  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338 · D2 G-0325 촬영 lg_dg_rank ▶"
  },
  {
   "id": "gd.forest.autoquest",
@@ -5312,12 +5312,12 @@
   "tests": [
    "autoquest"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0299",
   "since": "2026-10-22",
-  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338"
+  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338 · D2 G-0325 촬영 lg_fs_brew ▶"
  },
  {
   "id": "gd.story.autoquest",
@@ -5331,12 +5331,12 @@
   "tests": [
    "autoquest"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0299",
   "since": "2026-10-22",
-  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338"
+  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338 · D2 G-0325 촬영 lg_st_fall ▶"
  },
  {
   "id": "gd.realm.auto-rule",
@@ -5348,12 +5348,12 @@
   "tests": [
    "autoquest"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0300",
   "since": "2026-10-22",
-  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338 auto-rule.js · G-0299 개발만 → G-0300 넷"
+  "note": "공용 saga_core/ui/auto_quest_hud.gd · 웹 W-0338 auto-rule.js · G-0299 개발만 → G-0300 넷 · D2 G-0325 촬영 lg_rk_laws ▶ 시정 위임"
  },
  {
   "id": "gd.core.mocap30",
@@ -5560,12 +5560,12 @@
    "dungeon_rank",
    "story_rank"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0312",
   "since": "2026-10-23",
-  "note": "웹 W-0378 짝 · 4종횡 rank_of 위임 · S 보석 덤 없음 · SAGA_RUNRANK=0"
+  "note": "웹 W-0378 짝 · 4종횡 rank_of 위임 · S 보석 덤 없음 · SAGA_RUNRANK=0 · D2 G-0325 촬영 lg_dg_rank"
  },
  {
   "id": "gd.go.runrank",
@@ -5596,12 +5596,12 @@
   "tests": [
    "story_launch"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0314",
   "since": "2026-10-23",
-  "note": "웹 W-0345 짝 · move_forward 재사용 · SAGA_LAUNCH=0"
+  "note": "웹 W-0345 짝 · move_forward 재사용 · SAGA_LAUNCH=0 · D2 G-0325 촬영 lg_st_launch"
  },
  {
   "id": "gd.forest.relics",
