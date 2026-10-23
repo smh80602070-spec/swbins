@@ -110,6 +110,7 @@ namespace Saga.Dungeon.World
             // 고친 패턴 — 새로 짜는 컴포넌트엔 처음부터 넣는다).
             if (transform.childCount > 0)
             {
+                HideCeiling(transform.Find("Ceiling")); // tasks U-0191 — PBR 아닌 방(셸 없이 구운 판)도
                 // 씬에 구운 아치는 빌더가 다시 안 짓는다 — 메시만 타일 UV 판으로 바꿔 끼운다(U-0069)
                 if (UsePbrEnvironment) foreach (Transform child in transform)
                 {
@@ -507,6 +508,14 @@ namespace Saga.Dungeon.World
         /// <summary>U-0109 — 기본 Cube 는 면마다 UV 0~1 이라 옆면 기준 반복이 얇은 윗면·끝면에 눌려 줄무늬가 진다 →
         /// 같은 자리·크기(localScale 그대로, 콜라이더 무변경)의 면마다 미터 UV 상자(`MetricBox`)로 메시만 바꾼다.
         /// U-0112 — 벽뿐 아니라 천장·바닥 판(두께 1m)도 같은 길로(`repeat1` = 반복 1 재질).</summary>
+        /// <summary>tasks U-0191 — 게임 카메라(55°·6m, 높이 ≈5.9m)는 천장(높이 WallHeight)보다 위라 천장 윗면만 보였다(2나락 화면 = 돌바닥).
+        /// 그림자만 남긴다(방 안 빛·그림자는 그대로, 카메라에는 안 보임). 씬에 구운 천장·새로 지은 천장 모두.</summary>
+        public static void HideCeiling(Transform ceiling)
+        {
+            var r = ceiling != null ? ceiling.GetComponent<MeshRenderer>() : null;
+            if (r != null) r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+        }
+
         private void UseMetricBox(Transform wall, Material repeat1)
         {
             var mf = wall.GetComponent<MeshFilter>();
@@ -516,6 +525,7 @@ namespace Saga.Dungeon.World
             // 구워져 있고, 배칭된 렌더러의 메시를 갈면 합친 자리와 어긋날 수 있다. 재질만 바꾼다.
             if (!r.isPartOfStaticBatch) mf.sharedMesh = MetricBox.Get(wall.localScale);
             r.sharedMaterial = repeat1;
+            if (wall.name == "Ceiling") HideCeiling(wall); // tasks U-0191
         }
 
         private static Material MakeMaterial(Color color)

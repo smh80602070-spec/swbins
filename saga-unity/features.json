@@ -2283,6 +2283,23 @@
   "note": "D2(R-3 10-23): PlaytestDungeonHeadless autoquest OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0164): PlaytestDungeonHeadless autoquest OK(2층 전투방 적 12 치우고 문 밟아 방 0→1 · 체력 낮음 · 손 조작 · ▶) · 나머지 셋 U-0165~0167"
  },
  {
+  "id": "un.dg.ceiling-cam",
+  "name": "U-0191 2나락 게임 화면이 돌바닥만이던 것 — 방·복도 천장(높이 4m)이 카메라(≈5.9m)보다 아래라 천장 윗면만 보였다 → 천장 렌더러 그림자만(빛·그림자 그대로)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/World/DungeonRoomBuilder.cs",
+   "saga-unity/Assets/Games/SagaDungeon/World/DungeonCorridorBuilder.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonWalls"
+  ],
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
+  "fun": {},
+  "ticket": "U-0191",
+  "since": "2026-10-23",
+  "note": "D3(qc+claude, U-0191): 촬영 TestDungeon lgcamprobe gamecam — 모루골 방 바닥·벽·나무·깃발 위 주인공·동료 둘(고치기 전 같은 자리 돌 무늬뿐) · PlaytestDungeonHeadless slabs OK(천장 그림자만 — PBR 아닌 방·복도까지)"
+ },
+ {
   "id": "un.st.autoquest",
   "name": "U-0165 자동 퀘스트 4종횡 — 목표판 ▶ 로 이야기 걸음·사명을 대신(옆보기 좌우 걷기·턱이면 뛰기·돌아서며 평타·장면 줄 넘김), 전직·비경은 직접 하라며 멈춤(웹 W-0338)",
   "files": [

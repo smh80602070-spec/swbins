@@ -156,9 +156,20 @@ namespace Saga.EditorTools
                     }
                     else if (mesh == null || mesh.name != MetricBox.MeshName) why = $"메시 {(mesh == null ? "없음" : mesh.name)}";
                     else if ((mesh.bounds.size - Vector3.one).sqrMagnitude > 1e-6f) why = $"메시 크기 {mesh.bounds.size}";
+                    if (why == null && child.name == "Ceiling" && mr.shadowCastingMode != UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly) why = $"천장이 보임 {mr.shadowCastingMode}(U-0191 — 카메라가 천장 위라 윗면만 보인다)";
                     if (why == null && (mat == null || (mat.mainTextureScale - Vector2.one).sqrMagnitude > 1e-6f)) why = $"반복 {(mat == null ? "재질 없음" : mat.mainTextureScale.ToString("F3"))}";
                     if (why != null && bad++ < 5) Fail($"{when} {root.name}/{child.name} {why}");
                 }
+            }
+            // U-0191 — PBR 아닌 방·복도 천장도 그림자만
+            var all = new List<Transform>();
+            foreach (var r in rooms) all.Add(r.transform);
+            foreach (var c in corrs) all.Add(c.transform);
+            foreach (var root in all)
+            {
+                var ce = root.Find("Ceiling");
+                var cr = ce != null ? ce.GetComponent<MeshRenderer>() : null;
+                if (cr != null && cr.shadowCastingMode != UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly && bad++ < 5) Fail($"{when} {root.name}/Ceiling 천장이 보임 {cr.shadowCastingMode}(U-0191)");
             }
             if (slabs == 0) Fail($"{when} PBR 빌더 {roots.Count} 인데 Floor·Ceiling 렌더러 0");
             if (bad > 5) Fail($"{when} 틀린 판 모두 {bad}");

@@ -515,6 +515,43 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] lgworkers 칸 {slots} · 일꾼 {Saga.Go.Data.GoHomeWorkers.Workers.Count} · 몸 {hf.WorkerBodies} · 창 {hu.IsOpen}");
                         break;
                     }
+                    case "lgcamprobe":   // U-0191 2나락 카메라 돌바닥 — 실제 카메라·가상 카메라·주인공 자리를 적는다
+                    {
+                        var main = Camera.main;
+                        var who = GameObject.FindWithTag("Player");
+                        var rig = Object.FindFirstObjectByType<Saga.Dungeon.Player.CameraRig>();
+                        var cs = Object.FindFirstObjectByType<Saga.Dungeon.Cinematics.DungeonCutscenes>();
+                        string vc = cs != null && cs.Brain != null && cs.Brain.ActiveVirtualCamera != null ? cs.Brain.ActiveVirtualCamera.Name : "none";
+                        Debug.Log($"[ShowcaseGui] camprobe main {(main != null ? main.name + " " + main.transform.position + " " + main.transform.eulerAngles : "null")} · vcam {vc} · player {(who != null ? who.transform.position.ToString() : "null")} · rig {(rig != null ? rig.transform.position + " zoom " + rig.CurrentZoom + " parent " + (rig.transform.parent != null ? rig.transform.parent.name : "-") : "null")}");
+                        if (rig != null) foreach (Transform c in rig.transform) Debug.Log($"[ShowcaseGui] camprobe rig child {c.name} {c.position} local {c.localPosition}");
+                        if (who != null)
+                        {
+                            foreach (var h in Physics.RaycastAll(who.transform.position + Vector3.up * 30f, Vector3.down, 60f, ~0, QueryTriggerInteraction.Ignore))
+                                Debug.Log($"[ShowcaseGui] camprobe down {h.collider.name} y {h.point.y:0.00} n {h.normal}");
+                            int vis = 0, all = 0;
+                            foreach (var r in who.GetComponentsInChildren<Renderer>(true)) { all++; if (r.enabled && r.gameObject.activeInHierarchy) vis++; }
+                            Debug.Log($"[ShowcaseGui] camprobe player renderers {vis}/{all}");
+                        }
+                        foreach (var cam in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None)) Debug.Log($"[ShowcaseGui] camprobe cam {cam.name} en {cam.enabled} depth {cam.depth} {cam.transform.position} mask {cam.cullingMask} near {cam.nearClipPlane} far {cam.farClipPlane} fov {cam.fieldOfView} rect {cam.rect} tex {(cam.targetTexture != null)}");
+                        if (main != null && who != null)
+                        {
+                            var planes = GeometryUtility.CalculateFrustumPlanes(main);
+                            var layers = new System.Collections.Generic.Dictionary<string, int>();
+                            int inView = 0;
+                            foreach (var r in Object.FindObjectsByType<Renderer>(FindObjectsSortMode.None))
+                            {
+                                if (!r.enabled || !r.gameObject.activeInHierarchy) continue;
+                                if ((r.bounds.center - who.transform.position).magnitude > 15f) continue;
+                                if (!GeometryUtility.TestPlanesAABB(planes, r.bounds)) continue;
+                                inView++;
+                                string k = LayerMask.LayerToName(r.gameObject.layer) + "/" + (r.sharedMaterial != null && r.sharedMaterial.shader != null ? r.sharedMaterial.shader.name : "nomat");
+                                layers[k] = layers.TryGetValue(k, out var cnt) ? cnt + 1 : 1;
+                                if (inView <= 12) Debug.Log($"[ShowcaseGui] camprobe seen {r.name} @{r.bounds.center} size {r.bounds.size} layer {LayerMask.LayerToName(r.gameObject.layer)} shader {(r.sharedMaterial != null ? r.sharedMaterial.shader.name : "-")}");
+                            }
+                            foreach (var kv in layers) Debug.Log($"[ShowcaseGui] camprobe layer {kv.Key} x{kv.Value}");
+                        }
+                        break;
+                    }
                     case "lgauto":   // U-0188 자동 퀘스트 다섯 판 — 판에 있는 어댑터(AutoQuestHud·GoAutoQuest)의 Q.Start() — 걸어가는 것을 장마다
                     {
                         int started = 0;
