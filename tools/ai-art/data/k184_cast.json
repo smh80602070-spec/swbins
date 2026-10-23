@@ -298,9 +298,13 @@
    "stand_pick": "bw_cheolgi_v01",
    "face": [
     384,
-    282,
+    420,
     203,
     159
+   ],
+   "face_xy": [
+    384,
+    420
    ]
   },
   {
@@ -447,10 +451,14 @@
    "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, calm clever gaze",
    "stand_pick": "cs_gyeongjeok_v01",
    "face": [
-    385,
-    283,
+    384,
+    390,
     203,
     159
+   ],
+   "face_xy": [
+    384,
+    390
    ]
   },
   {
@@ -1363,9 +1371,13 @@
    "stand_pick": "hq_eodeok_v04",
    "face": [
     384,
-    283,
+    378,
     203,
     159
+   ],
+   "face_xy": [
+    384,
+    378
    ]
   },
   {
@@ -2293,9 +2305,13 @@
    "stand_pick": "ns_jeopsok_v02",
    "face": [
     384,
-    283,
+    200,
     203,
     159
+   ],
+   "face_xy": [
+    384,
+    200
    ]
   },
   {
@@ -2608,9 +2624,13 @@
    "stand_pick": "sn_bitdol_v01",
    "face": [
     384,
-    282,
+    400,
     203,
     159
+   ],
+   "face_xy": [
+    384,
+    400
    ]
   },
   {
