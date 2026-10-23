@@ -90,6 +90,7 @@ namespace Saga.Go.World
             var stone = WorldMapBuilder.Instance != null ? WorldMapBuilder.Instance.StoneMaterial : null;
             BuildIsle(stone);
             BuildSky(stone);
+            if (GetComponent<GoWindGuide>() == null) gameObject.AddComponent<GoWindGuide>(); // tasks U-0179 바람 길잡이
         }
 
         private void OnDestroy()
@@ -830,7 +831,7 @@ namespace Saga.Go.World
             bool has = Target(out Vector3 t, out _);
             if (_pillar != null)
             {
-                _pillar.SetActive(has);
+                _pillar.SetActive(has && !GoWindGuide.WindOnly); // tasks U-0179 바람만이면 기둥 끔
                 if (has) _pillar.transform.position = FolkWalker.Grounded(t + Vector3.up * 0.5f) + Vector3.up * PillarHeight * 0.5f;
             }
             foreach (var kv in _altars)

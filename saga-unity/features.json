@@ -2334,6 +2334,22 @@
   "note": "D1(U-0168): PlaytestHeadless restsites OK(자리 5 · 서쪽 숲길 앉음 = 지핌·회복·부활 자리·잡몹 1 다시 섬 · 안 나가면 다시 안 앉음 · 전멸 → 불 옆 · 안 지핀 = 처음 자리 · 세이브 칸) · UiLayoutCheck 0"
  },
  {
+  "id": "un.go.wind-guide",
+  "name": "U-0179 1만리 바람 길잡이 — 따라가는 목표가 있을 때 1.5초 가만히 서면 흰 바람 줄기 일곱이 목표 쪽으로 14m 흐름(6초에 한 번, 4m 안 안 붊) · 바람만 손잡이면 기둥 끄고 걸어도 12초마다(고돗 G-0318)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/World/GoWindGuide.cs"
+  ],
+  "tests": [
+   "PlaytestGoWind"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0179",
+  "since": "2026-10-23",
+  "note": "D1(U-0179): PlaytestHeadless wind rule·blow·cool·none·windonly·off OK"
+ },
+ {
   "id": "un.go.rank",
   "name": "U-0174 1만리 무리 토벌 한 판 등급 — 들판 무리 하나를 첫 타격부터 전원 쓰러질 때까지 S~D·덤 경험(S 0.5·A 0.2·B 0.1)·무리별 최고 기록·알림 두 줄(웹 W-0379·고돗 G-0313)",
   "files": [
