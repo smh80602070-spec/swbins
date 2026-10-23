@@ -9,15 +9,26 @@
   var core = global.DG.core, AQ = global.DG.autoquest;
   if (!AQ) { return; }
   function V() { return global.DG.village; }
+  /** 그 갈래를 지금 자동 마을살이가 구할 수 있나(W-0383) — 벌레 = 잠자리채, 나머지 = 마을에 그 갈래를 내는 사물(장식 아님)이 있고 도구가 있음(화석 = 삽).
+      못 구하는 부탁이 맨 앞을 막아 첫 10분 내내 같은 목표였다(화석·거미·옛 동전) — 규칙은 auto.js freshProp·nearBug 그대로 */
+  function canGet(cat, raw) {
+    if (cat === 'bug') { return !!(global.DG.bug && global.DG.bug.hasNet && global.DG.bug.hasNet()); }
+    var PR = global.DG.villageData.PROPS, props = (raw && raw.props) || [];
+    for (var i = 0; i < props.length; i++) {
+      var def = PR[props[i].kind];
+      if (def && def.gather === cat && !props[i].deco && (!def.tool || V().hasTool(def.tool))) { return true; }
+    }
+    return false;
+  }
   function goals() {
     var raw = V() && V().raw ? V().raw() : null, VD = global.DG.villageData, out = [];
     if (!raw || !raw.residents) { return out; }
     raw.residents.forEach(function (res) {
       var req = V().requestOf(res.id);
       if (!req || req.done) { return; }
-      var it = VD.item(req.want), have = V().bagCount(req.want);
-      out.push({ id: 'rq:' + res.id + ':' + req.want, type: 'collect', label: '🤝 ' + (res.ref && res.ref.name || res.id) + ' — ' + (it ? it.name : req.want) + ' ' + Math.min(have, req.n) + '/' + req.n,
-        x: res.x, y: res.y, left: Math.max(0, req.n - have), o: have >= req.n ? 0 : 1 });
+      var it = VD.item(req.want), have = V().bagCount(req.want), full = have >= req.n, ok = full || !!(it && canGet(it.cat, raw));
+      out.push({ id: 'rq:' + res.id + ':' + req.want, type: 'collect', label: '🤝 ' + (res.ref && res.ref.name || res.id) + ' — ' + (it ? it.name : req.want) + ' ' + Math.min(have, req.n) + '/' + req.n + (ok ? '' : ' (지금 자동으로 못 구함 — 뒤로)'),
+        x: res.x, y: res.y, left: Math.max(0, req.n - have), o: full ? 0 : ok ? 1 : 3 });   // 못 구하는 부탁은 마을 일(2) 뒤
     });
     Object.keys((VD && VD.QUESTS) || {}).forEach(function (k) {
       var p = V().questProgress(k);
@@ -60,5 +71,5 @@
     if (btn) { btn.paint(!!(q.status().on || goals().length)); }
   }
   if (typeof document !== 'undefined') { AQ.watchInput(q, { stopOn: stopOn }); }
-  global.DG.autoQuestFs = { q: q, goals: goals, update: update, start: q.start, stop: q.stop, status: q.status, _busy: busy };
+  global.DG.autoQuestFs = { q: q, goals: goals, update: update, start: q.start, stop: q.stop, status: q.status, _busy: busy, _canGet: canGet };
 })(window);

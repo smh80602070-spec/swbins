@@ -27,6 +27,10 @@
 
   var acc = { aim: 0, act: 0, sell: 0 };
   var aim = null;                 // 지금 향하는 것
+  /* 못 닿는 것 건너뛰기(W-0383) — 4초 동안 20 도 못 다가서면(손 닿는 거리 밖에서) 그것을 2분 안 노린다.
+     물가 조개처럼 걸을 수 없는 자리에 선 것을 10분 내내 노렸다. 저장 안 함 */
+  var skip = [], watch = { o: null, best: 0, t: 0 };
+  function skipped(o) { var now = Date.now(); for (var i = skip.length - 1; i >= 0; i--) { if (skip[i].until < now) { skip.splice(i, 1); } else if (skip[i].o === o) { return true; } } return false; }
   var doing = '';
   var lastLog = 0;
 
@@ -79,6 +83,53 @@
 
   function dist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
 
+  /** 곧게 갈 수 있나 — 20 단위마다 walkable */
+  function clearLine(V, a, b) {
+    var d = dist(a, b), n = Math.ceil(d / 20);
+    for (var i = 1; i < n; i++) { if (!V.walkable(a.x + (b.x - a.x) * i / n, a.y + (b.y - a.y) * i / n)) { return false; } }
+    return true;
+  }
+  /** 타일 너비 우선 길찾기(W-0383) — 걷기는 직선뿐이라 물·건물 너머 주민에게 가던 길이 500 앞에서 4분 섰다.
+      p→g 를 감싼 상자(+pad 타일)에서 walkable 타일만 8방(모서리 깎기 금지), 다음에 곧게 갈 수 있는 가장 먼 경유점 · 못 찾으면 null */
+  function nextStep(V, p, g, T, pad) {
+    T = T || 40; pad = pad == null ? 12 : pad;
+    var x0 = Math.floor(Math.min(p.x, g.x) / T) - pad, y0 = Math.floor(Math.min(p.y, g.y) / T) - pad;
+    var W = Math.floor(Math.max(p.x, g.x) / T) + pad - x0 + 1, H = Math.floor(Math.max(p.y, g.y) / T) + pad - y0 + 1;
+    if (W * H > 12000) { return null; }
+    var idx = function (x, y) { return (Math.floor(y / T) - y0) * W + (Math.floor(x / T) - x0); };
+    var s = idx(p.x, p.y), t = idx(g.x, g.y), from = new Int32Array(W * H).fill(-2), ok = new Int8Array(W * H), q = [s], qi = 0;
+    var cen = function (i) { return { x: (i % W + x0 + 0.5) * T, y: (Math.floor(i / W) + y0 + 0.5) * T }; };
+    var walk = function (i) { if (!ok[i]) { var c = cen(i); ok[i] = V.walkable(c.x, c.y) ? 1 : 2; } return ok[i] === 1; };
+    from[s] = -1;
+    while (qi < q.length) {
+      var c = q[qi++];
+      if (c === t) { break; }
+      var ix = c % W, iy = (c - ix) / W;
+      for (var dy = -1; dy <= 1; dy++) {
+        for (var dx = -1; dx <= 1; dx++) {
+          var nx = ix + dx, ny = iy + dy, n = ny * W + nx;
+          if ((!dx && !dy) || nx < 0 || ny < 0 || nx >= W || ny >= H || from[n] !== -2) { continue; }
+          if (n !== t && !walk(n)) { continue; }
+          if (dx && dy && (!walk(iy * W + nx) || !walk(ny * W + ix))) { continue; }
+          from[n] = c; q.push(n);
+        }
+      }
+    }
+    if (from[t] === -2) { return null; }
+    var cells = [];
+    for (var k = t; k !== s && k >= 0; k = from[k]) { cells.unshift(k); }
+    var pick = cells.length ? cen(cells[0]) : { x: g.x, y: g.y };
+    for (var j = cells.length - 1; j >= 0; j--) { var w = j === cells.length - 1 ? g : cen(cells[j]); if (clearLine(V, p, w)) { pick = w; break; } }
+    return pick;
+  }
+  /** 그리로 걷는다 — 곧게 못 가면 길찾기 경유점으로 */
+  function goTo(V, raw, x, y) {
+    var g = { x: x, y: y }, p = raw.player;
+    if (!V.walkable || clearLine(V, p, g)) { V.walkTo(x, y); return; }
+    var w = nextStep(V, p, g, V.TILE);
+    V.walkTo(w ? w.x : x, w ? w.y : y);
+  }
+
   /** 부탁을 채운 주민 (건네줄 수 있는 사람) */
   function readyResident(raw) {
     var V = global.DG.village;
@@ -86,7 +137,7 @@
     for (var i = 0; i < raw.residents.length; i++) {
       var res = raw.residents[i];
       var req = V.requestOf(res.id);
-      if (req.done) { continue; }
+      if (req.done || skipped(res)) { continue; }
       if (V.bagCount(req.want) < req.n) { continue; }
       var d = dist(res, raw.player);
       if (d < bd) { bd = d; best = res; }
@@ -102,7 +153,7 @@
       var pr = raw.props[i];
       var def = VD.PROPS[pr.kind];
       if (!def || !def.gather) { continue; }
-      if (pr.deco) { continue; }    // 숲 고리 장식(PLAN 40절 PHASE 3) — 자동도 안 노린다
+      if (pr.deco || skipped(pr)) { continue; }    // 숲 고리 장식(PLAN 40절 PHASE 3) — 자동도 안 노린다
       if (V.spent(pr)) { continue; }
       /* 도구가 없어 손을 못 대는 것은 목표로 삼지 않는다.
          삽 없이 갈라진 자리로 걸어가 아무것도 못 하고 다시 그리로 가는
@@ -125,7 +176,7 @@
     if (!B || !B.hasNet()) { return null; }
     var list = B.list(), best = null, bd = 1e9;
     for (var i = 0; i < list.length; i++) {
-      if (list[i].state === 'flee') { continue; }
+      if (list[i].state === 'flee' || skipped(list[i])) { continue; }
       var d = dist(list[i], raw.player);
       if (d < bd) { bd = d; best = list[i]; }
     }
@@ -164,7 +215,10 @@
                  (on('gather') ? freshProp(raw) : null);
       aim = pick;
       if (aim) {
-        V.walkTo(aim.obj.x, aim.obj.y + 6);
+        if (watch.o !== aim.obj || aim.dist < watch.best - 20) { watch.o = aim.obj; watch.best = aim.dist; watch.t = 0; }
+        else if (aim.dist > (V.REACH || 60) * 1.5 && (watch.t += 0.4) >= 4) { skip.push({ o: aim.obj, until: Date.now() + 120000 }); watch.o = null; aim = null; doing = '🤖 닿을 수 없어 2분 미룸'; return; }
+        else if (aim.dist <= (V.REACH || 60) * 1.5) { watch.t = 0; }
+        goTo(V, raw, aim.obj.x, aim.obj.y + 6);
         var VD = global.DG.villageData;
         doing = aim.type === 'resident'
           ? '🤝 ' + aim.obj.ref.name + ' 에게 (' + Math.round(aim.dist) + ')'
@@ -217,6 +271,6 @@
     setOn: setOn, toggle: toggle, toggleFlag: toggleFlag,
     update: update, status: status,
     /** 자가진단용 */
-    _readyResident: readyResident, _freshProp: freshProp
+    _readyResident: readyResident, _freshProp: freshProp, _nextStep: nextStep, _skip: skip
   };
 })(window);
