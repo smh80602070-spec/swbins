@@ -1,7 +1,7 @@
 // 폰 예산 측정(W-0302) — 다섯 판을 폰처럼(390×844 · 화소비 2 · CPU 4배 감속 · 품질 "자동") 띄워 장면마다
 //   ① 첫 화면까지 받은 용량(CDP Network.loadingFinished encodedDataLength 합) ② FPS(3초 rAF 셈) ③ 그리기 수(draw call)·삼각형·텍스처 수 ④ JS 힙
 // 을 재고 상한(용량 25MB · FPS 30 · draw call 300)과 견준다. 3회 평균(--runs=N). 결과 results/pw-phone-budget.json + 콘솔 표.
-//   node pw-phone-budget.mjs [판…] [--runs=3] [--base http://127.0.0.1:8871/] [--gpu]   (서버는 돌리는 쪽이 띄운다)
+//   node pw-phone-budget.mjs [판…] [--runs=3] [--base http://127.0.0.1:8871/] [--gpu] [--mode=2d|3d]   (서버는 돌리는 쪽이 띄운다 · W-0389 기본 2D = 폰이 여는 모드, 3D 는 참고)
 // --gpu: 헤드리스 크롬이 실제 GPU(d3d11)로 그린다 — FPS 를 믿을 수 있는 건 이때뿐. 없으면 swiftshader(소프트웨어)라 FPS 는 상대 비교용(표에 표시).
 // 판정에는 안 닿는다(읽기만). 품질 손잡이는 안 건드린다 — 판의 "자동" 단계가 폰에서 어디까지 내려가는지가 곧 재는 대상이다.
 import fs from 'node:fs';
@@ -17,6 +17,7 @@ const argv = process.argv.slice(2);
 const bi = argv.indexOf('--base');
 const BASE = (bi >= 0 ? argv[bi + 1] : (process.env.PW_BASE || 'http://127.0.0.1:8871/')).replace(/\/?$/, '/');
 const RUNS = +((argv.find((a) => a.startsWith('--runs=')) || '--runs=3').slice(7));
+const MODE = ((argv.find((a) => a.startsWith('--mode=')) || '--mode=2d').slice(7) === '3d') ? '3d' : '2d';   // W-0389 폰 = 2D(10-19) — 기본 2D, --mode=3d 는 참고용
 const GPU = argv.includes('--gpu') || wantGpu(), THROTTLE = +((argv.find((a) => a.startsWith('--throttle=')) || '--throttle=4').slice(11));   // CPU 감속 배수(1 = 감속 없음)
 const ALL = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm'];
 const games = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--base' && argv[i - 1] !== '--tune');
@@ -31,7 +32,7 @@ export const SCENES = {
   'saga-go': [['들판', async () => {}], ['걷기', async (p) => { await p.keyboard.down('w'); }]],
   'saga-dungeon': [['마을', async (p) => { await p.evaluate(() => { [...document.querySelectorAll('.stc-cell')].slice(0, 3).forEach((c) => c.click()); const b = document.querySelector('.stc-btn'); if (b) { b.click(); } }); await sleep(3500); }],
     ['던전', async (p) => { await p.evaluate(() => { if (DG.town && DG.town.active && DG.town.active()) { DG.town.leave(); } DG.dungeon.enter({ floor: 1 }); }); await sleep(4000); }]],
-  'saga-forest': [['마을', async (p) => { await p.evaluate(() => { const V = DG.villageView3d; if (V && V.available && V.available() && !V.active()) { V.toggle(); } }); }],
+  'saga-forest': [['마을', async (p) => { await p.evaluate(() => { if (/[?&]mode=2d\b/.test(location.search)) { return; } const V = DG.villageView3d; if (V && V.available && V.available() && !V.active()) { V.toggle(); } }); }],
     ['걷기', async (p) => { await p.keyboard.down('d'); }]],
   'saga-story': [['사냥터', async (p) => { await p.evaluate(() => { const S = DG.side, C = DG.core; if (!C.save.party.length && DG.hero && DG.hero.recruit) { const h = DG.data.heroes.filter((x) => x.rarity <= 2)[0]; if (h) { DG.hero.recruit(h.id); } } const st = S.stages().map((x) => x.ref).filter((s) => !s.town)[0]; if (st) { S.enter(st.key); } const V = DG.sideView3d; if (V && V.available && V.available() && !V.active()) { V.toggle(); } }); await sleep(2500); }],
     ['자동 사냥', async (p) => { await p.evaluate(() => { if (DG.auto && DG.auto.setOn) { DG.auto.setOn(true); } }); }]],
@@ -61,7 +62,7 @@ async function one(browser, g) {
   cdp.on('Network.responseReceived', (e) => { urls.set(e.requestId, e.response.url); });
   cdp.on('Network.loadingFinished', (e) => { bytes += e.encodedDataLength || 0; const u = urls.get(e.requestId); if (u) { big.set(u, e.encodedDataLength || 0); } });
   try { await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true }); } catch (e) { /* 없음 */ }
-  const url = BASE + g + '/', res = { game: g, scenes: [], err: '' };
+  const url = BASE + g + '/?mode=' + MODE, res = { game: g, mode: MODE.toUpperCase(), scenes: [], err: '' };   // W-0389 device-mode 손잡이 ?mode=2d|3d
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 90000 }); await sleep(1500);
     await page.evaluate((tn) => { try { localStorage.clear(); } catch (e) { /* 없음 */ } DG.account.create('예산'); tn.forEach(([k, v]) => DG.core.setTune(k, v)); }, TUNES);
@@ -96,13 +97,13 @@ try {
     for (let k = 0; k < RUNS; k++) { runs.push(await one(browser, g)); }
     const avg = (f) => { const v = runs.map(f).filter((x) => typeof x === 'number'); return v.length ? +(v.reduce((a, b) => a + b, 0) / v.length).toFixed(1) : null; };
     const names = (runs[0].scenes || []).map((s) => s.name);
-    const r = { game: g, runs: runs.length, firstMB: avg((x) => x.firstMB), totalMB: avg((x) => x.totalMB), top: runs[0].top, err: runs.map((x) => x.err).filter(Boolean)[0] || '',
+    const r = { game: g, mode: runs[0].mode, runs: runs.length, firstMB: avg((x) => x.firstMB), totalMB: avg((x) => x.totalMB), top: runs[0].top, err: runs.map((x) => x.err).filter(Boolean)[0] || '',
       scenes: names.map((nm, i) => ({ name: nm, fps: avg((x) => x.scenes[i] && x.scenes[i].fps), worstMs: avg((x) => x.scenes[i] && x.scenes[i].worstMs), calls: avg((x) => x.scenes[i] && x.scenes[i].calls), tris: avg((x) => x.scenes[i] && x.scenes[i].tris), tex: avg((x) => x.scenes[i] && x.scenes[i].tex), heapMB: avg((x) => x.scenes[i] && x.scenes[i].heapMB), quality: runs[0].scenes[i] && runs[0].scenes[i].quality, aq: runs[runs.length - 1].scenes[i] && runs[runs.length - 1].scenes[i].aq, gpu: runs[0].scenes[i] && runs[0].scenes[i].gpu })) };
     r.over = [];
     if (r.firstMB > BUDGET.mb) { r.over.push('용량 ' + r.firstMB + 'MB'); }
     r.scenes.forEach((s) => { if (GPU && s.fps != null && s.fps < BUDGET.fps) { r.over.push(s.name + ' FPS ' + s.fps); } if (s.calls != null && s.calls > BUDGET.calls) { r.over.push(s.name + ' 그리기 ' + s.calls); } });
     out.push(r);
-    console.log(`${r.over.length ? 'WARN' : 'OK  '} ${g} · 첫 화면 ${r.firstMB}MB(전체 ${r.totalMB}) · ` + r.scenes.map((s) => `${s.name} ${s.fps}fps 그리기 ${s.calls} 삼각 ${s.tris} 텍스처 ${s.tex} 힙 ${s.heapMB}MB [${s.quality}]`).join(' · ') + (r.over.length ? ' · 넘음 ' + r.over.join(', ') : '') + (r.err ? ' · ERR ' + r.err : ''));
+    console.log(`${r.over.length ? 'WARN' : 'OK  '} ${g}(${r.mode}) · 첫 화면 ${r.firstMB}MB(전체 ${r.totalMB}) · ` + r.scenes.map((s) => `${s.name} ${s.fps}fps 그리기 ${s.calls} 삼각 ${s.tris} 텍스처 ${s.tex} 힙 ${s.heapMB}MB [${s.quality}]`).join(' · ') + (r.over.length ? ' · 넘음 ' + r.over.join(', ') : '') + (r.err ? ' · ERR ' + r.err : ''));
   }
 } finally { await browser.close(); }
 const gpuName = out[0] && out[0].scenes[0] && out[0].scenes[0].gpu;
@@ -111,7 +112,7 @@ fs.mkdirSync(path.join(HERE, 'results'), { recursive: true });
 const RES = path.join(HERE, 'results', 'pw-phone-budget.json'), now = new Date().toISOString();
 let prev = []; try { prev = JSON.parse(fs.readFileSync(RES, 'utf8')).runs || []; } catch (e) { /* 처음 */ }
 out.forEach((r) => { r.at = now; r.gpu = GPU; r.cpuThrottle = THROTTLE; });
-const merged = prev.filter((p) => !out.some((r) => r.game === p.game)).concat(out).sort((a, b) => ALL.indexOf(a.game) - ALL.indexOf(b.game));
+const merged = prev.filter((p) => !out.some((r) => r.game === p.game && (p.mode || '2D') === r.mode)).concat(out).sort((a, b) => ALL.indexOf(a.game) - ALL.indexOf(b.game));
 fs.writeFileSync(RES, JSON.stringify({ at: now, base: BASE, gpu: GPU, gpuName, budget: BUDGET, cpuThrottle: THROTTLE, viewport: '390x844@2', runs: merged }, null, 1));
 console.log(`PHONE-BUDGET 넘은 판 ${out.filter((r) => r.over.length).length} / ${out.length} · GPU ${GPU ? gpuName : 'swiftshader(FPS 상대값)'}`);
 process.exit(0);

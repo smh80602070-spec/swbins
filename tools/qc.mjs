@@ -254,11 +254,13 @@ async function checkBudget() {
   if (!j) { row('폰 예산', games.map(nm).join('·'), 'WARN', '측정 없음 — node saga-web/tools/playcheck/pw-phone-budget.mjs --gpu'); return; }
   const B = j.budget || {};
   for (const g of games) {
-    const x = (j.runs || []).find((q) => q.game === g);
-    if (!x) { row('폰 예산', nm(g), 'WARN', '그 판 측정 없음'); continue; }
+    const x = (j.runs || []).find((q) => q.game === g && (q.mode || '2D') === '2D');   // W-0389 판정은 2D(폰이 여는 모드)만, 3D 는 참고 줄
+    if (!x) { row('폰 예산', nm(g), 'WARN', '그 판 2D 측정 없음 — node saga-web/tools/playcheck/pw-phone-budget.mjs ' + g + ' --gpu'); continue; }
+    const x3 = (j.runs || []).find((q) => q.game === g && q.mode === '3D');
+    if (x3) { row('폰 예산(3D 참고)', nm(g), 'PASS', (x3.scenes || []).map((q) => q.name + ' ' + q.fps + 'fps·그리기 ' + q.calls).join(' · ') + ' · 판정 안 함'); }
     const age = (Date.now() - Date.parse(x.at || j.at)) / 86400000;   // 판마다 잰 때(합쳐 쓰기)
     const sc = (x.scenes || []).map((q) => q.name + ' ' + q.fps + 'fps·그리기 ' + q.calls).join(' · ');
-    row('폰 예산', nm(g), x.over && x.over.length || age > 7 ? 'WARN' : 'PASS', '첫 화면 ' + x.firstMB + 'MB/' + B.mb + ' · ' + sc + (x.over && x.over.length ? ' · 넘음 ' + x.over.join(', ') : '') + (age > 7 ? ' · 측정 ' + Math.round(age) + '일 묵음' : '') + (j.gpu ? '' : ' · swiftshader(FPS 상대값)'));
+    row('폰 예산', nm(g), x.over && x.over.length || age > 7 ? 'WARN' : 'PASS', (x.mode || ((x.scenes || []).some((q) => q.calls != null) ? '3D?' : '2D')) + ' · 첫 화면 ' + x.firstMB + 'MB/' + B.mb + ' · ' + sc + (x.over && x.over.length ? ' · 넘음 ' + x.over.join(', ') : '') + (age > 7 ? ' · 측정 ' + Math.round(age) + '일 묵음' : '') + (j.gpu ? '' : ' · swiftshader(FPS 상대값)'));
   }
 }
 
