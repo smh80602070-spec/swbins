@@ -1463,7 +1463,13 @@
    "face_xy": [
     464,
     112
-   ]
+   ],
+   "expr_pick": {
+    "happy": "sg_menghuo__happy_v01",
+    "angry": "sg_menghuo__angry_v02",
+    "sad": "sg_menghuo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sg_pangtong",

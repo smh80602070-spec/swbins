@@ -17,3 +17,4 @@
 - [ ] 10-23 · (K-0178 끝) · W-0371 풀림 — 인물 일러스트 30 다시(초상과 같은 사람, stand·neutral·happy·angry·sad 그대로 이름·자리) 2나락 1·4종횡 16·5천하 13 배치됨 → illust.on 켜도 됨 · 웹
 - [ ] 10-23 · (K-0180 끝) · W-0356: 2나락 빌린 괴물 일곱 → 자체 몸 `shared/assets/creatures3d` armored_alpaca·bumble_knight·bumble_puff·tabby_ball·hen_ball·gape_fish·finback_brute(동작 7) — 짝 `tools/world-forge/data/k122_monsters.json` built, 웹 참조 바꾸기 · 웹/2나락
 - [ ] 10-23 · (G-0311 고돗 3마을 가축) · 닭·염소 몸 `saga-assets/creatures3d/farm_hen·farm_goat.glb` 을 고돗 `assets/creatures/` 에 놓기(지금 코드 도형 대역 — `games/saga_forest/world/forest_livestock_view.gd` `_body` 만 바꾸면 됨) · 자체툴
+- [ ] 10-23 · (K-0183 끝) · illust 한 벌 shared — `saga-web/shared/assets/illust` 116명, 다섯 판 manifest 새로(1만리·3마을 manifest 도 새로, base `../shared/assets/illust/`) · illust.js 가 base 따름 · 웹
