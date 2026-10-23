@@ -13,7 +13,6 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const KILL_ACTIVE := 2.0
 const KILL_PARTY := 1.0
 const DISPATCH := 15.0
-const KNOT_TIER := 3   # 지기
 
 
 static func pts(id: String) -> float:
@@ -38,22 +37,13 @@ static func line_of(id: String) -> String:
 
 ## 점수를 더한다 — 단이 오르면 알림 글(없으면 "")
 static func add(id: String, amount: float, host: Node = null) -> String:
-	if not Bond.on() or id == "" or id == "self" or amount <= 0.0:
-		return ""
 	if typeof(PartyState.bond) != TYPE_DICTIONARY:
 		PartyState.bond = {}
-	var lv0 := level(id)
-	PartyState.bond[id] = pts(id) + amount
-	var lv1 := level(id)
-	if lv1 <= lv0:
+	var r: Dictionary = Bond.gain(PartyState.bond, id, amount, _hero(id))   # G-0341 셈·글은 공용
+	if r.is_empty():
 		return ""
-	var h := _hero(id)
-	var nm := String(h.get("name", id))
-	var msg := "%s %s의 우정 Lv.%d · %s — \"%s\"" % [Bond.TIERS[Bond.tier_of(lv1)].emoji, Bond.with_wa(nm), lv1, Bond.TIERS[Bond.tier_of(lv1)].name, line_of(id)]
-	var got: Array = PartyState.bond.get("_knot", [])
-	if Bond.tier_of(lv1) >= KNOT_TIER and not got.has(id):
-		got.append(id)
-		PartyState.bond["_knot"] = got
+	var msg := String(r.msg)
+	if bool(r.first_top):
 		PartyState.add_items({"fate_knot": 1})
 		msg += " · 인연 매듭 +1"
 	if host != null and host.is_inside_tree():

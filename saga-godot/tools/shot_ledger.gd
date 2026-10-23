@@ -346,3 +346,10 @@ static func go_bond(tree: SceneTree) -> void:
 		if c != null:
 			c.call("open_screen")
 			c.call("select", "sg_guanyu"))
+
+
+## G-0341 2나락 부대 우정 — 부대 둘(명운 신뢰 6·뇌호 친근 3)을 두고 HUD 부대 줄을 다시 그린다
+static func dg_bond(tree: SceneTree) -> void:
+	tree.root.get_node("DungeonPartyState").set("members", ["sg_guanyu", "sg_zhangfei"] as Array[String])
+	tree.root.get_node("DungeonSaveState").set("bond", {"sg_guanyu": 300.0, "sg_zhangfei": 95.0})
+	_later(tree, 3, func() -> void: tree.call_group("dungeon_party_label", "_refresh"))

@@ -5975,5 +5975,25 @@
   "ticket": "G-0340",
   "since": "2026-10-24",
   "note": "추천 표 게임성 ④ · 세이브 bond 순수 추가 · SAGA_BOND=0 · 촬영 shot_scene lg_go_bond"
+ },
+ {
+  "id": "gd.dungeon.bond",
+  "name": "2나락 부대 우정(공용 bond) — 방 깸 +5·완주 +10 부대 전원, 단계 대사 알림·지기 첫 도달 금 500, HUD 부대 줄 꼬리표",
+  "files": [
+   "saga_core/data/bond.gd",
+   "games/saga_dungeon/data/dungeon_bond.gd",
+   "games/saga_dungeon/data/dungeon_save_state.gd",
+   "games/saga_dungeon/world/test_room.gd",
+   "games/saga_dungeon/ui/party_label.gd"
+  ],
+  "tests": [
+   "dungeon_bond"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0341",
+  "since": "2026-10-24",
+  "note": "G-0340 공용 두 번째 판 · 세이브 bond 순수 추가 · SAGA_BOND=0 · 촬영 shot_scene lg_dg_bond"
  }
 ]

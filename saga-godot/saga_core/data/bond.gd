@@ -69,3 +69,30 @@ static func line(trait_key: String, lv: int, quote: String = "") -> String:
 	if t >= 3:
 		return quote if quote != "" else String(arr[2])
 	return String(arr[t])
+
+
+## G-0341 판 어댑터 공용 — store(판 세이브의 bond 사전)에 점수를 더하고 단이 올랐으면 {lv, first_top, msg}, 아니면 {}.
+##   first_top = 지기에 처음 닿음(store "_knot" 에 id 를 적는다 — 덤은 판이 준다). msg = "💛 명운과의 우정 Lv.7 · 신뢰 — "대사"".
+##   hero 는 characters 한 줄(name·trait·quote, 없으면 {}). 꺼짐·"self"·0 이하면 {}.
+static func gain(store: Dictionary, id: String, amount: float, hero: Dictionary) -> Dictionary:
+	if not on() or id == "" or id == "self" or amount <= 0.0:
+		return {}
+	var lv0 := level_of(float(store.get(id, 0.0)))
+	store[id] = float(store.get(id, 0.0)) + amount
+	var lv1 := level_of(float(store[id]))
+	if lv1 <= lv0:
+		return {}
+	var t: Dictionary = TIERS[tier_of(lv1)]
+	var ln := line(String(hero.get("trait", "virtue")), lv1, String(hero.get("quote", "")))
+	var got: Array = store.get("_knot", [])
+	var first := tier_of(lv1) >= 3 and not got.has(id)
+	if first:
+		got.append(id)
+		store["_knot"] = got
+	return {"lv": lv1, "first_top": first, "msg": "%s %s의 우정 Lv.%d · %s — \"%s\"" % [t.emoji, with_wa(String(hero.get("name", id))), lv1, t.name, ln]}
+
+
+## 짧은 꼬리표 — "💛7"
+static func tag(pts: float) -> String:
+	var lv := level_of(pts)
+	return "%s%d" % [TIERS[tier_of(lv)].emoji, lv]

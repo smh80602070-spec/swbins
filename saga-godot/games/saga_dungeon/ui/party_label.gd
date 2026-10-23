@@ -10,6 +10,7 @@ extends Label
 const Characters := preload("res://saga_core/data/characters.gd")
 
 func _ready() -> void:
+	add_to_group("dungeon_party_label")   # G-0341 — 방을 깨면 우정 꼬리표를 다시 그린다(party_changed 는 동행 몸까지 다시 세워 안 쏜다)
 	DungeonPartyState.party_changed.connect(_refresh)
 	_refresh()
 
@@ -17,6 +18,6 @@ func _refresh() -> void:
 	var names: Array = []
 	for id in DungeonPartyState.members:
 		var h: Variant = Characters.find(id)
-		names.append(h.name if h != null else id)
+		names.append(preload("res://games/saga_dungeon/data/dungeon_bond.gd").name_tag(id, h.name if h != null else id))   # G-0341 우정 꼬리표
 	var names_text := " (" + "·".join(names) + ")" if not names.is_empty() else ""
 	text = "🛡️ 부대 %d명%s" % [DungeonPartyState.members.size(), names_text]

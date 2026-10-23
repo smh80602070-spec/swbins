@@ -46,6 +46,7 @@ var passive: Dictionary = {}
 var _passive_apis: Dictionary = {}
 ## G-0231 전리품 거르기 — {"rules": [...], "hinted": bool}(data/loot_filter.gd). 순수 추가 필드, 버전 안 올림 — 없으면 기본 셋.
 var loot_filter: Dictionary = {}
+var bond: Dictionary = {}   # G-0341 부대 우정 {id: 점수, "_knot": [...]} — 셈은 data/dungeon_bond.gd
 const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")
 
 
@@ -156,6 +157,7 @@ func save(player: Node3D) -> void:
 		"scenario": scenario,   # G-0085
 		"passive": passive,   # G-0217 경락도
 		"loot_filter": loot_filter,   # G-0231 전리품 거르기
+		"bond": bond,   # G-0341 부대 우정 — 순수 추가(버전 그대로)
 		"mode": DungeonMode.chosen,   # G-0247 고른 난도 — 순수 추가(버전 그대로), 없으면 "normal"
 		"season": preload("res://games/saga_dungeon/data/dungeon_season.gd").dump(),   # G-0334 로컬 시즌·래더 — 순수 추가(버전 그대로)
 		"rank_best": preload("res://games/saga_dungeon/data/dungeon_rank.gd").best,   # G-0312 난도별 최고 등급 — 순수 추가(버전 그대로)
@@ -193,6 +195,8 @@ func try_load() -> bool:
 	_passive_apis = {}
 	var lf: Variant = data.get("loot_filter", {})   # G-0231 — 없으면(옛 세이브) 기본 셋(loot_filter.gd store())
 	loot_filter = (lf as Dictionary).duplicate(true) if lf is Dictionary else {}
+	var bd: Variant = data.get("bond", {})   # G-0341 — 없으면(옛 세이브) 모두 Lv 0
+	bond = (bd as Dictionary).duplicate(true) if bd is Dictionary else {}
 	DungeonMode.restore(data.get("mode", "normal"))   # G-0247 — 없으면(옛 세이브) 평
 	preload("res://games/saga_dungeon/data/dungeon_season.gd").restore(data.get("season", {}))   # G-0334 — 없으면(옛 세이브) 번호 없음(다음 입장에 잡음)
 	preload("res://games/saga_dungeon/data/dungeon_rank.gd").restore(data.get("rank_best", {}))   # G-0312 — 없으면(옛 세이브) 빈 것
