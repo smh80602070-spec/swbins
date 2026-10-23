@@ -698,6 +698,12 @@
     { "key": "stock.why_fed", "value": "오늘은 이미 먹였다" },
     { "key": "stock.why_petted", "value": "오늘은 이미 쓰다듬었다" },
     { "key": "stock.why_off", "value": "가축 기르기가 꺼져 있다" },
-    { "key": "stock.why_none", "value": "할 수 없다" }
+    { "key": "stock.why_none", "value": "할 수 없다" },
+    { "key": "relic.set.bowl", "value": "옛 그릇" },
+    { "key": "relic.set.stele", "value": "옛 비석" },
+    { "key": "relic.set.tile", "value": "옛 망와" },
+    { "key": "relic.piece", "value": "{0} 유적 조각 — {1} {2}/{3}" },
+    { "key": "relic.restored", "value": "{0} {1} 복원! 화석 자리 곁에 전시대가 섰다 — 열매 +{2}" },
+    { "key": "relic.feast", "value": "🎉 옛터 잔치 — 유적 셋을 모두 되살렸다! 열매 +{0}" }
   ]
 }

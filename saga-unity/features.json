@@ -2459,6 +2459,23 @@
   "note": "D1(U-0173): PlaytestForestHeadless livestock pen·buy·care·morning·save OK · 금·가방 없는 트랙이라 값은 웹 능금 40벨 = 열매 1 · 산물은 열매로 · 닭·염소 몸은 코드 도형 대역(K-0186 요청) · 촬영 안 함"
  },
  {
+  "id": "un.fs.relics",
+  "name": "U-0177 3마을 유적 발굴·복원 — 화석 자리 하루 첫 채집에 0.5 로 유적 조각(옛 그릇·옛 비석·옛 망와 각 4), 넷이면 복원·전시대·열매 +8, 셋 다면 옛터 잔치 +15(웹 W-0309·고돗 G-0315)",
+  "files": [
+   "saga-unity/Assets/Games/SagaForest/Data/ForestRelics.cs",
+   "saga-unity/Assets/Games/SagaForest/World/ForestRelicStands.cs"
+  ],
+  "tests": [
+   "PlaytestForestRelics"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0177",
+  "since": "2026-10-23",
+  "note": "D1(U-0177): PlaytestForestHeadless relics roll·gather·restore·save·off OK(60일 중 27일 조각 · 화석·하루 첫 번만 · 셋 복원 열매 +39 · 전시대 3 충돌체 0 · relicsJson 왕복)"
+ },
+ {
   "id": "un.fs.cave-depth",
   "name": "U-0132 땅 아래 층 — 바위 지대 굴 입구 → 지하 5층(횃불·광맥 하루 한 번·사다리 지키는 짐승·5층 유물, 웹 W-0285 이식)",
   "files": [

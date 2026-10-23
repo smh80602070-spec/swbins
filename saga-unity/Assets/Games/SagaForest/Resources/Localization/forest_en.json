@@ -698,6 +698,12 @@
     { "key": "stock.why_fed", "value": "Already fed today" },
     { "key": "stock.why_petted", "value": "Already petted today" },
     { "key": "stock.why_off", "value": "Livestock is off" },
-    { "key": "stock.why_none", "value": "Can't do that" }
+    { "key": "stock.why_none", "value": "Can't do that" },
+    { "key": "relic.set.bowl", "value": "Old bowl" },
+    { "key": "relic.set.stele", "value": "Old stele" },
+    { "key": "relic.set.tile", "value": "Old roof tile" },
+    { "key": "relic.piece", "value": "{0} Relic piece — {1} {2}/{3}" },
+    { "key": "relic.restored", "value": "{0} {1} restored! A display stand rose by the fossil spot — fruit +{2}" },
+    { "key": "relic.feast", "value": "🎉 Ruin feast — all three relics restored! Fruit +{0}" }
   ]
 }

@@ -82,6 +82,8 @@ namespace Saga.Forest.World
             // 실제 갈래 수 4로 좁힘).
             // PLAN.md 109-12-1 — 가져오기 손님(낚시 명인·곤충 박사·시간 여행자)을 만났으면 이 채집을 센다.
             ForestScenario.OnGather(category); // PLAN.md 109-16 — 시나리오 gather 단계
+            string relicLine = ForestRelics.OnGather(category, ForestVisitors.Today); // tasks U-0177 유적 조각(화석 자리·하루 첫 번)
+            if (relicLine != null) DialogueLabel.Instance?.Show(relicLine, ToastSec + 1f);
             string visitLine = ForestVisitors.OnGather(category);
             if (visitLine != null) DialogueLabel.Instance?.Show(visitLine, ToastSec);
 
