@@ -110,6 +110,7 @@ namespace Saga.EditorTools
                 if (!PlaytestForestMount.Run()) _hadError = true; // PLAN.md 109-15 탈것·비행 — 탈것·점수 손잡이·자리·세이브를 되돌린다.
                 if (!PlaytestForestCraft.Run()) _hadError = true; // tasks U-0095 제작대·채집 손 — 손·열매를 되돌린다.
                 if (!PlaytestForestMoveIn.Run()) _hadError = true; // tasks U-0127 입주 조건 — 열매·집·창고·단골·날짜를 되돌린다.
+                if (!PlaytestForestLivestock.Run()) _hadError = true; // tasks U-0173 가축 기르기 — 열매·가축·날짜를 되돌린다.
                 if (!PlaytestForestHearts.Run()) _hadError = true; // tasks U-0143 관계 하트 — 하트·손님 기록·단골·사연·열매·창고·날짜를 되돌린다.
                 if (!PlaytestForestPartner.Run()) _hadError = true; // tasks U-0144 동반자 — 동반자·하트·단골·사연·손님 기록·열매·창고·날짜·손님 몸을 되돌린다.
                 if (!PlaytestLifePose.Run("PlaytestForestHeadless", "forest")) _hadError = true; // tasks U-0146 생활 몸짓

@@ -2406,6 +2406,24 @@
   "note": "D2(U-0127): docs/playcheck/d2-u0127-20261019.json — PlaytestForestHeadless 22→27(movein build·tags2·settle·oneaday·save) · 짓기 열매 15(재료 없음) · 집 모습 = 내 집 껍데기 ×0.55 · 촬영 안 함"
  },
  {
+  "id": "un.fs.livestock",
+  "name": "U-0173 가축 기르기 — 제작대 「🐔 우리」 작은 우리(열매 12)·꼬꼬 10·매매 22(넷까지)·먹이 열매 1·쓰다듬기 하트·아침 달걀 2·산양젖 4 열매(하트 3+ 둘)·사흘 굶으면 떠남(웹 W-0299 · 고돗 G-0311 짝)",
+  "files": [
+   "saga-unity/Assets/Games/SagaForest/Data/ForestLivestock.cs",
+   "saga-unity/Assets/Games/SagaForest/World/ForestLivestockRunner.cs",
+   "saga-unity/Assets/Games/SagaForest/World/ForestWorkbench.cs"
+  ],
+  "tests": [
+   "PlaytestForestLivestock"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0173",
+  "since": "2026-10-23",
+  "note": "D1(U-0173): PlaytestForestHeadless livestock pen·buy·care·morning·save OK · 금·가방 없는 트랙이라 값은 웹 능금 40벨 = 열매 1 · 산물은 열매로 · 닭·염소 몸은 코드 도형 대역(K-0186 요청) · 촬영 안 함"
+ },
+ {
   "id": "un.fs.cave-depth",
   "name": "U-0132 땅 아래 층 — 바위 지대 굴 입구 → 지하 5층(횃불·광맥 하루 한 번·사다리 지키는 짐승·5층 유물, 웹 W-0285 이식)",
   "files": [

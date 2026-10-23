@@ -77,6 +77,7 @@ namespace Saga.Forest.Data
             public int handLv;
             public int[] handPerks;
             public int handPending; // PLAN.md 109-16 시나리오 진행. 버전 그대로: 없는 세이브(null)는 처음부터.
+            public string livestockJson; // tasks U-0173 가축 — 버전 그대로: 옛 세이브는 null → 우리 없음.
             public string lotsJson; // tasks U-0127 작은 빈 집 — 버전 그대로: 옛 세이브는 null → 빈 집 없음.
             public string caveJson; // tasks U-0132 땅 아래 층 — 버전 그대로: 옛 세이브는 null → 가장 깊이 0·유물 그대로.
             public string heartsJson; // tasks U-0143 관계 하트 — 버전 그대로: 옛 세이브는 null → 전원 0.
@@ -168,6 +169,7 @@ namespace Saga.Forest.Data
             data.handPerks = ForestHandState.SnapshotPerks();
             data.handPending = ForestHandState.Pending ? 1 : 0;
             data.lotsJson = ForestLots.Snapshot();
+            data.livestockJson = ForestLivestock.Snapshot(); // tasks U-0173
             data.caveJson = ForestCave.Snapshot();
             data.heartsJson = ForestHearts.Snapshot();
             data.partnerJson = ForestPartner.Snapshot();
@@ -250,6 +252,7 @@ namespace Saga.Forest.Data
             ForestCave.Restore(data.caveJson); // tasks U-0132
             ForestHearts.Restore(data.heartsJson); // tasks U-0143
             ForestPartner.Restore(data.partnerJson); // tasks U-0144 — 손님 명단(visitSettled) 뒤
+            ForestLivestock.Restore(data.livestockJson); // tasks U-0173
             ForestLots.Restore(data.lotsJson); // tasks U-0127 — 눌러앉은 손님은 visitSettled 에 이미 있다(위 RestoreBonds 뒤)
             ForestTutorial.Restore(data.tutV == 0 ? ForestTutorial.AllIds() : data.tutDone); // tasks U-0023 — 없는 세이브는 옛 세이브라 전부 끝난 것으로
 

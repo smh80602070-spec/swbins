@@ -22,11 +22,12 @@ namespace Saga.Forest.World
         private Transform _player;
         private GameObject _panel;
         private TextMeshProUGUI _title, _status;
-        private Button _upgrade, _decline, _close, _hint, _lots;
+        private Button _upgrade, _decline, _close, _hint, _lots, _stock;
         private readonly List<Button> _axisButtons = new List<Button>();
         private ForestHandState.Axis[] _offer;
 
         public bool IsOpen => _panel != null && _panel.activeSelf;
+        public Button StockButton => _stock; // tasks U-0173
         public bool HintShown => _hint != null && _hint.gameObject.activeSelf;
         public IReadOnlyList<ForestHandState.Axis> Offer => _offer;
 
@@ -100,6 +101,9 @@ namespace Saga.Forest.World
             // tasks U-0127 — 작은 빈 집 창(창 오른쪽 위)
             _lots = SagaUi.NewButton(_panel.transform, "Lots", ForestLocalization.T("lot.open", "🏠 빈 집"), new Vector2(1f, 1f), new Vector2(-18f, -18f), new Vector2(170f, 54f), SagaUi.ButtonIdle, 22f);
             _lots.onClick.AddListener(OpenLots);
+            // tasks U-0173 — 작은 우리 창(창 왼쪽 위)
+            _stock = SagaUi.NewButton(_panel.transform, "Livestock", ForestLocalization.T("stock.open", "🐔 우리"), new Vector2(0f, 1f), new Vector2(18f, -18f), new Vector2(170f, 54f), SagaUi.ButtonIdle, 22f);
+            _stock.onClick.AddListener(OpenStock);
             _panel.SetActive(false);
         }
 
@@ -122,6 +126,14 @@ namespace Saga.Forest.World
         public void Close()
         {
             if (_panel != null) _panel.SetActive(false);
+        }
+
+        private void OpenStock()
+        {
+            var r = ForestLivestockRunner.Instance;
+            if (r == null) return;
+            Close();
+            r.Open();
         }
 
         private void OpenLots()
