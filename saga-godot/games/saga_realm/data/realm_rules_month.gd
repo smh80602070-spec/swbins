@@ -106,6 +106,7 @@ func next_month() -> void:
 	_run_enemy_statecraft()   # G-0219 AI 세력 경륜도 — 쌓인 점수를 성향대로(굴림 없음)
 	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_wonder.gd").ai_all(self))   # G-0243 AI 착공(병력 문턱·굴림 없음)
 	wonder_msgs.append_array(trade_msgs)
+	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_focus.gd").monthly(self))   # G-0336 국가 방침 한 달
 	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_marriage.gd").monthly(self))   # G-0332 혼인 — 정전 잇기·깨짐
 	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_relation.gd").monthly(self))   # G-0316 원수 충성 -2·스승 잃은 제자 +3
 	if not wonder_msgs.is_empty():

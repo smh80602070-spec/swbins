@@ -156,6 +156,7 @@ const CUTS := [
 	["lg_dg_rank", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rank", ["@tree"]]]],   # G-0325 ← G-0312 한 판 등급 알림
 	["lg_dg_season", DUNGEON, [["free_modal"], ["static", "res://games/saga_dungeon/data/dungeon_season.gd", "restore", [{"id": -1, "runs": [{"pts": 15, "rank": "S", "tier": 3, "sec": 245}, {"pts": 8, "rank": "A", "tier": 2, "sec": 300}, {"pts": 6, "rank": "B", "tier": 2, "sec": 410}], "past": [{"id": 2963, "score": 52, "tier": 2}]}]], ["call", "SeasonButton", "open_screen", []]]],   # G-0334 시즌 창(29점 백은)
 	["lg_dg_bless", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_bless", ["@tree"]]]],   # G-0335 3택 카드 신 계보 글
+	["lg_rk_focus", REALM, [["free_modal"], ["set", "/root/RealmSaveState", "focus", {"done": ["root", "rich"], "cur": "farm", "left": 2}], ["call", "FocusButton", "open_screen", []]]],   # G-0336 방침 창(부국 끝·둔전 2달)
 	["lg_dg_trail", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_legend", ["@tree"]], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0325 ← G-0290 전설 잔광
 	["lg_dg_rise", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rise", ["@tree"]]]],   # G-0325 ← G-0293 난입 솟음(한 컷씩 — time_scale)
 	["lg_dg_break", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_breakables", ["@tree"]]]],   # G-0325 ← G-0307 부서지는 통

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3]
+[gd_scene load_steps=27 format=3]
 
 [ext_resource type="PackedScene" path="res://games/saga_realm/ui/LordPortrait.tscn" id="17"]
 [ext_resource type="Script" path="res://saga_core/ui/goal_board.gd" id="14"]
@@ -25,6 +25,7 @@
 [ext_resource type="Script" path="res://games/saga_realm/ui/realm_wonder_button.gd" id="wonder_btn"]
 [ext_resource type="Script" path="res://games/saga_realm/ui/realm_trade_button.gd" id="trade_btn"]
 [ext_resource type="Script" path="res://games/saga_realm/ui/realm_law_button.gd" id="law_btn"]
+[ext_resource type="Script" path="res://games/saga_realm/ui/realm_focus_button.gd" id="focus_btn"]
 [ext_resource type="Script" path="res://saga_core/ui/menu_hud_hook.gd" id="menu_hook"]
 
 [node name="RealmHUD" type="CanvasLayer"]
@@ -185,6 +186,17 @@ offset_right = -180.0
 offset_bottom = -700.0
 script = ExtResource("law_btn")
 
+[node name="FocusButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -820.0
+offset_right = -180.0
+offset_bottom = -760.0
+script = ExtResource("focus_btn")
+
 [node name="TechButton" type="Button" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
@@ -327,4 +339,4 @@ script = ExtResource("14")
 script = ExtResource("menu_hook")
 game = "realm"
 me_adapter = "res://games/saga_realm/ui/me_adapter.gd"
-items = PackedStringArray("@me|👤|내 정보", "TechButton|📜|연구", "StatecraftButton|🧭|경륜 (F2)", "WonderButton|🏛️|불가사의", "TradeButton|🐫|교역", "LawButton|📜|법령", "DiploButton|🤝|외교", "PlotButton|🕵️|계략", "PromoteButton|🎖️|승진", "SuccessionButton|👑|계승", "EventButton|📯|사건", "QuizButton|❓|문답", "ArchiveButton|📚|서고", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")
+items = PackedStringArray("@me|👤|내 정보", "TechButton|📜|연구", "StatecraftButton|🧭|경륜 (F2)", "WonderButton|🏛️|불가사의", "TradeButton|🐫|교역", "LawButton|📜|법령", "FocusButton|🎯|방침", "DiploButton|🤝|외교", "PlotButton|🕵️|계략", "PromoteButton|🎖️|승진", "SuccessionButton|👑|계승", "EventButton|📯|사건", "QuizButton|❓|문답", "ArchiveButton|📚|서고", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")

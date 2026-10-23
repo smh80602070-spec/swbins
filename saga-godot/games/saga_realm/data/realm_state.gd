@@ -158,6 +158,8 @@ var laws: Dictionary = {}
 var age := 0
 ## G-0332 혼인 동맹 {세력 id: 무장 id}(저장 키 "marriages", 28→29). 규칙 data/realm_marriage.gd.
 var marriages: Dictionary = {}
+## G-0336 국가 방침 {done: [id…], cur: id, left: 달}(저장 키 "focus", 29→30). 규칙 data/realm_focus.gd · 곱은 _sc 에서.
+var focus: Dictionary = {}
 
 ## **2026-09-17 추가 — PLAN 101-2 REALM ③후보(웹판 §5-1 "인물 특성·야망").**
 ## `officer_growth`와 같은 지연 초기화 패턴 — officer_id -> {k, prog, done,
@@ -439,6 +441,7 @@ func start_scenario(id: String) -> void:
 	laws = {}   # G-0321
 	age = 0   # G-0329
 	marriages = {}   # G-0332
+	focus = {}   # G-0336
 	wonders = {"built": {}, "jobs": {}}   # G-0243 새 판은 아무도 안 지었다(웹 버그 ① — 웹은 옛 판 것이 남았다)
 	preload("res://games/saga_realm/data/realm_wonder.gd").bump()
 	_done_this_month.clear()
@@ -488,7 +491,7 @@ func passive_api() -> RefCounted:
 
 ## G-0216 경륜도 배수 하나(빈 경륜도면 1 — 곱하는 자리는 1 이 아닐 때만 손대 golden 이 비트 그대로)
 func _sc(key: String) -> float:
-	return float((load("res://games/saga_realm/data/realm_statecraft.gd") as GDScript).call("mul", key)) * preload("res://games/saga_realm/data/realm_laws.gd").mul(self, key) * preload("res://games/saga_realm/data/realm_ages.gd").mul(self, key)   # G-0321 법령 곱(빈 법전 1) · G-0329 국세(난세 1)
+	return float((load("res://games/saga_realm/data/realm_statecraft.gd") as GDScript).call("mul", key)) * preload("res://games/saga_realm/data/realm_laws.gd").mul(self, key) * preload("res://games/saga_realm/data/realm_ages.gd").mul(self, key) * preload("res://games/saga_realm/data/realm_focus.gd").mul(self, key)   # G-0336 방침(없으면 1) · G-0321 법령 곱(빈 법전 1) · G-0329 국세(난세 1)
 
 
 func _sc_apply(v: int, key: String) -> int:

@@ -5893,5 +5893,27 @@
   "ticket": "G-0335",
   "since": "2026-10-23",
   "note": "고돗 먼저(웹 짝 없음) · 세이브 안 건드림(boons 에서 셈) · SAGA_BLESSING=0 · 촬영 shot_scene lg_dg_bless"
+ },
+ {
+  "id": "gd.realm.focus",
+  "name": "5천하 국가 방침 나무 — 근본→부국(둔전)/강병(조련) 갈림길→인재→천하의 대계, 한 번에 하나·달이 차면 덤 영구",
+  "files": [
+   "games/saga_realm/data/realm_focus.gd",
+   "games/saga_realm/ui/realm_focus_button.gd",
+   "games/saga_realm/ui/RealmHUD.tscn",
+   "games/saga_realm/data/realm_state.gd",
+   "games/saga_realm/data/realm_save_state.gd",
+   "games/saga_realm/data/realm_rules.gd",
+   "games/saga_realm/data/realm_rules_month.gd"
+  ],
+  "tests": [
+   "realm_focus"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0336",
+  "since": "2026-10-23",
+  "note": "고돗 먼저(웹 짝 없음) · 세이브 v30 focus · SAGA_FOCUS=0 · 촬영 shot_scene lg_rk_focus"
  }
 ]

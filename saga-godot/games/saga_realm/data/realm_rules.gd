@@ -189,7 +189,7 @@ func _do_devel(key: String, o: Dictionary, officer_id: String) -> Dictionary:
 ## 전부 current_city 안에서 일어난다(인구·병력은 성마다 따로 논다).
 func _do_draft(o: Dictionary, officer_id: String) -> Dictionary:
 	var roll := _roll_amount(o, officer_id)
-	var law_m: float = preload("res://games/saga_realm/data/realm_laws.gd").mul(self, "draft")   # G-0321 징병령(경륜도 draft 는 _roll_amount 가 이미 곱함 — 법령만 따로)
+	var law_m: float = preload("res://games/saga_realm/data/realm_laws.gd").mul(self, "draft") * preload("res://games/saga_realm/data/realm_focus.gd").mul(self, "draft")   # G-0336 강병 · G-0321 징병령(경륜도 draft 는 _roll_amount 가 이미 곱함 — 법령만 따로)
 	var amount: int = int(roll.amount) if law_m == 1.0 else roundi(float(roll.amount) * law_m)
 
 	var c: Dictionary = cities[current_city]
