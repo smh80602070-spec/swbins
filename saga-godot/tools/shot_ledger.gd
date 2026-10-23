@@ -199,21 +199,21 @@ static func dg_rise(tree: SceneTree) -> void:
 			e.set("rise_in", true)
 			e.set_physics_process(false)
 			tree.current_scene.add_child(e)
-			e.global_position = p.global_position + Vector3(-2.5 + 2.5 * i, 0.0, -3.0)
-		_later(tree, 6, func() -> void: Engine.time_scale = 0.03))
+			e.global_position = p.global_position + Vector3(-3.5 - 2.0 * i, 0.0, 3.0 + 0.5 * i)   # 문 곁에 선 나에게서 방 가운데(−x·+z)
+		_later(tree, 3, func() -> void: Engine.time_scale = 0.02))
 
 
-## G-0325 2나락 부서지는 통 — 가장 가까운 통 곁에 선다
+## G-0325 2나락 부서지는 통 — 첫 방 문 곁(나)에서 방 안쪽에 통·항아리 둘을 놓는다(가장 가까운 기존 통은 다른 방이라 어둡다)
 static func dg_breakables(tree: SceneTree) -> void:
 	var p := _player(tree)
-	var best: Node3D = null
-	var bd := INF
-	for b in tree.get_nodes_in_group("dungeon_breakable"):
-		var d := (b as Node3D).global_position.distance_to(p.global_position)
-		if d < bd:
-			bd = d
-			best = b
-	if best != null:
-		p.global_position = best.global_position + Vector3(1.6, 0.3, 1.6)
-	else:
+	var bn := tree.current_scene.find_child("Breakables", true, false)
+	if bn == null:
+		for n in tree.get_nodes_in_group("dungeon_breakables"):
+			bn = n
+	if bn == null or p == null:
 		print("SHOT_BREAK 없음")
+		return
+	var m0 := "barrel_01"
+	var m1 := "jar_01"
+	bn.call("_place", (bn as Node3D).to_local(p.global_position + Vector3(-3.5, 0, 3.0)), m0, 1, false)
+	bn.call("_place", (bn as Node3D).to_local(p.global_position + Vector3(-5.0, 0, 3.8)), m1, 1, true)

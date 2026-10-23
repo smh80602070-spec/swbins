@@ -5464,12 +5464,12 @@
   "tests": [
    "breakables"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0307",
   "since": "2026-10-22",
-  "note": "유니티 U-0158 짝 · K-0174 조각 · SAGA_BREAKABLE=0"
+  "note": "유니티 U-0158 짝 · K-0174 조각 · SAGA_BREAKABLE=0 · D2 G-0327 촬영 shot_scene lg_dg_break"
  },
  {
   "id": "gd.dungeon.atlas",
