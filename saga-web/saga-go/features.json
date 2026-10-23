@@ -1776,14 +1776,14 @@
   "tests": [
    "test-web W-0375 쳐내기"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "C": "맞받기 손맛"
   },
   "ticket": "W-0375",
   "since": "2026-10-22",
-  "note": "10-22: 이르면 그냥 평타 · 자동 사냥 평타는 쳐내기를 안 씀(S.autoAct) · 화면 촬영 없음(타이밍)"
+  "note": "D2(claude 10-23 R-3): 1만리 마을 — 가까운 적 예고 끝 0.2초 남김 → 평타 {ok, parry:true}·field:parry 이벤트 · 적 머리 위 「쳐냄!」 촬영 · 10-22: 이르면 그냥 평타 · 자동 사냥 평타는 쳐내기를 안 씀(S.autoAct) · 화면 촬영 없음(타이밍)"
  },
  {
   "id": "go.envChain",

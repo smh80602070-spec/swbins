@@ -1042,12 +1042,12 @@
   "tests": [
    "test-web n/n"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0358",
   "since": "2026-10-21",
-  "note": "10-21: 횃불은 이 판이 제 점광을 이미 단다 → 빛남만(glowOnly) · 굴 1·모닥불 0.5 · 촬영 없음"
+  "note": "D2(claude 10-23 R-3): 굴 3D(🧊) 12초 — nightglow3d.stats { mats 1, spots 8, lit 0, night 1 }(빛남만 — 점광 0 이 맞음) · 10-21: 횃불은 이 판이 제 점광을 이미 단다 → 빛남만(glowOnly) · 굴 1·모닥불 0.5 · 촬영 없음"
  },
  {
   "id": "st.phone-hud-diet",
