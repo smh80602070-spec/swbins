@@ -139,29 +139,62 @@
     } }
     return out;
   }
+  /* W-0389 ② — 결(texture)·경계 번짐(blend)·테두리(edge)는 칸 그림이 좌표 해시라 프레임마다 같다 → CH×CH 칸 조각 캔버스에 한 번 굽고(열쇠 = 줌 T·계절) 매 프레임엔
+     조각만 붙인다(폰 2D 들판 13fps 의 주범 — 보이는 칸 70여 개 × 타원 10·그라데이션 4·칠 8 을 매 프레임 다시 그리던 것). 조각 경계는 이웃 조각 원점까지 늘려 1px 틈을 막는다.
+     소품(④)은 그대로 매 프레임(인물과 발 y 정렬). 손잡이 world.field2dCache 0 = 옛 길(A/B) */
+  var CH = 8, chunks = {}, chunkN = 0, CHUNK_MAX = 28, chunkKey = null;
+  function cacheOn() { var C = core(); return !(C && C.tuned && !+C.tuned('world.field2dCache', 1)) && typeof document !== 'undefined' && !global.DG_NO_DRAW; }
+  /** 칸 하나의 땅 그림(결·경계·테두리) — 화면/조각 어디에 그리든 같다 */
+  function paintTile(g, kind, tx, ty, sx, sy, Tw, Th, T, b, terrainAt) {
+    texture(g, kind, tx, ty, sx, sy, T);
+    blend(g, kind, terrainAt(tx + 1, ty), sx + Tw, sy, -1, 0, Tw, Th); blend(g, kind, terrainAt(tx - 1, ty), sx, sy, 1, 0, Tw, Th);
+    blend(g, kind, terrainAt(tx, ty + 1), sx, sy + Th, 0, -1, Tw, Th); blend(g, kind, terrainAt(tx, ty - 1), sx, sy, 0, 1, Tw, Th);
+    var c = edgeColor(kind, terrainAt(tx + 1, ty)); if (c) { g.fillStyle = c; g.fillRect(sx + Tw - b, sy, b, Th); }
+    c = edgeColor(kind, terrainAt(tx, ty + 1)); if (c) { g.fillStyle = c; g.fillRect(sx, sy + Th - b, Tw, b); }
+    c = edgeColor(kind, terrainAt(tx - 1, ty)); if (c) { g.fillStyle = c; g.fillRect(sx, sy, b, Th); }
+    c = edgeColor(kind, terrainAt(tx, ty - 1)); if (c) { g.fillStyle = c; g.fillRect(sx, sy, Tw, b); }
+  }
+  /** 조각(cx, cy) 캔버스 — 없으면 굽는다. 조각 안 칸 경계는 조각 원점 기준 정수 px */
+  function chunkOf(cx, cy, T, b, terrainAt) {
+    var k = cx + ',' + cy, c = chunks[k];
+    if (c) { c.at = ++chunkN; return c.cv; }
+    var cv = document.createElement('canvas'), px = Math.round(CH * T), g, i, j, sx, sy, Tw, Th;
+    cv.width = Math.max(1, px); cv.height = Math.max(1, px); g = cv.getContext('2d');
+    for (j = 0; j < CH; j++) { for (i = 0; i < CH; i++) {
+      sx = Math.round(i * T); sy = Math.round(j * T); Tw = Math.round((i + 1) * T) - sx; Th = Math.round((j + 1) * T) - sy;
+      paintTile(g, terrainAt(cx * CH + i, cy * CH + j), cx * CH + i, cy * CH + j, sx, sy, Tw, Th, T, b, terrainAt);
+    } }
+    if (Object.keys(chunks).length >= CHUNK_MAX) { var old = null, oa = Infinity, kk; for (kk in chunks) { if (chunks[kk].at < oa) { oa = chunks[kk].at; old = kk; } } if (old) { delete chunks[old]; } }
+    chunks[k] = { cv: cv, at: ++chunkN };
+    return cv;
+  }
+  function chunkStats() { return { n: Object.keys(chunks).length, key: chunkKey }; }
   function decorate(ctx, camX, camY, W, H, sc, terrainAt) {
     if (!on() || !terrainAt) { return false; }
     var M = global.DG.mode2d, T = CELL * sc, b = Math.max(2, T * 0.07);
     var t0x = Math.floor(camX / CELL) - 1, t1x = Math.ceil((camX + W / sc) / CELL) + 1;
     var t0y = Math.floor(camY / CELL) - 1, t1y = Math.ceil((camY + H / sc) / CELL) + 2;
-    var tx, ty, kind, sx, sy, v, c, props = [], ps, i, deep = tallOn(); tall = [];
+    var tx, ty, kind, sx, sy, props = [], ps, i, deep = tallOn(), useCache = cacheOn(); tall = [];
+    if (useCache) {
+      var key = T.toFixed(3) + '|' + (seasonMemo.k || '') + '|' + b;
+      if (chunkKey !== key) { chunks = {}; chunkKey = key; }
+      var c0x = Math.floor(t0x / CH), c1x = Math.floor(t1x / CH), c0y = Math.floor(t0y / CH), c1y = Math.floor(t1y / CH), cx, cy, ox, oy, nx, ny;
+      for (cy = c0y; cy <= c1y; cy++) { for (cx = c0x; cx <= c1x; cx++) {
+        ox = Math.round((cx * CH * CELL - camX) * sc); oy = Math.round((cy * CH * CELL - camY) * sc);
+        nx = Math.round(((cx + 1) * CH * CELL - camX) * sc); ny = Math.round(((cy + 1) * CH * CELL - camY) * sc);
+        ctx.drawImage(chunkOf(cx, cy, T, b, terrainAt), ox, oy, nx - ox, ny - oy);
+      } }
+    }
     for (ty = t0y; ty <= t1y; ty++) {
       for (tx = t0x; tx <= t1x; tx++) {
         kind = terrainAt(tx, ty);
         /* 칸 경계를 정수 픽셀로 — 반투명 칠이 1px 겹쳐 격자선이 서던 것 */
         sx = Math.round((tx * CELL - camX) * sc); sy = Math.round((ty * CELL - camY) * sc);
         var Tw = Math.round(((tx + 1) * CELL - camX) * sc) - sx, Th = Math.round(((ty + 1) * CELL - camY) * sc) - sy;
-        texture(ctx, kind, tx, ty, sx, sy, T);
-        /* ③ 경계 — 이웃 땅 색을 이 칸 안쪽으로 번지게(네모 블록 경계를 무르게) + 선 띠(거품·그늘) */
-        blend(ctx, kind, terrainAt(tx + 1, ty), sx + Tw, sy, -1, 0, Tw, Th); blend(ctx, kind, terrainAt(tx - 1, ty), sx, sy, 1, 0, Tw, Th);
-        blend(ctx, kind, terrainAt(tx, ty + 1), sx, sy + Th, 0, -1, Tw, Th); blend(ctx, kind, terrainAt(tx, ty - 1), sx, sy, 0, 1, Tw, Th);
-        c = edgeColor(kind, terrainAt(tx + 1, ty)); if (c) { ctx.fillStyle = c; ctx.fillRect(sx + Tw - b, sy, b, Th); }
-        c = edgeColor(kind, terrainAt(tx, ty + 1)); if (c) { ctx.fillStyle = c; ctx.fillRect(sx, sy + Th - b, Tw, b); }
-        c = edgeColor(kind, terrainAt(tx - 1, ty)); if (c) { ctx.fillStyle = c; ctx.fillRect(sx, sy, b, Th); }
-        c = edgeColor(kind, terrainAt(tx, ty - 1)); if (c) { ctx.fillStyle = c; ctx.fillRect(sx, sy, Tw, b); }
+        if (!useCache) { paintTile(ctx, kind, tx, ty, sx, sy, Tw, Th, T, b, terrainAt); }
         if (ty <= t1y - 1) {
           ps = propsAt(kind, tx, ty);
-          for (i = 0; i < ps.length; i++) { if (deep && ps[i].k >= TALL) { tall.push({ id: ps[i].id, wx: (tx + ps[i].dx) * CELL, wy: (ty + ps[i].dy) * CELL, k: ps[i].k }); continue; } props.push({ id: ps[i].id, x: sx + ps[i].dx * T, y: sy + ps[i].dy * T, h: T * ps[i].k }); }   // W-0372 키 큰 소품(나무)은 인물과 같은 깊이 줄로(world items)
+          for (i = 0; i < ps.length; i++) { if (deep && ps[i].k >= TALL) { tall.push({ id: ps[i].id, wx: (tx + ps[i].dx) * CELL, wy: (ty + ps[i].dy) * CELL, k: ps[i].k }); continue; } props.push({ id: ps[i].id, x: sx + ps[i].dx * T, y: sy + ps[i].dy * T, h: T * ps[i].k }); }
         }
       }
     }
@@ -196,5 +229,5 @@
   function npcMps(bodyM) { var C = core(), b = C && C.tuned ? +C.tuned('world.npc2dBps', 0.6) : 0.6; return bodyM > 0 && b > 0 ? b * bodyM : 0; }
   function strideMul() { var C = core(); return C && C.tuned ? Math.max(0.3, +C.tuned('world.stride2d', 1.45)) : 1.45; }
 
-  global.DG.field2d = { tall: function () { return tall; }, treeRects: treeRects, TALL: TALL, walkMps: walkMps, strideMul: strideMul, wander: wander, npcMps: npcMps, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
+  global.DG.field2d = { tall: function () { return tall; }, chunkStats: chunkStats, paintTile: paintTile, treeRects: treeRects, TALL: TALL, walkMps: walkMps, strideMul: strideMul, wander: wander, npcMps: npcMps, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
 })(typeof window !== 'undefined' ? window : this);
