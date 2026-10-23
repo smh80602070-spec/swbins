@@ -35,6 +35,7 @@ namespace Saga.Story.World
             StoryScenarioRunner.Install(); // PLAN.md 109-16 시나리오 — 장면 상자·목표 한 줄(Play 때, 씬 재빌드 없이)
             Saga.Story.UI.StoryPickUi.Install(); // tasks U-0093 레벨업 무예 3택 창(Play 때, 씬 재빌드 없이)
             StoryGatherNode.Install(); // tasks U-0133 들판 채집터 넷 — F·단추로 캐면 채집 등급 경험(Play 때, 씬 재빌드 없이)
+            StoryHiddenClue.Install(); // tasks U-0181 숨은 우두머리 — 들판 맨 끝 옛 비문(Play 때, 씬 재빌드 없이)
             StoryCampfireSpot.Install(); // tasks U-0170 모닥불에 모여 쉬기 — 들머리 불, 판 사이 앉으면 앞 동료 온기(Play 때, 씬 재빌드 없이)
             MountField.Install(); // PLAN.md 109-15 탈것·비행 — H 타기·Shift+H 고르기·타기 단추(Play 때, 씬 재빌드 없이)
             Saga.Story.UI.StoryAutoQuest.Install(); // tasks U-0165 자동 퀘스트 — 목표판 ▶(좌우 걷기·평타·장면 줄 넘김, Play 때)

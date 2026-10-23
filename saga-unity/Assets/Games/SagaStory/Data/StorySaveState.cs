@@ -116,6 +116,7 @@ namespace Saga.Story.Data
             public string rankBest;
             public string monthJson; // tasks U-0162 달 사명 — 버전 그대로: 옛 세이브는 null → 빈 칸.
             public string campWarmth; // tasks U-0170 모닥불 온기(동료 id) — 버전 그대로: 옛 세이브는 null → 온기 없음.
+            public string hiddenJson; // tasks U-0181 숨은 우두머리 — 버전 그대로: 옛 세이브는 null → 안 읽음·처치 0.
             public string lifeJson; // tasks U-0133 생활 기술(채집) — 버전 그대로: 옛 세이브는 null → F·재료 0.
         }
 
@@ -173,6 +174,7 @@ namespace Saga.Story.Data
             data.tutDone = StoryTutorial.Ids();
             data.rankBest = StoryRunRank.Best; // tasks U-0128
             data.lifeJson = StoryLife.Snapshot(); // tasks U-0133
+            data.hiddenJson = StoryHidden.Snapshot(); // tasks U-0181
             data.campWarmth = StoryCampfire.Snapshot(); // tasks U-0170
             data.monthJson = StoryMonthly.Snapshot(); // tasks U-0162
             data.round = StoryRound.Round;
@@ -229,6 +231,7 @@ namespace Saga.Story.Data
             else StoryScenario.Restore(data.scenarioJson);
             StoryRound.Restore(data.round, data.roundKills, data.roundRifts, data.round >= 2);
             StoryLife.Restore(data.lifeJson); // tasks U-0133
+            StoryHidden.Restore(data.hiddenJson); // tasks U-0181
             StoryCampfire.Restore(data.campWarmth); // tasks U-0170
             StoryMonthly.Restore(data.monthJson); // tasks U-0162
             StoryRunRank.RestoreBest(data.rankBest); // tasks U-0128 // 기준점은 첫 회귀 뒤(2회차부터)에만 있다

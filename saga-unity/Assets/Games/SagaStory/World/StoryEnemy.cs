@@ -39,8 +39,18 @@ namespace Saga.Story.World
         // data-enemy.js 황건적/황건 두목 공통 color '#c9a83a'.
         private static readonly Color BodyColor = new Color(0.788f, 0.659f, 0.227f);
         // 109-3 — 몸이 없는 PC 에서 다른 시대 잡졸을 빛깔로라도 가른다(몸이 있으면 리깅 모델이라 안 칠한다).
-        private Color TintColor => era == StoryEra.Future ? new Color(0.55f, 0.62f, 0.68f) : era == StoryEra.Modern ? new Color(0.3f, 0.34f, 0.3f) : BodyColor;
+        private Color TintColor => _hidden ? HiddenColor : era == StoryEra.Future ? new Color(0.55f, 0.62f, 0.68f) : era == StoryEra.Modern ? new Color(0.3f, 0.34f, 0.3f) : BodyColor;
         private const float BossVisualScaleMul = 1.4f;
+        // tasks U-0181 숨은 우두머리 — 짙은 보라(몸이 리깅 모델이면 안 칠한다, 다른 시대 잡졸과 같은 결).
+        private static readonly Color HiddenColor = new Color(0.36f, 0.16f, 0.5f);
+        private bool _hidden;
+        private float _firstHitAt = float.NaN;
+        /// <summary>tasks U-0181 — 숨은 우두머리인가.</summary>
+        public bool IsHidden => _hidden;
+        /// <summary>tasks U-0181 — 두목 패턴 공격 배율(숨은 우두머리 ×1.5, 아니면 1). `StoryBossPatternRunner.Hurt` 가 곱한다.</summary>
+        public float HitMul => _hidden ? StoryHidden.DmgMul : 1f;
+        /// <summary>tasks U-0181 — 첫 타 시각(없으면 NaN, 진단).</summary>
+        public float FirstHitAt => _firstHitAt;
 
         [SerializeField] private GameObject modelPrefab; // 잡졸 — BuildTestStoryScene.cs가 채운다(44장 이후 Abe).
         // 44장 "Boss" 교체 — 비어 있으면 잡졸과 같은 modelPrefab을 그대로
@@ -97,7 +107,7 @@ namespace Saga.Story.World
 
         public StoryEra Era => era;
         public float HeightMul => heightMul;
-        public string DisplayName => era == StoryEra.Past
+        public string DisplayName => _hidden ? StoryLocalization.T("hidden.name", "숨은 우두머리") : era == StoryEra.Past
             ? (isBoss && (isLabyrinthEnemy || _gateSigIndex >= 0) ? StoryBossPattern.SigBoss(StoryBossPattern.SigIndex(BossSigId))
                 : isBoss ? StoryLocalization.T("cut.story_boss_title", "황건 두목") : StoryLocalization.T("enemy.hwanggeon", "황건적"))
             : StoryLocalization.T(eraNameKey, eraNameKo);
@@ -313,6 +323,36 @@ namespace Saga.Story.World
             GetComponent<StoryBossPatternRunner>()?.ResetPattern();
         }
 
+        /// <summary>tasks U-0181 — 이 두목의 몸·자리로 <see cref="StoryHidden.DelaySec"/>초 뒤 숨은 우두머리(비문 실행기가 센다).</summary>
+        private void QueueHidden()
+        {
+            var parent = transform.parent;
+            var pos = transform.position;
+            GameObject mp = modelPrefab, bp = bossModelPrefab;
+            float bs = riggedBossVisualScale;
+            StoryHiddenClue.Queue(() => SpawnHidden(parent, pos, mp, bp, bs));
+        }
+
+        /// <summary>tasks U-0181 숨은 우두머리 세우기(진단도 부른다) — 꺼 둔 채 붙여 두목·숨은 표시를 먼저 넣고 켠다(Awake 가 두목 체력·보라 몸으로 짓게).</summary>
+        public static StoryEnemy SpawnHidden(Transform parent, Vector3 pos, GameObject model, GameObject bossModel, float bossScale)
+        {
+            var go = new GameObject("Boss_Hidden");
+            go.SetActive(false);
+            go.transform.SetParent(parent, false);
+            go.transform.position = pos;
+            var e = go.AddComponent<StoryEnemy>();
+            e.isBoss = true;
+            e._hidden = true;
+            e.modelPrefab = model;
+            e.bossModelPrefab = bossModel;
+            e.riggedBossVisualScale = bossScale;
+            go.SetActive(true);
+            e._hp *= StoryHidden.HpMul;
+            e._maxHp = e._hp;
+            e._introPlayed = true; // 등장 컷 없이 곧바로 싸운다
+            return e;
+        }
+
         private void OnDestroy()
         {
             AllList.Remove(this);
@@ -412,6 +452,7 @@ namespace Saga.Story.World
         {
             if (_dead || amount <= 0f) return;
             if (!isLabyrinthEnemy) StoryRunRank.OnHit(Time.time);   // tasks U-0093 판 등급 — 연타(미궁은 따로)
+            if (isBoss && float.IsNaN(_firstHitAt)) _firstHitAt = Time.time; // tasks U-0181 빨리 잡기 셈
             StorySummonState.OnEnemyHit(); // PLAN.md 106-10 — 소환 게이지(플레이어 +3 · 동료 +1 · 소환 자체는 0).
             float applied = _isChampion && _shieldBroken ? amount * ShieldVulnerableMul : amount;
             // PLAN.md 109-11-2 — 그로기 동안 받는 피해 ×1.5(방패 창과 곱한다).
@@ -459,8 +500,17 @@ namespace Saga.Story.World
             // tasks U-0162 달 사명 — 들판·비경 어디서든 한 마리(사냥터 = StoryEras 단계와 같은 넷)
             if (StoryMonthly.OnKill(isLabyrinthEnemy ? StoryEras.Tier(StoryLabyrinthState.Floor) : 0))
                 DialogueLabel.Instance?.Show(string.Format(StoryLocalization.T("monthly.earned", "🌙 달 사명 완수 — {0} 달 문장을 모았다"), StoryMonthly.NowKey), 4f);
-            if (!isLabyrinthEnemy)
+            if (_hidden)
             {
+                // tasks U-0181 — 숨은 우두머리는 사명·판 등급 밖(들판 두목이 이미 판을 닫았다), 경험치와 처치 기록만.
+                float hx = StoryCombat.BossExp * StoryHidden.ExpMul * StoryRound.GainMul();
+                StoryJobState.GainExp(hx);
+                StoryHidden.OnKilled();
+                DialogueLabel.Instance?.Show(StoryHidden.KillLine(hx), 4f);
+            }
+            else if (!isLabyrinthEnemy)
+            {
+                if (isBoss && StoryHidden.ShouldSummon(_firstHitAt, Time.time)) QueueHidden(); // tasks U-0181
                 StoryQuestState.AddKill();
                 if (isBoss) StoryQuestState.AddBossKill();
                 float expMul = _isChampion ? ChampionExpMul : 1f;

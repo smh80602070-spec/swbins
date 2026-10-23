@@ -2594,6 +2594,23 @@
   "note": "D1(U-0176): PlaytestStorySlice launch plain·launch·juggle·immune·off OK(↑ 평타 → 최고 1.58m·0.58초 닿음·떨어짐 16 = 32.8 × 0.5 · 저글 4타 상한 · 두목·관문 대장 안 뜸) · 4종횡 전체 통과"
  },
  {
+  "id": "un.st.hidden-boss",
+  "name": "U-0181 4종횡 숨은 우두머리 — 들판 맨 끝 옛 비문을 읽고 들판 두목을 첫 타부터 60초 안에 쓰러뜨리면 2초 뒤 같은 자리에 숨은 우두머리(체력 ×2.5·공격 ×1.5·보라), 잡으면 경험치 두목 ×2.5·처치 기록(고돗 G-0319)",
+  "files": [
+   "saga-unity/Assets/Games/SagaStory/Data/StoryHidden.cs",
+   "saga-unity/Assets/Games/SagaStory/World/StoryHiddenClue.cs"
+  ],
+  "tests": [
+   "PlaytestStoryHidden"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0181",
+  "since": "2026-10-23",
+  "note": "D1(U-0181): PlaytestStorySlice hidden rule·clue·summon·kill·save·off OK"
+ },
+ {
   "id": "un.rk.supply",
   "name": "U-0134 진·보급선 — 못 떨군 공격은 진(병력·사기·치중), 달마다 치중·보급로·사기, 끊기면 ×0.85·−5%, 0.60/500 밑 퇴각, 계략 ✂️ 보급 끊기(웹 W-0278 이식)",
   "files": [

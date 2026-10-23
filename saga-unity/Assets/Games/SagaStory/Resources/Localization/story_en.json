@@ -703,6 +703,11 @@
     { "key": "camp.eff.skirmisher", "value": "full energy" },
     { "key": "camp.eff.guardian", "value": "max HP +10%" },
     { "key": "camp.label", "value": "🔥 Campfire · rest" },
-    { "key": "camp.label_warm", "value": "🔥 Campfire · warm" }
+    { "key": "camp.label_warm", "value": "🔥 Campfire · warm" },
+    { "key": "hidden.name", "value": "Hidden Overlord" },
+    { "key": "hidden.stele", "value": "📜 Ancient stele" },
+    { "key": "hidden.clue", "value": "📜 Ancient stele — \"Cut down the land's master within one breath (60s), and its shadow will rise\"" },
+    { "key": "hidden.rise", "value": "🟣 The Hidden Overlord has risen!" },
+    { "key": "hidden.kill", "value": "🟣 Hidden Overlord defeated! EXP +{0:0} (kills {1})" }
   ]
 }
