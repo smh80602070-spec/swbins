@@ -16,7 +16,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_alexander_v01"
   },
   {
    "id": "eu_augustus",
@@ -31,7 +32,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_augustus_v01"
   },
   {
    "id": "eu_aurelius",
@@ -46,7 +48,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_aurelius_v01"
   },
   {
    "id": "eu_caesar",
@@ -61,7 +64,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_caesar_v02"
   },
   {
    "id": "eu_charlemagne",
@@ -76,7 +80,8 @@
     284,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_charlemagne_v02"
   },
   {
    "id": "eu_eleanor",
@@ -91,7 +96,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_eleanor_v01"
   },
   {
    "id": "eu_elizabeth",
@@ -106,7 +112,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_elizabeth_v01"
   },
   {
    "id": "eu_frederick",
@@ -121,7 +128,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_frederick_v01"
   },
   {
    "id": "eu_hannibal",
@@ -136,7 +144,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_hannibal_v01"
   },
   {
    "id": "eu_harald",
@@ -151,7 +160,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_harald_v01"
   },
   {
    "id": "eu_joan",
@@ -166,7 +176,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_joan_v02"
   },
   {
    "id": "eu_machiavelli",
@@ -181,7 +192,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_machiavelli_v01"
   },
   {
    "id": "eu_michelangelo",
@@ -196,7 +208,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_michelangelo_v01"
   },
   {
    "id": "eu_napoleon",
@@ -211,7 +224,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_napoleon_v01"
   },
   {
    "id": "eu_nelson",
@@ -226,7 +240,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_nelson_v01"
   },
   {
    "id": "eu_newton",
@@ -241,7 +256,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_newton_v01"
   },
   {
    "id": "eu_peter",
@@ -256,7 +272,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_peter_v01"
   },
   {
    "id": "eu_richard",
@@ -271,7 +288,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_richard_v01"
   },
   {
    "id": "eu_scipio",
@@ -286,7 +304,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_scipio_v01"
   },
   {
    "id": "eu_william",
@@ -301,7 +320,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "eu_william_v01"
   },
   {
    "id": "jp_hideyoshi",
@@ -316,7 +336,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_hideyoshi_v01"
   },
   {
    "id": "jp_ieyasu",
@@ -331,7 +352,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_ieyasu_v01"
   },
   {
    "id": "jp_kenshin",
@@ -346,7 +368,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_kenshin_v01"
   },
   {
    "id": "jp_masamune",
@@ -361,7 +384,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_masamune_v02"
   },
   {
    "id": "jp_mitsukuni",
@@ -376,7 +400,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_mitsukuni_v01"
   },
   {
    "id": "jp_murasaki",
@@ -391,7 +416,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_murasaki_v01"
   },
   {
    "id": "jp_naosuke",
@@ -406,7 +432,8 @@
     281,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_naosuke_v01"
   },
   {
    "id": "jp_nobunaga",
@@ -421,7 +448,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_nobunaga_v01"
   },
   {
    "id": "jp_ryoma",
@@ -436,7 +464,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_ryoma_v01"
   },
   {
    "id": "jp_saigo",
@@ -451,7 +480,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_saigo_v01"
   },
   {
    "id": "jp_seishonagon",
@@ -466,7 +496,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_seishonagon_v01"
   },
   {
    "id": "jp_shingen",
@@ -481,7 +512,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_shingen_v01"
   },
   {
    "id": "jp_taira",
@@ -496,7 +528,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_taira_v01"
   },
   {
    "id": "jp_yoritomo",
@@ -511,7 +544,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_yoritomo_v01"
   },
   {
    "id": "jp_yukimura",
@@ -526,7 +560,8 @@
     284,
     203,
     159
-   ]
+   ],
+   "bust_pick": "jp_yukimura_v02"
   },
   {
    "id": "kr_ahnjunggeun",
@@ -541,7 +576,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_ahnjunggeun_v01"
   },
   {
    "id": "kr_choemuseon",
@@ -556,7 +592,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_choemuseon_v01"
   },
   {
    "id": "kr_daejoyeong",
@@ -571,7 +608,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_daejoyeong_v02"
   },
   {
    "id": "kr_euljimundeok",
@@ -586,7 +624,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_euljimundeok_v01"
   },
   {
    "id": "kr_ganggamchan",
@@ -601,7 +640,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_ganggamchan_v02"
   },
   {
    "id": "kr_gwakjaeu",
@@ -616,7 +656,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_gwakjaeu_v01"
   },
   {
    "id": "kr_gwanggaeto",
@@ -631,7 +672,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_gwanggaeto_v01"
   },
   {
    "id": "kr_heojun",
@@ -646,7 +688,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_heojun_v01"
   },
   {
    "id": "kr_hwanghui",
@@ -661,7 +704,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_hwanghui_v01"
   },
   {
    "id": "kr_jangyeongsil",
@@ -676,7 +720,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_jangyeongsil_v01"
   },
   {
    "id": "kr_jeongmongju",
@@ -691,7 +736,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_jeongmongju_v01"
   },
   {
    "id": "kr_jeongyakyong",
@@ -706,7 +752,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_jeongyakyong_v01"
   },
   {
    "id": "kr_kimgu",
@@ -721,7 +768,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_kimgu_v01"
   },
   {
    "id": "kr_kimjeongho",
@@ -736,7 +784,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_kimjeongho_v01"
   },
   {
    "id": "kr_kimyusin",
@@ -751,7 +800,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_kimyusin_v01"
   },
   {
    "id": "kr_nongae",
@@ -766,7 +816,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_nongae_v01"
   },
   {
    "id": "kr_sejong",
@@ -781,7 +832,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_sejong_v01"
   },
   {
    "id": "kr_sinsaimdang",
@@ -796,7 +848,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_sinsaimdang_v01"
   },
   {
    "id": "kr_wanggeon",
@@ -811,7 +864,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_wanggeon_v01"
   },
   {
    "id": "kr_wonhyo",
@@ -826,7 +880,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_wonhyo_v01"
   },
   {
    "id": "kr_yeongaesomun",
@@ -841,7 +896,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_yeongaesomun_v02"
   },
   {
    "id": "kr_yihwang",
@@ -856,7 +912,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_yihwang_v01"
   },
   {
    "id": "kr_yii",
@@ -871,7 +928,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_yii_v01"
   },
   {
    "id": "kr_yisunsin",
@@ -886,7 +944,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_yisunsin_v02"
   },
   {
    "id": "kr_yugwansun",
@@ -901,7 +960,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kr_yugwansun_v01"
   },
   {
    "id": "sg_diaochan",
@@ -916,7 +976,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_diaochan_v01"
   },
   {
    "id": "sg_guanyu",
@@ -931,7 +992,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_guanyu_v01"
   },
   {
    "id": "sg_huatuo",
@@ -946,7 +1008,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_huatuo_v01"
   },
   {
    "id": "sg_luxun",
@@ -961,7 +1024,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_luxun_v01"
   },
   {
    "id": "sg_machao",
@@ -976,7 +1040,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_machao_v01"
   },
   {
    "id": "sg_menghuo",
@@ -991,7 +1056,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_menghuo_v02"
   },
   {
    "id": "sg_pangtong",
@@ -1006,7 +1072,8 @@
     281,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_pangtong_v01"
   },
   {
    "id": "sg_simayi",
@@ -1021,7 +1088,8 @@
     281,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_simayi_v01"
   },
   {
    "id": "sg_xiahoudun",
@@ -1036,7 +1104,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_xiahoudun_v02"
   },
   {
    "id": "sg_xunyu",
@@ -1051,7 +1120,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_xunyu_v01"
   },
   {
    "id": "sg_zhangfei",
@@ -1066,7 +1136,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_zhangfei_v02"
   },
   {
    "id": "sg_zhangliao",
@@ -1081,7 +1152,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_zhangliao_v01"
   },
   {
    "id": "sg_zhaoyun",
@@ -1096,7 +1168,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_zhaoyun_v01"
   },
   {
    "id": "sg_zhouyu",
@@ -1111,7 +1184,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sg_zhouyu_v01"
   },
   {
    "id": "wd_akbar",
@@ -1126,7 +1200,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_akbar_v01"
   },
   {
    "id": "wd_ashoka",
@@ -1141,7 +1216,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_ashoka_v01"
   },
   {
    "id": "wd_attila",
@@ -1156,7 +1232,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_attila_v01"
   },
   {
    "id": "wd_cleopatra",
@@ -1171,7 +1248,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_cleopatra_v01"
   },
   {
    "id": "wd_hammurabi",
@@ -1186,7 +1264,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_hammurabi_v01"
   },
   {
    "id": "wd_ibnbattuta",
@@ -1201,7 +1280,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_ibnbattuta_v01"
   },
   {
    "id": "wd_khubilai",
@@ -1216,7 +1296,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_khubilai_v01"
   },
   {
    "id": "wd_mansamusa",
@@ -1231,7 +1312,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_mansamusa_v01"
   },
   {
    "id": "wd_moctezuma",
@@ -1246,7 +1328,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_moctezuma_v01"
   },
   {
    "id": "wd_pachacuti",
@@ -1261,7 +1344,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_pachacuti_v01"
   },
   {
    "id": "wd_saladin",
@@ -1276,7 +1360,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_saladin_v01"
   },
   {
    "id": "wd_suleiman",
@@ -1291,7 +1376,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "wd_suleiman_v01"
   }
  ]
 }
