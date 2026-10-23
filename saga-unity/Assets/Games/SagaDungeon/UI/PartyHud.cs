@@ -60,12 +60,12 @@ namespace Saga.Dungeon.UI
             bool mReady = PartyState.Ready(PartyRole.Mystic);
             bool sReady = PartyState.SummonReady;
 
-            _guardName.text = DungeonLocalization.T("party.hud_guard", "무사") + (guardUp ? Tag(gReady, "1") : "  " + DungeonLocalization.T("party.hud_down", "쓰러짐"));
+            _guardName.text = DungeonLocalization.T("party.hud_guard", "무사") + DungeonBond.Tag(PartyRole.Guard) + (guardUp ? Tag(gReady, "1") : "  " + DungeonLocalization.T("party.hud_down", "쓰러짐"));
             _guardHp.fillAmount = guard != null ? guard.Hp / AllyFighter.HpMax : 1f;
             _guardHp.color = guardUp ? HpColor : DownColor;
             SetGauge(_guardAtb, PartyState.AtbOf(PartyRole.Guard) / PartyState.AtbMax, gReady);
 
-            _mysticName.text = DungeonLocalization.T("party.hud_mystic", "술사") + Tag(mReady, "2");
+            _mysticName.text = DungeonLocalization.T("party.hud_mystic", "술사") + DungeonBond.Tag(PartyRole.Mystic) + Tag(mReady, "2");
             SetGauge(_mysticAtb, PartyState.AtbOf(PartyRole.Mystic) / PartyState.AtbMax, mReady);
 
             _summonName.text = DungeonLocalization.T("party.hud_summon", "소환") + Tag(sReady, "V");

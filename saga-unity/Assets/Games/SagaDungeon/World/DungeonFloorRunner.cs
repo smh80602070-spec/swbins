@@ -270,6 +270,8 @@ namespace Saga.Dungeon.World
 
             if (DungeonEnemy.CountAliveInRoom(RoomId) > 0) return; // 아직 안 치워짐 — dungeon.js room.cleared와 같은 뜻.
 
+            string bond = DungeonBond.OnRoomCleared(); // tasks U-0201 방을 깸 — 부대 우정 +5
+            if (bond.Length > 0) DialogueLabel.Instance?.Show(bond, 3.5f);
             if (_roomIndex >= _roomTotal - 1) ShowStairDoor();
             else ShowKindDoors();
         }
@@ -369,6 +371,8 @@ namespace Saga.Dungeon.World
             if (SigilState.IsSigilFloor(_floor)) msg += "\n" + string.Format(DungeonLocalization.T("floor.sigil_warn", "⚠ 부적 층 — {0}"), SigilState.Label(SigilState.ModOf(_floor)));
             if (_landmark >= 0) msg += "\n" + DungeonLandmarkData.EnterText(_landmark); // 108 ③
             msg += DungeonRunRank.Append(rank);
+            string bond = DungeonBond.OnFloorDone(); // tasks U-0201 층을 다 깨고 내려감 — 부대 우정 +10
+            if (bond.Length > 0) msg += "\n" + bond;
             DialogueLabel.Instance?.Show(msg, _landmark >= 0 || rank.HasValue ? 5f : 4f);
             BuildRoomContent(FirstRoomKind());
             RepositionPlayerToEntry();

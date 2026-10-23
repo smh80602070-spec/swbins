@@ -66,6 +66,7 @@ namespace Saga.Dungeon.Data
             public string mode; // tasks U-0137 난도 — 옛 세이브엔 없음(null = 평), 버전 안 올림.
             public string treeJson; // tasks U-0135 무예 나무 — 옛 세이브엔 없음(null = 빈 나무), 버전 안 올림.
             public string seasonJson; // tasks U-0195 시즌·래더 — 옛 세이브엔 없음(null = 처음 켠 기기), 버전 안 올림.
+            public string bondJson; // tasks U-0201 부대 우정 — 옛 세이브엔 없음(null = 점수 0), 버전 안 올림.
             public string favorJson; // tasks U-0194 신의 가호 — 옛 세이브엔 없음(null = 고른 횟수 0), 버전 안 올림.
             public string masteryJson; // tasks U-0178 장비 숙련 — 옛 세이브엔 없음(null = 숙련 0), 버전 안 올림.
             public string weapon2Id; // tasks U-0131 무기 을(乙) — 옛 세이브엔 없음(null = 한 벌), 버전 안 올림.
@@ -140,6 +141,7 @@ namespace Saga.Dungeon.Data
                 treeJson = SkillTree.Snapshot(),
                 masteryJson = DungeonMastery.Snapshot(),
                 favorJson = DungeonFavor.Snapshot(), // tasks U-0194
+                bondJson = DungeonBond.Snapshot(), // tasks U-0201
                 seasonJson = Saga.Dungeon.World.DungeonSeason.Snapshot(), // tasks U-0195
                 mode = DungeonMode.Snapshot(),
                 discovered = BestiaryState.Snapshot(),
@@ -218,6 +220,7 @@ namespace Saga.Dungeon.Data
             SkillTree.Restore(data.treeJson); // tasks U-0135
             DungeonMastery.Restore(data.masteryJson); // tasks U-0178
             DungeonFavor.Restore(data.favorJson); // tasks U-0194
+            DungeonBond.Restore(data.bondJson); // tasks U-0201
             Saga.Dungeon.World.DungeonSeason.Restore(data.seasonJson); // tasks U-0195
             DungeonMode.Restore(data.mode); // tasks U-0137
             SecretState.Restore(data.version >= 11 ? data.secrets : null); // 레벨 뒤(모자라면 없는 것으로 읽는다).

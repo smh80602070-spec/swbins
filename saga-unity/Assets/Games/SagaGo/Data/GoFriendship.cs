@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Saga.Core;
 
 namespace Saga.Go.Data
 {
@@ -15,18 +16,11 @@ namespace Saga.Go.Data
     public static class GoFriendship
     {
         public const float KillActive = 2f, KillParty = 1f, Dispatch = 15f;
-        public static readonly int[] Need = { 0, 20, 50, 90, 140, 200, 270, 350, 440, 540, 650 };
-        public const int MaxLv = 10;
-        public static readonly int[] TierFrom = { 0, 3, 6, 9 };
-        public static readonly string[] TierKo = { "낯섦", "친근", "신뢰", "지기" };
-        public static readonly string[] TierEmoji = { "🤝", "😊", "💛", "💞" };
-        private static readonly Dictionary<HeroTrait, string[]> Lines = new Dictionary<HeroTrait, string[]>
-        {
-            { HeroTrait.Might, new[] { "싸움터에서 등을 맡길 만한지는 아직 모르겠군.", "그대 칼끝이 제법 매섭더군. 다음에도 앞장서지.", "그대와 함께라면 어떤 적진이든 베고 들어가겠다." } },
-            { HeroTrait.Wisdom, new[] { "서로를 더 지켜본 뒤에 판단해도 늦지 않겠지요.", "그대의 길 고르는 눈이 예사롭지 않군요.", "그대의 뜻이라면 계책을 아끼지 않겠습니다." } },
-            { HeroTrait.Command, new[] { "대열에 선 이상 명은 따르겠소. 그 이상은 두고 봅시다.", "그대와 발을 맞추니 무리가 한결 가볍소.", "그대가 깃발을 들면 내가 그 뒤를 지키겠소." } },
-            { HeroTrait.Virtue, new[] { "함께 걷게 되었군요. 잘 부탁드립니다.", "그대 곁에 있으면 마음이 놓입니다.", "그대를 위해서라면 무엇이든 나누겠습니다." } },
-        };
+        // 단계·글은 공용 Saga.Core.Friendship(tasks U-0201 — 2나락 DungeonBond 와 같이 씀).
+        public static int[] Need => Friendship.Need;
+        public const int MaxLv = Friendship.MaxLv;
+        public static string[] TierKo => Friendship.TierKo;
+        public static string[] TierEmoji => Friendship.TierEmoji;
 
         /// <summary>끄면 점수 없음(고돗 `SAGA_BOND=0` 짝).</summary>
         public static bool On = true;
@@ -40,34 +34,27 @@ namespace Saga.Go.Data
         public static event Action<string> RankedUp;
 
         public static float Pts(string id) { var r = _s.rows.Find(x => x.id == id); return r != null ? r.pts : 0f; }
-        public static int LevelOf(float pts) { int lv = 0; for (int i = 0; i < Need.Length; i++) if (pts >= Need[i]) lv = i; return Mathf.Min(lv, MaxLv); }
+        public static int LevelOf(float pts) => Friendship.LevelOf(pts);
         public static int Level(string id) => LevelOf(Pts(id));
-        public static int TierOf(int lv) { int t = 0; for (int i = 0; i < TierFrom.Length; i++) if (lv >= TierFrom[i]) t = i; return t; }
-        public static string TierText(int lv) { int t = TierOf(lv); return TierEmoji[t] + " " + GoLocalization.T("friend.tier" + t, TierKo[t]); }
-        public static int ToNext(float pts) { int lv = LevelOf(pts); return lv >= MaxLv ? 0 : Mathf.CeilToInt(Need[lv + 1] - pts); }
+        public static int TierOf(int lv) => Friendship.TierOf(lv);
+        public static string TierText(int lv) => Friendship.TierText(lv, GoLocalization.T);
+        public static int ToNext(float pts) => Friendship.ToNext(pts);
 
         /// <summary>그 단계 대사 — 지기면 인물 한마디, 없으면 기질 신뢰 줄.</summary>
         public static string Line(string id)
         {
-            int lv = Level(id), t = TierOf(lv);
-            HeroTrait trait = HeroTrait.Virtue;
+            int trait = 3;   // 기질 없으면 덕(Friendship.TraitKey 순서)
             string quote = "";
-            if (GoHeroes.TryGet(id, out var h)) { trait = h.Trait; quote = GoHeroes.Quote(h); }
-            var arr = Lines.TryGetValue(trait, out var a) ? a : Lines[HeroTrait.Virtue];
-            int k = Mathf.Min(t, 2);
-            string fallback = GoLocalization.T($"friend.line.{trait.ToString().ToLowerInvariant()}{k}", arr[k]);
-            return t >= 3 && !string.IsNullOrEmpty(quote) ? quote : fallback;
+            if (GoHeroes.TryGet(id, out var h)) { trait = TraitIndex(h.Trait); quote = GoHeroes.Quote(h); }
+            return Friendship.Line(trait, Level(id), quote, GoLocalization.T);
         }
+
+        private static int TraitIndex(HeroTrait t) => t == HeroTrait.Might ? 0 : t == HeroTrait.Wisdom ? 1 : t == HeroTrait.Command ? 2 : 3;
 
         public static string NameOf(string id) => GoHeroes.TryGet(id, out var h) ? GoHeroes.Name(h) : id;
 
         /// <summary>이름 뒤 와/과(받침 있으면 과).</summary>
-        public static string WithWa(string nm)
-        {
-            if (string.IsNullOrEmpty(nm)) return nm;
-            char c = nm[nm.Length - 1];
-            return nm + (c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 != 0 ? "과" : "와");
-        }
+        public static string WithWa(string nm) => Friendship.WithWa(nm);
 
         /// <summary>점수를 더한다 — 단이 오르면 알림 글(없으면 ""). 주인공·빈 id·끔이면 없음.</summary>
         public static string Add(string id, float amount)
@@ -80,8 +67,7 @@ namespace Saga.Go.Data
             int lv1 = LevelOf(r.pts);
             if (lv1 <= lv0) return "";
             int t = TierOf(lv1);
-            string msg = string.Format(GoLocalization.T("friend.up", "{0} {1}의 우정 Lv.{2} · {3} — \"{4}\""),
-                TierEmoji[t], WithWa(NameOf(id)), lv1, GoLocalization.T("friend.tier" + t, TierKo[t]), Line(id));
+            string msg = Friendship.UpLine(NameOf(id), lv1, Line(id), GoLocalization.T);
             if (t >= 3 && !_s.knot.Contains(id))
             {
                 _s.knot.Add(id);

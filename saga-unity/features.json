@@ -2266,6 +2266,24 @@
   "note": "U-0197: 목표가 창 밖이면 가까운 칸 1200 까지 — 길 내기 7.3 → 2.9ms(에디터) · D3(qc+claude, R-3): docs/playcheck/d3-r3-20261023b.json — 위 1만리 촬영과 같은 판 — 모서리에서 돌아가는 길 · 앞 D2(U-0190): PlaytestHeadless autopath OK — 가짜 격자(곧은 들판 경유점 하나·담 돌아감 3·갇힘 null·3m 턱 안 오름)·앞 막힘·진짜 임시 벽 돌아감 3 · autoquest OK 그대로"
  },
  {
+  "id": "un.dg.party-bond",
+  "name": "U-0201 2나락 부대 우정 — 무사·술사 자리마다 점수(방을 깸 +5 · 층을 다 깨고 내려감 +10) → Lv 0~10·낯섦·친근·신뢰·지기, 기질 대사(무사 = 무·술사 = 지), 지기 처음 금 +500, 오름 알림·부대 HUD 꼬리표(고돗 G-0341 짝) · 셈·글 공용 Saga.Core.Friendship(1만리 GoFriendship 도 이걸로)",
+  "files": [
+   "saga-unity/Assets/SagaCore/Friendship.cs",
+   "saga-unity/Assets/Games/SagaDungeon/Data/DungeonBond.cs",
+   "saga-unity/Assets/Games/SagaDungeon/World/DungeonFloorRunner.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonBond"
+  ],
+  "level": "D2",
+  "verified": "2026-10-24 claude",
+  "fun": {},
+  "ticket": "U-0201",
+  "since": "2026-10-24",
+  "note": "D2(U-0201): PlaytestDungeonHeadless bond tier·room·knot·hud·save·off OK · PlaytestHeadless friend 여섯 줄 그대로(공용으로 옮긴 뒤) · 촬영 안 함(알림·HUD 꼬리표 한 줄)"
+ },
+ {
   "id": "un.go.friendship",
   "name": "U-0199 1만리 동료 우정 — 편성 동료마다 점수(적 쓰러짐 앞 +2·다른 +1·탐사 돌아옴 +15) → Lv 0~10·낯섦·친근·신뢰·지기, 기질별 단계 대사(지기 = 그 인물 한마디), 지기 처음 인연 매듭 1, 오름 알림·도감 상세 줄(고돗 G-0340)",
   "files": [
