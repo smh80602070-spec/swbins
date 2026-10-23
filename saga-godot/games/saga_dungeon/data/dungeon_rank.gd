@@ -10,6 +10,7 @@ extends RefCounted
 
 const RunRank := preload("res://saga_core/data/runrank.gd")
 const DungeonMode := preload("res://games/saga_dungeon/data/dungeon_mode.gd")
+const Season := preload("res://games/saga_dungeon/data/dungeon_season.gd")   # G-0334 로컬 시즌·래더
 
 static var counter: RefCounted = RunRank.Counter.new()
 static var best: Dictionary = {}
@@ -55,6 +56,7 @@ static func finish(dead: bool = false) -> Dictionary:
 		DungeonGoldState.add(int(r.bonus_gold))
 	var mk: String = DungeonMode.run_mode if DungeonMode.run_mode != "" else DungeonMode.chosen
 	r.merge(RunRank.best_up(best, mk, String(r.rank)), true)
+	r["season"] = Season.record(r)   # G-0334 살아 나온 판만 래더에(쓰러지면 {})
 	last = r
 	return r
 
@@ -70,7 +72,8 @@ static func text(r: Dictionary) -> String:
 	if r.is_empty():
 		return ""
 	var l2 := RunRank.line2(r, ["💀 쓰러져 덤 없음"] if bool(r.get("dead", false)) else [])
-	return line(r) + ("\n" + l2 if l2 != "" else "")
+	var sl := Season.line(r.get("season", {}))
+	return line(r) + ("\n" + l2 if l2 != "" else "") + ("\n" + sl if sl != "" else "")
 
 
 static func restore(saved: Variant) -> void:

@@ -193,6 +193,9 @@ func _ready() -> void:
 	## 않는다"와 같은 경계, 이제 방마다 따로 확인한다).
 	var loaded: bool = DungeonSaveState.try_load()
 	DungeonMode.begin_run()   # G-0247 이번 회차 난도를 적 세우기 전에 굳힌다(HUD 에서 바꾸면 다음 회차부터)
+	var season_r: Dictionary = preload("res://games/saga_dungeon/data/dungeon_season.gd").roll()   # G-0334 시즌이 바뀌었으면 지난 시즌 닫고 덤 금
+	if not season_r.is_empty():
+		Toast.show(self, preload("res://games/saga_dungeon/data/dungeon_season.gd").roll_text(season_r), 6.0)
 	preload("res://games/saga_dungeon/data/dungeon_rank.gd").begin()   # G-0312 한 판 등급 셈 시작(난도·부적이 굳은 뒤)
 	for i in range(ROOM_COUNT):
 		var cleared: bool = loaded and DungeonSaveState.is_room_cleared(i)
