@@ -2514,12 +2514,12 @@
   "tests": [
    "PlaytestDungeonFavor"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0194",
   "since": "2026-10-23",
-  "note": "D2(U-0194): PlaytestDungeonHeadless favor tier·pick·card·save·off OK · 촬영 lgfavor 카드 ○ · 축마다 하나만 드는 트랙이라 '은사 수' 대신 '고른 횟수' · 선인·재신은 축이 없어 뺌 · 무리 사냥 3택은 안 셈"
+  "note": "D3(qc+claude, U-0196): U-0194 촬영 — 보스층 3택 카드 셋째 줄 「⚔️ 무신 2/3 → 가호 1단!」·「🛡 지신 0/3」·「🌪 풍신 5/6 → 가호 2단!」 칸 안 · 앞 D2(U-0194): PlaytestDungeonHeadless favor tier·pick·card·save·off OK · 촬영 lgfavor 카드 ○ · 축마다 하나만 드는 트랙이라 '은사 수' 대신 '고른 횟수' · 선인·재신은 축이 없어 뺌 · 무리 사냥 3택은 안 셈"
  },
  {
   "id": "un.dg.season",
@@ -2531,12 +2531,12 @@
   "tests": [
    "PlaytestDungeonSeason"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0195",
   "since": "2026-10-23",
-  "note": "D2(U-0195): PlaytestDungeonHeadless season week·ladder·roll·runrank·ui·save·off OK · 촬영 lgseason 창 ○ · 시계를 뒤로 돌리면 아무것도 안 함(고돗 R-5 구멍을 처음부터 막음) · 넘어감은 판 기록·켤 때·창 열 때"
+  "note": "D3(qc+claude, U-0196): U-0195 촬영 — 🏆 창 이번 시즌 24점·청동·좋은 판 넷·지난 시즌 둘·단계표·닫기(고친 뒤 다시 찍음) · U-0196 UiLayoutCheck 문제 0 · 앞 D2(U-0195): PlaytestDungeonHeadless season week·ladder·roll·runrank·ui·save·off OK · 촬영 lgseason 창 ○ · 시계를 뒤로 돌리면 아무것도 안 함(고돗 R-5 구멍을 처음부터 막음) · 넘어감은 판 기록·켤 때·창 열 때"
  },
  {
   "id": "un.dg.mastery",
@@ -2701,12 +2701,12 @@
   "tests": [
    "PlaytestStoryGuild"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0192",
   "since": "2026-10-23",
-  "note": "D2(U-0192): PlaytestStorySlice guild join·merit·bonus·ui·save·off OK · 촬영 lgguild 창 ○(검각 사형 공 420·의뢰 비경) · 돈 없는 판이라 상단은 채집 덤 확률, 사냥터 둘이라 의뢰는 들판·비경"
+  "note": "D3(qc+claude, U-0196): U-0192 촬영 — 🏯 창 「⚔️ 검각(劍閣) 사형 · 공 420 · 다음 장로까지 280 · 공격 +4%」·오늘의 문파 의뢰 줄·셋 단추(든 검각 흐림)·나가기·닫기 · 앞 D2(U-0192): PlaytestStorySlice guild join·merit·bonus·ui·save·off OK · 촬영 lgguild 창 ○(검각 사형 공 420·의뢰 비경) · 돈 없는 판이라 상단은 채집 덤 확률, 사냥터 둘이라 의뢰는 들판·비경"
  },
  {
   "id": "un.st.launch",
@@ -2840,12 +2840,12 @@
   "tests": [
    "PlaytestRealmFocus"
   ],
-  "level": "D2",
-  "verified": "2026-10-23 claude",
+  "level": "D3",
+  "verified": "2026-10-23 qc+claude",
   "fun": {},
   "ticket": "U-0193",
   "since": "2026-10-23",
-  "note": "D2(U-0193): PlaytestRealmSlice focus tree·month·mul·ui·save·off OK(부국 금 수입 4327→4760 진짜 NextMonth · 근본 완수 금 +300) · 촬영 lgfocus 창 ○ · 무장 경험이 없는 트랙이라 조련 = 훈련 명령 +10%"
+  "note": "D3(qc+claude, U-0196): U-0193 촬영 — 방침 창 일곱 줄 나무 순 들여쓰기·완수·진행 중 2달·갈림길 닫힘·먼저 까닭 · 앞 D2(U-0193): PlaytestRealmSlice focus tree·month·mul·ui·save·off OK(부국 금 수입 4327→4760 진짜 NextMonth · 근본 완수 금 +300) · 촬영 lgfocus 창 ○ · 무장 경험이 없는 트랙이라 조련 = 훈련 명령 +10%"
  },
  {
   "id": "un.rk.tech-tree",

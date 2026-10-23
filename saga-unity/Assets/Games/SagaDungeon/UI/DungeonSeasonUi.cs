@@ -14,8 +14,8 @@ namespace Saga.Dungeon.UI
     /// </summary>
     public class DungeonSeasonUi : MonoBehaviour
     {
-        /// <summary>오른쪽 위 — 일시정지(오른쪽에서 386, 80 폭)보다 100 더 안쪽.</summary>
-        public static readonly Vector2 ButtonAt = new Vector2(-486f, -30f);
+        /// <summary>오른쪽 위 — 일시정지(오른쪽에서 386, 80 폭) 왼쪽 8 틈. −486 이면 영어 목표판 글(더 길다)과 10px 겹쳤다(UiLayoutCheck).</summary>
+        public static readonly Vector2 ButtonAt = new Vector2(-474f, -30f);
 
         public static DungeonSeasonUi Instance { get; private set; }
         public Button OpenButton { get; private set; }
@@ -84,7 +84,7 @@ namespace Saga.Dungeon.UI
             foreach (var p in DungeonSeason.PastSeasons) sb.Append($"  {DungeonSeason.TierName(p.tierIdx)} {p.score}");
             sb.AppendLine();
             sb.Append("<size=80%><color=#b8b2a8>");
-            for (int i = 0; i < DungeonSeason.Need.Length; i++) sb.Append($"{DungeonSeason.TierEmoji[i]} {DungeonSeason.Need[i]}→금 {DungeonSeason.Gold[i]}  ");
+            for (int i = 0; i < DungeonSeason.Need.Length; i++) sb.Append(string.Format(DungeonLocalization.T("season.tier_gold", "{0} {1}→금 {2}  "), DungeonSeason.TierEmoji[i], DungeonSeason.Need[i], DungeonSeason.Gold[i]));
             sb.Append("</color></size>");
             Body.text = sb.ToString();
         }
