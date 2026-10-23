@@ -23,6 +23,10 @@ const ALL = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm
 const games = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--base' && argv[i - 1] !== '--tune');
 /* --tune 키=값 (여러 번) — 계정 만든 뒤 손잡이를 덧붙인다(켬·끔 A/B) */
 const TUNES = argv.map((a, i) => (a === '--tune' ? argv[i + 1] : null)).filter(Boolean).map((kv) => { const j = kv.indexOf('='), v = kv.slice(j + 1); return [kv.slice(0, j), /^-?\d+(\.\d+)?$/.test(v) ? +v : v]; });
+/* W-0389 ③-4 — --ab 키=a,b [--abn=4]: 마지막 장면(걷기)에서 **한 페이지 안에서** 손잡이를 a/b 로 번갈아 바꾸며 abn 회씩 재고 중앙값을 낸다.
+   호출마다 새 브라우저로 재면 같은 코드도 2배씩 흔들려(10-25) 손잡이 효과가 안 보인다 — 끼워 재면 공통 흔들림이 빠진다. 결과는 콘솔 AB 줄(json 엔 안 씀) */
+const ABA = argv.find((a) => a.startsWith('--ab=')), AB = ABA ? (() => { const kv = ABA.slice(5), j = kv.indexOf('='), vs = kv.slice(j + 1).split(',').map((v) => (/^-?\d+(\.\d+)?$/.test(v) ? +v : v)); return { key: kv.slice(0, j), a: vs[0], b: vs[1] }; })() : null;
+const ABN = +((argv.find((a) => a.startsWith('--abn=')) || '--abn=4').slice(6));
 export const BUDGET = { mb: 25, fps: 30, calls: 300 };
 const SHOT = ((argv.find((a) => a.startsWith('--shot=')) || '').slice(7)) || '';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -79,6 +83,16 @@ async function one(browser, g) {
       if (SHOT) { fs.mkdirSync(SHOT, { recursive: true }); await page.screenshot({ path: path.join(SHOT, g + '-' + i + '.png') }); }   // W-0376 --shot=폴더 — 장면마다 폰 화면(전후 비교)
       res.scenes.push({ name, ...m, covered });
     }
+    if (AB) {   // W-0389 ③-4 끼워 재기 — 마지막 장면 그대로(걷기 키 눌린 채) a,b,a,b… 손잡이만 바꿔 가며
+      const fa = [], fb = [];
+      for (let i = 0; i < ABN * 2; i++) {
+        const v = i % 2 ? AB.b : AB.a;
+        await page.evaluate(([k, x]) => { DG.core.setTune(k, x); window.dispatchEvent(new Event('resize')); }, [AB.key, v]); await sleep(1500);
+        const m = await page.evaluate(MEASURE); (i % 2 ? fb : fa).push(m.fps);
+      }
+      const med = (xs) => { const s = xs.slice().sort((p, q) => p - q); return s.length ? +(s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2).toFixed(1) : null; };
+      res.ab = { key: AB.key, a: AB.a, b: AB.b, n: ABN, aFps: med(fa), bFps: med(fb), aAll: fa, bAll: fb };
+    }
   } catch (e) { res.err = e.message.slice(0, 200); }
   res.firstMB = +((firstBytes == null ? bytes : firstBytes) / 1048576).toFixed(2);
   res.totalMB = +(bytes / 1048576).toFixed(2);
@@ -103,6 +117,7 @@ try {
     if (r.firstMB > BUDGET.mb) { r.over.push('용량 ' + r.firstMB + 'MB'); }
     r.scenes.forEach((s) => { if (GPU && s.fps != null && s.fps < BUDGET.fps) { r.over.push(s.name + ' FPS ' + s.fps); } if (s.calls != null && s.calls > BUDGET.calls) { r.over.push(s.name + ' 그리기 ' + s.calls); } });
     out.push(r);
+    runs.forEach((x, k) => { if (x.ab) { console.log(`AB ${g} ${x.ab.key}: ${x.ab.a} → ${x.ab.aFps}fps [${x.ab.aAll.join(' ')}] · ${x.ab.b} → ${x.ab.bFps}fps [${x.ab.bAll.join(' ')}] (${x.ab.n}회씩 끼워, run ${k + 1})`); } });
     console.log(`${r.over.length ? 'WARN' : 'OK  '} ${g}(${r.mode}) · 첫 화면 ${r.firstMB}MB(전체 ${r.totalMB}) · ` + r.scenes.map((s) => `${s.name} ${s.fps}fps 그리기 ${s.calls} 삼각 ${s.tris} 텍스처 ${s.tex} 힙 ${s.heapMB}MB [${s.quality}]`).join(' · ') + (r.over.length ? ' · 넘음 ' + r.over.join(', ') : '') + (r.err ? ' · ERR ' + r.err : ''));
   }
 } finally { await browser.close(); }
