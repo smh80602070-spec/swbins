@@ -192,6 +192,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoRunRank.Run()) _hadError = true; // tasks U-0174 무리 토벌 등급 — S·장판·버림·세이브(기록·레벨·적 되돌림)
                 if (!PlaytestGoFieldFire.Run()) _hadError = true; // tasks U-0175 환경 연쇄 — 풀불·안 타는 땅·강물 전류·끔·주인공(적·불길 되돌림)
                 if (!PlaytestGoWind.Run()) _hadError = true; // tasks U-0179 바람 길잡이 — 규칙·줄기·쿨·안 붊·바람만 기둥·끔(손잡이·줄기·목표 되돌림)
+                if (!PlaytestShaderKeep.Run()) _hadError = true; // tasks U-0183 런타임 Shader.Find 셰이더 빌드 포함 — 코드 훑기·앞/뒤 콜백(항상 포함 목록 되돌림)
                 if (!PlaytestGoWorldQuests.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-21 세계 임무 셋·따라가는 줄(이야기·임무·줄·돈·재료 되돌림)
                 if (!PlaytestGoMapMarks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-23 map marks
                 if (!PlaytestGoFishing.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-24 낚시(낚시터·흐름·조합·세이브·화면 — 가방·무기·돈·시각·세이브 되돌림)

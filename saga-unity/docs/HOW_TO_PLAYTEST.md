@@ -320,6 +320,8 @@ NPC에게 다가가면 자동으로 말을 걸고, 도적을 만나면 **맞선�
 
 **1만리 바람 길잡이(tasks U-0179, 고돗 G-0318)**: 따라가는 목표(이야기 단계·따라가는 세계 임무 — 금빛 기둥이 선 곳)가 있을 때 1.5초 가만히 서 있으면 흰 바람 줄기 일곱이 내 둘레에서 목표 쪽으로 14m 흘러 사라진다(6초에 한 번, 목표 4m 안이면 안 붊). 새 키 없음. `GoWindGuide.WindOnly` 를 켜면 기둥을 끄고 걷는 동안에도 12초마다 분다(HUD 덜기 — 손잡이만, 설정 창 줄은 아직 없음). 진단 `PlaytestHeadless` 의 `wind OK` 여섯 줄.
 
+**런타임 셰이더 빌드 포함(tasks U-0183)**: 코드가 `Shader.Find` 이름으로만 찾는 셰이더(안개 덩이 URP Particles/Unlit · 3마을 땅 Saga/ForestWorldCurve · 물·폭포·정점색 · 땅 표식 Decal · URP Unlit)는 머티리얼이 참조하지 않아 플레이어 빌드에서 빠진다. `Assets/Editor/SagaShaderKeep.cs` 가 빌드 직전에 그래픽 설정 "항상 포함"에 넣고 빌드가 끝나면(실패해도) 뺀다 — `ProjectSettings/` 는 그대로. 새 `Shader.Find` 이름을 쓰면 `SagaShaderKeep.Names` 에 더한다(진단 `PlaytestHeadless` 의 `shaderkeep scan` 이 빠진 이름을 잡는다).
+
 **쳐내기(tasks U-0157)**: 적 머리 위 "!" 예고 원이 다 차기 직전에 **X**(폰은 폭발 단추 위 🛡) — 0.25초 창 안에 근접 한 대가 떨어지면 피해 없이 "쳐냄!"·적이 비틀(잡몹 1.6초·인물·보스류 0.7초), 2초 안 그 적에게 넣는 다음 기본 공격 한 타가 ×2("반격!"). 떨어지는 원거리(지 인물)·땅에 그려지는 자리 수는 못 쳐낸다(회피로). 스태미나 10·헛치면 쿨 0.8초, 쳐내면 바로 다시. 진단 `PlaytestHeadless` 의 `parry OK`·`riposte OK`·`parry miss OK`.
 
 ### 사가나락 (DUNGEON)

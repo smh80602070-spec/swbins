@@ -153,6 +153,7 @@ namespace Saga.EditorTools
             }
             finally
             {
+                SagaShaderKeep.Cleanup(); // tasks U-0183 — 빌드가 실패해 뒤 콜백이 안 불려도 항상 포함 목록을 되돌린다
                 if (target == BuildTarget.Android)
                 {
                     if (PlayerSettings.Android.splitApplicationBinary != oldSplit) PlayerSettings.Android.splitApplicationBinary = oldSplit;

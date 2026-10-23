@@ -2350,6 +2350,22 @@
   "note": "D1(U-0179): PlaytestHeadless wind rule·blow·cool·none·windonly·off OK"
  },
  {
+  "id": "un.core.shader-keep",
+  "name": "U-0183 런타임 Shader.Find 셰이더 빌드 포함 — 이름으로만 찾는 셰이더 일곱(안개 Particles/Unlit·3마을 땅 ForestWorldCurve·물 등, 참조 .mat 0)을 빌드 직전에만 항상 포함에 넣고 끝나면 빼기(ProjectSettings 그대로)",
+  "files": [
+   "saga-unity/Assets/Editor/SagaShaderKeep.cs"
+  ],
+  "tests": [
+   "PlaytestShaderKeep"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0183",
+  "since": "2026-10-23",
+  "note": "D1(U-0183): PlaytestHeadless shaderkeep scan·find·pre·post OK · 빌드는 안 함(사용자 10-09) — 실제 빌드에서의 확인은 다음 빌드 때"
+ },
+ {
   "id": "un.go.rank",
   "name": "U-0174 1만리 무리 토벌 한 판 등급 — 들판 무리 하나를 첫 타격부터 전원 쓰러질 때까지 S~D·덤 경험(S 0.5·A 0.2·B 0.1)·무리별 최고 기록·알림 두 줄(웹 W-0379·고돗 G-0313)",
   "files": [
