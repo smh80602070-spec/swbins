@@ -160,6 +160,7 @@ const CUTS := [
 	["lg_rk_me", REALM, [["free_modal"], ["call", "MenuHook", "open_me"]]],   # G-0325 ← G-0295 군주 움직이는 초상
 	["lg_fs_hha", FOREST, [["free_modal"], ["set", "/root/ForestSaveState", "home_items", [{"key": "bangseok", "x": -1.2, "z": 1.8}, {"key": "bandaji", "x": 1.2, "z": 1.4}, {"key": "jokja", "x": 0.0, "z": 2.4}, {"key": "deungjan", "x": -2.0, "z": 0.6}]], ["set", "/root/ForestSaveState", "hha", {}], ["touch", "House", "_on_enter_house"], ["call", "House", "_show_home_score", ["@box"]]]],   # G-0330 집 평가 + 계절 심사 알림
 	["lg_st_wswap", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_ledger.gd", "story_wswap", ["@tree"]]]],   # G-0331 바꿔치기 알림
+	["lg_rk_marry", REALM, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "realm_marry", ["@tree"]]]],   # G-0332 혼인 무장 고르기
 	["lg_go_wind", GO, [["static", "res://tools/shot_ledger.gd", "wind", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0322 ← G-0318 바람 길잡이(촬영 70프레임 전 한 줄기)
 	["dg_room_wide", DUNGEON, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 14.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-40.0, 0.0, 0.0)]]],   # G-0112 첫 방 전체(어두움 판정)   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)
 	["go_cave_dirt", GO, [["call", "CaveInterior", "enter"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-25.0, 180.0, 0.0)]]],   # G-0098 굴 안 흙 복도

@@ -156,6 +156,8 @@ var rel_master: Dictionary = {}
 var laws: Dictionary = {}
 ## G-0329 국세 단계 0 난세 ~ 3 성세(저장 키 "age", 27→28). 규칙 data/realm_ages.gd · 곱은 _sc 에서.
 var age := 0
+## G-0332 혼인 동맹 {세력 id: 무장 id}(저장 키 "marriages", 28→29). 규칙 data/realm_marriage.gd.
+var marriages: Dictionary = {}
 
 ## **2026-09-17 추가 — PLAN 101-2 REALM ③후보(웹판 §5-1 "인물 특성·야망").**
 ## `officer_growth`와 같은 지연 초기화 패턴 — officer_id -> {k, prog, done,
@@ -436,6 +438,7 @@ func start_scenario(id: String) -> void:
 	rel_master = {}   # G-0316
 	laws = {}   # G-0321
 	age = 0   # G-0329
+	marriages = {}   # G-0332
 	wonders = {"built": {}, "jobs": {}}   # G-0243 새 판은 아무도 안 지었다(웹 버그 ① — 웹은 옛 판 것이 남았다)
 	preload("res://games/saga_realm/data/realm_wonder.gd").bump()
 	_done_this_month.clear()

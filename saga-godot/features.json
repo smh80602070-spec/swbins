@@ -5813,5 +5813,25 @@
   "ticket": "G-0331",
   "since": "2026-10-23",
   "note": "고돗 먼저(웹 부분 = 동료 교대) · G 는 실행 때 InputMap 등록 · 세이브 v26 weapon2 · SAGA_WSWAP=0 · 촬영 shot_scene lg_st_wswap"
+ },
+ {
+  "id": "gd.realm.marriage",
+  "name": "5천하 혼인 동맹 — 외교 💍: 우호 70·금 1500·무장 하나를 맺어(둘까지) 정전 유지·우호 +1/달, 맺은 무장이 사라지면 깨짐(우호 −30)",
+  "files": [
+   "games/saga_realm/data/realm_marriage.gd",
+   "games/saga_realm/data/realm_state.gd",
+   "games/saga_realm/data/realm_save_state.gd",
+   "games/saga_realm/data/realm_rules_month.gd",
+   "games/saga_realm/ui/realm_diplo_button.gd"
+  ],
+  "tests": [
+   "realm_marriage"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0332",
+  "since": "2026-10-23",
+  "note": "고돗 먼저(웹 짝 없음) · 세이브 v29 marriages · SAGA_MARRIAGE=0 · 촬영 shot_scene lg_rk_marry"
  }
 ]

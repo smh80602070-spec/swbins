@@ -229,3 +229,26 @@ static func story_wswap(tree: SceneTree) -> void:
 		var p := _player(tree)
 		if p != null:
 			p.call("_swap_weapon"))
+
+
+## G-0332 5천하 혼인 — 첫 적 성 세력과 우호 80·금 넉넉히, 외교 「누구와」 다음 고르기 창(혼인 줄) → 혼인 무장 고르기 창
+static func realm_marry(tree: SceneTree) -> void:
+	var RS: Node = tree.root.get_node("RealmSaveState")
+	var b := tree.current_scene.find_child("DiploButton", true, false)
+	if b == null:
+		print("SHOT_MARRY 단추 없음")
+		return
+	var eid := ""
+	for e: Dictionary in (load("res://games/saga_realm/data/realm_cities.gd") as GDScript).get("ENEMY_CITIES"):
+		var id := String(e.id)
+		if RS.enemies.has(id) and not bool(RS.enemies[id].get("captured", false)) and String(RS.call("force_of", id)) != "":
+			eid = id
+			break
+	if eid == "":
+		print("SHOT_MARRY 상대 없음")
+		return
+	var fid := String(RS.call("force_of", eid))
+	RS.diplomacy[fid] = {"relation": 80, "truce_months": 0}
+	RS.gold = 5000
+	RS.roster = ["sg_zhugeliang", "sg_guanyu", "sg_zhangfei"]
+	b.call("_pick_bride", eid, {"layer": CanvasLayer.new()})

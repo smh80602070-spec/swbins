@@ -72,7 +72,35 @@ func _pick_action(target_id: String, layer_box: Dictionary) -> void:
 		{"label": "🤝 화친 — 정전을 청한다(성공하면 %d개월간 공격 못 함)" % RealmDiplo.TRUCE_MONTHS,
 		 "cb": func() -> void: _run_truce(target_id, action_box)},
 	]
+	var Marriage: GDScript = preload("res://games/saga_realm/data/realm_marriage.gd")   # G-0332 혼인 동맹
+	if Marriage.on():
+		var fid: String = RealmSaveState.force_of(target_id)
+		var wed := String(Marriage.married_officer(RealmSaveState, fid))
+		choices.append({"label": ("💍 혼인 동맹 중 — %s" % Marriage._nm(wed)) if wed != "" else "💍 혼인 — 무장 하나를 맺어 오래 정전(우호 %d·금 %d)" % [Marriage.NEED_REL, Marriage.COST],
+			"cb": func() -> void: _pick_bride(target_id, action_box)})
 	action_box["layer"] = ChoicePrompt.build(self, "외교 — %s" % _lord_name(target_id), choices)
+
+
+## G-0332 혼인 — 맺을 무장 고르기(이미 맺은 이 빼고)
+func _pick_bride(target_id: String, layer_box: Dictionary) -> void:
+	(layer_box["layer"] as CanvasLayer).queue_free()
+	var Marriage: GDScript = preload("res://games/saga_realm/data/realm_marriage.gd")
+	var fid: String = RealmSaveState.force_of(target_id)
+	if String(Marriage.married_officer(RealmSaveState, fid)) != "":
+		Toast.show(self, "💍 이미 혼인으로 맺은 세력이다 — 맺은 무장이 사라지면 깨진다", TOAST_SEC)
+		return
+	var box := {}
+	var choices: Array = []
+	for oid: String in RealmSaveState.roster:
+		if bool(Marriage.taken(RealmSaveState, oid)):
+			continue
+		var w := String(Marriage.why(RealmSaveState, fid, oid))
+		choices.append({"label": "%s%s" % [Marriage._nm(oid), "" if w == "" else "  (%s)" % w], "cb": func() -> void:
+			(box["layer"] as CanvasLayer).queue_free()
+			var r: Dictionary = Marriage.marry(RealmSaveState, fid, oid)
+			Toast.show(self, ("💍 %s 을(를) 혼인으로 맺었다 — 우호 %d · 맺은 동안 정전" % [Marriage._nm(oid), int(r.relation)]) if bool(r.ok) else String(r.why), TOAST_SEC)})
+	choices.append({"label": "그만둔다", "cb": func() -> void: (box["layer"] as CanvasLayer).queue_free()})
+	box["layer"] = ChoicePrompt.build(self, "💍 혼인 — %s 세력과 맺을 무장" % _lord_name(target_id), choices)
 
 
 func _run_tribute(target_id: String, layer_box: Dictionary) -> void:
