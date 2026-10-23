@@ -129,6 +129,9 @@ var _attack_cd_left := 0.0
 var _player: Node3D
 var _dead := false
 var boss_pattern: RefCounted = null # G-0204 — 보스만(잡몹·정예는 null)
+var intro_done := false   # G-0339 등장 띠(공용 boss_banner) — 우두머리 INTRO_M 안에 처음 들면 한 번
+const INTRO_M := 10.0   # 한 방 안(test_room BOSS_BGM_M 과 같은 자)
+const INTRO_GRACE := 2.0   # 띠가 뜨는 동안 첫 강타를 미루는 틈(초)
 var _hurt_by := "" # 지금 맞히는 패턴 이름(사망 카드 "누구에게" 줄에 덧붙임)
 var weapon := "" # G-0208 종 무기(_ready 에서 species 로) — bow·staff 원거리 · club 들썩 · axe 비틀 · spear·halberd 긴 팔
 var atk_el := "" # G-0208 종 원소 공격(없으면 "" = 물리)
@@ -268,6 +271,10 @@ func _physics_process(delta: float) -> void:
 	var to_player: Vector3 = _player.global_position - global_position
 	to_player.y = 0
 	var dist := to_player.length()
+	if boss_pattern != null and not intro_done and dist < INTRO_M:
+		intro_done = true
+		if preload("res://saga_core/ui/boss_banner.gd").pop(get_tree().current_scene, "월드 보스" if is_in_group("world_boss") else "굴혈의 우두머리", "%d층 · %s" % [_floor_num, boss_pattern.call("pattern_name")]) != null and not boss_pattern.call("busy"):
+			boss_pattern.set("cd", maxf(float(boss_pattern.get("cd")), INTRO_GRACE))   # G-0339 띠 동안 첫 강타 미룸
 	## G-0204 — 보스 패턴은 평타와 나란히 돈다(웹 2966). 예고·연격 중엔 그 자리에 서고 평타를 쉰다.
 	if boss_pattern != null:
 		boss_pattern.tick(self, _player, delta, _boss_hurt)

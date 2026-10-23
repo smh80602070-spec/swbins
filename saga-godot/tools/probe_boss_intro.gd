@@ -49,14 +49,18 @@ func _initialize() -> void:
 
 	# ①
 	pl.global_position = b0.global_position + Vector3(8.0, 0.5, 0.0)
-	await _frames(20)
+	for _w in 600:   # 보스 바는 실시간 0.25초마다 고른다 — 헤드리스 프레임 수로 기다리면 들쭉날쭉
+		if int(BI.get("played")) > p0:
+			break
+		await process_frame
+	await _frames(3)
 	var node := sc.find_child("BossIntro", true, false)
 	var txt := ""
 	if node != null:
 		for l in node.find_children("*", "Label", true, false):
 			txt += String((l as Label).text) + " / "
 	var nm := String((b0.get("def") as Dictionary).get("name", ""))
-	check(int(BI.get("played")) == p0 + 1 and node != null and txt.contains(nm) and bool(rig.call("in_talk")), "① 등장 컷 — %s · 카메라 대화 구도" % txt)
+	check(int(BI.get("played")) == p0 + 1 and node != null and txt.contains(nm) and bool(rig.call("in_talk")), "① 등장 컷 — %s · 카메라 대화 구도(played %d→%d node %s talk %s)" % [txt, p0, int(BI.get("played")), node != null, rig.call("in_talk")])
 	check(String(BI.sub_text(b0)).contains("원소") or String(BI.sub_text(b0)).contains("Lv"), "① 아랫줄: %s" % BI.sub_text(b0))
 	check(float(b0.get("skill_cd")) >= BI.SHOT_SEC + BI.GRACE_SEC - 0.5, "① 컷 동안 첫 패턴 미룸(skill_cd %.2f)" % float(b0.get("skill_cd")))
 	var fbn := get_first_node_in_group("go_field_bosses")
@@ -86,6 +90,14 @@ func _initialize() -> void:
 	var t_after: Dictionary = rig.call("talk_target")
 	check((t_after.eye as Vector3).is_equal_approx(t_before.eye), "④ 대화 중엔 카메라 구도 그대로")
 	rig.call("end_talk")
+
+	# ④-2 이미 예고 중인 보스 — 예고 시간이 컷만큼 는다
+	if bosses.size() > 3:
+		var b3: Node3D = bosses[3]
+		b3.call("begin_skill", "slam", pl)
+		var t0 := float(b3.get("skill_t"))
+		BI.maybe_play(sc, b3)
+		check(String(b3.get("skill")) != "" and is_equal_approx(float(b3.get("skill_t")), t0 + BI.SHOT_SEC), "④ 예고 중이면 예고 %.2f → %.2f초" % [t0, float(b3.get("skill_t"))])
 
 	# ⑤
 	OS.set_environment("SAGA_BOSS_INTRO", "0")

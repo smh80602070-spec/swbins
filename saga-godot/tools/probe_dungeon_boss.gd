@@ -54,6 +54,7 @@ func _run(e: Node, secs: float) -> void:
 
 func _initialize() -> void:
 	await process_frame
+	OS.set_environment("SAGA_BOSS_INTRO", "0")   # G-0339 등장 띠가 첫 강타를 2초 미룬다 — 여긴 패턴 시각 점검(띠는 probe_boss_banner)
 	_stage = Node3D.new()
 	root.add_child(_stage)
 	current_scene = _stage

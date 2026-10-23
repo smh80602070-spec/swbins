@@ -315,3 +315,21 @@ static func go_boss_intro(tree: SceneTree) -> void:
 				best = b
 		if best != null:
 			pl.global_position = best.global_position + Vector3(8.0, 0.5, 0.0))
+
+
+## G-0339 2나락 우두머리 등장 띠 — 촬영 직전에 우두머리 6m 곁으로
+static func dg_boss_banner(tree: SceneTree) -> void:
+	_later(tree, 66, func() -> void:
+		for e in tree.get_nodes_in_group("dungeon_boss"):
+			if not e.is_in_group("world_boss"):
+				_player(tree).global_position = (e as Node3D).global_position + Vector3(-4.0, 0.0, 0.0)
+				return)
+
+
+## G-0339 4종횡 사냥터 보스 등장 띠 — 촬영 직전에 보스 곁으로
+static func st_boss_banner(tree: SceneTree) -> void:
+	_later(tree, 66, func() -> void:
+		for e in tree.current_scene.find_children("*", "", true, false):
+			if e.get("boss_pattern") != null and bool(e.get("is_boss")):
+				_player(tree).global_position = (e as Node3D).global_position + Vector3(-1.5, 0.0, 0.0)
+				return)

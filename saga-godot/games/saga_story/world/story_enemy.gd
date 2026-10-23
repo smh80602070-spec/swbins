@@ -129,6 +129,8 @@ var _champion_vuln_time_left := 0.0
 ## G-0205 — 사냥터 보스(관문 대장 제외)만 패턴전. 아래 셋은 story_boss_spawner 가 add_child 전에 넣는다.
 var boss_pattern: RefCounted = null
 var boss_name := "보스"
+var intro_done := false   # G-0339 등장 띠(공용 boss_banner) — 패턴전 거리(is_near) 안에 처음 들면 한 번, 띠 동안 첫 패턴 미룸
+const INTRO_GRACE := 2.0
 var stage_width_m := 0.0
 var minion_color := COLOR
 var _bp_api: Dictionary = {}
@@ -244,6 +246,11 @@ func _physics_process(delta: float) -> void:
 	## G-0205 — 패턴전은 붙어 치기와 나란히 돈다(웹 side.js 1819 — 몸통 박치기는 그대로).
 	if boss_pattern != null:
 		var near := StoryBossPattern.is_near(self, player)
+		if near and not intro_done:
+			intro_done = true
+			var tags: Array = ["Lv.%d" % int(enemy_lv)] + (["🚪 관문 대장"] if is_champion else [])
+			if preload("res://saga_core/ui/boss_banner.gd").pop(get_tree().current_scene, boss_name, " · ".join(tags), enemy_color) != null and not boss_pattern.call("busy"):
+				boss_pattern.set("cd", maxf(float(boss_pattern.get("cd")), INTRO_GRACE))   # G-0339 띠 동안 첫 패턴 미룸
 		var api := _pattern_api(player)
 		if boss_pattern.gate:
 			boss_pattern.step_sig(self, player, delta, near, api)

@@ -160,6 +160,8 @@ const CUTS := [
 	["lg_go_rest", GO, [["free_modal"], ["near", "RestSites/Rest_village", 0.0, 2.2], ["static", "res://tools/shot_ledger.gd", "go_rest", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-30.0, 0.0, 0.0)]]],   # G-0337 ← G-0305 쉼터에 앉음(불 지핌 알림)
 	["lg_go_mfight", GO, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "go_mount_fight", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 7.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-20.0, 90.0, 0.0)]]],   # G-0337 ← G-0306 말 위 돌진(넘어뜨림)
 	["lg_go_boss_intro", GO, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "go_boss_intro", ["@tree"]]]],   # G-0338 보스 등장 컷(이름 띠·어깨 너머 구도)
+	["lg_dg_boss_banner", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_boss_banner", ["@tree"]]]],   # G-0339 2나락 우두머리 등장 띠
+	["lg_st_boss_banner", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_ledger.gd", "st_boss_banner", ["@tree"]]]],   # G-0339 4종횡 사냥터 보스 등장 띠
 	["lg_dg_trail", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_legend", ["@tree"]], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0325 ← G-0290 전설 잔광
 	["lg_dg_rise", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rise", ["@tree"]]]],   # G-0325 ← G-0293 난입 솟음(한 컷씩 — time_scale)
 	["lg_dg_break", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_breakables", ["@tree"]]]],   # G-0325 ← G-0307 부서지는 통

@@ -5933,5 +5933,25 @@
   "ticket": "G-0338",
   "since": "2026-10-23",
   "note": "추천 표 카메라 연출 · SAGA_BOSS_INTRO=0 · 촬영 shot_scene lg_go_boss_intro · 옛 들판 보스 띠는 보스 바 있으면 숨김(같은 보스 두 줄)"
+ },
+ {
+  "id": "gd.core.boss-banner",
+  "name": "보스 등장 띠 공용 — 2나락 우두머리(층·패턴)·4종횡 사냥터 보스(Lv·관문 대장)·1만리 컷이 같은 띠(반투명 바탕), 띠 동안 첫 패턴 미룸",
+  "files": [
+   "saga_core/ui/boss_banner.gd",
+   "games/saga_go/ui/boss_intro.gd",
+   "games/saga_dungeon/world/dungeon_enemy.gd",
+   "games/saga_story/world/story_enemy.gd"
+  ],
+  "tests": [
+   "boss_banner",
+   "boss_intro"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0339",
+  "since": "2026-10-23",
+  "note": "SAGA_BOSS_INTRO=0 공용 · 촬영 shot_scene lg_dg_boss_banner·lg_st_boss_banner·lg_go_boss_intro"
  }
 ]
