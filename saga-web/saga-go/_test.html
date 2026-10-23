@@ -9589,6 +9589,22 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       if (bad.length) { throw new Error('실패: ' + bad.join(', ')); }
       return '정사각 _s · 카드 _c · 목록 밖은 굽는 쪽 · 있으면 안 굽고 sweep 이 파일로 교체';
     });
+    t('2D 걷기 비용(W-0389 ③-4) — 물들이기 빠른 길이 옛 화소별 길과 값이 같고, 들판 소품 그림자만 그리기·쉼터 칸 기억이 같은 답을 낸다', function () {
+      var M = DG.mode2d, RS = DG.restSite, sd = 20260824, bad = 0, t, i;
+      if (!M || !M._tintDataRef || !M.spriteShadow) { return false; }
+      function rnd() { sd = (sd * 1103515245 + 12345) & 0x7fffffff; return sd / 0x7fffffff; }
+      for (t = 0; t < 60; t++) {
+        var P = 16, d = new Uint8ClampedArray(P * P * 4);
+        for (i = 0; i < d.length; i += 4) { var bs = Math.floor(rnd() * 256), sp = rnd() < 0.6 ? Math.floor(rnd() * 40) : 255; d[i] = Math.min(255, bs + Math.floor(rnd() * sp)); d[i + 1] = Math.min(255, bs + Math.floor(rnd() * sp)); d[i + 2] = Math.min(255, bs + Math.floor(rnd() * sp)); d[i + 3] = rnd() < 0.2 ? 0 : 255; }
+        var a = d.slice(), b = d.slice(), sl = 1 + (t % 11), k = [undefined, 1, 0.5][t % 3], lo = [undefined, 0.25, 0][t % 3];
+        var na = M.tintData(a, sl, k, P, lo), nb = M._tintDataRef(b, sl, k, P, lo);
+        if (na !== nb) { bad++; continue; } for (i = 0; i < a.length; i++) { if (a[i] !== b[i]) { bad++; break; } }
+      }
+      if (bad) { throw new Error('물들이기 값 다름 ' + bad + '/60'); }
+      if (M.spriteShadow(null, { id: 'x' }) !== false) { throw new Error('spriteShadow 빈 ctx'); }
+      if (RS && RS.sitesNear) { var p = DG.core.save.player.pos, s1 = JSON.stringify(RS.sitesNear(p.x, p.y, 1500)), s2 = JSON.stringify(RS.sitesNear(p.x, p.y, 1500)); if (s1 !== s2) { throw new Error('쉼터 기억 답 다름'); } }
+      return true;
+    });
     t('절차 인물 초상(W-0389 ③-3) — kr_·ptgen_ 는 id 마다 달라 디스크에 없으니 몸이 정해지는 모델(asset3d.urlOf)의 도감 초상을 쓰고, 폰 2D 들판에선 live 굽기를 안 한다', function () {
       var P3 = DG.portrait3d, G = DG.genchar, A3 = DG.asset3d, D = DG.data, keep = DG.portraitDisk, keepDM = DG.deviceMode, res;
       if (!G || !G.find || !A3 || !A3.urlOf) { return false; }

@@ -146,7 +146,7 @@
      반 칸(왼쪽 위로) 밀린 격자의 칸 (x,y) 네 모서리 = 땅 칸 (x,y)·(x+1,y)·(x,y+1)·(x+1,y+1), i = NW1+NE2+SW4+SE8(비트 = 그 모서리가 a). 땅 종류 → 바탕 타일(kinds_a/kinds_b).
      네 모서리가 한 바탕이면 바탕 타일 한 장, 두 바탕이 쌍이면 아틀라스 칸, 쌍이 없으면 NW 바탕 + 옛 번짐(blend). 조각 캐시 안에서만 깐다(받은 그림 수가 열쇠 — 늦게 오면 다시 굽는다).
      손잡이 world.autotile(1 · 0 = 옛 색 바탕 + 결) */
-  var TILE_BASE = 'assets/web2d/tile/', tjson = null, tjTried = false, timgs = {}, tLoaded = 0, kindBase = null;
+  var dualMiss = 0, TILE_BASE = 'assets/web2d/tile/', tjson = null, tjTried = false, timgs = {}, tLoaded = 0, kindBase = null;
   function autotileOn() { var C = core(); return !(C && C.tuned && !+C.tuned('world.autotile', 1)); }
   function loadTiles() {
     if (tjTried || !global.fetch) { return; }
@@ -155,7 +155,8 @@
   }
   function timg(key, url) {
     var e = timgs[key];
-    if (e) { return e.ok ? e.img : null; }
+    if (e) { if (!e.ok) { dualMiss++; } return e.ok ? e.img : null; }
+    dualMiss++;
     if (typeof Image === 'undefined') { timgs[key] = { ok: false }; return null; }
     e = timgs[key] = { ok: false, img: new Image() };
     e.img.onload = function () { e.ok = true; tLoaded++; };
@@ -201,7 +202,10 @@
   }
   /** 이 칸과 이웃이 아틀라스로 이어지는가(결·번짐을 건너뛸 수 있나) — 순수(json 필요) */
   function seamed(kind, nb) { var a = baseOf(kind), b = baseOf(nb); return !!(a && b && (a === b || pairFor(a, b))); }
-  var CH = 8, chunks = {}, chunkN = 0, CHUNK_MAX = 28, chunkKey = null;
+  /* W-0389 ③-4 — 걷기 초반이 깎이던 것: 열쇠에 받은 타일 그림 수가 들어 있어 그림이 하나 올 때마다 보이는 조각 전부를 한 프레임에 다시 구웠다.
+     이제 그림이 빠진 채 구운 조각(miss)만 표시해 두고 프레임마다 하나씩 다시 굽는다(그 사이엔 옛 조각) · 굽기가 없는 프레임엔 걷는 쪽 바깥 한 줄을 하나 미리 굽는다.
+     손잡이 world.field2dPrebake 1(0 = 미리 굽기 끔) · 셈 = chunkStats() */
+  var CH = 8, chunks = {}, chunkN = 0, CHUNK_MAX = 28, chunkKey = null, frameBakes = 0, lastCam = null, ST = { bakes: 0, rebakes: 0, pre: 0, ms: 0, resets: 0, px: 0, cap: 28 };
   function cacheOn() { var C = core(); return !(C && C.tuned && !+C.tuned('world.field2dCache', 1)) && typeof document !== 'undefined' && !global.DG_NO_DRAW; }
   /** 칸 하나의 땅 그림(결·경계·테두리) — 화면/조각 어디에 그리든 같다 */
   function paintTile(g, kind, tx, ty, sx, sy, Tw, Th, T, b, terrainAt, dual) {
@@ -215,36 +219,71 @@
     c = edgeColor(kind, terrainAt(tx, ty - 1)); if (c) { g.fillStyle = c; g.fillRect(sx, sy, Tw, b); }
   }
   /** 조각(cx, cy) 캔버스 — 없으면 굽는다. 조각 안 칸 경계는 조각 원점 기준 정수 px */
-  function chunkOf(cx, cy, T, b, terrainAt) {
-    var k = cx + ',' + cy, c = chunks[k];
-    if (c) { c.at = ++chunkN; return c.cv; }
-    var cv = document.createElement('canvas'), px = Math.round(CH * T), g, i, j, sx, sy, Tw, Th;
-    cv.width = Math.max(1, px); cv.height = Math.max(1, px); g = cv.getContext('2d');
-    var dual = drawDual(g, cx, cy, T, b, terrainAt) > 0;   // W-0390 이중 격자 바탕(그림 왔을 때만)
+  function chunkOf(cx, cy, T, b, terrainAt, pre) {
+    var k = cx + ',' + cy, c = chunks[k], cv, t0 = global.performance ? global.performance.now() : 0;
+    if (c && !(frameBakes < 1 && ((c.miss && c.ld !== tLoaded) || (c.pmiss && anyReady(c.pmiss))))) { if (!pre) { c.at = ++chunkN; } return c.cv; }
+    var px = Math.round(CH * T), g, i, j, sx, sy, Tw, Th;
+    if (c) { cv = c.cv; g = cv.getContext('2d'); g.clearRect(0, 0, cv.width, cv.height); ST.rebakes++; } else { cv = document.createElement('canvas'); cv.width = Math.max(1, px); cv.height = Math.max(1, px); g = cv.getContext('2d'); }
+    frameBakes++; ST.px = px; dualMiss = 0;
+    var dual = drawDual(g, cx, cy, T, b, terrainAt) > 0, miss = dualMiss > 0, ld = tLoaded;   // W-0390 이중 격자 바탕(그림 왔을 때만)
     for (j = 0; j < CH; j++) { for (i = 0; i < CH; i++) {
       sx = Math.round(i * T); sy = Math.round(j * T); Tw = Math.round((i + 1) * T) - sx; Th = Math.round((j + 1) * T) - sy;
       paintTile(g, terrainAt(cx * CH + i, cy * CH + j), cx * CH + i, cy * CH + j, sx, sy, Tw, Th, T, b, terrainAt, dual);
     } }
-    if (Object.keys(chunks).length >= CHUNK_MAX) { var old = null, oa = Infinity, kk; for (kk in chunks) { if (chunks[kk].at < oa) { oa = chunks[kk].at; old = kk; } } if (old) { delete chunks[old]; } }
-    chunks[k] = { cv: cv, at: ++chunkN };
+    var pmiss = propsBaked() ? bakeProps(g, cx, cy, T, terrainAt) : null;   // W-0389 ③-4 땅 소품 + 큰 소품 그림자
+    if (c) { c.miss = miss; c.ld = ld; c.pmiss = pmiss; }
+    else {
+      if (Object.keys(chunks).length >= CHUNK_MAX) { var old = null, oa = Infinity, kk; for (kk in chunks) { if (chunks[kk].at < oa) { oa = chunks[kk].at; old = kk; } } if (old) { delete chunks[old]; } }
+      chunks[k] = { cv: cv, at: ++chunkN, miss: miss, ld: ld, pmiss: pmiss }; ST.bakes++; if (pre) { ST.pre++; }
+    }
+    if (global.performance) { ST.ms += global.performance.now() - t0; }
     return cv;
   }
-  function chunkStats() { return { n: Object.keys(chunks).length, key: chunkKey }; }
+  function chunkStats() { return { n: Object.keys(chunks).length, key: chunkKey, bakes: ST.bakes, rebakes: ST.rebakes, pre: ST.pre, ms: Math.round(ST.ms), resets: ST.resets, px: ST.px, cap: ST.cap }; }
+  /* W-0389 ③-4 — 숲으로 걸어 들어가면 보이는 소품이 수백 개(큰 나무 96→267)라 매 프레임 낱개 그리기(그림자 타원 둘·save/restore·그림)가
+     걷기 FPS 를 깎았다(30초 걷기에 프레임당 fill 272→937). 인물보다 늘 아래인 땅 소품(키 < TALL)은 그림자까지 조각에 굽고, 인물과 앞뒤를 가리는
+     큰 소품은 그림자만 조각에 굽는다(그림은 매 프레임 — world 가 shadow:false 로). 조각 경계를 넘는 소품은 이웃 칸까지 훑어 양쪽 조각에 같이 그린다.
+     그림이 아직 없는 소품 id 는 pmiss — 받아지면 그 조각만 다시 굽는다. 손잡이 world.field2dProps 1(0 = 옛 매 프레임) */
+  function propsBaked() { var C = core(), M = global.DG && global.DG.mode2d; return !!(M && M.drawSprite && M.spriteShadow && M.spriteReady) && !(C && C.tuned && !+C.tuned('world.field2dProps', 1)); }
+  function anyReady(ids) { var M = global.DG.mode2d; for (var i = 0; i < ids.length; i++) { if (M.spriteReady(ids[i])) { return true; } } return false; }
+  /** 조각(cx, cy) 캔버스 g 에 소품을 굽는다 — 돌아온 값 = 그림이 아직 없는 id 목록(없으면 null) */
+  function bakeProps(g, cx, cy, T, terrainAt) {
+    var M = global.DG.mode2d, deep = tallOn(), x0 = cx * CH, y0 = cy * CH, tx, ty, ps, i, p, lo = [], hi = [], miss = {}, o;
+    for (ty = y0 - 1; ty <= y0 + CH + 1; ty++) { for (tx = x0 - 1; tx <= x0 + CH; tx++) {
+      ps = propsAt(terrainAt(tx, ty), tx, ty);
+      for (i = 0; i < ps.length; i++) { p = ps[i]; o = { id: p.id, x: (tx - x0 + p.dx) * T, y: (ty - y0 + p.dy) * T, h: T * p.k }; (deep && p.k >= TALL ? hi : lo).push(o); }
+    } }
+    lo.sort(function (a, b2) { return a.y - b2.y; });
+    for (i = 0; i < lo.length; i++) { if (!M.drawSprite(g, lo[i])) { miss[lo[i].id] = 1; } }
+    for (i = 0; i < hi.length; i++) { if (!M.spriteShadow(g, hi[i])) { miss[hi[i].id] = 1; } }
+    var ids = Object.keys(miss);
+    return ids.length ? ids : null;
+  }
+  function prebakeOn() { var C = core(); return !(C && C.tuned && !+C.tuned('world.field2dPrebake', 1)); }
   function decorate(ctx, camX, camY, W, H, sc, terrainAt) {
     if (!on() || !terrainAt) { return false; }
     var M = global.DG.mode2d, T = CELL * sc, b = Math.max(2, T * 0.07);
     var t0x = Math.floor(camX / CELL) - 1, t1x = Math.ceil((camX + W / sc) / CELL) + 1;
     var t0y = Math.floor(camY / CELL) - 1, t1y = Math.ceil((camY + H / sc) / CELL) + 2;
-    var tx, ty, kind, sx, sy, props = [], ps, i, deep = tallOn(), useCache = cacheOn(); tall = [];
+    var tx, ty, kind, sx, sy, props = [], ps, i, deep = tallOn(), useCache = cacheOn(), baked = useCache && propsBaked(); tall = [];
     if (useCache) {
-      var key = T.toFixed(3) + '|' + (seasonMemo.k || '') + '|' + b + '|' + (autotileOn() ? 'a' + tLoaded + (tjson ? 'j' : '') : 'x');
-      if (chunkKey !== key) { chunks = {}; chunkKey = key; }
+      var key = T.toFixed(3) + '|' + (seasonMemo.k || '') + '|' + b + '|' + (autotileOn() ? 'a' + (tjson ? 'j' : '') : 'x') + (propsBaked() ? 'p' + (deep ? 'd' : '') : '');
+      if (chunkKey !== key) { chunks = {}; chunkKey = key; ST.resets++; }
       var c0x = Math.floor(t0x / CH), c1x = Math.floor(t1x / CH), c0y = Math.floor(t0y / CH), c1y = Math.floor(t1y / CH), cx, cy, ox, oy, nx, ny;
+      frameBakes = 0; CHUNK_MAX = ST.cap = Math.max(28, (c1x - c0x + 3) * (c1y - c0y + 3) + 4);
       for (cy = c0y; cy <= c1y; cy++) { for (cx = c0x; cx <= c1x; cx++) {
         ox = Math.round((cx * CH * CELL - camX) * sc); oy = Math.round((cy * CH * CELL - camY) * sc);
         nx = Math.round(((cx + 1) * CH * CELL - camX) * sc); ny = Math.round(((cy + 1) * CH * CELL - camY) * sc);
         ctx.drawImage(chunkOf(cx, cy, T, b, terrainAt), ox, oy, nx - ox, ny - oy);
       } }
+      /* 미리 굽기 — 이 프레임 굽기가 없을 때만, 걷는 쪽(카메라 움직임) 바깥 한 줄에서 아직 없는 조각 하나 */
+      var mvx = lastCam ? camX - lastCam[0] : 0, mvy = lastCam ? camY - lastCam[1] : 0; lastCam = [camX, camY];
+      if (!frameBakes && prebakeOn() && (mvx || mvy)) {
+        var rx0 = c0x - (mvx < 0 ? 1 : 0), rx1 = c1x + (mvx > 0 ? 1 : 0), ry0 = c0y - (mvy < 0 ? 1 : 0), ry1 = c1y + (mvy > 0 ? 1 : 0), done = false;
+        for (cy = ry0; cy <= ry1 && !done; cy++) { for (cx = rx0; cx <= rx1 && !done; cx++) {
+          if ((cx < c0x || cx > c1x || cy < c0y || cy > c1y) && !chunks[cx + ',' + cy]) { chunkOf(cx, cy, T, b, terrainAt, true); done = true; }
+        } }
+      }
     }
     for (ty = t0y; ty <= t1y; ty++) {
       for (tx = t0x; tx <= t1x; tx++) {
@@ -255,7 +294,7 @@
         if (!useCache) { paintTile(ctx, kind, tx, ty, sx, sy, Tw, Th, T, b, terrainAt); }
         if (ty <= t1y - 1) {
           ps = propsAt(kind, tx, ty);
-          for (i = 0; i < ps.length; i++) { if (deep && ps[i].k >= TALL) { tall.push({ id: ps[i].id, wx: (tx + ps[i].dx) * CELL, wy: (ty + ps[i].dy) * CELL, k: ps[i].k }); continue; } props.push({ id: ps[i].id, x: sx + ps[i].dx * T, y: sy + ps[i].dy * T, h: T * ps[i].k }); }
+          for (i = 0; i < ps.length; i++) { if (deep && ps[i].k >= TALL) { tall.push({ id: ps[i].id, wx: (tx + ps[i].dx) * CELL, wy: (ty + ps[i].dy) * CELL, k: ps[i].k, sb: baked }); continue; } if (baked) { continue; } props.push({ id: ps[i].id, x: sx + ps[i].dx * T, y: sy + ps[i].dy * T, h: T * ps[i].k }); }
         }
       }
     }

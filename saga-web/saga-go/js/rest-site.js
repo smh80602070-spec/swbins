@@ -40,13 +40,24 @@
     return false;
   }
   function terr() { var W = global.DG.world; return W && W.terrainAt ? W.terrainAt : null; }
+  /* W-0389 ③-4 — 칸 자리(siteAt)는 집·역참·탑 둘레를 훑어(칸마다 nearHouse 최대 넷 × 집 표 25칸) 그리기·작은 지도·틱이 매 프레임 같은 값을 다시 셌다
+     (폰 2D 걷기 프로파일 4.7%). 칸 열쇠로 기억하고 5초마다 비운다(땅 장식·마을 밀도가 늦게 정해져도 곧 따라감). 기본 지형 함수일 때만 */
+  var memo = {}, memoT = 0, MEMO_MS = 5000;
+  function siteMemo(cx, cy, T) {
+    if (T !== terr()) { return siteAt(cx, cy, T); }
+    var now = Date.now(), k = cx + ',' + cy;
+    if (now - memoT > MEMO_MS) { memo = {}; memoT = now; }
+    if (!(k in memo)) { memo[k] = siteAt(cx, cy, T); }
+    var b = memo[k];
+    return b ? { id: b.id, x: b.x, y: b.y, cx: b.cx, cy: b.cy } : null;
+  }
   /** (x, y) 반경 R 안 쉼터 [{ id, x, y, lit, at }] */
   function sitesNear(x, y, R, terrainAt) {
     var out = [], T = terrainAt || terr(), b = peek(), cx, cy, s;
     if (!on()) { return out; }
     for (cy = Math.floor((y - R) / CELL); cy <= Math.floor((y + R) / CELL); cy++) {
       for (cx = Math.floor((x - R) / CELL); cx <= Math.floor((x + R) / CELL); cx++) {
-        s = siteAt(cx, cy, T);
+        s = siteMemo(cx, cy, T);
         if (s && Math.hypot(s.x - x, s.y - y) <= R) { s.lit = b.lit.indexOf(s.id) >= 0; s.at = b.at === s.id; out.push(s); }
       }
     }
