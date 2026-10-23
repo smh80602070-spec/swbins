@@ -235,6 +235,7 @@ func _ready() -> void:
 	add_child(grab)
 	preload("res://games/saga_go/combat/field_mount.gd").attach(self)   # G-0306 말 위 전투(SAGA_MOUNT_FIGHT=0 이면 없음)
 	preload("res://games/saga_go/combat/field_parry.gd").attach(self)   # G-0304 쳐내기(SAGA_PARRY=0 이면 없음)
+	preload("res://games/saga_go/combat/field_standoff.gd").attach(self)   # G-0343 대치(SAGA_STANDOFF=0 이면 없음)
 	preload("res://games/saga_go/combat/field_env.gd").attach(self)   # G-0303 들불·물벼락(SAGA_FIELD_ENV=0 이면 없음)
 	_refresh_hud()
 
@@ -565,6 +566,7 @@ func attack() -> bool:
 	if _attack_t > 0.0 or not _grounded_ok():
 		return false
 	var kit: Dictionary = WEAPON_KIT[Weapons.type_of(active_id())]
+	if has_node("FieldStandoff") and get_node("FieldStandoff").call("try_strike"): return true   # G-0343 대치 — 달려드는 순간이면 한 칼(이르면 깨고 평타)
 	if has_node("FieldParry") and get_node("FieldParry").call("try_parry", float(kit.get("reach", 2.5))): return true   # G-0304 예고 끝이면 쳐내기 먼저
 	var step := _combo
 	_combo = (_combo + 1) % (kit.mul as Array).size()

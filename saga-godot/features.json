@@ -6013,5 +6013,23 @@
   "ticket": "G-0342",
   "since": "2026-10-24",
   "note": "장부 go.md 약점 쏘기 · SAGA_WEAKPART=0 · 촬영 shot_scene lg_go_weakpart"
+ },
+ {
+  "id": "gd.go.standoff",
+  "name": "1만리 대치 — 쉬는 무리 곁에 드러내고 다가가면 맞섬, 달려드는 0.45초 창에 평타면 한 칼·다음 놈 이어(창 ×0.85), 이르면 성급·놓치면 한 방",
+  "files": [
+   "games/saga_go/combat/field_standoff.gd",
+   "games/saga_go/combat/field_combat.gd",
+   "games/saga_go/combat/field_enemy.gd"
+  ],
+  "tests": [
+   "standoff"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0343",
+  "since": "2026-10-24",
+  "note": "장부 go.md 대치(고스트 오브 쓰시마) · SAGA_STANDOFF=0 · 웅크림은 몰래 다가가기 길"
  }
 ]

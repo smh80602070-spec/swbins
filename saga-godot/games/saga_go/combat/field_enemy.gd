@@ -441,14 +441,17 @@ func _physics_process(delta: float) -> void:
 	_t -= delta
 	match ai:
 		AI.IDLE:
-			var to_w := _wander_target - global_position
-			to_w.y = 0.0
-			if to_w.length() > 0.6:
-				move = to_w.normalized() * def.speed * 0.3
-			elif _t <= 0.0:
-				_pick_wander()
-			if (dist < def.aggro and _player_can_fight(player)) or is_instance_valid(siege):
-				ai = AI.CHASE
+			if has_meta("standoff"):   # G-0343 대치 — 무리가 멈춰 나를 노려본다(떠돌기·어그로 없음, field_standoff.gd)
+				_face(to_player, delta * 3.0)
+			else:
+				var to_w := _wander_target - global_position
+				to_w.y = 0.0
+				if to_w.length() > 0.6:
+					move = to_w.normalized() * def.speed * 0.3
+				elif _t <= 0.0:
+					_pick_wander()
+				if (dist < def.aggro and _player_can_fight(player)) or is_instance_valid(siege):
+					ai = AI.CHASE
 		AI.CHASE:
 			if is_instance_valid(siege) and not (dist <= SIEGE_PULL and _player_can_fight(player)):
 				var to_s := siege.global_position - global_position
