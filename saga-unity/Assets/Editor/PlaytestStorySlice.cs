@@ -217,6 +217,7 @@ namespace Saga.EditorTools
                     if (!PlaytestStoryJust.Run()) { Fail(); return; } // tasks U-0142 회피·저스트 회피(자리·체력·판 등급 셈·저스트 되돌림)
                     if (!PlaytestLifePose.Run("PlaytestStorySlice", "story")) { Fail(); return; } // tasks U-0146 생활 몸짓
                     if (!PlaytestStoryAutoQuest.Run()) { Fail(); return; } // tasks U-0165 자동 퀘스트 — 복제 잡졸 하나를 걸어가 평타로·멈춤 둘·▶(사명·직업·이야기·자리 되돌림)
+                    if (!PlaytestStoryLaunch.Run()) { Fail(); return; } // tasks U-0176 띄우기·공중 콤보 — 복제 잡졸(판 등급 셈·소환 게이지·자리 되돌림)
                     _enemyIndex = 0;
                     _phase = Phase.TalkNpc;
                     break;

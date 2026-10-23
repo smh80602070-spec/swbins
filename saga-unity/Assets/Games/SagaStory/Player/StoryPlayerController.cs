@@ -262,6 +262,7 @@ namespace Saga.Story.Player
         private void CastMelee(float mul, int hits)
         {
             bool hitAny = false, anyCrit = false;
+            bool up = UpHeld(); // tasks U-0176 띄우기
             foreach (var enemy in StoryEnemy.All)
             {
                 if (enemy == null || enemy.IsDead) continue;
@@ -272,6 +273,7 @@ namespace Saga.Story.Player
                 {
                     var (dmg, crit) = StoryCombat.RollDamage(CurrentAtk, mul);
                     enemy.TakeDamage(dmg, crit);
+                    if (!enemy.IsDead) enemy.OnStrike(up, dmg); // tasks U-0176
                     if (crit) StoryCombat.TriggerHitstop(this);
                     hitAny = true;
                     anyCrit |= crit;
@@ -416,6 +418,7 @@ namespace Saga.Story.Player
             PlayAttackAnim();
             Saga.Core.SagaVoice.Say("shout"); // U-0068 — 가끔 외침
             float justMul = StoryJust.TakeNextMul(); // tasks U-0142 — 저스트 회피 다음 한 타 ×1.3(웹 strike 처럼 휘두르면 맞든 안 맞든 씀)
+            bool up = UpHeld(); // tasks U-0176 ↑ 누른 채 = 올려치기
 
             bool hitAny = false;
             bool anyCrit = false;
@@ -428,6 +431,7 @@ namespace Saga.Story.Player
 
                 var (dmg, crit) = StoryCombat.RollDamage(CurrentAtk, justMul);
                 enemy.TakeDamage(dmg, crit);
+                if (!enemy.IsDead) enemy.OnStrike(up, dmg); // tasks U-0176 띄우기·저글
                 if (crit) StoryCombat.TriggerHitstop(this);
                 hitAny = true;
                 anyCrit |= crit;
@@ -666,6 +670,9 @@ namespace Saga.Story.Player
             if (climbUpButton != null && climbUpButton.IsHeld) v += 1f;
             return Mathf.Clamp(v, -1f, 1f);
         }
+
+        /// <summary>tasks U-0176 — ↑ 눌림(밧줄 오르기와 같은 입력, 새 키 없음).</summary>
+        private bool UpHeld() => StoryLaunch.UpForTest ?? ClimbInput() > 0.5f;
 
         private bool WantsJump()
         {

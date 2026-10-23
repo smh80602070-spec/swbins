@@ -235,6 +235,39 @@ namespace Saga.Story.World
         /// 호출부(PlaytestStorySlice.cs)는 GameObject 파괴 대신 이 플래그를
         /// 본다 — DUNGEON `DungeonEnemy._state`와 같은 결.</summary>
         public bool IsDead => _dead;
+
+        // ── tasks U-0176 띄우기·공중 콤보(`StoryLaunch`) — 런타임만
+        public StoryLaunch.Air AirState { get; private set; }
+        public bool Airborne => AirState != null;
+        public bool LaunchImmune => isBoss || _isChampion;
+
+        /// <summary>근접 한 대가 맞은 뒤(살아 있을 때) — 떠 있으면 저글, ↑ 면 띄움. 맡았으면 true.</summary>
+        public bool OnStrike(bool up, float dmg)
+        {
+            if (!StoryLaunch.On || _dead) return false;
+            if (AirState != null) { StoryLaunch.Juggle(AirState, dmg); return true; }
+            if (!up || LaunchImmune) return false;
+            AirState = StoryLaunch.Launch(transform.position.y, dmg);
+            return true;
+        }
+
+        /// <summary>떠 있으면 한 틱 — 닿으면 떨어짐 피해를 넣고 그 값을 돌려준다(아니면 0). 진단이 직접 부른다.</summary>
+        public float StepAir(float dt)
+        {
+            if (AirState == null) return 0f;
+            var p = transform.position;
+            float y = p.y;
+            float d = StoryLaunch.Step(AirState, ref y, dt);
+            p.y = y;
+            transform.position = p;
+            if (d > 0f)
+            {
+                AirState = null;
+                TakeDamage(d); // 땅 표식은 TakeDamage 가 남긴다
+            }
+            return d;
+        }
+
         /// <summary>진단 — 남은 체력(PLAN.md 106-10 동료 타격 확인).</summary>
         public float Hp => _hp;
         /// <summary>PLAN.md 109-11-1 — 체력 구간(단계) 판정의 기준. 비경 배율·관문 대장 배율을 곱한 뒤 값.</summary>
@@ -288,6 +321,8 @@ namespace Saga.Story.World
 
         private void Update()
         {
+            if (_dead) return;
+            StepAir(Time.deltaTime); // tasks U-0176
             if (_dead) return;
             if (isBoss && !_introPlayed) CheckIntro();
             if (era != StoryEra.Past && !StoryCutscenes.Playing) CheckAnnounce();

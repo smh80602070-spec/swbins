@@ -2510,6 +2510,24 @@
   "note": "D1(U-0170): PlaytestStorySlice campfire OK(선봉 첫 타 ×1.1 한 번·유격 기운 가득·호법 최대 체력 174→×1.1·판 중 못 앉음·판 닫히면 사라짐·들머리 불 x 1.2·저장 왕복) · Slice no errors · 세이브 다섯 md5 그대로 · 새 창 없음(DialogueLabel 한 줄) · 동료 앉는 몸짓은 없음(앉기 동작 에셋 없음) · 촬영 안 함"
  },
  {
+  "id": "un.st.launch",
+  "name": "U-0176 4종횡 띄우기·공중 콤보 — ↑ 누른 채 근접으로 치면 잡졸이 떠오르고(두목·관문 대장 제외), 떠 있으면 4타까지 다시 튕김, 닿으면 마지막 친 힘 × 0.5(웹 W-0345·고돗 G-0314)",
+  "files": [
+   "saga-unity/Assets/Games/SagaStory/Data/StoryLaunch.cs",
+   "saga-unity/Assets/Games/SagaStory/World/StoryEnemy.cs",
+   "saga-unity/Assets/Games/SagaStory/Player/StoryPlayerController.cs"
+  ],
+  "tests": [
+   "PlaytestStoryLaunch"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0176",
+  "since": "2026-10-23",
+  "note": "D1(U-0176): PlaytestStorySlice launch plain·launch·juggle·immune·off OK(↑ 평타 → 최고 1.58m·0.58초 닿음·떨어짐 16 = 32.8 × 0.5 · 저글 4타 상한 · 두목·관문 대장 안 뜸) · 4종횡 전체 통과"
+ },
+ {
   "id": "un.rk.supply",
   "name": "U-0134 진·보급선 — 못 떨군 공격은 진(병력·사기·치중), 달마다 치중·보급로·사기, 끊기면 ×0.85·−5%, 0.60/500 밑 퇴각, 계략 ✂️ 보급 끊기(웹 W-0278 이식)",
   "files": [
