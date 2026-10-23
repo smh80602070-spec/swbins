@@ -80,11 +80,11 @@
     var own = owned(), b = book(), c = core();
     if (!own.length) { return ''; }
     settle(Date.now());
-    var held = Object.keys(b.held).filter(function (k) { return b.held[k] > 0; }).map(function (k) { return k + ' ' + b.held[k]; }).join(' · ');
+    var held = Object.keys(b.held).filter(function (k) { return b.held[k] > 0; }).map(function (k) { var d = global.DG.bag && global.DG.bag.def ? global.DG.bag.def(k) : null; return (d ? d.name : k) + ' ' + b.held[k]; }).join(' · ');
     var out = '<div class="sec"><h4>🐾 신수 일꾼 <span class="muted">' + b.pets.length + '/' + MAX + ' · ' + K('every', 30) + '분에 하나 · 상한 ' + K('cap', 24) + (held ? ' · 모은 것 ' + esc(held) : '') + '</span></h4>';
     own.forEach(function (p) {
       var j = jobOf(p.id), s = isSeated(p.id);
-      out += '<div class="pc-row"><span>' + (p.emoji || '🐾') + ' ' + esc(p.name) + ' <small class="muted">' + j.icon + ' ' + j.name + ' → ' + (c.fmt ? '' : '') + j.item + '</small></span>' +
+      out += '<div class="pc-row"><span>' + (p.emoji || '🐾') + ' ' + esc(p.name) + ' <small class="muted">' + j.icon + ' ' + j.name + ' → ' + esc(global.DG.bag && global.DG.bag.def && global.DG.bag.def(j.item) ? global.DG.bag.def(j.item).name : j.item) + '</small></span>' +
         '<button class="btn tiny' + (s ? '' : ' primary') + '" data-worker="' + (s ? 'up:' : 'sit:') + p.id + '">' + (s ? '일으키기' : '앉히기') + '</button></div>';
     });
     return out + '<small class="muted">쉼터에서 쉬면 모은 것을 받습니다.</small></div>';
