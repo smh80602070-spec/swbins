@@ -56,6 +56,7 @@
     gCanvas = groundEl; gCtx = gCanvas.getContext('2d');
     resize();
     global.addEventListener('resize', resize);
+    if (core.on) { core.on('perf', function () { resize(); }); }   // W-0389 ③-4 — 품질 단계가 바뀌면 2D dpr 상한도 따라간다
     /* PLAN 30절 — resize 만으로도 대개 잡히지만, 회전 직후에는 일부 기기의
        innerWidth/innerHeight 가 아직 예전 값일 수 있다고 알려져 있다.
        orientationchange 도 같이 듣고, 한 번 더 늦춰 잰다 */
@@ -238,11 +239,19 @@
     return { u: dx / s, v: v };
   }
 
+  /** W-0389 ③-4 — 2D 들판(3D 비활성)의 캔버스 dpr 상한: 손잡이 perf.dpr2dLow·perf.dpr2dMed(0 = 안 묶음, 기본)(390×844@2 는 2.6M 화소라 폰 걷기의 (program) 몫이 컸다).
+   *  3D 땐 HUD 글자가 흐려지니 안 묶는다. A/B 는 같은 호출 안에서만 믿는다 */
+  function dprCap2d() {
+    var W3 = global.DG.world3d, P = global.DG.perf, t = P && P.tier ? P.tier() : null, k = t && t.key;
+    if (!k || (W3 && W3.active && W3.active())) { return 99; }
+    var v = k === 'LOW' ? core.tuned('perf.dpr2dLow', 0) : (k === 'MEDIUM' ? core.tuned('perf.dpr2dMed', 0) : 0);
+    return v > 0 ? v : 99;   // 0 = 안 묶음(기본 — 10-25 A/B 가 같은 날 2~3배 흔들려 판정 못 함, 손잡이로만 남김)
+  }
   function resize() {
     if (!canvas) { return; }
     lastRenderMode = null;
     if (global.DG.world3d) { global.DG.world3d.resize(); }
-    dpr = global.devicePixelRatio || 1;
+    dpr = Math.min(global.devicePixelRatio || 1, dprCap2d());   // W-0389 ③-4 — 2D 들판은 품질 단계로 화소 수를 묶는다
     geom = computeGeom();
 
     canvas.width = Math.floor(geom.W * dpr);
