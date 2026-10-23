@@ -5915,5 +5915,23 @@
   "ticket": "G-0336",
   "since": "2026-10-23",
   "note": "고돗 먼저(웹 짝 없음) · 세이브 v30 focus · SAGA_FOCUS=0 · 촬영 shot_scene lg_rk_focus"
+ },
+ {
+  "id": "gd.go.boss-intro",
+  "name": "1만리 보스 등장 컷 — 처음 마주친 보스를 어깨 너머 1.3초(talk_shot)·큰 이름 띠(원소·Lv), 보스마다 한 번, 컷 동안 첫 패턴 미룸",
+  "files": [
+   "games/saga_go/ui/boss_intro.gd",
+   "games/saga_go/ui/boss_bar.gd",
+   "games/saga_go/world/field_bosses.gd"
+  ],
+  "tests": [
+   "boss_intro"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0338",
+  "since": "2026-10-23",
+  "note": "추천 표 카메라 연출 · SAGA_BOSS_INTRO=0 · 촬영 shot_scene lg_go_boss_intro · 옛 들판 보스 띠는 보스 바 있으면 숨김(같은 보스 두 줄)"
  }
 ]

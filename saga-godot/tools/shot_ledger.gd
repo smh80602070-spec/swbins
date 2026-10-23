@@ -303,3 +303,15 @@ static func go_mount_fight(tree: SceneTree) -> void:
 				break
 		if fm != null:
 			fm.call("charge"))
+
+
+## G-0338 1만리 보스 등장 컷 — 촬영 바로 앞(화면 밖 창은 한 프레임이 길어 일찍 틀면 컷이 끝난 뒤 찍힌다)에 가장 가까운 들판 보스 8m 곁으로(보스 바가 고르면 컷이 돈다)
+static func go_boss_intro(tree: SceneTree) -> void:
+	_later(tree, 78, func() -> void:
+		var pl := _player(tree)
+		var best: Node3D = null
+		for b in tree.get_nodes_in_group("go_boss"):
+			if not b.call("is_dead") and (best == null or (b as Node3D).global_position.distance_to(pl.global_position) < best.global_position.distance_to(pl.global_position)):
+				best = b
+		if best != null:
+			pl.global_position = best.global_position + Vector3(8.0, 0.5, 0.0))

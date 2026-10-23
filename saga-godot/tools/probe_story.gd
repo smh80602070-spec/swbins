@@ -38,6 +38,7 @@ extends "res://tools/story_probe/ch1_5.gd"
 
 func _ready() -> void:
 	Weather.force("clear")
+	OS.set_environment("SAGA_BOSS_INTRO", "0")   # G-0338 등장 컷(실시간 1.3초)이 헤드리스 빠른 프레임에선 다음 장 대화 카메라 기준 각도를 흔든다 — 컷은 probe_boss_intro 몫
 	_p = get_tree().get_first_node_in_group("player")
 
 func _physics_process(_delta: float) -> void:

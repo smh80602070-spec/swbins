@@ -24,6 +24,7 @@ var _shield: ProgressBar
 
 func _ready() -> void:
 	layer = 4
+	add_to_group("go_boss_bar")   # G-0338 — field_bosses 옛 띠가 이 바가 있으면 숨는다
 	_root = Control.new()
 	_root.anchor_left = 0.5
 	_root.anchor_right = 0.5
@@ -81,7 +82,10 @@ func _process(delta: float) -> void:
 	_pick_t -= delta
 	if _pick_t <= 0.0:
 		_pick_t = PICK_SEC
+		var was_id := _boss.get_instance_id() if is_instance_valid(_boss) else 0   # 쓰러져 지워진 보스를 담지 않게 id 로
 		_boss = _pick()
+		if _boss != null and _boss.get_instance_id() != was_id:
+			preload("res://games/saga_go/ui/boss_intro.gd").maybe_play(get_parent(), _boss)   # G-0338 보스 등장 컷(보스마다 한 번)
 	if _boss == null or not is_instance_valid(_boss) or bool(_boss.call("is_dead")):
 		_root.visible = false
 		return

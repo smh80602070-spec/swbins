@@ -28,6 +28,7 @@ var _homes: Dictionary = {} # id → Vector3
 var _blooms: Dictionary = {} # id → Node3D
 var _claim_btn: Button = null
 var _hud: Control = null
+var _hud_on := false   # 보스 곁인가(글은 늘 채움) — 화면 위 보스 바(ui/boss_bar.gd, G-0161)가 있으면 이 옛 띠는 안 그린다(같은 보스 두 줄, G-0338 R-0)
 var _hud_label: Label = null
 var _hp_fill: ColorRect = null
 var _sh_fill: ColorRect = null
@@ -131,7 +132,7 @@ func engaged_boss() -> String:
 	return ""
 
 func hud_text() -> String:
-	return _hud_label.text if _hud.visible else ""
+	return _hud_label.text if _hud_on else ""
 
 func _physics_process(_delta: float) -> void:
 	if _player == null:
@@ -230,7 +231,8 @@ func _engaged_story_boss() -> Node:
 func _refresh_hud() -> void:
 	var id := engaged_boss()
 	var e: Node = _bosses[id] if id != "" else _engaged_story_boss()
-	_hud.visible = e != null
+	_hud_on = e != null
+	_hud.visible = _hud_on and get_tree().get_first_node_in_group("go_boss_bar") == null
 	if e == null:
 		return
 	var def: Dictionary = e.get("def")
