@@ -4732,12 +4732,12 @@
   "tests": [
    "perf_scenes"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0257",
   "since": "2026-10-20",
-  "note": "창 모드(mobile 1280x720) draw 평균 GO 263·DUNGEON 317·FOREST 335·STORY 261·REALM 302·REALM_MAP 174 · prims FOREST 98.8만(예산 35만/50만) · 헤드리스는 그리기 n/a · process_ms 대신 frame_ms(TIME_PROCESS 는 1초 최댓값) · 표 tools/_out/perf_scenes.md · 판별 예산 G-0261(측정 ×1.15 올림, 넘으면 FAIL): draw/prims_avg/prims_max GO 310·28만·32만 · DUNGEON 370·25만·28만 · FOREST 300·45만·50만 · STORY 310·21만·25만 · REALM 350·27만·30만 · REALM_MAP 210·2.1만·3.2만 · 그림자 빛 8·입자 12"
+  "note": "창 모드(mobile 1280x720) draw 평균 GO 263·DUNGEON 317·FOREST 335·STORY 261·REALM 302·REALM_MAP 174 · prims FOREST 98.8만(예산 35만/50만) · 헤드리스는 그리기 n/a · process_ms 대신 frame_ms(TIME_PROCESS 는 1초 최댓값) · 표 tools/_out/perf_scenes.md · 판별 예산 G-0261(측정 ×1.15 올림, 넘으면 FAIL): draw/prims_avg/prims_max GO 310·28만·32만 · DUNGEON 370·25만·28만 · FOREST 300·45만·50만 · STORY 310·21만·25만 · REALM 350·27만·30만 · REALM_MAP 210·2.1만·3.2만 · 그림자 빛 8·입자 12 · D2 G-0326 창 모드 perf_scenes 기록(티켓 메모)"
  },
  {
   "id": "gd.fs.perf",
@@ -5057,12 +5057,12 @@
    "me_panel",
    "menu_screen"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0286",
   "since": "2026-10-22",
-  "note": "읽기만(세이브·균형 불변) · 4종횡 공격은 버프 뺀 바탕(_effective_atk 는 한 방 배율 소비라 안 부름) · 촬영 shot_scene me_<판>"
+  "note": "읽기만(세이브·균형 불변) · 4종횡 공격은 버프 뺀 바탕(_effective_atk 는 한 방 배율 소비라 안 부름) · 촬영 shot_scene me_<판> · D2 G-0326 shot_scene me_<판>"
  },
  {
   "id": "gd.core.player-face",
@@ -5258,12 +5258,12 @@
   "tests": [
    "hud_kit"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0297",
   "since": "2026-10-22",
-  "note": "1만리 저장·사진은 E·Q 와 겹쳐 뺌(원래 겹침)"
+  "note": "1만리 저장·사진은 E·Q 와 겹쳐 뺌(원래 겹침) · D2 G-0326 shot_scene mn_<판>·lg_*"
  },
  {
   "id": "gd.go.autoquest",
