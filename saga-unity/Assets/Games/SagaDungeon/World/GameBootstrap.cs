@@ -96,7 +96,15 @@ namespace Saga.Dungeon.World
             if (_blessingChoiceUi == null || _blessingChoiceUi.IsShowing) return;
 
             var offer = BlessingState.RollChoice();
-            _blessingChoiceUi.Show(offer, BlessingState.Choose, () => BlessingState.Reject(floor));
+            _blessingChoiceUi.Show(offer, ChooseWithFavor, () => BlessingState.Reject(floor), favor: true);
+        }
+
+        /// <summary>tasks U-0194 — 보스층 3택을 고르면 그 신 가호 횟수도 센다(단이 오르면 알림).</summary>
+        public static void ChooseWithFavor(BlessingState.BlessingDef b)
+        {
+            BlessingState.Choose(b);
+            int up = DungeonFavor.OnPick(b.Axis);
+            if (up > 0) DialogueLabel.Instance?.Show(DungeonFavor.UpLine(b.Axis, up), 4f);
         }
 
         private void OnLeveledUp(int newLevel)

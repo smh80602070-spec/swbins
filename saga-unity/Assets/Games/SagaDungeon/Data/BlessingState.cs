@@ -77,7 +77,7 @@ namespace Saga.Dungeon.Data
         public static float SweepMultiplier => Multiplier(Axis.Sweep);
 
         private static float Multiplier(Axis axis) =>
-            Chosen.TryGetValue(axis, out var b) ? 1f + b.Bonus : 1f;
+            (Chosen.TryGetValue(axis, out var b) ? 1f + b.Bonus : 1f) * DungeonFavor.Mul(axis); // tasks U-0194 신의 가호(고른 횟수 3·6 → 단마다 ×1.08, 0단 = 1)
 
         public static bool HasBlessing(Axis axis) => Chosen.ContainsKey(axis);
 

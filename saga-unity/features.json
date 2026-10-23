@@ -2505,6 +2505,23 @@
   "note": "D2(U-0137): docs/playcheck/d2-u0137-20261020.json — PlaytestDungeonHeadless 69→74(mode table·start·room·sigil·save) · bias·resist 는 굴림 표·저항 칸이 없어 뺌 · 난입·월드 보스는 평 · 촬영 안 함"
  },
  {
+  "id": "un.dg.favor",
+  "name": "U-0194 2나락 신의 가호 — 축복 3택 축 셋을 신 셋(⚔️ 무신 공·🛡️ 지신 수·🌪️ 풍신 선)으로, 보스층 3택에서 그 신 은사를 3번 → 가호 1단·6번 → 2단(단마다 그 축 배율 ×1.08), 카드 셋째 줄 「→ 가호 1단!」·오름 알림(고돗 G-0335)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/Data/DungeonFavor.cs",
+   "saga-unity/Assets/Games/SagaDungeon/Data/BlessingState.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonFavor"
+  ],
+  "level": "D2",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0194",
+  "since": "2026-10-23",
+  "note": "D2(U-0194): PlaytestDungeonHeadless favor tier·pick·card·save·off OK · 촬영 lgfavor 카드 ○ · 축마다 하나만 드는 트랙이라 '은사 수' 대신 '고른 횟수' · 선인·재신은 축이 없어 뺌 · 무리 사냥 3택은 안 셈"
+ },
+ {
   "id": "un.dg.mastery",
   "name": "U-0178 2나락 장비 숙련 — 든 무기는 처치로·갑주는 맞아서 숙련, 문턱 10·30·60·100·150 에서 단계(최고 5), 무기 단계마다 공격 +3%·갑주 단계마다 받는 피해 −2%(고돗 G-0317)",
   "files": [

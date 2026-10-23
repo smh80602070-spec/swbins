@@ -651,6 +651,15 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] lgtrade 띄움 {why ?? "OK"} · 상단 {Saga.Realm.Data.RealmTrade.Routes.Count}");
                         break;
                     }
+                    case "lgfavor":   // U-0194 2나락 신의 가호 — 무신 2번·풍신 5번 고른 채 보스층 3택 카드를 띄운다
+                    {
+                        var bu = Object.FindFirstObjectByType<Saga.Dungeon.UI.BlessingChoiceUi>();
+                        if (bu == null) { Skip(act); return; }
+                        Saga.Dungeon.Data.DungeonFavor.Restore("{\"picks\":[2,0,5]}");
+                        bu.Show(Saga.Dungeon.Data.BlessingState.RollChoice(new System.Random(20260824)), Saga.Dungeon.World.GameBootstrap.ChooseWithFavor, () => { }, favor: true);
+                        Debug.Log($"[ShowcaseGui] lgfavor 창 {bu.IsShowing}");
+                        break;
+                    }
                     case "lgfocus":   // U-0193 5천하 국가 방침 — 근본·부국 끝내고 둔전 확장 2달 남은 채 창을 연다
                     {
                         var fu = Saga.Realm.UI.RealmFocusUi.Instance;

@@ -77,7 +77,7 @@ namespace Saga.Dungeon.UI
                 .GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        public void Show(BlessingState.BlessingDef[] offer, System.Action<BlessingState.BlessingDef> onChosen, System.Action onRejected)
+        public void Show(BlessingState.BlessingDef[] offer, System.Action<BlessingState.BlessingDef> onChosen, System.Action onRejected, bool favor = false)
         {
             if (_panel == null || offer == null || offer.Length != _cardButtons.Length) return;
 
@@ -89,7 +89,8 @@ namespace Saga.Dungeon.UI
             {
                 var blessing = offer[i];
                 string axis = DungeonLocalization.T(AxisKey[(int)blessing.Axis], AxisLabel[(int)blessing.Axis]);
-                _cardLabels[i].text = $"{axis} {DungeonLocalization.T("blessing." + blessing.Id, blessing.Name)}\n(+{Mathf.RoundToInt(blessing.Bonus * 100f)}%)";
+                _cardLabels[i].text = $"{axis} {DungeonLocalization.T("blessing." + blessing.Id, blessing.Name)}\n(+{Mathf.RoundToInt(blessing.Bonus * 100f)}%)"
+                    + (favor && DungeonFavor.On ? $"\n<size=75%>{DungeonFavor.CardLine(blessing.Axis)}</size>" : ""); // tasks U-0194 신의 가호 — 보스층 3택만
             }
             _panel.SetActive(true);
             if (!_holding) { HeroState.DamageHold++; _holding = true; } // U-0076 — 고르는 동안은 안 맞는다
