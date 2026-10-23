@@ -1390,12 +1390,12 @@
   "tests": [
    "2D 이름표 겹침(W-0348) — 겹친 둘 중 pri 낮은 먼 쪽은 숨고, 안 겹치면 둘 다 · 가까운 것은 위로 쌓이고 · 퀘스트 대상(keep)은 끝까지 보인다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0348",
   "since": "2026-10-21",
-  "note": "10-21: shots/cmp/w348a_go_map·w348a_dg_town·w348b_rm_map Read — 글자끼리 겹침 0"
+  "note": "D2(claude 10-23 R-3): 1만리 마을 가로 2D — 사람 열둘 이름표 서로 안 겹침(폰 세로는 빽빽하나 글자끼리 겹침 없음, 가장자리 하나는 + 단추 밑) · 10-21: shots/cmp/w348a_go_map·w348a_dg_town·w348b_rm_map Read — 글자끼리 겹침 0"
  },
  {
   "id": "go.w2d-scale",

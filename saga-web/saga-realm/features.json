@@ -1309,12 +1309,12 @@
   "tests": [
    "pw-web-2d-sheet 14/14 · pw-2d-cmp 비교판(옛 mip=0 / 새 mip=1)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0347",
   "since": "2026-10-21",
-  "note": "10-21: 1만리 짐승 점묘 사라짐(shots/cmp/w347c_go_map) · 밉 사본 캐시는 high 로 충분해 안 만듦"
+  "note": "D2(claude 10-23 R-3): 1만리 2D 말·나귀·소 점묘 없음 · 5천하 2D 지도 확대 성 그림 매끈(보급선 촬영) · 10-21: 1만리 짐승 점묘 사라짐(shots/cmp/w347c_go_map) · 밉 사본 캐시는 high 로 충분해 안 만듦"
  },
  {
   "id": "rk.w2d-labels",
