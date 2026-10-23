@@ -63,6 +63,10 @@ func _initialize() -> void:
 	S.set("now_override", mon + 21 * 86400)   # 빈 시즌 지나 닫기
 	var r0: Dictionary = S.roll()
 	check(int(r0.gold) == 0 and int(r0.tier) == -1 and int(G.gold) == 150, "④ 빈 시즌은 덤 0")
+	var id_now: int = S.get("id")
+	S.set("now_override", mon)   # 시계를 뒤로
+	check((S.roll() as Dictionary).is_empty() and int(S.get("id")) == id_now and int(G.gold) == 150, "④ 시계를 뒤로 돌리면 닫지 않음(번호 %d 그대로)" % id_now)
+	S.set("now_override", mon + 21 * 86400)
 
 	# ⑤ 한 판 등급에서
 	Mode.set("run_mode", "hard")

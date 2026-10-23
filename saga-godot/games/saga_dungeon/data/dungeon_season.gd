@@ -74,7 +74,7 @@ static func roll() -> Dictionary:
 	if not on():
 		return {}
 	var cur := season_of(now_unix())
-	if id == cur:
+	if id == cur or (id >= 0 and cur < id):   # 시계를 뒤로 돌려도 닫지 않는다(앞뒤로 돌려 덤 금 거듭 받기 막음 — R-5)
 		return {}
 	if id < 0:
 		id = cur
