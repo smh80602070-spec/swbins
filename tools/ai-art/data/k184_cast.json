@@ -16,7 +16,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ac_balgwang_v01"
   },
   {
    "id": "ac_choeumpa",
@@ -31,7 +32,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ac_choeumpa_v01"
   },
   {
    "id": "ac_gipo",
@@ -46,7 +48,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ac_gipo_v01"
   },
   {
    "id": "ac_haebit",
@@ -61,7 +64,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ac_haebit_v01"
   },
   {
    "id": "ac_haecho",
@@ -76,7 +80,8 @@
     281,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ac_haecho_v01"
   },
   {
    "id": "ac_haemun",
@@ -91,7 +96,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ac_haemun_v01"
   },
   {
    "id": "ac_simyeon",
@@ -106,7 +112,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ac_simyeon_v01"
   },
   {
    "id": "ac_suap",
@@ -121,7 +128,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ac_suap_v01"
   },
   {
    "id": "ac_sumbi",
@@ -136,7 +144,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ac_sumbi_v01"
   },
   {
    "id": "aq_byeolgil",
@@ -151,7 +160,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "aq_byeolgil_v01"
   },
   {
    "id": "aq_cheongok",
@@ -166,7 +176,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "aq_cheongok_v01"
   },
   {
    "id": "aq_dalgu",
@@ -181,7 +192,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "aq_dalgu_v01"
   },
   {
    "id": "aq_gyeongbong",
@@ -196,7 +208,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "aq_gyeongbong_v01"
   },
   {
    "id": "aq_nokju",
@@ -211,7 +224,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "aq_nokju_v01"
   },
   {
    "id": "aq_saebom",
@@ -226,7 +240,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "aq_saebom_v01"
   },
   {
    "id": "aq_sanghwa",
@@ -241,7 +256,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "aq_sanghwa_v01"
   },
   {
    "id": "aq_sapung",
@@ -256,7 +272,8 @@
     281,
     203,
     159
-   ]
+   ],
+   "bust_pick": "aq_sapung_v01"
   },
   {
    "id": "aq_yeolsa",
@@ -271,7 +288,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "aq_yeolsa_v01"
   },
   {
    "id": "bw_bitnae",
@@ -286,7 +304,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "bw_bitnae_v01"
   },
   {
    "id": "bw_cheolgi",
@@ -305,7 +324,8 @@
    "face_xy": [
     384,
     420
-   ]
+   ],
+   "bust_pick": "bw_cheolgi_v01"
   },
   {
    "id": "bw_gamu",
@@ -320,7 +340,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "bw_gamu_v01"
   },
   {
    "id": "bw_gomnae",
@@ -335,7 +356,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "bw_gomnae_v01"
   },
   {
    "id": "bw_hwaro",
@@ -350,7 +372,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "bw_hwaro_v01"
   },
   {
    "id": "bw_sangwol",
@@ -365,7 +388,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "bw_sangwol_v01"
   },
   {
    "id": "bw_seolgu",
@@ -380,7 +404,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "bw_seolgu_v01"
   },
   {
    "id": "bw_sungeom",
@@ -395,7 +420,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "bw_sungeom_v01"
   },
   {
    "id": "bw_yanggil",
@@ -410,7 +436,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "bw_yanggil_v01"
   },
   {
    "id": "cs_cheolgil",
@@ -425,7 +452,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "cs_cheolgil_v01"
   },
   {
    "id": "cs_gijeok",
@@ -440,7 +468,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "cs_gijeok_v01"
   },
   {
    "id": "cs_gyeongjeok",
@@ -459,7 +488,8 @@
    "face_xy": [
     384,
     390
-   ]
+   ],
+   "bust_pick": "cs_gyeongjeok_v01"
   },
   {
    "id": "cs_hwamul",
@@ -474,7 +504,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "cs_hwamul_v01"
   },
   {
    "id": "cs_jeongbi",
@@ -489,7 +520,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "cs_jeongbi_v01"
   },
   {
    "id": "cs_noseon",
@@ -504,7 +536,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "cs_noseon_v01"
   },
   {
    "id": "cs_seoktan",
@@ -519,7 +552,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "cs_seoktan_v01"
   },
   {
    "id": "cs_seungmu",
@@ -534,7 +568,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "cs_seungmu_v01"
   },
   {
    "id": "cs_yeokjang",
@@ -549,7 +584,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "cs_yeokjang_v01"
   },
   {
    "id": "dk_amgyeol",
@@ -564,7 +600,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "dk_amgyeol_v01"
   },
   {
    "id": "dk_gulttuk",
@@ -579,7 +616,8 @@
     284,
     203,
     159
-   ]
+   ],
+   "bust_pick": "dk_gulttuk_v01"
   },
   {
    "id": "dk_gyedo",
@@ -594,7 +632,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "dk_gyedo_v01"
   },
   {
    "id": "dk_jeoljeong",
@@ -609,7 +648,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "dk_jeoljeong_v02"
   },
   {
    "id": "dk_meari",
@@ -624,7 +664,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "dk_meari_v01"
   },
   {
    "id": "dk_mullae",
@@ -639,7 +680,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "dk_mullae_v01"
   },
   {
    "id": "dk_pungnyeon",
@@ -654,7 +696,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "dk_pungnyeon_v01"
   },
   {
    "id": "dk_saneum",
@@ -669,7 +712,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "dk_saneum_v01"
   },
   {
    "id": "dk_suro",
@@ -684,7 +728,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "dk_suro_v01"
   },
   {
    "id": "fy_baramgae",
@@ -699,7 +744,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "fy_baramgae_v01"
   },
   {
    "id": "fy_buyang",
@@ -714,7 +760,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "fy_buyang_v01"
   },
   {
    "id": "fy_cheonggong",
@@ -729,7 +776,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "fy_cheonggong_v01"
   },
   {
    "id": "fy_gitteol",
@@ -744,7 +792,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "fy_gitteol_v01"
   },
   {
    "id": "fy_mujigae",
@@ -759,7 +808,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "fy_mujigae_v01"
   },
   {
    "id": "fy_paran",
@@ -774,7 +824,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "fy_paran_v01"
   },
   {
    "id": "fy_seomgil",
@@ -789,7 +840,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "fy_seomgil_v01"
   },
   {
    "id": "fy_ttangkkeut",
@@ -804,7 +856,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "fy_ttangkkeut_v01"
   },
   {
    "id": "fy_unwon",
@@ -819,7 +872,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "fy_unwon_v01"
   },
   {
    "id": "gm_cheolbu",
@@ -834,7 +888,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gm_cheolbu_v01"
   },
   {
    "id": "gm_dolbae",
@@ -849,7 +904,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gm_dolbae_v02"
   },
   {
    "id": "gm_gaenghwa",
@@ -864,7 +920,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gm_gaenghwa_v01"
   },
   {
    "id": "gm_geumhyeol",
@@ -879,7 +936,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gm_geumhyeol_v01"
   },
   {
    "id": "gm_hwangma",
@@ -894,7 +952,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gm_hwangma_v01"
   },
   {
    "id": "gm_jeongdong",
@@ -909,7 +968,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gm_jeongdong_v01"
   },
   {
    "id": "gm_mahyang",
@@ -924,7 +984,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gm_mahyang_v01"
   },
   {
    "id": "gm_myeongseok",
@@ -939,7 +1000,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gm_myeongseok_v01"
   },
   {
    "id": "gm_sanul",
@@ -954,7 +1016,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gm_sanul_v01"
   },
   {
    "id": "gr_bangpung",
@@ -969,7 +1032,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gr_bangpung_v01"
   },
   {
    "id": "gr_haetbit",
@@ -984,7 +1048,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gr_haetbit_v01"
   },
   {
    "id": "gr_iseul",
@@ -999,7 +1064,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gr_iseul_v01"
   },
   {
    "id": "gr_kkulbeol",
@@ -1014,7 +1080,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gr_kkulbeol_v01"
   },
   {
    "id": "gr_mojong",
@@ -1029,7 +1096,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gr_mojong_v01"
   },
   {
    "id": "gr_nokhwa",
@@ -1044,7 +1112,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gr_nokhwa_v01"
   },
   {
    "id": "gr_ssiat",
@@ -1059,7 +1128,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gr_ssiat_v01"
   },
   {
    "id": "gr_supgil",
@@ -1074,7 +1144,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gr_supgil_v01"
   },
   {
    "id": "gr_toyang",
@@ -1089,7 +1160,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "gr_toyang_v01"
   },
   {
    "id": "hb_bisang",
@@ -1104,7 +1176,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hb_bisang_v01"
   },
   {
    "id": "hb_gisang",
@@ -1119,7 +1192,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hb_gisang_v01"
   },
   {
    "id": "hb_gwanje",
@@ -1134,7 +1208,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hb_gwanje_v01"
   },
   {
    "id": "hb_gyeongro",
@@ -1149,7 +1224,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hb_gyeongro_v01"
   },
   {
    "id": "hb_hwaljuro",
@@ -1164,7 +1240,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hb_hwaljuro_v01"
   },
   {
    "id": "hb_jeomgeom",
@@ -1179,7 +1256,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hb_jeomgeom_v01"
   },
   {
    "id": "hb_mangwon",
@@ -1194,7 +1272,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hb_mangwon_v01"
   },
   {
    "id": "hb_sangae",
@@ -1209,7 +1288,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hb_sangae_v01"
   },
   {
    "id": "hb_seonhoe",
@@ -1224,7 +1304,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hb_seonhoe_v01"
   },
   {
    "id": "hl_baekhwa",
@@ -1239,7 +1320,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hl_baekhwa_v01"
   },
   {
    "id": "hl_damhwa",
@@ -1254,7 +1336,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hl_damhwa_v01"
   },
   {
    "id": "hl_geumsil",
@@ -1269,7 +1352,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hl_geumsil_v01"
   },
   {
    "id": "hl_gyeongun",
@@ -1284,7 +1368,8 @@
     284,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hl_gyeongun_v01"
   },
   {
    "id": "hl_hwaseo",
@@ -1299,7 +1384,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hl_hwaseo_v01"
   },
   {
    "id": "hl_jeongwon",
@@ -1314,7 +1400,8 @@
     281,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hl_jeongwon_v01"
   },
   {
    "id": "hl_kkotbi",
@@ -1329,7 +1416,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hl_kkotbi_v01"
   },
   {
    "id": "hl_noeul",
@@ -1344,7 +1432,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hl_noeul_v01"
   },
   {
    "id": "hq_dotdae",
@@ -1359,7 +1448,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hq_dotdae_v01"
   },
   {
    "id": "hq_eodeok",
@@ -1378,7 +1468,8 @@
    "face_xy": [
     384,
     378
-   ]
+   ],
+   "bust_pick": "hq_eodeok_v01"
   },
   {
    "id": "hq_gaebeol",
@@ -1393,7 +1484,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hq_gaebeol_v01"
   },
   {
    "id": "hq_haeryeong",
@@ -1408,7 +1500,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hq_haeryeong_v01"
   },
   {
    "id": "hq_jamsu",
@@ -1423,7 +1516,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hq_jamsu_v01"
   },
   {
    "id": "hq_jugwang",
@@ -1438,7 +1532,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hq_jugwang_v01"
   },
   {
    "id": "hq_mulgyeol",
@@ -1453,7 +1548,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hq_mulgyeol_v01"
   },
   {
    "id": "hq_sanho",
@@ -1468,7 +1564,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hq_sanho_v01"
   },
   {
    "id": "hq_yongpa",
@@ -1483,7 +1580,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "hq_yongpa_v01"
   },
   {
    "id": "js_bodo",
@@ -1498,7 +1596,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "js_bodo_v01"
   },
   {
    "id": "js_dalli",
@@ -1513,7 +1612,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "js_dalli_v01"
   },
   {
    "id": "js_eumseong",
@@ -1528,7 +1628,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "js_eumseong_v01"
   },
   {
    "id": "js_hyeonjang",
@@ -1543,7 +1644,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "js_hyeonjang_v01"
   },
   {
    "id": "js_jamak",
@@ -1558,7 +1660,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "js_jamak_v01"
   },
   {
    "id": "js_jeonpa",
@@ -1573,7 +1676,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "js_jeonpa_v01"
   },
   {
    "id": "js_jomyeong",
@@ -1588,7 +1692,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "js_jomyeong_v01"
   },
   {
    "id": "js_saengbang",
@@ -1603,7 +1708,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "js_saengbang_v01"
   },
   {
    "id": "js_teukjong",
@@ -1618,7 +1724,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "js_teukjong_v01"
   },
   {
    "id": "kd_cheolsim",
@@ -1633,7 +1740,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kd_cheolsim_v01"
   },
   {
    "id": "kd_cheongram",
@@ -1648,7 +1756,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kd_cheongram_v01"
   },
   {
    "id": "kd_hoero",
@@ -1663,7 +1772,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kd_hoero_v01"
   },
   {
    "id": "kd_jeonji",
@@ -1678,7 +1788,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kd_jeonji_v01"
   },
   {
    "id": "kd_nalgae",
@@ -1693,7 +1804,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kd_nalgae_v01"
   },
   {
    "id": "kd_seolgye",
@@ -1708,7 +1820,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kd_seolgye_v01"
   },
   {
    "id": "kd_seorim",
@@ -1723,7 +1836,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kd_seorim_v01"
   },
   {
    "id": "kd_silheom",
@@ -1738,7 +1852,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kd_silheom_v01"
   },
   {
    "id": "kd_yongjeop",
@@ -1753,7 +1868,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "kd_yongjeop_v01"
   },
   {
    "id": "lg_baekgeom",
@@ -1768,7 +1884,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "lg_baekgeom_v01"
   },
   {
    "id": "lg_ilwol",
@@ -1783,7 +1900,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "lg_ilwol_v01"
   },
   {
    "id": "lg_mugyeong",
@@ -1798,7 +1916,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "lg_mugyeong_v01"
   },
   {
    "id": "mh_bungdae",
@@ -1813,7 +1932,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mh_bungdae_v01"
   },
   {
    "id": "mh_gangin",
@@ -1828,7 +1948,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mh_gangin_v01"
   },
   {
    "id": "mh_ganhui",
@@ -1843,7 +1964,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mh_ganhui_v01"
   },
   {
    "id": "mh_gugeup",
@@ -1858,7 +1980,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mh_gugeup_v01"
   },
   {
    "id": "mh_maekbak",
@@ -1873,7 +1996,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mh_maekbak_v01"
   },
   {
    "id": "mh_muha",
@@ -1888,7 +2012,8 @@
     281,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mh_muha_v01"
   },
   {
    "id": "mh_onyu",
@@ -1903,7 +2028,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mh_onyu_v01"
   },
   {
    "id": "mh_sabang",
@@ -1918,7 +2044,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mh_sabang_v01"
   },
   {
    "id": "mh_yakseon",
@@ -1933,7 +2060,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mh_yakseon_v01"
   },
   {
    "id": "mr_bakwi",
@@ -1948,7 +2076,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mr_bakwi_v01"
   },
   {
    "id": "mr_bingha",
@@ -1963,7 +2092,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mr_bingha_v01"
   },
   {
    "id": "mr_cheolgu",
@@ -1978,7 +2108,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mr_cheolgu_v01"
   },
   {
    "id": "mr_cheotbom",
@@ -1993,7 +2124,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mr_cheotbom_v01"
   },
   {
    "id": "mr_gaecheok",
@@ -2008,7 +2140,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mr_gaecheok_v01"
   },
   {
    "id": "mr_gwangmul",
@@ -2023,7 +2156,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mr_gwangmul_v01"
   },
   {
    "id": "mr_jeoksa",
@@ -2038,7 +2172,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mr_jeoksa_v01"
   },
   {
    "id": "mr_onsil",
@@ -2053,7 +2188,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mr_onsil_v01"
   },
   {
    "id": "mr_sumteo",
@@ -2068,7 +2204,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "mr_sumteo_v01"
   },
   {
    "id": "nc_baekdo",
@@ -2083,7 +2220,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "nc_baekdo_v01"
   },
   {
    "id": "nc_bitsal",
@@ -2098,7 +2236,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "nc_bitsal_v01"
   },
   {
    "id": "nc_geori",
@@ -2113,7 +2252,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "nc_geori_v01"
   },
   {
    "id": "nc_hamseong",
@@ -2128,7 +2268,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "nc_hamseong_v01"
   },
   {
    "id": "nc_hwalgi",
@@ -2143,7 +2284,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "nc_hwalgi_v01"
   },
   {
    "id": "nc_jeongmyeong",
@@ -2158,7 +2300,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "nc_jeongmyeong_v01"
   },
   {
    "id": "nc_sinho",
@@ -2173,7 +2316,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "nc_sinho_v01"
   },
   {
    "id": "nc_ullim",
@@ -2188,7 +2332,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "nc_ullim_v01"
   },
   {
    "id": "nc_yagyeong",
@@ -2203,7 +2348,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "nc_yagyeong_v01"
   },
   {
    "id": "ns_banghwabyeok",
@@ -2218,7 +2364,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ns_banghwabyeok_v01"
   },
   {
    "id": "ns_buho",
@@ -2233,7 +2380,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ns_buho_v01"
   },
   {
    "id": "ns_eungdap",
@@ -2248,7 +2396,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ns_eungdap_v01"
   },
   {
    "id": "ns_gieok",
@@ -2263,7 +2412,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ns_gieok_v01"
   },
   {
    "id": "ns_hakseup",
@@ -2278,7 +2428,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ns_hakseup_v01"
   },
   {
    "id": "ns_hwamyeon",
@@ -2293,7 +2444,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ns_hwamyeon_v01"
   },
   {
    "id": "ns_jeopsok",
@@ -2312,7 +2464,8 @@
    "face_xy": [
     384,
     200
-   ]
+   ],
+   "bust_pick": "ns_jeopsok_v01"
   },
   {
    "id": "ns_singyeong",
@@ -2327,7 +2480,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ns_singyeong_v01"
   },
   {
    "id": "ns_yeongyeol",
@@ -2342,7 +2496,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ns_yeongyeol_v01"
   },
   {
    "id": "ob_byeolbit",
@@ -2357,7 +2512,8 @@
     284,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ob_byeolbit_v01"
   },
   {
    "id": "ob_gongjeon",
@@ -2372,7 +2528,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ob_gongjeon_v01"
   },
   {
    "id": "ob_jungnyeok",
@@ -2387,7 +2544,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ob_jungnyeok_v01"
   },
   {
    "id": "ob_mujung",
@@ -2402,7 +2560,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ob_mujung_v01"
   },
   {
    "id": "ob_sanso",
@@ -2417,7 +2576,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ob_sanso_v01"
   },
   {
    "id": "ob_seongun",
@@ -2432,7 +2592,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ob_seongun_v01"
   },
   {
    "id": "ob_taeyang",
@@ -2447,7 +2608,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ob_taeyang_v01"
   },
   {
    "id": "ob_tongsin",
@@ -2462,7 +2624,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ob_tongsin_v01"
   },
   {
    "id": "ob_yeonryo",
@@ -2477,7 +2640,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "ob_yeonryo_v01"
   },
   {
    "id": "rg_eungwon",
@@ -2492,7 +2656,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "rg_eungwon_v01"
   },
   {
    "id": "rg_gyeolseung",
@@ -2507,7 +2672,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "rg_gyeolseung_v01"
   },
   {
    "id": "rg_gyesan",
@@ -2522,7 +2688,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "rg_gyesan_v01"
   },
   {
    "id": "rg_jagal",
@@ -2537,7 +2704,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "rg_jagal_v01"
   },
   {
    "id": "rg_jilju",
@@ -2552,7 +2720,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "rg_jilju_v01"
   },
   {
    "id": "rg_saekdong",
@@ -2567,7 +2736,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "rg_saekdong_v01"
   },
   {
    "id": "rg_singi",
@@ -2582,7 +2752,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "rg_singi_v01"
   },
   {
    "id": "rg_suri",
@@ -2597,7 +2768,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "rg_suri_v01"
   },
   {
    "id": "rg_yeonseup",
@@ -2612,7 +2784,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "rg_yeonseup_v01"
   },
   {
    "id": "sn_bitdol",
@@ -2631,7 +2804,8 @@
    "face_xy": [
     384,
     400
-   ]
+   ],
+   "bust_pick": "sn_bitdol_v01"
   },
   {
    "id": "sn_deonggul",
@@ -2646,7 +2820,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sn_deonggul_v01"
   },
   {
    "id": "sn_gojeok",
@@ -2661,7 +2836,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sn_gojeok_v01"
   },
   {
    "id": "sn_horang",
@@ -2676,7 +2852,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sn_horang_v01"
   },
   {
    "id": "sn_milhyang",
@@ -2691,7 +2868,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sn_milhyang_v01"
   },
   {
    "id": "sn_nuri",
@@ -2706,7 +2884,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sn_nuri_v01"
   },
   {
    "id": "sn_ppuri",
@@ -2721,7 +2900,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sn_ppuri_v01"
   },
   {
    "id": "sn_saessak",
@@ -2736,7 +2916,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sn_saessak_v01"
   },
   {
    "id": "sn_seokhwan",
@@ -2751,7 +2932,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "sn_seokhwan_v01"
   },
   {
    "id": "tw_baekya",
@@ -2766,7 +2948,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "tw_baekya_v01"
   },
   {
    "id": "tw_bunchim",
@@ -2781,7 +2964,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "tw_bunchim_v01"
   },
   {
    "id": "tw_cheonryu",
@@ -2796,7 +2980,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "tw_cheonryu_v01"
   },
   {
    "id": "tw_girok",
@@ -2811,7 +2996,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "tw_girok_v01"
   },
   {
    "id": "tw_hoegwi",
@@ -2826,7 +3012,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "tw_hoegwi_v01"
   },
   {
    "id": "tw_jogak",
@@ -2841,7 +3028,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "tw_jogak_v01"
   },
   {
    "id": "tw_jongsori",
@@ -2856,7 +3044,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "tw_jongsori_v01"
   },
   {
    "id": "tw_topni",
@@ -2871,7 +3060,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "tw_topni_v01"
   },
   {
    "id": "tw_yegyeon",
@@ -2886,7 +3076,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "tw_yegyeon_v01"
   },
   {
    "id": "yk_amsu",
@@ -2901,7 +3092,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "yk_amsu_v01"
   },
   {
    "id": "yk_baekyeong",
@@ -2916,7 +3108,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "yk_baekyeong_v01"
   },
   {
    "id": "yk_cheonro",
@@ -2931,7 +3124,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "yk_cheonro_v01"
   },
   {
    "id": "yk_hyangdo",
@@ -2946,7 +3140,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "yk_hyangdo_v01"
   },
   {
    "id": "yk_jinbaek",
@@ -2961,7 +3156,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "yk_jinbaek_v01"
   },
   {
    "id": "yk_pungdeung",
@@ -2976,7 +3172,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "yk_pungdeung_v01"
   },
   {
    "id": "yk_sanyeom",
@@ -2991,7 +3188,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "yk_sanyeom_v01"
   },
   {
    "id": "yk_seolmae",
@@ -3006,7 +3204,8 @@
     283,
     203,
     159
-   ]
+   ],
+   "bust_pick": "yk_seolmae_v01"
   },
   {
    "id": "yk_unsu",
@@ -3021,7 +3220,8 @@
     282,
     203,
     159
-   ]
+   ],
+   "bust_pick": "yk_unsu_v01"
   }
  ]
 }
