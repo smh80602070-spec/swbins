@@ -704,6 +704,25 @@
     { "key": "relic.set.tile", "value": "Old roof tile" },
     { "key": "relic.piece", "value": "{0} Relic piece — {1} {2}/{3}" },
     { "key": "relic.restored", "value": "{0} {1} restored! A display stand rose by the fossil spot — fruit +{2}" },
-    { "key": "relic.feast", "value": "🎉 Ruin feast — all three relics restored! Fruit +{0}" }
+    { "key": "relic.feast", "value": "🎉 Ruin feast — all three relics restored! Fruit +{0}" },
+    { "key": "brew.open", "value": "⚗️ Potions" },
+    { "key": "brew.title", "value": "⚗️ Brew a potion — 🌿 herbs {0} + one ingredient (mushrooms give herbs)" },
+    { "key": "brew.today", "value": "Today: {0}" },
+    { "key": "brew.go", "value": "⚗️ Brew" },
+    { "key": "brew.unknown", "value": "❔ Unknown result" },
+    { "key": "brew.mat.fruit", "value": "🍎 Fruit" },
+    { "key": "brew.mat.flower", "value": "🌸 Flower" },
+    { "key": "brew.mat.insect", "value": "🐞 Insect" },
+    { "key": "brew.mat.fossil", "value": "🪨 Fossil" },
+    { "key": "brew.p.vigor", "value": "🍯 Vigor potion — +1 fruit when shaking trees" },
+    { "key": "brew.p.scent", "value": "🌸 Scent potion — +1 when a villager's heart rises" },
+    { "key": "brew.p.murky", "value": "💧 Murky potion — nothing happens" },
+    { "key": "brew.p.none", "value": "No potion today" },
+    { "key": "brew.drank", "value": "⚗️ Brewed and drank it — {0}" },
+    { "key": "brew.found", "value": "✨ New potion discovered! — {0}" },
+    { "key": "brew.why_herb", "value": "No herbs — go pick mushrooms" },
+    { "key": "brew.why_mat", "value": "No such ingredient" },
+    { "key": "brew.why_off", "value": "Brewing is turned off" },
+    { "key": "brew.why_none", "value": "Cannot brew" }
   ]
 }

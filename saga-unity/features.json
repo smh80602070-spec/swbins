@@ -2508,6 +2508,23 @@
   "note": "D1(U-0177): PlaytestForestHeadless relics roll·gather·restore·save·off OK(60일 중 27일 조각 · 화석·하루 첫 번만 · 셋 복원 열매 +39 · 전시대 3 충돌체 0 · relicsJson 왕복)"
  },
  {
+  "id": "un.fs.brew",
+  "name": "U-0180 3마을 물약 양조 — 제작대 「⚗️ 물약」 약초(버섯 채집) 1 + 재료(열매·꽃·곤충·화석) 하나, 처음엔 ❔ 한 번 달이면 이름이 밝혀지고 곧바로 마셔 오늘 하루 🍯 기운(과일 +1)·🌸 꽃향(하트 +1)·💧 탁함(고돗 G-0320)",
+  "files": [
+   "saga-unity/Assets/Games/SagaForest/Data/ForestBrew.cs",
+   "saga-unity/Assets/Games/SagaForest/World/ForestBrewPanel.cs"
+  ],
+  "tests": [
+   "PlaytestForestBrew"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0180",
+  "since": "2026-10-23",
+  "note": "D1(U-0180): PlaytestForestHeadless brew pouch·rule·effect·panel·save·off OK"
+ },
+ {
   "id": "un.fs.cave-depth",
   "name": "U-0132 땅 아래 층 — 바위 지대 굴 입구 → 지하 5층(횃불·광맥 하루 한 번·사다리 지키는 짐승·5층 유물, 웹 W-0285 이식)",
   "files": [

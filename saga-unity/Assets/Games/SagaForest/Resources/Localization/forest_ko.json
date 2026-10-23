@@ -704,6 +704,25 @@
     { "key": "relic.set.tile", "value": "옛 망와" },
     { "key": "relic.piece", "value": "{0} 유적 조각 — {1} {2}/{3}" },
     { "key": "relic.restored", "value": "{0} {1} 복원! 화석 자리 곁에 전시대가 섰다 — 열매 +{2}" },
-    { "key": "relic.feast", "value": "🎉 옛터 잔치 — 유적 셋을 모두 되살렸다! 열매 +{0}" }
+    { "key": "relic.feast", "value": "🎉 옛터 잔치 — 유적 셋을 모두 되살렸다! 열매 +{0}" },
+    { "key": "brew.open", "value": "⚗️ 물약" },
+    { "key": "brew.title", "value": "⚗️ 물약 달이기 — 🌿 약초 {0} + 재료 하나 (버섯을 캐면 약초)" },
+    { "key": "brew.today", "value": "오늘: {0}" },
+    { "key": "brew.go", "value": "⚗️ 달이기" },
+    { "key": "brew.unknown", "value": "❔ 무엇이 될지 모른다" },
+    { "key": "brew.mat.fruit", "value": "🍎 열매" },
+    { "key": "brew.mat.flower", "value": "🌸 꽃" },
+    { "key": "brew.mat.insect", "value": "🐞 곤충" },
+    { "key": "brew.mat.fossil", "value": "🪨 화석" },
+    { "key": "brew.p.vigor", "value": "🍯 기운 물약 — 과일나무 흔들 때 열매 +1" },
+    { "key": "brew.p.scent", "value": "🌸 꽃향 물약 — 주민 하트가 오를 때 +1" },
+    { "key": "brew.p.murky", "value": "💧 탁한 물약 — 아무 일도 없다" },
+    { "key": "brew.p.none", "value": "오늘 마신 물약 없음" },
+    { "key": "brew.drank", "value": "⚗️ 달여 마셨다 — {0}" },
+    { "key": "brew.found", "value": "✨ 새 물약을 찾았다! — {0}" },
+    { "key": "brew.why_herb", "value": "약초가 없다 — 버섯을 캐 오자" },
+    { "key": "brew.why_mat", "value": "그 재료가 없다" },
+    { "key": "brew.why_off", "value": "물약 양조가 꺼져 있다" },
+    { "key": "brew.why_none", "value": "달일 수 없다" }
   ]
 }

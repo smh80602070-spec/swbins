@@ -22,12 +22,13 @@ namespace Saga.Forest.World
         private Transform _player;
         private GameObject _panel;
         private TextMeshProUGUI _title, _status;
-        private Button _upgrade, _decline, _close, _hint, _lots, _stock;
+        private Button _upgrade, _decline, _close, _hint, _lots, _stock, _brew;
         private readonly List<Button> _axisButtons = new List<Button>();
         private ForestHandState.Axis[] _offer;
 
         public bool IsOpen => _panel != null && _panel.activeSelf;
         public Button StockButton => _stock; // tasks U-0173
+        public Button BrewButton => _brew; // tasks U-0180
         public bool HintShown => _hint != null && _hint.gameObject.activeSelf;
         public IReadOnlyList<ForestHandState.Axis> Offer => _offer;
 
@@ -104,6 +105,9 @@ namespace Saga.Forest.World
             // tasks U-0173 — 작은 우리 창(창 왼쪽 위)
             _stock = SagaUi.NewButton(_panel.transform, "Livestock", ForestLocalization.T("stock.open", "🐔 우리"), new Vector2(0f, 1f), new Vector2(18f, -18f), new Vector2(170f, 54f), SagaUi.ButtonIdle, 22f);
             _stock.onClick.AddListener(OpenStock);
+            // tasks U-0180 — 물약 달이기 창(창 왼쪽 아래)
+            _brew = SagaUi.NewButton(_panel.transform, "Brew", ForestLocalization.T("brew.open", "⚗️ 물약"), new Vector2(0f, 0f), new Vector2(18f, 18f), new Vector2(170f, 54f), SagaUi.ButtonIdle, 22f);
+            _brew.onClick.AddListener(OpenBrew);
             _panel.SetActive(false);
         }
 
@@ -131,6 +135,14 @@ namespace Saga.Forest.World
         private void OpenStock()
         {
             var r = ForestLivestockRunner.Instance;
+            if (r == null) return;
+            Close();
+            r.Open();
+        }
+
+        private void OpenBrew()
+        {
+            var r = ForestBrewPanel.Instance;
             if (r == null) return;
             Close();
             r.Open();

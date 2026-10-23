@@ -82,6 +82,7 @@ namespace Saga.Forest.Data
         public static int Bump(string id, int delta)
         {
             if (string.IsNullOrEmpty(id) || delta == 0) return 0;
+            if (delta > 0) delta += ForestBrew.HeartBonus; // tasks U-0180 꽃향 물약(하루 상한은 아래가 그대로 자른다)
             var r = RecOf(id);
             int day = ForestVisitors.Today;
             if (r.gainDay != day) { r.gainDay = day; r.gained = 0; }

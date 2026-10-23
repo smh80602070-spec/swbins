@@ -132,7 +132,7 @@ namespace Saga.Forest.World
 
             _cooldownLeft = GatherCooldownSec * ForestHandState.CooldownMul;   // tasks U-0095 빠른 손(Lv.1 = ×1)
             // PLAN.md 101-2 5.6 "축제 하루"(2026-09-21) — 소원 버프가 있으면 과일 획득 ×1.5. tasks U-0095 넉넉한 손 — 확률로 +1(Lv.1 = 0).
-            ForestState.AddFruit(Mathf.RoundToInt(1 * ForestFestivalState.FruitMultiplier) + ForestHandState.BonusFruit(HandRng));
+            ForestState.AddFruit(Mathf.RoundToInt(1 * ForestFestivalState.FruitMultiplier) + ForestHandState.BonusFruit(HandRng) + ForestBrew.FruitBonus); // tasks U-0180 기운 물약
             DialogueLabel.Instance?.Show(
                 string.Format(ForestLocalization.T("fruit.gather_toast", "나무를 흔들었다 — {0}을(를) 주웠다 (보유 {1}개)"),
                     FruitName, ForestState.FruitCount),

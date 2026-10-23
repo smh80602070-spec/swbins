@@ -84,6 +84,7 @@ namespace Saga.Forest.World
             ForestScenario.OnGather(category); // PLAN.md 109-16 — 시나리오 gather 단계
             string relicLine = ForestRelics.OnGather(category, ForestVisitors.Today); // tasks U-0177 유적 조각(화석 자리·하루 첫 번)
             if (relicLine != null) DialogueLabel.Instance?.Show(relicLine, ToastSec + 1f);
+            ForestBrew.OnGather(category); // tasks U-0180 양조 주머니(버섯 = 약초)
             string visitLine = ForestVisitors.OnGather(category);
             if (visitLine != null) DialogueLabel.Instance?.Show(visitLine, ToastSec);
 

@@ -34,6 +34,7 @@ namespace Saga.Forest.World
             ForestWorkbench.Install(); // tasks U-0095 제작대 — 채집 손 승급·3택(Play 때, 씬 재빌드 없이)
             ForestCaveRunner.Install(); // tasks U-0132 땅 아래 층 — 바위 지대 굴 입구·먼 방(Play 때, 세이브 뒤라 굴에 갇힌 주인공을 꺼낸다)
             ForestLivestockRunner.Install(); // tasks U-0173 가축 기르기 — 제작대 창 "🐔 우리" 가 연다(Play 때)
+            ForestBrewPanel.Install(); // tasks U-0180 물약 달이기 창 — 제작대 창 "⚗️ 물약" 이 연다(Play 때)
             ForestRelicStands.Install(); // tasks U-0177 유적 전시대 — 되살린 유적마다 화석 자리 곁(Play 때, 세이브 뒤라 불러온 것도 선다)
             ForestLotRunner.Install(); // tasks U-0127 작은 빈 집·입주 조건 — 제작대 창 "🏠 빈 집" 이 연다(Play 때)
             MountField.Install(); // PLAN.md 109-15 탈것·비행 — H 타기·Shift+H 고르기(Play 때, 씬 재빌드 없이)
