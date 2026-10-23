@@ -1126,12 +1126,12 @@
   "tests": [
    "잡기(W-0277)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0277",
   "since": "2026-10-17",
-  "note": "붉은사막식(구조만). G 는 요리 창이 써서 C. 장부 tasks/gameplay/go.md"
+  "note": "D2(claude 10-23 R-3): 1만리 마을 2D — 들짐승 옆 ✊ 빛남(fc-grab near) → act grab {ok:true} → 단추 흐림(cd) 촬영 · 붉은사막식(구조만). G 는 요리 창이 써서 C. 장부 tasks/gameplay/go.md"
  },
  {
   "id": "go.stealth-catch",
