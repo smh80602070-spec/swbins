@@ -298,7 +298,7 @@
       }
       if (!spot) { return; }
       var d = Math.hypot(spot.x - p.x, spot.y - p.y);
-      if (d < bd) { bd = d; best = { x: spot.x, y: spot.y, d: d, key: ch.key, label: (ch.emoji || '📜') + ' ' + ch.title + ' · ' + ch.stepName + (ch.need ? ' ' + ch.have + '/' + ch.need : '') }; }
+      if (d < bd) { bd = d; best = { x: spot.x, y: spot.y, d: d, key: ch.key, have: ch.have, label: (ch.emoji || '📜') + ' ' + ch.title + ' · ' + ch.stepName + (ch.need ? ' ' + ch.have + '/' + ch.need : '') }; }
     });
     return best;
   }
@@ -378,6 +378,10 @@
     acc.quest = 0;
     var g = questFieldGoal(tr);
     if (!g) { questDoing = ''; return false; }
+    /* 셈이 3분 그대로면 그 사연 3분 미루고 메인(던전) 먼저(W-0382) — 첫 토벌 적이 마을 나무 띠 너머 2600보라 첫 10분이 걷기로 끝나곤 했다.
+       차례만 바꾼다(토벌 수·스폰·보상 그대로). 셈이 늘면 처음부터 */
+    if (qProg.key !== g.key || qProg.have !== g.have) { qProg.key = g.key; qProg.have = g.have; qProg.t = Date.now(); }   // 실제 시계 — 게임 박자로 세면 프레임이 느린 기기에서 3분이 7분이 됐다
+    if (Date.now() - qProg.t >= QPROG_SEC * 1000) { qDefer[g.key] = Date.now() + QPROG_SEC * 1000; qProg.key = ''; questDoing = ''; doing = '📜 ' + g.label + ' — 3분째 그대로, 던전 먼저'; return false; }
     /* 막힘 풀기 — 길 찾기가 없어 나무·바위·담에 붙으면 제자리. 2초 동안 30보도 못 가면 옆으로 400보 비켰다가 다시 */
     var p = tr.player;
     if (qStuck.path && (qStuck.path.key !== g.key || Date.now() > qStuck.path.until)) { qStuck.path = null; }
@@ -410,7 +414,7 @@
     doing = questDoing;
     return true;
   }
-  var questWait = '', questDoing = '', qStuck = { x: 0, y: 0, t: 0, side: null, n: 0, key: '', bestD: Infinity, path: null }, qDefer = {};
+  var questWait = '', questDoing = '', qStuck = { x: 0, y: 0, t: 0, side: null, n: 0, key: '', bestD: Infinity, path: null }, qDefer = {}, qProg = { key: '', have: -1, t: 0 }, QPROG_SEC = 180;
 
   /** 본영에 있을 때 — 다시 내려간다 */
   function tickEntry(dt) {
@@ -450,6 +454,6 @@
     update: update, status: status,
     /** 자가진단용 */
     _tickDungeon: tickDungeon, _tickEntry: tickEntry,
-    _autoRankUp: autoRankUp, _doorScore: doorScore, _mainReq: mainReq, _questFieldGoal: questFieldGoal, _sideSpot: sideSpot, _qDefer: qDefer, _gridPath: gridPath
+    _autoRankUp: autoRankUp, _doorScore: doorScore, _mainReq: mainReq, _questFieldGoal: questFieldGoal, _sideSpot: sideSpot, _qDefer: qDefer, _gridPath: gridPath, _qProg: qProg
   };
 })(window);

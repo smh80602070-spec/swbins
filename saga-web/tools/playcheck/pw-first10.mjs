@@ -66,7 +66,7 @@ async function runGame(game) {
     }
     res.today0 = await todayDone(page);
     const aqName = AQ[game];
-    let lastGoal = null, lastProg = null, minDist = Infinity, goalSince = Date.now();
+    let lastGoal = null, lastProg = null, minDist = Infinity, lastFloor = null, lastFoes = Infinity, goalSince = Date.now();
     const end = t0 + MIN * 60000;
     while (Date.now() < end) {
       { const ch = await choices(page); if (ch) { res.log.push('고름 ' + ch); await sleep(2000); } }
@@ -76,6 +76,9 @@ async function runGame(game) {
         if (s.none) { res.stuck.push('자동 퀘스트 어댑터 없음'); break; }
         res.steps = Math.max(res.steps, s.done || 0);
         const pc = ([...((s.label || '') + ' ' + (s.extra || '')).matchAll(/(\d+)\/\d+/g)].pop() || [])[1], dist = +((/ (\d+)보/.exec(s.extra || '') || [])[1] || NaN);   // 셈은 마지막 것 — 목표 라벨은 고를 때 값(0/40)이 남고 진행 문구에 지금 셈이 있다(W-0384)
+        const fl = (/\[던전 (\d+)층\]/.exec(s.extra || '') || [])[1], foes = +((/남은 적 (\d+)/.exec(s.extra || '') || [])[1] || NaN);
+        if (s.goal === lastGoal && ((fl && fl !== lastFloor) || foes < lastFoes)) { goalSince = Date.now(); }   // 던전 층이 바뀌거나 남은 적이 줄면 싸우는 중(2나락 「첫 출정」 1층에 4분 — W-0382)
+        lastFloor = fl; lastFoes = isNaN(foes) ? Infinity : foes;
         if (s.goal === lastGoal && dist < minDist - 300) { minDist = dist; goalSince = Date.now(); }   // 목표에 300보 넘게 다가섰으면 걷는 중(첫 목표가 3천 보 밖 — W-0382), 막힘 아님
         if (s.goal !== lastGoal) { minDist = isNaN(dist) ? Infinity : dist; }   // 같은 목표라도 셈(0/10 → 2/10)이 늘면 막힘 아님(W-0382 — 토벌은 10마리에 몇 분)
         if (s.goal !== lastGoal || (pc != null && pc !== lastProg)) { if (s.goal === lastGoal) { res.progress = (res.progress || 0) + 1; } lastGoal = s.goal; lastProg = pc; goalSince = Date.now(); }
