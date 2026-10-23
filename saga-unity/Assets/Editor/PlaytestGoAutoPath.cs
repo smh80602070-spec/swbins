@@ -26,6 +26,9 @@ namespace Saga.EditorTools
                 GoAutoPath.CellForTest = (x, z) => (true, 0f);
                 var open = GoAutoPath.Plan(Vector3.zero, new Vector3(12f, 0f, 3f), null);
                 if (open == null || open.Count != 1) Fail($"곧은 들판 경유점 {open?.Count}");
+                var far = GoAutoPath.Plan(Vector3.zero, new Vector3(200f, 0f, 0f), null);   // U-0197 창 밖 목표 — 칸 상한 안에서도 목표 쪽으로
+                if (far == null || far[far.Count - 1].x < 20f) Fail($"창 밖 목표 — 끝 {(far == null ? "null" : far[far.Count - 1].ToString())}");
+                else m += $" 창 밖 목표 끝 x {far[far.Count - 1].x:0}";
 
                 GoAutoPath.CellForTest = Wall;
                 var around = GoAutoPath.Plan(Vector3.zero, new Vector3(12f, 0f, 0f), null);
@@ -68,7 +71,14 @@ namespace Saga.EditorTools
                     var box = wall.GetComponent<BoxCollider>();
                     Vector3 goal = me + fw * 10f;
                     if (!GoAutoPath.BlockedAhead(me, fw, fc.transform)) Fail("벽 앞인데 안 막힘");
+                    var sw = System.Diagnostics.Stopwatch.StartNew();
                     var way = GoAutoPath.Plan(me, goal, fc.transform);
+                    double msWall = sw.Elapsed.TotalMilliseconds;
+                    // R-5 — 목표가 창 밖이면 61×61 칸을 다 잰다(가장 무거운 꼴) — 걸린 시간을 남긴다
+                    sw.Restart();
+                    GoAutoPath.Plan(me, me + fw * 200f, fc.transform);
+                    double msFar = sw.Elapsed.TotalMilliseconds;
+                    m += $" · 길 내기 {msWall:0.0}ms(벽)·{msFar:0.0}ms(창 밖 목표)";
                     if (way == null) Fail("벽 — 길 없음");
                     else
                     {
