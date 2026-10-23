@@ -7178,6 +7178,25 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return ok1 && ok2 ? '단추 셋 · 끄면 칸 없음·배율 1' : '실패 ' + ok1 + ' ' + ok2;
     });
 
+    t('혼인 동맹(W-0399 ④) — 우호 70 미만·금 부족이면 안 됨 · 맺으면 금 −1500·정전 36달 · 둘까지 · 무장이 죽으면 다음 달 깨지고 정전도 끝', function () {
+      fresh('cao');
+      var D = DG.diplo, O = DG.off, me = R.me(), f = R.force(me), others = R.liveForces().filter(function (x) { return x !== me; }), a = others[0], b = others[1], c = others[2];
+      var by = O.ofForce(me)[0]; if (!by) { return '실패 무장 없음'; }
+      f.gold = 10000; D.addRelation(me, a, -100);
+      if (D.marry(a, by.id).ok) { return '실패 우호 낮은데 맺음 ' + D.relation(me, a); }
+      D.addRelation(me, a, 100); D.addRelation(me, b, 100); D.addRelation(me, c, 100);
+      f.gold = 100; if (D.marry(a, by.id).ok) { return '실패 금 없는데 맺음'; }
+      f.gold = 10000;
+      var r = D.marry(a, by.id); if (!r.ok) { return '실패 ' + r.why; }
+      if (f.gold !== 8500 || !(f.truce && f.truce[a] === 36) || D.marriedWith(a) !== by.id) { return '실패 금 ' + f.gold + ' 정전 ' + (f.truce && f.truce[a]); }
+      var by2 = O.ofForce(me)[1] || by; D.marry(b, by2.id);
+      if (D.marry(c, by.id).ok) { return '실패 셋째 맺음'; }
+      O.rec(by.id).dead = true; D.monthly();
+      var ok = !D.marriedWith(a) && !(f.truce && f.truce[a]) && D.marriedWith(b);
+      delete R.state().marriages; O.rec(by.id).dead = false;
+      return ok ? '금 8500 · 정전 36 · 둘째 ○ 셋째 × · 죽음 → 깨짐·정전 끝' : '실패 깨짐 ' + D.marriedWith(a) + ' 정전 ' + (f.truce && f.truce[a]) + ' b ' + D.marriedWith(b);
+    });
+
     /* ── 천하 경륜도(W-0182) — 세력마다 패시브 그물(statecraft.js · 공용 passive-web.js), AI 도 찍는다 ── */
     function gyWith(fn) {
       var R = DG.rtk, SCX = DG.statecraft, won = {}, i;

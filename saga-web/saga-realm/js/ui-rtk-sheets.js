@@ -556,7 +556,8 @@
         '<span><i class="fdot" style="background:' + forceColor(f.id) + '"></i> <b>' +
           esc(f.name) + '</b>' +
           (ally ? ' <span class="tag">동맹 ' + mf.allies[f.id] + '개월</span>' : '') +
-          (truce ? ' <span class="tag">화친 ' + mf.truce[f.id] + '개월</span>' : '') + '</span>' +
+          (truce ? ' <span class="tag">화친 ' + mf.truce[f.id] + '개월</span>' : '') +
+          (D.marriedWith && D.marriedWith(f.id) ? ' <span class="tag">💍 혼인</span>' : '') + '</span>' +
         '<span class="muted">🏯 ' + f.cities + ' · 🪖 ' + core.fmt(f.troops) + '</span></div>' +
         '<div class="rstat"><span>우호</span><div class="bar sm"><i style="width:' + rel +
           '%"></i></div><b>' + rel + '</b></div>';
@@ -569,6 +570,7 @@
             '" data-by="' + by.id + '" title="' + DEBATE_TIP + '">🗣️ 동맹 ' + Math.round(D.envoyChance('ally', me, f.id, by.id, 200) * 100) + '%</button>' +
           '<button class="btn tiny ghost" data-act="envoy" data-kind="tribute" data-to="' + f.id +
             '" data-by="' + by.id + '">🎁 조공 600</button>' +
+          (D.marryWhy ? (function () { var w = D.marryWhy(f.id, by.id); return '<button class="btn tiny' + (w ? '' : ' primary') + '"' + (w ? ' disabled title="' + esc(w) + '"' : '') + ' data-marry="' + f.id + '" data-by="' + by.id + '">💍 혼인 ' + (w ? esc(w) : D.MARRY.gold + ' · ' + D.MARRY.months + '달 정전') + '</button>'; })() : '') +   // W-0399 ④
           '</div>';
       }
       html += '</div>';

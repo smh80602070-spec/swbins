@@ -26,6 +26,52 @@
 
   var ALLY_MONTHS = 18;
   var TRUCE_MONTHS = 8;
+  /* ── 혼인 동맹(W-0399 ④ — 정본 고돗 G-0332 · CK3 구조만): 우호 MARRY.rel 이상인 세력에 내 무장 하나를 맺어 보내면 금 MARRY.gold 를 내고
+     오래 정전(MARRY.months, 달마다 다시 채움). 둘까지. 맺은 무장이 사라지면(죽음·떠남) 깨지고 정전도 끝난다. 상태 save.rtk.marriages = { 세력: 무장 id } ── */
+  var MARRY = { rel: 70, gold: 1500, months: 36, max: 2 };
+  function marriages() { var st = global.DG.rtk.state(); if (!st.marriages) { st.marriages = {}; } return st.marriages; }
+  function marriedWith(toForce) { return marriages()[toForce] || null; }
+  function marryWhy(toForce, offId) {
+    var R = global.DG.rtk, off = global.DG.off, me = R.me(), f = R.force(me), r = offId && off.rec(offId);
+    if (!f || toForce === me) { return '우리끼리는 할 것이 없습니다'; }
+    if (marriedWith(toForce)) { return '이미 맺은 세력'; }
+    if (Object.keys(marriages()).length >= MARRY.max) { return '혼인은 ' + MARRY.max + '세력까지'; }
+    if (relation(me, toForce) < MARRY.rel) { return '우호 ' + relation(me, toForce) + '/' + MARRY.rel; }
+    if (f.gold < MARRY.gold) { return '금 ' + MARRY.gold + ' 모자람'; }
+    if (!r || r.force !== me || r.dead) { return '우리 무장이 아닙니다'; }
+    return '';
+  }
+  function marry(toForce, offId) {
+    var R = global.DG.rtk, why = marryWhy(toForce, offId), me = R.me();
+    if (why) { return { ok: false, why: why }; }
+    R.force(me).gold -= MARRY.gold;
+    marriages()[toForce] = offId;
+    setPact(me, toForce, 'truce', MARRY.months);
+    core.log('💍 ' + R.forceName(toForce) + ' 과 혼인 동맹 — ' + global.DG.off.find(offId).name + ' 을 보내 ' + MARRY.months + '달 정전', 'good');
+    return { ok: true };
+  }
+  /** 달마다 — 무장이 사라졌으면 깨지고, 살아 있으면 정전을 다시 채운다 */
+  function marryMonthly() {
+    var R = global.DG.rtk, off = global.DG.off, me = R.me(), m = marriages(), k, r, f = R.force(me);
+    if (!me || !f) { return; }
+    for (k in m) {
+      if (!Object.prototype.hasOwnProperty.call(m, k)) { continue; }
+      r = off.rec(m[k]);
+      if (!r || r.dead || r.force !== me || !R.force(k)) {
+        delete m[k]; if (f.truce) { delete f.truce[k]; } var o = R.force(k); if (o && o.truce) { delete o.truce[me]; }
+        core.log('💔 ' + R.forceName(k) + ' 과의 혼인 동맹이 깨졌다 — 맺은 무장이 사라졌다', 'warn');
+      } else if (!f.truce || !(f.truce[k] >= MARRY.months)) { setPact(me, k, 'truce', MARRY.months); }
+    }
+  }
+  if (global.document) {
+    global.document.addEventListener('click', function (e) {
+      var b = e.target && e.target.closest ? e.target.closest('[data-marry]') : null;
+      if (!b || b.disabled) { return; }
+      var r = marry(b.getAttribute('data-marry'), b.getAttribute('data-by'));
+      if (!r.ok) { core.emit('toast', r.why); }
+      core.emit('changed'); core.persist();
+    });
+  }
 
   /* ── 우호 ─────────────────────────────────────────────── */
 
@@ -82,6 +128,7 @@
   /** 달마다 맹약이 한 달씩 닳는다 */
   function monthly() {
     var st = global.DG.rtk.state(), k, o;
+    marryMonthly();   // W-0399 ④ 혼인 — 깨짐·정전 다시 채움(닳기 전에)
     for (k in st.forces) {
       if (!Object.prototype.hasOwnProperty.call(st.forces, k)) { continue; }
       var f = st.forces[k];
@@ -369,6 +416,7 @@
     neighbours: neighbours, commonEnemy: commonEnemy, touching: touching,
     envoyChance: envoyChance, envoy: envoy,
     plotByKey: plotByKey, plotChance: plotChance, plot: plot,
-    checkDefection: checkDefection, monthly: monthly
+    checkDefection: checkDefection, monthly: monthly,
+    MARRY: MARRY, marriages: marriages, marriedWith: marriedWith, marryWhy: marryWhy, marry: marry   // W-0399 ④ 혼인 동맹
   };
 })(window);
