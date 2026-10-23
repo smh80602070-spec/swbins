@@ -605,12 +605,12 @@
   "tests": [
    "PlaytestDungeonParty"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-24 qc+claude",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16",
-  "note": "D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonParty OK."
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261024.json — 모루골 방에서 무사·술사 동료 둘이 주인공 곁을 따라 섬(여러 장) · 앞 D2: docs/playcheck/d2-u0059-20261009.json PlaytestDungeonParty OK."
  },
  {
   "id": "un.dg.boss-intro",
@@ -619,12 +619,12 @@
   "tests": [
    "PlaytestDungeonBossIntro"
   ],
-  "level": "D2",
-  "verified": "2026-10-13 claude",
+  "level": "D3",
+  "verified": "2026-10-24 qc+claude",
   "fun": {},
   "ticket": "U-0114",
   "since": "2026-09-16",
-  "note": "D2(U-0114): docs/playcheck/d2-u0114-20261013.json — 촬영 bossintro 가 층 두목과 같은 몸(EliteModel)·색·크기 2·월드 보스로. Claude 눈 ○ 넓은 샷(어깨 너머) 붉은 사람 몸 팔 내린 서기 → 가까운 샷 올려다보기 포효 자세, 캡슐·T자세 없음, 이름표 '황건적 두목'·'75초 안에 쓰러뜨려라'·건너뛰기. 흠(후속 후보): 넓은 샷에서 두목 어깨 위가 화면 위·낮은 천장에 잘림(시험 씬 시작 자리), 가까운 샷 어두움"
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261024.json — 두목 방 들어서면 낮은 시점 등장 컷 — 도끼 든 황건 두목이 주인공 어깨 너머로(셋째~넷째 장 유지) · 천장이 그림자만이라 낮은 시점에선 벽 위가 검은 허공 · 앞 D2(U-0114): docs/playcheck/d2-u0114-20261013.json — 촬영 bossintro 가 층 두목과 같은 몸(EliteModel)·색·크기 2·월드 보스로. Claude 눈 ○ 넓은 샷(어깨 너머) 붉은 사람 몸 팔 내린 서기 → 가까운 샷 올려다보기 포효 자세, 캡슐·T자세 없음, 이름표 '황건적 두목'·'75초 안에 쓰러뜨려라'·건너뛰기. 흠(후속 후보): 넓은 샷에서 두목 어깨 위가 화면 위·낮은 천장에 잘림(시험 씬 시작 자리), 가까운 샷 어두움"
  },
  {
   "id": "un.dg.landmarks",
@@ -1861,12 +1861,12 @@
    "PlaytestDungeonWearTiersGui",
    "PlaytestDungeonHeadless"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-24 qc+claude",
   "fun": {},
   "ticket": "U-0082",
   "since": "2026-10-10",
-  "note": "D2(수치+눈 ○, U-0082): docs/playcheck/d2-u0082-20261010.json — 보조등 없이 마모 0단 가운데 평균 휘도 44.8(≥44, 전 ≈14)·최대 242, 1·2단 29.6·18.7(마모 색 설계, 눈 ○). 방 꾸밈 컷 보조등 없이 벽·바닥·꾸밈 읽힘, 지붕 위 컷 날림 없음"
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261024.json — 주인공 둘레 횃불 점광이 바닥 격자를 노랗게 밝히고 가장자리는 어두움 · 앞 D2(수치+눈 ○, U-0082): docs/playcheck/d2-u0082-20261010.json — 보조등 없이 마모 0단 가운데 평균 휘도 44.8(≥44, 전 ≈14)·최대 242, 1·2단 29.6·18.7(마모 색 설계, 눈 ○). 방 꾸밈 컷 보조등 없이 벽·바닥·꾸밈 읽힘, 지붕 위 컷 날림 없음"
  },
  {
   "id": "un.dg.grace",
@@ -1879,12 +1879,12 @@
   "tests": [
    "PlaytestDungeonGrace"
   ],
-  "level": "D2",
-  "verified": "2026-10-11 claude",
+  "level": "D3",
+  "verified": "2026-10-24 qc+claude",
   "fun": {},
   "ticket": "U-0092",
   "since": "2026-10-11",
-  "note": "D2(U-0092): docs/playcheck/d2-u0092-u0093-20261011.json — PlaytestDungeonGrace OK · 사망 카드 네 줄+「은총에서 다시」 촬영 Claude 눈 ○(고친 뒤 다시 찍음)"
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261024.json — 사망 카드「쓰러졌다 / 제 2층 · 방 1/4 / 황건적 두목 — 근접 타격 / 유품으로 금 188 / 남는 것: 도감·인물·공적」·「은총에서 다시」 · 앞 D2(U-0092): docs/playcheck/d2-u0092-u0093-20261011.json — PlaytestDungeonGrace OK · 사망 카드 네 줄+「은총에서 다시」 촬영 Claude 눈 ○(고친 뒤 다시 찍음)"
  },
  {
   "id": "un.st.pick3",
@@ -2023,12 +2023,12 @@
   "tests": [
    "PlaytestDungeonFoes"
   ],
-  "level": "D2",
-  "verified": "2026-10-12 claude",
+  "level": "D3",
+  "verified": "2026-10-24 qc+claude",
   "fun": {},
   "ticket": "U-0106",
   "since": "2026-10-12",
-  "note": "D2(U-0106): PlaytestDungeonHeadless foes OK(표 18·단계 4/4/5/5·무기 7·과거 잡졸 43 = 명단 종 14·활 탄 맞음 −7/무적 회피·창 +0.58·정예/명소 갈래 없음)·사슬 OK · 촬영 Claude 눈 ○ 궁수 선 채 탄 날아감 · 화면 이름표 △(2나락 적 이름표 없음) · 짐승 116 은 U-0100 뒤"
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261024.json — 활 잡졸이 쏜 보라 탄이 날아와(1장) 주인공 머리 위 붉은 피해 1(2~4장) · 앞 D2(U-0106): PlaytestDungeonHeadless foes OK(표 18·단계 4/4/5/5·무기 7·과거 잡졸 43 = 명단 종 14·활 탄 맞음 −7/무적 회피·창 +0.58·정예/명소 갈래 없음)·사슬 OK · 촬영 Claude 눈 ○ 궁수 선 채 탄 날아감 · 화면 이름표 △(2나락 적 이름표 없음) · 짐승 116 은 U-0100 뒤"
  },
  {
   "id": "un.dg.foe-card",

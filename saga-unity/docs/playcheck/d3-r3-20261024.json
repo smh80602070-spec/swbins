@@ -1,0 +1,31 @@
+{
+ "date": "2026-10-24",
+ "ticket": "R-3 (U-0191 천장 뒤 2나락 다시 촬영)",
+ "how": "PlaytestShowcaseGui GUI 촬영(SAGA_SHOT_ACT bossroom·die·dgranged·attack·lgcamprobe, 1280×720, 정오) → Claude 가 PNG 를 Read 로 판정. PNG 커밋 안 함.",
+ "shots": {
+  "un.dg.boss-intro": {
+   "verdict": "○",
+   "seen": "두목 방 들어서면 낮은 시점 등장 컷 — 도끼 든 황건 두목이 주인공 어깨 너머로(셋째~넷째 장 유지) · 천장이 그림자만이라 낮은 시점에선 벽 위가 검은 허공"
+  },
+  "un.dg.grace": {
+   "verdict": "○",
+   "seen": "사망 카드「쓰러졌다 / 제 2층 · 방 1/4 / 황건적 두목 — 근접 타격 / 유품으로 금 188 / 남는 것: 도감·인물·공적」·「은총에서 다시」"
+  },
+  "un.dg.enemy-weapons": {
+   "verdict": "○",
+   "seen": "활 잡졸이 쏜 보라 탄이 날아와(1장) 주인공 머리 위 붉은 피해 1(2~4장)"
+  },
+  "un.dg.party": {
+   "verdict": "○",
+   "seen": "모루골 방에서 무사·술사 동료 둘이 주인공 곁을 따라 섬(여러 장)"
+  },
+  "un.dg.room-light": {
+   "verdict": "○",
+   "seen": "주인공 둘레 횃불 점광이 바닥 격자를 노랗게 밝히고 가장자리는 어두움"
+  },
+  "un.dg.attack-nofoe": {
+   "verdict": "—",
+   "seen": "적 없는 마을이라 평타 몸짓만 작게 — 판정 안 함"
+  }
+ }
+}
