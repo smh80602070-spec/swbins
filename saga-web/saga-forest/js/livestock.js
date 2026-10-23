@@ -19,6 +19,37 @@
     goat:  { name: '매매', emoji: '🐐', price: 900, product: 'milk' }
   };
   var FEED_CATS = ['fruit', 'nut'];
+  /* W-0393 — 2D 그림(K-0181): 종 → 공장 시트 풀(assets/sprites2d_sheets/<풀>/ idle·walk·run·hit, index.json factory) · 울타리 shared/assets/world2d */
+  var POOL = { chick: 'farm_hen', goat: 'farm_goat' }, POOL_SCALE = { chick: 0.42, goat: 0.6 }, FENCE = { fence: 'pen_fence_01', gate: 'pen_gate_01' };
+  var penImgs = {};
+  function penImg(key) {
+    var e = penImgs[key];
+    if (e) { return e.ok ? e.img : null; }
+    if (typeof Image === 'undefined') { penImgs[key] = { ok: false }; return null; }
+    var A = global.DG.assets3d, base = A && A.sharedUrl ? A.sharedUrl('world2d/') : null;
+    e = penImgs[key] = { ok: false, img: new Image() };
+    e.img.onload = function () { e.ok = true; };
+    e.img.src = (base || '../shared/assets/world2d/') + FENCE[key] + '.webp';
+    return null;
+  }
+  /** 울타리 — 위·아래 가로 이음 + 아래 가운데 문. 그림이 아직이면 false(옛 선 그림) */
+  function drawPen(ctx, x, y, w, h, k) {
+    var f = penImg('fence'), g = penImg('gate');
+    if (!f) { return false; }
+    var fh = 11 * k, fw = fh * (f.naturalWidth / f.naturalHeight), i, n = Math.ceil(w / fw);
+    ctx.save(); ctx.beginPath(); ctx.rect(x - w / 2, y - h - fh, w, h + fh); ctx.clip();
+    for (i = 0; i < n; i++) { ctx.drawImage(f, x - w / 2 + i * fw, y - h - fh * 0.8, fw, fh); }
+    for (i = 0; i < n; i++) { ctx.drawImage(f, x - w / 2 + i * fw, y - fh, fw, fh); }
+    if (g) { var gw = fh * (g.naturalWidth / g.naturalHeight); ctx.drawImage(g, x - gw / 2, y - fh, gw, fh); }
+    ctx.restore();
+    return true;
+  }
+  /** 짐승 한 마리 — 공장 시트(mode2d.draw)가 되면 true */
+  function drawBeast(ctx, a, ax, ay, dir, moving, now, k) {
+    var M2 = global.DG.mode2d, pool = POOL[a.kind];
+    if (!M2 || !M2.draw || !pool) { return false; }
+    return M2.draw(ctx, { pool: pool, x: ax, y: ay, dirX: dir, dirY: 0.35, clip: moving ? 'walk' : 'idle', ms: now || 0, scale: (POOL_SCALE[a.kind] || 0.5) * k });
+  }
 
   function core() { return global.DG.core; }
   function V() { return global.DG.village; }
@@ -129,20 +160,23 @@
     });
   }
 
-  /** 2D — 집 곁 울타리(발 밑 가운데 x, y · 배율 k)와 그 안을 돌아다니는 짐승(코드 그림 — 그림은 K 몫) */
+  /** 2D — 집 곁 울타리(발 밑 가운데 x, y · 배율 k)와 그 안을 돌아다니는 짐승 — W-0393 공장 시트·울타리 그림, 못 받으면 옛 코드 그림 */
   function draw2d(ctx, x, y, k, now) {
     if (!on() || !hasPen() || !ctx) { return false; }
     var L = st(), w = 64 * k, h = 26 * k, i, a, t, ax, ay;
     ctx.save();
     ctx.fillStyle = 'rgba(120,150,70,0.35)'; ctx.fillRect(x - w / 2, y - h, w, h);
+    if (!drawPen(ctx, x, y, w, h, k)) {   // W-0393 울타리 그림 — 아직이면 옛 선
     ctx.strokeStyle = '#8a6440'; ctx.lineWidth = Math.max(1.5, 2.2 * k);
     ctx.strokeRect(x - w / 2, y - h, w, h);
     for (i = 0; i <= 6; i++) { ctx.beginPath(); ctx.moveTo(x - w / 2 + i * w / 6, y); ctx.lineTo(x - w / 2 + i * w / 6, y - 9 * k); ctx.stroke(); }
+    }
     for (i = 0; i < L.list.length; i++) {
       a = L.list[i]; t = (now || 0) / 1000 + i * 1.7;
       ax = x - w / 2 + (0.2 + 0.6 * (0.5 + 0.5 * Math.sin(t * 0.37 + i))) * w; ay = y - h + (0.35 + 0.5 * (0.5 + 0.5 * Math.cos(t * 0.29 + i * 2))) * h;
       var hop = Math.abs(Math.sin(t * 3)) * 1.5 * k, dir = Math.cos(t * 0.37 + i) >= 0 ? 1 : -1;
       ctx.fillStyle = 'rgba(0,0,0,0.25)'; ctx.beginPath(); ctx.ellipse(ax, ay, 6 * k, 2 * k, 0, 0, Math.PI * 2); ctx.fill();
+      if (drawBeast(ctx, a, ax, ay, dir, Math.abs(Math.cos(t * 0.37 + i)) > 0.35, now, k)) { continue; }   // W-0393 공장 시트
       if (a.kind === 'goat') {
         ctx.fillStyle = '#e8e2d6'; ctx.beginPath(); ctx.ellipse(ax, ay - 7 * k - hop, 8 * k, 5 * k, 0, 0, Math.PI * 2); ctx.fill();
         ctx.beginPath(); ctx.arc(ax + dir * 8 * k, ay - 11 * k - hop, 3.6 * k, 0, Math.PI * 2); ctx.fill();
@@ -160,5 +194,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.livestock = { MAX: MAX, KINDS: KINDS, LEAVE_DAYS: LEAVE_DAYS, hasPen: hasPen, buildPen: buildPen, buy: buy, feed: feed, pet: pet, feedKey: feedKey, rollDay: rollDay, list: function () { return st().list; }, sheetHtml: sheetHtml, draw2d: draw2d };
+  global.DG.livestock = { MAX: MAX, KINDS: KINDS, LEAVE_DAYS: LEAVE_DAYS, hasPen: hasPen, buildPen: buildPen, buy: buy, feed: feed, pet: pet, feedKey: feedKey, rollDay: rollDay, list: function () { return st().list; }, POOL: POOL, POOL_SCALE: POOL_SCALE, FENCE: FENCE, drawPen: drawPen, drawBeast: drawBeast, sheetHtml: sheetHtml, draw2d: draw2d };
 })(window);

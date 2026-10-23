@@ -4242,6 +4242,18 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       } finally { hs.items = items0; if (judge0) { hs.judge = judge0; } else { delete hs.judge; } p.gold = g0; }
     });
 
+    t('가축 2D 그림(W-0393) — 종 → 공장 시트 풀(꼬꼬 farm_hen·매매 farm_goat, index.json factory 에 있음) · 울타리 pen_fence_01·pen_gate_01 · 그림 전엔 옛 코드 그림으로 draw2d true', function () {
+      var LS = DG.livestock, V = DG.village, s = V.state(), ls0 = s.livestock;
+      s.livestock = { pen: true, list: [{ kind: 'chick', heart: 0 }, { kind: 'goat', heart: 0 }] };
+      try {
+        var ok1 = LS.POOL.chick === 'farm_hen' && LS.POOL.goat === 'farm_goat' && LS.FENCE.fence === 'pen_fence_01' && LS.FENCE.gate === 'pen_gate_01';
+        var c = document.createElement('canvas'); c.width = 200; c.height = 120; var ctx = c.getContext('2d');
+        var drew = LS.draw2d(ctx, 100, 100, 1, 1000);
+        var ok2 = drew === true && typeof LS.drawBeast === 'function' && typeof LS.drawPen === 'function';
+        var I = DG.itemicon, ok3 = !!I.src('saga-forest', 'material', 'egg') && !!I.src('saga-forest', 'material', 'milk');
+        return ok1 && ok2 && ok3 ? '풀 둘 · 울타리 둘 · draw2d true(시트 전엔 코드 그림) · 달걀·젖 아이콘 짝' : '실패 ' + [ok1, ok2, ok3, drew].join(' ');
+      } finally { s.livestock = ls0; }
+    });
     t('벽지·장판 — 갈아 끼우면 집 평가가 오른다', function () {
       var Hm = DG.home;
       Hm.state().items = [];
@@ -7277,7 +7289,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
     /* ── 아이템 아이콘(W-0025, shared/js/itemicon.js) — 표와 자료 id 의 짝·폴백만. 그림 파일은 안 받는다 ─── */
 
     t('아이템 아이콘 — 이 판 자료의 id 마다 이름 표에 그림이 있고, 없는 id 는 null(옛 이모지), 꺼 두면 늘 null', function () {
-      var I = DG.itemicon, G = 'saga-forest', T = (DG.itemiconIds || {})[G] || {}, bad = [], n = Object.keys(T).length, calls = 0, K_WAIT = { 'material:egg': 1, 'material:milk': 1 };   /* W-0299 우리 산물 — 아이콘 K 대기(옛 이모지로 뜬다) */
+      var I = DG.itemicon, G = 'saga-forest', T = (DG.itemiconIds || {})[G] || {}, bad = [], n = Object.keys(T).length, calls = 0, K_WAIT = {};   /* W-0393 — 달걀·젖 아이콘(fo_egg·fo_milk) 옴 */   /* W-0299 우리 산물 — 아이콘 K 대기(옛 이모지로 뜬다) */
       function L(x) { var out = []; function key(e) { return e && typeof e === 'object' ? (e.key !== undefined ? e.key : e.id) : e; } if (Array.isArray(x)) { return x.map(key); } Object.keys(x || {}).forEach(function (k) { var v = x[k]; if (Array.isArray(v)) { v.forEach(function (e) { out.push(key(e)); }); } else { out.push(k); } }); return out; }
       [
       ["material", L(DG.villageData.ITEMS)],

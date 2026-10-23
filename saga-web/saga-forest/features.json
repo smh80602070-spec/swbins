@@ -33,6 +33,22 @@
   "since": "2026-10-25",
   "note": "D2(페이블 10-25): 진단 ○(덤 25/40·문턱·심사 금 = 별×300·다시는 0) · 촬영 shots/w0397/home.png — 「집 평가 … 24점」 밑 「🍂 계절 심사 ☆☆☆☆☆ · 가을 사랑방 가구 덤 +0 · 다음 별까지 6」 「🏠 심사 받기 · 이번 계절 ★0 받음」."
  }, {
+  "id": "fs.livestock2d",
+  "name": "가축 2D 그림(W-0393 — K-0181 배선) — 우리 안 꼬꼬·매매가 공장 시트(farm_hen·farm_goat idle/walk, mode2d.draw)로, 울타리는 pen_fence_01 가로 이음 + pen_gate_01 문, 못 받으면 옛 코드 그림 · 달걀·젖 아이콘 fo_egg·fo_milk(K_WAIT 지움)",
+  "files": [
+   "js/livestock.js",
+   "_test.html"
+  ],
+  "tests": [
+   "가축 2D 그림(W-0393)"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 qc+claude",
+  "fun": {},
+  "ticket": "W-0393",
+  "since": "2026-10-25",
+  "note": "D2(페이블 10-25): 진단 ○(풀 둘·울타리 둘·draw2d·아이콘 짝) · 촬영 shots/w0393/pen.png — 2D 마을 「내 집」 곁 울타리(pen_fence 이음·문)에 염소·닭 시트 · 받은 뒤 drawBeast/drawPen 셋 다 true."
+ }, {
   "id": "fs.village",
   "name": "마을 생성·좌표 해시·숲 고리·바이옴",
   "files": [
