@@ -5776,5 +5776,23 @@
   "ticket": "G-0329",
   "since": "2026-10-23",
   "note": "고돗 먼저(웹 짝 없음) · 세이브 v28 age · SAGA_AGES=0 · 촬영 shot_scene lg_rk_laws"
+ },
+ {
+  "id": "gd.forest.hha",
+  "name": "3마을 집 꾸미기 계절 심사 — 집 평가 + 계절 주제 가구 덤(봄 뜰·여름 부엌·가을 사랑방·겨울 안방), ★1~5, 계절마다 별 × 300 금(오르면 차이만)",
+  "files": [
+   "games/saga_forest/data/forest_hha.gd",
+   "games/saga_forest/data/forest_save_state.gd",
+   "games/saga_forest/world/forest_house.gd"
+  ],
+  "tests": [
+   "forest_hha"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0330",
+  "since": "2026-10-23",
+  "note": "고돗 먼저(웹 짝 없음) · 순수 추가 칸 hha · SAGA_HHA=0 · 촬영 shot_scene lg_fs_hha"
  }
 ]

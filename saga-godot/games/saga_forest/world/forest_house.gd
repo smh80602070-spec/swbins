@@ -591,8 +591,11 @@ func _show_home_score(layer_box: Dictionary) -> void:
 	if ForestSaveState.floor_key != "wood":
 		fin += 12
 	var sc: Dictionary = ForestHome.score(ForestSaveState.home_items, fin, ForestSaveState.home_tier)
-	Toast.show(self, "🏠 %s — 평가 %d점(가구 %d점)" %
-		[ForestHome.grade(int(sc.total)), int(sc.total), int(sc.n)], 4.0)
+	var HHA: GDScript = preload("res://games/saga_forest/data/forest_hha.gd")   # G-0330 계절 심사
+	var today := ForestDay.today_key()
+	var r: Dictionary = HHA.judge(ForestSaveState, int(sc.total), HHA.theme_bonus(ForestSaveState.home_items, HHA.season_idx(today), ForestHome.furn), today)
+	Toast.show(self, "🏠 %s — 평가 %d점(가구 %d점)%s" %
+		[ForestHome.grade(int(sc.total)), int(sc.total), int(sc.n), "" if r.is_empty() else "\n" + HHA.text(r, HHA.season_idx(today))], 5.0)
 
 
 ## 웹판 home.js expand() — 즉시 넓어지고 그 자리에서 빚이 생긴다(선불이
