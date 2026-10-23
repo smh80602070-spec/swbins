@@ -20,20 +20,30 @@
     }
     return false;
   }
+  /* 오래 그대로인 부탁 돌리기(W-0383) — 갈래 안 무작위라(고둥) 낚시는 하는데 셈이 4분 넘게 0 이었다.
+     **지금 목표인 동안** 셈이 STALE 넘게 안 늘면 마을 일 뒤로(셈이 늘면 다시 앞). 저장 안 함 */
+  var STALE = 120000, seen = {}, lastAt = 0;
+  function stale(id, have) {
+    var now = Date.now(), dt = lastAt ? Math.min(now - lastAt, 2000) : 0, cur = q && q.status().goal, s = seen[id];
+    if (!s || s.have !== have) { s = seen[id] = { have: have, ms: 0 }; }
+    else if (cur && cur.id === id) { s.ms += dt; }
+    return s.ms > STALE;
+  }
   function goals() {
     var raw = V() && V().raw ? V().raw() : null, VD = global.DG.villageData, out = [];
     if (!raw || !raw.residents) { return out; }
     raw.residents.forEach(function (res) {
       var req = V().requestOf(res.id);
       if (!req || req.done) { return; }
-      var it = VD.item(req.want), have = V().bagCount(req.want), full = have >= req.n, ok = full || !!(it && canGet(it.cat, raw));
-      out.push({ id: 'rq:' + res.id + ':' + req.want, type: 'collect', label: '🤝 ' + (res.ref && res.ref.name || res.id) + ' — ' + (it ? it.name : req.want) + ' ' + Math.min(have, req.n) + '/' + req.n + (ok ? '' : ' (지금 자동으로 못 구함 — 뒤로)'),
-        x: res.x, y: res.y, left: Math.max(0, req.n - have), o: full ? 0 : ok ? 1 : 3 });   // 못 구하는 부탁은 마을 일(2) 뒤
+      var it = VD.item(req.want), have = V().bagCount(req.want), full = have >= req.n, ok = full || !!(it && canGet(it.cat, raw)), id = 'rq:' + res.id + ':' + req.want, old = !full && ok && stale(id, have);
+      out.push({ id: id, type: 'collect', label: '🤝 ' + (res.ref && res.ref.name || res.id) + ' — ' + (it ? it.name : req.want) + ' ' + Math.min(have, req.n) + '/' + req.n + (ok ? (old ? ' (2분째 그대로 — 뒤로)' : '') : ' (지금 자동으로 못 구함 — 뒤로)'),
+        x: res.x, y: res.y, left: Math.max(0, req.n - have), o: full ? 0 : ok && !old ? 1 : 3 });   // 못 구하는·오래 그대로인 부탁은 마을 일(2) 뒤
     });
     Object.keys((VD && VD.QUESTS) || {}).forEach(function (k) {
       var p = V().questProgress(k);
       if (p && !p.done) { out.push({ id: 'vq:' + k, type: VD.QUESTS[k].type === 'meetnpc' ? 'talk' : 'collect', label: '📜 ' + (VD.QUESTS[k].title || k) + ' ' + Math.min(p.have, p.need) + '/' + p.need, x: null, y: null, left: Math.max(0, p.need - p.have), o: 2 }); }
     });
+    lastAt = Date.now();
     return out.sort(function (a, b) { return a.o - b.o; });
   }
   function pos() { var raw = V() && V().raw ? V().raw() : null; return raw && raw.player ? raw.player : null; }
@@ -71,5 +81,5 @@
     if (btn) { btn.paint(!!(q.status().on || goals().length)); }
   }
   if (typeof document !== 'undefined') { AQ.watchInput(q, { stopOn: stopOn }); }
-  global.DG.autoQuestFs = { q: q, goals: goals, update: update, start: q.start, stop: q.stop, status: q.status, _busy: busy, _canGet: canGet };
+  global.DG.autoQuestFs = { q: q, goals: goals, update: update, start: q.start, stop: q.stop, status: q.status, _busy: busy, _canGet: canGet, _seen: seen };
 })(window);

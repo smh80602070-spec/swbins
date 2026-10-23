@@ -7808,6 +7808,19 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var p = { x: 200, y: 300 }, g = { x: 700, y: 300 }, w = A._nextStep(river(true), p, g, 40, 30), none = A._nextStep(river(false), p, g, 40, 8);
       return !!w && w.y > 300 && w.x < 480 && none === null && ('경유점 (' + Math.round(w.x) + ',' + Math.round(w.y) + ') · 다리 없음 null');
     });
+    t('W-0383 3마을 자동 퀘스트 — 지금 목표인 동안 셈이 2분 넘게 그대로인 부탁은 마을 일 뒤로 · 셈이 늘면 다시 앞', function () {
+      var G = DG.autoQuestFs, V = DG.village, VD = DG.villageData; if (!G || !G._seen) { return '실패 어댑터'; }
+      var raw = V.raw(), res = raw && raw.residents && raw.residents[0]; if (!res) { return '실패 주민 없음'; }
+      var fr = VD.ITEMS.fruit[0].key; if (!G._canGet('fruit', raw)) { return '나무 없음 — 건너뜀'; }
+      var req = V.requestOf(res.id), keep = JSON.stringify(req), id = 'rq:' + res.id + ':' + fr, have = V.bagCount(fr);
+      req.want = fr; req.n = 99; req.done = false;
+      var at = function () { var gs = G.goals(), i = -1, lastVq = -1; gs.forEach(function (g, k) { if (g.id === id) { i = k; } if (/^vq:/.test(g.id)) { lastVq = k; } }); return { i: i, lastVq: lastVq, label: i >= 0 ? gs[i].label : '' }; };
+      G._seen[id] = { have: have, ms: 999999 }; var old = at();
+      G._seen[id] = { have: have - 1, ms: 999999 }; var fresh = at();   // 셈이 바뀌면 처음부터
+      delete G._seen[id]; var o = JSON.parse(keep), k; for (k in o) { req[k] = o[k]; }
+      return old.i > old.lastVq && /2분째/.test(old.label) && !/2분째/.test(fresh.label) && (fresh.lastVq < 0 || fresh.i < fresh.lastVq) &&
+        ('오래 그대로 ' + old.i + '번째(마을 일 끝 ' + old.lastVq + ' 뒤) · 셈 바뀌면 ' + fresh.i + '번째');
+    });
     t('W-0383 3마을 자동 퀘스트 — 지금 못 구하는 부탁(삽 없는 화석)은 마을 일 뒤로 · 삽 있으면 앞으로', function () {
       var G = DG.autoQuestFs, V = DG.village, VD = DG.villageData; if (!G || !G._canGet) { return '실패 어댑터'; }
       var raw = V.raw(), res = raw && raw.residents && raw.residents[0]; if (!res) { return '실패 주민 없음'; }
