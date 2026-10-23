@@ -96,7 +96,6 @@
   });
   var ANIM_SRC = ANIM_DIR + 'UAL1_Standard.glb';
 
-  var PEOPLE_MONSTERS_Q = 'assets/models/monsters/quaternius/';
 
   var DEFAULTS = {
     'hero': HERO_RECIPES,
@@ -135,24 +134,24 @@
        내부 식별자일 뿐 화면에 그대로 안 띄운다. */
     'monster:alien': 'crea:alien_grunt',
     'monster:alien_2': 'crea:alien_grunt',
-    'monster:alpaking_evolved': PEOPLE_MONSTERS_Q + 'Alpaking_Evolved_c50fd18d.glb',
+    'monster:alpaking_evolved': 'crea:armored_alpaca',   // W-0392 K-0180 자체 몸
     'monster:alpaking': 'crea:alpaking',
-    'monster:armabee_evolved': PEOPLE_MONSTERS_Q + 'Armabee_Evolved_fb7d7a9e.glb',
-    'monster:armabee': PEOPLE_MONSTERS_Q + 'Armabee_de63aaf6.glb',
+    'monster:armabee_evolved': 'crea:bumble_knight',
+    'monster:armabee': 'crea:bumble_puff',
     'monster:birb': 'crea:birb',
     'monster:blue_demon': 'crea:demon_blue',
     'monster:bunny': 'crea:bunny',
     'monster:cactoro': 'crea:cactus_imp',
     'monster:cactoro_2': 'crea:cactus_imp',
-    'monster:cat': PEOPLE_MONSTERS_Q + 'Cat_7ccb71fe.glb',
-    'monster:chicken': PEOPLE_MONSTERS_Q + 'Chicken_a0001762.glb',
+    'monster:cat': 'crea:tabby_ball',
+    'monster:chicken': 'crea:hen_ball',
     'monster:demon': 'crea:demon_red',
     'monster:demon_2': 'crea:demon_red',
     'monster:dino': 'crea:dino_pet',
     'monster:dragon_evolved': 'crea:dragon_evolved',
     'monster:dragon': 'crea:dragon',
-    'monster:fish': PEOPLE_MONSTERS_Q + 'Fish_6c98561f.glb',
-    'monster:fish_2': PEOPLE_MONSTERS_Q + 'Fish_f7d91eb6.glb',
+    'monster:fish': 'crea:finback_brute',
+    'monster:fish_2': 'crea:gape_fish',
     'monster:frog': 'crea:swamp_toad',
     'monster:ghost': 'crea:ghost',
     'monster:ghost_skull': 'crea:ghost_skull',
@@ -264,7 +263,7 @@
     'pet:deer': ANIMALS + 'Deer.glb',
     'pet:boar': ANIMALS + 'Boar.glb',
     'pet:owl': ANIMALS + 'Owl.glb',
-    'pet:cat': ANIMALS + 'Cat.glb',
+    'pet:cat': 'crea:tabby_ball',   // W-0392 빌린 Cat → 자체
     /* 2026-09-07 — "펫 100개" 목표 1차분. poly.pizza 세 번들(전부 CC0,
        Quaternius 계열) — Farm Animal Pack(라마·돼지·퍼그·양·말·소·얼룩말),
        Animated Animal Pack(당나귀·알파카·황소·여우·수사슴·흰말·소·말 —
@@ -371,7 +370,7 @@
     'pet:pk_charizard': 'crea:dragon',
     'pet:pk_gyarados': STANDIN + 'Snake_angry.glb',
     'pet:pk_mewtwo': 'crea:alien_grunt',
-    'pet:pk_mew': PEOPLE_MONSTERS_Q + 'Cat_7ccb71fe.glb',
+    'pet:pk_mew': 'crea:tabby_ball',   // W-0392 빌린 Cat → 자체
     /* 2026-09-04(이어서) — 사용자가 "사가만리처럼 실사화"를 요청 → 사람은
        막다른 길(Mixamo 재배포 금지, 위 delam 주석 참고)이라 자연물만
        Poly Haven CC0 사진측량 스캔으로 갈아 끼웠다(`island_tree_02`,

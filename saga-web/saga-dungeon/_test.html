@@ -9292,9 +9292,17 @@ window.requestAnimationFrame = function () { return 0; };
       return r.every(Boolean) && ('왕복 · 카메라 ' + Math.round(L0.camX) + '~' + Math.round(L1.camX) + ' · 몸 ' + Math.round(40 * L0.s) + 'px/610 · 마을 제외') || '실패 ' + r.join(',');
     });
 
+    t('적 종 시트 42(W-0392, K-0170) — 공장 시트가 있는 body 는 그 폴더 이름으로 짝(코끼리병 beast_big → dg_elephant · 닌자 ninja → ninja_2) · 2D 짝 수 30 이상 · 빌린 quaternius·Cat 참조 0(일곱 + 반려 고양이 → crea:)', function () {
+      var MP = DG.monsterPortrait, ED = DG.enemyData, A3 = DG.asset3d, el = ED.enemies.filter(function (e) { return /코끼리/.test(e.name); }), nj = ED.enemies.filter(function (e) { return e.body === 'ninja'; })[0];
+      var ok1 = el.length >= 1 && el.every(function (e) { return MP.sheetOf(e, false) === 'dg_elephant'; }) && (!nj || MP.sheetOf(nj, false) === 'ninja_2');
+      var beasts = ED.enemies.filter(function (e) { return e.kind !== 'human' && !e.look; }), mapped = beasts.filter(function (e) { var id = MP.sheetOf(e, false); return id && !/^(boss_|mon_)/.test(id); }).length;
+      var D = A3.DEFAULTS || {}, borrowed = Object.keys(D).filter(function (k) { return typeof D[k] === 'string' && /quaternius|Cat\.glb/.test(D[k]); });
+      var ok3 = !borrowed.length && D['monster:cat'] === 'crea:tabby_ball' && D['monster:fish'] === 'crea:finback_brute' && D['pet:cat'] === 'crea:tabby_ball';
+      return ok1 && mapped >= 30 && ok3 ? '코끼리병 dg_elephant · 닌자 ninja_2 · 종 시트 짝 ' + mapped + '/' + beasts.length + ' · 빌린 0' : '실패 ' + [ok1, mapped, ok3, borrowed.join(',')].join(' ');
+    });
     t('dg.belt2d: 몬스터 2D 시트(W-0129) — 사람형 아닌 적은 몸 id(56벌 이름)로 짝, manifest 로 배율·발(상한 2.2)', function () {
       var M = DG.mode2d, MP = DG.monsterPortrait, ED = DG.enemyData, re = /^(boss_(0[1-9]|1[0-2])|mon_(cons|quad|serp|spir|wing)_0[1-4])$/;
-      var beasts = ED.enemies.filter(function (e) { return e.kind !== 'human' && !e.look; }), bad = beasts.filter(function (e) { var id = MP.sheetOf(e, false); return id && !re.test(id) && id !== e.body; });   // W-0354 종 시트가 있으면 body
+      var beasts = ED.enemies.filter(function (e) { return e.kind !== 'human' && !e.look; }), bad = beasts.filter(function (e) { var id = MP.sheetOf(e, false); return id && !re.test(id) && id !== e.body && id !== (MP.SHEET_ALIAS || {})[e.body]; });   // W-0354 종 시트가 있으면 body · W-0392 별명
       var mapped = beasts.filter(function (e) { return MP.sheetOf(e, false); }).length, bossOk = ED.bosses.every(function (b) { return re.test(MP.sheetOf(b, true)); });
       var f1 = M.creaFit({ px: 128, anchor_feet_y_px: 112.64, ortho_m: 8.8635 }), f2 = M.creaFit({ px: 128, anchor_feet_y_px: 112.64, ortho_m: 3 });
       var fit = Math.abs(f1.foot - 0.88) < 1e-3 && f1.k === 2.2 && Math.abs(f2.k - 1.2) < 1e-9 && M.isCrea('crea:boss_01') && !M.isCrea('vroid:x');
