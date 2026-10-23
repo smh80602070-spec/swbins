@@ -17,7 +17,7 @@
     global.DG.rtkAI.runAll();
     if (global.DG.war) { global.DG.war.resolveAll(); }
     if (global.DG.war) { global.DG.war.resolveJourneys(); }
-    if (global.DG.diplo) { global.DG.diplo.monthly(); } if (global.DG.wonder) { global.DG.wonder.monthly(); } if (global.DG.trade) { global.DG.trade.monthly(); } if (global.DG.relation) { global.DG.relation.monthly(); } if (global.DG.tech) { global.DG.tech.monthly(); }   // W-0290 기술 나무 연구점(tech.js) · W-0279 불가사의 — 공사 한 달·먼저 다 지은 세력이 갖는다(wonder.js)
+    if (global.DG.diplo) { global.DG.diplo.monthly(); } if (global.DG.polity) { global.DG.polity.monthly(); } if (global.DG.wonder) { global.DG.wonder.monthly(); } if (global.DG.trade) { global.DG.trade.monthly(); } if (global.DG.relation) { global.DG.relation.monthly(); } if (global.DG.tech) { global.DG.tech.monthly(); }   // W-0290 기술 나무 연구점(tech.js) · W-0279 불가사의 — 공사 한 달·먼저 다 지은 세력이 갖는다(wonder.js)
     settleMonth();
 
     st.month += 1;

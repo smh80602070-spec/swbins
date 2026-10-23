@@ -73,7 +73,7 @@
     }
     return c;
   }
-  function sum(fid, key) { var c = sums(fid); return (c ? (c.sums[key] || 0) : 0) + (global.DG.wonder ? global.DG.wonder.pct(fid, key) : 0) + (global.DG.tech ? global.DG.tech.pct(fid, key) : 0); }   // W-0279 불가사의 효과도 같은 배율로 · W-0290 기술 나무도
+  function sum(fid, key) { var c = sums(fid); return (c ? (c.sums[key] || 0) : 0) + (global.DG.wonder ? global.DG.wonder.pct(fid, key) : 0) + (global.DG.tech ? global.DG.tech.pct(fid, key) : 0) + (global.DG.polity ? global.DG.polity.pct(fid, key) : 0); }   // W-0399 나라(국세·방침·법령) · W-0279 불가사의 효과도 같은 배율로 · W-0290 기술 나무도
   function has(fid, rule) { var c = sums(fid); return !!(c && c.rules[rule]); }
   function pct(fid, key) { return 1 + sum(fid, key) / 100; }
 

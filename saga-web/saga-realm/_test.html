@@ -120,6 +120,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/wonder.js"></script>
 <script src="js/traderoute.js"></script>
 <script src="js/tech.js"></script>
+<script src="js/polity.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/war.js"></script>
 <script src="js/journey.js"></script>
@@ -7121,6 +7122,62 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var r = [ok, a.x === -3.5 && a.z === -2.5 && z.x === 3.5 && z.z === 2.5, V3.cellOf(-4.2, 0, cols, rows) === null, V3.cellOf(0, 3.1, cols, rows) === null, V3.HGT.wall > V3.HGT.forest && V3.HGT.river < 0];
       return r.every(Boolean) && '48칸 왕복 · 모서리 칸 ±3.5/±2.5 · 판 밖 null · 높이 성벽>숲>평지>강' || '실패 ' + r.join(',');
     });
+    /* ── 나라 — 국세·방침·법령(W-0399 웹 역이식, 정본 고돗 G-0329·G-0336·G-0321) ── */
+    t('국세(W-0399) — 문턱(성 4·기술 4·금 1500) 모자라면 안 오르고, 채우면 기틀 · 금·수확 +5% · 법령 자리 2', function () {
+      fresh('cao');
+      var P = DG.polity, SCX = DG.statecraft, me = R.me(), f = R.force(me), g0 = SCX.gold(me), fd0 = SCX.food(me);
+      f.gold = 100;
+      var a = P.advanceAge();
+      if (a.ok || !/모자람/.test(a.why)) { return '실패 모자란데 올랐다 ' + JSON.stringify(a); }
+      f.gold = 5000; if (DG.tech) { DG.tech.rec(me).done = ['l1', 'l2', 'l3', 'l4']; }
+      while (R.citiesOf(me).length < 4) { var free = Object.keys(R.state().cities).filter(function (id) { return R.city(id).force !== me; })[0]; if (!free) { break; } R.city(free).force = me; }
+      SCX._reset();
+      var b = P.advanceAge(), st = P.state();
+      if (!b.ok) { return '실패 못 올림 ' + b.why; }
+      SCX._reset();
+      var ok = st.age === 1 && f.gold === 3500 && P.lawSlots() === 2 && Math.abs(SCX.gold(me) / g0 - 1.05) < 0.011 && Math.abs(SCX.food(me) / fd0 - 1.05) < 0.011;
+      delete R.state().polity; SCX._reset();
+      return ok ? '기틀 · 금 ×' + (SCX.gold(me) ? '1.05' : '?') + ' · 자리 2 · 금 3500' : '실패 age ' + st.age + ' gold ' + f.gold + ' slots ' + P.lawSlots();
+    });
+    t('국가 방침(W-0399) — 근본 3달 → 부국 고르면 강병 닫힘 · 달마다 줄어 완수 · 금 +10% 영구', function () {
+      fresh('cao');
+      var P = DG.polity, SCX = DG.statecraft, me = R.me(), f = R.force(me), g0 = SCX.gold(me);
+      f.gold = 5000;
+      if (P.startFocus('rich').ok) { return '실패 근본 전에 부국'; }
+      var s = P.startFocus('root'); if (!s.ok) { return '실패 근본 ' + s.why; }
+      P.monthly(); P.monthly(); P.monthly();
+      if (P.focusState('root') !== 'done') { return '실패 3달 뒤 미완 ' + P.focusState('root'); }
+      var r = P.startFocus('rich'); if (!r.ok) { return '실패 부국 ' + r.why; }
+      if (P.focusState('army') !== 'closed') { return '실패 강병 안 닫힘'; }
+      P.monthly(); P.monthly(); P.monthly(); P.monthly(); SCX._reset();
+      var ok = P.focusState('rich') === 'done' && Math.abs(SCX.gold(me) / g0 - 1.10) < 0.011 && f.gold === 5000 - 300 - 500;
+      var out = ok ? '근본 ✓ · 부국 ✓ 금 ×' + (SCX.gold(me) / g0).toFixed(2) + ' · 강병 닫힘' : '실패 rich ' + P.focusState('rich') + ' 금 ' + (SCX.gold(me) / g0).toFixed(2) + ' gold ' + f.gold;
+      delete R.state().polity; SCX._reset();
+      return out;
+    });
+    t('법령(W-0399) — 난세는 자리 1: 징병령 뒤 상세령은 막힘 · 거둘 수 없음 · 징병 +15%·수확 −5%', function () {
+      fresh('cao');
+      var P = DG.polity, SCX = DG.statecraft, me = R.me(), d0 = SCX.order(me, 'draft'), fd0 = SCX.food(me);
+      var a = P.enact('draft'); if (!a.ok) { return '실패 징병령 ' + a.why; }
+      SCX._reset();
+      var b = P.enact('trade'); if (b.ok || !/자리/.test(b.why)) { return '실패 자리 넘어 내려짐'; }
+      var c = P.enact('draft'); if (c.ok || !/거둘/.test(c.why)) { return '실패 두 번 내려짐'; }
+      var ok = Math.abs(SCX.order(me, 'draft') / d0 - 1.15) < 0.011 && Math.abs(SCX.food(me) / fd0 - 0.95) < 0.011;
+      var out = ok ? '징병 ×1.15 · 수확 ×0.95 · 자리 1/1' : '실패 징병 ' + (SCX.order(me, 'draft') / d0).toFixed(2) + ' 수확 ' + (SCX.food(me) / fd0).toFixed(2);
+      delete R.state().polity; SCX._reset();
+      return out;
+    });
+    t('나라 칸(W-0399) — 성 창 HTML 에 국세·방침·법령 단추가 있고, 손잡이 rk.polity.on=0 이면 칸·배율 없음', function () {
+      fresh('cao');
+      var P = DG.polity, SCX = DG.statecraft, me = R.me(), h = P.cardHtml();
+      var ok1 = /data-polity="age"/.test(h) && /data-polity="focus:root"/.test(h) && /data-polity="law:draft"/.test(h);
+      P.enact('draft'); SCX._reset(); var on = SCX.order(me, 'draft');
+      C.setTune('rk.polity.on', 0); SCX._reset();
+      var ok2 = P.cardHtml() === '' && Math.abs(SCX.order(me, 'draft') / on - 1 / 1.15) < 0.011;
+      C.setTune('rk.polity.on', 1); delete R.state().polity; SCX._reset();
+      return ok1 && ok2 ? '단추 셋 · 끄면 칸 없음·배율 1' : '실패 ' + ok1 + ' ' + ok2;
+    });
+
     /* ── 천하 경륜도(W-0182) — 세력마다 패시브 그물(statecraft.js · 공용 passive-web.js), AI 도 찍는다 ── */
     function gyWith(fn) {
       var R = DG.rtk, SCX = DG.statecraft, won = {}, i;
