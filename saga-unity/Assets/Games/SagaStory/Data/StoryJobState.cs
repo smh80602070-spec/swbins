@@ -33,6 +33,7 @@ namespace Saga.Story.Data
         public static void GainExp(float amount)
         {
             if (amount <= 0f) return;
+            amount *= StoryGuild.ExpMul; // tasks U-0192 서원 덤(문파 없으면 ×1)
             Exp += amount;
             while (Exp >= StoryCombat.ExpNeed(Level))
             {

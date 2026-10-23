@@ -515,6 +515,17 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] lgworkers 칸 {slots} · 일꾼 {Saga.Go.Data.GoHomeWorkers.Workers.Count} · 몸 {hf.WorkerBodies} · 창 {hu.IsOpen}");
                         break;
                     }
+                    case "lgguild":   // U-0192 4종횡 문파 — 검각 공 420(사형) 으로 창을 연다
+                    {
+                        var ui = Saga.Story.UI.StoryGuildUi.Instance;
+                        if (ui == null) { Skip(act); return; }
+                        Saga.Story.UI.StoryScenarioUi.Instance?.Hide(); // 세이브 자리에서 장면 상자가 떠 있으면 창이 안 열린다
+                        Saga.Story.Data.StoryGuild.Join("blade");
+                        Saga.Story.Data.StoryGuild.SetPtsForTest(420);
+                        ui.Open();
+                        Debug.Log($"[ShowcaseGui] lgguild {Saga.Story.Data.StoryGuild.RankText()}");
+                        break;
+                    }
                     case "lgcamprobe":   // U-0191 2나락 카메라 돌바닥 — 실제 카메라·가상 카메라·주인공 자리를 적는다
                     {
                         var main = Camera.main;

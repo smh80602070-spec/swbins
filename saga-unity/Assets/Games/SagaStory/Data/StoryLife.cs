@@ -57,7 +57,7 @@ namespace Saga.Story.Data
         public static int Gather(System.Random rng, out string rankUp)
         {
             int before = GatherRank;
-            int n = 1 + (rng.NextDouble() < ExtraChance ? 1 : 0);
+            int n = 1 + (rng.NextDouble() < ExtraChance + StoryGuild.MatsChance ? 1 : 0); // tasks U-0192 상단 덤(문파 없으면 +0)
             _s.mats += n;
             _s.gatherXp++;
             int after = GatherRank;

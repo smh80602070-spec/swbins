@@ -90,7 +90,7 @@ namespace Saga.Story.Player
         /// "동료 교대"(2026-09-21) — 활성 역할의 공격 배율(웹판 "인물의
         /// 몸" 재해석)도 곱한다.</summary>
         private float CurrentAtk => (StoryCombat.StartAtk + StoryJobState.AtkBonus + StoryLabyrinthState.MemoryAtkBonus)
-            * (BuffActive ? _buffAtk : 1f) * StoryLabyrinthState.AtkMul * StoryPartyState.AtkMultiplier;
+            * (BuffActive ? _buffAtk : 1f) * StoryLabyrinthState.AtkMul * StoryPartyState.AtkMultiplier * StoryGuild.AtkMul; // tasks U-0192 검각 덤(문파 없으면 ×1)
 
         private void Awake()
         {
