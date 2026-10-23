@@ -1316,12 +1316,12 @@
   "tests": [
    "test-web n/n"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0358",
   "since": "2026-10-21",
-  "note": "10-21: 기본 마을엔 3D 석등이 안 놓임(놓는 가구·손님 도깨비불 몫) — 엔진 길만, 촬영 없음"
+  "note": "D2(claude 10-23 R-3): 3D 마을 23시, 나를 오두막 터 석등 옆으로 — nightglow3d.stats { mats 1, spots 9, lit 4 } · 석등 불빛 보임(W-0387 — 석등은 시작 자리에서 멀 뿐) · 10-21: 기본 마을엔 3D 석등이 안 놓임(놓는 가구·손님 도깨비불 몫) — 엔진 길만, 촬영 없음"
  },
  {
   "id": "fs.phone-hud-diet",
