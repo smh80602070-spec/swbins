@@ -197,7 +197,7 @@
 
   function atkOf() {
     var p = partyPower();
-    return Math.max(4, p.atk * (1 + boonVal('atkPct') / 100) / 6);   // 한 타 기준으로 나눈다
+    return Math.max(4, p.atk * (1 + boonVal('atkPct') / 100) * (1 + (global.DG.gearMastery ? global.DG.gearMastery.atkPct() : 0) / 100) / 6);   // 한 타 기준으로 나눈다
   }
 
   function reachOf() { return BASE_REACH * (1 + boonVal('reachPct') / 100); }

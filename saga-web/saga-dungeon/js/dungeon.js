@@ -197,7 +197,7 @@
 
   function atkOf() {
     var p = partyPower();
-    return Math.max(4, p.atk * (1 + boonVal('atkPct') / 100) / 6);   // 한 타 기준으로 나눈다
+    return Math.max(4, p.atk * (1 + boonVal('atkPct') / 100) * (1 + (global.DG.gearMastery ? global.DG.gearMastery.atkPct() : 0) / 100) / 6);   // 한 타 기준으로 나눈다
   }
 
   function reachOf() { return BASE_REACH * (1 + boonVal('reachPct') / 100); }
@@ -1666,7 +1666,7 @@
   function hurtPlayer(amount, el, src, how) {   // src·how — 마지막 피해(사망 카드 W-0102): 적 개체·이름, 무슨 공격
     if (!run) { return; }
     if (run.player.invuln > 0) { return; }        // 돌진 중에는 맞지 않는다
-    amount = amount * (1 - (MR().has('flow') ? 0 : boonVal('guardPct')) / 100);   // 유수(경락 규칙) — 막기 없음
+    amount = amount * (1 - (MR().has('flow') ? 0 : boonVal('guardPct')) / 100) * (1 - (global.DG.gearMastery ? global.DG.gearMastery.defPct() : 0) / 100);   // W-0396 갑주 숙련   // 유수(경락 규칙) — 막기 없음
     if (el && el !== 'phys') { amount *= 1 - elemResOf(el) / 100; }
     if (nmHasMod('glass')) { amount *= 1.5; }   // 부적 '유리대포' 변형자(§5.3) — 받는 피해도 는다
     amount = Math.max(1, amount);

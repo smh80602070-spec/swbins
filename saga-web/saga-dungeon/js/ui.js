@@ -827,7 +827,7 @@
         '<div>📦 ' + (toGrave ? '유품으로 남은 장비' : '잃은 장비') + ' ' +
         (card.lostItems || 0) + '점</div>';
     }
-    html += (card.rank && global.DG.dgRank ? global.DG.dgRank.cardHtml(card.rank) : '') + (global.DG.grace ? global.DG.grace.cardHtml(card) : '') + '<div>🏅 공적 +' + (card.feat || 0) + '</div>' +   // W-0102 사망 세 줄
+    html += (card.rank && global.DG.dgRank ? global.DG.dgRank.cardHtml(card.rank) : '') + (card.rank && global.DG.dgSeason ? global.DG.dgSeason.lineHtml(card.rank) : '') + (global.DG.grace ? global.DG.grace.cardHtml(card) : '') + '<div>🏅 공적 +' + (card.feat || 0) + '</div>' +   // W-0102 사망 세 줄
       '<div>📖 도감 ' + card.dexPct + '%' + (card.reason === 'dead' && !card.keep ? ' · 죽어도 도감·인물·공적은 그대로' : '') + '</div>' +   // 표준 F: 죽어도 남는 것을 말해 준다
       '</div>' +
       '<div class="sec"><h4>다음 할 것</h4><div>' + esc(card.next) + '</div></div>' +
@@ -1225,7 +1225,7 @@
 
   function viewParty() {
     var party = core.save.party, html = '', i;
-    var pw = hero().partyPower();
+    var pw = hero().partyPower(); if (global.DG.dgSeason) { html += global.DG.dgSeason.cardHtml(); } if (global.DG.gearMastery) { html += global.DG.gearMastery.cardHtml(); }   // W-0396 시즌·숙련 카드
     html += '<div class="sec"><h4>부대 <span class="muted">' + party.length + ' / 5</span></h4>' +
       '<div class="card">' +
       '<div class="stat-row"><span>공격력</span><b>' + core.fmt(pw.atk) + '</b></div>' +

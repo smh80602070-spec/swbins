@@ -218,6 +218,8 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/ui-skill.js"></script>
 <script src="js/runrank-core.js"></script>
 <script src="js/dg-rank.js"></script>
+<script src="js/dg-season.js"></script>
+<script src="js/gear-mastery.js"></script>
 <script src="js/game.js"></script>
 <script>
 /* 자가진단 — 헤드리스에서도 돈다 (rAF 가 아니라 setTimeout 을 쓴다).
@@ -4837,6 +4839,40 @@ window.requestAnimationFrame = function () { return 0; };
         return ok && ('S · 덤 +' + r.bonusGold + ' · ' + gem.name + ' +1 · 최고 f1=S · 카드 두 줄') || ('실패 ' + JSON.stringify({ rank: r && r.rank, bonus: r && r.bonusGold, gem: m1 - m0, best: r && r.best }));
       } finally { p.gold = g0; IT.addMat('gem', gem.key, 0, -(IT.matCount('gem', gem.key, 0) - m0)); C.save.dgRankBest = bk; }
     });
+    /* ── W-0396 2나락 웹 역이식(정본 고돗 G-0334·G-0317) — 로컬 시즌·래더 · 장비 숙련 ── */
+    t('시즌·래더(W-0396 ①) — 한 주 = 시즌(월요일 경계) · 살아 나온 판 (등급×급)점, 좋은 다섯 합 · 25 = 백은 · 주 넘김 금 300·지난 기록·비움 · 시계 뒤로는 무시', function () {
+      var S = DG.dgSeason, C = DG.core, p = C.save.player, g0 = p.gold, bk = C.save.dgSeason, i;
+      delete C.save.dgSeason;
+      try {
+        var t0 = Date.UTC(2026, 9, 19, 12), n0 = S.num(t0);   // 2026-10-19(월) 낮
+        if (n0 !== 2964 || S.num(t0 + 6 * 86400000) !== n0 || S.num(t0 + 7 * 86400000) !== n0 + 1) { return '실패 번호 ' + n0; }
+        S.roll(t0); if (S.book().n !== n0 || p.gold !== g0) { return '실패 처음 켬 ' + S.book().n; }
+        for (i = 0; i < 5; i++) { S.record('S', 1, t0); } S.record('D', 1, t0); S.record('S', 1, t0);
+        var b = S.book();
+        if (b.runs.length !== 5 || S.score() !== 25 || S.stageOf(S.score()).key !== 'silver') { return '실패 점수 ' + S.score() + ' 판 ' + b.runs.length; }
+        var line = S.lineHtml({ rank: 'S', tier: 1, dead: false, seasonPt: 5 });
+        if (line.indexOf('시즌 +5점') < 0 || line.indexOf('25점') < 0) { return '실패 줄 ' + line; }
+        if (S.roll(t0 - 7 * 86400000) !== 0 || b.runs.length !== 5) { return '실패 시계 뒤로'; }
+        var got = S.roll(t0 + 7 * 86400000);
+        var ok = got === 300 && p.gold === g0 + 300 && b.runs.length === 0 && b.hist.length === 1 && b.hist[0].score === 25 && b.hist[0].stage === 'silver' && b.n === n0 + 1 && S.cardHtml(t0 + 7 * 86400000).indexOf('지난 시즌') >= 0;
+        return ok ? '2964 · 처음 덤 없음 · S×5 = 25 백은(D 는 밖) · 뒤로 무시 · 넘김 +300 · 지난 기록 1 · 비움' : '실패 got ' + got + ' gold ' + (p.gold - g0) + ' runs ' + b.runs.length + ' hist ' + b.hist.length;
+      } finally { p.gold = g0; if (bk) { C.save.dgSeason = bk; } else { delete C.save.dgSeason; } }
+    });
+    t('장비 숙련(W-0396 ②) — 문턱 10·30·60·100·150 단계 · 선두 무기는 처치, 갑주는 피격마다 +1 · 공격 +3%/단계 · 피해 −2%/단계 · 다른 부위 교체 시 절반 물려받음', function () {
+      var M = DG.gearMastery, C = DG.core, IT = DG.item, lead = C.save.party[0], i;
+      if (!lead || !IT) { return '실패 선두·장비 모듈'; }
+      if (M.stageOf(9) !== 0 || M.stageOf(10) !== 1 || M.stageOf(30) !== 2 || M.stageOf(150) !== 5 || M.stageOf(999) !== 5 || M.nextOf(10) !== 30) { return '실패 문턱'; }
+      var eq = IT.equipped(lead), w0 = eq.weapon, a0 = eq.armor;
+      eq.weapon = { name: '시험 칼', mx: 9 }; eq.armor = { name: '시험 갑주', mx: 0 };
+      try {
+        C.emit('dungeon:kill', { e: null, floor: 1 });
+        for (i = 0; i < 30; i++) { C.emit('dungeon:hurt'); }
+        var ok1 = eq.weapon.mx === 10 && M.atkPct() === 3 && eq.armor.mx === 30 && M.defPct() === 4;
+        var old = { mx: 40 }, nw = { mx: 0 }, half = Math.floor(old.mx / 2);
+        return ok1 ? '무기 9→10 1단계 +3% · 갑주 30 2단계 −4% · 절반 물려받기 ' + half + '(equip 감쌈 ' + (typeof IT.equip === 'function') + ')' : '실패 w ' + eq.weapon.mx + ' atk ' + M.atkPct() + ' a ' + eq.armor.mx + ' def ' + M.defPct();
+      } finally { eq.weapon = w0; eq.armor = a0; if (!w0) { delete eq.weapon; } if (!a0) { delete eq.armor; } }
+    });
+
     t('W-0378 한 판 등급 — 타격·피격 사건(dungeon:hit·hurt)을 세고 맞으면 연타가 끊긴다 · 쓰러진 판은 등급만(덤 없음) · 셋 못 잡으면 안 매김', function () {
       var RR = DG.dgRank, C = DG.core, g0 = C.save.player.gold, bk = C.save.dgRankBest, i;
       C.save.dgRankBest = {};

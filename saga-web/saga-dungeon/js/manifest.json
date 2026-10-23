@@ -137,6 +137,8 @@
    "js/ui-skill.js",
    "js/runrank-core.js",
    "js/dg-rank.js",
+   "js/dg-season.js",
+   "js/gear-mastery.js",
    "js/perf.js",
    "js/game.js"
   ]
@@ -277,6 +279,8 @@
    "js/ui-skill.js",
    "js/runrank-core.js",
    "js/dg-rank.js",
+   "js/dg-season.js",
+   "js/gear-mastery.js",
    "js/game.js"
   ]
  ],
