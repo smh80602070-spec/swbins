@@ -1768,6 +1768,23 @@
   "since": "2026-10-25",
   "note": "D2(페이블 10-25): 진단 ○ · 촬영 shots/w0395/workers.png — 「신수 2마리가 쉼터에 앉아 일을 시작했다」·동행 시트 「🐾 신수 일꾼 2/2 · 30분에 하나 · 상한 24」 삼족오·해태 일으키기 / 청룡 앉히기(캐기 → 인장 조각)."
  }, {
+  "id": "go.sharedIllustSheets",
+  "name": "shared 한 벌 연결(W-0394 — K-0160·K-0183 배선) — 일러스트 manifest 에 base 가 없으면 shared/assets/illust/(116명)로(1만리·3마을은 판 폴더가 비어 404 였음) · 공장 시트 맨 풀은 판 index → 없으면 shared/assets/sprites2d_sheets index(도감 60) 둘째 단(mode2d.poolBase) · 1만리 짐승 125 는 W-0370 때 이미 판 index factory 에 등록",
+  "files": [
+   "../shared/js/illust.js",
+   "../shared/js/mode2d.js",
+   "_test.html"
+  ],
+  "tests": [
+   "W-0394 shared 한 벌"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 qc+claude",
+  "fun": {},
+  "ticket": "W-0394",
+  "since": "2026-10-25",
+  "note": "D2(페이블 10-25, 판정기 = 진단): base 없는 manifest → shared 주소 · poolBase. 도감 60 시트를 실제로 쓰는 호출자(vroid: 풀을 공장 시트로 돌리기)는 다섯 판 화면이 바뀌는 결정이라 후속 R-0."
+ }, {
   "id": "go.restSite",
   "name": "쉼터(W-0297) — 들판 720m 칸마다 모닥불 자리(물·마을·집·역참·지역 탑 피함) · 처음 들면 불 지핌(발견) · 쉬면 동행 회복·부활 자리·비운 잡몹 무리 다시 섬(보스 꽃 그대로) · 전멸하면 그 쉼터에서 일어남 · 2D 모닥불·미니맵 점 · 손잡이 go.rest",
   "files": [

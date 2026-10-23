@@ -26,11 +26,13 @@
     return !files || files.indexOf(m) >= 0 ? m : 'neutral';
   }
   /** 표정 반신 주소 — 없는 인물이면 null */
-  function url(id, emote) { var M = man(); return has(id) ? (M.base || 'assets/illust/') + id + '/' + moodOf(emote, M.files) + '.webp' : null; }
+  function url(id, emote) { var M = man(); return has(id) ? baseOf(M) + id + '/' + moodOf(emote, M.files) + '.webp' : null; }
   /** 전신 스탠딩 주소 — 없는 인물이면 null */
-  function stand(id) { var M = man(); return has(id) && (!M.files || M.files.indexOf('stand') >= 0) ? (M.base || 'assets/illust/') + id + '/stand.webp' : null; }
+  function stand(id) { var M = man(); return has(id) && (!M.files || M.files.indexOf('stand') >= 0) ? baseOf(M) + id + '/stand.webp' : null; }
   function ids() { var M = man(); return M ? M.ids.slice() : []; }
+  /** W-0394 — manifest 에 base 가 없으면 shared 한 벌(K-0183 116명)로: 공용 주소(assets3d.sharedUrl) → 못 잡으면 상대 경로 */
+  function baseOf(M) { if (M && M.base) { return M.base; } var A = global.DG && global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('illust/') : null; return u || '../shared/assets/illust/'; }
 
   global.DG = global.DG || {};
-  global.DG.illust = { has: has, url: url, stand: stand, moodOf: moodOf, ids: ids, MOOD: MOOD };
+  global.DG.illust = { has: has, url: url, stand: stand, moodOf: moodOf, ids: ids, MOOD: MOOD, baseOf: baseOf };
 })(window);

@@ -24,6 +24,13 @@
 
   var imgs = {};          // 'pool/clip' → { img, ok, fail }
   var index = null, indexTried = false;
+  /* W-0394 둘째 단 — shared/assets/sprites2d_sheets(도감 60 한 벌, K-0160) index.json: 판 index 에 없는 맨 풀은 여기서 찾는다 */
+  var index2 = null, idx2Tried = false, idx2Done = false;
+  function sharedSheets() { var A = global.DG && global.DG.assets3d; return A && A.sharedUrl ? A.sharedUrl('sprites2d_sheets/') : null; }
+  function loadIndex2() { var b = sharedSheets(); if (index2 || idx2Tried || !b || !global.fetch) { if (!b) { idx2Done = true; } return; } idx2Tried = true; global.fetch(b + 'index.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { index2 = j; idx2Done = true; })['catch'](function () { idx2Done = true; }); }
+  function in2(id) { if (!index2 || !index2.factory) { return false; } if (!index2._fset) { index2._fset = {}; index2.factory.forEach(function (k) { index2._fset[k] = 1; }); } return !!index2._fset[id]; }
+  /** 맨 풀의 시트 뿌리 — 판 폴더에 있으면 판, 아니면 shared(둘째 단) */
+  function poolBase(id) { return index && index._fset && index._fset[id] ? base() : (in2(id) ? sharedSheets() : base()); }
 
   /** 지금 2D 모드인가 — 판이 정한다(없으면 항상 참 — 이 부품을 부른 쪽이 이미 2D 자리에서 부른 것) */
   function isOn() { var c = C(); return c.on ? !!c.on() : true; }
@@ -360,7 +367,7 @@
     im.onload = function () { e.ok = true; };
     im.onerror = function () { e.fail = true; };   // 파일이 없으면 영영 기존 그림 — 다시 받으려 들지 않는다
     im.src = isCrea(pool) ? creaRoot() + 'creatures2d/' + pool.slice(CPRE.length) + '/' + clip + '.webp'   // W-0129 몬스터 시트
-      : isVroid(pool) ? global.DG.assets3d.root() + (eight === 16 ? 'characters2d16/' : eight ? 'characters2d8/' : 'characters2d/') + pool.slice(VPRE.length) + '/' + clip + '.webp' : base() + pool + '/' + clip + '.webp';
+      : isVroid(pool) ? global.DG.assets3d.root() + (eight === 16 ? 'characters2d16/' : eight ? 'characters2d8/' : 'characters2d/') + pool.slice(VPRE.length) + '/' + clip + '.webp' : poolBase(pool) + pool + '/' + clip + '.webp';   // W-0394 두 단
     e.img = im;
     return e;
   }
@@ -415,11 +422,11 @@
     if (!idxDone) { if (indexTried && !index && Date.now() - idxAt > 2500) { if (idxN >= 3) { idxDone = true; return null; } indexTried = false; } loadIndex(); return 'wait'; }   // 부팅 때 부른 요청이 안 끝나는 일이 있다(2나락 실측) — 2.5초마다 다시, 세 번이면 공장 없음
     if (!index || !index.factory) { return null; }
     if (!index._fset) { index._fset = {}; index.factory.forEach(function (k) { index._fset[k] = 1; }); }
-    if (!index._fset[id]) { return null; }
+    if (!index._fset[id]) { loadIndex2(); if (!idx2Done) { return 'wait'; } if (!in2(id)) { return null; } }   // W-0394 둘째 단(shared 도감 60)
     f = facts[id];
     if (!f) {
       f = facts[id] = { m: null, fail: false, bh: 0 };
-      global.fetch(base() + id + '/manifest.json').then(function (r) { return r.ok ? r.json() : null; })
+      global.fetch(poolBase(id) + id + '/manifest.json').then(function (r) { return r.ok ? r.json() : null; })
         .then(function (m) { if (m && m.clips) { f.m = m; } else { f.fail = true; } })['catch'](function () { f.fail = true; });
     }
     return f.fail ? null : (f.m ? f : 'wait');
@@ -796,7 +803,7 @@
   global.DG.mode2d = {
     labels: labels,
     scaleOf: scaleOf, scaleOn: scaleOn, shadow: shadow, stepDust: stepDust, setTone: setTone, tone: function () { return toneF; }, SCALE: SCALE, BEAST: BEAST,   // W-0368 setTone·tone ·   // W-0349
-    mark: mark, markSrc: markSrc, MARK: MARK, markMisses: function () { return Object.assign({}, markMiss); },   // W-0350
+    mark: mark, markSrc: markSrc, MARK: MARK, poolBase: poolBase, sharedSheets: sharedSheets, markMisses: function () { return Object.assign({}, markMiss); },   // W-0350
     isCrea: isCrea, creaPool: creaPool, creaFit: creaFit, cell8: cell8,   // W-0129 몬스터 2D 시트
     drawSprite: drawSprite, drawKind: drawKind, hasKind: hasKind, spriteReady: function (id) { return !!spriteOf(id); },
     fillIso: fillIso, isoMode: function () { return tuneOf('mode2d.isoMode', 1); }, isoBaked: function () { return Object.keys(isoBake); },   // W-0376

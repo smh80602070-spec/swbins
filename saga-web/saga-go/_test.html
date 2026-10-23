@@ -17477,6 +17477,17 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var d1 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.52 }, 60), d2 = M.stepDust(dc, { x: 0, y: 0, clip: 'walk', stride: 0.3 }, 60), d3 = M.stepDust(dc, { x: 0, y: 0, clip: 'idle', stride: 0.02 }, 60);
       return (d1 === 2 && d2 === 0 && d3 === 0) || ('실패 발 먼지 ' + d1 + ' ' + d2 + ' ' + d3);
     });
+    t('W-0394 shared 한 벌 — 일러스트 manifest 에 base 가 없으면 shared/assets/illust/ 로 · 공장 시트 맨 풀은 판 폴더 → 없으면 shared/assets/sprites2d_sheets(도감 60) 둘째 단', function () {
+      var IL = DG.illust, M = DG.mode2d, S = window.SAGA || (window.SAGA = {}), m0 = S.illust, r = [];
+      var u = '', st = '';
+      if (!IL) { r.push(true, true, true); } else { S.illust = { ids: ['sg_guanyu'], files: ['stand', 'neutral'] };
+      try {
+        u = IL.url('sg_guanyu', 'joy'); st = IL.stand('sg_guanyu');
+        r.push(/shared\/assets\/illust\/sg_guanyu\/happy\.webp$/.test(u), /shared\/assets\/illust\/sg_guanyu\/stand\.webp$/.test(st), IL.baseOf({ base: 'x/' }) === 'x/');
+      } finally { S.illust = m0; } }
+      r.push(typeof M.poolBase === 'function' && typeof M.sharedSheets === 'function', M.poolBase('beast_dog') === 'assets/sprites2d_sheets/' || M.poolBase('beast_dog').indexOf('sprites2d_sheets/') >= 0);
+      return r.every(Boolean) ? '일러스트 base → shared · 시트 둘째 단 poolBase' : '실패 ' + r.join(',') + ' ' + u;
+    });
     t('W-0370 공장 시트 — 방향 5줄(정면 0·앞대각 1·옆 2·뒤대각 3·뒤 4, 왼쪽은 뒤집기) · 없는 동작은 가까운 것 · 프레임 수는 manifest(죽음 6 은 끝에서 멈춤)', function () {
       var M = DG.mode2d; if (!M || !M.factRole || !M.factFrame) { return '실패 factRole·factFrame 없음'; }
       var rows = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1]].map(function (d) { return M.dirOf8(d[0], d[1]).row; }).join(''), L = M.dirOf8(-1, 0);
