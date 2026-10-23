@@ -1,0 +1,921 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k178_stand",
+ "kit": {
+  "spec": "character_tall",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 1152,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "ac_balgwang",
+   "seed": 2026102200,
+   "prompt": "(1boy:1.15), male focus, adult man, black undercut hair, light brown eyes, deep sea explorer, black padded pressure suit jacket with cream high collar, shoulder lamp, thick work boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 심해 탐사대",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "ac_choeumpa",
+   "seed": 2026102301,
+   "prompt": "(1girl:1.15), young woman, long black hair, brown eyes, futuristic undersea city citizen, sleek black bodysuit with glowing teal seams, high collar, long coat, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 아크 해저도시",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "ac_gipo",
+   "seed": 2026102402,
+   "prompt": "(1boy:1.15), male focus, adult man, messy ash brown hair, light brown eyes, futuristic undersea city citizen, white armored bodysuit with glowing teal seams, high collar, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 아크 해저도시",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "ac_haebit",
+   "seed": 2026102503,
+   "prompt": "(1girl:1.15), young woman, black hair in low ponytail, brown eyes, gentle smile, futuristic undersea city citizen, white high-collar jacket with glowing cyan lines, white boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 아크 해저도시",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "ac_haecho",
+   "seed": 2026102604,
+   "prompt": "(1girl:1.15), young woman, black bob hair, brown eyes, gentle smile, futuristic undersea city citizen, iridescent white high-collar jacket with glowing pink seams, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 아크 해저도시",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "ac_haemun",
+   "seed": 2026102705,
+   "prompt": "(1boy:1.15), male focus, adult man, short brown hair, brown eyes, friendly smile, futuristic undersea city citizen, black bodysuit with red collar trim, black cape, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 아크 해저도시",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "ac_simyeon",
+   "seed": 2026102806,
+   "prompt": "(1girl:1.15), young woman, long dark brown hair in ponytail, blue eyes, deep sea explorer, red high-collar pressure suit jacket, olive green backpack, dark trousers, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 심해 탐사대",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "ac_suap",
+   "seed": 2026102907,
+   "prompt": "(1boy:1.15), male focus, adult man, short brown hair, round diving goggles on forehead, light brown eyes, deep sea explorer, white quilted padded jacket with high collar, brown leather trousers, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 심해 탐사대",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "ac_sumbi",
+   "seed": 2026103008,
+   "prompt": "(1girl:1.15), young woman, brown bob hair, green eyes, serious face, futuristic undersea city citizen, dark green jacket with glowing teal lines and cream high collar, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 아크 해저도시",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "aq_byeolgil",
+   "seed": 2026103109,
+   "prompt": "(1girl:1.15), young woman, long brown hair, brown eyes, beige turban, desert caravan merchant, brown scarf, long grey striped coat, wide sash, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "사하(가상) 모래 대상",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "aq_cheongok",
+   "seed": 2026103210,
+   "prompt": "(1girl:1.15), young woman, brown hair in bun, cream headscarf band, teal eyes, desert oasis townsperson, green patterned robe, cream shawl, sandals, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "사하(가상) 사하 성읍",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "aq_dalgu",
+   "seed": 2026103311,
+   "prompt": "(1boy:1.15), male focus, adult man, dark brown head wrap cap, light brown eyes, gentle smile, desert caravan merchant, brown striped long coat, wide sash, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "사하(가상) 모래 대상",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "aq_gyeongbong",
+   "seed": 2026103412,
+   "prompt": "(1girl:1.15), young woman, black hair slicked back with white head cloth, brown eyes, determined, desert caravan merchant, black scarf, golden orange woven coat with round brooch, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "사하(가상) 모래 대상",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "aq_nokju",
+   "seed": 2026103513,
+   "prompt": "(1boy:1.15), male focus, adult man, short brown hair, olive headband, grey eyes, big smile, desert oasis townsperson, cream scarf, olive vest over linen robe, sandals, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "사하(가상) 사하 성읍",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "aq_saebom",
+   "seed": 2026103614,
+   "prompt": "(1boy:1.15), male focus, adult man, blonde hair, green eyes, gentle smile, white head scarf, desert oasis townsperson, layered white linen robes, sandals, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "사하(가상) 사하 성읍",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "aq_sanghwa",
+   "seed": 2026103715,
+   "prompt": "(1boy:1.15), male focus, adult man, brown pompadour hair, light brown eyes, desert caravan merchant, brown high-collar long coat, red vest, wide sash, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "사하(가상) 모래 대상",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "aq_sapung",
+   "seed": 2026103816,
+   "prompt": "(1boy:1.15), male focus, adult man, short black hair, blue eyes, stern, desert oasis townsperson, cream scarf, reddish brown patterned linen robe, sandals, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "사하(가상) 사하 성읍",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "aq_yeolsa",
+   "seed": 2026103917,
+   "prompt": "(1boy:1.15), male focus, young man, short brown hair, black headband, brown eyes, determined, desert oasis townsperson, white scarf, mustard yellow linen robe, sandals, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "사하(가상) 사하 성읍",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "bw_bitnae",
+   "seed": 2026104018,
+   "prompt": "(1girl:1.15), young woman, brown hair in low ponytail, light brown eyes, snowfield cavalry rider, black high-collar padded lamellar armor jacket, dark trousers, fur boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "북원(가상) 설원 기마",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "bw_cheolgi",
+   "seed": 2026104119,
+   "prompt": "(1girl:1.15), adult woman, short light brown hair, light brown eyes, wide brimmed fur hat, snowfield cavalry rider, big white fur cloak over dark lamellar armor, fur boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "북원(가상) 설원 기마",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "bw_gamu",
+   "seed": 2026104220,
+   "prompt": "(1boy:1.15), male focus, adult man, brown hair tied up spiky, black headband, brown eyes, smile, northern steppe tribe warrior, white fur coat, tooth and bone necklace, leather boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "북원(가상) 북원 부족",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "bw_gomnae",
+   "seed": 2026104321,
+   "prompt": "(1boy:1.15), male focus, adult man, grey fur hat, light brown eyes, stern frown, snowfield cavalry rider, white padded tunic with black leather straps, fur boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "북원(가상) 설원 기마",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "bw_hwaro",
+   "seed": 2026104422,
+   "prompt": "(1girl:1.15), young woman, auburn hair in bun, light brown eyes, gentle smile, northern steppe tribe warrior, tan fur coat, large white bead necklace, leather boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "북원(가상) 북원 부족",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "bw_sangwol",
+   "seed": 2026104523,
+   "prompt": "(1girl:1.15), young woman, brown hair in bun, patterned headband with small gold points, grey eyes, northern steppe tribe, black and white patterned fur coat, bead necklace, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "북원(가상) 북원 부족",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "bw_seolgu",
+   "seed": 2026104624,
+   "prompt": "(1girl:1.15), young woman, auburn hair, light brown eyes, black fur ushanka hat with silver star badge, snowfield cavalry rider, cream fur-lined high-collar coat over tan lamellar armor, fur boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "북원(가상) 설원 기마",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "bw_sungeom",
+   "seed": 2026104725,
+   "prompt": "(1boy:1.15), male focus, adult man, brown hair, black headband, brown eyes, fierce frown, northern steppe tribe warrior, dark brown fur coat, large white bead necklace, leather boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "북원(가상) 북원 부족",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "bw_yanggil",
+   "seed": 2026104826,
+   "prompt": "(1boy:1.15), male focus, adult man, black hair, teal eyes, gentle smile, northern steppe tribe warrior, dark fur coat with white fur trim, large white bead necklace, leather boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "북원(가상) 북원 부족",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "cs_cheolgil",
+   "seed": 2026104927,
+   "prompt": "(1boy:1.15), male focus, middle-aged man, short receding brown hair, kind smile, 1920s railway company manager, cream three-piece suit, white shirt, pocket watch chain, brown shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 철로 상회",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "cs_gijeok",
+   "seed": 2026105028,
+   "prompt": "(1boy:1.15), male focus, mature man, dark hair, blue eyes, stern, steam train engineer, white engineer cap, yellow and teal work jacket, denim overalls, red neckerchief, work boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 기관사 조합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "cs_gyeongjeok",
+   "seed": 2026105129,
+   "prompt": "(1girl:1.15), young woman, shoulder-length blonde hair, grey eyes, light grey engineer cap, steam train engineer, light denim jacket with patch, olive shirt, red neckerchief, denim overalls, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 기관사 조합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "cs_hwamul",
+   "seed": 2026105230,
+   "prompt": "(1boy:1.15), male focus, adult man, black hair, brown eyes, calm, 1920s railway company manager, black bow tie, blue three-piece suit, gold pocket watch chain, black shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 철로 상회",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "cs_jeongbi",
+   "seed": 2026105331,
+   "prompt": "(1boy:1.15), male focus, adult man, messy brown hair, light brown eyes, calm, steam train engineer, white shirt, denim overall straps, red neckerchief, work boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 기관사 조합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "cs_noseon",
+   "seed": 2026105432,
+   "prompt": "(1boy:1.15), male focus, young man, brown hair, green eyes, 1920s railway company manager, dark green three-piece suit, gold pocket watch chain, brown shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 철로 상회",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "cs_seoktan",
+   "seed": 2026105533,
+   "prompt": "(1boy:1.15), male focus, adult man, black hair, brown eyes, fierce frown, black work helmet with headset, steam train engineer, blue denim jacket with yellow collar, work boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 기관사 조합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "cs_seungmu",
+   "seed": 2026105634,
+   "prompt": "(1boy:1.15), male focus, young man, short dark brown hair, brown eyes, smirk, 1920s railway company manager, white shirt with rolled sleeves, gold chain, grey waistcoat and trousers, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 철로 상회",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "cs_yeokjang",
+   "seed": 2026105735,
+   "prompt": "(1boy:1.15), male focus, adult man, short dark brown hair, smile, 1920s railway company manager, blue waistcoat, white shirt, black tie, pocket watch chain, brown shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 철로 상회",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "dk_amgyeol",
+   "seed": 2026105836,
+   "prompt": "(1girl:1.15), young woman, long black hair, brown eyes, serious, valley guard, black studded scale leather armor, dark green cloak, leather boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "대곡(가상) 계곡 수호대",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "dk_gulttuk",
+   "seed": 2026105937,
+   "prompt": "(1girl:1.15), young woman, blonde hair, grey eyes, gentle smile, highland valley clan member, rust red scarf, cream wool shawl, dark patterned tunic, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "대곡(가상) 대곡",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "dk_gyedo",
+   "seed": 2026106038,
+   "prompt": "(1boy:1.15), male focus, adult man, messy light brown hair, green eyes, frown, valley guard, blue studded scale armor with orange trim, green hood lowered, green emblem, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "대곡(가상) 계곡 수호대",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "dk_jeoljeong",
+   "seed": 2026106139,
+   "prompt": "(1boy:1.15), male focus, adult man, long light brown hair, blue eyes, fierce, valley guard, green hooded cloak lowered, dark studded leather vest, spiked shoulder pad, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "대곡(가상) 계곡 수호대",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "dk_meari",
+   "seed": 2026106240,
+   "prompt": "(1boy:1.15), male focus, adult man, long black hair, green eyes, calm, valley guard, black studded hood over head, green cloak, white undershirt, studded leather armor, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "대곡(가상) 계곡 수호대",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "dk_mullae",
+   "seed": 2026106341,
+   "prompt": "(1girl:1.15), young woman, auburn hair braided updo, green eyes, gentle smile, highland valley clan member, dark grey wool shawl, patterned tunic, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "대곡(가상) 대곡",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "dk_pungnyeon",
+   "seed": 2026106442,
+   "prompt": "(1boy:1.15), male focus, adult man, short black hair, brown eyes, smile, highland valley clan member, black and grey checkered wool coat with fur trim, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "대곡(가상) 대곡",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "dk_saneum",
+   "seed": 2026106543,
+   "prompt": "(1girl:1.15), young woman, brown bob hair, light brown eyes, calm, highland valley clan member, mustard yellow tunic, dark green wool shawl, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "대곡(가상) 대곡",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "dk_suro",
+   "seed": 2026106644,
+   "prompt": "(1boy:1.15), male focus, adult man, long dark brown hair tied back, blue eyes, calm, highland valley clan member, white and blue patterned woven shawl, white tunic, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "대곡(가상) 대곡",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "fy_baramgae",
+   "seed": 2026106745,
+   "prompt": "(1boy:1.15), male focus, adult man, black hair, brown eyes, gentle smile, floating sky island noble, black vest with gold shoulder trim over white high-collar robe, wind ribbons, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 하늘섬",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "fy_buyang",
+   "seed": 2026106846,
+   "prompt": "(1girl:1.15), young woman, black hair tied up, light brown eyes, calm, floating sky island noble, flowing white robe cape with gold trim, wind ribbons, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 하늘섬",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "fy_cheonggong",
+   "seed": 2026106947,
+   "prompt": "(1girl:1.15), young woman, auburn hair in bun, green eyes, small green gem circlet, confident smirk, floating sky island noble, black robe with gold trim, green wind ribbons, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 하늘섬",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "fy_gitteol",
+   "seed": 2026107048,
+   "prompt": "(1girl:1.15), young woman, short wavy blonde hair, light brown eyes, gentle smile, cloud garden keeper, pastel plaid smock, flower pins, small flower basket, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 구름 정원",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "fy_mujigae",
+   "seed": 2026107149,
+   "prompt": "(1girl:1.15), young woman, blonde bob hair with dark green ribbon, blue eyes, gentle smile, cloud garden keeper, green and blue futuristic smock with pink flower pins, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 구름 정원",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "fy_paran",
+   "seed": 2026107250,
+   "prompt": "(1boy:1.15), male focus, adult man, short spiky brown hair, stubble, light brown eyes, determined frown, cloud garden keeper, white high collar over holographic blue smock, flower pin, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 구름 정원",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "fy_seomgil",
+   "seed": 2026107351,
+   "prompt": "(1boy:1.15), male focus, adult man, black hair, brown eyes, calm, floating sky island noble, cream high-collar robe with gold diamond trim, wind ribbons, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 하늘섬",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "fy_ttangkkeut",
+   "seed": 2026107452,
+   "prompt": "(1girl:1.15), young woman, dark auburn bob hair, light brown eyes, serious, floating sky island noble, deep blue robe with gold sparkles, cream wind ribbon capelet, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 하늘섬",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "fy_unwon",
+   "seed": 2026107553,
+   "prompt": "(1girl:1.15), young woman, long dark brown hair, light brown eyes, gentle smile, clear glass dome hood, cloud garden keeper, black and white tweed smock, olive collar, flower pin, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 구름 정원",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gm_cheolbu",
+   "seed": 2026107654,
+   "prompt": "(1boy:1.15), male focus, young man, short blonde hair, green eyes, soot smudge on cheek, determined, mining guild worker, orange goggles around neck, brown canvas work jacket, red shirt, work boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "금마(가상) 광산 조합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gm_dolbae",
+   "seed": 2026107755,
+   "prompt": "(1girl:1.15), adult woman, black hair tied back, brown eyes, gentle smile, soot smudge on forehead, mining guild worker, goggles around neck, navy canvas work jacket, work boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "금마(가상) 광산 조합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gm_gaenghwa",
+   "seed": 2026107856,
+   "prompt": "(1girl:1.15), young woman, short dark brown hair, light brown eyes, calm, mining guild worker, goggles around neck, blue and mustard canvas work jacket, work boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "금마(가상) 광산 조합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gm_geumhyeol",
+   "seed": 2026107957,
+   "prompt": "(1boy:1.15), male focus, adult man, black hair in topknot, brown eyes, smile, golden fortress knight, gilded lamellar armor, golden pauldrons, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "금마(가상) 금마성",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gm_hwangma",
+   "seed": 2026108058,
+   "prompt": "(1boy:1.15), male focus, adult man, brown hair with bangs, brown eyes, stern, golden fortress knight, silver and gold lamellar armor, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "금마(가상) 금마성",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gm_jeongdong",
+   "seed": 2026108159,
+   "prompt": "(1boy:1.15), male focus, adult man, black flat cap, brown eyes, calm, mining guild worker, headlamp strap, blue canvas work jacket, leather belt, work boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "금마(가상) 광산 조합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gm_mahyang",
+   "seed": 2026108260,
+   "prompt": "(1boy:1.15), male focus, mature man, short blonde hair, blue eyes, slight smile, golden fortress knight, white and silver scale armor with gold trim, big pauldrons, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "금마(가상) 금마성",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gm_myeongseok",
+   "seed": 2026108361,
+   "prompt": "(1girl:1.15), young woman, blonde bob hair, grey eyes, calm, mining guild worker, goggles around neck, white canvas work coat over orange jumpsuit, work boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "금마(가상) 광산 조합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gm_sanul",
+   "seed": 2026108462,
+   "prompt": "(1girl:1.15), adult woman, long wavy brown hair, teal eyes, serious, golden fortress knight, gold pauldrons over royal blue surcoat with gold emblem, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "금마(가상) 금마성",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gr_bangpung",
+   "seed": 2026108563,
+   "prompt": "(1boy:1.15), male focus, adult man, long black hair, brown eyes, serious, seed vault scientist, orange padded high-collar jacket with grey patches, seed pouches on belt, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 씨앗 은행",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gr_haetbit",
+   "seed": 2026108664,
+   "prompt": "(1boy:1.15), male focus, adult man, short blonde hair, grey eyes, calm, eco engineer, olive green field jacket with leaf embroidery, utility pockets, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 녹화 연합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gr_iseul",
+   "seed": 2026108765,
+   "prompt": "(1girl:1.15), young woman, blonde bob hair, grey eyes, calm, seed vault scientist, orange turtleneck, white lab coat, dark gear backpack, seed pouches, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 씨앗 은행",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gr_kkulbeol",
+   "seed": 2026108866,
+   "prompt": "(1boy:1.15), male focus, adult man, long black hair, brown eyes, gentle smile, eco engineer, white field jacket with green leaf emblem, utility pockets, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 녹화 연합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gr_mojong",
+   "seed": 2026108967,
+   "prompt": "(1boy:1.15), male focus, adult man, spiky brown hair, brown eyes, gentle smile, seed vault scientist, white lab coat, seed pouches on belt, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 씨앗 은행",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gr_nokhwa",
+   "seed": 2026109068,
+   "prompt": "(1boy:1.15), male focus, adult man, short brown hair, blue eyes, stubble, gentle smile, eco engineer, pale green field jacket over white t-shirt, utility pockets, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 녹화 연합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gr_ssiat",
+   "seed": 2026109169,
+   "prompt": "(1girl:1.15), young woman, long dark brown hair, light brown eyes, calm, seed vault scientist, khaki field coat with green trim, seed pouches on belt, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 씨앗 은행",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gr_supgil",
+   "seed": 2026109270,
+   "prompt": "(1boy:1.15), male focus, adult man, auburn hair, blue eyes, fierce, black protective helmet with visor, seed vault scientist, black armored vest over white lab coat, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 씨앗 은행",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "gr_toyang",
+   "seed": 2026109371,
+   "prompt": "(1boy:1.15), male focus, adult man, short auburn hair, brown eyes, calm, eco engineer, white hoodie under olive green field jacket, utility pockets, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "미래 녹화 연합",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hb_bisang",
+   "seed": 2026109472,
+   "prompt": "(1boy:1.15), male focus, adult man, short auburn brown hair, brown eyes, aviator pilot, cream turtleneck scarf, dark brown leather flight jacket, aviator boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 하늘 비행단",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hb_gisang",
+   "seed": 2026109573,
+   "prompt": "(1boy:1.15), male focus, adult man, brown hair, black headband headset, stubble, brown eyes, air traffic controller, white shirt under orange and tan utility vest, headset microphone, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 관제탑",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hb_gwanje",
+   "seed": 2026109674,
+   "prompt": "(1boy:1.15), male focus, young man, brown bowl cut hair, brown eyes, calm, air traffic controller, orange headphones around neck with microphone, dark grey uniform shirt, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 관제탑",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hb_gyeongro",
+   "seed": 2026109775,
+   "prompt": "(1girl:1.15), young woman, brown hair in low bun, navy hairband, grey eyes, calm, air traffic controller, headset around neck, grey uniform jacket with green collar, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 관제탑",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hb_hwaljuro",
+   "seed": 2026109876,
+   "prompt": "(1boy:1.15), male focus, adult man, black hair, light brown eyes, smile, black peaked uniform cap with gold badge, air traffic controller, orange jacket, headset around neck, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 관제탑",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hb_jeomgeom",
+   "seed": 2026109977,
+   "prompt": "(1boy:1.15), male focus, adult man, spiky blonde hair, flight goggles on forehead, blue eyes, smile, aviator pilot, white scarf, light flight jacket with round badge, olive shirt, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 하늘 비행단",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hb_mangwon",
+   "seed": 2026110078,
+   "prompt": "(1girl:1.15), young woman, black hair in bun, light brown eyes, calm, aviator pilot, thick white knit scarf, white flight jacket with round badges and orange trim, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 하늘 비행단",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hb_sangae",
+   "seed": 2026110179,
+   "prompt": "(1boy:1.15), male focus, adult man, messy light brown hair, round glasses, blue eyes, calm, aviator pilot, cream scarf, dark brown leather flight jacket, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 하늘 비행단",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hb_seonhoe",
+   "seed": 2026110280,
+   "prompt": "(1boy:1.15), male focus, adult man, short black hair, blue eyes, fierce frown, aviator pilot, white scarf, brown leather flight jacket, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 하늘 비행단",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hl_baekhwa",
+   "seed": 2026110381,
+   "prompt": "(1boy:1.15), male focus, adult man, brown hair tied up with ornate hairpin and green leaves, green eyes, gentle smile, flower forest palace courtier, pale blue silk robe with floral embroidery, lace collar, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "화림(가상) 화림 궁",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hl_damhwa",
+   "seed": 2026110482,
+   "prompt": "(1boy:1.15), male focus, young man, dark brown hair tied up, light brown eyes, calm, academy scholar, plain white scholar robe with hood, ink brush, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "화림(가상) 화림 서원",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hl_geumsil",
+   "seed": 2026110583,
+   "prompt": "(1girl:1.15), young woman, long light blonde hair, grey eyes, smile, ornate hairpin with flowers, flower forest palace courtier, white lace silk robe over blue dress with floral embroidery, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "화림(가상) 화림 궁",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hl_gyeongun",
+   "seed": 2026110684,
+   "prompt": "(1boy:1.15), male focus, adult man, brown hair in topknot, brown eyes, serious, academy scholar, white scholar robe with gold buttons, ink brush, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "화림(가상) 화림 서원",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hl_hwaseo",
+   "seed": 2026110785,
+   "prompt": "(1girl:1.15), adult woman, black hair tied low, light brown eyes, calm, academy scholar, dark blue scholar robe, ink brush, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "화림(가상) 화림 서원",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hl_jeongwon",
+   "seed": 2026110886,
+   "prompt": "(1girl:1.15), young woman, black hair in loose updo with pink flower hairpin, light brown eyes, gentle smile, flower forest palace courtier, white lace silk robe with purple floral embroidery, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "화림(가상) 화림 궁",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hl_kkotbi",
+   "seed": 2026110987,
+   "prompt": "(1boy:1.15), male focus, adult man, brown hair, white flower hairpin, light brown eyes, calm, flower forest palace courtier, pale blue silk robe with flower embroidery, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "화림(가상) 화림 궁",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hl_noeul",
+   "seed": 2026111088,
+   "prompt": "(1boy:1.15), male focus, mature man, slicked back blonde hair tied low, light brown eyes, stern, academy scholar, white collar over dark brown scholar robe, ink brush, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "화림(가상) 화림 서원",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hq_dotdae",
+   "seed": 2026111189,
+   "prompt": "(1girl:1.15), young woman, dark brown bob hair, light brown eyes, pearl earrings, pearl fleet sea captain, blue captain coat with yellow collar and gold buttons, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "해궁(가상) 진주 선단",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hq_eodeok",
+   "seed": 2026111290,
+   "prompt": "(1girl:1.15), young woman, black hair in bun, blue eyes, smile, navy tricorn hat, pearl earrings, pearl fleet sea captain, burgundy long captain coat with yellow collar, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "해궁(가상) 진주 선단",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hq_gaebeol",
+   "seed": 2026111391,
+   "prompt": "(1boy:1.15), male focus, adult man, brown hair, brown eyes, smile, black tricorn hat with white trim, pearl earring, pearl fleet sea captain, red long captain coat, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "해궁(가상) 진주 선단",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hq_haeryeong",
+   "seed": 2026111492,
+   "prompt": "(1boy:1.15), male focus, adult man, brown hair in bun with coral and pearl hairpin, blue eyes, calm, undersea palace royal, white ornate flowing robe, many pearl strands, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "해궁(가상) 해궁",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hq_jamsu",
+   "seed": 2026111593,
+   "prompt": "(1girl:1.15), young woman, blonde hair, grey eyes, serious, cream tricorn hat with gold studs, pearl earrings, pearl fleet sea captain, white long captain coat with gold buttons, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "해궁(가상) 진주 선단",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hq_jugwang",
+   "seed": 2026111694,
+   "prompt": "(1boy:1.15), male focus, adult man, short black hair, light brown eyes, smile, pearl fleet sea captain, cream turtleneck, black long captain coat with checkered cape, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "해궁(가상) 진주 선단",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hq_mulgyeol",
+   "seed": 2026111795,
+   "prompt": "(1boy:1.15), male focus, adult man, dark brown hair, blue eyes, smile, ornate blue jewel ear clips, undersea palace royal, black flowing robe with pearl strands, white cape, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "해궁(가상) 해궁",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hq_sanho",
+   "seed": 2026111896,
+   "prompt": "(1boy:1.15), male focus, young man, brown hair, light brown eyes, calm, red and silver conical helmet with blue brim and pearl tassels, undersea palace royal, white ornate flowing robe, pearl strands, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "해궁(가상) 해궁",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "hq_yongpa",
+   "seed": 2026111997,
+   "prompt": "(1boy:1.15), male focus, adult man, short dark brown hair with coral and pearl hairpin, teal eyes, stern, undersea palace royal, white fluffy collar, golden brocade robe, pearl strands, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "해궁(가상) 해궁",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "js_bodo",
+   "seed": 2026112098,
+   "prompt": "(1girl:1.15), adult woman, black bob hair, light brown eyes, calm, modern news anchor, cream tailored blazer with gold buttons, blue press badge, pencil skirt, heels, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 진성 방송국",
+   "width": 768,
+   "height": 1152
+  },
+  {
+   "id": "js_dalli",
+   "seed": 2026112199,
+   "prompt": "(1girl:1.15), young woman, black hair tied back, brown eyes, determined, field reporter, white high-collar jacket, khaki utility vest, camera strap over shoulder, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "현대 현장 취재반",
+   "width": 768,
+   "height": 1152
+  }
+ ]
+}

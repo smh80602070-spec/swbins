@@ -1,0 +1,1607 @@
+{
+ "note": "K-0184 후기 201(batches/k27_late201_i2i.json) 중 shared·K-0183 에 없는 200 — 정본 한 벌 saga-assets/illust/shared. 이름 = data.js HEROES name(가명). look = 초상 프롬프트(참고), 묘사 정본은 data/k184_desc.json(초상 보고 적음). sex = 프롬프트 1girl 여부 — 초상 보고 고친다.",
+ "ticket": "K-0184",
+ "eye_rule": "○ = 초상 _c 와 성별·나이·머리·옷 색·시대 같음 + 스탠딩·반신·표정 넷이 서로 같은 사람",
+ "cast": [
+  {
+   "id": "ac_balgwang",
+   "game": "shared",
+   "name": "발광",
+   "role": "미래 심해 탐사대",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, calm clever gaze"
+  },
+  {
+   "id": "ac_choeumpa",
+   "game": "shared",
+   "name": "초음파",
+   "role": "미래 아크 해저도시",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, calm clever gaze"
+  },
+  {
+   "id": "ac_gipo",
+   "game": "shared",
+   "name": "기포",
+   "role": "미래 아크 해저도시",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, calm clever gaze"
+  },
+  {
+   "id": "ac_haebit",
+   "game": "shared",
+   "name": "해빛",
+   "role": "미래 아크 해저도시",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile"
+  },
+  {
+   "id": "ac_haecho",
+   "game": "shared",
+   "name": "해초",
+   "role": "미래 아크 해저도시",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile"
+  },
+  {
+   "id": "ac_haemun",
+   "game": "shared",
+   "name": "해문",
+   "role": "미래 아크 해저도시",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, gentle kind smile"
+  },
+  {
+   "id": "ac_simyeon",
+   "game": "shared",
+   "name": "심연",
+   "role": "미래 심해 탐사대",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, dark brown hair, blue eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, calm clever gaze"
+  },
+  {
+   "id": "ac_suap",
+   "game": "shared",
+   "name": "수압",
+   "role": "미래 심해 탐사대",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, deep sea explorer, padded pressure suit jacket, high collar, shoulder lamp, fierce determined expression"
+  },
+  {
+   "id": "ac_sumbi",
+   "game": "shared",
+   "name": "숨비",
+   "role": "미래 아크 해저도시",
+   "sex": "f",
+   "look": "adult, brown hair, green eyes, futuristic undersea city citizen, sleek teal bodysuit with glowing seams, high collar, fierce determined expression"
+  },
+  {
+   "id": "aq_byeolgil",
+   "game": "shared",
+   "name": "별길",
+   "role": "사하(가상) 모래 대상",
+   "sex": "f",
+   "look": "young adult, brown hair, brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, calm clever gaze"
+  },
+  {
+   "id": "aq_cheongok",
+   "game": "shared",
+   "name": "청옥",
+   "role": "사하(가상) 사하 성읍",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, teal eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, calm clever gaze"
+  },
+  {
+   "id": "aq_dalgu",
+   "game": "shared",
+   "name": "달구",
+   "role": "사하(가상) 모래 대상",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, gentle kind smile"
+  },
+  {
+   "id": "aq_gyeongbong",
+   "game": "shared",
+   "name": "경봉",
+   "role": "사하(가상) 모래 대상",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, fierce determined expression"
+  },
+  {
+   "id": "aq_nokju",
+   "game": "shared",
+   "name": "녹주",
+   "role": "사하(가상) 사하 성읍",
+   "sex": "m",
+   "look": "adult, brown hair, grey eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, gentle kind smile"
+  },
+  {
+   "id": "aq_saebom",
+   "game": "shared",
+   "name": "새봄",
+   "role": "사하(가상) 사하 성읍",
+   "sex": "m",
+   "look": "adult, blonde hair, green eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, gentle kind smile"
+  },
+  {
+   "id": "aq_sanghwa",
+   "game": "shared",
+   "name": "상화",
+   "role": "사하(가상) 모래 대상",
+   "sex": "m",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, light brown eyes, desert caravan merchant, long striped coat, wide sash, turban scarf, calm clever gaze"
+  },
+  {
+   "id": "aq_sapung",
+   "game": "shared",
+   "name": "사풍",
+   "role": "사하(가상) 사하 성읍",
+   "sex": "m",
+   "look": "adult, black hair, blue eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, fierce determined expression"
+  },
+  {
+   "id": "aq_yeolsa",
+   "game": "shared",
+   "name": "열사",
+   "role": "사하(가상) 사하 성읍",
+   "sex": "m",
+   "look": "young adult, brown hair, brown eyes, desert oasis townsperson, layered sand-colored linen robes, head wrap scarf, fierce determined expression"
+  },
+  {
+   "id": "bw_bitnae",
+   "game": "shared",
+   "name": "빛내",
+   "role": "북원(가상) 설원 기마",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, calm clever gaze"
+  },
+  {
+   "id": "bw_cheolgi",
+   "game": "shared",
+   "name": "철기",
+   "role": "북원(가상) 설원 기마",
+   "sex": "f",
+   "look": "adult, brown hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression"
+  },
+  {
+   "id": "bw_gamu",
+   "game": "shared",
+   "name": "가무",
+   "role": "북원(가상) 북원 부족",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile"
+  },
+  {
+   "id": "bw_gomnae",
+   "game": "shared",
+   "name": "곰내",
+   "role": "북원(가상) 설원 기마",
+   "sex": "m",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression"
+  },
+  {
+   "id": "bw_hwaro",
+   "game": "shared",
+   "name": "화로",
+   "role": "북원(가상) 북원 부족",
+   "sex": "f",
+   "look": "young adult, auburn hair, light brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile"
+  },
+  {
+   "id": "bw_sangwol",
+   "game": "shared",
+   "name": "상월",
+   "role": "북원(가상) 북원 부족",
+   "sex": "f",
+   "look": "young adult, brown hair, grey eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, calm clever gaze"
+  },
+  {
+   "id": "bw_seolgu",
+   "game": "shared",
+   "name": "설구",
+   "role": "북원(가상) 설원 기마",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, auburn hair, light brown eyes, snowfield cavalry rider, fur-lined lamellar armor, fur hat, fierce determined expression"
+  },
+  {
+   "id": "bw_sungeom",
+   "game": "shared",
+   "name": "순검",
+   "role": "북원(가상) 북원 부족",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, fierce determined expression"
+  },
+  {
+   "id": "bw_yanggil",
+   "game": "shared",
+   "name": "양길",
+   "role": "북원(가상) 북원 부족",
+   "sex": "m",
+   "look": "adult, black hair, teal eyes, northern steppe tribe warrior, thick fur coat, bone bead necklace, braided leather, gentle kind smile"
+  },
+  {
+   "id": "cs_cheolgil",
+   "game": "shared",
+   "name": "철길",
+   "role": "현대 철로 상회",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile"
+  },
+  {
+   "id": "cs_gijeok",
+   "game": "shared",
+   "name": "기적",
+   "role": "현대 기관사 조합",
+   "sex": "m",
+   "look": "mature adult, brown hair, blue eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, fierce determined expression"
+  },
+  {
+   "id": "cs_gyeongjeok",
+   "game": "shared",
+   "name": "경적",
+   "role": "현대 기관사 조합",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, calm clever gaze"
+  },
+  {
+   "id": "cs_hwamul",
+   "game": "shared",
+   "name": "화물",
+   "role": "현대 철로 상회",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, calm clever gaze"
+  },
+  {
+   "id": "cs_jeongbi",
+   "game": "shared",
+   "name": "정비",
+   "role": "현대 기관사 조합",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, calm clever gaze"
+  },
+  {
+   "id": "cs_noseon",
+   "game": "shared",
+   "name": "노선",
+   "role": "현대 철로 상회",
+   "sex": "m",
+   "look": "young adult, brown hair, green eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, calm clever gaze"
+  },
+  {
+   "id": "cs_seoktan",
+   "game": "shared",
+   "name": "석탄",
+   "role": "현대 기관사 조합",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, steam train engineer, denim overalls, engineer cap, red neckerchief, fierce determined expression"
+  },
+  {
+   "id": "cs_seungmu",
+   "game": "shared",
+   "name": "승무",
+   "role": "현대 철로 상회",
+   "sex": "m",
+   "look": "young adult, brown hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile"
+  },
+  {
+   "id": "cs_yeokjang",
+   "game": "shared",
+   "name": "역장",
+   "role": "현대 철로 상회",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, 1920s railway company manager, three-piece suit, waistcoat, pocket watch chain, gentle kind smile"
+  },
+  {
+   "id": "dk_amgyeol",
+   "game": "shared",
+   "name": "암결",
+   "role": "대곡(가상) 계곡 수호대",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression"
+  },
+  {
+   "id": "dk_gulttuk",
+   "game": "shared",
+   "name": "굴뚝",
+   "role": "대곡(가상) 대곡",
+   "sex": "f",
+   "look": "young adult, blonde hair, grey eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile"
+  },
+  {
+   "id": "dk_gyedo",
+   "game": "shared",
+   "name": "계도",
+   "role": "대곡(가상) 계곡 수호대",
+   "sex": "m",
+   "look": "adult, brown hair, green eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression"
+  },
+  {
+   "id": "dk_jeoljeong",
+   "game": "shared",
+   "name": "절정",
+   "role": "대곡(가상) 계곡 수호대",
+   "sex": "m",
+   "look": "adult, brown hair, blue eyes, valley guard, studded leather armor, green hooded cloak lowered, fierce determined expression"
+  },
+  {
+   "id": "dk_meari",
+   "game": "shared",
+   "name": "메아리",
+   "role": "대곡(가상) 계곡 수호대",
+   "sex": "m",
+   "look": "adult, black hair, green eyes, valley guard, studded leather armor, green hooded cloak lowered, calm clever gaze"
+  },
+  {
+   "id": "dk_mullae",
+   "game": "shared",
+   "name": "물레",
+   "role": "대곡(가상) 대곡",
+   "sex": "f",
+   "look": "young adult, auburn hair, green eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile"
+  },
+  {
+   "id": "dk_pungnyeon",
+   "game": "shared",
+   "name": "풍년",
+   "role": "대곡(가상) 대곡",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile"
+  },
+  {
+   "id": "dk_saneum",
+   "game": "shared",
+   "name": "산음",
+   "role": "대곡(가상) 대곡",
+   "sex": "f",
+   "look": "young adult, brown hair, light brown eyes, highland valley clan member, woven patterned tunic, wool shawl, calm clever gaze"
+  },
+  {
+   "id": "dk_suro",
+   "game": "shared",
+   "name": "수로",
+   "role": "대곡(가상) 대곡",
+   "sex": "m",
+   "look": "adult, dark brown hair, blue eyes, highland valley clan member, woven patterned tunic, wool shawl, calm clever gaze"
+  },
+  {
+   "id": "fy_baramgae",
+   "game": "shared",
+   "name": "바람개",
+   "role": "미래 하늘섬",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, gentle kind smile"
+  },
+  {
+   "id": "fy_buyang",
+   "game": "shared",
+   "name": "부양",
+   "role": "미래 하늘섬",
+   "sex": "f",
+   "look": "young adult, black hair, light brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, calm clever gaze"
+  },
+  {
+   "id": "fy_cheonggong",
+   "game": "shared",
+   "name": "청공",
+   "role": "미래 하늘섬",
+   "sex": "f",
+   "look": "young adult, auburn hair, green eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, fierce determined expression"
+  },
+  {
+   "id": "fy_gitteol",
+   "game": "shared",
+   "name": "깃털",
+   "role": "미래 구름 정원",
+   "sex": "f",
+   "look": "young adult, blonde hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, calm clever gaze"
+  },
+  {
+   "id": "fy_mujigae",
+   "game": "shared",
+   "name": "무지개",
+   "role": "미래 구름 정원",
+   "sex": "f",
+   "look": "young adult, blonde hair, blue eyes, cloud garden keeper, futuristic pastel smock, flower pin, gentle kind smile"
+  },
+  {
+   "id": "fy_paran",
+   "game": "shared",
+   "name": "파란",
+   "role": "미래 구름 정원",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, fierce determined expression"
+  },
+  {
+   "id": "fy_seomgil",
+   "game": "shared",
+   "name": "섬길",
+   "role": "미래 하늘섬",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, calm clever gaze"
+  },
+  {
+   "id": "fy_ttangkkeut",
+   "game": "shared",
+   "name": "땅끝",
+   "role": "미래 하늘섬",
+   "sex": "f",
+   "look": "young adult, auburn hair, light brown eyes, floating sky island noble, futuristic white robes with gold trim, wind ribbons, fierce determined expression"
+  },
+  {
+   "id": "fy_unwon",
+   "game": "shared",
+   "name": "운원",
+   "role": "미래 구름 정원",
+   "sex": "f",
+   "look": "young adult, brown hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, gentle kind smile"
+  },
+  {
+   "id": "gm_cheolbu",
+   "game": "shared",
+   "name": "철부",
+   "role": "금마(가상) 광산 조합",
+   "sex": "m",
+   "look": "young adult, blonde hair, green eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, fierce determined expression"
+  },
+  {
+   "id": "gm_dolbae",
+   "game": "shared",
+   "name": "돌배",
+   "role": "금마(가상) 광산 조합",
+   "sex": "f",
+   "look": "adult, black hair, brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, gentle kind smile"
+  },
+  {
+   "id": "gm_gaenghwa",
+   "game": "shared",
+   "name": "갱화",
+   "role": "금마(가상) 광산 조합",
+   "sex": "f",
+   "look": "young adult, auburn hair, light brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze"
+  },
+  {
+   "id": "gm_geumhyeol",
+   "game": "shared",
+   "name": "금혈",
+   "role": "금마(가상) 금마성",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, golden fortress knight, gilded lamellar armor, horse crest, gentle kind smile"
+  },
+  {
+   "id": "gm_hwangma",
+   "game": "shared",
+   "name": "황마",
+   "role": "금마(가상) 금마성",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, golden fortress knight, gilded lamellar armor, horse crest, fierce determined expression"
+  },
+  {
+   "id": "gm_jeongdong",
+   "game": "shared",
+   "name": "정동",
+   "role": "금마(가상) 광산 조합",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze"
+  },
+  {
+   "id": "gm_mahyang",
+   "game": "shared",
+   "name": "마향",
+   "role": "금마(가상) 금마성",
+   "sex": "m",
+   "look": "mature adult, blonde hair, blue eyes, golden fortress knight, gilded lamellar armor, horse crest, gentle kind smile"
+  },
+  {
+   "id": "gm_myeongseok",
+   "game": "shared",
+   "name": "명석",
+   "role": "금마(가상) 광산 조합",
+   "sex": "f",
+   "look": "young adult, blonde hair, grey eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze"
+  },
+  {
+   "id": "gm_sanul",
+   "game": "shared",
+   "name": "산울",
+   "role": "금마(가상) 금마성",
+   "sex": "f",
+   "look": "adult, brown hair, teal eyes, golden fortress knight, gilded lamellar armor, horse crest, fierce determined expression"
+  },
+  {
+   "id": "gr_bangpung",
+   "game": "shared",
+   "name": "방풍",
+   "role": "미래 씨앗 은행",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, seed vault scientist, white lab coat, seed pouches on belt, fierce determined expression"
+  },
+  {
+   "id": "gr_haetbit",
+   "game": "shared",
+   "name": "햇빛",
+   "role": "미래 녹화 연합",
+   "sex": "m",
+   "look": "adult, blonde hair, grey eyes, eco engineer, green field jacket, leaf emblem, utility pockets, calm clever gaze"
+  },
+  {
+   "id": "gr_iseul",
+   "game": "shared",
+   "name": "이슬",
+   "role": "미래 씨앗 은행",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, seed vault scientist, white lab coat, seed pouches on belt, calm clever gaze"
+  },
+  {
+   "id": "gr_kkulbeol",
+   "game": "shared",
+   "name": "꿀벌",
+   "role": "미래 녹화 연합",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, eco engineer, green field jacket, leaf emblem, utility pockets, gentle kind smile"
+  },
+  {
+   "id": "gr_mojong",
+   "game": "shared",
+   "name": "모종",
+   "role": "미래 씨앗 은행",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, seed vault scientist, white lab coat, seed pouches on belt, gentle kind smile"
+  },
+  {
+   "id": "gr_nokhwa",
+   "game": "shared",
+   "name": "녹화",
+   "role": "미래 녹화 연합",
+   "sex": "m",
+   "look": "adult, brown hair, blue eyes, eco engineer, green field jacket, leaf emblem, utility pockets, gentle kind smile"
+  },
+  {
+   "id": "gr_ssiat",
+   "game": "shared",
+   "name": "씨앗",
+   "role": "미래 씨앗 은행",
+   "sex": "f",
+   "look": "young adult, brown hair, light brown eyes, seed vault scientist, white lab coat, seed pouches on belt, calm clever gaze"
+  },
+  {
+   "id": "gr_supgil",
+   "game": "shared",
+   "name": "숲길",
+   "role": "미래 씨앗 은행",
+   "sex": "m",
+   "look": "adult, auburn hair, blue eyes, seed vault scientist, white lab coat, seed pouches on belt, fierce determined expression"
+  },
+  {
+   "id": "gr_toyang",
+   "game": "shared",
+   "name": "토양",
+   "role": "미래 녹화 연합",
+   "sex": "m",
+   "look": "adult, auburn hair, brown eyes, eco engineer, green field jacket, leaf emblem, utility pockets, calm clever gaze"
+  },
+  {
+   "id": "hb_bisang",
+   "game": "shared",
+   "name": "비상",
+   "role": "현대 하늘 비행단",
+   "sex": "m",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, brown eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression"
+  },
+  {
+   "id": "hb_gisang",
+   "game": "shared",
+   "name": "기상",
+   "role": "현대 관제탑",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze"
+  },
+  {
+   "id": "hb_gwanje",
+   "game": "shared",
+   "name": "관제",
+   "role": "현대 관제탑",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze"
+  },
+  {
+   "id": "hb_gyeongro",
+   "game": "shared",
+   "name": "경로",
+   "role": "현대 관제탑",
+   "sex": "f",
+   "look": "young adult, brown hair, grey eyes, air traffic controller, navy uniform, headset around neck, calm clever gaze"
+  },
+  {
+   "id": "hb_hwaljuro",
+   "game": "shared",
+   "name": "활주로",
+   "role": "현대 관제탑",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, air traffic controller, navy uniform, headset around neck, gentle kind smile"
+  },
+  {
+   "id": "hb_jeomgeom",
+   "game": "shared",
+   "name": "점검",
+   "role": "현대 하늘 비행단",
+   "sex": "m",
+   "look": "adult, blonde hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, gentle kind smile"
+  },
+  {
+   "id": "hb_mangwon",
+   "game": "shared",
+   "name": "망원",
+   "role": "현대 하늘 비행단",
+   "sex": "f",
+   "look": "young adult, black hair, light brown eyes, aviator pilot, leather flight jacket, white scarf, wings badge, calm clever gaze"
+  },
+  {
+   "id": "hb_sangae",
+   "game": "shared",
+   "name": "산개",
+   "role": "현대 하늘 비행단",
+   "sex": "m",
+   "look": "adult, brown hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression"
+  },
+  {
+   "id": "hb_seonhoe",
+   "game": "shared",
+   "name": "선회",
+   "role": "현대 하늘 비행단",
+   "sex": "m",
+   "look": "adult, black hair, blue eyes, aviator pilot, leather flight jacket, white scarf, wings badge, fierce determined expression"
+  },
+  {
+   "id": "hl_baekhwa",
+   "game": "shared",
+   "name": "백화",
+   "role": "화림(가상) 화림 궁",
+   "sex": "m",
+   "look": "adult, brown hair, green eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile"
+  },
+  {
+   "id": "hl_damhwa",
+   "game": "shared",
+   "name": "담화",
+   "role": "화림(가상) 화림 서원",
+   "sex": "m",
+   "look": "young adult, brown hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze"
+  },
+  {
+   "id": "hl_geumsil",
+   "game": "shared",
+   "name": "금실",
+   "role": "화림(가상) 화림 궁",
+   "sex": "f",
+   "look": "young adult, blonde hair, grey eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile"
+  },
+  {
+   "id": "hl_gyeongun",
+   "game": "shared",
+   "name": "경운",
+   "role": "화림(가상) 화림 서원",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze"
+  },
+  {
+   "id": "hl_hwaseo",
+   "game": "shared",
+   "name": "화서",
+   "role": "화림(가상) 화림 서원",
+   "sex": "f",
+   "look": "adult, black hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze"
+  },
+  {
+   "id": "hl_jeongwon",
+   "game": "shared",
+   "name": "정원",
+   "role": "화림(가상) 화림 궁",
+   "sex": "f",
+   "look": "young adult, black hair, light brown eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, gentle kind smile"
+  },
+  {
+   "id": "hl_kkotbi",
+   "game": "shared",
+   "name": "꽃비",
+   "role": "화림(가상) 화림 궁",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, flower forest palace courtier, layered silk robes with floral embroidery, ornate hairpin, fierce determined expression"
+  },
+  {
+   "id": "hl_noeul",
+   "game": "shared",
+   "name": "노을",
+   "role": "화림(가상) 화림 서원",
+   "sex": "m",
+   "look": "mature adult, blonde hair, light brown eyes, academy scholar, plain scholar robe, ink brush, hair tied up, calm clever gaze"
+  },
+  {
+   "id": "hq_dotdae",
+   "game": "shared",
+   "name": "돛대",
+   "role": "해궁(가상) 진주 선단",
+   "sex": "f",
+   "look": "young adult, auburn hair, light brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, fierce determined expression"
+  },
+  {
+   "id": "hq_eodeok",
+   "game": "shared",
+   "name": "어덕",
+   "role": "해궁(가상) 진주 선단",
+   "sex": "f",
+   "look": "young adult, black hair, blue eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile"
+  },
+  {
+   "id": "hq_gaebeol",
+   "game": "shared",
+   "name": "갯벌",
+   "role": "해궁(가상) 진주 선단",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile"
+  },
+  {
+   "id": "hq_haeryeong",
+   "game": "shared",
+   "name": "해령",
+   "role": "해궁(가상) 해궁",
+   "sex": "m",
+   "look": "adult, brown hair, teal eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze"
+  },
+  {
+   "id": "hq_jamsu",
+   "game": "shared",
+   "name": "잠수",
+   "role": "해궁(가상) 진주 선단",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, fierce determined expression"
+  },
+  {
+   "id": "hq_jugwang",
+   "game": "shared",
+   "name": "주광",
+   "role": "해궁(가상) 진주 선단",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, pearl fleet sea captain, long captain coat, pearl earring, tricorn hat, gentle kind smile"
+  },
+  {
+   "id": "hq_mulgyeol",
+   "game": "shared",
+   "name": "물결",
+   "role": "해궁(가상) 해궁",
+   "sex": "m",
+   "look": "adult, brown hair, blue eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze"
+  },
+  {
+   "id": "hq_sanho",
+   "game": "shared",
+   "name": "산호",
+   "role": "해궁(가상) 해궁",
+   "sex": "m",
+   "look": "young adult, brown hair, light brown eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, calm clever gaze"
+  },
+  {
+   "id": "hq_yongpa",
+   "game": "shared",
+   "name": "용파",
+   "role": "해궁(가상) 해궁",
+   "sex": "m",
+   "look": "adult, brown hair, teal eyes, undersea palace royal, ornate flowing robes, pearl strands, coral hairpin, fierce determined expression"
+  },
+  {
+   "id": "js_bodo",
+   "game": "shared",
+   "name": "보도",
+   "role": "현대 진성 방송국",
+   "sex": "f",
+   "look": "adult, black hair, light brown eyes, modern news anchor, tailored blazer, press badge, calm clever gaze"
+  },
+  {
+   "id": "js_dalli",
+   "game": "shared",
+   "name": "달리",
+   "role": "현대 현장 취재반",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, black hair, brown eyes, field reporter, khaki utility vest, camera strap over shoulder, fierce determined expression"
+  },
+  {
+   "id": "js_eumseong",
+   "game": "shared",
+   "name": "음성",
+   "role": "현대 진성 방송국",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, modern news anchor, tailored blazer, press badge, gentle kind smile"
+  },
+  {
+   "id": "js_hyeonjang",
+   "game": "shared",
+   "name": "현장",
+   "role": "현대 현장 취재반",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, field reporter, khaki utility vest, camera strap over shoulder, fierce determined expression"
+  },
+  {
+   "id": "js_jamak",
+   "game": "shared",
+   "name": "자막",
+   "role": "현대 진성 방송국",
+   "sex": "m",
+   "look": "adult, dark brown hair, grey eyes, modern news anchor, tailored blazer, press badge, calm clever gaze"
+  },
+  {
+   "id": "js_jeonpa",
+   "game": "shared",
+   "name": "전파",
+   "role": "현대 진성 방송국",
+   "sex": "f",
+   "look": "young adult, black hair, light brown eyes, modern news anchor, tailored blazer, press badge, calm clever gaze"
+  },
+  {
+   "id": "js_jomyeong",
+   "game": "shared",
+   "name": "조명",
+   "role": "현대 진성 방송국",
+   "sex": "m",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, dark brown hair, blue eyes, modern news anchor, tailored blazer, press badge, gentle kind smile"
+  },
+  {
+   "id": "js_saengbang",
+   "game": "shared",
+   "name": "생방",
+   "role": "현대 진성 방송국",
+   "sex": "f",
+   "look": "young adult, blonde hair, grey eyes, modern news anchor, tailored blazer, press badge, gentle kind smile"
+  },
+  {
+   "id": "js_teukjong",
+   "game": "shared",
+   "name": "특종",
+   "role": "현대 현장 취재반",
+   "sex": "m",
+   "look": "adult, auburn hair, grey eyes, field reporter, khaki utility vest, camera strap over shoulder, calm clever gaze"
+  },
+  {
+   "id": "kd_cheolsim",
+   "game": "shared",
+   "name": "철심",
+   "role": "현대 로봇 동아리",
+   "sex": "m",
+   "look": "elderly, wrinkles, gray beard, brown hair, grey eyes, robotics club member, team jacket, tool belt, robot arm patch, fierce determined expression"
+  },
+  {
+   "id": "kd_cheongram",
+   "game": "shared",
+   "name": "청람",
+   "role": "현대 청람 공대",
+   "sex": "f",
+   "look": "adult, black hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze"
+  },
+  {
+   "id": "kd_hoero",
+   "game": "shared",
+   "name": "회로",
+   "role": "현대 로봇 동아리",
+   "sex": "f",
+   "look": "adult, brown hair, teal eyes, robotics club member, team jacket, tool belt, robot arm patch, calm clever gaze"
+  },
+  {
+   "id": "kd_jeonji",
+   "game": "shared",
+   "name": "전지",
+   "role": "현대 청람 공대",
+   "sex": "f",
+   "look": "young adult, auburn hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze"
+  },
+  {
+   "id": "kd_nalgae",
+   "game": "shared",
+   "name": "날개",
+   "role": "현대 로봇 동아리",
+   "sex": "f",
+   "look": "adult, black hair, brown eyes, robotics club member, team jacket, tool belt, robot arm patch, gentle kind smile"
+  },
+  {
+   "id": "kd_seolgye",
+   "game": "shared",
+   "name": "설계",
+   "role": "현대 청람 공대",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze"
+  },
+  {
+   "id": "kd_seorim",
+   "game": "shared",
+   "name": "서림",
+   "role": "현대 청람 공대",
+   "sex": "m",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, brown eyes, engineering university student, zip-up hoodie, lanyard id card, gentle kind smile"
+  },
+  {
+   "id": "kd_silheom",
+   "game": "shared",
+   "name": "실험",
+   "role": "현대 청람 공대",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze"
+  },
+  {
+   "id": "kd_yongjeop",
+   "game": "shared",
+   "name": "용접",
+   "role": "현대 로봇 동아리",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, robotics club member, team jacket, tool belt, robot arm patch, fierce determined expression"
+  },
+  {
+   "id": "lg_baekgeom",
+   "game": "shared",
+   "name": "백검",
+   "role": "전설 전설",
+   "sex": "f",
+   "look": "adult, brown hair, blue eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, fierce determined expression"
+  },
+  {
+   "id": "lg_ilwol",
+   "game": "shared",
+   "name": "일월",
+   "role": "전설 전설",
+   "sex": "f",
+   "look": "young adult, black hair, light brown eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, gentle kind smile"
+  },
+  {
+   "id": "lg_mugyeong",
+   "game": "shared",
+   "name": "무경",
+   "role": "전설 전설",
+   "sex": "m",
+   "look": "young adult, brown hair, blue eyes, legendary mythic hero, ornate ancient armor with faintly glowing runes, flowing cape, calm clever gaze"
+  },
+  {
+   "id": "mh_bungdae",
+   "game": "shared",
+   "name": "붕대",
+   "role": "현대 무하 의료단",
+   "sex": "f",
+   "look": "young adult, black hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile"
+  },
+  {
+   "id": "mh_gangin",
+   "game": "shared",
+   "name": "강인",
+   "role": "현대 응급 구조대",
+   "sex": "f",
+   "look": "young adult, brown hair, light brown eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression"
+  },
+  {
+   "id": "mh_ganhui",
+   "game": "shared",
+   "name": "간희",
+   "role": "현대 무하 의료단",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile"
+  },
+  {
+   "id": "mh_gugeup",
+   "game": "shared",
+   "name": "구급",
+   "role": "현대 응급 구조대",
+   "sex": "m",
+   "look": "mature adult, brown hair, blue eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression"
+  },
+  {
+   "id": "mh_maekbak",
+   "game": "shared",
+   "name": "맥박",
+   "role": "현대 무하 의료단",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, hospital doctor, white coat, stethoscope around neck, calm clever gaze"
+  },
+  {
+   "id": "mh_muha",
+   "game": "shared",
+   "name": "무하",
+   "role": "현대 무하 의료단",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile"
+  },
+  {
+   "id": "mh_onyu",
+   "game": "shared",
+   "name": "온유",
+   "role": "현대 무하 의료단",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile"
+  },
+  {
+   "id": "mh_sabang",
+   "game": "shared",
+   "name": "사방",
+   "role": "현대 응급 구조대",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression"
+  },
+  {
+   "id": "mh_yakseon",
+   "game": "shared",
+   "name": "약선",
+   "role": "현대 무하 의료단",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, hospital doctor, white coat, stethoscope around neck, calm clever gaze"
+  },
+  {
+   "id": "mr_bakwi",
+   "game": "shared",
+   "name": "바퀴",
+   "role": "미래 붉은 사막 기지",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, black hair, blue eyes, mars base engineer, dusty red jumpsuit, utility harness, fierce determined expression"
+  },
+  {
+   "id": "mr_bingha",
+   "game": "shared",
+   "name": "빙하",
+   "role": "미래 화성 개척단",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, teal eyes, mars colonist, rust orange environment suit, high collar, mission patch, calm clever gaze"
+  },
+  {
+   "id": "mr_cheolgu",
+   "game": "shared",
+   "name": "철구",
+   "role": "미래 화성 개척단",
+   "sex": "f",
+   "look": "young adult, brown hair, light brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, calm clever gaze"
+  },
+  {
+   "id": "mr_cheotbom",
+   "game": "shared",
+   "name": "첫봄",
+   "role": "미래 화성 개척단",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile"
+  },
+  {
+   "id": "mr_gaecheok",
+   "game": "shared",
+   "name": "개척",
+   "role": "미래 화성 개척단",
+   "sex": "f",
+   "look": "adult, brown hair, teal eyes, mars colonist, rust orange environment suit, high collar, mission patch, fierce determined expression"
+  },
+  {
+   "id": "mr_gwangmul",
+   "game": "shared",
+   "name": "광물",
+   "role": "미래 붉은 사막 기지",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, mars base engineer, dusty red jumpsuit, utility harness, calm clever gaze"
+  },
+  {
+   "id": "mr_jeoksa",
+   "game": "shared",
+   "name": "적사",
+   "role": "미래 붉은 사막 기지",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, grey eyes, mars base engineer, dusty red jumpsuit, utility harness, fierce determined expression"
+  },
+  {
+   "id": "mr_onsil",
+   "game": "shared",
+   "name": "온실",
+   "role": "미래 화성 개척단",
+   "sex": "m",
+   "look": "young adult, brown hair, brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile"
+  },
+  {
+   "id": "mr_sumteo",
+   "game": "shared",
+   "name": "숨터",
+   "role": "미래 화성 개척단",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, grey eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile"
+  },
+  {
+   "id": "nc_baekdo",
+   "game": "shared",
+   "name": "백도",
+   "role": "현대 네온 상가",
+   "sex": "f",
+   "look": "young adult, blonde hair, grey eyes, neon market merchant, glossy jacket, holographic accessories, calm clever gaze"
+  },
+  {
+   "id": "nc_bitsal",
+   "game": "shared",
+   "name": "빛살",
+   "role": "현대 네온시 순찰대",
+   "sex": "f",
+   "look": "young adult, brown hair, teal eyes, cyberpunk city patrol officer, armored jacket with neon trim, fierce determined expression"
+  },
+  {
+   "id": "nc_geori",
+   "game": "shared",
+   "name": "거리",
+   "role": "현대 네온 상가",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, neon market merchant, glossy jacket, holographic accessories, fierce determined expression"
+  },
+  {
+   "id": "nc_hamseong",
+   "game": "shared",
+   "name": "함성",
+   "role": "현대 네온시 순찰대",
+   "sex": "m",
+   "look": "elderly, wrinkles, gray beard, brown hair, light brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, gentle kind smile"
+  },
+  {
+   "id": "nc_hwalgi",
+   "game": "shared",
+   "name": "활기",
+   "role": "현대 네온 상가",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, neon market merchant, glossy jacket, holographic accessories, gentle kind smile"
+  },
+  {
+   "id": "nc_jeongmyeong",
+   "game": "shared",
+   "name": "정명",
+   "role": "현대 네온시 순찰대",
+   "sex": "m",
+   "look": "adult, blonde hair, grey eyes, cyberpunk city patrol officer, armored jacket with neon trim, calm clever gaze"
+  },
+  {
+   "id": "nc_sinho",
+   "game": "shared",
+   "name": "신호",
+   "role": "현대 네온시 순찰대",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, calm clever gaze"
+  },
+  {
+   "id": "nc_ullim",
+   "game": "shared",
+   "name": "울림",
+   "role": "현대 네온 상가",
+   "sex": "m",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, grey eyes, neon market merchant, glossy jacket, holographic accessories, gentle kind smile"
+  },
+  {
+   "id": "nc_yagyeong",
+   "game": "shared",
+   "name": "야경",
+   "role": "현대 네온시 순찰대",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, cyberpunk city patrol officer, armored jacket with neon trim, fierce determined expression"
+  },
+  {
+   "id": "ns_banghwabyeok",
+   "game": "shared",
+   "name": "방화벽",
+   "role": "미래 접속자 연합",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, fierce determined expression"
+  },
+  {
+   "id": "ns_buho",
+   "game": "shared",
+   "name": "부호",
+   "role": "미래 접속자 연합",
+   "sex": "f",
+   "look": "young adult, black hair, light brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, calm clever gaze"
+  },
+  {
+   "id": "ns_eungdap",
+   "game": "shared",
+   "name": "응답",
+   "role": "미래 신경망 도시",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile"
+  },
+  {
+   "id": "ns_gieok",
+   "game": "shared",
+   "name": "기억",
+   "role": "미래 신경망 도시",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile"
+  },
+  {
+   "id": "ns_hakseup",
+   "game": "shared",
+   "name": "학습",
+   "role": "미래 접속자 연합",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, virtual reality netrunner, long tech coat, visor hanging around neck, calm clever gaze"
+  },
+  {
+   "id": "ns_hwamyeon",
+   "game": "shared",
+   "name": "화면",
+   "role": "미래 신경망 도시",
+   "sex": "m",
+   "look": "adult, brown hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile"
+  },
+  {
+   "id": "ns_jeopsok",
+   "game": "shared",
+   "name": "접속",
+   "role": "미래 접속자 연합",
+   "sex": "m",
+   "look": "young adult, black hair, brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, fierce determined expression"
+  },
+  {
+   "id": "ns_singyeong",
+   "game": "shared",
+   "name": "신경",
+   "role": "미래 신경망 도시",
+   "sex": "f",
+   "look": "young adult, blonde hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, calm clever gaze"
+  },
+  {
+   "id": "ns_yeongyeol",
+   "game": "shared",
+   "name": "연결",
+   "role": "미래 신경망 도시",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile"
+  },
+  {
+   "id": "ob_byeolbit",
+   "game": "shared",
+   "name": "별빛",
+   "role": "미래 궤도 정거장",
+   "sex": "f",
+   "look": "young adult, blonde hair, blue eyes, space station crew member, fitted crew uniform, mission patches, gentle kind smile"
+  },
+  {
+   "id": "ob_gongjeon",
+   "game": "shared",
+   "name": "공전",
+   "role": "미래 궤도 정거장",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, space station crew member, fitted crew uniform, mission patches, gentle kind smile"
+  },
+  {
+   "id": "ob_jungnyeok",
+   "game": "shared",
+   "name": "중력",
+   "role": "미래 궤도 정거장",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, space station crew member, fitted crew uniform, mission patches, fierce determined expression"
+  },
+  {
+   "id": "ob_mujung",
+   "game": "shared",
+   "name": "무중",
+   "role": "미래 우주 정비단",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, space mechanic, padded jumpsuit, tool harness, fierce determined expression"
+  },
+  {
+   "id": "ob_sanso",
+   "game": "shared",
+   "name": "산소",
+   "role": "미래 우주 정비단",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, space mechanic, padded jumpsuit, tool harness, gentle kind smile"
+  },
+  {
+   "id": "ob_seongun",
+   "game": "shared",
+   "name": "성운",
+   "role": "미래 궤도 정거장",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, space station crew member, fitted crew uniform, mission patches, calm clever gaze"
+  },
+  {
+   "id": "ob_taeyang",
+   "game": "shared",
+   "name": "태양",
+   "role": "미래 우주 정비단",
+   "sex": "f",
+   "look": "adult, brown hair, light brown eyes, space mechanic, padded jumpsuit, tool harness, calm clever gaze"
+  },
+  {
+   "id": "ob_tongsin",
+   "game": "shared",
+   "name": "통신",
+   "role": "미래 궤도 정거장",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, light brown eyes, space station crew member, fitted crew uniform, mission patches, calm clever gaze"
+  },
+  {
+   "id": "ob_yeonryo",
+   "game": "shared",
+   "name": "연료",
+   "role": "미래 우주 정비단",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, space mechanic, padded jumpsuit, tool harness, fierce determined expression"
+  },
+  {
+   "id": "rg_eungwon",
+   "game": "shared",
+   "name": "응원",
+   "role": "현대 질주 리그",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, gentle kind smile"
+  },
+  {
+   "id": "rg_gyeolseung",
+   "game": "shared",
+   "name": "결승",
+   "role": "현대 질주 리그",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, black hair, brown eyes, racing driver, racing suit with sponsor patches, high collar, fierce determined expression"
+  },
+  {
+   "id": "rg_gyesan",
+   "game": "shared",
+   "name": "계산",
+   "role": "현대 정비 팀",
+   "sex": "f",
+   "look": "young adult, auburn hair, light brown eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze"
+  },
+  {
+   "id": "rg_jagal",
+   "game": "shared",
+   "name": "자갈",
+   "role": "현대 정비 팀",
+   "sex": "m",
+   "look": "adult, auburn hair, grey eyes, pit crew mechanic, team uniform, work gloves, fierce determined expression"
+  },
+  {
+   "id": "rg_jilju",
+   "game": "shared",
+   "name": "질주",
+   "role": "현대 질주 리그",
+   "sex": "m",
+   "look": "adult, black hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, fierce determined expression"
+  },
+  {
+   "id": "rg_saekdong",
+   "game": "shared",
+   "name": "색동",
+   "role": "현대 정비 팀",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, pit crew mechanic, team uniform, work gloves, gentle kind smile"
+  },
+  {
+   "id": "rg_singi",
+   "game": "shared",
+   "name": "신기",
+   "role": "현대 정비 팀",
+   "sex": "m",
+   "look": "adult, black hair, teal eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze"
+  },
+  {
+   "id": "rg_suri",
+   "game": "shared",
+   "name": "수리",
+   "role": "현대 정비 팀",
+   "sex": "f",
+   "look": "young adult, brown hair, light brown eyes, pit crew mechanic, team uniform, work gloves, calm clever gaze"
+  },
+  {
+   "id": "rg_yeonseup",
+   "game": "shared",
+   "name": "연습",
+   "role": "현대 질주 리그",
+   "sex": "m",
+   "look": "adult, auburn hair, light brown eyes, racing driver, racing suit with sponsor patches, high collar, gentle kind smile"
+  },
+  {
+   "id": "sn_bitdol",
+   "game": "shared",
+   "name": "빛돌",
+   "role": "석남(가상) 석남",
+   "sex": "m",
+   "look": "mature adult, brown hair, light brown eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, calm clever gaze"
+  },
+  {
+   "id": "sn_deonggul",
+   "game": "shared",
+   "name": "덩굴",
+   "role": "석남(가상) 밀림 촌락",
+   "sex": "f",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, teal eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, fierce determined expression"
+  },
+  {
+   "id": "sn_gojeok",
+   "game": "shared",
+   "name": "고적",
+   "role": "석남(가상) 석남",
+   "sex": "m",
+   "look": "adult, dark brown hair, grey eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, calm clever gaze"
+  },
+  {
+   "id": "sn_horang",
+   "game": "shared",
+   "name": "호랑",
+   "role": "석남(가상) 밀림 촌락",
+   "sex": "f",
+   "look": "young adult, black hair, brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, fierce determined expression"
+  },
+  {
+   "id": "sn_milhyang",
+   "game": "shared",
+   "name": "밀향",
+   "role": "석남(가상) 밀림 촌락",
+   "sex": "f",
+   "look": "young adult, blonde hair, grey eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, calm clever gaze"
+  },
+  {
+   "id": "sn_nuri",
+   "game": "shared",
+   "name": "누리",
+   "role": "석남(가상) 석남",
+   "sex": "f",
+   "look": "adult, brown hair, teal eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, gentle kind smile"
+  },
+  {
+   "id": "sn_ppuri",
+   "game": "shared",
+   "name": "뿌리",
+   "role": "석남(가상) 밀림 촌락",
+   "sex": "m",
+   "look": "mature adult, brown hair, light brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, gentle kind smile"
+  },
+  {
+   "id": "sn_saessak",
+   "game": "shared",
+   "name": "새싹",
+   "role": "석남(가상) 밀림 촌락",
+   "sex": "m",
+   "look": "elderly, wrinkles, gray beard, white hair, light brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, gentle kind smile"
+  },
+  {
+   "id": "sn_seokhwan",
+   "game": "shared",
+   "name": "석환",
+   "role": "석남(가상) 석남",
+   "sex": "f",
+   "look": "young adult, dark brown hair, blue eyes, southern jungle kingdom noble, gold armlets, colorful layered sash, fierce determined expression"
+  },
+  {
+   "id": "tw_baekya",
+   "game": "shared",
+   "name": "백야",
+   "role": "미래 시계지기",
+   "sex": "f",
+   "look": "young adult, brown hair, teal eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, calm clever gaze"
+  },
+  {
+   "id": "tw_bunchim",
+   "game": "shared",
+   "name": "분침",
+   "role": "미래 시간 관측소",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, fierce determined expression"
+  },
+  {
+   "id": "tw_cheonryu",
+   "game": "shared",
+   "name": "천류",
+   "role": "미래 시간 관측소",
+   "sex": "f",
+   "look": "young adult, black hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, calm clever gaze"
+  },
+  {
+   "id": "tw_girok",
+   "game": "shared",
+   "name": "기록",
+   "role": "미래 시계지기",
+   "sex": "m",
+   "look": "adult, black hair, brown eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, gentle kind smile"
+  },
+  {
+   "id": "tw_hoegwi",
+   "game": "shared",
+   "name": "회귀",
+   "role": "미래 시간 관측소",
+   "sex": "m",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, black hair, tied back hair, brown eyes, time observatory scholar, long dark coat, clockwork brooch, fierce determined expression"
+  },
+  {
+   "id": "tw_jogak",
+   "game": "shared",
+   "name": "조각",
+   "role": "미래 시간 관측소",
+   "sex": "f",
+   "look": "young adult, brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, gentle kind smile"
+  },
+  {
+   "id": "tw_jongsori",
+   "game": "shared",
+   "name": "종소리",
+   "role": "미래 시계지기",
+   "sex": "f",
+   "look": "young adult, blonde hair, light brown eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, gentle kind smile"
+  },
+  {
+   "id": "tw_topni",
+   "game": "shared",
+   "name": "톱니",
+   "role": "미래 시계지기",
+   "sex": "f",
+   "look": "adult, black hair, blue eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, calm clever gaze"
+  },
+  {
+   "id": "tw_yegyeon",
+   "game": "shared",
+   "name": "예견",
+   "role": "미래 시간 관측소",
+   "sex": "f",
+   "look": "young adult, dark brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, calm clever gaze"
+  },
+  {
+   "id": "yk_amsu",
+   "game": "shared",
+   "name": "암수",
+   "role": "운령(가상) 운령 관문",
+   "sex": "m",
+   "look": "forehead visible, high collar, closed jacket, fully clothed, adult, black hair, brown eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, fierce determined expression"
+  },
+  {
+   "id": "yk_baekyeong",
+   "game": "shared",
+   "name": "백영",
+   "role": "운령(가상) 고원 유목",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, highland nomad, felt coat, sheepskin collar, fierce determined expression"
+  },
+  {
+   "id": "yk_cheonro",
+   "game": "shared",
+   "name": "천로",
+   "role": "운령(가상) 운령 관문",
+   "sex": "m",
+   "look": "adult, blonde hair, teal eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, calm clever gaze"
+  },
+  {
+   "id": "yk_hyangdo",
+   "game": "shared",
+   "name": "향도",
+   "role": "운령(가상) 고원 유목",
+   "sex": "m",
+   "look": "adult, brown hair, green eyes, highland nomad, felt coat, sheepskin collar, calm clever gaze"
+  },
+  {
+   "id": "yk_jinbaek",
+   "game": "shared",
+   "name": "진백",
+   "role": "운령(가상) 고원 유목",
+   "sex": "m",
+   "look": "adult, brown hair, brown eyes, highland nomad, felt coat, sheepskin collar, fierce determined expression"
+  },
+  {
+   "id": "yk_pungdeung",
+   "game": "shared",
+   "name": "풍등",
+   "role": "운령(가상) 운령 관문",
+   "sex": "f",
+   "look": "young adult, brown hair, teal eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, calm clever gaze"
+  },
+  {
+   "id": "yk_sanyeom",
+   "game": "shared",
+   "name": "산염",
+   "role": "운령(가상) 운령 관문",
+   "sex": "f",
+   "look": "young adult, black hair, blue eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, gentle kind smile"
+  },
+  {
+   "id": "yk_seolmae",
+   "game": "shared",
+   "name": "설매",
+   "role": "운령(가상) 고원 유목",
+   "sex": "f",
+   "look": "young adult, auburn hair, light brown eyes, highland nomad, felt coat, sheepskin collar, gentle kind smile"
+  },
+  {
+   "id": "yk_unsu",
+   "game": "shared",
+   "name": "운수",
+   "role": "운령(가상) 운령 관문",
+   "sex": "m",
+   "look": "adult, brown hair, light brown eyes, mountain pass guard, lamellar armor, red tassel helmet held at side, fierce determined expression"
+  }
+ ]
+}
