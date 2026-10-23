@@ -111,6 +111,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/account.js"></script>
 <script src="js/hero.js"></script>
 <script src="js/mount.js"></script>
+<script src="js/village-animals.js"></script>
 <script src="js/village.js"></script>
 <script src="js/village-folk.js"></script>
 <script src="js/partner.js"></script>
@@ -5079,6 +5080,16 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         ('차림표 ' + a + ' → ' + b + ' → ' + c);
     });
 
+    t('짐승 자리(R-4 village-animals.js) — 같은 손잡이면 같은 목록 · 막힌 칸엔 안 선다 · 마을 짐승과 같은 수', function () {
+      var VA = DG.villageAnimals, V = DG.village; if (!VA || !V) { return '실패 villageAnimals 없음'; }
+      var E = { seed: 12345, W: 40, H: 30, TILE: 40, CELL: 22, margin: 30, spaceBase: null, biomeAt: function () { return 'meadow'; }, free: function () { return true; } };
+      var a = VA.place(E), b = VA.place(E), none = VA.place(Object.assign({}, E, { free: function () { return false; } }));
+      var same = a.length === b.length && a.every(function (x, i) { return x.id === b[i].id && x.kind === b[i].kind; });
+      var noHerd = none.filter(function (x) { return x.id.indexOf('ah') !== 0; }).length;
+      V.buildAnimals(); var live = V.raw().animals.length;
+      var ok = a.length > 0 && same && noHerd === 0 && live > 0;
+      return ok ? ('짐승 ' + a.length + ' · 같은 손잡이 같은 목록 · 막힌 칸 0 · 마을 ' + live) : ('실패 ' + JSON.stringify({ n: a.length, same: same, noHerd: noHerd, live: live }));
+    });
     t('침선방 — 건물 앞에서 옷 시트를 연다', function () {
       var raw = V.raw();
       var pr = raw.props.filter(function (p) { return p.kind === 'tailor'; })[0];
