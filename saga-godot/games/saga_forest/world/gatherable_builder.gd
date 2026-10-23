@@ -173,6 +173,7 @@ func _gather(d: Dictionary) -> void:
 		ForestSaveState.knack_used[d.id] = today
 		ForestSaveState.used.erase(d.id)
 		tail = " · 손재주 — 오늘 한 번 더"
+	tail += preload("res://games/saga_forest/data/forest_relics.gd").on_dig(ForestSaveState, today, String(d.id))   # G-0315 유적 조각
 	Toast.show(self, "%s(을)를 %s — %s +%d%s" % [d.name, d.hint, d.item_label, n, tail], 2.5)
 	var pl := get_tree().get_first_node_in_group("player")
 	if pl != null and pl.has_method("play_once"):   # G-0282 삽 자리는 파기, 나머지는 허리 굽혀 줍기

@@ -13,6 +13,8 @@ const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_bu
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
+const Relics := preload("res://games/saga_forest/data/forest_relics.gd")
+const RELIC_SLOT_RADIUS := 2.6
 
 const GRID := Vector2i(12, 6)
 const RADIUS := 3.5
@@ -100,6 +102,9 @@ func _ready() -> void:
 			_spawn_bundle_decoration(cat)
 	if ForestSaveState.village_bundle_grand_reward:
 		_spawn_grand_flag()
+	for s: Dictionary in Relics.SETS:   # G-0315 복원한 유적 전시대
+		if Relics.restored(ForestSaveState, String(s.key)):
+			_spawn_relic(String(s.key))
 
 
 ## PLAN 101-2 FOREST ③후보 "마을 번들" — 번들마다 고정 자리 하나(사고를
@@ -192,7 +197,8 @@ func _open_donate_menu() -> void:
 	for cat in DONATE_CATS:
 		if ForestSaveState.item_count(cat) > 0:
 			available.append(cat)
-	if available.is_empty():
+	var relic_lines: Array = Relics.lines(ForestSaveState).filter(func(l: Dictionary) -> bool: return bool(l.ready))
+	if available.is_empty() and relic_lines.is_empty():
 		Toast.show(self, "🏛️ 기증할 것이 없다 — 곤충·물고기·화석·조개를 모아 오게.", 2.5)
 		return
 
@@ -206,7 +212,48 @@ func _open_donate_menu() -> void:
 			"label": "%s 기증하기 (%d개 있음)" % [cat, ForestSaveState.item_count(cat)],
 			"cb": func() -> void: _donate(cat, layer_box),
 		})
+	for l: Dictionary in relic_lines:   # G-0315 조각 넷 모인 유적 복원
+		var key := String(l.key)
+		choices.append({"label": String(l.label), "cb": func() -> void: _restore(key, layer_box)})
 	layer_box["layer"] = ChoicePrompt.build(self, "🏛️ 사고에 기증하기", choices)
+
+
+## G-0315 유적 복원 — 사고 둘레 안쪽 고리에 전시대 하나(primitive 받침 + 이모지 이름표, 번들 장식과 같은 결)
+func _restore(key: String, layer_box: Dictionary) -> void:
+	(layer_box["layer"] as CanvasLayer).queue_free()
+	var r: Dictionary = Relics.restore(ForestSaveState, key, ForestDay.today_key())
+	if not bool(r.ok):
+		Toast.show(self, "🏛️ " + String(r.why), 2.5)
+		return
+	_spawn_relic(key)
+	var s: Dictionary = Relics.by_key(key)
+	Toast.show(self, ("🎊 옛터 잔치 — 유적 셋을 다 되살렸다! 💰 +%d" if bool(r.feast) else "🏛️ %s %s 을(를) 복원해 사고에 세웠다 — 💰 +%%d" % [s.emoji, s.name]) % int(r.gold), 4.0)
+
+
+func _spawn_relic(key: String) -> void:
+	var idx := -1
+	for i in Relics.SETS.size():
+		if String(Relics.SETS[i].key) == key:
+			idx = i
+	if idx < 0 or has_node("Relic_" + key):
+		return
+	var angle := PI * 0.5 + (float(idx) - 1.0) * 0.6
+	var stand := MeshInstance3D.new()
+	stand.name = "Relic_" + key
+	var m := BoxMesh.new()
+	m.size = Vector3(0.7, 0.8, 0.7)
+	stand.mesh = m
+	stand.position = Vector3(cos(angle) * RELIC_SLOT_RADIUS, 0.4, sin(angle) * RELIC_SLOT_RADIUS)
+	stand.material_override = WorldCurveMaterial.vertex_color_material(CURVE_AMOUNT, 0.75, Color(0.62, 0.55, 0.45))
+	add_child(stand)
+	var s: Dictionary = Relics.SETS[idx]
+	var label := Label3D.new()
+	label.text = "%s %s" % [s.emoji, s.name]
+	label.font_size = 28
+	label.position = Vector3(0, 0.9, 0)
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.no_depth_test = true
+	stand.add_child(label)
 
 
 func _donate(cat: String, layer_box: Dictionary) -> void:

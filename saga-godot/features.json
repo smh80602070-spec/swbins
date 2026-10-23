@@ -5602,5 +5602,24 @@
   "ticket": "G-0314",
   "since": "2026-10-23",
   "note": "웹 W-0345 짝 · move_forward 재사용 · SAGA_LAUNCH=0"
+ },
+ {
+  "id": "gd.forest.relics",
+  "name": "3마을 유적 발굴·복원 — 갈라진 자리에서 조각(옛 그릇·비석·망와 각 넷), 사고 창에서 복원 → 전시대·금 +300, 셋이면 옛터 잔치 +600",
+  "files": [
+   "games/saga_forest/data/forest_relics.gd",
+   "games/saga_forest/data/forest_save_state.gd",
+   "games/saga_forest/world/gatherable_builder.gd",
+   "games/saga_forest/world/museum.gd"
+  ],
+  "tests": [
+   "forest_relics"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0315",
+  "since": "2026-10-23",
+  "note": "웹 W-0309 짝 · 명성 없음 → 금 · CHANCE 0.5(갈라진 자리 하나) · SAGA_RELICS=0"
  }
 ]

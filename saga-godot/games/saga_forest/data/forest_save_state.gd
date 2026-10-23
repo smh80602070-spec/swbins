@@ -69,6 +69,8 @@ var lots: Array = []
 var lots_roll := -1
 ## G-0311 가축 — {pen, list: [{kind, name, fed, petted, heart, hungry}], roll}. 순수 추가 칸. data/forest_livestock.gd.
 var livestock: Dictionary = {}
+## G-0315 유적 복원 — {got: {key: n}, restored: [key…], feast: 날|-1}. 순수 추가 칸. data/forest_relics.gd.
+var relics: Dictionary = {}
 ## G-0242 땅 아래 층 — {deepest, torch_until(unix 초), relic, dug{day, got}}, 없으면 {}. 순수 추가 칸. data/forest_cave.gd.
 var cave: Dictionary = {}
 var heart_reward_10: Dictionary = {}   # npc_id(String) -> true(10♥ 기념 사례금, 한 번만)
@@ -469,6 +471,7 @@ func save() -> bool:
 		"lots_roll": lots_roll,
 		"cave": cave,   # G-0242
 		"livestock": livestock,   # G-0311
+		"relics": relics,   # G-0315
 		"tools": tools,
 		"tool_lv": tool_lv,   # G-0196
 		"tool_perks": tool_perks,
@@ -533,6 +536,8 @@ func try_load() -> bool:
 	lots_roll = int(data.get("lots_roll", -1))
 	var loaded_ls: Variant = data.get("livestock", {})   # G-0311 — 옛 세이브는 우리 없음
 	livestock = (loaded_ls as Dictionary).duplicate(true) if typeof(loaded_ls) == TYPE_DICTIONARY else {}
+	var loaded_rl: Variant = data.get("relics", {})   # G-0315 — 옛 세이브는 조각 없음
+	relics = (loaded_rl as Dictionary).duplicate(true) if typeof(loaded_rl) == TYPE_DICTIONARY else {}
 	var loaded_cave: Variant = data.get("cave", {})   # G-0242 — 옛 세이브는 굴 기록 없음
 	cave = (loaded_cave as Dictionary).duplicate(true) if typeof(loaded_cave) == TYPE_DICTIONARY else {}
 	var loaded_tools: Variant = data.get("tools", {})
