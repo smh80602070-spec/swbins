@@ -336,6 +336,7 @@ func part_hit(dealt: float) -> bool:
 	part_broken = true
 	part_dmg_mul = PART_WEAKEN
 	skill = ""
+	skill_cd = maxf(skill_cd, PART_STAGGER)   # R-5 패턴 사이(쿨 0)에 부서지면 다음 프레임 새 패턴이 비틀을 먹던 것 막음
 	_clear_marks()
 	stagger(PART_STAGGER)
 	if _part_mark != null and is_instance_valid(_part_mark):

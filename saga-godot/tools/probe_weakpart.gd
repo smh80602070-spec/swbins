@@ -58,6 +58,10 @@ func _initialize() -> void:
 	check(broke and bool(b.get("part_broken")) and String(b.get("skill")) == "" and int(b.get("ai")) == 4 and is_equal_approx(float(b.get("part_dmg_mul")), 0.85)
 		and not mk0.visible, "③ 부서짐 — 예고 끊김·비틀·공격 ×0.85·표식 꺼짐")
 	check(not bool(b.call("part_hit", need * 5.0)), "③ 두 번은 없음")
+	b.call("_on_reset")
+	b.set("skill_cd", 0.0)
+	b.call("part_hit", need)
+	check(float(b.get("skill_cd")) >= float(b.get("PART_STAGGER")), "③ 패턴 사이에 부서져도 비틀 동안 새 패턴 없음(쿨 %.1f)" % float(b.get("skill_cd")))
 
 	# ⑤ 공격 배율이 실제 피해에
 	var fc := get_first_node_in_group("go_field_combat")
