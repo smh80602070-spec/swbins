@@ -106,6 +106,7 @@ func next_month() -> void:
 	_run_enemy_statecraft()   # G-0219 AI 세력 경륜도 — 쌓인 점수를 성향대로(굴림 없음)
 	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_wonder.gd").ai_all(self))   # G-0243 AI 착공(병력 문턱·굴림 없음)
 	wonder_msgs.append_array(trade_msgs)
+	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_relation.gd").monthly(self))   # G-0316 원수 충성 -2·스승 잃은 제자 +3
 	if not wonder_msgs.is_empty():
 		Toast.show(self, "\n".join(wonder_msgs), 3.0)
 	_resolve_camps()   # G-0239 진 — 치중·보급선·사기·한 번 더 싸움(realm_rules_war.gd)
@@ -218,7 +219,7 @@ func officer_hint(id: String) -> String:
 	var amb := _ambition(id)
 	var def: Dictionary = RealmTraits.AMBITIONS.get(String(amb.k), {})
 	var mark := "달성" if bool(amb.get("done", false)) else "%d/%d" % [int(amb.get("prog", 0)), int(def.get("target", 1))]
-	return "%s 야망:%s(%s)" % [badge, String(def.get("name", "")), mark]
+	return "%s 야망:%s(%s)" % [badge, String(def.get("name", "")), mark] + preload("res://games/saga_realm/data/realm_relation.gd").hint(self, id)   # G-0316 관계 줄
 
 
 ## PLAN 101-2 REALM ③후보(웹판 §5-1) — 달마다 로스터 전원의 야망 진행도를

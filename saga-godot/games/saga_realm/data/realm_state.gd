@@ -150,6 +150,8 @@ var camps: Array = []
 var wonders: Dictionary = {"built": {}, "jobs": {}}
 ## G-0310 교역로 — 우리 상단 [{from, to, left}](저장 키 "trade", 24→25). 규칙 data/realm_trade.gd · 달마다 realm_rules_month.gd.
 var trade: Array = []
+## G-0316 장수 관계망 — 스승을 잃고 능력을 받은 제자 {제자 id: 스승 id}(저장 키 "rel_master", 25→26). 규칙 data/realm_relation.gd.
+var rel_master: Dictionary = {}
 
 ## **2026-09-17 추가 — PLAN 101-2 REALM ③후보(웹판 §5-1 "인물 특성·야망").**
 ## `officer_growth`와 같은 지연 초기화 패턴 — officer_id -> {k, prog, done,
@@ -427,6 +429,7 @@ func start_scenario(id: String) -> void:
 	news = []
 	camps = []   # G-0239
 	trade = []   # G-0310 새 판은 상단 없음
+	rel_master = {}   # G-0316
 	wonders = {"built": {}, "jobs": {}}   # G-0243 새 판은 아무도 안 지었다(웹 버그 ① — 웹은 옛 판 것이 남았다)
 	preload("res://games/saga_realm/data/realm_wonder.gd").bump()
 	_done_this_month.clear()

@@ -597,6 +597,7 @@ func attack(enemy_id: String, duel_moves: Array = [], grid: Dictionary = {}) -> 
 	if RealmTraits.has_trait(officer_id, "militant"):
 		atk_might *= RealmTraits.TRAIT_MILITANT_MIGHT_MUL
 	atk_might *= duel_mul
+	atk_might *= preload("res://games/saga_realm/data/realm_relation.gd").attack_mul(self, officer_id, from_city)   # G-0316 의형제가 같은 성에 있으면 +5%
 	var atk := {
 		"troops": troops, "start": troops, "train": int(c.train), "tech": int(c.tech),
 		"best_command": _effective_stat(officer_id, "command"), "best_might": atk_might,

@@ -5621,5 +5621,24 @@
   "ticket": "G-0315",
   "since": "2026-10-23",
   "note": "웹 W-0309 짝 · 명성 없음 → 금 · CHANCE 0.5(갈라진 자리 하나) · SAGA_RELICS=0"
+ },
+ {
+  "id": "gd.realm.relation",
+  "name": "5천하 장수 관계망 — 의형제(같은 출진 성 공 +5%)·원수(한 세력이면 충성 -2/달)·사제(스승 전사 → 제자 능력 +3)·호적수, 무장 줄 🔗",
+  "files": [
+   "games/saga_realm/data/realm_relation.gd",
+   "games/saga_realm/data/realm_rules_war.gd",
+   "games/saga_realm/data/realm_rules_month.gd",
+   "games/saga_realm/data/realm_save_state.gd"
+  ],
+  "tests": [
+   "realm_relation"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0316",
+  "since": "2026-10-23",
+  "note": "웹 W-0308 짝 · 짝 표 33 그대로 · 세이브 v26 rel_master · SAGA_RELATION=0"
  }
 ]
