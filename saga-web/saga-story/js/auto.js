@@ -109,8 +109,13 @@
     if (p.climb) {
       /* 여유를 크게 잡으면 발판 코앞에서 손을 떼 버린다 — 줄은 **끝까지** 탄다.
          꼭대기·아래 끝에 닿으면 side.js 가 알아서 발판(또는 바닥)에 세워 준다. */
-      if (dy < -1) { S.setInput('down', false); S.setInput('up', true); }
-      else if (dy > 1) { S.setInput('up', false); S.setInput('down', true); }
+      /* 적은 발판에 12쯤 파묻혀 선다 — 꼭대기 발판의 적 발치(362)가 줄 꼭대기 직전 내 발(358)보다 "아래" 로 잡혀
+         ±1 로 견주면 꼭대기 코앞에서 오르락내리락만 하다 6초 뒤 손을 놓았다(W-0384 첫 10분). 적이 줄 끝 발판에 있으면 그 끝까지 */
+      var rc = p.climb, END2 = 18;
+      if (rc && rc.top != null && Math.abs(eFoot - rc.top) <= END2) { S.setInput('down', false); S.setInput('up', true); }
+      else if (rc && rc.bottom != null && Math.abs(eFoot - rc.bottom) <= END2) { S.setInput('up', false); S.setInput('down', true); }
+      else if (dy < -END2) { S.setInput('down', false); S.setInput('up', true); }
+      else if (dy > END2) { S.setInput('up', false); S.setInput('down', true); }
       else {
         /* 높이가 맞았다 — 손을 떼고 적 쪽으로 뛴다 */
         S.setInput('up', false); S.setInput('down', false);

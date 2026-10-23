@@ -1338,6 +1338,35 @@ window.DG_NO_TUNE = true;
       return climbed && onPlat && ('줄을 잡고 발판 ' + pl[1] + ' 까지 · ' + i + '프레임');
     });
 
+    t('W-0384 자동 — 발판에 12 파묻혀 선 적(발치가 줄 꼭대기보다 아래로 잡힘)에게도 줄 끝까지 올라 발판에 선다', function () {
+      /* **무대를 스스로 만든다** — 앞 항목이 어느 사냥터에 있었느냐에 따라
+         발판·줄 좌표가 달라지면 이 항목이 애먼 자리를 짚는다 */
+      if (S.active()) { S.leave(); }
+      S.enter('field');
+      var run = S.raw(), p = run.player, stg = run.stage;
+      var keep = run.enemies.slice();
+      var r = stg.ropes[0], pl = stg.plats[0];
+      var e = keep[0], hp0 = e.hp, ex0 = e.x, ey0 = e.y;
+      run.enemies = [e];                        // 목표를 하나로 좁힌다
+      e.x = pl[0] + 130; e.y = pl[1] - e.h + 12; e.hp = e.hpMax = 99999;
+      run.hp = run.hpMax; p.invuln = 999;
+      p.climb = null; p.x = r[0] + 260; p.y = stg.floor - S.P_H;
+      p.vy = 0; p.onGround = true;
+      var climbed = false, onPlat = false, i;
+      for (i = 0; i < 400 && !onPlat; i++) {
+        AU._tickHunt(0.05); S.update(0.05);
+        if (p.climb) { climbed = true; }
+        if (climbed) { onPlat = p.onGround && Math.abs((p.y + S.P_H) - pl[1]) < 3; }
+      }
+      /* 치운다 — 남기면 다음 항목이 이 상태를 딛는다 */
+      restInput();
+      e.x = ex0; e.y = ey0; e.hp = e.hpMax = hp0;
+      run.enemies = keep;
+      p.invuln = 0; p.climb = null;
+      p.x = 80; p.y = stg.floor - S.P_H; p.vy = 0; p.onGround = true;
+      return climbed && onPlat && ('줄을 잡고 발판 ' + pl[1] + ' 까지 · ' + i + '프레임');
+    });
+
     t('자동 — 5분치를 굴리면 실제로 잡힌다', function () {
       var s = S.state();
       s.kills = 0;
@@ -1521,6 +1550,7 @@ window.DG_NO_TUNE = true;
       bare();
       C.save.player.level = 6;
       C.save.player.gold = 5000;
+      var mu0 = C.save.player.merchantUntil; C.save.player.merchantUntil = 0;   // 앞 항목 자동 사냥이 상인 할인을 띄우면 값이 바뀐다(W-0384 로 더 오래 잡게 되며 드러남)
       var d = GD.find('hat2');
       var bought = G.buyGear('hat2');
       var afterBuy = C.save.player.gold;
@@ -1531,6 +1561,7 @@ window.DG_NO_TUNE = true;
         got === Math.round(d.price * G.SELL_RATE) && afterSell === afterBuy + got &&
         G.inv().length === 0;
       var out = '🪙 5000 → ' + afterBuy + ' → ' + afterSell + ' (' + d.name + ')';
+      C.save.player.merchantUntil = mu0;
       bare();
       return ok && out;
     });

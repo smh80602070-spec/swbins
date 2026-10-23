@@ -75,7 +75,7 @@ async function runGame(game) {
         const s = await page.evaluate((n) => { const A = DG[n]; if (!A) { return { none: true }; } let st = A.status(); if (!st.on) { A.start(); st = A.status(); } var D = DG.dungeon, extra = D && D.active ? (D.active() ? ' [던전 ' + ((D.status && D.status().floor) || '?') + '층]' : ' [마을]') : ''; var SD = DG.story, so = SD && SD.isOpen && SD.isOpen() ? ' [이야기 창]' : ''; return { on: st.on, goal: st.goal ? (st.goal.id || st.goal.label) : null, label: st.goal ? st.goal.label : '', why: st.why, stuck: st.stuck, done: st.done, extra: extra + so + (st.doing ? ' · ' + String(st.doing).slice(0, 40) : '') }; }, aqName);
         if (s.none) { res.stuck.push('자동 퀘스트 어댑터 없음'); break; }
         res.steps = Math.max(res.steps, s.done || 0);
-        const pc = (/(\d+)\/\d+/.exec((s.label || '') + ' ' + (s.extra || '')) || [])[1], dist = +((/ (\d+)보/.exec(s.extra || '') || [])[1] || NaN);
+        const pc = ([...((s.label || '') + ' ' + (s.extra || '')).matchAll(/(\d+)\/\d+/g)].pop() || [])[1], dist = +((/ (\d+)보/.exec(s.extra || '') || [])[1] || NaN);   // 셈은 마지막 것 — 목표 라벨은 고를 때 값(0/40)이 남고 진행 문구에 지금 셈이 있다(W-0384)
         if (s.goal === lastGoal && dist < minDist - 300) { minDist = dist; goalSince = Date.now(); }   // 목표에 300보 넘게 다가섰으면 걷는 중(첫 목표가 3천 보 밖 — W-0382), 막힘 아님
         if (s.goal !== lastGoal) { minDist = isNaN(dist) ? Infinity : dist; }   // 같은 목표라도 셈(0/10 → 2/10)이 늘면 막힘 아님(W-0382 — 토벌은 10마리에 몇 분)
         if (s.goal !== lastGoal || (pc != null && pc !== lastProg)) { if (s.goal === lastGoal) { res.progress = (res.progress || 0) + 1; } lastGoal = s.goal; lastProg = pc; goalSince = Date.now(); }

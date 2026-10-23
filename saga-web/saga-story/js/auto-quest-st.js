@@ -28,7 +28,7 @@
     if (!Q || !Q.list) { return out; }
     Q.list().filter(function (it) { return it.taken && !it.full; }).forEach(function (it, i) {
       var g = it.ref.goal;
-      out.push({ id: 'q:' + it.ref.key, type: TYPE[g.type] || 'kill', label: '📜 ' + (it.ref.name || it.ref.key), x: null, y: null, left: Math.max(0, it.goal - it.n),
+      out.push({ id: 'q:' + it.ref.key, type: TYPE[g.type] || 'kill', label: '📜 ' + (it.ref.name || it.ref.key) + ' ' + Math.min(it.n, it.goal) + '/' + it.goal, x: null, y: null, left: Math.max(0, it.goal - it.n),
         stage: stageFor(it), o: (ORDER[g.type] == null ? 2 : ORDER[g.type]) * 100 + i });
     });
     return out.sort(function (a, b) { return a.o - b.o; });
