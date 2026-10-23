@@ -2557,6 +2557,22 @@
   "note": "D3(qc+claude, U-0185): docs/playcheck/d3-u0185-20261023.json — 물약 창 — 약초 3·오늘 꽃향 · 꽃 줄만 이름(꽃향 물약) 나머지 ❔ · 화석 ×0 단추 흐림 · 닫기 · 앞 D2(R-3 10-23): PlaytestForestHeadless brew OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0180): PlaytestForestHeadless brew pouch·rule·effect·panel·save·off OK"
  },
  {
+  "id": "un.fs.hha",
+  "name": "U-0189 3마을 집 꾸미기 계절 심사 — 가구를 놓을 때마다 이번 계절 심사: 집 평가 + 계절 주제 가구 덤(봄 뜰·여름 부엌·가을 사랑방·겨울 안방, 하나 +25·둘 +40) → 문턱 30·80·160·280·450 ★1~5, 계절마다 가장 높은 별 × 열매 8(오르면 차이만)(고돗 G-0330)",
+  "files": [
+   "saga-unity/Assets/Games/SagaForest/Data/ForestHha.cs"
+  ],
+  "tests": [
+   "PlaytestForestHha"
+  ],
+  "level": "D2",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0189",
+  "since": "2026-10-23",
+  "note": "D2(U-0189): PlaytestForestHeadless hha season·theme·stars·line·save·off OK · 「집 평가」 단추가 없는 트랙이라 놓을 때 심사 · 금 대신 열매(300 = 8)"
+ },
+ {
   "id": "un.fs.cave-depth",
   "name": "U-0132 땅 아래 층 — 바위 지대 굴 입구 → 지하 5층(횃불·광맥 하루 한 번·사다리 지키는 짐승·5층 유물, 웹 W-0285 이식)",
   "files": [

@@ -94,10 +94,10 @@ namespace Saga.Forest.World
                 }
                 var item = FurnitureItem.Get(placedId);
                 var (total, count, _, _) = ForestHomeState.Score();
-                DialogueLabel.Instance?.Show(
-                    string.Format(ForestLocalization.T("furniture.placer.placed", "{0}을(를) 놓았다 — 집 평가: {1}({2}점, 가구 {3}개)"),
-                        item != null ? item.Name : placedId, FurnitureItem.GradeName(total), total, count),
-                    ToastSec);
+                string msg = string.Format(ForestLocalization.T("furniture.placer.placed", "{0}을(를) 놓았다 — 집 평가: {1}({2}점, 가구 {3}개)"),
+                    item != null ? item.Name : placedId, FurnitureItem.GradeName(total), total, count);
+                if (ForestHha.On) msg += "\n" + ForestHha.Line(ForestHha.Judge()); // tasks U-0189 계절 심사(오르면 차이만큼 열매)
+                DialogueLabel.Instance?.Show(msg, ToastSec);
             }
         }
 

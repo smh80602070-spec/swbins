@@ -723,6 +723,13 @@
     { "key": "brew.why_herb", "value": "약초가 없다 — 버섯을 캐 오자" },
     { "key": "brew.why_mat", "value": "그 재료가 없다" },
     { "key": "brew.why_off", "value": "물약 양조가 꺼져 있다" },
-    { "key": "brew.why_none", "value": "달일 수 없다" }
+    { "key": "brew.why_none", "value": "달일 수 없다" },
+    { "key": "hha.spring", "value": "🌸 봄" },
+    { "key": "hha.summer", "value": "☀️ 여름" },
+    { "key": "hha.autumn", "value": "🍂 가을" },
+    { "key": "hha.winter", "value": "❄️ 겨울" },
+    { "key": "hha.theme", "value": "(주제 {0} +{1})" },
+    { "key": "hha.paid", "value": " 🍎 +{0}" },
+    { "key": "hha.line", "value": "{0} 심사 — {1} {2}점{3}{4}" }
   ]
 }

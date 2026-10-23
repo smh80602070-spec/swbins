@@ -113,6 +113,7 @@ namespace Saga.EditorTools
                 if (!PlaytestForestLivestock.Run()) _hadError = true; // tasks U-0173 가축 기르기 — 열매·가축·날짜를 되돌린다.
                 if (!PlaytestForestRelics.Run()) _hadError = true; // tasks U-0177 유적 발굴·복원 — 유적·열매를 되돌린다.
                 if (!PlaytestForestBrew.Run()) _hadError = true; // tasks U-0180 물약 양조 — 양조·열매·하트를 되돌린다.
+                if (!PlaytestForestHha.Run()) _hadError = true; // tasks U-0189 계절 심사 — 가구 배치·열매·심사 기록을 되돌린다.
                 if (!PlaytestForestHearts.Run()) _hadError = true; // tasks U-0143 관계 하트 — 하트·손님 기록·단골·사연·열매·창고·날짜를 되돌린다.
                 if (!PlaytestForestPartner.Run()) _hadError = true; // tasks U-0144 동반자 — 동반자·하트·단골·사연·손님 기록·열매·창고·날짜·손님 몸을 되돌린다.
                 if (!PlaytestLifePose.Run("PlaytestForestHeadless", "forest")) _hadError = true; // tasks U-0146 생활 몸짓
