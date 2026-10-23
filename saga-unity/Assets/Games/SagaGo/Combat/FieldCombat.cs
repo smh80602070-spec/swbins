@@ -278,15 +278,29 @@ namespace Saga.Go.Combat
             SafePoint = transform.position;
             RebuildParty();
             PartyState.PowerChanged += OnPowerChanged;
+            FieldEnemy.Killed += OnFriendKill;          // tasks U-0199 동료 우정
+            GoFriendship.RankedUp += OnFriendUp;
         }
 
         private void OnDestroy()
         {
+            FieldEnemy.Killed -= OnFriendKill;
+            GoFriendship.RankedUp -= OnFriendUp;
             PartyState.PowerChanged -= OnPowerChanged;
             if (player != null) player.PlungeLanded -= OnPlungeLanded;
             if (Instance == this) Instance = null;
             HurtVignette.Unbind(this);
         }
+
+        /// <summary>tasks U-0199 — 적이 쓰러지면 앞에 선 동료 +2 · 편성 다른 동료 +1(주인공 빼고).</summary>
+        private void OnFriendKill(FieldEnemy e)
+        {
+            var ids = new List<string>();
+            foreach (var m in _party) if (m != null && m.Id != HeroId) ids.Add(m.Id);
+            if (ids.Count > 0) GoFriendship.OnKill(Active?.Id, ids);
+        }
+
+        private static void OnFriendUp(string msg) => DialogueLabel.Instance?.Show(msg, 4f);
 
         /// <summary>tasks U-0105 — 지금 나선 인물 체력 비율(없으면 1).</summary>
         public float ActiveHpFrac()

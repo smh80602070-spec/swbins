@@ -227,6 +227,7 @@ namespace Saga.Go.Data
             if (r.Ore > 0) WeaponState.AddOre(r.Ore);
             if (r.Dust > 0) ArtifactState.AddPolish(r.Dust);
             foreach (var (item, n) in r.Items) CookState.Add(item, n);
+            GoFriendship.Add(e.hero, GoFriendship.Dispatch); // tasks U-0199 탐사 다녀온 동료 우정 +15
             _out.Remove(site);
             Done++;
             Changed?.Invoke();

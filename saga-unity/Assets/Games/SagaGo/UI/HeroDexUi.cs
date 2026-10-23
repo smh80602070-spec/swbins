@@ -682,7 +682,8 @@ namespace Saga.Go.UI
                     return string.Format(GoLocalization.T("dex.detail.got", "{0} · {1} 원소 · 기질 {2}\n무력 {3} · 지력 {4} · 통솔 {5} — \"{6}\""),
                         GoHeroes.Label(h), GoElements.NameOf(el), GoHeroes.TraitName(h.Trait), h.Might, h.Wisdom, h.Command, GoHeroes.Quote(h))
                         + KitLine(id, el) // 109-14-11
-                        + " · " + SlotLine(id); // 109-14-15
+                        + " · " + SlotLine(id) // 109-14-15
+                        + (GoFriendship.On ? "\n" + GoFriendship.DexLine(id) : ""); // tasks U-0199 동료 우정
                 case CardState.Unseen when h.Era == HeroEra.Story:
                     return string.Format(GoLocalization.T("dex.detail.story", "이야기 동료 — {0} 끝에 합류한다"), JoinChapterName(id));
                 case CardState.Seen:

@@ -170,6 +170,7 @@ namespace Saga.Go.Data
             public long homeT;
             public int homeAcc;
             public int homeSpent;
+            public string friendJson; // tasks U-0199 동료 우정 — 버전 그대로: 옛 세이브는 null → 우정 0.
             public string homeWorkers; // tasks U-0186 신수 일꾼 — 버전 그대로: 옛 세이브는 null → 일꾼 없음.
             // 109-14-26 탐사 파견 — 나간 이(탐사지·동료·시간·시작 유닉스 초)·끝낸 수(버전 그대로 — 옛 세이브는 빈 채)
             public List<DispatchState.Entry> dispOut;
@@ -251,6 +252,7 @@ namespace Saga.Go.Data
                 homeAcc = HomeState.SnapshotAcc(),
                 homeSpent = HomeState.Spent,
                 homeWorkers = GoHomeWorkers.Snapshot(),
+                friendJson = GoFriendship.Snapshot(), // tasks U-0199
                 dispOut = DispatchState.Snapshot(), // 109-14-26
                 dispDone = DispatchState.Done,
                 frostFound = FrostState.Snapshot(), // 109-14-27a
@@ -417,6 +419,7 @@ namespace Saga.Go.Data
             WeeklyState.Restore(data.wgWeek, data.wgBase, data.wgClaimed, data.wgBonus); // U-0044 — 없는 세이브(0·null)는 새 주
             HomeState.Restore(data.homeItems, data.homeT, data.homeAcc, data.homeSpent); // U-0032 — 없는 세이브(null·0)는 빈 마당
             GoHomeWorkers.Restore(data.homeWorkers); // tasks U-0186
+            GoFriendship.Restore(data.friendJson); // tasks U-0199
             DispatchState.Restore(data.dispOut, data.dispDone); // 109-14-26
             FrostState.Restore(data.frostFound); // 109-14-27a
             FrostBossState.Restore(data.frostBossDown, data.frostBossBloom, data.frostBossPaidAt); // 109-14-31
