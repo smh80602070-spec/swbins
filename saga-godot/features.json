@@ -5698,5 +5698,25 @@
   "ticket": "G-0319",
   "since": "2026-10-23",
   "note": "고돗 먼저(웹 짝 없음) · 세이브 v25 hidden · SAGA_HIDDEN=0"
+ },
+ {
+  "id": "gd.forest.brew",
+  "name": "3마을 물약 양조 — 제작대에서 약초 + 재료 하나를 섞어 찾는 하루 물약(기운 채집 +1·물빛 낚시 입질 창 ×1.5·꽃향 하트 +1·탁한 물약 헛방)",
+  "files": [
+   "games/saga_forest/data/forest_brew.gd",
+   "games/saga_forest/data/forest_save_state.gd",
+   "games/saga_forest/world/gatherable_builder.gd",
+   "games/saga_forest/world/fishing_spot.gd",
+   "games/saga_forest/world/craft_bench.gd"
+  ],
+  "tests": [
+   "forest_brew"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0320",
+  "since": "2026-10-23",
+  "note": "고돗 먼저(웹 짝 없음) · 순수 추가 칸 brew · SAGA_BREW=0"
  }
 ]

@@ -180,7 +180,7 @@ func _on_press() -> void:
 func _cast() -> void:
 	var now := Time.get_ticks_msec()
 	_bite_at_ms = now + CAST_MIN_MS + (randi() % (CAST_VAR_MS + 1))
-	_ends_at_ms = _bite_at_ms + roundi(BITE_WINDOW_MS * Workshop.fish_win_mul())   # G-0218 입질 창
+	_ends_at_ms = _bite_at_ms + roundi(BITE_WINDOW_MS * Workshop.fish_win_mul() * preload("res://games/saga_forest/data/forest_brew.gd").fish_mul(ForestSaveState, ForestDay.today_key()))   # G-0218 입질 창 · G-0320 물빛 물약
 	_bite_notified = false
 	_state = State.LINE_OUT
 	Toast.show(self, "🎣 찌를 던졌다 — 입질을 기다린다", 2.0)

@@ -71,6 +71,8 @@ var lots_roll := -1
 var livestock: Dictionary = {}
 ## G-0315 유적 복원 — {got: {key: n}, restored: [key…], feast: 날|-1}. 순수 추가 칸. data/forest_relics.gd.
 var relics: Dictionary = {}
+## G-0320 물약 양조 — {found: [재료…], drunk: 재료, day: 날}. 순수 추가 칸. data/forest_brew.gd.
+var brew: Dictionary = {}
 ## G-0242 땅 아래 층 — {deepest, torch_until(unix 초), relic, dug{day, got}}, 없으면 {}. 순수 추가 칸. data/forest_cave.gd.
 var cave: Dictionary = {}
 var heart_reward_10: Dictionary = {}   # npc_id(String) -> true(10♥ 기념 사례금, 한 번만)
@@ -270,6 +272,7 @@ func mark_talked(npc_id: String) -> void:
 func gain_affinity(npc_id: String, amount: int) -> int:
 	amount = Workshop.heart(amount)   # G-0218 마을 사랑 두 배·하트 하나 더(하루 상한은 그대로)
 	var today := ForestDay.today_key()
+	amount += preload("res://games/saga_forest/data/forest_brew.gd").heart_add(self, today, amount)   # G-0320 꽃향 물약
 	if int(affinity_day.get(npc_id, -1)) != today:
 		affinity_day[npc_id] = today
 		affinity_gained_today[npc_id] = 0
@@ -472,6 +475,7 @@ func save() -> bool:
 		"cave": cave,   # G-0242
 		"livestock": livestock,   # G-0311
 		"relics": relics,   # G-0315
+		"brew": brew,   # G-0320
 		"tools": tools,
 		"tool_lv": tool_lv,   # G-0196
 		"tool_perks": tool_perks,
@@ -538,6 +542,8 @@ func try_load() -> bool:
 	livestock = (loaded_ls as Dictionary).duplicate(true) if typeof(loaded_ls) == TYPE_DICTIONARY else {}
 	var loaded_rl: Variant = data.get("relics", {})   # G-0315 — 옛 세이브는 조각 없음
 	relics = (loaded_rl as Dictionary).duplicate(true) if typeof(loaded_rl) == TYPE_DICTIONARY else {}
+	var loaded_brew: Variant = data.get("brew", {})   # G-0320 — 옛 세이브는 빈 것
+	brew = (loaded_brew as Dictionary).duplicate(true) if typeof(loaded_brew) == TYPE_DICTIONARY else {}
 	var loaded_cave: Variant = data.get("cave", {})   # G-0242 — 옛 세이브는 굴 기록 없음
 	cave = (loaded_cave as Dictionary).duplicate(true) if typeof(loaded_cave) == TYPE_DICTIONARY else {}
 	var loaded_tools: Variant = data.get("tools", {})

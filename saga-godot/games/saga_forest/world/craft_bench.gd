@@ -119,6 +119,10 @@ func open_menu() -> void:
 		choices.append({"label": "🐔 작은 우리 — 새끼 들이기·먹이·쓰다듬기 (%d/%d)" % [Livestock.animals(ForestSaveState).size(), Livestock.MAX], "cb": func() -> void:
 			(box["layer"] as CanvasLayer).queue_free()
 			open_pen()})
+	if preload("res://games/saga_forest/data/forest_brew.gd").on():   # G-0320 물약 달이기
+		choices.append({"label": "⚗️ 물약 달이기 — 약초 + 재료 하나 (찾은 %d/%d)" % [(preload("res://games/saga_forest/data/forest_brew.gd").st(ForestSaveState).found as Array).size(), preload("res://games/saga_forest/data/forest_brew.gd").MIXES.size()], "cb": func() -> void:
+			(box["layer"] as CanvasLayer).queue_free()
+			open_brew()})
 	choices.append({"label": "닫기", "cb": func() -> void: (box["layer"] as CanvasLayer).queue_free()})
 	var lv_line := "바구니 Lv%d · 잠자리채 Lv%d · 삽 Lv%d" % [ForestCraft.tool_lv(ForestSaveState, "basket"), ForestCraft.tool_lv(ForestSaveState, "net"), ForestCraft.tool_lv(ForestSaveState, "spade")]
 	box["layer"] = ChoicePrompt.build(self, "🔨 제작대 — %s" % lv_line, choices)
@@ -168,6 +172,20 @@ func open_perks(tool: String) -> void:
 
 
 ## G-0311 작은 우리 — 짐승마다 한 줄(안 먹였으면 먹이, 먹였으면 쓰다듬기) · 새끼 들이기 · 닫기. 누르면 창이 다시 열린다.
+## G-0320 물약 달이기 창 — 고르면 곧바로 달여 마신다(오늘 하루)
+func open_brew() -> void:
+	var box := {}
+	var choices: Array = []
+	for l: Dictionary in preload("res://games/saga_forest/data/forest_brew.gd").lines(ForestSaveState):
+		var mix := String(l.mix)
+		choices.append({"label": String(l.label), "cb": func() -> void:
+			(box["layer"] as CanvasLayer).queue_free()
+			var r: Dictionary = preload("res://games/saga_forest/data/forest_brew.gd").brew(ForestSaveState, mix, ForestDay.today_key())
+			Toast.show(self, ("%s %s%s — %s (오늘 하루)" % [r.emoji, r.name, " 을(를) 처음 찾았다" if bool(r.fresh) else "", r.text]) if bool(r.ok) else String(r.why), 3.0)})
+	choices.append({"label": "닫기", "cb": func() -> void: (box["layer"] as CanvasLayer).queue_free()})
+	box["layer"] = ChoicePrompt.build(self, "⚗️ 물약 달이기 — 약초 %d개 · 달이면 곧바로 마신다" % ForestSaveState.item_count(preload("res://games/saga_forest/data/forest_brew.gd").BASE), choices)
+
+
 func pen_lines() -> Array:
 	var F := ForestSaveState
 	var out: Array = []

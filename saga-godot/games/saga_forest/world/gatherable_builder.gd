@@ -166,7 +166,7 @@ func _gather(d: Dictionary) -> void:
 	var tool_key := String(ForestCraft.GATHER_TOOL.get(d.id, ""))
 	var today := ForestDay.today_key()
 	var roll := ForestCraft.gather_roll(ForestCraft.perks(ForestSaveState, tool_key), "%d|%s" % [today, d.id], Workshop.bounty_add())
-	var n := Workshop.gather_n(String(d.id), 1 + int(roll.extra))   # G-0218 솜씨도(덤 굴림 뒤에 따로)
+	var n := Workshop.gather_n(String(d.id), 1 + int(roll.extra)) + preload("res://games/saga_forest/data/forest_brew.gd").gather_add(ForestSaveState, today)   # G-0218 솜씨도(덤 굴림 뒤에 따로) · G-0320 기운 물약
 	ForestSaveState.add_item(d.item_label, n)
 	var tail := ""
 	if bool(roll.again) and int(ForestSaveState.knack_used.get(d.id, -1)) != today:
