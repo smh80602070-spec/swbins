@@ -12,6 +12,11 @@ const Homestead := preload("res://games/saga_go/data/homestead.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+const Workers := preload("res://games/saga_go/data/home_workers.gd")   # G-0328 신수 일꾼
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
+const Growth := preload("res://games/saga_go/data/growth.gd")
+const Pets := preload("res://saga_core/data/pets.gd")
+const Eggs := preload("res://games/saga_go/data/eggs.gd")
 
 var is_open := false
 var rot := 0
@@ -98,6 +103,7 @@ func _build_marker() -> void:
 			s.rotation.y = -a
 			root.add_child(s)
 	_rebuild()
+	_sync_workers()   # G-0328 일꾼 몸
 
 
 func _item_scene(id: String) -> PackedScene:
@@ -123,6 +129,73 @@ func _rebuild() -> void:
 		_items_root.add_child(n)
 	_signature = str((Homestead.state().items as Array).size())
 
+
+## G-0328 — 받은 것 한 줄(냥 + 일꾼 채집물)
+func _got_text(n: int, got: Dictionary) -> String:
+	var bits: Array = []
+	if n > 0:
+		bits.append("냥 %d" % n)
+	for k in got:
+		bits.append("%s %d" % [Growth.item_name(String(k)), int(got[k])])
+	return " · ".join(bits)
+
+
+## G-0328 신수 일꾼 줄 — 일하는 신수(무슨 일·모은 수·내보내기) + 앉힐 수 있는 신수
+func _worker_rows() -> void:
+	if not Workers.on():
+		return
+	var head := Label.new()
+	head.text = "🐾 신수 일꾼 %d/%d — %d분에 하나 · 상한 %d" % [Workers.list().size(), Workers.slots(), int(Workers.EVERY_MIN), Workers.CAP]
+	head.add_theme_color_override("font_color", Color(0.75, 0.9, 1.0))
+	_body.add_child(head)
+	for w: Dictionary in Workers.list():
+		var pid := String(w.pet)
+		var b := Button.new()
+		b.text = "%s %s — 모은 것 %d · 내보내기" % [Workers.job_of(pid).label, Eggs.pet_name(pid), Workers.count(Workers.pending_of(w))]
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.pressed.connect(func() -> void:
+			var got := Workers.release(pid, PartyState.add_items)
+			Toast.show(self, "🐾 %s 을(를) 내보냈다%s" % [Eggs.pet_name(pid), "" if got.is_empty() else " — " + _got_text(0, got)], 2.5)
+			_sync_workers()
+			_refresh())
+		_body.add_child(b)
+	var buddy := String(Eggs.state().get("buddy", ""))
+	for pp in Pets.PETS:
+		var pid := String(pp.id)
+		if not CodexState.has("pet", pid) or Workers.working(pid) or pid == buddy:
+			continue
+		var b := Button.new()
+		b.text = "＋ %s 앉히기 (%s)" % [Eggs.pet_name(pid), Workers.job_of(pid).label]
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		b.disabled = Workers.list().size() >= Workers.slots()
+		b.pressed.connect(func() -> void:
+			var e := Workers.assign(pid, CodexState.has("pet", pid), String(Eggs.state().get("buddy", "")))
+			Toast.show(self, ("🐾 %s 이(가) 마당에서 일을 시작했다" % Eggs.pet_name(pid)) if e == "" else e, 2.5)
+			_sync_workers()
+			_refresh())
+		_body.add_child(b)
+
+
+## G-0328 마당에 일꾼 몸(코드 신수 몸, 마당 가장자리에 둘러 섬)
+var _workers_root: Node3D = null
+func _sync_workers() -> void:
+	if _workers_root == null:
+		_workers_root = Node3D.new()
+		_workers_root.name = "Workers"
+		add_child(_workers_root)
+	for c in _workers_root.get_children():
+		c.queue_free()
+	var ws := Workers.list() if Workers.on() else []
+	for i in ws.size():
+		var body := CreatureBuilder.build_pet(String(ws[i].pet), 0.9)
+		if body == null:
+			continue
+		var a := TAU * float(i) / float(maxi(ws.size(), 1)) + 0.4
+		var q := _center + Vector3(cos(a), 0, sin(a)) * (Homestead.RADIUS * 0.6)
+		q.y = TerrainBuilder.height_at(Homestead.REGION, q)
+		body.position = q - global_position
+		body.rotation.y = -a + PI * 0.5
+		_workers_root.add_child(body)
 
 # ---------------------------------------------------------------- 매 틱
 
@@ -177,12 +250,13 @@ func remove_nearby() -> String:
 
 func harvest() -> int:
 	var n := Homestead.harvest()
-	if n > 0:
-		Toast.show(self, "🏡 쉼터에서 냥 %d 을(를) 거뒀다" % n, 2.5)
+	var got := Workers.collect(PartyState.add_items)   # G-0328 일꾼이 모은 것도 같이
+	if n > 0 or not got.is_empty():
+		Toast.show(self, "🏡 쉼터에서 %s 을(를) 거뒀다" % _got_text(n, got), 2.5)
 		harvested.emit(n)
 		changed.emit()
 	else:
-		Toast.show(self, "아직 쌓인 냥이 없다", 1.8)
+		Toast.show(self, "아직 쌓인 것이 없다", 1.8)
 	_refresh()
 	return n
 
@@ -287,11 +361,13 @@ func _refresh() -> void:
 		nxt = " · 다음 등급까지 안락도 %d" % (int(Homestead.TIERS[t + 1].min) - c)
 	_title.text = "🏡 쉼터 마당 — %s\n안락도 %d%s\n소품 %d/%d · 시간당 냥 %d (상한 %d시간)" % [tier.name, c, nxt, (st.items as Array).size(), Homestead.MAX_ITEMS, int(tier.income), int(Homestead.CAP_HOURS)]
 	var pend := Homestead.pending()
+	var wp := Workers.pending()
 	var hv := Button.new()
-	hv.text = "수확 — 쌓인 냥 %d" % pend
-	hv.disabled = pend <= 0
+	hv.text = "수확 — 쌓인 냥 %d%s" % [pend, "" if wp.is_empty() else " · 일꾼 %d개" % Workers.count(wp)]
+	hv.disabled = pend <= 0 and wp.is_empty()
 	hv.pressed.connect(func() -> void: harvest())
 	_body.add_child(hv)
+	_worker_rows()
 	var row := HBoxContainer.new()
 	_body.add_child(row)
 	var place_btn := Button.new()

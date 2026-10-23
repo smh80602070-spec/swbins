@@ -5740,5 +5740,22 @@
   "ticket": "G-0321",
   "since": "2026-10-23",
   "note": "고돗 먼저(웹 짝 없음) · 곱은 _sc 자리(빈 법전 1) · 세이브 v27 laws · SAGA_LAWS=0 · D2 G-0322 촬영 shot_scene lg_rk_laws"
+ },
+ {
+  "id": "gd.go.home-workers",
+  "name": "1만리 신수 일꾼 — 쉼터 마당에 신수(동행 말고)를 앉히면 능력 갈래대로 30분에 하나(강화석 조각·박하/꿀꽃·짐승 고기, 상한 24), 칸 = 1 + 마당 등급, 수확·내보내기, 마당에 일꾼 몸",
+  "files": [
+   "games/saga_go/data/home_workers.gd",
+   "games/saga_go/world/homestead.gd"
+  ],
+  "tests": [
+   "go_workers"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0328",
+  "since": "2026-10-23",
+  "note": "고돗 먼저(웹 짝 없음) · PartyState.home.workers 순수 추가 · SAGA_HOME_WORK=0 · 촬영 probe_shots lg_go_workers"
  }
 ]

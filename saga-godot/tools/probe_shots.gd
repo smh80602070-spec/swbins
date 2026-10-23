@@ -67,6 +67,7 @@ const SHOTS := [
 	["lg_go_ring", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(5.5, 3.0), -30.0, 4.0, "ring6"],   # G-0324 승급 금테 6
 	["lg_go_parry", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -20.0, 6.0, "parry"],   # G-0324 쳐내기
 	["lg_go_rank", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(5.5, 3.0), -10.0, 7.0, "rank"],   # G-0324 토벌 등급 알림·▶ 자동 퀘스트 단추
+	["lg_go_workers", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(5.5, 3.0), -18.0, 9.0, "workers"],   # G-0328 신수 일꾼
 	["lg_go_wind", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(5.5, 3.0), -10.0, 7.0, "wind"],   # G-0322 바람 길잡이 줄기
 	["g40_daycard", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 9.0, "card"],
 	["g40_sky_shrine", "sunken", "isle:shrine", Vector3(10, 0, 8), "isle:shrine", -14.0, 12.0, "ch:25:0"],
@@ -549,6 +550,21 @@ func _act(a: String) -> void:
 			_later(20, func() -> void:
 				var r := {"rank": "S", "sec": 42.0, "hits": 0, "combo": 9, "bonus_gold": 60, "best": true, "prev_best": ""}
 				(load("res://saga_core/ui/toast.gd") as GDScript).call("show", _p, (load("res://games/saga_go/data/go_rank.gd") as GDScript).call("text", r), 6.0))
+		"workers":   # G-0328 신수 일꾼 — 마당에 소품 몇·일꾼 셋(2시간 일함, 메모리만)·쉼터 화면
+			var hs := get_tree().get_first_node_in_group("go_homestead")
+			if hs != null:
+				var HSd: GDScript = load("res://games/saga_go/data/homestead.gd")
+				var c0: Vector3 = hs.call("center")
+				PartyState.home = {"items": [{"id": "shed", "x": c0.x - 3.0, "z": c0.z - 4.0, "r": 0}, {"id": "well", "x": c0.x + 3.0, "z": c0.z - 3.0, "r": 0}, {"id": "lamp", "x": c0.x, "z": c0.z - 1.0, "r": 0}],
+					"t": HSd.now(), "acc": 0.0, "spent": 0, "workers": [{"pet": "pt_dokkaebi", "t": HSd.now() - 7200.0}, {"pet": "pt_samjogo", "t": HSd.now() - 7200.0}, ]}
+				hs.call("_rebuild")
+				hs.call("_sync_workers")
+				_p.global_position = c0 + Vector3(0, 0.4, 8.0)
+				_later(20, func() -> void:
+					for m in get_tree().get_nodes_in_group("ui_modal"):   # 길 위 사건 창이 마당을 가린다(컷에서만)
+						if m is CanvasLayer:
+							(m as CanvasLayer).visible = false   # 지우면 사건 스크립트가 지워진 창을 만진다 — 숨기기만
+					hs.call("open_screen"))
 		"wind":   # G-0322 바람 길잡이(G-0318) — 할 일 뒤 40프레임에 한 줄기(창 모드는 프레임이 느려 초로 재면 다 사라진다)(목표 쪽, 없으면 북쪽)
 			var wn := [0]
 			var wcb := [Callable()]
