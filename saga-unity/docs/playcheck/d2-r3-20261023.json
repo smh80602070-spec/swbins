@@ -1,0 +1,279 @@
+{
+ "date": "2026-10-23",
+ "ticket": "R-3",
+ "what": "Unity D1 → D2 — 다섯 판 진단을 한 번씩 새로 돌려 기능마다 진단 줄을 기록(촬영 없음, 앞선 U-0157~0162 D2 와 같은 기준)",
+ "runs": {
+  "go": {
+   "runner": "PlaytestHeadless",
+   "error_cs": 0,
+   "ok_lines": 118,
+   "fail_lines_other_than_rocks": []
+  },
+  "dg": {
+   "runner": "PlaytestDungeonHeadless",
+   "error_cs": 0,
+   "ok_lines": 83,
+   "fail_lines_other_than_rocks": []
+  },
+  "fs": {
+   "runner": "PlaytestForestHeadless",
+   "error_cs": 0,
+   "ok_lines": 63,
+   "fail_lines_other_than_rocks": []
+  },
+  "st": {
+   "runner": "PlaytestStorySlice",
+   "error_cs": 0,
+   "ok_lines": 66,
+   "fail_lines_other_than_rocks": []
+  },
+  "rl": {
+   "runner": "PlaytestRealmSlice",
+   "error_cs": 0,
+   "ok_lines": 132,
+   "fail_lines_other_than_rocks": []
+  }
+ },
+ "features": {
+  "un.go.autoquest": {
+   "runner": "PlaytestHeadless",
+   "tag": "autoquest",
+   "ok": [
+    "autoquest OK - 틀(목표 없음·셈·멈출 이유·바쁨·막힘 셋 비켜 가기·넷째 멈춤) · 1만리(걸어가 말 걸고 줄 넘겨 단계 넘김·체력 낮음·손 조작·▶) | 틀 걸음 91·25→4.9m·대화·0_0→0_1"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.go.restsite": {
+   "runner": "PlaytestHeadless",
+   "tag": "restsites",
+   "ok": [
+    "restsites OK - 1만리 모닥불(지역마다 하나·앉으면 지핌·회복·부활 자리·잡몹 다시 섬·수호장 그대로·안 나가면 다시 안 앉음·쓰러지면 불 옆·안 지핀 = 처음 자리·세이브 칸) | 자리 5 · west_wood 앉음·다시 섬 1"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.go.mount-fight": {
+   "runner": "PlaytestHeadless",
+   "tag": "mountfight",
+   "ok": [
+    "mountfight OK - 배율 1/1.25/1.5 · 탄 채 평타(안 내림·피해 ×배율) · 돌진(앞만·비틀·쿨 6·둘째 막힘) · 탄 동안 다섯 손 막힘 · 낙마 0.8초 · 싸움 붙어도 안 내림 | 평타 254→368 돌진 368"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.go.rank": {
+   "runner": "PlaytestHeadless",
+   "tag": "gorank",
+   "ok": [
+    "gorank S OK - TakeHit 이 엶·연타 12·피격 0·30초 → S(급 3) · 덤 경험 +13(= 26 × 0.5) · 첫 기록「★ 토벌 등급 S — 피격 0 · 연타 12 · 0:30 / 등급 덤 경험 +13 · 🏆 첫 기록 S」",
+    "gorank zone OK - 장판 틱 6 은 판만 열고 연타 0 · 피격 9 → B · 기록 S 그대로",
+    "gorank drop OK - 20초 멍하면 새 판 · 전멸이면 버림 · 수호장 안 셈",
+    "gorank save OK - rankCamps·rankGrades 칸·왕복·틀린 등급 거름·옛 세이브 빈 기록"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.go.field-env": {
+   "runner": "PlaytestHeadless",
+   "tag": "fieldfire",
+   "ok": [
+    "fieldfire grass OK - 불 타격 → 불길 1 · 0.5초 번짐 2(한 번만) · 둘레 피해 15.0/틱·불 묻힘 · 반경 밖 그대로 · 3초 꺼짐",
+    "fieldfire ground OK - 길 = ·마을 H 은 안 탐",
+    "fieldfire shock OK - 강 위 번개 → 강 위 둘째 적 100 한 번 · 뭍(12m) 적 그대로",
+    "fieldfire douse OK - 물 타격 → 불길 꺼짐",
+    "fieldfire safe OK - 주인공 체력 그대로 · 손잡이 끄면 불길 없음"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.go.wind-guide": {
+   "runner": "PlaytestHeadless",
+   "tag": "wind",
+   "ok": [
+    "wind rule OK - 4m 안 안 붊 · 땅 위 방향 · 가만히 1.5초 + 6초 · 바람만이면 걸어도 12초",
+    "wind blow OK - 1.4초 안 붊 · 1.6초 줄기 7 · 0.8초에 목표 쪽 5.7m",
+    "wind cool OK - 6초 안 다시 안 붊·2.3초에 줄기 0·6초 뒤 다시",
+    "wind none OK - 4m 안·따라가는 목표 없음 = 안 붊",
+    "wind windonly OK - 걸어도 12초·기둥 끔 · 되돌리면 기둥 다시 켬",
+    "wind off OK - 손잡이 끄면 안 붊"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.core.shader-keep": {
+   "runner": "PlaytestHeadless",
+   "tag": "shaderkeep",
+   "ok": [
+    "shaderkeep scan OK - 런타임 Shader.Find 이름 9개 모두 목록 안(넣을 것 7 · 안 넣어도 됨 2)",
+    "shaderkeep find OK - 넣을 셰이더 모두 에디터에서 찾아짐",
+    "shaderkeep pre OK - 빌드 앞: 항상 포함 7 → 14(+7)",
+    "shaderkeep post OK - 빌드 뒤 원래 7개 그대로(두 번 불러도 같음)"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.dg.autoquest": {
+   "runner": "PlaytestDungeonHeadless",
+   "tag": "autoquest",
+   "ok": [
+    "autoquest OK - 2나락(방 적 걸어가 평타로 치움 → 문 밟아 다음 방·체력 낮음·손 조작·▶) | 걸음 89·적 12 치움·방 0→1·목표 2"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.dg.run-rank": {
+   "runner": "PlaytestDungeonHeadless",
+   "tag": "runrank",
+   "ok": [
+    "runrank OK - 식(S·D·급 문턱)·층→급·계단 판(덤·보석·첫 기록)·피격 훅·쓰러진 판(덤 없음)·처치 3 미만·층 건너뛰기 버림·기록 안 내려감·세이브 | 급보정 1→3 계단 S·덤 282·gem_sapphire 쓰러짐 A 세이브"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.dg.mastery": {
+   "runner": "PlaytestDungeonHeadless",
+   "tag": "mastery",
+   "ok": [
+    "mastery tier OK - 10·30·60·100·150 → 1~5단 · 넘어도 5",
+    "mastery kill OK - 든 무기에만(쇠도끼 30 → 2단, 을 0) · 알림 2번 · 바꿔 들면 환도에 쌓이고 쇠도끼 그대로",
+    "mastery atk OK - 쇠도끼 2단 한 타 7.7 → 8.16(×1.06) · 환도(0단) 8.75",
+    "mastery guard OK - 무적이면 안 쌓임 · 10번 맞고 1단 · 100 피해 100 → 98(−2%)",
+    "mastery save OK - masteryJson 왕복 · 옛 세이브 = 숙련 0",
+    "mastery off OK - 끄면 쌓기·효과 없음"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.fs.autoquest": {
+   "runner": "PlaytestForestHeadless",
+   "tag": "autoquest",
+   "ok": [
+    "autoquest OK - 3마을(걸음 종류 표·소포 없음 = 목표 없음·우체통까지 걸어가 배달·이야기 걸음 자리·손 조작·▶) | 걸음 106·우체통 34→2.0m·배달 +1"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.fs.livestock": {
+   "runner": "PlaytestForestHeadless",
+   "tag": "livestock",
+   "ok": [
+    "livestock pen OK - 열매 12 · 모자라면·둘째 거절 · 울타리 8조각(문 하나) · 자리 (11.00, 0.00, -18.50) 빔",
+    "livestock buy OK - 꼬꼬 10·매매 22 · 넷까지 · 몸 넷 · 둘째 이름「꼬꼬 2」",
+    "livestock care OK - 먹이 열매 1·하루 한 번·열매 없으면 거절 · 쓰다듬기 하트 +1·하루 한 번",
+    "livestock morning OK - 처음 날 적기만 · 먹은 짐승 산물 = 열매(달걀 2·산양젖 4) · 하트 3 이면 둘 · 사흘 굶으면 떠남 · 빠진 날은 굶은 날「🐔 우리 — 아침에 거뒀다: 🥚 달걀 2 (열매 +4) / 🐐 사흘 굶은 꼬꼬 2·매매 2 이(가) 우리를 떠났다」",
+    "livestock save OK - livestockJson 칸·왕복(우리·마리·하트)·옛 세이브 빈 것·제작대 「🐔 우리」 → 창·겹침 0"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.fs.relics": {
+   "runner": "PlaytestForestHeadless",
+   "tag": "relics",
+   "ok": [
+    "relics roll OK - 60일 중 27일 조각(확률 0.5) · 날로 결정적",
+    "relics gather OK - 곤충 없음 · 화석 첫 번「🪦 유적 조각 — 옛 비석 1/4」· 둘째 번 없음",
+    "relics restore OK - 20일에 셋 복원 · 열매 +39(8×3 + 잔치 15 한 번) · 전시대 3(충돌체 0) · 다 되살린 뒤 조각 없음「🏺 유적 조각 — 옛 그릇 4/4 / 🏺 옛 그릇 복원! 화석 자리 곁에 전시대가 섰다 — 열매 +8」",
+    "relics save OK - relicsJson 칸·왕복(복원·잔치·전시대)·옛 세이브 빈 것",
+    "relics off OK - 손잡이 끄면 조각 없음"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.fs.brew": {
+   "runner": "PlaytestForestHeadless",
+   "tag": "brew",
+   "ok": [
+    "brew pouch OK - 버섯 = 약초·꽃·곤충 하나씩 · 상한 9",
+    "brew rule OK - 약초·재료 없으면 거절 · 쓰면 줄고 이름 밝혀짐 · 새로 마시면 바뀜 · 다음 날 없음",
+    "brew effect OK - 기운 과일 +1 · 꽃향 하트 +1 → 2·상한 4 그대로(+3 → 2)·내림은 그대로 · 탁함 헛방",
+    "brew panel OK - 제작대 단추 · ❔ 줄 · 재료 없으면 흐림 · 누르면 마시고 이름 밝혀짐",
+    "brew save OK - brewJson 칸·왕복(주머니·밝힌 것·오늘 물약)·옛 세이브 빈 것",
+    "brew off OK - 손잡이 끄면 주머니·달이기·효과 없음"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.st.autoquest": {
+   "runner": "PlaytestStorySlice",
+   "tag": "autoquest",
+   "ok": [
+    "autoquest OK - 4종횡(걸음 종류 표·사명 첫 사냥 = 좌우로 걸어가 돌아서며 평타로 처치·체력 낮음·손 조작·▶) | 걸음 12·x 12.0→16.6·처치 1"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.st.campfire": {
+   "runner": "PlaytestStorySlice",
+   "tag": "campfire",
+   "ok": [
+    "campfire OK - 선봉 첫 타 ×1.1 한 번·체력 가득 · 유격 기운 가득 · 호법 체력 ×1.1 · 판 중 못 앉음·판 닫히면 사라짐 · 들머리 불(곁·다시 안 앉음·다녀오면) · 저장 | 기본 체력 174 불 x 1.2"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.st.launch": {
+   "runner": "PlaytestStorySlice",
+   "tag": "launch",
+   "ok": [
+    "launch plain OK - ↑ 없이 평타는 안 뜸",
+    "launch launch OK - ↑ 평타 → 뜸 · 최고 1.58m · 0.58초에 닿음 · 떨어짐 피해 16(= 32.83373 × 0.5)",
+    "launch juggle OK - 떠 있는 적 추가타 4타 튕김·다섯째는 그대로 떨어짐 · ↑ 없는 평타도 저글",
+    "launch immune OK - 두목·관문 대장은 안 뜸",
+    "launch off OK - 손잡이 끄면 안 뜸"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.st.hidden-boss": {
+   "runner": "PlaytestStorySlice",
+   "tag": "hidden",
+   "ok": [
+    "hidden rule OK - 읽어야·첫 타부터 60초 안·첫 타 없으면 안 부름",
+    "hidden clue OK - 들판 끝 x 43.4(두목 x 43.6 뒤) · 멀리·공중 안 읽힘 · 곁 처음만",
+    "hidden summon OK - 빠른 처치 → 2초 뒤 「숨은 우두머리」 체력 ×2.5·공격 ×1.5·등장 컷 없음 · 61초·안 읽음은 안 섬",
+    "hidden kill OK - 쳐도 판 안 열림 · 경험치 +375(두목 ×2.5) · 처치 기록 1 · 두목 사명 그대로",
+    "hidden save OK - hiddenJson 칸·왕복(읽음·처치)·옛 세이브 빈 것",
+    "hidden off OK - 손잡이 끄면 안 섬"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.rl.autorule": {
+   "runner": "PlaytestRealmSlice",
+   "tag": "autorule",
+   "ok": [
+    "autorule OK - 5천하 시정 위임(고름 셋·켜면 성마다 하나·같은 달 0·다음 달 다시·끄면 안 냄·금 바닥·단추) | 성 58·이 달 6(진류 — 이도인 — 치안 +6 / 소패 — 강서(현대) — 치안 +7 / 운중 — 성혼(균열) — 치안 +6 / 오원 — 부생(폐허) — 치안 +6 / 일남 — 강해(묘역) — 치안 +6 / 전충 — 현책 — 치안 +8) · 다음 달 6"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.rk.trade": {
+   "runner": "PlaytestRealmSlice",
+   "tag": "trade",
+   "ok": [
+    "trade path OK - 허창>진류>복양 · 소패 이미 우리 것 · 함락 뒤 복양>진류>허창>소패",
+    "trade start OK - 금 300 나감 · 금 모자람·남의 성·같은 길(거꾸로)·셋째 거절",
+    "trade month OK - 달마다 금 +117(상업 합×0.1×금 배율) · 12달째 돌아옴「🐫 허창 ↔ 복양 상단이 돌아왔다 — 모두 금 780」",
+    "trade cut OK - 길 가운데 성을 잃으면 그 달 상단을 잃고 금 없음",
+    "trade save OK - tradeJson 왕복·옛 세이브 빈 것·기술 창 단추 → 창(상단 줄·후보)·겹침 0"
+   ],
+   "fail": [],
+   "d2": true
+  },
+  "un.rk.laws": {
+   "runner": "PlaytestRealmSlice",
+   "tag": "laws",
+   "ok": [
+    "laws mul OK - 빈 법전 1 · 셋이면 금 ×1.035·수확 ×0.9·먹음 ×0.8·징병 ×1.25·등용 ×0.85",
+    "laws rule OK - 성 하나 = 법전 1(성 다섯도 3) · 같은 법령·가득 참·6달 안 거절 · 6달 뒤 반포",
+    "laws month OK - 진짜 다음 달: 금 +4327 → 상업령 +4976 · 수확 1846 → 1661 · 먹음 50 → 둔전령 40",
+    "laws panel OK - 📜 법령 단추·창 줄·반포 → 시행 중·다른 줄 기다림 흐림",
+    "laws save OK - lawsJson 왕복(법령·6달 간격)·옛 세이브 빈 법전",
+    "laws off OK - 손잡이 끄면 효과·반포 없음"
+   ],
+   "fail": [],
+   "d2": true
+  }
+ }
+}

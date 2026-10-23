@@ -2132,12 +2132,12 @@
   "tests": [
    "PlaytestDungeonRunRank"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0169",
   "since": "2026-10-23",
-  "note": "D1(U-0169): PlaytestDungeonHeadless runrank OK(급보정 1→3 · 계단 S 덤 282 · 남주 박음 · 쓰러짐 A 덤 없음 · 세이브 왕복) · 세이브 md5 그대로 · 전체 FAIL 은 era-decor 바위(K-0176)뿐 · 촬영 안 함"
+  "note": "D2(R-3 10-23): PlaytestDungeonHeadless runrank OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0169): PlaytestDungeonHeadless runrank OK(급보정 1→3 · 계단 S 덤 282 · 남주 박음 · 쓰러짐 A 덤 없음 · 세이브 왕복) · 세이브 md5 그대로 · 전체 FAIL 은 era-decor 바위(K-0176)뿐 · 촬영 안 함"
  },
  {
   "id": "un.parity.s1",
@@ -2241,12 +2241,12 @@
   "tests": [
    "PlaytestGoAutoQuest"
   ],
-  "level": "D1",
-  "verified": "2026-10-22 claude",
+  "level": "D2",
+  "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0163",
   "since": "2026-10-22",
-  "note": "D1(U-0163): PlaytestHeadless autoquest OK(틀 막힘·멈춤 · 1만리 1장 첫 단계 25m 걸어가 말 걸어 단계 넘김 · 체력 낮음 · 손 조작 · ▶) · UiLayoutCheck 0(▶ 목표판 왼쪽, 검사가 ▶ 건너뜀) · 나머지 넷 U-0164"
+  "note": "D2(R-3 10-23): PlaytestHeadless autoquest OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0163): PlaytestHeadless autoquest OK(틀 막힘·멈춤 · 1만리 1장 첫 단계 25m 걸어가 말 걸어 단계 넘김 · 체력 낮음 · 손 조작 · ▶) · UiLayoutCheck 0(▶ 목표판 왼쪽, 검사가 ▶ 건너뜀) · 나머지 넷 U-0164"
  },
  {
   "id": "un.dg.autoquest",
@@ -2258,12 +2258,12 @@
   "tests": [
    "PlaytestDungeonAutoQuest"
   ],
-  "level": "D1",
-  "verified": "2026-10-22 claude",
+  "level": "D2",
+  "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0164",
   "since": "2026-10-22",
-  "note": "D1(U-0164): PlaytestDungeonHeadless autoquest OK(2층 전투방 적 12 치우고 문 밟아 방 0→1 · 체력 낮음 · 손 조작 · ▶) · 나머지 셋 U-0165~0167"
+  "note": "D2(R-3 10-23): PlaytestDungeonHeadless autoquest OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0164): PlaytestDungeonHeadless autoquest OK(2층 전투방 적 12 치우고 문 밟아 방 0→1 · 체력 낮음 · 손 조작 · ▶) · 나머지 셋 U-0165~0167"
  },
  {
   "id": "un.st.autoquest",
@@ -2275,12 +2275,12 @@
   "tests": [
    "PlaytestStoryAutoQuest"
   ],
-  "level": "D1",
-  "verified": "2026-10-22 claude",
+  "level": "D2",
+  "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0165",
   "since": "2026-10-22",
-  "note": "D1(U-0165): PlaytestStorySlice autoquest OK(복제 잡졸 하나 12걸음 걸어가 평타로 처치 · 걸음 종류 표 · 체력 낮음 · 손 조작 · ▶) · 슬라이스 전체 OK · UiLayoutCheck 0"
+  "note": "D2(R-3 10-23): PlaytestStorySlice autoquest OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0165): PlaytestStorySlice autoquest OK(복제 잡졸 하나 12걸음 걸어가 평타로 처치 · 걸음 종류 표 · 체력 낮음 · 손 조작 · ▶) · 슬라이스 전체 OK · UiLayoutCheck 0"
  },
  {
   "id": "un.fs.autoquest",
@@ -2292,12 +2292,12 @@
   "tests": [
    "PlaytestForestAutoQuest"
   ],
-  "level": "D1",
-  "verified": "2026-10-22 claude",
+  "level": "D2",
+  "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0166",
   "since": "2026-10-22",
-  "note": "D1(U-0166): PlaytestForestHeadless autoquest OK(소포 하나 접수대 곁에서 34m 걸어가 우체통 배달 · 걸음 종류 표 · 손 조작 · ▶) · 전체 FAIL 은 바위(K-0176)뿐 · UiLayoutCheck 0(검사 세이브는 목표가 없어 ▶ 가 안 떠 자리는 위젯 표로 잼)"
+  "note": "D2(R-3 10-23): PlaytestForestHeadless autoquest OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0166): PlaytestForestHeadless autoquest OK(소포 하나 접수대 곁에서 34m 걸어가 우체통 배달 · 걸음 종류 표 · 손 조작 · ▶) · 전체 FAIL 은 바위(K-0176)뿐 · UiLayoutCheck 0(검사 세이브는 목표가 없어 ▶ 가 안 떠 자리는 위젯 표로 잼)"
  },
  {
   "id": "un.rl.autorule",
@@ -2309,12 +2309,12 @@
   "tests": [
    "PlaytestRealmAutoRule"
   ],
-  "level": "D1",
-  "verified": "2026-10-22 claude",
+  "level": "D2",
+  "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0167",
   "since": "2026-10-22",
-  "note": "D1(U-0167): PlaytestRealmSlice autorule OK(고름 셋 · 켜면 58곳 중 장수 있는 6곳 · 같은 달 0 · 다음 달 6 · 끄면 안 냄 · 금 바닥 · 단추) · 슬라이스 전체 OK · UiLayoutCheck 위임 단추 겹침 0"
+  "note": "D2(R-3 10-23): PlaytestRealmSlice autorule OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0167): PlaytestRealmSlice autorule OK(고름 셋 · 켜면 58곳 중 장수 있는 6곳 · 같은 달 0 · 다음 달 6 · 끄면 안 냄 · 금 바닥 · 단추) · 슬라이스 전체 OK · UiLayoutCheck 위임 단추 겹침 0"
  },
  {
   "id": "un.go.restsite",
@@ -2326,12 +2326,12 @@
   "tests": [
    "PlaytestGoRestSites"
   ],
-  "level": "D1",
-  "verified": "2026-10-22 claude",
+  "level": "D2",
+  "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0168",
   "since": "2026-10-22",
-  "note": "D1(U-0168): PlaytestHeadless restsites OK(자리 5 · 서쪽 숲길 앉음 = 지핌·회복·부활 자리·잡몹 1 다시 섬 · 안 나가면 다시 안 앉음 · 전멸 → 불 옆 · 안 지핀 = 처음 자리 · 세이브 칸) · UiLayoutCheck 0"
+  "note": "D2(R-3 10-23): PlaytestHeadless restsites OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0168): PlaytestHeadless restsites OK(자리 5 · 서쪽 숲길 앉음 = 지핌·회복·부활 자리·잡몹 1 다시 섬 · 안 나가면 다시 안 앉음 · 전멸 → 불 옆 · 안 지핀 = 처음 자리 · 세이브 칸) · UiLayoutCheck 0"
  },
  {
   "id": "un.go.wind-guide",
@@ -2342,12 +2342,12 @@
   "tests": [
    "PlaytestGoWind"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0179",
   "since": "2026-10-23",
-  "note": "D1(U-0179): PlaytestHeadless wind rule·blow·cool·none·windonly·off OK"
+  "note": "D2(R-3 10-23): PlaytestHeadless wind OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0179): PlaytestHeadless wind rule·blow·cool·none·windonly·off OK"
  },
  {
   "id": "un.core.shader-keep",
@@ -2358,12 +2358,12 @@
   "tests": [
    "PlaytestShaderKeep"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0183",
   "since": "2026-10-23",
-  "note": "D1(U-0183): PlaytestHeadless shaderkeep scan·find·pre·post OK · 빌드는 안 함(사용자 10-09) — 실제 빌드에서의 확인은 다음 빌드 때"
+  "note": "D2(R-3 10-23): PlaytestHeadless shaderkeep OK 4줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0183): PlaytestHeadless shaderkeep scan·find·pre·post OK · 빌드는 안 함(사용자 10-09) — 실제 빌드에서의 확인은 다음 빌드 때"
  },
  {
   "id": "un.go.rank",
@@ -2376,12 +2376,12 @@
   "tests": [
    "PlaytestGoRunRank"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0174",
   "since": "2026-10-23",
-  "note": "D1(U-0174): PlaytestHeadless gorank S·zone·drop·save OK(TakeHit 이 엶·연타 12·피격 0·30초 → S 급 3·덤 경험 +13 · 장판 틱 연타 0 · 피격 9 → B 기록 그대로 · 20초 멍·전멸 버림·수호장 안 셈 · rankCamps·rankGrades)"
+  "note": "D2(R-3 10-23): PlaytestHeadless gorank OK 4줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0174): PlaytestHeadless gorank S·zone·drop·save OK(TakeHit 이 엶·연타 12·피격 0·30초 → S 급 3·덤 경험 +13 · 장판 틱 연타 0 · 피격 9 → B 기록 그대로 · 20초 멍·전멸 버림·수호장 안 셈 · rankCamps·rankGrades)"
  },
  {
   "id": "un.go.field-env",
@@ -2393,12 +2393,12 @@
   "tests": [
    "PlaytestGoFieldFire"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0175",
   "since": "2026-10-23",
-  "note": "D1(U-0175): PlaytestHeadless fieldfire grass·ground·shock·douse·safe OK(불길 1 → 0.5초 번짐 2 · 둘레 15/틱·불 묻힘 · 3초 꺼짐 · 길·마을 안 탐 · 강 위 둘째 적 100·뭍 그대로 · 물에 꺼짐 · 주인공 그대로)"
+  "note": "D2(R-3 10-23): PlaytestHeadless fieldfire OK 5줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0175): PlaytestHeadless fieldfire grass·ground·shock·douse·safe OK(불길 1 → 0.5초 번짐 2 · 둘레 15/틱·불 묻힘 · 3초 꺼짐 · 길·마을 안 탐 · 강 위 둘째 적 100·뭍 그대로 · 물에 꺼짐 · 주인공 그대로)"
  },
  {
   "id": "un.dg.weapon-swap",
@@ -2463,12 +2463,12 @@
   "tests": [
    "PlaytestDungeonMastery"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0178",
   "since": "2026-10-23",
-  "note": "D1(U-0178): PlaytestDungeonHeadless mastery tier·kill·atk·guard·save·off OK(쇠도끼 30 처치 2단 한 타 ×1.06 · 10번 맞고 갑주 1단 100 → 98 · masteryJson 왕복)"
+  "note": "D2(R-3 10-23): PlaytestDungeonHeadless mastery OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0178): PlaytestDungeonHeadless mastery tier·kill·atk·guard·save·off OK(쇠도끼 30 처치 2단 한 타 ×1.06 · 10번 맞고 갑주 1단 100 → 98 · masteryJson 왕복)"
  },
  {
   "id": "un.fs.move-in",
@@ -2499,12 +2499,12 @@
   "tests": [
    "PlaytestForestLivestock"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0173",
   "since": "2026-10-23",
-  "note": "D1(U-0173): PlaytestForestHeadless livestock pen·buy·care·morning·save OK · 금·가방 없는 트랙이라 값은 웹 능금 40벨 = 열매 1 · 산물은 열매로 · 닭·염소 몸은 코드 도형 대역(K-0186 요청) · 촬영 안 함"
+  "note": "D2(R-3 10-23): PlaytestForestHeadless livestock OK 5줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0173): PlaytestForestHeadless livestock pen·buy·care·morning·save OK · 금·가방 없는 트랙이라 값은 웹 능금 40벨 = 열매 1 · 산물은 열매로 · 닭·염소 몸은 코드 도형 대역(K-0186 요청) · 촬영 안 함"
  },
  {
   "id": "un.fs.relics",
@@ -2516,12 +2516,12 @@
   "tests": [
    "PlaytestForestRelics"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0177",
   "since": "2026-10-23",
-  "note": "D1(U-0177): PlaytestForestHeadless relics roll·gather·restore·save·off OK(60일 중 27일 조각 · 화석·하루 첫 번만 · 셋 복원 열매 +39 · 전시대 3 충돌체 0 · relicsJson 왕복)"
+  "note": "D2(R-3 10-23): PlaytestForestHeadless relics OK 5줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0177): PlaytestForestHeadless relics roll·gather·restore·save·off OK(60일 중 27일 조각 · 화석·하루 첫 번만 · 셋 복원 열매 +39 · 전시대 3 충돌체 0 · relicsJson 왕복)"
  },
  {
   "id": "un.fs.brew",
@@ -2533,12 +2533,12 @@
   "tests": [
    "PlaytestForestBrew"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0180",
   "since": "2026-10-23",
-  "note": "D1(U-0180): PlaytestForestHeadless brew pouch·rule·effect·panel·save·off OK"
+  "note": "D2(R-3 10-23): PlaytestForestHeadless brew OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0180): PlaytestForestHeadless brew pouch·rule·effect·panel·save·off OK"
  },
  {
   "id": "un.fs.cave-depth",
@@ -2584,12 +2584,12 @@
   "tests": [
    "PlaytestStoryCampfire"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0170",
   "since": "2026-10-23",
-  "note": "D1(U-0170): PlaytestStorySlice campfire OK(선봉 첫 타 ×1.1 한 번·유격 기운 가득·호법 최대 체력 174→×1.1·판 중 못 앉음·판 닫히면 사라짐·들머리 불 x 1.2·저장 왕복) · Slice no errors · 세이브 다섯 md5 그대로 · 새 창 없음(DialogueLabel 한 줄) · 동료 앉는 몸짓은 없음(앉기 동작 에셋 없음) · 촬영 안 함"
+  "note": "D2(R-3 10-23): PlaytestStorySlice campfire OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0170): PlaytestStorySlice campfire OK(선봉 첫 타 ×1.1 한 번·유격 기운 가득·호법 최대 체력 174→×1.1·판 중 못 앉음·판 닫히면 사라짐·들머리 불 x 1.2·저장 왕복) · Slice no errors · 세이브 다섯 md5 그대로 · 새 창 없음(DialogueLabel 한 줄) · 동료 앉는 몸짓은 없음(앉기 동작 에셋 없음) · 촬영 안 함"
  },
  {
   "id": "un.st.launch",
@@ -2602,12 +2602,12 @@
   "tests": [
    "PlaytestStoryLaunch"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0176",
   "since": "2026-10-23",
-  "note": "D1(U-0176): PlaytestStorySlice launch plain·launch·juggle·immune·off OK(↑ 평타 → 최고 1.58m·0.58초 닿음·떨어짐 16 = 32.8 × 0.5 · 저글 4타 상한 · 두목·관문 대장 안 뜸) · 4종횡 전체 통과"
+  "note": "D2(R-3 10-23): PlaytestStorySlice launch OK 5줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0176): PlaytestStorySlice launch plain·launch·juggle·immune·off OK(↑ 평타 → 최고 1.58m·0.58초 닿음·떨어짐 16 = 32.8 × 0.5 · 저글 4타 상한 · 두목·관문 대장 안 뜸) · 4종횡 전체 통과"
  },
  {
   "id": "un.st.hidden-boss",
@@ -2619,12 +2619,12 @@
   "tests": [
    "PlaytestStoryHidden"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0181",
   "since": "2026-10-23",
-  "note": "D1(U-0181): PlaytestStorySlice hidden rule·clue·summon·kill·save·off OK"
+  "note": "D2(R-3 10-23): PlaytestStorySlice hidden OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0181): PlaytestStorySlice hidden rule·clue·summon·kill·save·off OK"
  },
  {
   "id": "un.rk.supply",
@@ -2673,12 +2673,12 @@
   "tests": [
    "PlaytestRealmTrade"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0172",
   "since": "2026-10-23",
-  "note": "D1(U-0172): PlaytestRealmSlice trade path·start·month·cut·save OK(허창↔복양 달마다 +117·12달 780) · 화친·적 진 없는 트랙이라 우리 성끼리만 · 성 잃기 규칙이 없어 끊김은 진단 손잡이로만 · 지도 띠 없음 · 촬영 안 함"
+  "note": "D2(R-3 10-23): PlaytestRealmSlice trade OK 5줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0172): PlaytestRealmSlice trade path·start·month·cut·save OK(허창↔복양 달마다 +117·12달 780) · 화친·적 진 없는 트랙이라 우리 성끼리만 · 성 잃기 규칙이 없어 끊김은 진단 손잡이로만 · 지도 띠 없음 · 촬영 안 함"
  },
  {
   "id": "un.rk.laws",
@@ -2690,12 +2690,12 @@
   "tests": [
    "PlaytestRealmLaws"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0182",
   "since": "2026-10-23",
-  "note": "D1(U-0182): PlaytestRealmSlice laws mul·rule·month·panel·save·off OK · 충성·관직이 없어 엄법령 뺌·법전 칸은 성 수"
+  "note": "D2(R-3 10-23): PlaytestRealmSlice laws OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0182): PlaytestRealmSlice laws mul·rule·month·panel·save·off OK · 충성·관직이 없어 엄법령 뺌·법전 칸은 성 수"
  },
  {
   "id": "un.rk.tech-tree",
@@ -2727,12 +2727,12 @@
   "tests": [
    "PlaytestGoMountFight"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-23 claude",
   "fun": {},
   "ticket": "U-0171",
   "since": "2026-10-23",
-  "note": "D1(U-0171): PlaytestHeadless mountfight OK(배율 1/1.25/1.5 · 평타 257→368 · 돌진 368·앞만·비틀·쿨 6 · 다섯 손 막힘 · 낙마 · 싸움 붙어도 안 내림) · 1만리 전체 FAIL 은 바위(K-0176)뿐 · 나는 탈것은 옛대로 내림 · 촬영 안 함"
+  "note": "D2(R-3 10-23): PlaytestHeadless mountfight OK 1줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0171): PlaytestHeadless mountfight OK(배율 1/1.25/1.5 · 평타 257→368 · 돌진 368·앞만·비틀·쿨 6 · 다섯 손 막힘 · 낙마 · 싸움 붙어도 안 내림) · 1만리 전체 FAIL 은 바위(K-0176)뿐 · 나는 탈것은 옛대로 내림 · 촬영 안 함"
  },
  {
   "id": "un.go.path-acts",
