@@ -5757,5 +5757,24 @@
   "ticket": "G-0328",
   "since": "2026-10-23",
   "note": "고돗 먼저(웹 짝 없음) · PartyState.home.workers 순수 추가 · SAGA_HOME_WORK=0 · 촬영 probe_shots lg_go_workers"
+ },
+ {
+  "id": "gd.realm.ages",
+  "name": "5천하 국세 올리기 — 난세→기틀→치세→성세, 성 수·연구한 기술·금 문턱, 단계마다 금·수확 ×1.05(성세 경험 ×1.1), 법령 창 맨 위 줄",
+  "files": [
+   "games/saga_realm/data/realm_ages.gd",
+   "games/saga_realm/data/realm_state.gd",
+   "games/saga_realm/data/realm_save_state.gd",
+   "games/saga_realm/ui/realm_law_button.gd"
+  ],
+  "tests": [
+   "realm_ages"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0329",
+  "since": "2026-10-23",
+  "note": "고돗 먼저(웹 짝 없음) · 세이브 v28 age · SAGA_AGES=0 · 촬영 shot_scene lg_rk_laws"
  }
 ]

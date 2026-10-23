@@ -5,7 +5,7 @@ extends RealmRulesMonth
 const SAVE_PATH := "user://save_realm.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
-const SAVE_VERSION := 27  # 26→27(법령: laws, G-0321) · 25→26(장수 관계망: rel_master, G-0316) · 24→25(교역로: trade, G-0310) · 23→24(불가사의: wonders, G-0243) · 22→23(진·보급선: camps, G-0239) · 21→22(기술 나무: tech, G-0234) · 20→21(AI 세력 경륜도: ai_passive, G-0219) · 19→20(경륜도: passive, G-0216) · 18→19(영내 소식: news, G-0194) · 17→18(격자 전술: officer_hurt/annals, G-0182) · 16→17(이야기 카드: story, G-0088) · 1(성 하나) → 2(성 여러 곳) → 3(officer_city) → 4(enemies) → 5(diplomacy) → 6(정복 성 편입) → 7(충성·계략) → 8(문답) → 9(이간·매수) → 10(인구 증감+재해: cities[].disaster/d_left) → 11(승진/관직: officer_growth) → 12(승패 판정: result) → 13(시나리오: scenario_id) → 14(특성·야망: officer_ambition/enemies_subverted, PLAN 101-2 REALM ③) → 15(이벤트 체인: active_events/events_done, PLAN 101-2 REALM ⑤) → 16(계승: lord_succession_enabled/current_lord_id/heir_id/_succession_shock_until, PLAN 101-2 REALM ⑥)
+const SAVE_VERSION := 28  # 27→28(국세: age, G-0329) · 26→27(법령: laws, G-0321) · 25→26(장수 관계망: rel_master, G-0316) · 24→25(교역로: trade, G-0310) · 23→24(불가사의: wonders, G-0243) · 22→23(진·보급선: camps, G-0239) · 21→22(기술 나무: tech, G-0234) · 20→21(AI 세력 경륜도: ai_passive, G-0219) · 19→20(경륜도: passive, G-0216) · 18→19(영내 소식: news, G-0194) · 17→18(격자 전술: officer_hurt/annals, G-0182) · 16→17(이야기 카드: story, G-0088) · 1(성 하나) → 2(성 여러 곳) → 3(officer_city) → 4(enemies) → 5(diplomacy) → 6(정복 성 편입) → 7(충성·계략) → 8(문답) → 9(이간·매수) → 10(인구 증감+재해: cities[].disaster/d_left) → 11(승진/관직: officer_growth) → 12(승패 판정: result) → 13(시나리오: scenario_id) → 14(특성·야망: officer_ambition/enemies_subverted, PLAN 101-2 REALM ③) → 15(이벤트 체인: active_events/events_done, PLAN 101-2 REALM ⑤) → 16(계승: lord_succession_enabled/current_lord_id/heir_id/_succession_shock_until, PLAN 101-2 REALM ⑥)
 
 
 func save_version() -> int:
@@ -37,6 +37,7 @@ func save() -> bool:
 		"trade": trade,   # G-0310
 		"rel_master": rel_master,   # G-0316
 		"laws": laws,   # G-0321
+		"age": age,   # G-0329
 		"enemy_officer_loyal": enemy_officer_loyal,
 		"diplomacy": diplomacy,
 		"quiz": quiz,
@@ -107,6 +108,7 @@ func try_load() -> bool:
 	trade = (loaded_trade as Array).duplicate(true) if typeof(loaded_trade) == TYPE_ARRAY else []
 	var loaded_rm: Variant = data.get("rel_master", {})   # G-0316 — 옛 세이브(25)는 빈 것
 	rel_master = (loaded_rm as Dictionary).duplicate(true) if typeof(loaded_rm) == TYPE_DICTIONARY else {}
+	age = int(data.get("age", 0))   # G-0329 — 옛 세이브(27)는 난세
 	var loaded_laws: Variant = data.get("laws", {})   # G-0321 — 옛 세이브(26)는 빈 법전 · JSON 실수 → 정수
 	laws = {}
 	if typeof(loaded_laws) == TYPE_DICTIONARY:
