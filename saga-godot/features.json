@@ -5427,12 +5427,12 @@
   "tests": [
    "rest_sites"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0305",
   "since": "2026-10-22",
-  "note": "웹 W-0297 짝 · SAGA_REST=0 · 세이브 새 칸 rest"
+  "note": "웹 W-0297 짝 · SAGA_REST=0 · 세이브 새 칸 rest · D2 G-0337 촬영 shot_scene lg_go_rest(모닥불·✦ 쉼터·곁에 앉음)"
  },
  {
   "id": "gd.go.mount-fight",
@@ -5446,12 +5446,12 @@
    "mount_fight",
    "mount"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0306",
   "since": "2026-10-22",
-  "note": "웹 W-0304 짝 · SAGA_MOUNT_FIGHT=0"
+  "note": "웹 W-0304 짝 · SAGA_MOUNT_FIGHT=0 · D2 G-0337 촬영 shot_scene lg_go_mfight(돌진! 133·넘어뜨림·베기 궤적)"
  },
  {
   "id": "gd.dungeon.breakables",

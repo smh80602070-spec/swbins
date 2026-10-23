@@ -260,3 +260,46 @@ static func dg_bless(tree: SceneTree) -> void:
 	_later(tree, 20, func() -> void:
 		(tree.current_scene.get("_exit_used") as Array)[0] = false   # 세이브에서 깬 방이면 출구가 닫혀 있다
 		tree.current_scene.call("_on_exit_entered", _player(tree), 0))
+
+
+## G-0337 1만리 쉼터(G-0305) — 마을 쉼터 곁에 세워 앉힌다 · 늦게 뜨는 길 위 사건 창(ui_modal)은 뜬 뒤 닫는다
+static func go_rest(tree: SceneTree) -> void:
+	var close := func() -> void:
+		for m in tree.get_nodes_in_group("ui_modal"):
+			if m is CanvasLayer and (m as CanvasLayer).visible:   # 숨은 확인창(봉화대 등)은 두고
+				m.remove_from_group("ui_modal")
+				m.queue_free()
+	_later(tree, 25, close)
+	_later(tree, 45, close)
+
+
+## G-0337 1만리 말 위 전투(G-0306) — 절영에 태워 앞 적에게 돌진(E). 태우기가 user://mount.cfg 에 마지막 탈것을 쓰므로 읽어 두었다 되돌린다.
+static func go_mount_fight(tree: SceneTree) -> void:
+	const CFG := "user://mount.cfg"
+	var had := FileAccess.file_exists(CFG)
+	var old := FileAccess.get_file_as_string(CFG) if had else ""
+	var pl := _player(tree)
+	var m: Node = null
+	for c in pl.get_children():
+		if c.has_method("dismount") and c.has_method("is_riding"):
+			m = c
+	if m == null:
+		return
+	m.call("mount", "pt_jeolyeong")
+	if had:
+		var f := FileAccess.open(CFG, FileAccess.WRITE)
+		f.store_string(old)
+		f.close()
+	else:
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(CFG))
+	_later(tree, 84, func() -> void:   # 촬영(120프레임) 바로 앞 — 일찍 치면 밀침 9 로 적이 화면 밖
+		var fm := tree.get_first_node_in_group("go_field_mount")
+		for e in tree.get_nodes_in_group("field_enemy"):
+			if not e.call("is_dead") and not e.call("is_shielded"):
+				var fwd: Vector3 = pl.call("facing")
+				(e as Node3D).global_position = pl.global_position + fwd * 2.5
+				e.set("max_hp", 9999.0)
+				e.set("hp", 9999.0)
+				break
+		if fm != null:
+			fm.call("charge"))

@@ -157,6 +157,8 @@ const CUTS := [
 	["lg_dg_season", DUNGEON, [["free_modal"], ["static", "res://games/saga_dungeon/data/dungeon_season.gd", "restore", [{"id": -1, "runs": [{"pts": 15, "rank": "S", "tier": 3, "sec": 245}, {"pts": 8, "rank": "A", "tier": 2, "sec": 300}, {"pts": 6, "rank": "B", "tier": 2, "sec": 410}], "past": [{"id": 2963, "score": 52, "tier": 2}]}]], ["call", "SeasonButton", "open_screen", []]]],   # G-0334 시즌 창(29점 백은)
 	["lg_dg_bless", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_bless", ["@tree"]]]],   # G-0335 3택 카드 신 계보 글
 	["lg_rk_focus", REALM, [["free_modal"], ["set", "/root/RealmSaveState", "focus", {"done": ["root", "rich"], "cur": "farm", "left": 2}], ["call", "FocusButton", "open_screen", []]]],   # G-0336 방침 창(부국 끝·둔전 2달)
+	["lg_go_rest", GO, [["free_modal"], ["near", "RestSites/Rest_village", 0.0, 2.2], ["static", "res://tools/shot_ledger.gd", "go_rest", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-30.0, 0.0, 0.0)]]],   # G-0337 ← G-0305 쉼터에 앉음(불 지핌 알림)
+	["lg_go_mfight", GO, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "go_mount_fight", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 7.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-20.0, 90.0, 0.0)]]],   # G-0337 ← G-0306 말 위 돌진(넘어뜨림)
 	["lg_dg_trail", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_legend", ["@tree"]], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0325 ← G-0290 전설 잔광
 	["lg_dg_rise", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rise", ["@tree"]]]],   # G-0325 ← G-0293 난입 솟음(한 컷씩 — time_scale)
 	["lg_dg_break", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_breakables", ["@tree"]]]],   # G-0325 ← G-0307 부서지는 통
@@ -223,7 +225,7 @@ func _steps(steps: Array) -> void:
 	for st: Array in steps:
 		if String(st[0]) == "free_modal":
 			for m in get_nodes_in_group("ui_modal"):
-				if m is CanvasLayer:
+				if m is CanvasLayer and (m as CanvasLayer).visible:   # 숨은 확인창(1만리 봉화대 등)은 두고 — 지우면 그 노드 _process 가 오류를 쏟는다(G-0337)
 					m.remove_from_group("ui_modal")   # queue_free 는 프레임 끝 — 같은 차례 다음 단계(☰ 메뉴 열기)가 막히지 않게
 					m.queue_free()
 			continue
