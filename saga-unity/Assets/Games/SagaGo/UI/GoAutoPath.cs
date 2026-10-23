@@ -14,6 +14,8 @@ namespace Saga.Go.UI
     {
         public const float Cell = 1.5f, BodyR = 0.4f, StepH = 0.9f, MinGain = 3f, ProbeAhead = 2.2f;
         public const int Half = 30;
+        /// <summary>tasks U-0197 — 목표가 창 밖이면 가까운 칸부터 이만큼만 훑는다(반경 ≈ 30m · 61×61 = 3721 칸 다 재면 에디터 7.3ms — 폰 끊김 후보, R-5).</summary>
+        public const int MaxVisitFar = 1200;
 
         /// <summary>진단 — 칸 하나(세계 x·z) → (열림, 땅 높이). null 이면 물리로 잰다.</summary>
         public static Func<float, float, (bool open, float h)> CellForTest;
@@ -69,9 +71,11 @@ namespace Saga.Go.UI
             int best = start;
             float bestD = Flat(Pos(start) - goal);
             float startD = bestD;
+            int visited = 0;
             while (q.Count > 0)
             {
                 int c = q.Dequeue();
+                if (!goalIn && ++visited > MaxVisitFar) break;
                 if (c == goalI) { best = c; bestD = 0f; break; }
                 int cx = c % N, cz = c / N;
                 for (int dz = -1; dz <= 1; dz++)

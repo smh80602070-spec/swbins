@@ -2263,7 +2263,7 @@
   "fun": {},
   "ticket": "U-0190",
   "since": "2026-10-23",
-  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261023b.json — 위 1만리 촬영과 같은 판 — 모서리에서 돌아가는 길 · 앞 D2(U-0190): PlaytestHeadless autopath OK — 가짜 격자(곧은 들판 경유점 하나·담 돌아감 3·갇힘 null·3m 턱 안 오름)·앞 막힘·진짜 임시 벽 돌아감 3 · autoquest OK 그대로"
+  "note": "U-0197: 목표가 창 밖이면 가까운 칸 1200 까지 — 길 내기 7.3 → 2.9ms(에디터) · D3(qc+claude, R-3): docs/playcheck/d3-r3-20261023b.json — 위 1만리 촬영과 같은 판 — 모서리에서 돌아가는 길 · 앞 D2(U-0190): PlaytestHeadless autopath OK — 가짜 격자(곧은 들판 경유점 하나·담 돌아감 3·갇힘 null·3m 턱 안 오름)·앞 막힘·진짜 임시 벽 돌아감 3 · autoquest OK 그대로"
  },
  {
   "id": "un.dg.autoquest",
