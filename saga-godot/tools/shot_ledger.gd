@@ -333,3 +333,16 @@ static func st_boss_banner(tree: SceneTree) -> void:
 			if e.get("boss_pattern") != null and bool(e.get("is_boss")):
 				_player(tree).global_position = (e as Node3D).global_position + Vector3(-1.5, 0.0, 0.0)
 				return)
+
+
+## G-0340 1만리 동료 우정 — 명운(관우 id)을 명단에 두고 우정 Lv.7(신뢰) 로, 인물 창(C)에서 고른다
+static func go_bond(tree: SceneTree) -> void:
+	var PS: Node = tree.root.get_node("PartyState")
+	if not (PS.get("members") as Array).has("sg_guanyu"):
+		(PS.get("members") as Array).push_front("sg_guanyu")
+	PS.set("bond", {"sg_guanyu": 380.0})
+	_later(tree, 5, func() -> void:
+		var c := tree.get_first_node_in_group("go_character_screen")
+		if c != null:
+			c.call("open_screen")
+			c.call("select", "sg_guanyu"))

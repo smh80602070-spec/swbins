@@ -89,6 +89,7 @@ func _hook_enemy(e: Node) -> void:
 
 func _on_enemy_died(enemy: Node) -> void:
 	add_stat("kills", 1, false)
+	preload("res://games/saga_go/data/go_bond.gd").on_kill(get_tree(), self)   # G-0340 함께 싸운 동료 우정
 	var def: Variant = enemy.get("def")
 	if typeof(def) == TYPE_DICTIONARY and String((def as Dictionary).get("element", "")) != "":
 		add_stat("kills_elemental", 1, false)

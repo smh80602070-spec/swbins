@@ -174,6 +174,7 @@ func claim(spot: String) -> Dictionary:
 	_out().erase(spot)
 	_notified.erase(spot)
 	PartyState.dispatch["done"] = int(PartyState.dispatch.get("done", 0)) + 1
+	preload("res://games/saga_go/data/go_bond.gd").add(who, preload("res://games/saga_go/data/go_bond.gd").DISPATCH, self)   # G-0340 탐사 다녀온 동료 우정
 	CombatFeel.ui()
 	Toast.show(self, "탐사 보상 — %s  (%s 돌아옴)" % [_items_text(got), _name(who)], 2.5)
 	claimed.emit(spot, got)

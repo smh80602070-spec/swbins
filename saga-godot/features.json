@@ -5953,5 +5953,27 @@
   "ticket": "G-0339",
   "since": "2026-10-23",
   "note": "SAGA_BOSS_INTRO=0 공용 · 촬영 shot_scene lg_dg_boss_banner·lg_st_boss_banner·lg_go_boss_intro"
+ },
+ {
+  "id": "gd.go.bond",
+  "name": "1만리 동료 우정(공용 bond) — 함께 싸우면 +2/+1·탐사 +15, Lv 0~10·낯섦~지기 단계 대사(성향별·지기는 한마디), 지기 첫 도달 인연 매듭",
+  "files": [
+   "saga_core/data/bond.gd",
+   "games/saga_go/data/go_bond.gd",
+   "games/saga_go/data/party_state.gd",
+   "games/saga_go/data/save_state.gd",
+   "games/saga_go/world/achievements.gd",
+   "games/saga_go/world/dispatch.gd",
+   "games/saga_go/ui/character_screen.gd"
+  ],
+  "tests": [
+   "go_bond"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0340",
+  "since": "2026-10-24",
+  "note": "추천 표 게임성 ④ · 세이브 bond 순수 추가 · SAGA_BOND=0 · 촬영 shot_scene lg_go_bond"
  }
 ]

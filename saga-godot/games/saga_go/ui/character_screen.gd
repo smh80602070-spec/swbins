@@ -367,6 +367,9 @@ func _refresh() -> void:
 	var hp: float = fc.call("max_hp_of", id) if fc else 0.0
 	var atk: float = fc.call("char_atk", id) if fc else PartyState.char_atk(id)
 	_stats.text = "체력 %d   공격 %d   방어 %d" % [int(hp), int(atk), int(PartyState.char_def(id))]
+	var bond_line: String = preload("res://games/saga_go/data/go_bond.gd").screen_line(id)   # G-0340 동료 우정·단계 대사
+	if bond_line != "":
+		_stats.text += "\n" + bond_line
 
 	var at_cap := lv >= cap
 	_once_button.disabled = at_cap
