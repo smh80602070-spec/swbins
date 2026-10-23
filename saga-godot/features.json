@@ -5095,12 +5095,12 @@
   "tests": [
    "rank_ring"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0288",
   "since": "2026-10-22",
-  "note": "읽기만(growth.get) · 촬영 3·6 ○"
+  "note": "읽기만(growth.get) · 촬영 3·6 ○ · D2 G-0324 촬영 probe_shots lg_go_ring"
  },
  {
   "id": "gd.story.job-ring",
@@ -5278,12 +5278,12 @@
   "tests": [
    "autoquest"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0298",
   "since": "2026-10-22",
-  "note": "직선 걷기(길 찾기 없음) · 네 판은 G-0299"
+  "note": "직선 걷기(길 찾기 없음) · 네 판은 G-0299 · D2 G-0324 촬영 probe_shots lg_go_rank(▶ 단추)"
  },
  {
   "id": "gd.dungeon.autoquest",
@@ -5390,12 +5390,12 @@
   "tests": [
    "field_env"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0303",
   "since": "2026-10-22",
-  "note": "웹 W-0374 짝 · SAGA_FIELD_ENV=0"
+  "note": "웹 W-0374 짝 · SAGA_FIELD_ENV=0 · D2 G-0324 촬영 probe_shots lg_go_fire"
  },
  {
   "id": "gd.go.parry",
@@ -5407,12 +5407,12 @@
   "tests": [
    "parry"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0304",
   "since": "2026-10-22",
-  "note": "웹 W-0375 짝 · SAGA_PARRY=0 · 자동 퀘스트는 안 씀"
+  "note": "웹 W-0375 짝 · SAGA_PARRY=0 · 자동 퀘스트는 안 씀 · D2 G-0324 촬영 probe_shots lg_go_parry"
  },
  {
   "id": "gd.go.rest-sites",
@@ -5578,12 +5578,12 @@
   "tests": [
    "go_rank"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0313",
   "since": "2026-10-23",
-  "note": "웹 W-0379 짝 · 공용 runrank(G-0312) · S 단사 덤 없음 · SAGA_RUNRANK=0"
+  "note": "웹 W-0379 짝 · 공용 runrank(G-0312) · S 단사 덤 없음 · SAGA_RUNRANK=0 · D2 G-0324 촬영 probe_shots lg_go_rank"
  },
  {
   "id": "gd.story.launch",

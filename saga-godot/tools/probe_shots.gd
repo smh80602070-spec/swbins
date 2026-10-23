@@ -62,6 +62,11 @@ const SHOTS := [
 	["o_sunken_field", "sunken", Vector2(4.0, 4.5), Vector3.ZERO, Vector2(5.0, 3.5), -2.0, 12.0, ""],
 	# G-0040 — 못 본 화면 넷(인물 조우·일과판 카드·7부 하늘 섬·8부 먹구름 눈과 매듭). ch:<장 0부터>:<단계> 는 컷 동안만 이야기 진행을 바꾼다
 	["g40_hero", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 9.0, "touch:go_heroes:_flee"],
+	["lg_go_rest", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(5.5, 3.0), -14.0, 6.0, "rest"],   # G-0324 쉼터
+	["lg_go_fire", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(5.5, 3.0), -14.0, 7.0, "fire"],   # G-0324 들불
+	["lg_go_ring", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(5.5, 3.0), -30.0, 4.0, "ring6"],   # G-0324 승급 금테 6
+	["lg_go_parry", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -20.0, 6.0, "parry"],   # G-0324 쳐내기
+	["lg_go_rank", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(5.5, 3.0), -10.0, 7.0, "rank"],   # G-0324 토벌 등급 알림·▶ 자동 퀘스트 단추
 	["lg_go_wind", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(5.5, 3.0), -10.0, 7.0, "wind"],   # G-0322 바람 길잡이 줄기
 	["g40_daycard", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 9.0, "card"],
 	["g40_sky_shrine", "sunken", "isle:shrine", Vector3(10, 0, 8), "isle:shrine", -14.0, 12.0, "ch:25:0"],
@@ -500,6 +505,50 @@ func _act(a: String) -> void:
 			if tn:
 				tn.call("_on_body_entered", _p)
 				_close_call = [tn, tp[2] if tp.size() > 2 else ""]
+		"rest":   # G-0324 쉼터(G-0305) — 가장 가까운 쉼터 곁에 서서 앉는다(지피기·앉은 몸)
+			var rs := get_tree().get_first_node_in_group("go_rest_sites")
+			if rs != null:
+				var best_id := ""
+				var bd2 := INF
+				var all: Dictionary = rs.call("sites")
+				for id: String in all:
+					var dd := (all[id] as Vector3).distance_to(_p.global_position)
+					if dd < bd2:
+						bd2 = dd
+						best_id = id
+				if best_id != "":
+					_p.global_position = (all[best_id] as Vector3) + Vector3(1.6, 0.4, 1.4)
+					_later(20, func() -> void: rs.call("sit", best_id))
+		"fire":   # G-0324 환경 연쇄(G-0303) — 앞 3m 풀밭에 들불(번짐 켬), 효과가 남게 느리게
+			var fe := get_tree().get_first_node_in_group("go_field_env")
+			if fe != null:
+				var fp := _p.global_position + Vector3(0, 0, -3.0)
+				_later(30, func() -> void:
+					fe.call("ignite", fp, 30.0, true)
+					Engine.time_scale = 0.1)
+		"ring6":   # G-0324 승급 금테(G-0288) — 6 = 두 테 + 별 열둘
+			_later(20, func() -> void: (load("res://saga_core/world/rank_ring.gd") as GDScript).call("set_rank", _p, 6))
+		"parry":   # G-0324 쳐내기(G-0304) — 가장 가까운 적을 예고 끝(창 안)에 멈춰 두고 쳐낸다
+			var be: Node3D = null
+			var bb := INF
+			for e in get_tree().get_nodes_in_group("field_enemy"):
+				var d2 := (e as Node3D).global_position.distance_to(_p.global_position)
+				if d2 < bb:
+					bb = d2
+					be = e
+			if be != null:
+				be.set_physics_process(false)
+				_p.global_position = be.global_position + Vector3(1.4, 0.4, 0.9)
+				_later(30, func() -> void:
+					be.set("ai", 2)
+					be.set("_t", 0.1)
+					var fpn := get_tree().get_first_node_in_group("go_field_parry")
+					print("SHOT_PARRY ", fpn.call("try_parry", 3.0) if fpn else "없음")
+					_later(4, func() -> void: Engine.time_scale = 0.05))   # 쳐낸 멈칫(hitstop)이 배율을 되돌린 뒤에
+		"rank":   # G-0324 무리 토벌 등급(G-0313) — 끝나는 순간 알림(보기 값: 피격 0·연속 9·42초·덤·첫 기록)
+			_later(20, func() -> void:
+				var r := {"rank": "S", "sec": 42.0, "hits": 0, "combo": 9, "bonus_gold": 60, "best": true, "prev_best": ""}
+				(load("res://saga_core/ui/toast.gd") as GDScript).call("show", _p, (load("res://games/saga_go/data/go_rank.gd") as GDScript).call("text", r), 6.0))
 		"wind":   # G-0322 바람 길잡이(G-0318) — 할 일 뒤 40프레임에 한 줄기(창 모드는 프레임이 느려 초로 재면 다 사라진다)(목표 쪽, 없으면 북쪽)
 			var wn := [0]
 			var wcb := [Callable()]
@@ -657,6 +706,18 @@ func _lineup_center() -> Vector3:
 	for n in _lineup:
 		c += n.global_position
 	return c / maxf(_lineup.size(), 1)
+
+## G-0324 — 할 일 뒤 n 프레임에 한 번(창 모드는 프레임이 느려 초 타이머로는 찍기 전·후가 흔들린다)
+func _later(n: int, cb: Callable) -> void:
+	var k := [0]
+	var w := [Callable()]
+	w[0] = func() -> void:
+		k[0] += 1
+		if k[0] >= n:
+			get_tree().process_frame.disconnect(w[0])
+			cb.call()
+	get_tree().process_frame.connect(w[0])
+
 
 func _capture(name: String) -> void:
 	await RenderingServer.frame_post_draw
