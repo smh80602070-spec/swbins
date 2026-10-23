@@ -3321,6 +3321,10 @@
     { "key": "rest.sat", "value": "🔥 {0} 모닥불 곁에서 쉬었다" },
     { "key": "rest.revive", "value": "들판에 적 {0}이 다시 섰다" },
     { "key": "mount.charge", "value": "돌진!" },
-    { "key": "mount.fall", "value": "낙마!" }
+    { "key": "mount.fall", "value": "낙마!" },
+    { "key": "rank.line", "value": "★ 토벌 등급 {0} — 피격 {1} · 연타 {2} · {3}:{4:00}" },
+    { "key": "rank.bonus", "value": "등급 덤 경험 +{0}" },
+    { "key": "rank.best", "value": "🏆 최고 기록 {0} → {1}" },
+    { "key": "rank.first", "value": "🏆 첫 기록 {0}" }
   ]
 }

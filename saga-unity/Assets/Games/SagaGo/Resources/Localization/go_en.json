@@ -3321,6 +3321,10 @@
     { "key": "rest.sat", "value": "🔥 Rested by the campfire at {0}" },
     { "key": "rest.revive", "value": "{0} foes rose again in the fields" },
     { "key": "mount.charge", "value": "Charge!" },
-    { "key": "mount.fall", "value": "Thrown off!" }
+    { "key": "mount.fall", "value": "Thrown off!" },
+    { "key": "rank.line", "value": "★ Camp rank {0} — hits taken {1} · combo {2} · {3}:{4:00}" },
+    { "key": "rank.bonus", "value": "Rank bonus EXP +{0}" },
+    { "key": "rank.best", "value": "🏆 Best {0} → {1}" },
+    { "key": "rank.first", "value": "🏆 First record {0}" }
   ]
 }

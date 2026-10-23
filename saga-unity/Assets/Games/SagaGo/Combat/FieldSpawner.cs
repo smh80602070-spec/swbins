@@ -200,6 +200,7 @@ namespace Saga.Go.Combat
         {
             if (GetComponent<FieldHeroes>() == null) gameObject.AddComponent<FieldHeroes>(); // 109-6 들판 인물
             if (GetComponent<Saga.Go.UI.HeroDexUi>() == null) gameObject.AddComponent<Saga.Go.UI.HeroDexUi>(); // 109-6b 도감 화면
+            GoRunRank.Hook(); // tasks U-0174 무리 토벌 등급
             if (FieldEnemy.All.Count > 0) return;
             foreach (var g in Groups)
             {

@@ -671,7 +671,17 @@ namespace Saga.Go.Combat
             }
         }
 
+        /// <summary>tasks U-0174 — 장판·소환·바람 자리 틱이 치는 중(무리 토벌 등급이 연타로 안 센다). 진단이 직접 켠다.</summary>
+        public static bool ZoneTicking { get; set; }
+
         private void TickZone(SkillZone z, float dt)
+        {
+            ZoneTicking = true;
+            try { TickZoneCore(z, dt); }
+            finally { ZoneTicking = false; }
+        }
+
+        private void TickZoneCore(SkillZone z, float dt)
         {
             z.Left -= dt;
             z.Next -= dt;
@@ -859,7 +869,7 @@ namespace Saga.Go.Combat
             }
             m.Hp = Mathf.Max(0f, m.Hp - dmg);
             _sinceHit = 0f;
-            if (dmg > 0f) OnHurtMounted(); // U-0171 낙마
+            if (dmg > 0f) { OnHurtMounted(); GoRunRank.OnHurt(); } // U-0171 낙마 · U-0174 토벌 등급 피격
             Saga.Go.Audio.GoSfx.Play("sword_hurt", 1f, 0.1f); // U-0048
             FieldDamageText.Spawn(transform.position + Vector3.up * 4f, Mathf.RoundToInt(dmg).ToString(), new Color(1f, 0.3f, 0.25f));
             HurtVignette.Flash(); // tasks U-0105 — 가장자리 붉게 번쩍(회피 무적·굳힘으로 다 막으면 위에서 돌아가 신호 없음)

@@ -20,11 +20,15 @@ namespace Saga.Go.Combat
         /// <paramref name="atk"/> 는 반응 피해를 셀 공격력. <paramref name="heavy"/> = 기본 공격 3타째(얼어붙은 적을 깨뜨린다, 109-14-1a).</summary>
         public const float HitShakeSmall = 0.1f, HitShakeBig = 0.24f;
 
+        /// <summary>tasks U-0174 — 내 쪽 타격이 산 적에 닿은 순간(방패에 막혀도) — 무리 토벌 등급(`GoRunRank`)이 듣는다.</summary>
+        public static event Action<FieldEnemy> Struck;
+
         public float TakeHit(float amount, GoElement element, float atk, out GoReaction reaction, bool heavy = false, bool crit = false)
         {
             Saga.Go.Audio.GoSfx.Play(HitSfxName(), 0.9f, 0.07f); // U-0048·U-0051 활성 인물 무기 종류별
             reaction = GoReaction.None;
             if (!Alive) return 0f;
+            Struck?.Invoke(this); // tasks U-0174
             FieldCombat.Instance?.MarkFought(); // 109-14-18 방금 싸움(편성 막기)
             if (MarkLeft > 0f) amount *= MarkMul; // 109-14-15 그림자 걸음 표식 — 누구에게든 받는 피해
             if (Shielded) return HitShield(amount, element);

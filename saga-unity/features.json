@@ -2334,6 +2334,24 @@
   "note": "D1(U-0168): PlaytestHeadless restsites OK(자리 5 · 서쪽 숲길 앉음 = 지핌·회복·부활 자리·잡몹 1 다시 섬 · 안 나가면 다시 안 앉음 · 전멸 → 불 옆 · 안 지핀 = 처음 자리 · 세이브 칸) · UiLayoutCheck 0"
  },
  {
+  "id": "un.go.rank",
+  "name": "U-0174 1만리 무리 토벌 한 판 등급 — 들판 무리 하나를 첫 타격부터 전원 쓰러질 때까지 S~D·덤 경험(S 0.5·A 0.2·B 0.1)·무리별 최고 기록·알림 두 줄(웹 W-0379·고돗 G-0313)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Combat/GoRunRank.cs",
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldEnemy.Damage.cs",
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldCombat.cs"
+  ],
+  "tests": [
+   "PlaytestGoRunRank"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0174",
+  "since": "2026-10-23",
+  "note": "D1(U-0174): PlaytestHeadless gorank S·zone·drop·save OK(TakeHit 이 엶·연타 12·피격 0·30초 → S 급 3·덤 경험 +13 · 장판 틱 연타 0 · 피격 9 → B 기록 그대로 · 20초 멍·전멸 버림·수호장 안 셈 · rankCamps·rankGrades)"
+ },
+ {
   "id": "un.dg.weapon-swap",
   "name": "U-0131 무기 두 벌 — 바뀐 손 무기를 을(乙)로, G·폰 바꿔 들기 단추로 갑↔을(쿨 1초·첫 타 ×1.15, 웹 W-0281 이식)",
   "files": [
