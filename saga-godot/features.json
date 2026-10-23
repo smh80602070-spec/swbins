@@ -5678,5 +5678,25 @@
   "ticket": "G-0318",
   "since": "2026-10-23",
   "note": "고돗 먼저(웹 짝 없음) · 새 키 없음 · SAGA_WIND_GUIDE=0"
+ },
+ {
+  "id": "gd.story.hidden-boss",
+  "name": "4종횡 숨은 우두머리 — 사냥터 넷 끝자락 옛 비문을 읽고 그 땅 보스를 첫 타부터 60초 안에 잡으면 숨은 우두머리(체력 ×2.5·피해 ×1.5), 잡으면 금 +40×lv·기록",
+  "files": [
+   "games/saga_story/data/story_hidden.gd",
+   "games/saga_story/world/story_hidden_clue.gd",
+   "games/saga_story/world/story_boss_spawner.gd",
+   "games/saga_story/world/story_field.gd",
+   "games/saga_story/data/story_save_state.gd"
+  ],
+  "tests": [
+   "story_hidden"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0319",
+  "since": "2026-10-23",
+  "note": "고돗 먼저(웹 짝 없음) · 세이브 v25 hidden · SAGA_HIDDEN=0"
  }
 ]

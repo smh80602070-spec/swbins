@@ -22,7 +22,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const SAVE_PATH := "user://save_story.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
-const SAVE_VERSION := 24  # 23→24: stage_maps(지도 조각, G-0309 — 옛 세이브는 빈 칸) · 22→23: monthly(달 사명, G-0296 — 옛 세이브는 빈 칸) · 21→22: rank_best(사냥터별 최고 등급, G-0245 — 옛 세이브는 빈 칸) · 20→21: life(생활 랭크 — 채집, G-0238 — 옛 세이브는 0) · 19→20: passive(사방 성좌도, G-0214 — 옛 세이브는 빈 칸) · 18→19: sp_cut_lv/sp_bonus/skill_offers(레벨업 3택, G-0197 — 옛 세이브는 불러온 레벨까지 SP 그대로) · 17→18: scenario(이야기, G-0087) · 1→2: mats, 2→3: has_weapon, 3→4: equipped, 4→5: gold, 5→6: job(1차 전직), 6→7: skills(SP 투자), 7→8: scroll_bonus/scroll_left(주문서), 8→9: bosses/feat/achievements(업적), 9→10: quests_done(사명), 10→11: stage_kills(사냥터별 킬 수 사명), 11→12: visited_stages(q_explore1), 12→13: talks(q_talk1), 13→14: repeat_progress/daily_done_day(반복/일일 사명), 14→15: weekly_champion_week(관문 대장), 15→16: memory_fragments/memory_tier(비경), 16→17: mentor_bond(사제 유대, 51장 STORY "관계" 축 첫 걸음)
+const SAVE_VERSION := 25  # 24→25: hidden(숨은 우두머리 비문·처치, G-0319 — 옛 세이브는 빈 칸) · 23→24: stage_maps(지도 조각, G-0309 — 옛 세이브는 빈 칸) · 22→23: monthly(달 사명, G-0296 — 옛 세이브는 빈 칸) · 21→22: rank_best(사냥터별 최고 등급, G-0245 — 옛 세이브는 빈 칸) · 20→21: life(생활 랭크 — 채집, G-0238 — 옛 세이브는 0) · 19→20: passive(사방 성좌도, G-0214 — 옛 세이브는 빈 칸) · 18→19: sp_cut_lv/sp_bonus/skill_offers(레벨업 3택, G-0197 — 옛 세이브는 불러온 레벨까지 SP 그대로) · 17→18: scenario(이야기, G-0087) · 1→2: mats, 2→3: has_weapon, 3→4: equipped, 4→5: gold, 5→6: job(1차 전직), 6→7: skills(SP 투자), 7→8: scroll_bonus/scroll_left(주문서), 8→9: bosses/feat/achievements(업적), 9→10: quests_done(사명), 10→11: stage_kills(사냥터별 킬 수 사명), 11→12: visited_stages(q_explore1), 12→13: talks(q_talk1), 13→14: repeat_progress/daily_done_day(반복/일일 사명), 14→15: weekly_champion_week(관문 대장), 15→16: memory_fragments/memory_tier(비경), 16→17: mentor_bond(사제 유대, 51장 STORY "관계" 축 첫 걸음)
 
 
 func save_version() -> int:
@@ -96,6 +96,7 @@ var run_stage := ""
 var run_tier_now := 1
 var rank_best: Dictionary = {}   # stage_key → 등급 글자
 const Monthly := preload("res://games/saga_story/data/story_monthly.gd")   # G-0296 달 사명
+var hidden: Dictionary = {}   # G-0319 {stage_key: {clue, beaten}} — 규칙은 story_hidden.gd
 var stage_maps: Dictionary = {}   # G-0309 {stage_key: [조각 번호…]} — 규칙은 story_stagemap.gd
 var monthly: Dictionary = {}   # G-0296 {key: "YYYY-MM", n, badges: [달 열쇠…]} — 규칙은 story_monthly.gd
 
@@ -919,6 +920,7 @@ func save() -> bool:
 		"rank_best": rank_best,   # G-0245
 		"monthly": monthly,   # G-0296
 		"stage_maps": stage_maps,   # G-0309
+		"hidden": hidden,   # G-0319
 		"scenario": scenario,   # G-0087
 		"skills": skills,
 		"sp_cut_lv": sp_cut_lv,   # G-0197
@@ -987,6 +989,13 @@ func try_load() -> bool:
 			var v: Variant = (loaded_stage_maps as Dictionary)[k]
 			if v is Array:
 				stage_maps[String(k)] = (v as Array).map(func(x: Variant) -> int: return int(x))
+	var loaded_hidden: Variant = data.get("hidden", {})   # G-0319 — 옛 세이브(24)는 빈 칸
+	hidden = {}
+	if typeof(loaded_hidden) == TYPE_DICTIONARY:
+		for k: Variant in (loaded_hidden as Dictionary):
+			var hv: Variant = (loaded_hidden as Dictionary)[k]
+			if typeof(hv) == TYPE_DICTIONARY:
+				hidden[String(k)] = {"clue": bool((hv as Dictionary).get("clue", false)), "beaten": int((hv as Dictionary).get("beaten", 0))}
 	var loaded_monthly: Variant = data.get("monthly", {})   # G-0296 — 옛 세이브(22)는 빈 칸
 	monthly = (loaded_monthly as Dictionary).duplicate(true) if typeof(loaded_monthly) == TYPE_DICTIONARY else {}
 	var loaded_rank_best: Variant = data.get("rank_best", {})   # G-0245 — 옛 세이브(21)는 빈 칸
