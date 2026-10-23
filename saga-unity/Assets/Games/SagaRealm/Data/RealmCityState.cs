@@ -382,6 +382,7 @@ namespace Saga.Realm.Data
             int sv = GetStat(officer, order.Stat);
             var (rolled, _) = RollAmount(sv, order.Base, order.Per);
             if (RealmTechData.Pct("troopPct") != 0) rolled = Mathf.RoundToInt(rolled * RealmTechData.Mul("troopPct")); // tasks U-0129
+            if (RealmLaws.DraftMul != 1f) rolled = Mathf.RoundToInt(rolled * RealmLaws.DraftMul); // tasks U-0182 징병령
 
             int room = Mathf.FloorToInt(record.Pop * 0.06f) - record.Troops;
             int amount = Mathf.Max(0, Mathf.Min(rolled, Mathf.Max(0, room)));
@@ -446,6 +447,7 @@ namespace Saga.Realm.Data
             var target = RealmOfficerPool.Get(targetId);
             float chance = RealmEras.AdjustHireChance(target, HireChance(officer.Wisdom, target.Rarity, debateMul)); // 109-5 낯선 시대 × 0.85
             if (RealmTechData.Pct("hirePct") != 0) chance = Mathf.Min(1f, chance * RealmTechData.Mul("hirePct")); // tasks U-0129 객주 두기
+            chance = Mathf.Min(1f, chance * RealmLaws.HireMul); // tasks U-0182 징병령 등용 −15%
             if (UnityEngine.Random.value > chance)
             {
                 return new OrderResult(true, string.Format(RealmLocalization.T("order.hire_declined", "{0}이(가) 설득에 응하지 않았다."), target.Name));
@@ -495,6 +497,7 @@ namespace Saga.Realm.Data
                 var r = _cities[cityId];
                 income += Mathf.RoundToInt(r.Comm * 0.55f * SecMul(r.Sec) * RealmTechData.Mul("goldPct")); // tasks U-0129 기술 나무(연구 0 = ×1)
             }
+            income = Mathf.RoundToInt(income * RealmLaws.GoldMul); // tasks U-0182 상업령·둔전령
             int upkeep = _roster.Count * UpkeepPerOfficer;
             Gold = Mathf.Max(0, Gold + income - upkeep);
 
@@ -503,9 +506,9 @@ namespace Saga.Realm.Data
             foreach (var cityId in _activeCityIds)
             {
                 var r = _cities[cityId];
-                if (harvest) r.Food += Mathf.RoundToInt(r.Agri * 6f * SecMul(r.Sec) * RealmTechData.Mul("foodPct"));
+                if (harvest) r.Food += Mathf.RoundToInt(r.Agri * 6f * SecMul(r.Sec) * RealmTechData.Mul("foodPct") * RealmLaws.HarvestMul); // tasks U-0182 상업령 수확 −10%
 
-                int eat = Mathf.RoundToInt(r.Troops / 1000f * FoodPer1000);
+                int eat = Mathf.RoundToInt(r.Troops / 1000f * FoodPer1000 * RealmLaws.EatMul); // tasks U-0182 둔전령
                 r.Food -= eat;
                 if (r.Food < 0)
                 {

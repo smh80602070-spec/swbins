@@ -110,6 +110,7 @@ namespace Saga.Realm.Data
             // tasks U-0129 기술 나무 — 버전 그대로: 옛 세이브는 0점·null = 연구 없음.
             public int techPts;
             public string[] techDone;
+            public string lawsJson; // tasks U-0182 법령 — 버전 그대로: 옛 세이브는 null → 빈 법전.
             public string tradeJson; // tasks U-0172 교역로 — 버전 그대로: 옛 세이브는 null → 상단 없음.
             public string wonderJson; // tasks U-0136 불가사의 — 버전 그대로: 옛 세이브는 null → 빈 것.
             public string campJson; // tasks U-0134 진·보급선 — 버전 그대로: 옛 세이브는 null → 진 없음.
@@ -209,6 +210,7 @@ namespace Saga.Realm.Data
             data.campJson = RealmCamp.Snapshot(); // tasks U-0134
             data.wonderJson = RealmWonder.Snapshot(); // tasks U-0136
             data.tradeJson = RealmTrade.Snapshot(); // tasks U-0172
+            data.lawsJson = RealmLaws.Snapshot(); // tasks U-0182
             return JsonUtility.ToJson(data);
         }
 
@@ -297,6 +299,7 @@ namespace Saga.Realm.Data
             RealmCamp.Restore(data.campJson); // tasks U-0134
             RealmWonder.Restore(data.wonderJson); // tasks U-0136
             RealmTrade.Restore(data.tradeJson); // tasks U-0172
+            RealmLaws.Restore(data.lawsJson); // tasks U-0182
             return true;
         }
 

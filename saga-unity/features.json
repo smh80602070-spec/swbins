@@ -2665,6 +2665,23 @@
   "note": "D1(U-0172): PlaytestRealmSlice trade path·start·month·cut·save OK(허창↔복양 달마다 +117·12달 780) · 화친·적 진 없는 트랙이라 우리 성끼리만 · 성 잃기 규칙이 없어 끊김은 진단 손잡이로만 · 지도 띠 없음 · 촬영 안 함"
  },
  {
+  "id": "un.rk.laws",
+  "name": "U-0182 5천하 법령 — ☰ 「📜 법령」 거둘 수 없는 법 셋(🏪 상업령 금 +15%·수확 −10% · 🌾 둔전령 군량 먹음 −20%·금 −10% · 🛡️ 징병령 징병 +25%·등용 −15%), 6달 간격, 법전 칸 = 다스리는 성 수(최대 3)(고돗 G-0321)",
+  "files": [
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmLaws.cs",
+   "saga-unity/Assets/Games/SagaRealm/UI/RealmLawUi.cs"
+  ],
+  "tests": [
+   "PlaytestRealmLaws"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0182",
+  "since": "2026-10-23",
+  "note": "D1(U-0182): PlaytestRealmSlice laws mul·rule·month·panel·save·off OK · 충성·관직이 없어 엄법령 뺌·법전 칸은 성 수"
+ },
+ {
   "id": "un.rk.tech-tree",
   "name": "U-0129 기술 나무 — 세력 연구 네 갈래(농·상·군·학) × 6마디(웹 W-0290 이식)",
   "files": [

@@ -51,6 +51,7 @@ namespace Saga.Realm.UI
             Add(() => ButtonOf(map), "ui_map");
             Add(() => RealmMountUi.Instance != null ? RealmMountUi.Instance.MountsButton : null, "ui_footprints");
             Add(() => RealmTechUi.Instance != null ? RealmTechUi.Instance.ToggleButton : null, "ui_scroll");
+            Add(() => RealmLawUi.Instance != null ? RealmLawUi.Instance.ToggleButton : null, "ui_scroll"); // tasks U-0182 법령
             Refresh();
         }
 

@@ -1102,6 +1102,26 @@
     { "key": "trade.why_gold", "value": "Not enough gold ({0})" },
     { "key": "trade.why_path", "value": "No road through our land" },
     { "key": "trade.lost", "value": "✂️ The {0} route was cut — the caravan is lost" },
-    { "key": "trade.back", "value": "🐫 The {0} caravan is home — {1} gold in all" }
+    { "key": "trade.back", "value": "🐫 The {0} caravan is home — {1} gold in all" },
+    { "key": "law.commerce", "value": "Commerce Law" },
+    { "key": "law.commerce.desc", "value": "Gold +15% · harvest −10%" },
+    { "key": "law.tuntian", "value": "Tuntian Law" },
+    { "key": "law.tuntian.desc", "value": "Grain eaten −20% · gold −10%" },
+    { "key": "law.draft", "value": "Conscription Law" },
+    { "key": "law.draft.desc", "value": "Draft +25% · recruiting −15%" },
+    { "key": "law.why_has", "value": "Already enacted" },
+    { "key": "law.why_slots", "value": "The code is full — {0} cities allow {0} laws (max {1})" },
+    { "key": "law.why_wait", "value": "The next law can be enacted in {0} months" },
+    { "key": "law.why_off", "value": "Laws are turned off" },
+    { "key": "law.why_none", "value": "Cannot enact" },
+    { "key": "law.enacted", "value": "📜 {0} {1} enacted — {2} (cannot be repealed)" },
+    { "key": "law.toggle", "value": "📜 Laws\n{0}/{1}" },
+    { "key": "law.title", "value": "📜 Laws — once enacted, never repealed" },
+    { "key": "law.info", "value": "Code {0}/{1} (cities ruled, max {2}) · {3}" },
+    { "key": "law.wait", "value": "Next law in {0} months" },
+    { "key": "law.ready", "value": "A law can be enacted now" },
+    { "key": "law.has_tag", "value": " <color=#ffd060>· in force</color>" },
+    { "key": "law.in_force", "value": "In force" },
+    { "key": "law.enact", "value": "Enact" }
   ]
 }

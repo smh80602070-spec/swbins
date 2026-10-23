@@ -1102,6 +1102,26 @@
     { "key": "trade.why_gold", "value": "금이 모자랍니다(금 {0})" },
     { "key": "trade.why_path", "value": "우리 땅으로 이어진 길이 없습니다" },
     { "key": "trade.lost", "value": "✂️ {0} 교역로가 끊겨 상단을 잃었다" },
-    { "key": "trade.back", "value": "🐫 {0} 상단이 돌아왔다 — 모두 금 {1}" }
+    { "key": "trade.back", "value": "🐫 {0} 상단이 돌아왔다 — 모두 금 {1}" },
+    { "key": "law.commerce", "value": "상업령" },
+    { "key": "law.commerce.desc", "value": "금 +15% · 수확 −10%" },
+    { "key": "law.tuntian", "value": "둔전령" },
+    { "key": "law.tuntian.desc", "value": "군량 먹음 −20% · 금 −10%" },
+    { "key": "law.draft", "value": "징병령" },
+    { "key": "law.draft.desc", "value": "징병 +25% · 등용 −15%" },
+    { "key": "law.why_has", "value": "이미 내린 법령이다" },
+    { "key": "law.why_slots", "value": "법전이 가득 찼다 — 성 {0}곳이면 {0}개까지(최대 {1})" },
+    { "key": "law.why_wait", "value": "{0}달 뒤에야 다음 법령을 내릴 수 있다" },
+    { "key": "law.why_off", "value": "법령이 꺼져 있다" },
+    { "key": "law.why_none", "value": "내릴 수 없다" },
+    { "key": "law.enacted", "value": "📜 {0} {1} 반포 — {2} (거둘 수 없다)" },
+    { "key": "law.toggle", "value": "📜 법령\n{0}/{1}" },
+    { "key": "law.title", "value": "📜 법령 — 한 번 내리면 거둘 수 없다" },
+    { "key": "law.info", "value": "법전 {0}/{1}(다스리는 성 수, 최대 {2}) · {3}" },
+    { "key": "law.wait", "value": "다음 법령까지 {0}달" },
+    { "key": "law.ready", "value": "지금 내릴 수 있다" },
+    { "key": "law.has_tag", "value": " <color=#ffd060>· 시행 중</color>" },
+    { "key": "law.in_force", "value": "시행 중" },
+    { "key": "law.enact", "value": "반포" }
   ]
 }
