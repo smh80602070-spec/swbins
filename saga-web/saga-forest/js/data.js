@@ -127,7 +127,7 @@
     { id: 'wd_ashoka',    name: '법륜왕', era: '세계사', faction: '마우리아',     rarity: 5, trait: 'virtue', stats: { might: 60, wisdom: 92, command: 90 }, hanja: 'Dharmandra', emoji: '☸️', quote: '칼로 얻은 땅을 이제 법으로 다스리겠다.' },
     { id: 'wd_akbar',     name: '관용제', era: '세계사', faction: '무굴',         rarity: 5, trait: 'wisdom', stats: { might: 75, wisdom: 93, command: 95 }, hanja: 'Akbaran', emoji: '🕌', quote: '믿음은 강요로 얻어지지 않는다.' },
     { id: 'wd_saladin',   name: '의검주', era: '세계사', faction: '아이유브',     rarity: 5, trait: 'virtue', stats: { might: 88, wisdom: 90, command: 96 }, hanja: 'Salahin', emoji: '🌙', quote: '예루살렘의 문은 자비로도 열린다.' },
-    { id: 'wd_suleiman',  name: '장려제', era: '세계사', faction: '오스만',       rarity: 5, trait: 'wisdom', stats: { might: 80, wisdom: 95, command: 97 }, hanja: 'Suleyman', emoji: '🕌', quote: '법과 영광을 함께 세우겠다.' },
+    { id: 'wd_suleiman',  name: '장려제', era: '세계사', faction: '오스만',       rarity: 5, trait: 'wisdom', stats: { might: 80, wisdom: 95, command: 97 }, hanja: 'Sulemar', emoji: '🕌', quote: '법과 영광을 함께 세우겠다.' },
     { id: 'wd_ibnsina',   name: '의철인', era: '세계사', faction: '페르시아',     rarity: 4, trait: 'wisdom', stats: { might: 10, wisdom: 99, command: 40 }, hanja: 'Sinardo', emoji: '📗', quote: '몸의 이치를 책 한 권에 담겠소.' },
     { id: 'wd_genghis',   name: '초원패', era: '세계사', faction: '몽골제국',     rarity: 5, trait: 'might',  stats: { might: 96, wisdom: 85, command: 99 }, hanja: 'Tengoran', emoji: '🏹', quote: '세상의 끝까지 말을 달리겠다.' },
     { id: 'wd_khubilai',  name: '대원조', era: '세계사', faction: '원',           rarity: 5, trait: 'wisdom', stats: { might: 75, wisdom: 90, command: 95 }, hanja: 'Khuvilan', emoji: '🐎', quote: '초원과 중원을 하나로 잇겠다.' },
