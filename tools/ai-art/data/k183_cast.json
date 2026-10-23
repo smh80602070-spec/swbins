@@ -109,7 +109,13 @@
    "face_xy": [
     384,
     340
-   ]
+   ],
+   "expr_pick": {
+    "happy": "eu_charlemagne__happy_v01",
+    "angry": "eu_charlemagne__angry_v01",
+    "sad": "eu_charlemagne__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_eleanor",
@@ -151,7 +157,13 @@
    "face_xy": [
     384,
     396
-   ]
+   ],
+   "expr_pick": {
+    "happy": "eu_elizabeth__happy_v01",
+    "angry": "eu_elizabeth__angry_v01",
+    "sad": "eu_elizabeth__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "eu_frederick",
@@ -875,7 +887,13 @@
    "face_xy": [
     388,
     357
-   ]
+   ],
+   "expr_pick": {
+    "happy": "kr_ganggamchan__happy_v01",
+    "angry": "kr_ganggamchan__angry_v02",
+    "sad": "kr_ganggamchan__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kr_gwakjaeu",
@@ -1436,15 +1454,15 @@
    "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, tribal warrior, face paint, feathers, looking at viewer, soft dramatic lighting, simple painterly gradient background",
    "stand_pick": "sg_menghuo_v01",
    "face": [
-    384,
-    283,
+    464,
+    112,
     203,
     159
    ],
    "bust_pick": "sg_menghuo_v02",
    "face_xy": [
-    390,
-    70
+    464,
+    112
    ]
   },
   {
@@ -1773,7 +1791,13 @@
    "face_xy": [
     384,
     350
-   ]
+   ],
+   "expr_pick": {
+    "happy": "wd_khubilai__happy_v01",
+    "angry": "wd_khubilai__angry_v01",
+    "sad": "wd_khubilai__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_mansamusa",
@@ -1837,7 +1861,13 @@
    "face_xy": [
     384,
     429
-   ]
+   ],
+   "expr_pick": {
+    "happy": "wd_pachacuti__happy_v01",
+    "angry": "wd_pachacuti__angry_v01",
+    "sad": "wd_pachacuti__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "wd_saladin",
