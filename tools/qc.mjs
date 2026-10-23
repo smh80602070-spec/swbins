@@ -10,6 +10,7 @@
  *   --play        플레이 QC 만(W-0270 — pw-play.mjs: 판마다 PC·폰으로 키·끌기·터치 이동 · ☰ 창 닫은 뒤 이동 · HUD 겹침 · 새로 고침 이어하기). 기본 실행에 든다(--no-shots 면 생략)
  *   --budget      폰 예산 측정을 실제로 돌린다(W-0302 pw-phone-budget.mjs, 판마다 1회 — 없으면 마지막 결과만 읽는다)
  *   --mobile      모바일 실태 측정을 실제로 돌린다(W-0335 pw-mobile.mjs, 아이폰 WebKit·안드 크롬 — 없으면 마지막 결과만 읽는다)
+ *   --first10     첫 10분 자동 점검을 실제로 돌린다(W-0381 pw-first10.mjs — 새 계정으로 판마다 --first10-min=10 분 자동 놀기 → 막힘·예외·진척). 없으면 마지막 결과만 읽는다
  *   --deploy      배포 확인만(W-0258 — 공개 Pages 주소에서 가입→시작→☰→새로 고침, pw-deploy.mjs). --branch web·--full 엔 늘 든다
  *
  * 하는 일(웹 판마다): ① 번들·shared 사본 최신인지(bundle --check·sync-shared --check) ② 진단 러너(test-web.mjs, RESULT n/m·실패 줄·DIFF)
@@ -38,7 +39,7 @@ const FUN = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
 const val = (f) => { const i = argv.indexOf(f); return i >= 0 ? argv[i + 1] : null; };
-const full = has('--full'), noShots = has('--no-shots'), deployOnly = has('--deploy'), playOnly = has('--play');
+const full = has('--full'), noShots = has('--no-shots'), deployOnly = has('--deploy'), playOnly = has('--play'), first10Only = has('--first10');
 const branch = val('--branch');
 let games = val('--game') ? val('--game').split(',') : GAMES;
 if (branch && branch !== 'web') games = [];
@@ -218,6 +219,19 @@ async function checkPlay() {
 }
 
 /* ── ④-4 그래픽 기준선(W-0291) — 다섯 판 3D 를 높음 품질로 띄워 shared/gfx-baseline.json 의 기능이 켜졌는지(pw-gfx). 빠진 칸은 WARN(티켓 번호 함께) ── */
+/* ── ④-3b 첫 10분(W-0381) — 새 계정으로 판마다 자동으로 놀아 막힘 0·예외 0·진척 > 0. 오래 걸려(판마다 10분) --first10 일 때만 돌리고, 아니면 마지막 결과를 읽는다 */
+async function checkFirst10() {
+  if (!games.length) return;
+  let r = null;
+  if (first10Only) { const b = await serve(); const mm = (argv.find((a) => a.startsWith('--first10-min=')) || '').split('=')[1] || '10'; r = run(process.execPath, ['pw-first10.mjs', ...games, '--min=' + mm, '--base', b], { cwd: PLAY, timeout: (games.length * (+mm + 2) + 5) * 60 * 1000 }); }
+  const j = readJson(path.join(PLAY, 'results', 'pw-first10.json'), null);
+  if (!j) { row('첫 10분', games.map(nm).join('·'), 'WARN', '결과 없음 — node tools/qc.mjs --first10', r ? r.sec : 0); return; }
+  for (const g of games) {
+    const c = (j.checks || []).find((x) => x.name.indexOf(g + ' ') === 0);
+    row('첫 10분', nm(g), !c ? 'WARN' : (c.ok ? 'PASS' : 'FAIL'), c ? c.detail.slice(0, 200) : '그 판 결과 없음', r ? Math.round(r.sec / games.length) : 0);
+  }
+}
+
 async function checkGfx() {
   if (noShots || !games.length) return;
   const b = await serve();
@@ -428,11 +442,13 @@ function report() {
     if (has('--deploy-later')) { await deployLater(); process.exit(0); }   // W-0317 ⑨ push.sh 가 분리 실행
     if (deployOnly) { checkDeploy(); return; }
     if (playOnly) { await checkPlay(); stopServer(); return; }
+    if (first10Only) { await checkFirst10(); stopServer(); return; }
     checkBundles();
     checkOps();
     checkTests();
     await checkShots();
     await checkPlay();
+    await checkFirst10();
     await checkGfx();
     await checkBudget();
     await checkMobile();
