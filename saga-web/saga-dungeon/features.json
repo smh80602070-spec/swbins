@@ -1162,12 +1162,12 @@
   "tests": [
    "전리품 거르기(W-0287)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0287",
   "since": "2026-10-17",
-  "note": "라스트 에포크·PoE 식(구조만). 장부 tasks/gameplay/dungeon.md · 세이브 save.settings.lootFilter = { rules, hinted } · 판정 DG.lootFilter.judge(dp) · 3D 는 lootBeam(dp, force)"
+  "note": "D2(claude 10-23 R-3): 설정 창 「전리품 거르기 3/12 규칙」 — 기본 셋(전설·보물·내 직업 무기 빛기둥)·▲▼·켜짐·추천 단추 보임 · 라스트 에포크·PoE 식(구조만). 장부 tasks/gameplay/dungeon.md · 세이브 save.settings.lootFilter = { rules, hinted } · 판정 DG.lootFilter.judge(dp) · 3D 는 lootBeam(dp, force)"
  },
  {
   "id": "dg.pose3d",

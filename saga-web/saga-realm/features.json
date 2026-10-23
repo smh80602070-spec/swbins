@@ -1091,12 +1091,12 @@
    "기술 나무(W-0290)",
    "불가사의(W-0279)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0290",
   "since": "2026-10-17",
-  "note": "문명·AoE 식(구조만). 장부 tasks/gameplay/realm.md · 세이브 save.rtk.tech = { [force]: { pts, done[] } }(옛 세이브 빈 것) · 진형 해금 대신 있는 배율 키만 씀(진형은 war.js 가 능력치로 자동)"
+  "note": "D2(claude 10-23 R-3): 성 창 「기술 나무 연구점 0 · 달마다 +2(학자 1)」 — 농·상·군 여섯 마디 ○○○○○○ 0/6·다음 마디·연구점 모자람 단추 · 문명·AoE 식(구조만). 장부 tasks/gameplay/realm.md · 세이브 save.rtk.tech = { [force]: { pts, done[] } }(옛 세이브 빈 것) · 진형 해금 대신 있는 배율 키만 씀(진형은 war.js 가 능력치로 자동)"
  },
  {
   "id": "rk.pose3d",
