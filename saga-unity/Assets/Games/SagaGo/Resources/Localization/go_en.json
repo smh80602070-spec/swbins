@@ -3327,6 +3327,25 @@
     { "key": "rank.best", "value": "🏆 Best {0} → {1}" },
     { "key": "rank.first", "value": "🏆 First record {0}" },
     { "key": "env.fire", "value": "Grass fire" },
-    { "key": "env.shock", "value": "River current" }
+    { "key": "env.shock", "value": "River current" },
+    { "key": "work.got_ore", "value": "⛏️ Ore {0}" },
+    { "key": "work.got_mint", "value": "🌿 Mint {0}" },
+    { "key": "work.got_honey", "value": "🌼 Honey flower {0}" },
+    { "key": "work.got_meat", "value": "🍖 Game meat {0}" },
+    { "key": "work.why_buddy", "value": "A companion beast can't be sent to work" },
+    { "key": "work.why_has", "value": "Already working in the yard" },
+    { "key": "work.why_slots", "value": "No free worker spot — decorate the yard to add more ({0})" },
+    { "key": "work.why_off", "value": "Beast workers are turned off" },
+    { "key": "work.why_none", "value": "No beast to station — hatch an egg first" },
+    { "key": "work.kind_might", "value": "⛏️ Mining" },
+    { "key": "work.kind_wisdom", "value": "🌿 Foraging" },
+    { "key": "work.kind_command", "value": "🍖 Hunting" },
+    { "key": "work.head", "value": "🐾 Beast workers {0}/{1} — one every 30 min (ore every 2 h) · up to 12 h" },
+    { "key": "work.empty", "value": "No workers yet" },
+    { "key": "work.harvested", "value": "🐾 Gathered by workers — {0}" },
+    { "key": "work.assign", "value": "🐾 Station a beast" },
+    { "key": "work.dismiss", "value": "Dismiss" },
+    { "key": "work.assigned", "value": "🐾 {0} now works in the yard — {1}" },
+    { "key": "work.dismissed", "value": "🐾 Dismissed {0}{1}" }
   ]
 }

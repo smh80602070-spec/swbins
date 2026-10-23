@@ -30,6 +30,7 @@ namespace Saga.Go.World
             Instance = this;
             _marker = new GameObject("HomesteadMarker").transform; _marker.SetParent(transform, false);
             _itemsRoot = new GameObject("HomesteadItems").transform; _itemsRoot.SetParent(transform, false);
+            _workersRoot = new GameObject("HomesteadWorkers").transform; _workersRoot.SetParent(transform, false); // tasks U-0186
         }
 
         private void Start()
@@ -38,11 +39,14 @@ namespace Saga.Go.World
             BuildMarker();
             Rebuild();
             HomeState.Changed += Rebuild;
+            GoHomeWorkers.Changed += SyncWorkers; // tasks U-0186 신수 일꾼 몸
+            SyncWorkers();
         }
 
         private void OnDestroy()
         {
             HomeState.Changed -= Rebuild;
+            GoHomeWorkers.Changed -= SyncWorkers;
             if (Instance == this) Instance = null;
         }
 
@@ -223,12 +227,52 @@ namespace Saga.Go.World
             return id;
         }
 
-        /// <summary>수확 — 받은 금.</summary>
+        /// <summary>수확 — 받은 금. tasks U-0186 — 신수 일꾼이 모은 것도 같이 받는다(<see cref="LastWorkGot"/>).</summary>
         public int HarvestNow()
         {
             int n = HomeState.Harvest();
-            Toast(n > 0 ? string.Format(GoLocalization.T("home.harvested", "🏡 쉼터에서 금 {0} 을(를) 거뒀다"), n) : GoLocalization.T("home.nothing_yet", "아직 쌓인 금이 없다"));
+            LastWorkGot = GoHomeWorkers.Collect(HomeState.Now);
+            string gold = n > 0 ? string.Format(GoLocalization.T("home.harvested", "🏡 쉼터에서 금 {0} 을(를) 거뒀다"), n) : "";
+            string work = LastWorkGot.Length > 0 ? string.Format(GoLocalization.T("work.harvested", "🐾 일꾼이 모은 것 — {0}"), LastWorkGot) : "";
+            Toast(gold.Length + work.Length == 0 ? GoLocalization.T("home.nothing_yet", "아직 쌓인 금이 없다") : gold + (gold.Length > 0 && work.Length > 0 ? "\n" : "") + work);
             return n;
+        }
+
+        /// <summary>tasks U-0186 — 마지막 수확에서 일꾼에게 받은 줄(진단).</summary>
+        public string LastWorkGot { get; private set; } = "";
+        private Transform _workersRoot;
+        public int WorkerBodies => _workersRoot != null ? _workersRoot.childCount : 0;
+
+        /// <summary>tasks U-0186 — 일꾼마다 마당 둘레(중심 4m, 고르게)에 신수 몸. 몸 GLB(`pet_*`)가 없으면 갈래 빛깔 공(고돗도 코드 몸).</summary>
+        public void SyncWorkers()
+        {
+            if (_workersRoot == null) return;
+            for (int i = _workersRoot.childCount - 1; i >= 0; i--) DestroyImmediate(_workersRoot.GetChild(i).gameObject);
+            var list = GoHomeWorkers.Workers;
+            for (int i = 0; i < list.Count; i++)
+            {
+                string pet = list[i].pet;
+                float a = (i + 0.5f) / Mathf.Max(1, list.Count) * Mathf.PI * 2f + 0.6f;
+                var holder = new GameObject("Worker_" + pet);
+                holder.transform.SetParent(_workersRoot, false);
+                var c = Center;
+                holder.transform.position = FolkWalker.Grounded(new Vector3(c.x + Mathf.Cos(a) * 4f, c.y + 2f, c.z + Mathf.Sin(a) * 4f));
+                holder.transform.rotation = Quaternion.LookRotation(new Vector3(-Mathf.Cos(a), 0f, -Mathf.Sin(a)));
+                var model = Saga.Core.WorldModels.Spawn(GoEggs.BodyName(pet), holder.transform, 1.0f);
+                if (model == null)
+                {
+                    var ball = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    Saga.Core.Colliders.Strip(ball);
+                    ball.name = "Body";
+                    ball.transform.SetParent(holder.transform, false);
+                    ball.transform.localPosition = new Vector3(0f, 0.45f, 0f);
+                    ball.transform.localScale = Vector3.one * 0.8f;
+                    string k = GoHomeWorkers.KindOf(pet);
+                    var col = k == "might" ? new Color(0.75f, 0.35f, 0.25f) : k == "wisdom" ? new Color(0.35f, 0.7f, 0.4f) : new Color(0.55f, 0.45f, 0.3f);
+                    ball.GetComponent<Renderer>().material.color = col;
+                }
+                else Saga.Core.Colliders.Strip(model);
+            }
         }
 
         private static void Toast(string text)

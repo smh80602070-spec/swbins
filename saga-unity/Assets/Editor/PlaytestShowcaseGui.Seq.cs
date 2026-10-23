@@ -498,6 +498,23 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] lghidden {hb.DisplayName} 체력 {hb.Hp:0}/{hb.MaxHp:0} @ {hb.transform.position}");
                         break;
                     }
+                    case "lgworkers":   // U-0186 1만리 신수 일꾼 — 신수 셋을 만나 둘을 일꾼으로 앉히고(4시간 지난 채) 마당에서 쉼터 창을 연다
+                    {
+                        var hf = Saga.Go.World.HomesteadField.Instance;
+                        var hu = Saga.Go.UI.HomesteadUi.Instance;
+                        var who = GameObject.FindWithTag("Player");
+                        if (hf == null || hu == null || who == null) { Skip(act); return; }
+                        Teleport(who.transform, Saga.Go.Data.GoHomestead.Center + new Vector3(1f, 0.5f, -5f));
+                        long now = Saga.Go.Data.HomeState.Now;
+                        foreach (var id in new[] { "pt_samjogo", "pt_dokkaebi", "pt_haetae" }) Saga.Go.Data.EggState.Discover(id);
+                        Saga.Go.Data.GoHomeWorkers.ResetForTest();
+                        int slots = Saga.Go.Data.GoHomeWorkers.Slots;
+                        Saga.Go.Data.GoHomeWorkers.Assign("pt_dokkaebi", now - 4 * 3600);
+                        if (slots > 1) Saga.Go.Data.GoHomeWorkers.Assign("pt_samjogo", now - 4 * 3600);
+                        hu.Open();
+                        Debug.Log($"[ShowcaseGui] lgworkers 칸 {slots} · 일꾼 {Saga.Go.Data.GoHomeWorkers.Workers.Count} · 몸 {hf.WorkerBodies} · 창 {hu.IsOpen}");
+                        break;
+                    }
                     case "lglaws":   // U-0185 5천하 법령 — 상업령 하나 반포한 채 창을 연다
                     {
                         var lu = Saga.Realm.UI.RealmLawUi.Instance;

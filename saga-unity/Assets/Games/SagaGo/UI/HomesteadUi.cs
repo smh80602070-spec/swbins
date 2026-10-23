@@ -30,6 +30,10 @@ namespace Saga.Go.UI
         public Button PlaceButton { get; private set; }
         public Button RemoveButton { get; private set; }
         public Button HarvestButton { get; private set; }
+        public Button AssignButton { get; private set; }   // tasks U-0186
+        public Button DismissButton { get; private set; }
+        private TextMeshProUGUI _work;
+        public string WorkText => _work != null ? _work.text : "";
         public Button RotateButton { get; private set; }
         public Button CloseButton { get; private set; }
         public Button ItemButton(int i) => _itemBtn[i];
@@ -94,6 +98,11 @@ namespace Saga.Go.UI
             RemoveButton = Btn(GoLocalization.T("home.remove", "가까운 것 치우기"), new Vector2(40f, -190f), 280f, RemoveNearby);
             HarvestButton = Btn(GoLocalization.T("home.harvest", "수확"), new Vector2(330f, -190f), 200f, Harvest);
             CloseButton = Btn(GoLocalization.T("dex.close", "닫는다"), new Vector2(0f, -405f), 200f, Close);
+            // tasks U-0186 신수 일꾼 — 단추 줄 아래 한 줄 + 앉히기·내보내기
+            _work = EncounterUiKit.NewText(_panel.transform, "", mid, new Vector2(-150f, -288f), new Vector2(820f, 90f), 17);
+            Center(_work.rectTransform);
+            AssignButton = Btn(GoLocalization.T("work.assign", "🐾 신수 앉히기"), new Vector2(400f, -262f), 240f, AssignNext);
+            DismissButton = Btn(GoLocalization.T("work.dismiss", "내보내기"), new Vector2(400f, -322f), 240f, DismissLast);
         }
 
         private Button Btn(string label, Vector2 pos, float w, UnityEngine.Events.UnityAction act)
@@ -125,6 +134,30 @@ namespace Saga.Go.UI
         public void RemoveNearby() { HomesteadField.Instance?.RemoveNearby(); Refresh(); }
         public void Harvest() { HomesteadField.Instance?.HarvestNow(); Refresh(); }
 
+        /// <summary>tasks U-0186 — 앉힐 수 있는 다음 신수를 앉힌다.</summary>
+        public void AssignNext()
+        {
+            string pet = GoHomeWorkers.NextCandidate();
+            string why = GoHomeWorkers.Assign(pet, HomeState.Now);
+            string name = pet != null ? GoEggs.Find(pet)?.Name ?? pet : "";
+            Saga.Go.UI.DialogueLabel.Instance?.Show(why == null
+                ? string.Format(GoLocalization.T("work.assigned", "🐾 {0} 이(가) 마당에서 일한다 — {1}"), name, GoHomeWorkers.KindLabel(pet))
+                : GoHomeWorkers.WhyText(why), 2.2f);
+            Refresh();
+        }
+
+        /// <summary>tasks U-0186 — 마지막에 앉힌 일꾼을 내보낸다(모은 것을 먼저 받는다).</summary>
+        public void DismissLast()
+        {
+            var list = GoHomeWorkers.Workers;
+            if (list.Count == 0) return;
+            string pet = list[list.Count - 1].pet;
+            string got = GoHomeWorkers.Dismiss(pet, HomeState.Now);
+            Saga.Go.UI.DialogueLabel.Instance?.Show(string.Format(GoLocalization.T("work.dismissed", "🐾 {0} 을(를) 내보냈다{1}"),
+                GoEggs.Find(pet)?.Name ?? pet, string.IsNullOrEmpty(got) ? "" : " — " + got), 2.2f);
+            Refresh();
+        }
+
         // ---- 글 ----
 
         public static string InfoLine()
@@ -152,7 +185,10 @@ namespace Saga.Go.UI
                 _itemText[i].text = (on ? "▶ " : "") + $"{it.Name}  <size=15>금 {it.Cost} · 안락도 {it.Comfort}</size>";
                 _itemText[i].color = on ? new Color(1f, 0.88f, 0.4f) : Color.white;
             }
-            HarvestButton.interactable = pend > 0;
+            HarvestButton.interactable = pend > 0 || GoHomeWorkers.PendingAll(HomeState.Now) > 0; // tasks U-0186 일꾼 몫도
+            _work.text = GoHomeWorkers.Line(HomeState.Now);
+            AssignButton.interactable = GoHomeWorkers.On && GoHomeWorkers.Workers.Count < GoHomeWorkers.Slots && GoHomeWorkers.NextCandidate() != null;
+            DismissButton.interactable = GoHomeWorkers.Workers.Count > 0;
             PlaceButton.interactable = f != null && f.Inside;
             RemoveButton.interactable = HomeState.Count > 0;
         }

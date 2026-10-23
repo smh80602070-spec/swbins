@@ -3327,6 +3327,25 @@
     { "key": "rank.best", "value": "🏆 최고 기록 {0} → {1}" },
     { "key": "rank.first", "value": "🏆 첫 기록 {0}" },
     { "key": "env.fire", "value": "풀불" },
-    { "key": "env.shock", "value": "강물 전류" }
+    { "key": "env.shock", "value": "강물 전류" },
+    { "key": "work.got_ore", "value": "⛏️ 강화석 {0}" },
+    { "key": "work.got_mint", "value": "🌿 박하 {0}" },
+    { "key": "work.got_honey", "value": "🌼 꿀꽃 {0}" },
+    { "key": "work.got_meat", "value": "🍖 짐승 고기 {0}" },
+    { "key": "work.why_buddy", "value": "동행 중인 신수는 일하러 못 보낸다" },
+    { "key": "work.why_has", "value": "이미 마당에서 일한다" },
+    { "key": "work.why_slots", "value": "일꾼 자리가 없다 — 마당을 꾸미면 는다({0}칸)" },
+    { "key": "work.why_off", "value": "신수 일꾼이 꺼져 있다" },
+    { "key": "work.why_none", "value": "앉힐 신수가 없다 — 알을 부화시키자" },
+    { "key": "work.kind_might", "value": "⛏️ 캐기" },
+    { "key": "work.kind_wisdom", "value": "🌿 뜯기" },
+    { "key": "work.kind_command", "value": "🍖 사냥" },
+    { "key": "work.head", "value": "🐾 신수 일꾼 {0}/{1} — 30분에 하나(강화석은 2시간) · 12시간치까지" },
+    { "key": "work.empty", "value": "아직 일꾼이 없다" },
+    { "key": "work.harvested", "value": "🐾 일꾼이 모은 것 — {0}" },
+    { "key": "work.assign", "value": "🐾 신수 앉히기" },
+    { "key": "work.dismiss", "value": "내보내기" },
+    { "key": "work.assigned", "value": "🐾 {0} 이(가) 마당에서 일한다 — {1}" },
+    { "key": "work.dismissed", "value": "🐾 {0} 을(를) 내보냈다{1}" }
   ]
 }

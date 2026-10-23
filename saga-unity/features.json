@@ -2350,6 +2350,22 @@
   "note": "D3(qc+claude, U-0185): docs/playcheck/d3-u0185-20261023.json — 다시 찍음: 주인공 둘레에서 하늘빛 줄기 일곱이 한쪽으로 흘러가며 4장째 멀어짐 · 고침: 줄기 옅은 하늘빛(0.72,0.9,1)·굵기 0.11×0.07·길이 2.4 · 앞 D2(R-3 10-23): PlaytestHeadless wind OK 6줄 · 기록 saga-unity/docs/playcheck/d2-r3-20261023.json · D1(U-0179): PlaytestHeadless wind rule·blow·cool·none·windonly·off OK"
  },
  {
+  "id": "un.go.home-workers",
+  "name": "U-0186 1만리 신수 일꾼 — 쉼터 창 「🐾 신수 앉히기」로 가진 신수(동행 말고)를 마당 일꾼으로, 지력 박하·꿀꽃·통솔 짐승 고기 30분에 하나(상한 24)·무력 강화석 2시간에 하나(상한 6), 칸 = 1 + 마당 등급, 수확이 같이 받음·마당에 몸(고돗 G-0328)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Data/GoHomeWorkers.cs"
+  ],
+  "tests": [
+   "PlaytestGoWorkers"
+  ],
+  "level": "D2",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0186",
+  "since": "2026-10-23",
+  "note": "D2(U-0186): PlaytestHeadless workers count·assign·harvest·dismiss·panel·save·off OK · 강화석 조각이 없는 트랙이라 무력은 강화석 2시간"
+ },
+ {
   "id": "un.core.shader-keep",
   "name": "U-0183 런타임 Shader.Find 셰이더 빌드 포함 — 이름으로만 찾는 셰이더 일곱(안개 Particles/Unlit·3마을 땅 ForestWorldCurve·물 등, 참조 .mat 0)을 빌드 직전에만 항상 포함에 넣고 끝나면 빼기(ProjectSettings 그대로)",
   "files": [
