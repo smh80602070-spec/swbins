@@ -9,7 +9,14 @@
    "name": "카시안더",
    "role": "세계사 마케도니아",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet"
+   "look": "adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet",
+   "stand_pick": "eu_alexander_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_augustus",
@@ -17,7 +24,14 @@
    "name": "세레누스",
    "role": "세계사 로마",
    "sex": "m",
-   "look": "mature adult, black hair, blue eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "mature adult, black hair, blue eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_augustus_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_aurelius",
@@ -25,7 +39,14 @@
    "name": "베렌델",
    "role": "세계사 로마",
    "sex": "m",
-   "look": "adult, brown hair, teal eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, brown hair, teal eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_aurelius_v02",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_caesar",
@@ -33,7 +54,14 @@
    "name": "발레리안",
    "role": "세계사 로마",
    "sex": "m",
-   "look": "adult, blonde hair, grey eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, blonde hair, grey eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_caesar_v02",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_charlemagne",
@@ -41,7 +69,14 @@
    "name": "로타리안",
    "role": "세계사 프랑크",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, medieval european inspired clothing, tunic and cloak, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, medieval european inspired clothing, tunic and cloak, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_charlemagne_v01",
+   "face": [
+    384,
+    284,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_eleanor",
@@ -49,7 +84,14 @@
    "name": "바엘린",
    "role": "세계사 프랑스",
    "sex": "f",
-   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, brown hair, teal eyes, medieval european inspired clothing, tunic and cloak, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, brown hair, teal eyes, medieval european inspired clothing, tunic and cloak, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_eleanor_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_elizabeth",
@@ -57,7 +99,14 @@
    "name": "코리넬레",
    "role": "세계사 잉글랜드",
    "sex": "f",
-   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, dark brown hair, blue eyes, medieval european inspired clothing, tunic and cloak, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, dark brown hair, blue eyes, medieval european inspired clothing, tunic and cloak, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_elizabeth_v02",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_frederick",
@@ -65,7 +114,14 @@
    "name": "바실로른",
    "role": "세계사 프로이센",
    "sex": "m",
-   "look": "adult, black hair, teal eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, teal eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_frederick_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_hannibal",
@@ -73,7 +129,14 @@
    "name": "마그나로",
    "role": "세계사 카르타고",
    "sex": "m",
-   "look": "adult, brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_hannibal_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_harald",
@@ -81,7 +144,14 @@
    "name": "오스트바르드",
    "role": "세계사 노르웨이",
    "sex": "m",
-   "look": "adult, auburn hair, light brown eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, auburn hair, light brown eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_harald_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_joan",
@@ -89,7 +159,14 @@
    "name": "셀렌느",
    "role": "세계사 프랑스",
    "sex": "f",
-   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, blonde hair, light brown eyes, medieval european inspired clothing, tunic and cloak, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, blonde hair, light brown eyes, medieval european inspired clothing, tunic and cloak, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_joan_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_machiavelli",
@@ -97,7 +174,14 @@
    "name": "반토렐리",
    "role": "세계사 이탈리아",
    "sex": "m",
-   "look": "adult, dark brown hair, teal eyes, medieval european inspired clothing, tunic and cloak, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, dark brown hair, teal eyes, medieval european inspired clothing, tunic and cloak, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_machiavelli_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_michelangelo",
@@ -105,7 +189,14 @@
    "name": "첼로리니",
    "role": "세계사 이탈리아",
    "sex": "m",
-   "look": "adult, auburn hair, grey eyes, medieval european inspired clothing, tunic and cloak, creative artist, paint stained fingers, curious eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, auburn hair, grey eyes, medieval european inspired clothing, tunic and cloak, creative artist, paint stained fingers, curious eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_michelangelo_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_napoleon",
@@ -113,7 +204,14 @@
    "name": "발데나르",
    "role": "세계사 프랑스",
    "sex": "m",
-   "look": "adult, brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_napoleon_v03",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_nelson",
@@ -121,7 +219,14 @@
    "name": "애쉬그레이브",
    "role": "세계사 잉글랜드",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_nelson_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_newton",
@@ -129,7 +234,14 @@
    "name": "할베린",
    "role": "세계사 잉글랜드",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_newton_v04",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_peter",
@@ -137,7 +249,14 @@
    "name": "볼카노프",
    "role": "세계사 러시아",
    "sex": "m",
-   "look": "adult, dark brown hair, brown eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, dark brown hair, brown eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_peter_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_richard",
@@ -145,7 +264,14 @@
    "name": "코드윈",
    "role": "세계사 잉글랜드",
    "sex": "m",
-   "look": "adult, black hair, teal eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, teal eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_richard_v03",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_scipio",
@@ -153,7 +279,14 @@
    "name": "코르비날",
    "role": "세계사 로마",
    "sex": "m",
-   "look": "adult, dark brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet"
+   "look": "adult, dark brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet",
+   "stand_pick": "eu_scipio_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "eu_william",
@@ -161,7 +294,14 @@
    "name": "펜드릭",
    "role": "세계사 노르만",
    "sex": "m",
-   "look": "adult, brown hair, brown eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, brown hair, brown eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "eu_william_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_hideyoshi",
@@ -169,7 +309,14 @@
    "name": "태합원",
    "role": "일본사 도요토미가",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "jp_hideyoshi_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_ieyasu",
@@ -177,7 +324,14 @@
    "name": "인내옹",
    "role": "일본사 도쿠가와막부",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "jp_ieyasu_v04",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_kenshin",
@@ -185,7 +339,14 @@
    "name": "군신아",
    "role": "일본사 우에스기가",
    "sex": "m",
-   "look": "young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet"
+   "look": "young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet",
+   "stand_pick": "jp_kenshin_v02",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_masamune",
@@ -193,7 +354,14 @@
    "name": "독안룡",
    "role": "일본사 다테가",
    "sex": "m",
-   "look": "young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet"
+   "look": "young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet",
+   "stand_pick": "jp_masamune_v04",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_mitsukuni",
@@ -201,7 +369,14 @@
    "name": "천하부",
    "role": "일본사 도쿠가와막부",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "jp_mitsukuni_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_murasaki",
@@ -209,7 +384,14 @@
    "name": "원씨필",
    "role": "일본사 헤이안",
    "sex": "f",
-   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, graceful court lady, refined makeup, layered robes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, graceful court lady, refined makeup, layered robes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "jp_murasaki_v01",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_naosuke",
@@ -217,7 +399,14 @@
    "name": "개항로",
    "role": "일본사 도쿠가와막부",
    "sex": "m",
-   "look": "mature adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "mature adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "jp_naosuke_v02",
+   "face": [
+    384,
+    281,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_nobunaga",
@@ -225,7 +414,14 @@
    "name": "화천마",
    "role": "일본사 오다가",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet"
+   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet",
+   "stand_pick": "jp_nobunaga_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_ryoma",
@@ -233,7 +429,14 @@
    "name": "해원랑",
    "role": "일본사 메이지유신",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "jp_ryoma_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_saigo",
@@ -241,7 +444,14 @@
    "name": "최후향",
    "role": "일본사 메이지유신",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "jp_saigo_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_seishonagon",
@@ -249,7 +459,14 @@
    "name": "침초필",
    "role": "일본사 헤이안",
    "sex": "f",
-   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, graceful court lady, refined makeup, layered robes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, graceful court lady, refined makeup, layered robes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "jp_seishonagon_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_shingen",
@@ -257,7 +474,14 @@
    "name": "풍림화",
    "role": "일본사 다케다가",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet"
+   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet",
+   "stand_pick": "jp_shingen_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_taira",
@@ -265,7 +489,14 @@
    "name": "평가주",
    "role": "일본사 다이라가",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "jp_taira_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_yoritomo",
@@ -273,7 +504,14 @@
    "name": "막부조",
    "role": "일본사 가마쿠라막부",
    "sex": "m",
-   "look": "mature adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "mature adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "jp_yoritomo_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "jp_yukimura",
@@ -281,7 +519,14 @@
    "name": "일번창",
    "role": "일본사 사나다가",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet"
+   "look": "adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet",
+   "stand_pick": "jp_yukimura_v02",
+   "face": [
+    384,
+    284,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_ahnjunggeun",
@@ -289,7 +534,14 @@
    "name": "동양평",
    "role": "한국사 대한제국",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_ahnjunggeun_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_choemuseon",
@@ -297,7 +549,14 @@
    "name": "화포공",
    "role": "한국사 고려",
    "sex": "m",
-   "look": "mature adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "mature adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_choemuseon_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_daejoyeong",
@@ -305,7 +564,14 @@
    "name": "요동패",
    "role": "한국사 발해",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_daejoyeong_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_euljimundeok",
@@ -313,7 +579,14 @@
    "name": "현묘",
    "role": "한국사 고구려",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_euljimundeok_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_ganggamchan",
@@ -321,7 +594,14 @@
    "name": "강우",
    "role": "한국사 고려",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_ganggamchan_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_gwakjaeu",
@@ -329,7 +609,14 @@
    "name": "초모의",
    "role": "한국사 조선",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_gwakjaeu_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_gwanggaeto",
@@ -337,7 +624,14 @@
    "name": "정복왕",
    "role": "한국사 고구려",
    "sex": "m",
-   "look": "mature adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "mature adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_gwanggaeto_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_heojun",
@@ -345,7 +639,14 @@
    "name": "활인",
    "role": "한국사 조선",
    "sex": "m",
-   "look": "elderly, wrinkles, gray beard, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "elderly, wrinkles, gray beard, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_heojun_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_hwanghui",
@@ -353,7 +654,14 @@
    "name": "균형공",
    "role": "한국사 조선",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_hwanghui_v02",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_jangyeongsil",
@@ -361,7 +669,14 @@
    "name": "성시",
    "role": "한국사 조선",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_jangyeongsil_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_jeongmongju",
@@ -369,7 +684,14 @@
    "name": "청죽",
    "role": "한국사 고려",
    "sex": "m",
-   "look": "elderly, wrinkles, gray beard, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "elderly, wrinkles, gray beard, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_jeongmongju_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_jeongyakyong",
@@ -377,7 +699,14 @@
    "name": "만기",
    "role": "한국사 조선",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_jeongyakyong_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_kimgu",
@@ -385,7 +714,14 @@
    "name": "자강",
    "role": "한국사 일제강점기",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_kimgu_v02",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_kimjeongho",
@@ -393,7 +729,14 @@
    "name": "방각",
    "role": "한국사 조선",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, adventurous traveler, travel cloak, bright eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, adventurous traveler, travel cloak, bright eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_kimjeongho_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_kimyusin",
@@ -401,7 +744,14 @@
    "name": "화랑준",
    "role": "한국사 신라",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_kimyusin_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_nongae",
@@ -409,7 +759,14 @@
    "name": "화영",
    "role": "한국사 조선",
    "sex": "f",
-   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, graceful dancer, flowing ribbons, cheerful, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, graceful dancer, flowing ribbons, cheerful, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_nongae_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_sejong",
@@ -417,7 +774,14 @@
    "name": "훈민",
    "role": "한국사 조선",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_sejong_v03",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_sinsaimdang",
@@ -425,7 +789,14 @@
    "name": "초충당",
    "role": "한국사 조선",
    "sex": "f",
-   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, elegant noble lady, hairpins, poised, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, elegant noble lady, hairpins, poised, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_sinsaimdang_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_wanggeon",
@@ -433,7 +804,14 @@
    "name": "통합공",
    "role": "한국사 고려",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_wanggeon_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_wonhyo",
@@ -441,7 +819,14 @@
    "name": "각원",
    "role": "한국사 신라",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, serene monk, prayer beads, shaved head, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, serene monk, prayer beads, shaved head, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_wonhyo_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_yeongaesomun",
@@ -449,7 +834,14 @@
    "name": "철령",
    "role": "한국사 고구려",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_yeongaesomun_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_yihwang",
@@ -457,7 +849,14 @@
    "name": "경헌",
    "role": "한국사 조선",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_yihwang_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_yii",
@@ -465,7 +864,14 @@
    "name": "문형",
    "role": "한국사 조선",
    "sex": "m",
-   "look": "mature adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "mature adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_yii_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_yisunsin",
@@ -473,7 +879,14 @@
    "name": "해장",
    "role": "한국사 조선",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_yisunsin_v01",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "kr_yugwansun",
@@ -481,7 +894,14 @@
    "name": "소녀화",
    "role": "한국사 일제강점기",
    "sex": "f",
-   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, earnest young student, neat clothes, bright smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, earnest young student, neat clothes, bright smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "kr_yugwansun_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_diaochan",
@@ -489,7 +909,14 @@
    "name": "월영",
    "role": "삼국지 군웅",
    "sex": "f",
-   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, graceful dancer, flowing ribbons, cheerful, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, graceful dancer, flowing ribbons, cheerful, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_diaochan_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_guanyu",
@@ -497,7 +924,14 @@
    "name": "명운",
    "role": "삼국지 촉",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_guanyu_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_huatuo",
@@ -505,7 +939,14 @@
    "name": "신침",
    "role": "삼국지 재야",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_huatuo_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_luxun",
@@ -513,7 +954,14 @@
    "name": "담연",
    "role": "삼국지 오",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_luxun_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_machao",
@@ -521,7 +969,14 @@
    "name": "서풍",
    "role": "삼국지 촉",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_machao_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_menghuo",
@@ -529,7 +984,14 @@
    "name": "만왕",
    "role": "삼국지 남만",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, tribal warrior, face paint, feathers, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, tribal warrior, face paint, feathers, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_menghuo_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_pangtong",
@@ -537,7 +999,14 @@
    "name": "봉래",
    "role": "삼국지 촉",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_pangtong_v02",
+   "face": [
+    384,
+    281,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_simayi",
@@ -545,7 +1014,14 @@
    "name": "은인",
    "role": "삼국지 위",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_simayi_v03",
+   "face": [
+    384,
+    281,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_xiahoudun",
@@ -553,7 +1029,14 @@
    "name": "언무",
    "role": "삼국지 위",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_xiahoudun_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_xunyu",
@@ -561,7 +1044,14 @@
    "name": "청안",
    "role": "삼국지 위",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_xunyu_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_zhangfei",
@@ -569,7 +1059,14 @@
    "name": "뇌호",
    "role": "삼국지 촉",
    "sex": "m",
-   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_zhangfei_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_zhangliao",
@@ -577,7 +1074,14 @@
    "name": "철벽",
    "role": "삼국지 위",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_zhangliao_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_zhaoyun",
@@ -585,7 +1089,14 @@
    "name": "은창",
    "role": "삼국지 촉",
    "sex": "m",
-   "look": "young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_zhaoyun_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sg_zhouyu",
@@ -593,7 +1104,14 @@
    "name": "화풍",
    "role": "삼국지 오",
    "sex": "m",
-   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "sg_zhouyu_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_akbar",
@@ -601,7 +1119,14 @@
    "name": "관용제",
    "role": "세계사 무굴",
    "sex": "m",
-   "look": "mature adult, brown hair, brown eyes, mughal court clothing, jeweled turban, long embroidered coat, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "mature adult, brown hair, brown eyes, mughal court clothing, jeweled turban, long embroidered coat, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_akbar_v03",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_ashoka",
@@ -609,7 +1134,14 @@
    "name": "법륜왕",
    "role": "세계사 마우리아",
    "sex": "m",
-   "look": "adult, auburn hair, blue eyes, ancient indian royal clothing, gold jewelry, saffron cloth, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, auburn hair, blue eyes, ancient indian royal clothing, gold jewelry, saffron cloth, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_ashoka_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_attila",
@@ -617,7 +1149,14 @@
    "name": "재앙편",
    "role": "세계사 훈제국",
    "sex": "m",
-   "look": "adult, brown hair, light brown eyes, steppe nomad warrior, fur-trimmed leather coat, braided hair, nomad rider, wind blown hair, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, brown hair, light brown eyes, steppe nomad warrior, fur-trimmed leather coat, braided hair, nomad rider, wind blown hair, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_attila_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_cleopatra",
@@ -625,7 +1164,14 @@
    "name": "나일화",
    "role": "세계사 프톨레마이오스",
    "sex": "f",
-   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, brown hair, grey eyes, ancient egyptian queen, gold collar necklace, kohl eye makeup, headdress, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "1girl, female focus, feminine, solo, upper body portrait, adult, brown hair, grey eyes, ancient egyptian queen, gold collar necklace, kohl eye makeup, headdress, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_cleopatra_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_hammurabi",
@@ -633,7 +1179,14 @@
    "name": "율법석",
    "role": "세계사 바빌로니아",
    "sex": "m",
-   "look": "adult, dark brown hair, blue eyes, ancient mesopotamian king, tiered fringed robe, curled beard, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, dark brown hair, blue eyes, ancient mesopotamian king, tiered fringed robe, curled beard, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_hammurabi_v04",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_ibnbattuta",
@@ -641,7 +1194,14 @@
    "name": "천리객",
    "role": "세계사 여행자",
    "sex": "m",
-   "look": "adult, brown hair, grey eyes, arab traveler scholar, turban, long striped robe, satchel, adventurous traveler, travel cloak, bright eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, brown hair, grey eyes, arab traveler scholar, turban, long striped robe, satchel, adventurous traveler, travel cloak, bright eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_ibnbattuta_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_khubilai",
@@ -649,7 +1209,14 @@
    "name": "대원조",
    "role": "세계사 원",
    "sex": "m",
-   "look": "mature adult, brown hair, blue eyes, steppe emperor, ornate fur-trimmed silk robe, tall hat, ruthless steppe ruler, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "mature adult, brown hair, blue eyes, steppe emperor, ornate fur-trimmed silk robe, tall hat, ruthless steppe ruler, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_khubilai_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_mansamusa",
@@ -657,7 +1224,14 @@
    "name": "황금왕",
    "role": "세계사 말리제국",
    "sex": "m",
-   "look": "adult, brown hair, green eyes, west african king, gold crown, gold embroidered robe, jewelry, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, brown hair, green eyes, west african king, gold crown, gold embroidered robe, jewelry, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_mansamusa_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_moctezuma",
@@ -665,7 +1239,14 @@
    "name": "독수리주",
    "role": "세계사 아즈텍",
    "sex": "m",
-   "look": "adult, black hair, green eyes, mesoamerican ruler, tall feather headdress, jade jewelry, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, black hair, green eyes, mesoamerican ruler, tall feather headdress, jade jewelry, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_moctezuma_v02",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_pachacuti",
@@ -673,7 +1254,14 @@
    "name": "태양개",
    "role": "세계사 잉카제국",
    "sex": "m",
-   "look": "mature adult, blonde hair, brown eyes, andean emperor, woven patterned tunic, gold ear ornaments, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "mature adult, blonde hair, brown eyes, andean emperor, woven patterned tunic, gold ear ornaments, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_pachacuti_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_saladin",
@@ -681,7 +1269,14 @@
    "name": "의검주",
    "role": "세계사 아이유브",
    "sex": "m",
-   "look": "mature adult, brown hair, blue eyes, arab sultan, white turban, chainmail under robe, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "mature adult, brown hair, blue eyes, arab sultan, white turban, chainmail under robe, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_saladin_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "wd_suleiman",
@@ -689,7 +1284,14 @@
    "name": "장려제",
    "role": "세계사 오스만",
    "sex": "m",
-   "look": "adult, brown hair, grey eyes, ottoman sultan, huge white turban, ornate fur robe, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background"
+   "look": "adult, brown hair, grey eyes, ottoman sultan, huge white turban, ornate fur robe, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "stand_pick": "wd_suleiman_v02",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   }
  ]
 }
