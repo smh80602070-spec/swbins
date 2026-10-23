@@ -150,6 +150,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/realm-shadow3d.js"></script>
 <script src="js/realm-water3d.js"></script>
 <script src="js/ui-rtk-sheets.js"></script>
+<script src="js/ui-rtk-cards.js"></script>
 <script src="js/live-portrait.js"></script>
 <script src="js/rtk-hand.js"></script>
 <script src="js/ui-rtk.js"></script>
@@ -5520,6 +5521,16 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         ' · elevAt=' + elev + '(바다) · 먼 뭍 straitFactor=' + farAway);
     });
 
+    t('겨루기 카드(R-4 ui-rtk-cards.js) — 일기토 손 싸움 카드는 수 셋을 고르게 하고, 설전 끝 장은 정답 수·성공률, 전황 막대는 아군·적군·성벽 셋', function () {
+      var K = DG.rtkCards, W = DG.war, O = DG.off; if (!K || !W || !O) { return '실패 rtkCards 없음'; }
+      var U = { esc: function (x) { return String(x); }, pt: function () { return ''; }, bar: function (l) { return '<div class="rstat">' + l + '</div>'; }, DEBATE_TIP: '팁' }, C = K.make(U);
+      var hs = O.all().slice(0, 2), view = { a: hs[0].id, d: hs[1].id, stances: W.STANCES, bouts: [], ah: 100, dh: 100, done: false };
+      var duel = C.duelCardHtml(view), picks = (duel.match(/data-act="duel-pick"/g) || []).length;
+      var deb = C.debateHtml({ title: '사절', qs: [], i: 0, ok: 0, must: false });
+      var hud = C.battleHudHtml({ force: '', defForce: '', atkStart: 100, defStart: 80, wallFrom: 50 }), rows = (hud.match(/class="rstat"/g) || []).length;
+      var ok = picks === Object.keys(W.STANCES).length + 1 && duel.indexOf('1번째 수') >= 0 && deb.indexOf('정답 0 / 0') >= 0 && rows === 3;
+      return ok ? ('일기토 고르기 ' + picks + '(맡기기 포함) · 설전 끝 장 · 전황 막대 ' + rows) : ('실패 ' + JSON.stringify({ picks: picks, deb: deb.slice(0, 60), rows: rows }));
+    });
     t('realm3d — 지도 사본 PBR(W-0386): 빛남 재질 glow_* 는 이름·emissive 를 옮기고 몸통은 이름 없이 그대로 · 같은 색이라도 둘이 안 섞인다', function () {
       var RS = DG.realmSky3d, T3 = window.THREE; if (!RS || !RS._realMat || !T3) { return '실패 realmSky3d/THREE 없음'; }
       var body = new T3.MeshToonMaterial({ color: 0xffffff }); body.name = 'concrete_wall_001';
