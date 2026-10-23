@@ -5794,5 +5794,24 @@
   "ticket": "G-0330",
   "since": "2026-10-23",
   "note": "고돗 먼저(웹 짝 없음) · 순수 추가 칸 hha · SAGA_HHA=0 · 촬영 shot_scene lg_fs_hha"
+ },
+ {
+  "id": "gd.story.weapon-swap",
+  "name": "4종횡 무기 두 벌·바꿔치기 콤보 — 새 무기를 끼우면 들던 것이 버금(주문서와 함께), G 로 맞바꿈(쿨 1초), 연속 중에 바꾸면 다음 근접 한 타 ×1.3",
+  "files": [
+   "games/saga_story/data/story_wswap.gd",
+   "games/saga_story/data/story_save_state.gd",
+   "games/saga_story/player/story_player.gd",
+   "games/saga_story/player/story_player_base.gd"
+  ],
+  "tests": [
+   "story_wswap"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0331",
+  "since": "2026-10-23",
+  "note": "고돗 먼저(웹 부분 = 동료 교대) · G 는 실행 때 InputMap 등록 · 세이브 v26 weapon2 · SAGA_WSWAP=0 · 촬영 shot_scene lg_st_wswap"
  }
 ]

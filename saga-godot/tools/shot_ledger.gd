@@ -217,3 +217,15 @@ static func dg_breakables(tree: SceneTree) -> void:
 	var m1 := "jar_01"
 	bn.call("_place", (bn as Node3D).to_local(p.global_position + Vector3(-3.5, 0, 3.0)), m0, 1, false)
 	bn.call("_place", (bn as Node3D).to_local(p.global_position + Vector3(-5.0, 0, 3.8)), m1, 1, true)
+
+
+## G-0331 4종횡 바꿔치기 — 버금 무기를 두고 연속 3 중에 바꾼 순간(알림)
+static func story_wswap(tree: SceneTree) -> void:
+	_later(tree, 20, func() -> void:
+		var S: Node = tree.root.get_node("StorySaveState")
+		S.set("weapon2", {"key": "sword2", "sb": {}, "sl": 0})
+		S.set("run_combo", 3)
+		S.set("_run_last_hit_ms", Time.get_ticks_msec())
+		var p := _player(tree)
+		if p != null:
+			p.call("_swap_weapon"))

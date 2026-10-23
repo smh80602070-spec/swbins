@@ -329,6 +329,17 @@ func _effective_atk() -> float:
 
 ## 정면 판정 공용 — 연참(reach)·기탄(reach*2)이 같이 쓴다. mul은 무예별
 ## 배율(연참 1.0·기탄 BOLT_MUL), range는 사거리.
+## G-0331 무기 바꾸기 — 연속 중이면 다음 근접 한 타 ×1.3 "바꿔치기!"
+func _swap_weapon() -> void:
+	var r: Dictionary = preload("res://games/saga_story/data/story_wswap.gd").swap(StorySaveState, Time.get_ticks_msec())
+	if not bool(r.ok):
+		if String(r.why) == "single":
+			preload("res://saga_core/ui/toast.gd").show(self, "🗡️ 버금 무기가 없다 — 새 무기를 끼우면 들던 것이 버금으로 간다", 2.0)
+		return
+	var it: Dictionary = StoryCombat.item_def(String(r.key))
+	preload("res://saga_core/ui/toast.gd").show(self, "%s %s%s" % ["⚡ 바꿔치기!" if bool(r.combo) else "🔁", String(it.get("name", r.key)), " — 다음 한 타 ×1.3" if bool(r.combo) else "", ], 1.6)
+
+
 func _melee_hit(range_m: float, mul: float) -> void:
 	range_m *= StoryLabyrinthState.reach_mult()  # PLAN 101-2 STORY ⑤(비경, 장병 은사) — 18곳 전부 이 한 곳을 거친다
 	_fx_hits = 0
@@ -341,7 +352,7 @@ func _melee_hit(range_m: float, mul: float) -> void:
 			continue
 		if signf(dx) != 0.0 and signf(dx) != _facing and absf(dx) > 0.3:
 			continue  # 등 뒤는 안 맞는다(바로 겹친 자리 정도는 봐준다)
-		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul)
+		var roll: Dictionary = StoryCombat.roll_damage(_effective_atk(), mul * preload("res://games/saga_story/data/story_wswap.gd").take_mul(Time.get_ticks_msec()))   # G-0331 바꿔치기 한 타
 		e.take_damage(float(roll.dmg))
 		preload("res://games/saga_story/data/story_launch.gd").on_strike(e, Input.is_action_pressed("move_forward"), float(roll.dmg))   # G-0314 ↑ 누른 채 치면 띄우기 · 떠 있으면 저글
 		if StoryConstellation.has_rule("manadrink"):   # G-0214 마력 흡수 — 맞힐 때마다 최대 마나 5%

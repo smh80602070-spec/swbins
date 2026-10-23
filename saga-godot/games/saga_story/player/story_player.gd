@@ -237,6 +237,8 @@ func _physics_process(delta: float) -> void:
 		_attack()
 	if Input.is_action_just_pressed("story_skill_sweep"):
 		_cast_sweep()
+	if preload("res://games/saga_story/data/story_wswap.gd").pressed():   # G-0331 G 무기 바꾸기
+		_swap_weapon()
 	if Input.is_action_just_pressed("story_skill_bolt"):
 		_cast_bolt()
 	if Input.is_action_just_pressed("story_skill_brace"):

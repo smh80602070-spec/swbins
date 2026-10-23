@@ -193,6 +193,7 @@ GODOT=<콘솔 exe> bash saga-godot/tools/probe_all.sh --only=save_dungeon,save_f
 |---|---|
 | J | 평타 연참(`combat_quick`) |
 | W(↑) + J | **올려치기**(G-0314) — 잡졸이 떠오르고, 떠 있는 동안 치면 다시 튕김(4타까지)·내려와 닿으면 떨어짐 피해. 보스·관문 대장·탱커는 안 뜸(`move_forward` 재사용, 새 키 없음) |
+| G | **무기 바꾸기**(G-0331) — 무기 칸에 새 무기를 끼우면 들던 것이 버금으로, G 로 맞바꿈(쿨 1초). 연속 타격 중에 바꾸면 "⚡ 바꿔치기!" 다음 근접 한 타 ×1.3(4종횡만 — G 는 3마을 채집 키, 실행 때 등록) · `SAGA_WSWAP=0` 끔 |
 | U | 횡소(`story_skill_sweep`, aoe) |
 | I | 기탄(`story_skill_bolt`, 관통) |
 | O | 기합(`story_skill_brace`, 버프) |
