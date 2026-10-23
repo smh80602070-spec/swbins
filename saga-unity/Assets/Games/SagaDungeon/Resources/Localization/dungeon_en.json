@@ -872,6 +872,8 @@
     { "key": "runrank.gem", "value": "💎 {0} socketed" },
     { "key": "runrank.best", "value": "🏆 Best {0} → {1}" },
     { "key": "runrank.first", "value": "🏆 First record {0}" },
+    { "key": "mastery.weapon", "value": "⚔️ {0} mastery {1} — attack +{2}%" },
+    { "key": "mastery.guard", "value": "🛡️ Armor mastery {0} — damage taken −{1}%" },
     { "key": "runrank.dead", "value": "Fell — no bonus" }
   ]
 }

@@ -933,6 +933,7 @@ namespace Saga.Dungeon.World
             int levelBefore = HeroState.Level;
             HeroState.AddExp(rewardExp);
             HeroState.AddGold(rewardGold);
+            DungeonMastery.OnKill(); // tasks U-0178 — 든 무기 숙련(줍기 전 무기에)
             bool equipped = HeroState.EquipIfBetter(rewardItemId);
             var item = ItemData.Get(rewardItemId);
             bool socketed = !string.IsNullOrEmpty(rewardGemId) && HeroState.SocketIfBetter(rewardGemId);

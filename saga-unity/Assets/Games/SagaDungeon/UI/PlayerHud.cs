@@ -41,11 +41,13 @@ namespace Saga.Dungeon.UI
             if (label == null) return;
             string weapon = HeroState.EquippedWeapon?.Name ?? DungeonLocalization.T("item.bare_hands");
             var lore = SecretState.EquippedLore; // PLAN.md 109-10-2 비전
+            weapon += DungeonMastery.Stars(DungeonMastery.WeaponTier(HeroState.EquippedWeaponId)); // tasks U-0178 무기 숙련
             if (lore != Secret.None) weapon += string.Format(DungeonLocalization.T("lore.hud", " [비전 {0}]"), SecretState.LoreName(lore));
             // "절차적 층 진행" 슬라이스 — ProcRoom에 아직 안 닿았으면(Room1~4,
             // 개념상 "층1") DungeonFloorRunner.Instance가 null이라 1로 대신함.
             int floor = DungeonFloorRunner.Instance?.CurrentFloor ?? 1;
             string hp = string.Format(DungeonLocalization.T("hud.hp"), HeroState.Hp, HeroState.HpMax);
+            if (DungeonMastery.GuardTier > 0) hp += " 🛡" + DungeonMastery.GuardTier; // tasks U-0178 갑주 숙련
             string exp = string.Format(DungeonLocalization.T("hud.exp"), HeroState.Exp, HeroState.ExpToNext);
             string gold = string.Format(DungeonLocalization.T("hud.gold"), HeroState.Gold);
             string atk = string.Format(DungeonLocalization.T("hud.atk"), HeroState.Atk);

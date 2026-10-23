@@ -872,6 +872,8 @@
     { "key": "runrank.gem", "value": "💎 {0} 박음" },
     { "key": "runrank.best", "value": "🏆 최고 기록 {0} → {1}" },
     { "key": "runrank.first", "value": "🏆 첫 기록 {0}" },
+    { "key": "mastery.weapon", "value": "⚔️ {0} 숙련 {1}단 — 공격 +{2}%" },
+    { "key": "mastery.guard", "value": "🛡️ 갑주 숙련 {0}단 — 받는 피해 −{1}%" },
     { "key": "runrank.dead", "value": "쓰러져 덤 없음" }
   ]
 }

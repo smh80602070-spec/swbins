@@ -97,7 +97,8 @@ namespace Saga.Dungeon.Data
         /// PLAN.md 101-2 5.3 "부적 던전" 유리대포 변형자(<see cref="SigilState.PlayerDamageMultiplier"/>)도
         /// 같은 자리에 곱한다 — 그 층에선 플레이어도 더 세게 때린다.</summary>
         public static float HitDamage => Math.Max(4f, Atk / 6f) * BlessingState.AtkMultiplier
-            * SigilState.PlayerDamageMultiplier(DungeonFloorRunner.Instance?.CurrentFloor ?? 1);
+            * SigilState.PlayerDamageMultiplier(DungeonFloorRunner.Instance?.CurrentFloor ?? 1)
+            * DungeonMastery.AtkMul; // tasks U-0178 무기 숙련(단계마다 +3%)
 
         /// <summary>회피(Player/PlayerController.cs) 중에만 켜진다 — 켜져
         /// 있는 동안 TakeDamage가 전부 무시된다(dungeon.js `p.invuln`과
@@ -203,8 +204,9 @@ namespace Saga.Dungeon.Data
             LastHitWho = who;
             LastHitHow = how;
             int before = Hp;
-            Hp = Math.Max(0, Hp - RoundInt(amount / BlessingState.DefMultiplier));
+            Hp = Math.Max(0, Hp - RoundInt(amount * DungeonMastery.GuardMul / BlessingState.DefMultiplier)); // tasks U-0178 갑주 숙련(단계마다 −2%)
             LastDealt = before - Hp;
+            if (LastDealt > 0) DungeonMastery.OnHurt();
             Saga.Dungeon.Audio.SfxPlayer.Play("sword_hurt", minGap: HurtSfxGap); // tasks U-0104 — 피격(연타는 한 번).
             Hurt?.Invoke();
             if (Hp <= 0) Died?.Invoke(DropGoldAsGrave());

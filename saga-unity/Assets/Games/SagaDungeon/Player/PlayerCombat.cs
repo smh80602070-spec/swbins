@@ -104,6 +104,7 @@ namespace Saga.Dungeon.Player
         {
             HeroState.Died += OnDied;
             SkillTree.LeveledUp += OnTreeLeveled; // tasks U-0135
+            DungeonMastery.TierUp += OnMasteryTier; // tasks U-0178
             PlayerController.PerfectDodged += OnPerfectDodged;
             _controller = GetComponent<PlayerController>();
             _lockOn = GetComponent<PlayerLockOn>();
@@ -114,11 +115,17 @@ namespace Saga.Dungeon.Player
         {
             HeroState.Died -= OnDied;
             SkillTree.LeveledUp -= OnTreeLeveled;
+            DungeonMastery.TierUp -= OnMasteryTier;
             PlayerController.PerfectDodged -= OnPerfectDodged;
         }
 
         private static void OnTreeLeveled(SecretMove m, int lv) =>
             DialogueLabel.Instance?.Show(string.Format(DungeonLocalization.T("tree.leveled", "{0} 무예 레벨 {1} — 나무에 점 하나(비결 창)"), SecretState.MoveName(m), lv), 2.5f);
+
+        private static void OnMasteryTier(bool weapon, string id, int tier) =>
+            DialogueLabel.Instance?.Show(weapon
+                ? string.Format(DungeonLocalization.T("mastery.weapon", "⚔️ {0} 숙련 {1}단 — 공격 +{2}%"), ItemData.Get(id)?.Name ?? id, tier, tier * 3)
+                : string.Format(DungeonLocalization.T("mastery.guard", "🛡️ 갑주 숙련 {0}단 — 받는 피해 −{1}%"), tier, tier * 2), 2.5f);
 
         private void OnPerfectDodged()
         {
