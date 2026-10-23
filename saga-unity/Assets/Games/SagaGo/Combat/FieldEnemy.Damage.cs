@@ -166,7 +166,20 @@ namespace Saga.Go.Combat
             }
 
             Aggro();
+            Reacted?.Invoke(this, element, reaction, amount); // tasks U-0175 땅이 받아친다(풀불·물벼락·불 끔)
             return dealt;
+        }
+
+        /// <summary>tasks U-0175 — 방패 아닌 몸에 원소 타격이 다 풀린 뒤(적·친 원소·걸린 반응·그 타격 기본 피해). `FieldFire` 가 듣는다.</summary>
+        public static event Action<FieldEnemy, GoElement, GoReaction, float> Reacted;
+
+        /// <summary>tasks U-0175 불길 — 붙은 원소가 없고 방패도 없으면 그 원소를 묻힌다(반응은 안 부름).</summary>
+        public void TouchAura(GoElement element)
+        {
+            if (!Alive || Shielded || AuraLeft > 0f || !GoElements.Attaches(element)) return;
+            Aura = element;
+            AuraLeft = GoElements.AuraSec;
+            RefreshElementFx();
         }
 
         /// <summary>얼어붙음 — 2.5초 제자리에 멎고, 예고하던 수도 끊긴다.</summary>

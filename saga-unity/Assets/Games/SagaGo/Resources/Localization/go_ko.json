@@ -3325,6 +3325,8 @@
     { "key": "rank.line", "value": "★ 토벌 등급 {0} — 피격 {1} · 연타 {2} · {3}:{4:00}" },
     { "key": "rank.bonus", "value": "등급 덤 경험 +{0}" },
     { "key": "rank.best", "value": "🏆 최고 기록 {0} → {1}" },
-    { "key": "rank.first", "value": "🏆 첫 기록 {0}" }
+    { "key": "rank.first", "value": "🏆 첫 기록 {0}" },
+    { "key": "env.fire", "value": "풀불" },
+    { "key": "env.shock", "value": "강물 전류" }
   ]
 }

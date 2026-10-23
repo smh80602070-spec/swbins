@@ -2352,6 +2352,23 @@
   "note": "D1(U-0174): PlaytestHeadless gorank S·zone·drop·save OK(TakeHit 이 엶·연타 12·피격 0·30초 → S 급 3·덤 경험 +13 · 장판 틱 연타 0 · 피격 9 → B 기록 그대로 · 20초 멍·전멸 버림·수호장 안 셈 · rankCamps·rankGrades)"
  },
  {
+  "id": "un.go.field-env",
+  "name": "U-0175 1만리 환경 연쇄 — 불 타격·불붙음이 풀 땅 위 적에 닿으면 발밑 불길(3초·둘레 피해·불 묻힘·옆 풀 한 번 번짐), 강 위 번개는 강 위 다른 적까지, 물 타격은 불길 끔(웹 W-0374·고돗 G-0303)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldFire.cs",
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldEnemy.Damage.cs"
+  ],
+  "tests": [
+   "PlaytestGoFieldFire"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0175",
+  "since": "2026-10-23",
+  "note": "D1(U-0175): PlaytestHeadless fieldfire grass·ground·shock·douse·safe OK(불길 1 → 0.5초 번짐 2 · 둘레 15/틱·불 묻힘 · 3초 꺼짐 · 길·마을 안 탐 · 강 위 둘째 적 100·뭍 그대로 · 물에 꺼짐 · 주인공 그대로)"
+ },
+ {
   "id": "un.dg.weapon-swap",
   "name": "U-0131 무기 두 벌 — 바뀐 손 무기를 을(乙)로, G·폰 바꿔 들기 단추로 갑↔을(쿨 1초·첫 타 ×1.15, 웹 W-0281 이식)",
   "files": [
