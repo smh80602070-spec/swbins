@@ -106,6 +106,8 @@ window.DG_NO_TUNE = true;
 <script src="js/boss-pattern.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/side.js"></script>
+<script src="js/sect.js"></script>
+<script src="js/hidden-boss.js"></script>
 <script src="js/side-just.js"></script>
 <script src="js/side-launch.js"></script>
 <script src="js/life.js"></script>
@@ -6437,6 +6439,38 @@ window.DG_NO_TUNE = true;
         delete sv.tut; var none = T.line() === '' && T.done() === true;
         return first.indexOf(want) === 0 && fin === '' && none && ('첫 줄 "' + want + '" · 끝난·옛 세이브는 빈 문구');
       });
+    });
+
+
+    /* ── W-0398 4종횡 웹 역이식(정본 고돗 G-0333·G-0319) — 문파 · 숨은 우두머리 ── */
+    t('문파(W-0398 ①) — 셋 중 하나 들기 · 처치 +1·보스 +10·오늘 의뢰 사냥터 두 배 · 공 100 제자 +2%(그 갈래만)·3000 문주 +10% · 나가면 공 0', function () {
+      var SE = DG.sect, C = DG.core, bk = C.save.sect;
+      delete C.save.sect;
+      try {
+        if (!SE.join('sword').ok || SE.join('sword').ok || SE.mul('atk') !== 1) { return '실패 들기'; }
+        C.emit('side:kill', { ref: 'x', boss: false, lv: 1, stage: 'zzz' }); C.emit('side:kill', { ref: 'x', boss: true, lv: 1, stage: 'zzz' });
+        var b = SE.book(); if (b.pts !== 11) { return '실패 공 ' + b.pts; }
+        var q = SE.questStage(); if (!q || !q.boss) { return '실패 의뢰 사냥터'; }
+        C.emit('side:kill', { ref: 'x', boss: false, lv: 1, stage: q.key }); if (b.pts !== 13) { return '실패 두 배 ' + b.pts; }
+        b.pts = 100; var ok1 = SE.stageOf(b.pts) === 1 && SE.rankName(1) === '제자' && Math.abs(SE.mul('atk') - 1.02) < 1e-9 && SE.mul('gold') === 1 && SE.mul('exp') === 1;
+        b.pts = 3000; var ok2 = SE.stageOf(b.pts) === 5 && SE.rankName(5) === '문주' && Math.abs(SE.mul('atk') - 1.10) < 1e-9;
+        var h = SE.cardHtml(), ok3 = h.indexOf('data-sect="leave"') >= 0 && h.indexOf(q.name) >= 0;
+        var ok4 = SE.leave().ok && b.pts === 0 && b.id === null && SE.cardHtml().indexOf('data-sect="join:trade"') >= 0;
+        return ok1 && ok2 && ok3 && ok4 ? '검각 · 1+10 · 의뢰 ' + q.name + ' 두 배 · 100 제자 +2% · 3000 문주 +10% · 나가기 0' : '실패 ' + [ok1, ok2, ok3, ok4].join(' ');
+      } finally { if (bk) { C.save.sect = bk; } else { delete C.save.sect; } }
+    });
+    t('숨은 우두머리(W-0398 ②) — 비문은 사냥터마다 한 번 · 읽은 땅·첫 타 60초 안 보스만 조건 · 숨은 것 처치 금 +40×lv·기록 · side.spawnBoss(opts)·_run 노출', function () {
+      var HB = DG.hiddenBoss, S = DG.side, C = DG.core, bk = C.save.hidden, now = Date.now();
+      delete C.save.hidden;
+      try {
+        if (!HB.read('field') || HB.read('field') || !HB.hasStele('field') || HB.hasStele('forest')) { return '실패 비문'; }
+        var ok1 = HB.shouldSpawn({ boss: true, _t0: now - 1000 }, 'field', now) && !HB.shouldSpawn({ boss: true, _t0: now - 61000 }, 'field', now) &&
+          !HB.shouldSpawn({ boss: true, _t0: now - 1000 }, 'forest', now) && !HB.shouldSpawn({ boss: true, hidden: true, _t0: now - 1000 }, 'field', now) && !HB.shouldSpawn({ boss: true }, 'field', now);
+        var run = { stage: { key: 'field', enemyLv: 2 }, gold: 0 };
+        var ok2 = HB.onBossKill({ boss: true, hidden: true }, run) && run.gold === 80 && HB.killsOf('field') === 1 && HB.rewardFor(3) === 120;
+        var ok3 = typeof S.spawnBoss === 'function' && typeof S._run === 'function' && HB.cardHtml().indexOf('비문 읽음') >= 0;
+        return ok1 && ok2 && ok3 ? '비문 1회 · 조건(읽음·60초·보스·숨은 것 제외) · 숨은 것 처치 +80·기록 1 · 노출 둘' : '실패 ' + [ok1, ok2, ok3].join(' ');
+      } finally { if (bk) { C.save.hidden = bk; } else { delete C.save.hidden; } }
     });
 
     t('첫 10분 — 다섯 단계가 순서대로만 나아가고(앞 단계 전의 이벤트는 무시), 레벨은 2 이상일 때만, 보상은 합 240금, 끝나면 done 이 5 다', function () {

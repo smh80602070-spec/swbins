@@ -640,26 +640,26 @@
     return Math.max(0, stg.boss.cool * 60000 * BOSS_COOL - (Date.now() - at));
   }
 
-  function spawnBoss() {
+  function spawnBoss(opts) {   // W-0398 ② opts = { hpMul, dmgMul, color, hidden } — 숨은 우두머리
     if (!run) { return null; }
     var stg = run.stage;
-    if (!stg.boss || !bossReady(stg.key)) { return null; }
+    if (!stg.boss || (!opts && !bossReady(stg.key))) { return null; }
     var ed = global.DG.enemyData;
     var ref = ed ? ed.bossByName(stg.boss.name) : { name: stg.boss.name, kind: 'human', color: '#7a3a3a' };
     var lv = stg.enemyLv;
     var baseHp = Math.round(baseHpOf(lv));
-    var hp = Math.max(1, Math.round(baseHp * stg.boss.hpMul * E_HP * RF()));
+    var hp = Math.max(1, Math.round(baseHp * stg.boss.hpMul * E_HP * RF() * (opts && opts.hpMul || 1)));
     var e = {
       ref: ref, boss: true,
       x: stg.width - 220, y: stg.floor - 52, w: 52, h: 52,
       hp: hp, hpMax: hp,
-      dmg: Math.round((4 + lv * 1.6) * stg.boss.dmgMul * E_DMG * RF()),
+      dmg: Math.round((4 + lv * 1.6) * stg.boss.dmgMul * E_DMG * RF() * (opts && opts.dmgMul || 1)),
       dir: -1,
       spd: 38 + Math.min(40, lv * 2),
       phase: 0, hurt: 0, cd: 0, atkAnim: 0,
       chargeCd: 4 + Math.random() * 3, charge: 0
     };
-    run.enemies.push(e);
+    if (opts && opts.hidden) { e.hidden = true; e.ref = Object.assign({}, ref, { name: '숨은 ' + ref.name, color: opts.color || ref.color }); } run.enemies.push(e);
     run.boss = e;
     fx.push({ t: 'bossintro', name: ref.name, life: BOSS_INTRO_DUR });   // 등장 연출(PLAN 35절)
     sfx('boss');
@@ -1127,7 +1127,7 @@
     if (e.gate && e.gateVulnT > 0) { dmg *= GATE_VULN_MUL; }
     /* 사냥터 보스 그로기(§5-10) — 패턴 셋을 잇달아 피하면 5초 동안 ×1.5 */
     if (e.bp && e.bp.groggy > 0 && global.DG.bossPattern) { dmg *= global.DG.bossPattern.dmgTakenMul(e); }
-    dmg = Math.max(1, Math.round(dmg));
+    dmg = Math.max(1, Math.round(dmg * (global.DG.sect ? global.DG.sect.mul('atk') : 1)));   // W-0398 ① 검각
     e.hp -= dmg;
     if (rm && rm.leech) { run.hp = Math.min(run.hpMax, run.hp + dmg * rm.leech); } if (global.DG.constellation) { run.mp = Math.min(run.mpMax, run.mp + global.DG.constellation.mpHit(run.mpMax)); }   // 마력 흡수(성좌도)
     e.hurt = HURT_FLASH;
@@ -1181,9 +1181,9 @@
     var rmk = run.rm;   // 비경(§5-3) — 재물 축복·주간 변형자 보상 배수
     var gold = Math.round((6 + lv * 3) * (0.8 + Math.random() * 0.6) * mul * GAIN_GOLD * RG() *
       (rmk ? (1 + rmk.gold) * rmk.reward : 1));
-    run.gold += gold;
+    gold = Math.round(gold * (global.DG.sect ? global.DG.sect.mul('gold') : 1)); run.gold += gold;   // W-0398 ① 상단
     run.drops.push({ kind: 'gold', x: e.x + e.w / 2, y: e.y, vy: -180, n: gold });
-    if (e.boss) {
+    if (e.boss) { if (global.DG.hiddenBoss) { global.DG.hiddenBoss.onBossKill(e, run); }   // W-0398 ② 숨은 우두머리
       /* 보스는 탕약을 확정으로 떨군다 — 다음 판을 이어 갈 밑천이다 */
       run.drops.push({ kind: 'potion', x: e.x + e.w / 2 + 14, y: e.y, vy: -220, n: 3 });
     } else if (e.mini || Math.random() < DROP_POTION) {
@@ -1202,7 +1202,7 @@
     }
     var expAmt = Math.round((6 + lv * 4) * (e.boss ? 15 : (e.rare ? RARE_GAIN_MUL : (e.mini ? MINI_GAIN_MUL : 1))) * GAIN_EXP * RG() *
       (rmk ? rmk.reward : 1));
-    core.gainExp(expAmt);
+    expAmt = Math.round(expAmt * (global.DG.sect ? global.DG.sect.mul('exp') : 1)); core.gainExp(expAmt);   // W-0398 ① 서원
     run.expGained += expAmt;   // 세션 카드(§5-6) — 이 판에서 잡아 얻은 경험치만 잰다(사명 보상 등은 안 잡는다)
     /* 사명(quest.js)이 이 소식을 듣는다 — 규칙이 서로를 부르지 않게 알림으로만 잇는다 */
     core.emit('side:kill', { ref: e.ref, boss: !!e.boss, lv: lv, stage: run.stage.key });
@@ -2226,7 +2226,7 @@
   global.DG = global.DG || {};
   global.DG.side = {
     GRAV: GRAV, SPEED: SPEED, P_W: P_W, P_H: P_H, REACH: REACH, CLIMB: CLIMB, _strike: function (e, m, el) { return strike(e, m, false, el); },
-    enter: enter, leave: leave, resume: resume, active: active, update: update,
+    enter: enter, leave: leave, resume: resume, active: active, update: update, spawnBoss: spawnBoss, _run: function () { return run; },   // W-0398 ②
     setInput: setInput, jump: jump, dodge: dodge, castSkill: castSkill, drink: drink,
     holdStart: holdStart, holdEnd: holdEnd, cancelHold: cancelHold,
     travel: travel, useUp: useUp, useDown: useDown, dropThrough: dropThrough,

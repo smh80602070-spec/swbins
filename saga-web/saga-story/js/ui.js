@@ -927,7 +927,7 @@
     var S = global.DG.side;
     var st = S.status();
     var pw = S.power();
-    var html = '<div class="sec"><h4>내 몸</h4><div class="card">' +
+    var html = (global.DG.sect ? global.DG.sect.cardHtml() : '') + (global.DG.hiddenBoss ? global.DG.hiddenBoss.cardHtml() : '') + '<div class="sec"><h4>내 몸</h4><div class="card">' +   // W-0398 문파·숨은 우두머리 카드
       '<div class="stat-row"><span>체력</span><b>' + core.fmt(pw.hp) + '</b></div>' +
       '<div class="stat-row"><span>공격력</span><b>' + core.fmt(pw.atk) + '</b></div>' +
       '<div class="stat-row"><span>탕약</span><b>🧪 ' + st.potions + '</b></div>' +

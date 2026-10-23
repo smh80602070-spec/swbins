@@ -640,26 +640,26 @@
     return Math.max(0, stg.boss.cool * 60000 * BOSS_COOL - (Date.now() - at));
   }
 
-  function spawnBoss() {
+  function spawnBoss(opts) {   // W-0398 ② opts = { hpMul, dmgMul, color, hidden } — 숨은 우두머리
     if (!run) { return null; }
     var stg = run.stage;
-    if (!stg.boss || !bossReady(stg.key)) { return null; }
+    if (!stg.boss || (!opts && !bossReady(stg.key))) { return null; }
     var ed = global.DG.enemyData;
     var ref = ed ? ed.bossByName(stg.boss.name) : { name: stg.boss.name, kind: 'human', color: '#7a3a3a' };
     var lv = stg.enemyLv;
     var baseHp = Math.round(baseHpOf(lv));
-    var hp = Math.max(1, Math.round(baseHp * stg.boss.hpMul * E_HP * RF()));
+    var hp = Math.max(1, Math.round(baseHp * stg.boss.hpMul * E_HP * RF() * (opts && opts.hpMul || 1)));
     var e = {
       ref: ref, boss: true,
       x: stg.width - 220, y: stg.floor - 52, w: 52, h: 52,
       hp: hp, hpMax: hp,
-      dmg: Math.round((4 + lv * 1.6) * stg.boss.dmgMul * E_DMG * RF()),
+      dmg: Math.round((4 + lv * 1.6) * stg.boss.dmgMul * E_DMG * RF() * (opts && opts.dmgMul || 1)),
       dir: -1,
       spd: 38 + Math.min(40, lv * 2),
       phase: 0, hurt: 0, cd: 0, atkAnim: 0,
       chargeCd: 4 + Math.random() * 3, charge: 0
     };
-    run.enemies.push(e);
+    if (opts && opts.hidden) { e.hidden = true; e.ref = Object.assign({}, ref, { name: '숨은 ' + ref.name, color: opts.color || ref.color }); } run.enemies.push(e);
     run.boss = e;
     fx.push({ t: 'bossintro', name: ref.name, life: BOSS_INTRO_DUR });   // 등장 연출(PLAN 35절)
     sfx('boss');
