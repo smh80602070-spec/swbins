@@ -1085,6 +1085,23 @@
     { "key": "aq.rule_off", "value": "🌾 Delegated rule off" },
     { "key": "aq.rule_btn", "value": "🌾 Delegate ▶" },
     { "key": "aq.rule_btn_on", "value": "🌾 Delegate ■" },
-    { "key": "aq.rule_month", "value": "🌾 Delegated rule — {0} cities developed" }
+    { "key": "aq.rule_month", "value": "🌾 Delegated rule — {0} cities developed" },
+    { "key": "trade.open", "value": "🐫 Trade" },
+    { "key": "trade.title", "value": "🐫 Trade routes {0}/{1} — {2} gold · {3} months · between cities linked by our land" },
+    { "key": "trade.row_on", "value": "{0} — {1} gold a month · {2} months left · {3} so far" },
+    { "key": "trade.none", "value": "No caravans on the road" },
+    { "key": "trade.from", "value": "Routes worth opening from {0}" },
+    { "key": "trade.no_path", "value": "No city links to this one through our land" },
+    { "key": "trade.row_pick", "value": "{0}\n{1} gold a month × {2} months" },
+    { "key": "trade.start", "value": "Send" },
+    { "key": "trade.started", "value": "🐫 Caravan sent — {0} · {1} gold a month" },
+    { "key": "trade.why_off", "value": "Trade routes are off" },
+    { "key": "trade.why_mine", "value": "Caravans leave only from our cities" },
+    { "key": "trade.why_max", "value": "Up to {0} caravans" },
+    { "key": "trade.why_dup", "value": "A caravan already runs this road" },
+    { "key": "trade.why_gold", "value": "Not enough gold ({0})" },
+    { "key": "trade.why_path", "value": "No road through our land" },
+    { "key": "trade.lost", "value": "✂️ The {0} route was cut — the caravan is lost" },
+    { "key": "trade.back", "value": "🐫 The {0} caravan is home — {1} gold in all" }
   ]
 }

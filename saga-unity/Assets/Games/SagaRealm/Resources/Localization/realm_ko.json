@@ -1085,6 +1085,23 @@
     { "key": "aq.rule_off", "value": "🌾 시정 위임 끔" },
     { "key": "aq.rule_btn", "value": "🌾 위임 ▶" },
     { "key": "aq.rule_btn_on", "value": "🌾 위임 ■" },
-    { "key": "aq.rule_month", "value": "🌾 시정 위임 — {0}곳 내정" }
+    { "key": "aq.rule_month", "value": "🌾 시정 위임 — {0}곳 내정" },
+    { "key": "trade.open", "value": "🐫 교역" },
+    { "key": "trade.title", "value": "🐫 교역로 {0}/{1} — 금 {2} · {3}달 · 우리 땅으로 이어진 성끼리" },
+    { "key": "trade.row_on", "value": "{0} — 달마다 금 {1} · {2}달 남음 · 지금까지 {3}" },
+    { "key": "trade.none", "value": "다니는 상단이 없습니다" },
+    { "key": "trade.from", "value": "{0} 에서 띄울 만한 길" },
+    { "key": "trade.no_path", "value": "이 성에서 우리 땅으로 이어진 성이 없습니다" },
+    { "key": "trade.row_pick", "value": "{0}\n달마다 금 {1} × {2}달" },
+    { "key": "trade.start", "value": "띄우기" },
+    { "key": "trade.started", "value": "🐫 상단을 띄웠다 — {0} · 달마다 금 {1}" },
+    { "key": "trade.why_off", "value": "교역로가 꺼져 있습니다" },
+    { "key": "trade.why_mine", "value": "우리 성에서만 띄웁니다" },
+    { "key": "trade.why_max", "value": "상단은 {0}개까지" },
+    { "key": "trade.why_dup", "value": "이미 오가는 길입니다" },
+    { "key": "trade.why_gold", "value": "금이 모자랍니다(금 {0})" },
+    { "key": "trade.why_path", "value": "우리 땅으로 이어진 길이 없습니다" },
+    { "key": "trade.lost", "value": "✂️ {0} 교역로가 끊겨 상단을 잃었다" },
+    { "key": "trade.back", "value": "🐫 {0} 상단이 돌아왔다 — 모두 금 {1}" }
   ]
 }

@@ -2493,6 +2493,24 @@
   "note": "D2(U-0136): docs/playcheck/d2-u0136-20261020.json — PlaytestRealmSlice 117→122(wonder gate·build·race·rival·save) · 효과는 RealmTechData.Pct 한 자리 · 적 몫은 그 성 싸움 수비·공격만 · 촬영 안 함"
  },
  {
+  "id": "un.rk.trade",
+  "name": "U-0172 교역로 — 우리 땅으로 이어진 우리 성끼리 상단(금 300·12달·둘까지), 달마다 (상업 합)×0.1×금 배율, 길이 끊기면 잃음(웹 W-0301 · 고돗 G-0310 짝)",
+  "files": [
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmTrade.cs",
+   "saga-unity/Assets/Games/SagaRealm/UI/RealmTradeUi.cs",
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmCityState.cs"
+  ],
+  "tests": [
+   "PlaytestRealmTrade"
+  ],
+  "level": "D1",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0172",
+  "since": "2026-10-23",
+  "note": "D1(U-0172): PlaytestRealmSlice trade path·start·month·cut·save OK(허창↔복양 달마다 +117·12달 780) · 화친·적 진 없는 트랙이라 우리 성끼리만 · 성 잃기 규칙이 없어 끊김은 진단 손잡이로만 · 지도 띠 없음 · 촬영 안 함"
+ },
+ {
   "id": "un.rk.tech-tree",
   "name": "U-0129 기술 나무 — 세력 연구 네 갈래(농·상·군·학) × 6마디(웹 W-0290 이식)",
   "files": [

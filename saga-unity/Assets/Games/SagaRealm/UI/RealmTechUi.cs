@@ -26,6 +26,7 @@ namespace Saga.Realm.UI
         public string RowText(int i) => _rowText[i] != null ? _rowText[i].text : "";
         public Button RowButton(int i) => _rowButton[i];
         public Button WonderButton { get; private set; }
+        public Button TradeButton { get; private set; } // tasks U-0172
 
         public static RealmTechUi Install()
         {
@@ -75,6 +76,8 @@ namespace Saga.Realm.UI
             RealmUiKit.NewButton(_panel.transform, RealmLocalization.T("settings.close", "닫기"), new Vector2(0.5f, 0f), new Vector2(0f, 20f), new Vector2(300f, 66f), Close);
             // tasks U-0136 — 불가사의 창(학 갈래 「큰 도면」이 문, 창은 늘 열 수 있음)
             WonderButton = RealmUiKit.NewButton(_panel.transform, RealmLocalization.T("wonder.open", "🏛️ 불가사의"), new Vector2(0f, 0f), new Vector2(30f, 20f), new Vector2(240f, 66f), () => RealmWonderUi.Install().Open());
+            // tasks U-0172 — 교역로 창(아래 오른쪽)
+            TradeButton = RealmUiKit.NewButton(_panel.transform, RealmLocalization.T("trade.open", "🐫 교역"), new Vector2(1f, 0f), new Vector2(-30f, 20f), new Vector2(240f, 66f), () => RealmTradeUi.Install().Open());
             Refresh();
         }
 
