@@ -776,12 +776,12 @@
    "사냥 평가(W-0289)",
    "st.job-2: 결과 등급 ⑤"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "W-0289",
   "since": "2026-10-17",
-  "note": "던파식(구조만) — W-0104 S·A·B·C 를 넓힘. 장부 tasks/gameplay/story.md · 티켓의 save.side.best 는 옛 칸(최고 사냥터 key)과 겹쳐 rankBest 로 둠 · 10-22 W-0378: 점수식·세기·덤 배율을 shared/js/runrank-core.js 로 올림(결과 같음, js/runrank.js 는 어댑터)"
+  "note": "던파식(구조만) — W-0104 S·A·B·C 를 넓힘. 장부 tasks/gameplay/story.md · 티켓의 save.side.best 는 옛 칸(최고 사냥터 key)과 겹쳐 rankBest 로 둠 · 10-22 W-0378: 점수식·세기·덤 배율을 shared/js/runrank-core.js 로 올림(결과 같음, js/runrank.js 는 어댑터) · D2(claude 2026-10-23 R-3): 폰 자동 사냥 28초 뒤 나온다 → 결과 카드 \"이번 판 등급 B — 피격 13·콤보 6·0:37 · 등급 덤 +26 · 첫 기록 B\" Read ○"
  },
  {
   "id": "st.pose3d",
@@ -1216,14 +1216,14 @@
   "tests": [
    "test-web 띄우기(W-0345) 순수·배선"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "C": "공중 손맛"
   },
   "ticket": "W-0345",
   "since": "2026-10-22",
-  "note": "10-22: 데이터 칸·세이브 없음(e.air·vy·airHits·groundY 런타임) · 자동 사냥은 ↑ 를 안 눌러 변화 없음 · 화면 촬영은 마을 판이라 적이 없어 못 함 — 배선 진단이 실제 update 틱으로 확인"
+  "note": "10-22: 데이터 칸·세이브 없음(e.air·vy·airHits·groundY 런타임) · 자동 사냥은 ↑ 를 안 눌러 변화 없음 · 화면 촬영은 마을 판이라 적이 없어 못 함 — 배선 진단이 실제 update 틱으로 확인 · D2(claude 2026-10-23 R-3): 폰 390×844 허창 들판 — 곁의 잡졸을 띄워 땅 위 공중에 체력 띠와 함께 뜬 장면 Read ○ (pw-look2d field + LOOK_EVAL launch)"
  },
  {
   "id": "st.goals-panel",
