@@ -235,24 +235,38 @@
   var tints = {}, tintPxSum = 0, TINT_CAP = 12e6;   // 칸 캐시 — 화소 합이 상한(≈48MB)을 넘으면 비우고 다시 칠한다
   /* W-0389 ③ — 시트 한 장 캐시: 풀×동작×색 슬롯마다 시트 전체를 칸 단위로 한 번 물들여 둔다(프레임·방향마다 캔버스를 새로 만들던 tintCell 은
      마을 인물 10+ 에서 캐시가 넘쳐 매 프레임 getImageData 를 다시 했다 — 폰 2D 들판 13→25fps 의 반). 화소 예산 SHEET_CAP 을 넘으면 가장 오래 안 쓴 것부터 뺀다 */
-  var sheets = {}, sheetPx = 0, SHEET_CAP = 24e6, sheetN = 0;
-  function tintSheet(e, key, P, slot, k, low) {
+  var sheets = {}, sheetPx = 0, SHEET_CAP = 24e6, sheetN = 0, tintFrameT = 0, tintSpent = 0, TINT_MS = 5;
+  function perfNow() { return global.performance && global.performance.now ? global.performance.now() : Date.now(); }
+  /** 이 프레임(12ms 창)에 물들이기 시간이 남았나 — 걷다 새 인물이 들어와도 한 프레임에 몰아 하지 않는다(그동안은 원본 색) */
+  function tintBudget() { var now = perfNow(); if (now - tintFrameT > 12) { tintFrameT = now; tintSpent = 0; } return tintSpent < TINT_MS; }
+  /** 시트 한 장(풀×동작×색)의 row 줄(방향)만 물들여 둔다 — 줄이 아직이면 null(원본으로 그림). 시트 캔버스는 처음 한 번 복사 */
+  function tintSheet(e, key, P, slot, k, low, row) {
     var ck = key + '~' + slot + '@' + k + '/' + low, c = sheets[ck], img = e && e.img;
-    if (c !== undefined) { if (c) { c.at = ++sheetN; } return c ? c.cv : null; }
-    if (!img || !img.naturalWidth) { return null; }
-    var cv = null;
-    try {
-      var doc = global.document; cv = doc && doc.createElement('canvas');
-      if (cv && cv.getContext) {
-        var W = img.naturalWidth, H = img.naturalHeight, g, cx, cy, im;
-        cv.width = W; cv.height = H; g = cv.getContext('2d'); g.drawImage(img, 0, 0);
-        for (cy = 0; cy + P <= H; cy += P) { for (cx = 0; cx + P <= W; cx += P) { im = g.getImageData(cx, cy, P, P); tintData(im.data, slot, k, P, low); g.putImageData(im, cx, cy); } }
-        while (sheetPx + W * H > SHEET_CAP) { var old = null, oa = Infinity, kk; for (kk in sheets) { if (sheets[kk] && sheets[kk].at < oa) { oa = sheets[kk].at; old = kk; } } if (!old) { break; } sheetPx -= sheets[old].px; delete sheets[old]; }
-        sheetPx += W * H;
-      } else { cv = null; }
-    } catch (err) { cv = null; }
-    sheets[ck] = cv ? { cv: cv, px: cv.width * cv.height, at: ++sheetN } : null;
-    return cv;
+    if (c === null) { return null; }
+    if (!c) {
+      if (!img || !img.naturalWidth) { return null; }
+      var cv = null;
+      try {
+        var doc = global.document; cv = doc && doc.createElement('canvas');
+        if (cv && cv.getContext) {
+          cv.width = img.naturalWidth; cv.height = img.naturalHeight; cv.getContext('2d').drawImage(img, 0, 0);
+          while (sheetPx + cv.width * cv.height > SHEET_CAP) { var old = null, oa = Infinity, kk; for (kk in sheets) { if (sheets[kk] && sheets[kk].at < oa) { oa = sheets[kk].at; old = kk; } } if (!old) { break; } sheetPx -= sheets[old].px; delete sheets[old]; }
+          sheetPx += cv.width * cv.height;
+        } else { cv = null; }
+      } catch (err) { cv = null; }
+      c = sheets[ck] = cv ? { cv: cv, px: cv.width * cv.height, at: ++sheetN, rows: {} } : null;
+      if (!c) { return null; }
+    }
+    c.at = ++sheetN;
+    row = row || 0;
+    if (!c.rows[row]) {
+      if (!tintBudget()) { return null; }
+      var t0 = perfNow(), g = c.cv.getContext('2d'), W = c.cv.width, cx, im;
+      try { for (cx = 0; cx + P <= W; cx += P) { im = g.getImageData(cx, row * P, P, P); tintData(im.data, slot, k, P, low); g.putImageData(im, cx, row * P); } c.rows[row] = 1; }
+      catch (err) { sheets[ck] = null; return null; }
+      tintSpent += perfNow() - t0;
+    }
+    return c.cv;
   }
   /** 시트 한 칸(sx, sy, P)을 칸 색으로 칠한 캔버스 — 못 하면(캔버스 없음·읽기 막힘) null → 원본 그대로 */
   function tintCell(e, key, sx, sy, P, slot, k, low) {
@@ -424,7 +438,7 @@
     if (P2) { ctx.translate(o.x, o.y); ctx.rotate(P2.rot); ctx.scale(P2.sx, P2.sy); ctx.translate(-o.x, -o.y); }
     var slot = tintOf(o.pool), Co = global.DG && global.DG.core, tk = slot && Co && Co.tuned ? Math.min(1, Math.max(0, +Co.tuned('mode2d.borrowTint', 1))) : 1;
     var tl = slot && Co && Co.tuned ? Math.min(1, Math.max(0, +Co.tuned('mode2d.borrowTintLow', 0.25))) : 1;
-    var sheet = slot && tk > 0 ? tintSheet(e, bare(o.pool) + '/' + role + '#16', P, slot, tk, tl) : null;   // W-0389 ③ 시트 캐시
+    var sheet = slot && tk > 0 ? tintSheet(e, bare(o.pool) + '/' + role + '#16', P, slot, tk, tl, d.row) : null;   // W-0389 ③ 시트 줄 캐시
     ctx.drawImage(sheet || e.img, f * P, d.row * P, P, P, o.x - w / 2, o.y - h * foot, w, h);
     ctx.restore();
     return true;
@@ -536,7 +550,7 @@
     if (P2) { ctx.translate(o.x, o.y); ctx.rotate(P2.rot); ctx.scale(P2.sx, P2.sy); ctx.translate(-o.x, -o.y); }
     var slot = tintOf(o.pool), Co = global.DG && global.DG.core, tk = slot && Co && Co.tuned ? Math.min(1, Math.max(0, +Co.tuned('mode2d.borrowTint', 1))) : 1;
     var tl = slot && Co && Co.tuned ? Math.min(1, Math.max(0, +Co.tuned('mode2d.borrowTintLow', 0.25))) : 1;   // W-0195 허리 아래 세기(1 = 옛 온몸)
-    var sheet = slot && tk > 0 ? tintSheet(e, bare(o.pool) + '/' + role + (eight ? '#8' : ''), P, slot, tk, tl) : null;   // W-0389 ③ 시트 캐시
+    var sheet = slot && tk > 0 ? tintSheet(e, bare(o.pool) + '/' + role + (eight ? '#8' : ''), P, slot, tk, tl, d.row) : null;   // W-0389 ③ 시트 줄 캐시
     ctx.drawImage(sheet || e.img, f * P, d.row * P, P, P, o.x - w / 2, o.y - h * foot, w, h);
     ctx.restore();
     return true;
