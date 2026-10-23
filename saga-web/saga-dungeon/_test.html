@@ -215,6 +215,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/ui-detail.js"></script>
 <script src="js/ui-quest.js"></script>
 <script src="js/ui-gear.js"></script>
+<script src="js/ui-skill.js"></script>
 <script src="js/runrank-core.js"></script>
 <script src="js/dg-rank.js"></script>
 <script src="js/game.js"></script>
@@ -4815,6 +4816,13 @@ window.requestAnimationFrame = function () { return 0; };
       if (DG.ui && DG.ui.closeSheet) { DG.ui.closeSheet(); }
       var ok = r.indexOf('width:25%') >= 0 && r.indexOf('1/4') >= 0 && (!v || v.indexOf('메인') >= 0);
       return ok && ('줄 막대 25% · 시트 ' + v.length + '자') || ('실패 ' + JSON.stringify({ r: r.slice(0, 80), v: v.length }));
+    });
+    t('무예 시트(R-4 ui-skill.js) — 같은 이름 viewSkill 이 네 칸·갈래 나무를 그리고, 수치 글은 모양마다(상시 % · 공격 위력 %)', function () {
+      var U = DG.uiSkill, v = '', el; if (!U) { return '실패 uiSkill 없음'; }
+      if (DG.ui && DG.ui.openSheet && DG.core.save.party.length) { DG.ui.openSheet('skill'); el = document.getElementById('sheet') || document.querySelector('.sheet'); v = el ? el.innerHTML : ''; DG.ui.closeSheet(); }
+      var f1 = U.fmtSkillValue({ shape: 'passive' }, 12.34), f2 = U.fmtSkillValue({ shape: 'strike', arc: true }, 1.5);
+      var ok = f1 === '+12.3%' && f2 === '위력 150% · 앞 부채꼴' && (!DG.core.save.party.length || (v.indexOf('손에 든 넷') >= 0 && v.indexOf('갈래 1') >= 0));
+      return ok ? ('수치 ' + f1 + ' · ' + f2 + ' · 시트 ' + v.length + '자') : ('실패 ' + JSON.stringify({ f1: f1, f2: f2, v: v.length }));
     });
     t('W-0378 한 판 등급 — 빠르고 안 맞으면 S: 금 덤 ×0.5·💎 보석 하나·5층 단위 최고 기록, 끝 카드 두 줄 · 급은 층 깊이', function () {
       var RR = DG.dgRank, C = DG.core, p = C.save.player, g0 = p.gold, bk = C.save.dgRankBest, GD = DG.gemData, IT = DG.item;
