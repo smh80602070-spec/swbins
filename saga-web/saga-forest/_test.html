@@ -5095,12 +5095,18 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var pr = raw.props.filter(function (p) { return p.kind === 'tailor'; })[0];
       raw.player.x = pr.x; raw.player.y = pr.y + 8;
       var r = V.interact();
-      return r && r.kind === 'open' && r.place === 'wear' &&
-        (r.text + ' → ' + r.place);
+      return r && r.kind === 'open' && r.place === 'wear' ? (r.text + ' → ' + r.place) : ('실패 ' + JSON.stringify({ at: raw.props.filter(function (q) { return Math.hypot(q.x - pr.x, q.y - pr.y) < 40; }).map(function (q) { return q.id + '@' + q.x + ',' + q.y; }), f: V.focus && V.focus() }).slice(0, 400));
     });
 
     /* ── 마을 이름과 깃발 ───────────────────────────────── */
 
+    t('W-0388 고정 건물(가게·게시판·집·우편함·침선방·깃대) 칸 위엔 60일 내내 흩뿌림 소품이 안 선다', function () {
+      var sv = DG.core.save.village, d0 = sv.day, bad = [], d, keys = /^(shop|board|home|mail|tailor|pole)$/;
+      try { for (d = d0; d < d0 + 60; d++) { sv.day = d; V.buildProps(); var ps = V.raw().props, fx = ps.filter(function (q) { return keys.test(q.id); });
+        ps.forEach(function (q) { if (/^p-?\d+_-?\d+$/.test(q.id) && fx.some(function (b) { return Math.hypot(q.x - b.x, q.y - b.y) <= 32; })) { bad.push(d + ':' + q.id + ':' + q.kind); } }); } }
+      finally { sv.day = d0; V.buildProps(); }
+      return bad.length ? ('실패 ' + bad.slice(0, 5).join(' ')) : ('60일 · 건물 칸 위 흩뿌림 0');
+    });
     t('마을 — 이름은 씨앗으로 뽑히고 바꿀 수 있다', function () {
       var T = DG.town;
       var auto = T.name();

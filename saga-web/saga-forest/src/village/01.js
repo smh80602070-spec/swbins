@@ -660,7 +660,7 @@
     props.push({ id: 'mail', kind: 'mail', x: (cx + 3) * TILE + 20, y: (cy + 1) * TILE + 6 });
     props.push({ id: 'tailor', kind: 'tailor',
                  x: (cx - 3) * TILE + 20, y: (cy + 2) * TILE + 20 });
-    props.push({ id: 'pole', kind: 'pole', x: (cx + 1) * TILE + 20, y: (cy + 1) * TILE + 14 }); var bx = (cx + 2) * TILE + 20, by = (cy + 1) * TILE + 14; props = props.filter(function (q) { return Math.hypot(q.x - bx, q.y - by) > TILE * 0.8; }); props.push({ id: 'bench', kind: 'bench', x: bx, y: by });   // 제작대(W-0103) — 집 앞 우편함 곁, 둘레 잔 소품은 비운다
+    props.push({ id: 'pole', kind: 'pole', x: (cx + 1) * TILE + 20, y: (cy + 1) * TILE + 14 }); var bx = (cx + 2) * TILE + 20, by = (cy + 1) * TILE + 14; props = props.filter(function (q) { return Math.hypot(q.x - bx, q.y - by) > TILE * 0.8; }); props.push({ id: 'bench', kind: 'bench', x: bx, y: by }); var fixedB = props.filter(function (q) { return /^(shop|board|home|mail|tailor|pole)$/.test(q.id); }); props = props.filter(function (q) { return !/^p-?\d+_-?\d+$/.test(q.id) || fixedB.every(function (b) { return Math.hypot(q.x - b.x, q.y - b.y) > TILE * 0.8; }); });   // 제작대(W-0103) — 집 앞 우편함 곁, 둘레 잔 소품은 비운다 · W-0388 고정 건물 칸 위엔 흩뿌림 소품(나무·파기 자리 등)이 안 선다 — 날마다 바뀌는 dig 가 침선방 칸에 떨어지면 건물 대신 땅을 팠다
     /* 잡초 — 세이브에 자리가 남는다. 안 뽑으면 날마다 는다 */
     var wd = s.weeds || [];
     for (var wi = 0; wi < wd.length; wi++) {
