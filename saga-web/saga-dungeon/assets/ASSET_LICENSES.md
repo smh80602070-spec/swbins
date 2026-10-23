@@ -1277,7 +1277,7 @@ Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가만리처럼 대역 �
 | `icons/icon64/*` | 246 | `saga-assets/icons/icon64` | gen.py (ComfyUI) · animagine-xl-4.0-opt, gen.py · animagine-xl-4.0-opt, make_ui_icons.py · none | CreativeML OpenRAIL++-M, CC0-1.0 |
 | `portraits-monster/*` | 106 | `saga-assets/portraits-monster` | gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `rarity/*` | 4 | `saga-assets/rarity` | raritygen.py | CC0-1.0 |
-| `beast_Alpaca.png`, `beast_Cow.png`, `beast_Dolphin.png`, `beast_Donkey.png`, `beast_Fox.png`, `beast_Horse.png`, `beast_Horse_White.png`, `beast_Koi.png`, `beast_Manta_ray.png`, `beast_Shark.png`, `beast_Stag.png`, `beast_Stegosaurus.png`, 외 3 | 15 | `saga-assets/sprites2d-creatures/beast` | beast2d_rebake.py (Blender render_sprite.py) | CC0-1.0 |
+| `sprites2d/*.png`, `beast_Manta_ray.png` | 16 | `saga-assets/sprites2d-creatures/beast` | beast2d_rebake.py (Blender render_sprite.py) | CC0-1.0 |
 | `sprites2d_sheets/beast_wolf/*` | 8 | `saga-assets/sprites2d_factory/beast_wolf` | 자체 도구 | 자체 3D 몸(saga-assets/creatures3d/wolf.glb, TRELLIS |
 | `sprites2d_sheets/hero_m/*` | 11 | `saga-assets/sprites2d_factory/hero_m` | 자체 도구 | VRoid Studio 공식 샘플 이용 조건(상업 사용·개작본 재배포 허용, 크레딧 불필요 — 옷 이식 몸  |
 | `sprites2d_sheets/pool_basem_demon_104/*` | 6 | `saga-assets/sprites2d/pool_basem_demon_104` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |

@@ -294,7 +294,7 @@ Quaternius CC0 1.0, 사가나락에서 md5 그대로 복사(이미 Meshopt). `Kn
 |---|---|---|---|---|
 | `audio/bgm/*` | 3 | `saga-assets/bgm` | music-gen · ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT |
 | `cutscene/*` | 12 | `saga-assets/cutscene` | gen.py · Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-0 |
-| `icons/icon64/*` | 44 | `saga-assets/icons/icon64` | make_ui_icons.py · none, gen.py · animagine-xl-4.0-opt, gen.py (ComfyUI) · animagine-xl-4.0-opt | CC0-1.0, CreativeML OpenRAIL++-M |
+| `icons/icon64/*` | 16 | `saga-assets/icons/icon64` | gen.py · animagine-xl-4.0-opt, gen.py (ComfyUI) · animagine-xl-4.0-opt | CreativeML OpenRAIL++-M |
 | `models/troops/*` | 1 | `saga-assets/troops` | compress.mjs | CC0-1.0 |
 | `realm-ui/*` | 40 | `saga-assets/web2d/realm-ui` | make_realm_ui.py, gen.py (ComfyUI) · animagine-xl-4.0-opt, make_realm_ui.py woff2 | CC0-1.0 코드 배치 + 글꼴 SIL OFL-1.1, CC0-1.0 |
 | `sprites2d_sheets/pool_basef_human_115/*` | 6 | `saga-assets/sprites2d/pool_basef_human_115` | 자체 도구 | CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vr |

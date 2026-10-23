@@ -419,14 +419,14 @@
    "tool": "k163_illust.py + gen.py (ComfyUI, Kaggle 원격)",
    "model": "animagine-xl-4.0-opt",
    "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상 보고 적은 묘사)",
-   "count": 30,
+   "count": 115,
    "where": [
-    "saga-assets/illust/shared/eu_davinci",
-    "saga-assets/illust/shared/eu_leonidas",
-    "saga-assets/illust/shared/fu_jongwang",
-    "saga-assets/illust/shared/hl_mukhyang",
-    "saga-assets/illust/shared/jp_hanzo",
-    "saga-assets/illust/shared/jp_himiko"
+    "saga-assets/illust/shared/eu_alexander",
+    "saga-assets/illust/shared/eu_augustus",
+    "saga-assets/illust/shared/eu_aurelius",
+    "saga-assets/illust/shared/eu_caesar",
+    "saga-assets/illust/shared/eu_charlemagne",
+    "saga-assets/illust/shared/eu_davinci"
    ]
   },
   {

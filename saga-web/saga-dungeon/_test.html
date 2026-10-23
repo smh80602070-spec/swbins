@@ -7610,10 +7610,11 @@ window.requestAnimationFrame = function () { return 0; };
     });
 
     t('디스크 초상(SAGA-DESIGN §11 Phase 1) — 구워 둔 파일이 목록에 있으면 of() 가 굽기 없이 파일 주소를 주고 warm() 이 다시 안 굽는다, 목록에 없거나 꼴이 안 맞으면 파일로 안 간다, sweep() 이 이름표 <img> 를 그 파일로 갈아 끼운다', function () {
-      var P3 = DG.portrait3d, D = DG.data, keep = DG.portraitDisk, res;
+      var P3 = DG.portrait3d, D = DG.data, keep = DG.portraitDisk, keepIl = DG.illust, res;
       if (!P3 || !P3.of || !P3.warm || !P3.sweep || !P3.keyOf) { throw new Error('portrait3d 내보내기 없음'); }
       var h0 = D.heroes[0], h1 = D.heroes[1], base = 'assets/portraits/';
       DG.portraitDisk = { v: 1, base: base, ids: { hero: { s: h0.id, c: h0.id }, pet: { s: '', c: '' } } };
+      DG.illust = null;   // K-0183 heroes[0] 에 일러스트가 생기면 카드 꼴은 일러스트(W-0371) — 여기서는 디스크 초상만 본다
       try {
         var fs_ = base + 'hero/' + h0.id + '_s.webp', fc_ = base + 'hero/' + h0.id + '_c.webp';
         var sq = P3.of('hero', h0, 96, 96) === fs_ && P3.of('hero', h0, 40, 40) === fs_;       // 정사각은 크기 무관 _s
@@ -7628,7 +7629,7 @@ window.requestAnimationFrame = function () { return 0; };
         var swapped = img.getAttribute('src') === fs_ && img.getAttribute('data-p3-done') === '1';
         document.body.removeChild(img);
         res = { sq: sq, card: card, nolist: nolist, noshape: noshape, nowarm: nowarm, swapped: swapped };
-      } finally { DG.portraitDisk = keep; }
+      } finally { DG.portraitDisk = keep; DG.illust = keepIl; }
       var bad = Object.keys(res).filter(function (k) { return !res[k]; });
       if (bad.length) { throw new Error('실패: ' + bad.join(', ')); }
       return '정사각 _s · 카드 _c · 목록 밖은 굽는 쪽 · 있으면 안 굽고 sweep 이 파일로 교체';
