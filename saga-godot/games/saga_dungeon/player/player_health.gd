@@ -100,7 +100,10 @@ func heal_by(amount: float) -> void:
 func take_damage(amount: float, source: Node = null, el: String = "") -> void:
 	if _dead or amount <= 0.0:
 		return
-	var dealt := amount * DungeonRunState.guard_mult()
+	var dealt := amount * DungeonRunState.guard_mult() * preload("res://games/saga_dungeon/data/dungeon_mastery.gd").guard_mul(DungeonEquipmentState.armor)   # G-0317 갑주 숙련
+	var a_up: int = preload("res://games/saga_dungeon/data/dungeon_mastery.gd").gain(DungeonEquipmentState.armor)
+	if a_up > 0:
+		Toast.show(self, preload("res://games/saga_dungeon/data/dungeon_mastery.gd").up_text("armor", a_up), 2.5)
 	var elemental := el != "" and el != "phys"
 	if elemental:
 		dealt *= 1.0 - DungeonEquipmentState.elem_resist(el) / 100.0

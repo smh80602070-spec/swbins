@@ -523,6 +523,9 @@ func _die() -> void:
 	_dead = true
 	died.emit()
 	preload("res://games/saga_dungeon/data/dungeon_rank.gd").kill()   # G-0312 한 판 등급 — 처치
+	var w_up: int = preload("res://games/saga_dungeon/data/dungeon_mastery.gd").gain(DungeonEquipmentState.weapon)   # G-0317 무기 숙련
+	if w_up > 0 and get_parent() != null:
+		Toast.show(get_parent(), preload("res://games/saga_dungeon/data/dungeon_mastery.gd").up_text("weapon", w_up), 2.5)
 	var split: int = int(_elite_def.get("split", 0))
 	if split > 0 and not _is_shade:
 		var parent := get_parent()

@@ -12,7 +12,7 @@ static func model(hud: Node) -> Dictionary:
 	var slots: Array = []
 	for s: String in DungeonEquipmentState.SLOT_NAMES:
 		var it: Dictionary = DungeonEquipmentState.item_for(s)
-		slots.append({"label": String(Vendor._SLOT_LABELS.get(s, s)), "item": "" if it.is_empty() else DungeonItems.item_name(it)})
+		slots.append({"label": String(Vendor._SLOT_LABELS.get(s, s)), "item": "" if it.is_empty() else DungeonItems.item_name(it) + preload("res://games/saga_dungeon/data/dungeon_mastery.gd").tag(it)})   # G-0317 숙련 ★
 	var pct: float = DungeonRunState.atk_mult() + DungeonEquipmentState.atk_pct_bonus() / 100.0
 	var atk: float = Melee.ATK_DAMAGE * pct + DungeonEquipmentState.atk_flat_bonus()
 	var guard: float = DungeonRunState.guard_mult()

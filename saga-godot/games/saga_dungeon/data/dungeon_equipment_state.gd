@@ -94,6 +94,7 @@ func _emit_changed(slot_name: String) -> void:
 ## 부위 이름을 몰라도(loot_pickup.gd처럼 주운 밑감의 slot만 아는 자리)
 ## 바로 장착할 수 있는 공용 진입점.
 func equip(slot_name: String, it: Dictionary) -> void:
+	preload("res://games/saga_dungeon/data/dungeon_mastery.gd").inherit(slot_name, _item_for(slot_name), it)   # G-0317 숙련 절반 물려받기(무기 말고)
 	_set_item(slot_name, it)
 	_emit_changed(slot_name)
 
@@ -268,6 +269,7 @@ func atk_pct_bonus() -> float:
 	for e: Dictionary in _set_effects():
 		if e.kind == "pct" and (e.stat == "might" or e.stat == "all"):
 			total += float(e.v)
+	total += preload("res://games/saga_dungeon/data/dungeon_mastery.gd").atk_pct(weapon)   # G-0317 무기 숙련 단계마다 +3
 	return total
 
 
