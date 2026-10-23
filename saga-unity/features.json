@@ -2797,6 +2797,23 @@
   "note": "D3(qc+claude, U-0188): docs/playcheck/d3-u0188-20261023.json — (U-0187 촬영) 법령 창 맨 위 「국세 난세 · 금·수확 ×1.00 / ▶ 기틀 올리기 …(모자람 — 성·기술·금)」·단추 흐림 · 앞 D2(U-0187): PlaytestRealmSlice ages table·rule·month·panel·save·off OK · 무장 경험이 없는 트랙이라 성세 경험 ×1.1 은 뺌"
  },
  {
+  "id": "un.rk.focus",
+  "name": "U-0193 5천하 국가 방침 나무 — ☰ 🎯 방침: 나라의 근본(3달·금 300) → 부국(금 +10%) → 둔전 확장(수확 +10%) / 강병(징병 +15%) → 조련(훈련 +10%) 갈림길 → 인재 등용(등용 +15%) → 천하의 대계(6달·금·수확 +5%·계략 +10%·금 1000), 한 번에 하나·달 끝마다 1·끝나면 덤 영구(고돗 G-0336)",
+  "files": [
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmFocus.cs",
+   "saga-unity/Assets/Games/SagaRealm/UI/RealmFocusUi.cs"
+  ],
+  "tests": [
+   "PlaytestRealmFocus"
+  ],
+  "level": "D2",
+  "verified": "2026-10-23 claude",
+  "fun": {},
+  "ticket": "U-0193",
+  "since": "2026-10-23",
+  "note": "D2(U-0193): PlaytestRealmSlice focus tree·month·mul·ui·save·off OK(부국 금 수입 4327→4760 진짜 NextMonth · 근본 완수 금 +300) · 촬영 lgfocus 창 ○ · 무장 경험이 없는 트랙이라 조련 = 훈련 명령 +10%"
+ },
+ {
   "id": "un.rk.tech-tree",
   "name": "U-0129 기술 나무 — 세력 연구 네 갈래(농·상·군·학) × 6마디(웹 W-0290 이식)",
   "files": [

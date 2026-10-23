@@ -651,6 +651,16 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] lgtrade 띄움 {why ?? "OK"} · 상단 {Saga.Realm.Data.RealmTrade.Routes.Count}");
                         break;
                     }
+                    case "lgfocus":   // U-0193 5천하 국가 방침 — 근본·부국 끝내고 둔전 확장 2달 남은 채 창을 연다
+                    {
+                        var fu = Saga.Realm.UI.RealmFocusUi.Instance;
+                        if (fu == null) { Skip(act); return; }
+                        Saga.Realm.Data.RealmFocus.Restore("{\"done\":[\"root\",\"rich\"],\"cur\":\"farm\",\"left\":2}");
+                        foreach (var card in Object.FindObjectsByType<Saga.Core.SessionCard>(FindObjectsSortMode.None)) card.Hide();
+                        fu.Open();
+                        Debug.Log($"[ShowcaseGui] lgfocus 창 {fu.PanelOpen} · {fu.InfoText}");
+                        break;
+                    }
                     case "lglaws":   // U-0185 5천하 법령 — 상업령 하나 반포한 채 창을 연다
                     {
                         var lu = Saga.Realm.UI.RealmLawUi.Instance;

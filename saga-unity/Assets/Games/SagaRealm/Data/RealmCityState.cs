@@ -363,6 +363,7 @@ namespace Saga.Realm.Data
             var (rolled, crit) = RollAmount(sv, order.Base, order.Per);
             float techMul = RealmTechData.Mul(key == "wall" ? "wallPct" : key == "train" || key == "ships" ? "-" : "govPct"); // tasks U-0129 내정·축성
             if (techMul != 1f) rolled = Mathf.RoundToInt(rolled * techMul);
+            if (key == "train" && RealmFocus.Mul("train") != 1f) rolled = Mathf.RoundToInt(rolled * RealmFocus.Mul("train")); // tasks U-0193 방침 조련
 
             int cap = CapOf(key, cityDef);
             int before = GetField(record, key);
@@ -383,6 +384,7 @@ namespace Saga.Realm.Data
             var (rolled, _) = RollAmount(sv, order.Base, order.Per);
             if (RealmTechData.Pct("troopPct") != 0) rolled = Mathf.RoundToInt(rolled * RealmTechData.Mul("troopPct")); // tasks U-0129
             if (RealmLaws.DraftMul != 1f) rolled = Mathf.RoundToInt(rolled * RealmLaws.DraftMul); // tasks U-0182 징병령
+            if (RealmFocus.Mul("draft") != 1f) rolled = Mathf.RoundToInt(rolled * RealmFocus.Mul("draft")); // tasks U-0193 방침 강병
 
             int room = Mathf.FloorToInt(record.Pop * 0.06f) - record.Troops;
             int amount = Mathf.Max(0, Mathf.Min(rolled, Mathf.Max(0, room)));
@@ -447,7 +449,7 @@ namespace Saga.Realm.Data
             var target = RealmOfficerPool.Get(targetId);
             float chance = RealmEras.AdjustHireChance(target, HireChance(officer.Wisdom, target.Rarity, debateMul)); // 109-5 낯선 시대 × 0.85
             if (RealmTechData.Pct("hirePct") != 0) chance = Mathf.Min(1f, chance * RealmTechData.Mul("hirePct")); // tasks U-0129 객주 두기
-            chance = Mathf.Min(1f, chance * RealmLaws.HireMul); // tasks U-0182 징병령 등용 −15%
+            chance = Mathf.Min(1f, chance * RealmLaws.HireMul * RealmFocus.Mul("hire")); // tasks U-0182 징병령 등용 −15% · U-0193 방침 인재 등용
             if (UnityEngine.Random.value > chance)
             {
                 return new OrderResult(true, string.Format(RealmLocalization.T("order.hire_declined", "{0}이(가) 설득에 응하지 않았다."), target.Name));
@@ -497,7 +499,7 @@ namespace Saga.Realm.Data
                 var r = _cities[cityId];
                 income += Mathf.RoundToInt(r.Comm * 0.55f * SecMul(r.Sec) * RealmTechData.Mul("goldPct")); // tasks U-0129 기술 나무(연구 0 = ×1)
             }
-            income = Mathf.RoundToInt(income * RealmLaws.GoldMul * RealmAges.Mul); // tasks U-0182 상업령·둔전령 · U-0187 국세
+            income = Mathf.RoundToInt(income * RealmLaws.GoldMul * RealmAges.Mul * RealmFocus.Mul("gold")); // tasks U-0182 상업령·둔전령 · U-0187 국세 · U-0193 방침
             int upkeep = _roster.Count * UpkeepPerOfficer;
             Gold = Mathf.Max(0, Gold + income - upkeep);
 
@@ -506,7 +508,7 @@ namespace Saga.Realm.Data
             foreach (var cityId in _activeCityIds)
             {
                 var r = _cities[cityId];
-                if (harvest) r.Food += Mathf.RoundToInt(r.Agri * 6f * SecMul(r.Sec) * RealmTechData.Mul("foodPct") * RealmLaws.HarvestMul * RealmAges.Mul); // tasks U-0182 상업령 수확 −10% · U-0187 국세
+                if (harvest) r.Food += Mathf.RoundToInt(r.Agri * 6f * SecMul(r.Sec) * RealmTechData.Mul("foodPct") * RealmLaws.HarvestMul * RealmAges.Mul * RealmFocus.Mul("food")); // tasks U-0182 상업령 수확 −10% · U-0187 국세 · U-0193 방침
 
                 int eat = Mathf.RoundToInt(r.Troops / 1000f * FoodPer1000 * RealmLaws.EatMul); // tasks U-0182 둔전령
                 r.Food -= eat;
@@ -535,6 +537,8 @@ namespace Saga.Realm.Data
             }
 
             var campLines = RealmCamp.Monthly();
+            campLines.AddRange(RealmFocus.Monthly(out int focusGold)); // tasks U-0193 방침 — 한 달 · 끝나면 알림(근본·대계 금 덤)
+            if (focusGold > 0) Gold += focusGold;
             campLines.AddRange(RealmTrade.Monthly()); // tasks U-0172 교역로 — 이어진 상단 금·끊긴 상단 잃음·돌아옴
             campLines.AddRange(RealmWonder.Monthly()); // tasks U-0136 불가사의 — 적 착공·남은 달·완공·환급 // tasks U-0134 진·보급선 — 달 바뀐 뒤(군량 먹고·보급 보고·다시 친다)
             Changed?.Invoke();
