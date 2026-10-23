@@ -470,7 +470,7 @@
   function hurt(S, f, mul) {
     var m = active(S);
     if (!m || m.down) { return; }
-    var dmg = Math.max(1, Math.round(f.atk * (mul || 1) * (1 - m.def / (m.def + 300)) * (global.DG.starchart ? global.DG.starchart.take() : 1)));   // mul — ⑲-14 공격 차례의 한 수 배수 · 철벽 부대(성도)
+    var dmg = Math.max(1, Math.round(f.atk * (mul || 1) * (f.weakMul || 1) * (1 - m.def / (m.def + 300)) * (global.DG.starchart ? global.DG.starchart.take() : 1)));   // mul — ⑲-14 공격 차례의 한 수 배수 · 철벽 부대(성도)
     if (S.wardT > 0) { dmg = Math.max(1, Math.round(dmg * S.wardMul)); }   // ⑲-11 맹세·오천의 맹세
     var rockX = f.el === 'rock' ? Math.round(dmg * 0.3) : 0; if (global.DG.mountCombat) { global.DG.mountCombat.onHurt(); }   // ⑲-1 짓눌림 — 이것만으로는 안 쓰러진다
     S.calmT = 0;

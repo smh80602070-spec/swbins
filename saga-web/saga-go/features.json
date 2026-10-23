@@ -1718,6 +1718,56 @@
   "note": "10-22: 사용자 아이폰 \"나무를 밟고 다니네\" · 지도 생성·GPS·3D 그대로 · D2(claude 2026-10-23 R-3 닫기): W-0372 pw-look2d LOOK_EVAL 줄기 뒤·앞 폰 두 장 Read ○"
  },
  {
+  "id": "go.fieldWeak",
+  "name": "보스 약점 부수기(W-0395 ② 웹 역이식 — 고돗 G-0342 수치) — 보스 약점 체력 = 최대 12%, 급소·치명만 깎임, 0 이면 비틀 2.5초·그 보스 공격 ×0.85 · 체력 띠 글 ✦n%/✦부서짐 · 손잡이 fieldweak.on",
+  "files": [
+   "js/field-weak.js",
+   "src/field-combat/01.js",
+   "src/field-combat/02.js",
+   "src/field-combat/03.js"
+  ],
+  "tests": [
+   "보스 약점(W-0395 ②)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0395",
+  "since": "2026-10-25",
+  "note": "D1(페이블 10-25): 코드·진단. 2D·3D 약점 표식 그림은 안 넣음(띠 글만 — 10-19 3D 는 배선만)."
+ }, {
+  "id": "go.windGuide",
+  "name": "바람 길잡이(W-0395 ① 웹 역이식 — 고돗 G-0318) — 1.2초 가만히 서면 목표(autoQuestGo.goals 첫 자리) 쪽으로 2D 지도 위 풀잎 가닥이 흐른다 · 손잡이 wind.on·still·n·len",
+  "files": [
+   "js/wind-guide.js",
+   "src/world/02.js"
+  ],
+  "tests": [
+   "바람 길잡이(W-0395 ①)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0395",
+  "since": "2026-10-25",
+  "note": "D1(페이블 10-25): 2D 만(3D 는 배선만). 기둥 끄기는 웹에 목표 기둥이 없어 해당 없음."
+ }, {
+  "id": "go.petWorkers",
+  "name": "신수 일꾼(W-0395 ③ 웹 역이식 — 고돗 G-0328 수치) — 쉼터에서 쉬면 가진 신수 둘이 실제 시간 30분에 하나씩(상한 24) 캐기→인장 조각·뜯기→사료를 모으고 다음 쉼터에서 가방으로 · 나 시트 「🐾 신수 일꾼」 앉히기/일으키기 · save.rest.workers",
+  "files": [
+   "js/pet-workers.js",
+   "js/party-sheet.js"
+  ],
+  "tests": [
+   "신수 일꾼(W-0395 ③)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0395",
+  "since": "2026-10-25",
+  "note": "D1(페이블 10-25): 코드·진단. 마당 위 신수 몸 그리기는 안 넣음."
+ }, {
   "id": "go.restSite",
   "name": "쉼터(W-0297) — 들판 720m 칸마다 모닥불 자리(물·마을·집·역참·지역 탑 피함) · 처음 들면 불 지핌(발견) · 쉬면 동행 회복·부활 자리·비운 잡몹 무리 다시 섬(보스 꽃 그대로) · 전멸하면 그 쉼터에서 일어남 · 2D 모닥불·미니맵 점 · 손잡이 go.rest",
   "files": [

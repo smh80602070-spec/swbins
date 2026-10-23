@@ -201,7 +201,7 @@
       b.style.left = Math.round(p.x) + 'px';
       b.style.top = Math.round(p.y) + 'px';
       var layerTxt = f.layers && f.layers.length > 1 && f.shield > 0 ? ' 🛡️' + f.layers.slice(f.layer).map(function (x) { return EL[x].icon; }).join('') : '';
-      b.querySelector('small').textContent = (f.aura ? EL[f.aura].icon + ' ' : '') + f.name + ' Lv.' + (f.tier * 5 + lvAddOf(f.wl)) + layerTxt + (f.stun > 0 ? ' 💫' : '');
+      b.querySelector('small').textContent = (global.DG.fieldWeak ? global.DG.fieldWeak.tag(f) : '') + (f.aura ? EL[f.aura].icon + ' ' : '') + f.name + ' Lv.' + (f.tier * 5 + lvAddOf(f.wl)) + layerTxt + (f.stun > 0 ? ' 💫' : '');
       b.querySelector('.fc-bhp i').style.width = Math.round(100 * f.hp / f.hpMax) + '%';
       var sh = b.querySelector('.fc-bsh');
       sh.style.display = f.shieldMax ? '' : 'none';

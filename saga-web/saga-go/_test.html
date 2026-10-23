@@ -183,6 +183,8 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/shrine.js"></script>
 <script src="js/stela.js"></script>
 <script src="js/rest-site.js"></script>
+<script src="js/wind-guide.js"></script>
+<script src="js/pet-workers.js"></script>
 <script src="js/drop.js"></script>
 <script src="js/event.js"></script>
 <script src="js/codex.js"></script>
@@ -209,6 +211,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/treasure.js"></script>
 <script src="js/domain.js"></script>
 <script src="js/fieldboss.js"></script>
+<script src="js/field-weak.js"></script>
 <script src="js/track.js"></script>
 <script src="js/worldquest.js"></script>
 <script src="js/story-chapters.js"></script>
@@ -12327,6 +12330,54 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     });
 
     /* ── ⑲-22 활 조준 사격·과녁 잠금 (field-combat aim·arrows · treasure target, PLAN §5 ⑲-22) ── */
+    /* ── W-0395 1만리 웹 역이식(정본 고돗 G-0342·G-0318·G-0328) — 보스 약점·바람 길잡이·신수 일꾼 ── */
+    t('보스 약점(W-0395 ②) — 보스만 약점(최대 체력 12%) · 치명(급소)만 깎임 · 0 이면 비틀 2.5초·공격 ×0.85·띠 글 ✦부서짐', function () {
+      var FC = DG.fieldCombat, FW = DG.fieldWeak, S = fcState(), m = S.party[0]; m.cr = 0;
+      var f = fcFoe(S, 'rex', 20, 0), g = fcFoe(S, 'boar', -20, 0);   // rex = 보호막 없는 보스(수호자는 막이 먼저 받아 막 깨진 뒤에만 약점이 깎인다)
+      FW.ensure(f); FW.ensure(g);
+      if (g.weakMax) { return '실패 잡몹에 약점'; }
+      var wm = Math.round(f.hpMax * 0.12);
+      if (f.weakMax !== wm) { return '실패 약점 ' + f.weakMax + ' ≠ ' + wm; }
+      FC.hitFoe(S, f, m, 5, null, 'test', false);
+      if (f.weakHp !== wm) { return '실패 보통 타격이 약점을 깎음 ' + f.weakHp; }
+      FC.hitFoe(S, f, m, 5, null, 'test', true);
+      if (!(f.weakHp < wm) || f.weakBroken) { return '실패 급소가 안 깎음 ' + f.weakHp; }
+      var n = 0; while (!f.weakBroken && n++ < 400) { FC.hitFoe(S, f, m, 20, null, 'test', true); }
+      var ok = f.weakBroken && f.stun >= 2.5 && f.weakMul === 0.85 && FW.tag(f) === '✦부서짐 ' && f.hp > 0;
+      return ok ? '약점 ' + wm + ' · 급소만 깎임 · 부서짐 → 비틀 ' + f.stun.toFixed(1) + '초 · ×0.85 · 띠 ✦부서짐' : '실패 broken ' + f.weakBroken + ' stun ' + f.stun + ' mul ' + f.weakMul + ' hp ' + f.hp + ' tag ' + FW.tag(f);
+    });
+    t('바람 길잡이(W-0395 ①) — 1.2초 가만히 서야 불고(0.6초에 걸쳐 1) · 움직이면 0 · 방향은 목표 쪽 단위 벡터 또는 목표 없음 null', function () {
+      var W = DG.windGuide, p = { x: 100, y: 100 }, i, k = 0;
+      W._reset();
+      for (i = 0; i < 6; i++) { k = W.stillness(p, 1000 + i * 200); }
+      if (k !== 0) { return '실패 1.2초 전에 붊 ' + k; }
+      for (i = 6; i < 14; i++) { k = W.stillness(p, 1000 + i * 200); }
+      if (!(k > 0.99)) { return '실패 2.6초 뒤 세기 ' + k; }
+      p.x += 1; k = W.stillness(p, 4000);
+      if (k !== 0) { return '실패 움직였는데 붊 ' + k; }
+      var d = W.dir(C.save.player.pos);
+      var okd = d === null || (Math.abs(Math.hypot(d.dx, d.dy) - 1) < 1e-6 && d.dist > 2 && !!d.goal);
+      W._reset();
+      return okd ? '1.2초 뒤 1 · 움직이면 0 · 방향 ' + (d ? '단위 벡터(' + d.goal.id + ')' : '목표 없음 null') : '실패 dir ' + JSON.stringify(d);
+    });
+    t('신수 일꾼(W-0395 ③) — 가진 신수만 · 처음 쉬면 앞 둘 자동 앉힘 · 30분에 하나씩 · 상한 24 · 셋째는 자리 없음 · 쉼터에서 받으면 held 비움', function () {
+      var PW = DG.petWorkers, dex0 = C.save.dex, rest0 = C.save.rest && C.save.rest.workers;
+      C.save.dex = { pets: { pt_samjogo: 1, pt_haetae: 1, pt_cheongryong: 1 } }; if (C.save.rest) { delete C.save.rest.workers; }
+      var own = PW.owned().map(function (p) { return p.id; });
+      if (own.length !== 3) { return '실패 가진 신수 ' + own.length; }
+      var t0 = 1000000; PW.collect(t0);
+      if (PW.seated().length !== 2) { return '실패 자동 앉힘 ' + PW.seated().length; }
+      if (PW.seat(own[2]).ok) { return '실패 셋째 앉음'; }
+      if (PW.due(t0 + 29 * 60000) !== 0) { return '실패 29분에 생김'; }
+      if (PW.due(t0 + 31 * 60000) !== 2) { return '실패 31분 = ' + PW.due(t0 + 31 * 60000); }
+      if (PW.due(t0 + 100 * 3600000) !== 24) { return '실패 상한 ' + PW.due(t0 + 100 * 3600000); }
+      var b = PW.book(), heldBefore = 24, got = PW.collect(t0 + 100 * 3600000), left = 0, k;
+      for (k in b.held) { left += b.held[k]; }
+      var ok = got + left === heldBefore && got >= 0;
+      C.save.dex = dex0; if (C.save.rest) { if (rest0) { C.save.rest.workers = rest0; } else { delete C.save.rest.workers; } }
+      return ok ? '가진 3 · 자동 2 · 셋째 × · 31분 2 · 상한 24 · 받음 ' + got + '(가방 여유만)' : '실패 받음 ' + got + ' 남음 ' + left;
+    });
+
     t('활 조준 ⑲-22 — 활 인물만 · 가까운 적에 잠김 · 방향 키로 돌리면 콘 밖은 풀림 · 덜 찬 화살 물리 · 다 찬 화살 원소 · 모르는 적 = 급소(반드시 치명) · 쫓는 적은 급소 아님 · 빈 곳은 45m 날아 멈춤 · 칼로 바꾸면 풀림', function () {
       var FC = DG.fieldCombat, bow = heroOfType('bow'), sw = heroOfType('sword');
       if (!bow || !sw) { return false; }

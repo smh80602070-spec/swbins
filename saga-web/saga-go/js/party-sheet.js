@@ -38,6 +38,7 @@
         '<div class="pc-meta"><b>' + esc(cur.pet.name) + ' ' + cur.bond.def.mark + '</b><small>' + esc(cur.bond.def.name) +
           ' · 함께 ' + core.fmt(cur.log.walked) + 'm</small></div></div></div>';
     }
+    if (global.DG.petWorkers) { html += global.DG.petWorkers.html(); }   // W-0395 ③ 신수 일꾼 칸
     return html;
   }
 

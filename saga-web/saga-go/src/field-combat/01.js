@@ -767,7 +767,7 @@
         if (rc && rc.kind === 'melt') { extra *= MELT_MUL() * emB * rxB(m, 'melt'); }
       }
       out.dmg = Math.round(raw * mul * extra);
-      f.hp -= out.dmg;
+      f.hp -= out.dmg; if (global.DG.fieldWeak) { global.DG.fieldWeak.onHit(S, f, out); }   // W-0395 ② 보스 약점
       if (rc) {
         out.react = rc.kind;
         var near, i;

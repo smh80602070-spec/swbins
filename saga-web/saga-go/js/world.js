@@ -1415,7 +1415,7 @@
       })(fts[fi]);
     }
 
-    var RSn = global.DG.restSite ? global.DG.restSite.sitesNear(pos.x, pos.y, 700) : []; for (var rsi = 0; rsi < RSn.length; rsi++) { (function (rs) { var u = (rs.x - pos.x) * sc, v = (rs.y - pos.y) * sc; items.push({ v: v, draw: function () { var p = project(u, v); if (p.s < 0.2 || p.y < -120 || p.y > geom.H + 80) { return; } var z = core.clamp(p.s, 0.5, 1.8) * bodyK(); global.DG.restSite.draw2d(ctx, p.x, p.y, z, rs.lit, now); label(ctx, (rs.at ? '🔥 쉼터 ✦' : '🔥 쉼터'), p.x, p.y - 44 * z, rs.lit ? '#ffcf7a' : '#c9c1b2', 'center', core.clamp(p.s, 0.5, 1.8)); } }); })(RSn[rsi]); }   /* W-0297 쉼터 */   // 지역 랜드마크 (biome.js, §5 ⑩) — 2D 에선 탑 그림 + 이름
+    var RSn = global.DG.restSite ? global.DG.restSite.sitesNear(pos.x, pos.y, 700) : []; for (var rsi = 0; rsi < RSn.length; rsi++) { (function (rs) { var u = (rs.x - pos.x) * sc, v = (rs.y - pos.y) * sc; items.push({ v: v, draw: function () { var p = project(u, v); if (p.s < 0.2 || p.y < -120 || p.y > geom.H + 80) { return; } var z = core.clamp(p.s, 0.5, 1.8) * bodyK(); global.DG.restSite.draw2d(ctx, p.x, p.y, z, rs.lit, now); label(ctx, (rs.at ? '🔥 쉼터 ✦' : '🔥 쉼터'), p.x, p.y - 44 * z, rs.lit ? '#ffcf7a' : '#c9c1b2', 'center', core.clamp(p.s, 0.5, 1.8)); } }); })(RSn[rsi]); } if (global.DG.windGuide) { global.DG.windGuide.draw2d(ctx, pos, sc, project, now, items); }   /* W-0297 쉼터 · W-0395 ① 바람 길잡이 */   // 지역 랜드마크 (biome.js, §5 ⑩) — 2D 에선 탑 그림 + 이름
     var BMd = global.DG.biome;
     var lms = BMd && BMd.on() ? BMd.landmarks(pos.x, pos.y, 700) : [];
     for (var li = 0; li < lms.length; li++) {
