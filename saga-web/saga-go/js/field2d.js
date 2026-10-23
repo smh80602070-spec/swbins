@@ -142,13 +142,73 @@
   /* W-0389 ② — 결(texture)·경계 번짐(blend)·테두리(edge)는 칸 그림이 좌표 해시라 프레임마다 같다 → CH×CH 칸 조각 캔버스에 한 번 굽고(열쇠 = 줌 T·계절) 매 프레임엔
      조각만 붙인다(폰 2D 들판 13fps 의 주범 — 보이는 칸 70여 개 × 타원 10·그라데이션 4·칠 8 을 매 프레임 다시 그리던 것). 조각 경계는 이웃 조각 원점까지 늘려 1px 틈을 막는다.
      소품(④)은 그대로 매 프레임(인물과 발 y 정렬). 손잡이 world.field2dCache 0 = 옛 길(A/B) */
+  /* W-0390 — K-0162 이음 타일(이중 격자 wang16-corner-dualgrid): assets/web2d/tile/tiles.json — 쌍(grass_dirt…)마다 4×4 아틀라스(칸 PX 256 · stride 272 · gutter 8),
+     반 칸(왼쪽 위로) 밀린 격자의 칸 (x,y) 네 모서리 = 땅 칸 (x,y)·(x+1,y)·(x,y+1)·(x+1,y+1), i = NW1+NE2+SW4+SE8(비트 = 그 모서리가 a). 땅 종류 → 바탕 타일(kinds_a/kinds_b).
+     네 모서리가 한 바탕이면 바탕 타일 한 장, 두 바탕이 쌍이면 아틀라스 칸, 쌍이 없으면 NW 바탕 + 옛 번짐(blend). 조각 캐시 안에서만 깐다(받은 그림 수가 열쇠 — 늦게 오면 다시 굽는다).
+     손잡이 world.autotile(1 · 0 = 옛 색 바탕 + 결) */
+  var TILE_BASE = 'assets/web2d/tile/', tjson = null, tjTried = false, timgs = {}, tLoaded = 0, kindBase = null;
+  function autotileOn() { var C = core(); return !(C && C.tuned && !+C.tuned('world.autotile', 1)); }
+  function loadTiles() {
+    if (tjTried || !global.fetch) { return; }
+    tjTried = true;
+    global.fetch(TILE_BASE + 'tiles.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { tjson = j; kindBase = null; })['catch'](function () { tjson = null; });
+  }
+  function timg(key, url) {
+    var e = timgs[key];
+    if (e) { return e.ok ? e.img : null; }
+    if (typeof Image === 'undefined') { timgs[key] = { ok: false }; return null; }
+    e = timgs[key] = { ok: false, img: new Image() };
+    e.img.onload = function () { e.ok = true; tLoaded++; };
+    e.img.src = url;
+    return null;
+  }
+  /** 땅 종류 → 바탕 타일 id(go_grass …) — tiles.json 쌍의 kinds_a/kinds_b 에서(순수, json 필요) */
+  function baseOf(kind) {
+    if (!tjson || !tjson.pairs) { return null; }
+    if (!kindBase) { kindBase = {}; Object.keys(tjson.pairs).forEach(function (k) { var P = tjson.pairs[k]; (P.kinds_a || []).forEach(function (x) { kindBase[x] = kindBase[x] || P.a; }); (P.kinds_b || []).forEach(function (x) { kindBase[x] = kindBase[x] || P.b; }); }); }
+    return kindBase[kind] || null;
+  }
+  /** 두 바탕의 쌍 — { key, P, aFirst }(a 가 첫째 바탕인가) 또는 null(순수) */
+  function pairFor(b1, b2) {
+    if (!tjson || !tjson.pairs || !b1 || !b2 || b1 === b2) { return null; }
+    var k, P;
+    for (k in tjson.pairs) { if (!tjson.pairs.hasOwnProperty(k)) { continue; } P = tjson.pairs[k]; if (P.a === b1 && P.b === b2) { return { key: k, P: P, aFirst: true }; } if (P.a === b2 && P.b === b1) { return { key: k, P: P, aFirst: false }; } }
+    return null;
+  }
+  function dualIndex(nwA, neA, swA, seA) { return (nwA ? 1 : 0) + (neA ? 2 : 0) + (swA ? 4 : 0) + (seA ? 8 : 0); }
+  /** 조각 캔버스에 이중 격자 바탕을 깐다 — 조각 원점 = 땅 칸 (cx*CH, cy*CH). 돌아온 값 = 그린 칸 수(그림 없으면 0) */
+  function drawDual(g, cx, cy, T, b, terrainAt) {
+    if (!autotileOn() || !tjson) { if (!tjson) { loadTiles(); } return 0; }
+    var x0 = cx * CH - 1, y0 = cy * CH - 1, x, y, n = 0, k0, k1, k2, k3, b0, b1, b2, b3, px, py, img, pr, i, cell, ST = (tjson.stride || 272), GU = (tjson.gutter || 8), PX = (tjson.px || 256);
+    for (y = y0; y < y0 + CH + 1; y++) { for (x = x0; x < x0 + CH + 1; x++) {
+      k0 = terrainAt(x, y); k1 = terrainAt(x + 1, y); k2 = terrainAt(x, y + 1); k3 = terrainAt(x + 1, y + 1);
+      b0 = baseOf(k0); b1 = baseOf(k1); b2 = baseOf(k2); b3 = baseOf(k3);
+      if (!b0) { continue; }
+      px = Math.round(((x - cx * CH) + 0.5) * T); py = Math.round(((y - cy * CH) + 0.5) * T);
+      var pw = Math.round(((x - cx * CH) + 1.5) * T) - px, ph = Math.round(((y - cy * CH) + 1.5) * T) - py;
+      if (b0 === b1 && b0 === b2 && b0 === b3) { img = timg(b0, TILE_BASE + b0 + '.webp'); if (img) { g.drawImage(img, px, py, pw, ph); n++; } continue; }
+      var set = {}; set[b0] = 1; if (b1) { set[b1] = 1; } if (b2) { set[b2] = 1; } if (b3) { set[b3] = 1; }
+      var keys = Object.keys(set); pr = keys.length === 2 ? pairFor(keys[0], keys[1]) : null;
+      if (pr) {
+        img = timg('pair:' + pr.key, TILE_BASE + pr.P.atlas);
+        if (!img) { continue; }
+        i = dualIndex(b0 === pr.P.a, b1 === pr.P.a, b2 === pr.P.a, b3 === pr.P.a);
+        cell = [(i % 4) * ST + GU, Math.floor(i / 4) * ST + GU];
+        g.drawImage(img, cell[0], cell[1], PX, PX, px, py, pw, ph); n++;
+      } else { img = timg(b0, TILE_BASE + b0 + '.webp'); if (img) { g.drawImage(img, px, py, pw, ph); n++; } }
+    } }
+    return n;
+  }
+  /** 이 칸과 이웃이 아틀라스로 이어지는가(결·번짐을 건너뛸 수 있나) — 순수(json 필요) */
+  function seamed(kind, nb) { var a = baseOf(kind), b = baseOf(nb); return !!(a && b && (a === b || pairFor(a, b))); }
   var CH = 8, chunks = {}, chunkN = 0, CHUNK_MAX = 28, chunkKey = null;
   function cacheOn() { var C = core(); return !(C && C.tuned && !+C.tuned('world.field2dCache', 1)) && typeof document !== 'undefined' && !global.DG_NO_DRAW; }
   /** 칸 하나의 땅 그림(결·경계·테두리) — 화면/조각 어디에 그리든 같다 */
-  function paintTile(g, kind, tx, ty, sx, sy, Tw, Th, T, b, terrainAt) {
-    texture(g, kind, tx, ty, sx, sy, T);
-    blend(g, kind, terrainAt(tx + 1, ty), sx + Tw, sy, -1, 0, Tw, Th); blend(g, kind, terrainAt(tx - 1, ty), sx, sy, 1, 0, Tw, Th);
-    blend(g, kind, terrainAt(tx, ty + 1), sx, sy + Th, 0, -1, Tw, Th); blend(g, kind, terrainAt(tx, ty - 1), sx, sy, 0, 1, Tw, Th);
+  function paintTile(g, kind, tx, ty, sx, sy, Tw, Th, T, b, terrainAt, dual) {
+    if (!dual || !baseOf(kind)) { texture(g, kind, tx, ty, sx, sy, T); }   // W-0390 아틀라스 바탕이면 결은 그림에 있다
+    var nE = terrainAt(tx + 1, ty), nW = terrainAt(tx - 1, ty), nS = terrainAt(tx, ty + 1), nN = terrainAt(tx, ty - 1);
+    if (!dual || !seamed(kind, nE)) { blend(g, kind, nE, sx + Tw, sy, -1, 0, Tw, Th); } if (!dual || !seamed(kind, nW)) { blend(g, kind, nW, sx, sy, 1, 0, Tw, Th); }
+    if (!dual || !seamed(kind, nS)) { blend(g, kind, nS, sx, sy + Th, 0, -1, Tw, Th); } if (!dual || !seamed(kind, nN)) { blend(g, kind, nN, sx, sy, 0, 1, Tw, Th); }
     var c = edgeColor(kind, terrainAt(tx + 1, ty)); if (c) { g.fillStyle = c; g.fillRect(sx + Tw - b, sy, b, Th); }
     c = edgeColor(kind, terrainAt(tx, ty + 1)); if (c) { g.fillStyle = c; g.fillRect(sx, sy + Th - b, Tw, b); }
     c = edgeColor(kind, terrainAt(tx - 1, ty)); if (c) { g.fillStyle = c; g.fillRect(sx, sy, b, Th); }
@@ -160,9 +220,10 @@
     if (c) { c.at = ++chunkN; return c.cv; }
     var cv = document.createElement('canvas'), px = Math.round(CH * T), g, i, j, sx, sy, Tw, Th;
     cv.width = Math.max(1, px); cv.height = Math.max(1, px); g = cv.getContext('2d');
+    var dual = drawDual(g, cx, cy, T, b, terrainAt) > 0;   // W-0390 이중 격자 바탕(그림 왔을 때만)
     for (j = 0; j < CH; j++) { for (i = 0; i < CH; i++) {
       sx = Math.round(i * T); sy = Math.round(j * T); Tw = Math.round((i + 1) * T) - sx; Th = Math.round((j + 1) * T) - sy;
-      paintTile(g, terrainAt(cx * CH + i, cy * CH + j), cx * CH + i, cy * CH + j, sx, sy, Tw, Th, T, b, terrainAt);
+      paintTile(g, terrainAt(cx * CH + i, cy * CH + j), cx * CH + i, cy * CH + j, sx, sy, Tw, Th, T, b, terrainAt, dual);
     } }
     if (Object.keys(chunks).length >= CHUNK_MAX) { var old = null, oa = Infinity, kk; for (kk in chunks) { if (chunks[kk].at < oa) { oa = chunks[kk].at; old = kk; } } if (old) { delete chunks[old]; } }
     chunks[k] = { cv: cv, at: ++chunkN };
@@ -176,7 +237,7 @@
     var t0y = Math.floor(camY / CELL) - 1, t1y = Math.ceil((camY + H / sc) / CELL) + 2;
     var tx, ty, kind, sx, sy, props = [], ps, i, deep = tallOn(), useCache = cacheOn(); tall = [];
     if (useCache) {
-      var key = T.toFixed(3) + '|' + (seasonMemo.k || '') + '|' + b;
+      var key = T.toFixed(3) + '|' + (seasonMemo.k || '') + '|' + b + '|' + (autotileOn() ? 'a' + tLoaded + (tjson ? 'j' : '') : 'x');
       if (chunkKey !== key) { chunks = {}; chunkKey = key; }
       var c0x = Math.floor(t0x / CH), c1x = Math.floor(t1x / CH), c0y = Math.floor(t0y / CH), c1y = Math.floor(t1y / CH), cx, cy, ox, oy, nx, ny;
       for (cy = c0y; cy <= c1y; cy++) { for (cx = c0x; cx <= c1x; cx++) {
@@ -229,5 +290,5 @@
   function npcMps(bodyM) { var C = core(), b = C && C.tuned ? +C.tuned('world.npc2dBps', 0.6) : 0.6; return bodyM > 0 && b > 0 ? b * bodyM : 0; }
   function strideMul() { var C = core(); return C && C.tuned ? Math.max(0.3, +C.tuned('world.stride2d', 1.45)) : 1.45; }
 
-  global.DG.field2d = { tall: function () { return tall; }, chunkStats: chunkStats, paintTile: paintTile, treeRects: treeRects, TALL: TALL, walkMps: walkMps, strideMul: strideMul, wander: wander, npcMps: npcMps, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
+  global.DG.field2d = { tall: function () { return tall; }, chunkStats: chunkStats, paintTile: paintTile, autotile: { on: autotileOn, baseOf: baseOf, pairFor: pairFor, dualIndex: dualIndex, seamed: seamed, loaded: function () { return tLoaded; }, json: function () { return tjson; }, _set: function (j) { tjson = j; kindBase = null; tjTried = true; } }, treeRects: treeRects, TALL: TALL, walkMps: walkMps, strideMul: strideMul, wander: wander, npcMps: npcMps, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
 })(typeof window !== 'undefined' ? window : this);

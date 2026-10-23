@@ -17488,6 +17488,18 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       r.push(typeof M.poolBase === 'function' && typeof M.sharedSheets === 'function', M.poolBase('beast_dog') === 'assets/sprites2d_sheets/' || M.poolBase('beast_dog').indexOf('sprites2d_sheets/') >= 0);
       return r.every(Boolean) ? '일러스트 base → shared · 시트 둘째 단 poolBase' : '실패 ' + r.join(',') + ' ' + u;
     });
+    t('W-0390 이음 타일(K-0162 이중 격자) — 땅 종류 → 바탕(grass go_grass·forest/farm go_dirt·road go_sand·mount/town go_stone·water go_water) · 쌍 다섯 · i = NW1+NE2+SW4+SE8 · 이어지는 변은 결·번짐 생략 · 조각 열쇠에 받은 그림 수', function () {
+      var F = DG.field2d, A = F.autotile, j0 = A.json();
+      A._set({ px: 256, stride: 272, gutter: 8, pairs: { grass_dirt: { atlas: 'grass_dirt/atlas.webp', a: 'go_grass', b: 'go_dirt', kinds_a: ['grass'], kinds_b: ['forest', 'farm'] }, grass_sand: { atlas: 'grass_sand/atlas.webp', a: 'go_grass', b: 'go_sand', kinds_a: ['grass'], kinds_b: ['road'] }, grass_stone: { atlas: 'grass_stone/atlas.webp', a: 'go_grass', b: 'go_stone', kinds_a: ['grass'], kinds_b: ['mount', 'town'] }, grass_water: { atlas: 'grass_water/atlas.webp', a: 'go_grass', b: 'go_water', kinds_a: ['grass'], kinds_b: ['water'] }, sand_water: { atlas: 'sand_water/atlas.webp', a: 'go_sand', b: 'go_water', kinds_a: ['road'], kinds_b: ['water'] } } });
+      try {
+        var r = [A.baseOf('grass') === 'go_grass', A.baseOf('forest') === 'go_dirt', A.baseOf('farm') === 'go_dirt', A.baseOf('road') === 'go_sand', A.baseOf('town') === 'go_stone', A.baseOf('water') === 'go_water', A.baseOf('snow') === null];
+        var p1 = A.pairFor('go_grass', 'go_dirt'), p2 = A.pairFor('go_dirt', 'go_grass'), p3 = A.pairFor('go_sand', 'go_stone');
+        r.push(!!p1 && p1.key === 'grass_dirt' && p1.aFirst === true, !!p2 && p2.aFirst === false, p3 === null);
+        r.push(A.dualIndex(true, true, true, true) === 15, A.dualIndex(false, false, false, false) === 0, A.dualIndex(true, false, false, true) === 9);
+        r.push(A.seamed('grass', 'forest'), A.seamed('grass', 'grass'), !A.seamed('road', 'town'), typeof A.loaded() === 'number');
+        return r.every(Boolean) ? '바탕 다섯 · 쌍 그대로/뒤집기/없음 · 지수 15·0·9 · 이음 변 판정' : '실패 ' + r.join(',');
+      } finally { A._set(j0); }
+    });
     t('W-0370 공장 시트 — 방향 5줄(정면 0·앞대각 1·옆 2·뒤대각 3·뒤 4, 왼쪽은 뒤집기) · 없는 동작은 가까운 것 · 프레임 수는 manifest(죽음 6 은 끝에서 멈춤)', function () {
       var M = DG.mode2d; if (!M || !M.factRole || !M.factFrame) { return '실패 factRole·factFrame 없음'; }
       var rows = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1]].map(function (d) { return M.dirOf8(d[0], d[1]).row; }).join(''), L = M.dirOf8(-1, 0);
