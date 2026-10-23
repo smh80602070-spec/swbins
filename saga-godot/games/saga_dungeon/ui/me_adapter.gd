@@ -15,7 +15,7 @@ static func model(hud: Node) -> Dictionary:
 		slots.append({"label": String(Vendor._SLOT_LABELS.get(s, s)), "item": "" if it.is_empty() else DungeonItems.item_name(it) + preload("res://games/saga_dungeon/data/dungeon_mastery.gd").tag(it)})   # G-0317 숙련 ★
 	var pct: float = DungeonRunState.atk_mult() + DungeonEquipmentState.atk_pct_bonus() / 100.0
 	var atk: float = Melee.ATK_DAMAGE * pct + DungeonEquipmentState.atk_flat_bonus()
-	var guard: float = DungeonRunState.guard_mult()
+	var guard: float = DungeonRunState.guard_mult() * preload("res://games/saga_dungeon/data/dungeon_mastery.gd").guard_mul(DungeonEquipmentState.armor)   # G-0317 갑주 숙련(take_damage 와 같은 곱)
 	var stats: Array = [
 		{"label": "평타 피해", "value": "%d" % roundi(atk), "detail": "바탕 %d × %d%% + %d" % [roundi(Melee.ATK_DAMAGE), roundi(pct * 100.0), roundi(DungeonEquipmentState.atk_flat_bonus())]},
 		{"label": "체력", "value": "%d" % roundi(Health.MAX_HP_BASE * DungeonRunState.hp_mult())},

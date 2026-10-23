@@ -138,6 +138,16 @@ const CUTS := [
 	["fs_workshop", FOREST, [["free_modal"], ["static", "res://tools/shot_forest_workshop.gd", "open", ["@tree"]]]],   # G-0218 3마을 솜씨도 — HUD 단추로 연 화면·손 큰 장인 카드
 	["dg_meridian", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_meridian.gd", "open", ["@tree"]]]],   # G-0217 2나락 경락도 — 무예 창 단추로 연 화면·일격 카드
 	["dg_story", DUNGEON, [["free_modal"]]],
+	["lg_fs_brew", FOREST, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "brew", ["@tree"]]]],   # G-0322 ← G-0320 물약 달이기 창
+	["lg_fs_relic", FOREST, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "relics", ["@tree", false]]]],   # G-0322 ← G-0315 사고 앞 옛 비석 전시대
+	["lg_fs_relic_menu", FOREST, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "relics", ["@tree", true]]]],   # 복원 창 줄
+	["lg_rk_laws", REALM, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "laws", ["@tree"]]]],   # G-0322 ← G-0321 법령 창
+	["lg_rk_relation", REALM, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "relation", ["@tree"]]]],   # G-0322 ← G-0316 승진 창 🔗 관계 꼬리
+	["lg_rk_trade", REALM, [["free_modal"], ["call", "TradeButton", "open_screen", []]]],   # G-0322 ← G-0310 교역 창
+	["lg_st_clue", STORY_CAVE, [["free_modal"], ["near", "HiddenClue", -1.6, 0.0]]],   # G-0322 ← G-0319 굴혈 끝 옛 비문
+	["lg_st_piece", STORY_CAVE, [["free_modal"], ["near", "MapPiece0", -1.6, 0.0]]],   # G-0322 ← G-0309 지도 조각
+	["lg_dg_mastery", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "mastery", ["@tree"]], ["call", "MenuHook", "open_me"]]],   # G-0322 ← G-0317 「내 정보」 ★
+	["lg_go_wind", GO, [["static", "res://tools/shot_ledger.gd", "wind", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0322 ← G-0318 바람 길잡이(촬영 70프레임 전 한 줄기)
 	["dg_room_wide", DUNGEON, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 14.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-40.0, 0.0, 0.0)]]],   # G-0112 첫 방 전체(어두움 판정)   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)
 	["go_cave_dirt", GO, [["call", "CaveInterior", "enter"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-25.0, 180.0, 0.0)]]],   # G-0098 굴 안 흙 복도
 	["go_cave_lava", GO, [["call", "CaveInterior", "enter"], ["call", "CaveInterior", "goto_room", [2]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-30.0, 270.0, 0.0)]]],   # 용암 방(적 셋)

@@ -249,8 +249,9 @@ func _spawn_relic(key: String) -> void:
 	var s: Dictionary = Relics.SETS[idx]
 	var label := Label3D.new()
 	label.text = "%s %s" % [s.emoji, s.name]
-	label.font_size = 28
-	label.position = Vector3(0, 0.9, 0)
+	label.font_size = 64
+	label.outline_size = 12
+	label.position = Vector3(0, 1.3, 0)
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.no_depth_test = true
 	stand.add_child(label)

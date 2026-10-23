@@ -5501,12 +5501,12 @@
   "tests": [
    "story_stagemap"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0309",
   "since": "2026-10-23",
-  "note": "웹 W-0305 짝 · 세이브 판 24 stage_maps · SAGA_STAGEMAP=0"
+  "note": "웹 W-0305 짝 · 세이브 판 24 stage_maps · SAGA_STAGEMAP=0 · D2 G-0322 촬영 shot_scene lg_st_piece"
  },
  {
   "id": "gd.realm.trade",
@@ -5520,12 +5520,12 @@
   "tests": [
    "realm_trade"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0310",
   "since": "2026-10-23",
-  "note": "웹 W-0301 짝 · AI 상단 없음(고돗 AI 금 없음) · 세이브 판 25 trade · SAGA_TRADE=0"
+  "note": "웹 W-0301 짝 · AI 상단 없음(고돗 AI 금 없음) · 세이브 판 25 trade · SAGA_TRADE=0 · D2 G-0322 촬영 shot_scene lg_rk_trade"
  },
  {
   "id": "gd.forest.livestock",
@@ -5615,12 +5615,12 @@
   "tests": [
    "forest_relics"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0315",
   "since": "2026-10-23",
-  "note": "웹 W-0309 짝 · 명성 없음 → 금 · CHANCE 0.5(갈라진 자리 하나) · SAGA_RELICS=0"
+  "note": "웹 W-0309 짝 · 명성 없음 → 금 · CHANCE 0.5(갈라진 자리 하나) · SAGA_RELICS=0 · D2 G-0322 촬영 shot_scene lg_fs_relic·lg_fs_relic_menu"
  },
  {
   "id": "gd.realm.relation",
@@ -5634,12 +5634,12 @@
   "tests": [
    "realm_relation"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0316",
   "since": "2026-10-23",
-  "note": "웹 W-0308 짝 · 짝 표 33 그대로 · 세이브 v26 rel_master · SAGA_RELATION=0"
+  "note": "웹 W-0308 짝 · 짝 표 33 그대로 · 세이브 v26 rel_master · SAGA_RELATION=0 · D2 G-0322 촬영 shot_scene lg_rk_relation"
  },
  {
   "id": "gd.dungeon.mastery",
@@ -5654,12 +5654,12 @@
   "tests": [
    "dungeon_mastery"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0317",
   "since": "2026-10-23",
-  "note": "고돗 먼저(웹 짝 없음) · 숙련은 물건 칸 mxp(세이브 버전 그대로) · SAGA_MASTERY=0"
+  "note": "고돗 먼저(웹 짝 없음) · 숙련은 물건 칸 mxp(세이브 버전 그대로) · SAGA_MASTERY=0 · D2 G-0322 촬영 shot_scene lg_dg_mastery"
  },
  {
   "id": "gd.go.wind-guide",
@@ -5692,12 +5692,12 @@
   "tests": [
    "story_hidden"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0319",
   "since": "2026-10-23",
-  "note": "고돗 먼저(웹 짝 없음) · 세이브 v25 hidden · SAGA_HIDDEN=0"
+  "note": "고돗 먼저(웹 짝 없음) · 세이브 v25 hidden · SAGA_HIDDEN=0 · D2 G-0322 촬영 shot_scene lg_st_clue"
  },
  {
   "id": "gd.forest.brew",
@@ -5712,12 +5712,12 @@
   "tests": [
    "forest_brew"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0320",
   "since": "2026-10-23",
-  "note": "고돗 먼저(웹 짝 없음) · 순수 추가 칸 brew · SAGA_BREW=0"
+  "note": "고돗 먼저(웹 짝 없음) · 순수 추가 칸 brew · SAGA_BREW=0 · D2 G-0322 촬영 shot_scene lg_fs_brew"
  },
  {
   "id": "gd.realm.laws",
@@ -5734,11 +5734,11 @@
   "tests": [
    "realm_laws"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0321",
   "since": "2026-10-23",
-  "note": "고돗 먼저(웹 짝 없음) · 곱은 _sc 자리(빈 법전 1) · 세이브 v27 laws · SAGA_LAWS=0"
+  "note": "고돗 먼저(웹 짝 없음) · 곱은 _sc 자리(빈 법전 1) · 세이브 v27 laws · SAGA_LAWS=0 · D2 G-0322 촬영 shot_scene lg_rk_laws"
  }
 ]
