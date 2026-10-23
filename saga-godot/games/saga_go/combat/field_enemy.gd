@@ -290,6 +290,7 @@ var shield := 0.0
 var max_shield := 0.0
 ## 106장 ⑳ 비경 — 공격 배율, 쓰러지면 되살아나지 않고 사라짐, 경험·전리품 없음(비경 보상은 끝에 한꺼번에).
 var dmg_mul := 1.0
+var part_dmg_mul := 1.0   # G-0342 보스 약점이 부서지면 field_boss 가 낮춘다(세계 등급 dmg_mul 과 따로 — 그건 다시 매겨진다)
 var respawns := true
 var drops := true
 ## 106장 ㉒ 세계 등급 — field_spawner 가 앉힌다(비경 적은 안 씀 = -1, Lv 표시 없음).
@@ -558,7 +559,7 @@ func _try_hit_player(player: Node3D) -> void:
 		return
 	var fc := get_tree().get_first_node_in_group("go_field_combat")
 	if fc:
-		fc.call("take_damage", def.atk * dmg_mul, self)
+		fc.call("take_damage", def.atk * dmg_mul * part_dmg_mul, self)
 
 func _try_hit_siege() -> void:
 	if not is_instance_valid(siege):
@@ -566,7 +567,7 @@ func _try_hit_siege() -> void:
 	var to_s := siege.global_position - global_position
 	to_s.y = 0.0
 	if to_s.length() <= def.reach + float(siege.call("siege_radius")) + 0.6:
-		siege.call("siege_hit", def.atk * dmg_mul, self)
+		siege.call("siege_hit", def.atk * dmg_mul * part_dmg_mul, self)
 
 func _pick_wander() -> void:
 	var a := _rng.randf() * TAU

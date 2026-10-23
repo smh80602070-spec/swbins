@@ -222,6 +222,8 @@ func _impact(a: Dictionary, h: Dictionary) -> void:
 			if h.weak:
 				_fc.call("_reaction_text", e, "급소!", WEAK_COLOR)
 				weak_hit.emit()
+				if e.has_method("part_hit"):
+					e.call("part_hit", dealt)   # G-0342 보스 약점 부수기
 			_fc.call("_gain_energy", ENERGY_PER_HIT)
 			_fc.call("_rain_follow")
 		"target":

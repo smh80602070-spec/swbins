@@ -164,6 +164,7 @@ const CUTS := [
 	["lg_st_boss_banner", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_ledger.gd", "st_boss_banner", ["@tree"]]]],   # G-0339 4종횡 사냥터 보스 등장 띠
 	["lg_go_bond", GO, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "go_bond", ["@tree"]]]],   # G-0340 인물 창 우정 줄(명운 Lv.7 신뢰)
 	["lg_dg_bond", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_bond", ["@tree"]]]],   # G-0341 HUD 부대 줄 우정 꼬리표
+	["lg_go_weakpart", GO, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "go_weakpart", ["@tree"]]]],   # G-0342 보스 약점 표식(주황 빛 공)
 	["lg_dg_trail", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_legend", ["@tree"]], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0325 ← G-0290 전설 잔광
 	["lg_dg_rise", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rise", ["@tree"]]]],   # G-0325 ← G-0293 난입 솟음(한 컷씩 — time_scale)
 	["lg_dg_break", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_breakables", ["@tree"]]]],   # G-0325 ← G-0307 부서지는 통

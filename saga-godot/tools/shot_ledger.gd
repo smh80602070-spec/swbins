@@ -353,3 +353,20 @@ static func dg_bond(tree: SceneTree) -> void:
 	tree.root.get_node("DungeonPartyState").set("members", ["sg_guanyu", "sg_zhangfei"] as Array[String])
 	tree.root.get_node("DungeonSaveState").set("bond", {"sg_guanyu": 300.0, "sg_zhangfei": 95.0})
 	_later(tree, 3, func() -> void: tree.call_group("dungeon_party_label", "_refresh"))
+
+
+## G-0342 1만리 보스 약점 표식 — 등장 컷은 끄고 가까운 들판 보스를 대화 구도로 잡아 둔다(표식이 몸에 묻히는지)
+static func go_weakpart(tree: SceneTree) -> void:
+	OS.set_environment("SAGA_BOSS_INTRO", "0")
+	_later(tree, 40, func() -> void:
+		var pl := _player(tree)
+		var best: Node3D = null
+		for b in tree.get_nodes_in_group("go_boss"):
+			if not b.call("is_dead") and (best == null or (b as Node3D).global_position.distance_to(pl.global_position) < best.global_position.distance_to(pl.global_position)):
+				best = b
+		if best == null:
+			return
+		pl.global_position = best.global_position + Vector3(9.0, 0.5, 0.0)
+		var rig := tree.get_first_node_in_group("camera_rig")
+		if rig != null:
+			rig.call("talk_shot", best.global_position, pl.global_position))

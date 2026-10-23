@@ -33,6 +33,18 @@ const HALO := {"inner": 3.0, "outer": 9.0, "tell": 1.3, "mul": 1.5}
 ## 줄 끝 땅 높이가 RIFT.climb m 넘게 다르면(벽·바위 위) 옮기지 않고 원만 친다.
 const RIFT := {"count": 5, "first": 2.0, "step": 2.6, "radius": 1.8, "tell": 1.0, "mul": 1.4, "climb": 1.5}
 
+## G-0342 약점 부수기(호라이즌 — 구조만): 머리 쪽 빛나는 약점(표식) — 조준 급소 화살(aimed_shot 급소)이 맞힌 피해만큼 약점 체력이 깎이고,
+## 0 이면 부서짐: 예고 끊고 PART_STAGGER 초 비틀 · 그 뒤 이 보스 공격 ×PART_WEAKEN · 표식 꺼짐. 집으로 돌아가거나 되살아나면(_on_reset) 다시 선다.
+## SAGA_WEAKPART=0 이면 표식·약점 없음(옛 길).
+const PART_FRAC := 0.12
+const PART_STAGGER := 2.5
+const PART_WEAKEN := 0.85
+const PART_COLOR := Color(1.0, 0.5, 0.15)
+var part_hp := -1.0   # 처음 맞을 때 max_hp × PART_FRAC 로 채움
+var part_broken := false
+var _part_mark: MeshInstance3D = null
+var _part_tried := false
+
 var phase := 1
 var skill := ""
 
@@ -48,6 +60,8 @@ var _marks: Array = [] # [{pos, radius, node}]
 var summoned: Array = [] # 2단계에 부른 졸개(def.summon) — 보스가 쓰러지거나 되돌아가면 흩어진다
 
 func _physics_process(delta: float) -> void:
+	if not _part_tried:
+		ensure_part_mark()   # G-0342 약점 표식(한 번)
 	if ai == AI.DEAD:
 		_clear_marks()
 		_clear_summons()
@@ -137,7 +151,7 @@ func _fire() -> void:
 	if hit:
 		var fc := get_tree().get_first_node_in_group("go_field_combat")
 		if fc and fc.call("can_be_targeted"):
-			fc.call("take_damage", def.atk * mul * dmg_mul, self)
+			fc.call("take_damage", def.atk * mul * dmg_mul * part_dmg_mul, self)   # G-0342 약점 부서지면 약해짐
 			hits_taken += 1
 	if skill == "rift" and not _marks.is_empty():
 		_rift_to(_marks[_marks.size() - 1].pos)
@@ -204,6 +218,11 @@ func _phase_shield() -> float:
 ## 들판 보스 — 끌려 나갔다 집에서 체력을 채우거나 되살아나면 1단계부터.
 func _on_reset() -> void:
 	var was := phase
+	part_broken = false   # G-0342 약점 다시 선다
+	part_hp = -1.0
+	part_dmg_mul = 1.0
+	if _part_mark != null and is_instance_valid(_part_mark):
+		_part_mark.visible = true
 	phase = 1
 	_rot = 0
 	skill_cd = 2.0
@@ -275,3 +294,57 @@ func _clear_marks() -> void:
 func _exit_tree() -> void:
 	_clear_marks()
 	_clear_summons()
+
+
+## G-0342 약점 표식 — 몸 높이 0.85 자리 빛나는 공(급소 띠 WEAK_FRAC 0.7 위). 처음 보이는 프레임에 단다.
+func ensure_part_mark() -> void:
+	if _part_tried or not is_inside_tree():
+		return
+	_part_tried = true
+	if OS.get_environment("SAGA_WEAKPART") == "0":
+		return
+	var m := MeshInstance3D.new()
+	m.name = "WeakPart"
+	var sm := SphereMesh.new()
+	var h := float(def.get("height", 2.0))
+	sm.radius = clampf(h * 0.07, 0.18, 0.45)
+	sm.height = sm.radius * 2.0
+	m.mesh = sm
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.albedo_color = PART_COLOR
+	mat.emission_enabled = true
+	mat.emission = PART_COLOR
+	mat.emission_energy_multiplier = 2.5
+	m.material_override = mat
+	m.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(m)
+	m.position = Vector3(0.0, h * 0.85, 0.0)
+	m.visible = not part_broken
+	_part_mark = m
+
+
+## 급소 화살이 맞힘(aimed_shot) — 부서졌으면 true
+func part_hit(dealt: float) -> bool:
+	if OS.get_environment("SAGA_WEAKPART") == "0" or part_broken or dealt <= 0.0 or ai == AI.DEAD:
+		return false
+	if part_hp < 0.0:
+		part_hp = max_hp * PART_FRAC
+	part_hp -= dealt
+	if part_hp > 0.0:
+		return false
+	part_broken = true
+	part_dmg_mul = PART_WEAKEN
+	skill = ""
+	_clear_marks()
+	stagger(PART_STAGGER)
+	if _part_mark != null and is_instance_valid(_part_mark):
+		_part_mark.visible = false
+	var fc := get_tree().get_first_node_in_group("go_field_combat")
+	if fc != null:
+		fc.call("_reaction_text", self, "약점 파괴!", PART_COLOR)
+		fc.call("_ring_fx", global_position + Vector3.UP * float(def.get("height", 2.0)) * 0.85, 1.2, PART_COLOR, 0.35)
+	var rig := get_tree().get_first_node_in_group("camera_rig")
+	if rig != null and rig.has_method("shake"):
+		rig.call("shake", 0.12, 0.25)
+	return true
