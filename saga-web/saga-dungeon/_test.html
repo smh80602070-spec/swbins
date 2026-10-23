@@ -8717,7 +8717,7 @@ window.requestAnimationFrame = function () { return 0; };
       A._qDefer[key] = Date.now() + 60000; var gD = A._questFieldGoal(tr); delete A._qDefer[key];
       q.chain = keepCh;
       var wall = function (x, y) { return x > 280 && x < 340 && y > -600 && y < 600; };   // 긴 담(세로 1200)
-      var gp = A._gridPath({ x: 0, y: 0 }, { x: 700, y: 0 }, wall), gpHit = !gp || gp.some(function (v) { return wall(v.x, v.y); });
+      var gp = A._gridPath({ x: 0, y: 0 }, { x: 700, y: 0 }, wall), gpHit = !gp || gp.some(function (v, k) { var a0 = k ? gp[k - 1] : { x: 0, y: 0 }; for (var m = 1; m < 40; m++) { if (wall(a0.x + (v.x - a0.x) * m / 40, a0.y + (v.y - a0.y) * m / 40)) { return true; } } return wall(v.x, v.y); });   // 경유점 사이 직선도 담을 안 가로지름
       var gpNone = A._gridPath({ x: 0, y: 0 }, { x: 700, y: 0 }, function (x) { return x > 280 && x < 340; });   // 끝없는 담 = 길 없음
       return ys.join() === '400,800,1200,-400,-800,-1200' && s[6] === null && !!g0 && g0.key === key && gD === null && !gpHit && gpNone === null &&
         ('비킴 y ' + ys.join('·') + ' · 일곱째 null · 미루면 목표 없음 · 긴 담 돌아가는 길 ' + gp.length + '점 · 끝없는 담 null');

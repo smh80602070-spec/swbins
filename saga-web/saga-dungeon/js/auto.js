@@ -337,9 +337,16 @@
     if (from[t] === -2) { return null; }
     var cells = [];
     for (var k = t; k !== s && k >= 0; k = from[k]) { cells.unshift(k); }
-    var out = [];
-    for (var j = 0; j < cells.length; j++) {
-      if (j === cells.length - 1 || j % 3 === 2) { out.push(j === cells.length - 1 ? { x: g.x, y: g.y } : { x: x0 + (cells[j] % W + 0.5) * cell, y: y0 + (Math.floor(cells[j] / W) + 0.5) * cell }); }
+    /* 경유점 = 지금 자리에서 곧게(15보마다 blocked 없음) 갈 수 있는 가장 먼 칸 — 칸 셋마다 찍던 때는 경유점 사이 직선이
+       막힌 칸 모서리를 가로질러, 마을 둘레 나무 띠 앞에서 길을 찾고도 섰다(W-0382 측정 (-383,-764)) */
+    var cen = function (k) { return { x: x0 + (cells[k] % W + 0.5) * cell, y: y0 + (Math.floor(cells[k] / W) + 0.5) * cell }; };
+    var clear = function (a, b) { var n = Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) / 15); for (var m = 1; m < n; m++) { if (blocked(a.x + (b.x - a.x) * m / n, a.y + (b.y - a.y) * m / n)) { return false; } } return true; };
+    var out = [], cur = { x: p.x, y: p.y }, i = 0;
+    while (i < cells.length) {
+      var j = i;
+      while (j + 1 < cells.length && clear(cur, cen(j + 1))) { j++; }
+      cur = j === cells.length - 1 ? { x: g.x, y: g.y } : cen(j);
+      out.push(cur); i = j + 1;
     }
     return out;
   }
