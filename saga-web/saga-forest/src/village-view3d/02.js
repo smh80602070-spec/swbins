@@ -309,8 +309,8 @@
     if (!V || !scene) { return; }
     syncTreeSeason();
     var raw = V.raw(), props = raw.props.concat(raw.animals || []), px = raw.player.x, py = raw.player.y;
-    var scale = WORLD_SCALE(), renderU = RENDER_R() / scale, cullU = CULL_R() / scale;
-    var within = {}, budget = MAX_BUILD_PER_STEP();
+    var scale = WORLD_SCALE(), renderU = RENDER_R() / scale, cullU = CULL_R() / scale, ZM = +C().tuned('village3d.zoneM', 64), ZB = ZM > 0 && !!global.DG.zoneCut, zu = ZM / scale, zx = Math.floor(px / zu), zy = Math.floor(py / zu), zp = 16 / scale, inZ = function (x, y) { return x >= zx * zu - zp && x <= (zx + 1) * zu + zp && y >= zy * zu - zp && y <= (zy + 1) * zu + zp; };   /* W-0414 ② 구역(ZM m 정사각)째 — 걸으며 반경 따라 솟지 않게, 넘김 막 아래서 통째로 */
+    var within = {}, budget = ZB && global.DG.zoneCut.shown() ? 999 : MAX_BUILD_PER_STEP(); syncScatter.pend = 0;
     var i, p, key, ent, d;
 
     for (i = 0; i < props.length; i++) {
@@ -319,7 +319,7 @@
       key = seasonalTreeKey(SCATTER_KIND[p.kind]);
       if (!key) { continue; }
       d = Math.hypot(p.x - px, p.y - py);
-      if (d > cullU) { continue; }                    // 완전히 멀다 — 후보에서도 뺀다
+      if (ZB ? !inZ(p.x, p.y) : d > cullU) { continue; }                    // 완전히 멀다(구역째면 구역 밖) — 후보에서도 뺀다
       within[p.id] = true;
       ent = scatter[p.id];
       if (ent && ent.group) {
@@ -345,8 +345,8 @@
         applyShadowLOD(ent, d);
         continue;
       }
-      if (d > renderU) { continue; }                  // cull 과 render 사이 — 있으면 두고, 새로 안 짓는다
-      if (ent && ent.building) { continue; }           // 이미 요청해 둔 것 — 또 부르지 않는다
+      if (!ZB && d > renderU) { continue; }                  // cull 과 render 사이 — 있으면 두고, 새로 안 짓는다
+      if (ent && ent.building) { syncScatter.pend++; continue; }           // 이미 요청해 둔 것 — 또 부르지 않는다(받는 중 = 막이 기다림)
 
       /* Object Pool(PLAN 40절 PHASE 7) — 같은 kind 를 쌓아 둔 게 있으면 새로
          짓지 않고 그대로 꺼내 쓴다. 예산(budget)을 안 쓴다 — 비동기 build() 가
@@ -368,7 +368,7 @@
         continue;
       }
 
-      if (budget <= 0) { continue; }                   // 이번 프레임 몫을 다 썼다
+      if (budget <= 0) { syncScatter.pend++; continue; }                   // 이번 프레임 몫을 다 썼다
       budget--;
       ent = scatter[p.id] = {
         group: null, kind: p.kind, building: true, meshes: null, shadowOn: null,
@@ -741,7 +741,7 @@
   global.DG = global.DG || {}; global.DG.perf = global.DG.perf || { tier: function () { return { key: String(tier()).toUpperCase() }; } };   // W-0292 post3d 가 등급을 DG.perf.tier().key 로 읽는다(2나락과 같게) — 로드 때 정의해 진단도 본다
   global.DG.villageView3d = {
     init: init, resize: resize, step: step, toggle: toggle,
-    active: active, available: available, on: ON,
+    active: active, available: available, on: ON, _scatterPend: function () { return syncScatter.pend || 0; }, _scatter: function () { return scatter; },
     /** ui.js 의 doInteract() 가 손을 쓴 순간마다 부른다 — 나무 흔들기·낚시
      *  던지기·상자 열기 등에 몸짓 한 번(interaction/attack 클립). 그런 클립이
      *  없는 조합이면 조용히 아무 일도 안 한다 */
