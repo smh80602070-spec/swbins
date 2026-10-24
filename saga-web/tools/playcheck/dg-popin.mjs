@@ -23,7 +23,7 @@ try {
   out.probe = await r.page.evaluate(() => {
     const D3 = DG.dungeon3d, T = D3.three(), sc = (() => { const n = new T.Object3D(); D3.addFx(n); let s = n.parent; n.parent.remove(n); while (s && s.parent) { s = s.parent; } return s; })();
     let me = null; sc.traverse((o) => { if (!me && o.userData && o.userData.mixerNode && o.userData.actorKey === 'me') { me = o; } });
-    const ctx = DG.town.raw(), p = ctx && ctx.player; return { hasMe: !!me, player: p ? [Math.round(p.x), Math.round(p.y)] : null, anchor: ctx && ctx.anchor ? [ctx.anchor.x, ctx.anchor.y] : null, radius: DG.spawnView ? Math.round(DG.spawnView.radius()) : null };
+    const ctx = DG.town.raw(), p = ctx && ctx.player; return { mode: D3.active && D3.active() ? '3d' : '2d', hasMe: !!me, player: p ? [Math.round(p.x), Math.round(p.y)] : null, anchor: ctx && ctx.anchor ? [ctx.anchor.x, ctx.anchor.y] : null, radius: DG.spawnView ? Math.round(DG.spawnView.radius()) : null, meScreen: p && DG.dungeonView && DG.dungeonView._proj ? (function (q) { return [Math.round(q.x / innerWidth * 100), Math.round(q.y / innerHeight * 100)]; })(DG.dungeonView._proj(p.x, p.y)) : null };   // 2D 투영 확인 — 나 = 화면 % (가운데 근처여야)
   });
   /* 걷기 + 표본 — 페이지 안에서 돈다(evaluate 왕복 지연 없이 0.2초 간격) */
   const res = await r.page.evaluate(async (SEC) => {
@@ -36,17 +36,19 @@ try {
     while (performance.now() - t0 < SEC * 1000) {
       const sec = Math.floor((performance.now() - t0) / 8000);
       if (sec !== lastTurn) { cur = dirs[sec % 4]; DG.town.setInput(cur[0], cur[1]); lastTurn = sec; }
-      const ctx = DG.town.raw(), cam = D3.camNode(); if (!ctx || !cam) { await new Promise((r) => setTimeout(r, 200)); continue; }
+      const is3 = !!(D3.active && D3.active()), DV = DG.dungeonView;   /* 2D(폰 기본)는 3D 카메라가 없다 — 2D 투영(dungeonView._proj, 캔버스 px)으로 센다 */
+      const ctx = DG.town.raw(), cam = D3.camNode(); if (!ctx || (is3 && !cam) || (!is3 && !(DV && DV._proj))) { await new Promise((r) => setTimeout(r, 200)); continue; }
       const es = ctx.room.enemies || [], me = ctx.player; n++;
       /* 3D 노드 자리를 직접 못 얻으니: 카메라가 보는 땅 가운데 = 나(카메라가 따라감). 적 3D = 내 3D(카메라 표적) + (적 − 나) */
       const ray = new T.Raycaster(), ndc = new T.Vector2(0, 0), c0 = new T.Vector3(), pl = new T.Plane(new T.Vector3(0, 1, 0), 0);
-      cam.updateMatrixWorld(); ray.setFromCamera(ndc, cam); ray.ray.intersectPlane(pl, c0);
+      if (is3) { cam.updateMatrixWorld(); ray.setFromCamera(ndc, cam); ray.ray.intersectPlane(pl, c0); }
+      const VW = innerWidth, VH = innerHeight;
       for (const e of es) {
         if (!e || e.hp <= 0) { continue; }
         if (!e.__pid) { e.__pid = ++k; }
         if (seen.has(e.__pid)) { continue; }
         seen.set(e.__pid, true);
-        v.set(c0.x + (e.x - me.x), 10, c0.z + (e.y - me.y)); v.project(cam);
+        if (is3) { v.set(c0.x + (e.x - me.x), 10, c0.z + (e.y - me.y)); v.project(cam); } else { const q = DV._proj(e.x, e.y); v.set(q.x / VW * 2 - 1, 1 - q.y / VH * 2, 0); }
         const inView = Math.abs(v.x) <= 1.05 && Math.abs(v.y) <= 1.05 && v.z < 1;
         const d = Math.round(Math.hypot(e.x - me.x, e.y - me.y));
         if (n <= 2) { continue; }   // 처음 두 표본 = 진입 때 이미 있던 적(진입 스폰은 화면 밖일 수 없다 — 가림막 몫)

@@ -1,14 +1,15 @@
 {
- "at": "2026-10-18T11:40:41.562Z",
+ "at": "2026-10-24T11:08:09.647Z",
  "phone": true,
  "sec": 60,
- "samples": 282,
- "seen": 56,
+ "samples": 292,
+ "seen": 18,
  "popin": 0,
  "appear": 0,
- "offscreen": 51,
+ "offscreen": 18,
  "list": [],
  "probe": {
+  "mode": "2d",
   "hasMe": false,
   "player": [
    195,
@@ -18,7 +19,11 @@
    0,
    0
   ],
-  "radius": 924
+  "radius": 453,
+  "meScreen": [
+   50,
+   67
+  ]
  },
  "errors": []
 }
