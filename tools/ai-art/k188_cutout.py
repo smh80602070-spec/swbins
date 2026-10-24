@@ -244,7 +244,8 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             bones[n] = {'x': round((pv[0] - piv[par][0]) * S, 2), 'y': round((pv[1] - piv[par][1]) * S, 2), 'rot': 0}
     if 'armUL' not in B and far == 'copy':
         # 안쪽 팔·다리 = 바깥 것을 어둡게 복사(몸 뒤, z 낮게) — 옆모습에서 가려 안 보이는 쪽
-        for s in ('armU', 'armL', 'hand', 'legU', 'legL', 'foot'):
+        # 팔은 복사하지 않는다 — 인페인트 몸통이 몸에 붙은 팔을 새로 그려 그게 뒤팔 노릇을 한다(K-0188 ② 눈 판정 · 셋째 팔 막기)
+        for s in (('armU', 'armL', 'hand', 'legU', 'legL', 'foot') if far == 'copyall' else ('legU', 'legL', 'foot')):
             src_p = next((p for p in parts if p['bone'] == s + 'R'), None)
             if not src_p:
                 continue
