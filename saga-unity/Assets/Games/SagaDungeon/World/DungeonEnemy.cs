@@ -960,6 +960,7 @@ namespace Saga.Dungeon.World
 
             // PLAN.md 101-3 F "죽음"(2026-09-17) — 보상은 이미 위에서 다
             // 줬다, 이건 그 자리에 남는 시각적 표식뿐(LootMarker.cs 클래스 주석 참고).
+            HealthGlobe.Drop(transform.position, isBoss, IsElite); // tasks U-0205 피 구슬(고돗 G-0344 짝) — 잡졸 22%·정예 1·두목 셋
             LootMarker.SpawnFiltered(transform.position, item, equipped, gem != null); // PLAN.md 109-10 명품 이상은 빛기둥 · U-0126 전리품 거르기
             AnyDied?.Invoke(this);
             // PLAN.md 101-2 5.6 "목표판·세션 카드·일일/주간"(2026-09-21) — 일일 풀의

@@ -2395,6 +2395,23 @@
   "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261024b.json · 앞 D2(U-0201): PlaytestDungeonHeadless bond tier·room·knot·hud·save·off OK · PlaytestHeadless friend 여섯 줄 그대로(공용으로 옮긴 뒤) · 촬영 안 함(알림·HUD 꼬리표 한 줄)"
  },
  {
+  "id": "un.dg.globe",
+  "name": "U-0205 2나락 피 구슬 — 적이 쓰러지며 붉게 빛나는 구슬(잡졸 22%·정예 1·두목 셋), 3m 안이면 끌려와(9m/s) 0.7m 에서 최대 체력 12%(올림·최소 1) 회복·\"+n\" 숫자, 가득이면 제자리, 25초 수명(마지막 3초 줄어들며 흐려짐) · SAGA_GLOBE=0 끔(고돗 G-0344 짝)",
+  "files": [
+   "saga-unity/Assets/Games/SagaDungeon/World/HealthGlobe.cs",
+   "saga-unity/Assets/Games/SagaDungeon/World/DungeonEnemy.cs"
+  ],
+  "tests": [
+   "PlaytestDungeonGlobe"
+  ],
+  "level": "D2",
+  "verified": "2026-10-24 claude",
+  "fun": {},
+  "ticket": "U-0205",
+  "since": "2026-10-24",
+  "note": "D2(U-0205): PlaytestDungeonHeadless globe drop·pull·eat·full·life·off OK(씨앗 20260824 잡졸 1000 에 207) · 다른 OK 줄 그대로·FAIL 0 · error CS 0 · 촬영 안 함(작은 공 — 진단 줄로)"
+ },
+ {
   "id": "un.go.friendship",
   "name": "U-0199 1만리 동료 우정 — 편성 동료마다 점수(적 쓰러짐 앞 +2·다른 +1·탐사 돌아옴 +15) → Lv 0~10·낯섦·친근·신뢰·지기, 기질별 단계 대사(지기 = 그 인물 한마디), 지기 처음 인연 매듭 1, 오름 알림·도감 상세 줄(고돗 G-0340)",
   "files": [
