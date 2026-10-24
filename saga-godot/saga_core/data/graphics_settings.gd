@@ -2,6 +2,8 @@ extends RefCounted
 
 ## G-0054 — 설정 "화질/성능" 2단(SAGA-BACKLOG §4.6 · SAGA-DESIGN §6.1-B ②). 다섯 판 공용, 정적 함수만(오토로드를 안 늘린다).
 ## 화질 = 지금까지 그대로(기본). 성능 = 30fps · 3D 해상도 0.75 · MSAA 끔 · 환경 SSAO/SSIL/SDFGI 끔(env_pc 와 env_mobile 의 차이 그대로).
+## G-0352 — 화질도 MSAA 는 0(project.godot msaa_3d=0, 가장자리는 TAA 가 맡음): Forward+ 에서 MSAA 2배면 Radeon Pro 570X 에서 화면 대부분이
+## 검은 네모로 깨졌다(1만리 들판·4종횡 사냥터, 15초 기다려도 그대로 · MSAA 만 끄면 멀쩡). 모바일 렌더러(msaa_3d.mobile)는 그대로.
 ## 고른 값은 세이브와 별개인 user://graphics.cfg 에 — 다음 실행·다른 판에도 간다(세이브 옮기기에는 안 실린다).
 ## 환경은 environment_profile.gd 가 그룹 "env_profile" 에 들고, 시작할 때 apply_env 를 부른다. 날씨·밤 스크립트가 바꾸는 값(안개·빛)은 안 건드린다.
 
