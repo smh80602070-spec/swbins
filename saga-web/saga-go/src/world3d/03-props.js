@@ -697,7 +697,7 @@
 
   function syncProps(W) {
     var pos = core.save.player.pos;
-    var R = PROP_R(), ZM = +core.tuned('go.zoneM', 576), ZB = ZM > 0 && +core.tuned('go.zoneBuild', 1) === 1 && !!global.DG.zoneCut, zx = ZB ? Math.floor(pos.x / ZM + 0.5) - 0.5 : 0, zy = ZB ? Math.floor(pos.y / ZM + 0.5) - 0.5 : 0, ZP = ZB ? 96 : 0;   /* W-0414 ② 구역(ZM m 정사각) 통째로 — 들 때 한 번 세우고(넘김 막 아래) 구역 안에선 다시 안 훑는다 · ZP 가장자리 여유 */
+    var R = PROP_R(), ZM = +core.tuned('go.zoneM', 576), ZB = ZM > 0 && +core.tuned('go.zoneBuild', 1) === 1 && !!global.DG.zoneCut, zx = ZB ? (global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 0, ZM) : Math.floor(pos.x / ZM + 0.5)) - 0.5 : 0, zy = ZB ? (global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 1, ZM) : Math.floor(pos.y / ZM + 0.5)) - 0.5 : 0, ZP = ZB ? 96 : 0;   /* W-0414 ② 구역(ZM m 정사각) 통째로 — 들 때 한 번 세우고(넘김 막 아래) 구역 안에선 다시 안 훑는다 · ZP 가장자리 여유 */
     /* 지도가 깔렸는지 — 깔린 자리와 안 깔린 자리(오프라인·타일 실패)에서
        세우는 것이 다르다. 캐시 키에도 넣어야 상태가 바뀔 때 다시 세운다 */
     var mapped = !!(W.tilesUsable && W.tilesUsable());

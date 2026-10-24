@@ -1919,7 +1919,7 @@
         if (Math.abs(e.kx) < 4) { e.kx = 0; }
       }
       if (e.x < 20) { e.x = 20; e.dir = 1; e.kx = 0; }
-      if (e.x > stg.width - 40) { e.x = stg.width - 40; e.dir = -1; e.kx = 0; } var epl = e.pi >= 0 && !e.air && +core.tuned('side.platEdge', 1) === 1 ? stg.plats[e.pi] : null; if (epl && (Math.abs(e.y + e.h - 12 - epl[1]) > 3 || e.x < epl[0] - 40 || e.x + e.w > epl[0] + epl[2] + 40)) { e.pi = -1; epl = null; }   /* 다른 데로 옮겨진 적(습격·진단)은 발판 기억을 버린다 */ if (epl) { if (e.x < epl[0]) { e.x = epl[0]; e.dir = 1; e.kx = 0; } else if (e.x + e.w > epl[0] + epl[2]) { e.x = epl[0] + epl[2] - e.w; e.dir = -1; e.kx = 0; } }   /* 발판 위 적은 끝에서 돌아선다 — 허공으로 걸어 나가 그 높이에 떠 있었다(10-25 촬영: 발판 없는 x 에 발 높이 482·312) */
+      if (e.x > stg.width - 40) { e.x = stg.width - 40; e.dir = -1; e.kx = 0; } var epl = e.pi >= 0 && !e.air && +core.tuned('side.platEdge', 1) === 1 ? stg.plats[e.pi] : null; if (epl && (Math.abs(e.y + e.h - 12 - epl[1]) > 3 || e.x < epl[0] - 40 || e.x + e.w > epl[0] + epl[2] + 40)) { e.pi = -1; epl = null; }   /* 다른 데로 옮겨진 적(습격·진단)은 발판 기억을 버린다 */ if (epl) { if (e.x < epl[0]) { e.x = epl[0]; if (!near) { e.dir = 1; } e.kx = 0; } else if (e.x + e.w > epl[0] + epl[2]) { e.x = epl[0] + epl[2] - e.w; if (!near) { e.dir = -1; } e.kx = 0; } }   /* 쫓는 중엔 끝에서 서서 나를 본다(매 프레임 뒤집기 깜빡임 — 리뷰) */   /* 발판 위 적은 끝에서 돌아선다 — 허공으로 걸어 나가 그 높이에 떠 있었다(10-25 촬영: 발판 없는 x 에 발 높이 482·312) */
       e.cd -= dt;
       if (overlap({ x: p.x, y: p.y, w: P_W, h: P_H }, e) && e.cd <= 0 && !e.air) {   // W-0345 뜬 적은 몸으로 못 친다
         e.cd = 1.0;

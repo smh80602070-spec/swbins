@@ -404,10 +404,10 @@
     /* 밤에는 지도 자체가 어두워야 한다 — 타일 색에 조명의 물감을 곱한다.
        (지도 이미지는 늘 한낮 그림이라, 안 곱하면 밤에 땅만 대낮이다) */
     var tint = lightNow ? lightNow.tint : 0xffffff;
-    var gk = (+core.tuned('go.zoneM', 576) > 0 ? Math.floor(pos.x / +core.tuned('go.zoneM', 576) + 0.5) + 'z' + Math.floor(pos.y / +core.tuned('go.zoneM', 576) + 0.5) + '/' : '') + cx + '/' + cy + '/' + mpp + '/' + tint + '/' + R + '/' + (RELIEF_ON() ? 1 : 0), gNow = Date.now();
+    var gk = (+core.tuned('go.zoneM', 576) > 0 ? (global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 0, +core.tuned('go.zoneM', 576)) : Math.floor(pos.x / +core.tuned('go.zoneM', 576) + 0.5)) + 'z' + (global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 1, +core.tuned('go.zoneM', 576)) : Math.floor(pos.y / +core.tuned('go.zoneM', 576) + 0.5)) + '/' : '') + cx + '/' + cy + '/' + mpp + '/' + tint + '/' + R + '/' + (RELIEF_ON() ? 1 : 0), gNow = Date.now();
     if (gk === groundKey && gNow - groundAt < GROUND_REFRESH_MS) { return; }
     var groundPending = false;
-    syncGen++; var gZM = +core.tuned('go.zoneGround', 1) === 1 ? +core.tuned('go.zoneM', 576) : 0, gZP = 160, gZx0 = gZM ? (Math.floor(pos.x / gZM + 0.5) - 0.5) * gZM - gZP : 0, gZy0 = gZM ? (Math.floor(pos.y / gZM + 0.5) - 0.5) * gZM - gZP : 0, gZx1 = gZx0 + gZM + 2 * gZP, gZy1 = gZy0 + gZM + 2 * gZP;
+    syncGen++; var gZM = +core.tuned('go.zoneGround', 1) === 1 ? +core.tuned('go.zoneM', 576) : 0, gZP = 160, gZx0 = gZM ? ((global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 0, gZM) : Math.floor(pos.x / gZM + 0.5)) - 0.5) * gZM - gZP : 0, gZy0 = gZM ? ((global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 1, gZM) : Math.floor(pos.y / gZM + 0.5)) - 0.5) * gZM - gZP : 0, gZx1 = gZx0 + gZM + 2 * gZP, gZy1 = gZy0 + gZM + 2 * gZP;
 
     for (var dy = -R; dy <= R; dy++) {
       for (var dx = -R; dx <= R; dx++) {
@@ -1186,7 +1186,7 @@
 
   function syncProps(W) {
     var pos = core.save.player.pos;
-    var R = PROP_R(), ZM = +core.tuned('go.zoneM', 576), ZB = ZM > 0 && +core.tuned('go.zoneBuild', 1) === 1 && !!global.DG.zoneCut, zx = ZB ? Math.floor(pos.x / ZM + 0.5) - 0.5 : 0, zy = ZB ? Math.floor(pos.y / ZM + 0.5) - 0.5 : 0, ZP = ZB ? 96 : 0;   /* W-0414 ② 구역(ZM m 정사각) 통째로 — 들 때 한 번 세우고(넘김 막 아래) 구역 안에선 다시 안 훑는다 · ZP 가장자리 여유 */
+    var R = PROP_R(), ZM = +core.tuned('go.zoneM', 576), ZB = ZM > 0 && +core.tuned('go.zoneBuild', 1) === 1 && !!global.DG.zoneCut, zx = ZB ? (global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 0, ZM) : Math.floor(pos.x / ZM + 0.5)) - 0.5 : 0, zy = ZB ? (global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 1, ZM) : Math.floor(pos.y / ZM + 0.5)) - 0.5 : 0, ZP = ZB ? 96 : 0;   /* W-0414 ② 구역(ZM m 정사각) 통째로 — 들 때 한 번 세우고(넘김 막 아래) 구역 안에선 다시 안 훑는다 · ZP 가장자리 여유 */
     /* 지도가 깔렸는지 — 깔린 자리와 안 깔린 자리(오프라인·타일 실패)에서
        세우는 것이 다르다. 캐시 키에도 넣어야 상태가 바뀔 때 다시 세운다 */
     var mapped = !!(W.tilesUsable && W.tilesUsable());
@@ -2339,7 +2339,7 @@
 
   var zoneWalls = null; function syncLight(dt) {
     var L = lightingAt(forcedMs === null ? undefined : forcedMs, weatherKey());
-    lightNow = L; var ZCw = global.DG.zoneCut, zwM = +core.tuned('go.zoneM', 576); if (ZCw && ZCw.walls && scene && T) { if (!zoneWalls) { zoneWalls = ZCw.walls(scene, T); } if (zoneWalls) { if (zwM > 0) { var zpp = core.save.player.pos, zx0 = (Math.floor(zpp.x / zwM + 0.5) - 0.5) * zwM - 130, zy0 = (Math.floor(zpp.y / zwM + 0.5) - 0.5) * zwM - 130; zoneWalls.set(zx0, zy0, zx0 + zwM + 260, zy0 + zwM + 260, scene.fog && scene.fog.color ? scene.fog.color.getHex() : L.bg, 120); } else { zoneWalls.group.visible = false; } } }   /* W-0417 구역 경계 안개 벽 — 안 지은 땅(구역+160m 밖)을 가린다 */
+    lightNow = L; var ZCw = global.DG.zoneCut, zwM = +core.tuned('go.zoneM', 576); if (ZCw && ZCw.walls && scene && T) { if (!zoneWalls) { zoneWalls = ZCw.walls(scene, T); } if (zoneWalls) { if (zwM > 0) { var zpp = core.save.player.pos, zx0 = ((global.DG.goZoneIdx ? global.DG.goZoneIdx(zpp, 0, zwM) : Math.floor(zpp.x / zwM + 0.5)) - 0.5) * zwM - 130, zy0 = ((global.DG.goZoneIdx ? global.DG.goZoneIdx(zpp, 1, zwM) : Math.floor(zpp.y / zwM + 0.5)) - 0.5) * zwM - 130; zoneWalls.set(zx0, zy0, zx0 + zwM + 260, zy0 + zwM + 260, scene.fog && scene.fog.color ? scene.fog.color.getHex() : L.bg, 120); } else { zoneWalls.group.visible = false; } } }   /* W-0417 구역 경계 안개 벽 — 안 지은 땅(구역+160m 밖)을 가린다 */
     var pos = core.save.player.pos; if (global.DG.ground3d) { global.DG.ground3d.ridge(scene); global.DG.ground3d.follow(pos, scene.fog && scene.fog.color ? scene.fog.color.getHex() : null, L.bg); global.DG.ground3d.turf(scene, pos); } if (global.DG.farland3d) { global.DG.farland3d.follow(scene, pos, camera, L); }   /* W-0200 먼 산 고리·발밑 잔풀 */ if (global.DG.skypano3d) { global.DG.skypano3d.apply(L, { three: T, scene: scene, camera: camera, pos: pos, dark: eventDark }); }   // W-0140 그린 하늘·그 해 자리·지평선 색(skypano3d.js)
     /* 해는 늘 플레이어 곁을 따라다닌다 — 그림자 상자를 좁게 유지하려고.
        높이·방위만 시각이 정한다 */

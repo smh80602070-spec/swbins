@@ -1551,10 +1551,10 @@
       }
     }
 
-    var best = null, bd = REACH;
+    var best = null, bd = REACH, fishFar = null;
     for (i = 0; i < props.length; i++) {
       if (props[i].deco) { continue; }    // 숲 고리 장식(PLAN 40절 PHASE 3) — 손이 안 닿는다
-      d = Math.hypot(props[i].x - player.x, props[i].y - player.y); if (VD.PROPS[props[i].kind] && VD.PROPS[props[i].kind].gather === 'fish') { if (d > REACH) { d = Math.max(REACH * 0.95, d - Math.max(0, CAST_R() - REACH)) + d * 0.0001; } }   // W-0416 낚시터는 줄 거리만큼 멀리서도
+      d = Math.hypot(props[i].x - player.x, props[i].y - player.y); if (d > REACH && d < CAST_R() && VD.PROPS[props[i].kind] && VD.PROPS[props[i].kind].gather === 'fish') { if (!fishFar || d < fishFar.dist) { fishFar = { type: 'prop', obj: props[i], dist: d }; } continue; }   // W-0419 줄 거리 낚시터는 손 닿는 다른 것이 없을 때만(옆 주민을 가로챘다 — 리뷰)   // W-0416 낚시터는 줄 거리만큼 멀리서도
       if (d < bd) { bd = d; best = { type: 'prop', obj: props[i], dist: d }; }
     }
     for (i = 0; i < residents.length; i++) {
@@ -1575,7 +1575,7 @@
       d = Math.hypot(vis[i].x - player.x, vis[i].y - player.y);
       if (d < bd) { bd = d; best = { type: 'npc', obj: vis[i], dist: d }; }
     }
-    return best;
+    return best || fishFar;
   }
 
   /** 그 사물을 오늘 이미 썼나 */

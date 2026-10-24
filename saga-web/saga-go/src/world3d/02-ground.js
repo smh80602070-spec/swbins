@@ -102,10 +102,10 @@
     /* 밤에는 지도 자체가 어두워야 한다 — 타일 색에 조명의 물감을 곱한다.
        (지도 이미지는 늘 한낮 그림이라, 안 곱하면 밤에 땅만 대낮이다) */
     var tint = lightNow ? lightNow.tint : 0xffffff;
-    var gk = (+core.tuned('go.zoneM', 576) > 0 ? Math.floor(pos.x / +core.tuned('go.zoneM', 576) + 0.5) + 'z' + Math.floor(pos.y / +core.tuned('go.zoneM', 576) + 0.5) + '/' : '') + cx + '/' + cy + '/' + mpp + '/' + tint + '/' + R + '/' + (RELIEF_ON() ? 1 : 0), gNow = Date.now();
+    var gk = (+core.tuned('go.zoneM', 576) > 0 ? (global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 0, +core.tuned('go.zoneM', 576)) : Math.floor(pos.x / +core.tuned('go.zoneM', 576) + 0.5)) + 'z' + (global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 1, +core.tuned('go.zoneM', 576)) : Math.floor(pos.y / +core.tuned('go.zoneM', 576) + 0.5)) + '/' : '') + cx + '/' + cy + '/' + mpp + '/' + tint + '/' + R + '/' + (RELIEF_ON() ? 1 : 0), gNow = Date.now();
     if (gk === groundKey && gNow - groundAt < GROUND_REFRESH_MS) { return; }
     var groundPending = false;
-    syncGen++; var gZM = +core.tuned('go.zoneGround', 1) === 1 ? +core.tuned('go.zoneM', 576) : 0, gZP = 160, gZx0 = gZM ? (Math.floor(pos.x / gZM + 0.5) - 0.5) * gZM - gZP : 0, gZy0 = gZM ? (Math.floor(pos.y / gZM + 0.5) - 0.5) * gZM - gZP : 0, gZx1 = gZx0 + gZM + 2 * gZP, gZy1 = gZy0 + gZM + 2 * gZP;
+    syncGen++; var gZM = +core.tuned('go.zoneGround', 1) === 1 ? +core.tuned('go.zoneM', 576) : 0, gZP = 160, gZx0 = gZM ? ((global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 0, gZM) : Math.floor(pos.x / gZM + 0.5)) - 0.5) * gZM - gZP : 0, gZy0 = gZM ? ((global.DG.goZoneIdx ? global.DG.goZoneIdx(pos, 1, gZM) : Math.floor(pos.y / gZM + 0.5)) - 0.5) * gZM - gZP : 0, gZx1 = gZx0 + gZM + 2 * gZP, gZy1 = gZy0 + gZM + 2 * gZP;
 
     for (var dy = -R; dy <= R; dy++) {
       for (var dx = -R; dx <= R; dx++) {
