@@ -135,6 +135,7 @@ func _ready() -> void:
 	_build_cells()
 	_build_units()
 	_build_camera()
+	_fit_labels()   # G-0348 카메라가 멀어지면 이름 글도 줄인다
 	_build_ui()
 	_hide_hud(true)
 	_refresh()
@@ -321,6 +322,19 @@ func _build_camera() -> void:
 	_cam_dist = fit_dist(cur_cols, cur_rows, get_viewport().get_visible_rect().size)
 	_aim_camera(ORIGIN, _cam_dist)
 	_cam.current = true
+
+
+## G-0348 이름 글은 화면 크기 고정(fixed_size)이라 카메라가 물러나도(세로 화면·큰 판) 그대로 커서 칸끼리 겹쳤다 — 물러난 만큼(CAM_DIST/거리, 0.55 까지) 줄인다
+static func label_scale(dist: float) -> float:
+	return clampf(CAM_DIST / maxf(dist, 0.01), 0.55, 1.0)
+
+
+func _fit_labels() -> void:
+	var k := label_scale(_cam_dist)
+	for uid in _units:
+		var l: Label3D = _units[uid].get("label")
+		if l != null:
+			l.pixel_size = 0.0011 * k
 
 
 ## 판 전체가 들어오는 거리 — 가로 시야(fov 50 세로 기준)로 판 너비(+여유), 세로로 깊이. 옛 8×6 가로 화면은 CAM_DIST 그대로(그보다 가깝게 안 함)

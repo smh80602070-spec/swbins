@@ -87,6 +87,10 @@ func _run() -> void:
 	# ⑦
 	var view: GDScript = load("res://games/saga_realm/world/realm_tactics_view.gd")
 	check(view != null and view.can_instantiate(), "⑦ 화면 스크립트 읽힘")
+	var k1 := float(view.call("label_scale", 17.0))
+	var k2 := float(view.call("label_scale", 40.0))
+	var fd := float(view.call("fit_dist", 12, 10, Vector2(720, 1280)))
+	check(is_equal_approx(k1, 1.0) and is_equal_approx(k2, 0.55) and fd > 17.0, "⑧ G-0348 이름 글 — 가로 그대로 ×%.2f · 멀면 ×%.2f · 세로 12×10 판 거리 %.0f" % [k1, k2, fd])
 	_finish()
 
 
