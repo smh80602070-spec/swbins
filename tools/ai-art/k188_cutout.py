@@ -161,6 +161,11 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
     if j.get('flip'):
         im = im.transpose(Image.FLIP_LEFT_RIGHT)
     A = np.asarray(im).copy(); H, W = A.shape[:2]
+    for poly in j.get('drop_poly', []):                   # 바닥 그림자·떠 있는 장식처럼 몸에 안 붙일 영역 — 지운다
+        dm = Image.new('L', (W, H), 0); ImageDraw.Draw(dm).polygon([tuple(q) for q in poly], fill=255)
+        dm = np.asarray(dm) > 0
+        keep = (A[..., 3] > 24) & ~dm
+        A[..., 3] = np.where(dm & (A[..., 3] > 0) & ~(keep), 0, A[..., 3])
     alpha = A[..., 3] > 24
     ys, xs = np.mgrid[0:H, 0:W]
     B = bones_of(j)
@@ -211,6 +216,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         for c_, (_, _, cr, cpv, cpar) in B.items():
             if cpar == n and c_ != 'weapon' and not (j.get('skirt') and cpv[1] < j['skirt']):
                 m2 = m2 | ((np.hypot(xs - cpv[0], ys - cpv[1]) < cr * 0.9) & alpha & np.isin(lab, [k, names.index(c_)]))
+        rgb = A[..., :3]                                   # 부위마다 원본에서 — 몸통 채움 색이 뒤 순서 팔·손 조각에 새지 않게(10-24 버그)
         if n in ('chest', 'hip') and fill != 'none':
             # 팔·다리에 가린 몸통·허리 자리(돌리면 드러남) — 제 캡슐 안인데 팔·다리가 가져간 곳을 둘레 색으로 채움
             a, b, rr, _, _ = B[n]
