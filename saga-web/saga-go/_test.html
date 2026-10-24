@@ -206,6 +206,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/field-combat.js"></script>
 <script src="js/runrank-core.js"></script>
 <script src="js/go-rank.js"></script>
+<script src="js/species-study.js"></script>
 <script src="js/slash3d.js"></script>
 <script src="js/adventure.js"></script>
 <script src="js/treasure.js"></script>
@@ -17644,6 +17645,33 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         var ok = !w0 && stay && n === 2 && left === 'g:boss' && at === a.id && lit && healed && w1 && back;
         return ok || ('실패 ' + JSON.stringify({ w0: w0, stay: stay, n: n, left: left, at: at, lit: lit, healed: healed, w1: w1, back: back }));
       } finally { S.cleared = keepC; C.save.rest = keepR; pos.x = px; pos.y = py; keepP.forEach(function (k, i) { S.party[i].hp = k.hp; S.party[i].down = k.down; }); if (RS._reset) { RS._reset(); } if (!S0) { FC._setStateForTest(null); } }
+    });
+    t('W-0420 종 연구 — 쳐낸 적·반응 막타·급소 막타를 종마다 세고 셋째에 덤(금 80) · 우두머리는 던지기 빼고 셋·목표 1 · 도감 칸', function () {
+      var R = DG.speciesStudy, C = DG.core; if (!R) { return '실패 DG.speciesStudy 없음'; }
+      var sv = C.save, keep = sv.goStudy, g0 = sv.player.gold || 0, d0 = sv.dust || 0, i;
+      try {
+        sv.goStudy = {}; R._reset();
+        R.onEv({ t: 'parry', uid: 901 }); R.onEv({ t: 'kill', uid: 901, kind: 'boar' }); R.flush();
+        R.onEv({ t: 'kill', uid: 902, kind: 'boar' }); R.onEv({ t: 'hit', uid: 902, react: 'melt' }); R.onEv({ t: 'weak', uid: 902 }); R.onEv({ t: 'swing' });
+        R.onEv({ t: 'kill', uid: 903, kind: 'boar' }); R.onEv({ t: 'hit', uid: 904, react: 'melt' }); R.flush();
+        var c1 = [R.count('boar', 'parried'), R.count('boar', 'react'), R.count('boar', 'weak')].join(',');
+        var gA = sv.player.gold - g0, f2 = R.record('boar', ['parried']), f3 = R.record('boar', ['parried']), gB = sv.player.gold - g0;
+        var boss = DG.fieldFoes.FOES.rex ? R.tasksOf('rex').length + '/' + R.goalOf('rex') : '3/1';
+        var v = R.view(function (s) { return s; });
+        var ok = c1 === '1,1,1' && gA === 0 && !f2.length && f3[0] === 'parried' && gB === 80 && boss === '3/1' && /연구 1\/4/.test(v) && R.doneCount('boar') === 1;
+        return ok || ('실패 ' + JSON.stringify({ c1: c1, gA: gA, f2: f2, f3: f3, gB: gB, boss: boss, v: v.slice(0, 200) }));
+      } finally { sv.goStudy = keep; sv.player.gold = g0; sv.dust = d0; R._reset(); }
+    });
+    t('W-0420 종 연구 — 과제를 다 채우면 연구 완료 덤(금 300·단사 8) 한 번 · 다시 채워도 덤 없음', function () {
+      var R = DG.speciesStudy, C = DG.core; if (!R) { return '실패 DG.speciesStudy 없음'; }
+      var sv = C.save, keep = sv.goStudy, g0 = sv.player.gold || 0, d0 = sv.dust || 0;
+      try {
+        sv.goStudy = {}; var all = ['weak', 'react', 'parried', 'thrown'], fresh = [];
+        for (var i = 0; i < 3; i++) { fresh = R.record('imp', all); }
+        var g = sv.player.gold - g0, d = sv.dust - d0, done = R.complete('imp'), again = R.record('imp', all).length;
+        var ok = fresh.indexOf('done') >= 0 && fresh.length === 5 && g === 80 * 4 + 300 && d === 2 * 4 + 8 && done && again === 0;
+        return ok || ('실패 ' + JSON.stringify({ fresh: fresh, g: g, d: d, done: done, again: again }));
+      } finally { sv.goStudy = keep; sv.player.gold = g0; sv.dust = d0; }
     });
     t('W-0379 무리 토벌 등급 — 빠르고 안 맞고 연계 12·처치 3 이면 S · 토벌 금 × 0.5 덤 · 단사 덤(그 토벌 단사만큼) · 무리 종류별 최고 기록', function () {
       var G = DG.goRank, C = DG.core; if (!G || !DG.runRankCore) { return '실패 DG.goRank 없음'; }

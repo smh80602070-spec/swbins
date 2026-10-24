@@ -100,7 +100,7 @@
     }
     var nDone = kinds.filter(complete).length, rows = '';
     kinds.forEach(function (k) {
-      var g = goalOf(k), sub = tasksOf(k).map(function (t) { var n = Math.min(count(k, t), g); return (n >= g ? '✔' : '·') + ' ' + nameOf(t, true) + ' ' + n + '/' + g; }).join(' · ');
+      var g = goalOf(k), sub = tasksOf(k).map(function (t) { var n = Math.min(count(k, t), g); return (n >= g ? '✔' : '○') + ' ' + nameOf(t, true) + ' ' + n + '/' + g; }).join(' · ');
       rows += '<div class="stat-row study-row"><span>' + esc(FOES()[k].name) + '</span><b>' + (complete(k) ? '연구 완료' : '연구 ' + doneCount(k) + '/' + tasksOf(k).length) + '</b></div>' +
         '<small class="muted">' + sub + '</small>';
     });

@@ -1949,5 +1949,22 @@
   "ticket": "W-0380",
   "since": "2026-10-23",
   "note": "D2(claude 2026-10-23): 폰 촬영 w380_saga-go.png Read ○"
+ }, {
+  "id": "go.speciesStudy",
+  "name": "종 연구 과제(W-0420 ① 웹 역이식 — 고돗 G-0371) — 종마다 급소·원소 반응·쳐낸 적·던진 적 막타 과제 넷(우두머리는 셋·목표 1), 과제마다 금 80·단사 2, 다 채우면 금 300·단사 8 · 도감 창 「🔬 들판 짐승 연구」 · 손잡이 go.study",
+  "files": [
+   "js/species-study.js",
+   "src/field-combat/02.js",
+   "src/ui/01.js"
+  ],
+  "tests": [
+   "W-0420 종 연구"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 qc+claude",
+  "fun": {},
+  "ticket": "W-0420",
+  "since": "2026-10-25",
+  "note": "D1(오퍼스 10-25): 진단 둘 — 사건 순서 react→kill→hit→weak 를 kill 뒤 잠깐 들고 셈. 덤은 웹 금 단위로 줄임(고돗 냥 800/3000). D2: shot-go-study.mjs → shots/w0420 study-pc·phone Read ○(도감 맨 위 「🔬 들판 짐승 연구」·종마다 연구 n/4·과제 ✔/○)."
  }
 ]
