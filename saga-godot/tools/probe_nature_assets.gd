@@ -4,12 +4,13 @@ extends SceneTree
 ## ③ clutter·하층·들꽃·관목 표 전부 열리고 높이×배율이 0.2~1.7m 안 ④ 마을 나무 표에 옛 variants 경로가 없다 ⑤ G-0021 폐허·마을 소품 표가 전부 새 world GLB(높이×배율 0.05~2.0m)
 
 const VB := preload("res://games/saga_go/world/vegetation_builder.gd")
+const WorldAsset := preload("res://saga_core/world/world_asset.gd")
 
 var fails := 0
 
 
 func _height(path: String) -> float:
-	var ps := load(path) as PackedScene
+	var ps := load(WorldAsset.nature(path)) as PackedScene   # G-0357 게임이 실제로 그리는 파일(사실판이 있으면 그것 — GLBUtils.extract_mesh 와 같은 길)
 	if ps == null:
 		return -1.0
 	var inst := ps.instantiate()
@@ -46,7 +47,7 @@ func _check(label: String, path: String, scale: float, lo: float, hi: float) -> 
 func _init() -> void:
 	for region: String in VB.REGION_TREE_VARIANTS:
 		for v: Dictionary in VB.REGION_TREE_VARIANTS[region]:
-			_check("나무 " + region, v.glb, v.scale, 4.9, 5.65)
+			_check("나무 " + region, v.glb, v.scale, 4.9, 6.0)   # G-0357 사실판(G-0272) 높이 비 0.93~1.06 — 툰 5.65 의 1.06배까지
 			if String(v.glb).contains("generated/variants"):
 				fails += 1
 				print("  FAIL 옛 variants 경로 ", v.glb)
