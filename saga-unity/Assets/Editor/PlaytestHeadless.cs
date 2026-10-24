@@ -191,6 +191,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoFriendship.Run()) _hadError = true; // tasks U-0199 동료 우정(우정·재능 재료 되돌림)
                 if (!PlaytestGoStandoff.Run()) _hadError = true; // tasks U-0202 대치(적·싸움·자리 되돌림)
                 if (!PlaytestGoWeakPart.Run()) _hadError = true; // tasks U-0203 보스 약점(보스 되살림)
+                if (!PlaytestGoEnemyFixes.Run()) _hadError = true; // tasks U-0211 들판 적 고침 — 잡힌 채 쓰러짐·고리 끊김·제단 한 대 끊김(적 되살림)
                 if (!PlaytestGoAnimals.Run()) _hadError = true; // R-3 un.go.animals 동물 배회·놀람·무리·나그네(자리 되돌림)
                 if (!PlaytestGoRestSites.Run()) _hadError = true; // tasks U-0168 모닥불 쉼터(쉼터·체력·적·자리·부활 자리 되돌림)
                 if (!PlaytestGoMountFight.Run()) _hadError = true; // tasks U-0171 말 위 전투 — 배율·평타·돌진·막는 손·낙마·안 내림(탈것·적·전투·자리 되돌림)

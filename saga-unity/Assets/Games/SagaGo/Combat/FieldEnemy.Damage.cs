@@ -285,7 +285,7 @@ namespace Saga.Go.Combat
             if (HoldState == Hold.None) return;
             HoldState = Hold.None;
             transform.position = Grounded(landing);
-            _timer = 0f;
+            if (Alive) _timer = 0f; // tasks U-0211 잡힌 채 쓰러졌으면 부활 타이머(90초·다시 안 섬)를 그대로 둔다
         }
 
         /// <summary>넘어뜨린다(sec 초 동안 비틀림 상태로 멎고 몸이 눕는다). 보스류·굴복한 인물은 안 넘어진다.</summary>

@@ -135,6 +135,7 @@ namespace Saga.EditorTools
                 CheckNpcModels(); // PLAN.md 106-4 — 씬을 안 바꾸는 검사라 앞쪽 아무 데나.
                 CheckLockOn(); // PLAN.md 106-1 — 더미 처치가 레벨업을 부를 수 있어 CheckLevelUpCut 뒤.
                 CheckEnemyTelegraph();
+                CheckEnemyWake(); // tasks U-0211 감지 반경 밖에서 맞아도 깨어남
                 if (!PlaytestDungeonBossIntro.Run()) _hadError = true; // PLAN.md 106-7 층 두목 등장 컷.
                 if (!PlaytestNpcModels.Dungeon()) _hadError = true; // 106-4 능묘지기 전용 몸(읽기만)
                 if (!PlaytestDungeonParty.Run()) _hadError = true; // PLAN.md 106-6 파티·소환 — 더미로 보고 자리·게이지를 되돌린다.

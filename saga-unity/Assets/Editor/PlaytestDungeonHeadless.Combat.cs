@@ -340,6 +340,37 @@ namespace Saga.EditorTools
             }
         }
 
+        /// <summary>tasks U-0211 — 감지 반경 밖에서 맞은 적이 Idle 로 남지 않고 다음 Tick 에 쫓는지(반경 밖·안 맞음은 그대로 Idle).</summary>
+        private static void CheckEnemyWake()
+        {
+            const string T = "[PlaytestDungeonHeadless] wake";
+            var playerGo = GameObject.FindWithTag("Player");
+            if (playerGo == null) { Debug.LogError($"{T} — Player 없음"); _hadError = true; return; }
+            var others = DisableOtherEnemies();
+            DungeonEnemy e = null;
+            try
+            {
+                e = SpawnDummyEnemy(playerGo.transform.position + new Vector3(12f, 0f, 0f));
+                SetPrivate(e, "_curHp", 9999f);
+                e.Tick(0.016f);
+                bool idle = !e.IsEngaged;
+                e.TakeDamage(1f);
+                e.Tick(0.016f);
+                if (!idle || !e.IsEngaged)
+                {
+                    Debug.LogError($"{T} — 12m 밖에서 맞았는데 안 깨어남(맞기 전 idle={idle} 뒤 engaged={e.IsEngaged})");
+                    _hadError = true;
+                    return;
+                }
+                Debug.Log($"{T} OK - 12m(감지 밖) 안 맞으면 Idle · 맞으면 다음 Tick 에 Chase");
+            }
+            finally
+            {
+                if (e != null) Object.Destroy(e.gameObject);
+                RestoreEnemies(others);
+            }
+        }
+
         /// <summary>PLAN.md 106-1 "적 공격 예고" — `DungeonEnemy.Tick()`에 시간을 직접
         /// 넣어 예비동작 중엔 안 맞고·판정에 맞고·반경 밖이면 헛손질·회피 무적이면
         /// 완벽 회피(반격 창)·반격 평타 2배·강공격이 예비동작을 끊는지 확인한다.</summary>

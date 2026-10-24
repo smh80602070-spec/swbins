@@ -223,6 +223,7 @@ namespace Saga.Dungeon.World
         private const float DeathAnimDelaySec = 1.2f;
 
         private State _state = State.Idle;
+        private bool _hitWake; // tasks U-0211 감지 반경 밖에서 맞아도 깨어난다(다음 Tick 이 Idle→Chase 같은 길 — 월드 보스 시작·컷도)
         private float _curHp;
         private float _attackCooldown;
         private Transform _player;
@@ -508,7 +509,7 @@ namespace Saga.Dungeon.World
 
             if (_state == State.Idle)
             {
-                if (dist <= aggroRadius || IsTaunted)
+                if (dist <= aggroRadius || IsTaunted || _hitWake)
                 {
                     _state = State.Chase;
                     if (isWorldBoss)
@@ -809,6 +810,7 @@ namespace Saga.Dungeon.World
             }
             else
             {
+                if (_state == State.Idle) _hitWake = true;
                 _animator?.SetTrigger("Hit");
                 if (!HasHitClip && _visualGo != null) Flinch(); // 피격 클립이 없는 몸은 움찔(그림만)
             }

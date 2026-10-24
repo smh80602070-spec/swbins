@@ -743,7 +743,11 @@ namespace Saga.Go.Combat
         public void Tick(float dt)
         {
             TickStatus(dt);
-            if (CurrentState != State.Telegraph && _tidePts.Count > 0) ClearMove(); // 예고가 끊겼으면(비틀·얼음·쓰러짐) 밀물 원을 거둔다
+            if (CurrentState != State.Telegraph)
+            {
+                if (_tidePts.Count > 0 || _haloInner > 0f || _moveAtPoint) ClearMove(); // 예고가 끊겼으면(비틀·얼음·쓰러짐·쳐내기·방패 깨짐·귀가) 밀물 원·고리 테를 거둔다(tasks U-0211 고리도)
+                _siegeStrike = false; // tasks U-0211 제단 노린 한 대가 끊겼으면 다음 한 대는 다시 나를 친다
+            }
             if (IsGuardian && !BossStanding && Alive)
             {
                 gameObject.SetActive(false); // 세이브에서 이미 쓰러뜨린 수호장 — 꽃을 받고 150초가 지나기 전엔 안 선다(109-14-10 `GuardianBloom` 이 다시 세운다).
@@ -1105,6 +1109,12 @@ namespace Saga.Go.Combat
             CurrentState = State.Return;
         }
 
+        /// <summary>진단용(tasks U-0211) — 예고를 곧바로 건다(siege 면 제단 노린 한 대).</summary>
+        public void BeginTelegraphForTest(bool siege) { _siegeStrike = siege; BeginTelegraph(); }
+        /// <summary>진단용(tasks U-0211) — 제단 노린 한 대 표시·고리 테가 보이나.</summary>
+        public bool SiegeStrikeNow => _siegeStrike;
+        public bool HaloRingShown => _haloRing != null && _haloRing.enabled;
+
         /// <summary>진단용 — 곧바로 다시 세운다.</summary>
         public void ReviveNow() => Revive();
 
@@ -1241,12 +1251,19 @@ namespace Saga.Go.Combat
             }
         }
 
+        private static readonly RaycastHit[] GroundHits = new RaycastHit[32];
+
         private static Vector3 Grounded(Vector3 p)
         {
-            var hits = Physics.RaycastAll(new Vector3(p.x, p.y + 30f, p.z), Vector3.down, 80f, ~0, QueryTriggerInteraction.Ignore);
+            // tasks U-0211 — 매 프레임·적마다 배열을 새로 만들지 않게 정적 버퍼(넘치면 예전처럼 전부 받는다 — 고르는 규칙 그대로)
+            Vector3 from = new Vector3(p.x, p.y + 30f, p.z);
+            int n = Physics.RaycastNonAlloc(from, Vector3.down, GroundHits, 80f, ~0, QueryTriggerInteraction.Ignore);
+            RaycastHit[] hits = GroundHits;
+            if (n >= GroundHits.Length) { hits = Physics.RaycastAll(from, Vector3.down, 80f, ~0, QueryTriggerInteraction.Ignore); n = hits.Length; }
             float best = float.NegativeInfinity;
-            foreach (var h in hits)
+            for (int i = 0; i < n; i++)
             {
+                var h = hits[i];
                 if (h.collider is CharacterController) continue;
                 if (h.point.y > p.y + 3f) continue; // 머리 위 지붕·나무 윗면엔 안 올라탄다
                 if (h.point.y > best) best = h.point.y;
