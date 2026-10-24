@@ -61,6 +61,29 @@ const WET_SCAN := 5.0
 var wet := 0.0
 var _wet_mats: Array[ShaderMaterial] = []
 var _wet_std: Array[StandardMaterial3D] = []
+## G-0363 바람 날 풀 눕힘 — 풀 셰이더(grass_blades)의 wind_strength 를 날씨 배율만큼(처음 값은 meta 로 기억), 초당 0.5 씩 다가감.
+const GRASS_SHADER := "res://saga_core/shaders/grass_blades.gdshader"
+const WIND_MUL := {"wind": 2.6, "rain": 1.6, "snow": 1.3}
+const GRASS_WIND_DEFAULT := 0.16   # grass_blades.gdshader wind_strength 기본값(안 넣은 손잡이는 get 이 null)
+var wind_k := 1.0
+var _grass: Array[ShaderMaterial] = []
+var _wind_sent := -1.0
+
+
+## 젖음·바람 배율 목표(순수)
+static func wind_target(k: String) -> float:
+	return float(WIND_MUL.get(k, 1.0))
+
+
+static func grass_mats(root: Node) -> Array[ShaderMaterial]:
+	var out: Array[ShaderMaterial] = []
+	if root == null:
+		return out
+	for n in root.find_children("*", "GeometryInstance3D", true, false):
+		var m := (n as GeometryInstance3D).material_override as ShaderMaterial
+		if m != null and m.shader != null and m.shader.resource_path == GRASS_SHADER and not out.has(m):
+			out.append(m)
+	return out
 var _wet_scan := 0.0
 var _wet_sent := -1.0
 
@@ -91,7 +114,17 @@ func _wet_tick(delta: float) -> void:
 		_wet_scan = WET_SCAN
 		_wet_mats = terrain_mats(get_tree().current_scene)
 		_wet_std = std_wet_mats(get_tree().current_scene)
+		_grass = grass_mats(get_tree().current_scene)
 		_wet_sent = -1.0
+		_wind_sent = -1.0
+	wind_k = move_toward(wind_k, wind_target(key), delta * 0.5)
+	if absf(wind_k - _wind_sent) > 0.02:
+		_wind_sent = wind_k
+		for g in _grass:
+			if not g.has_meta(&"wind_base"):
+				var ws = g.get_shader_parameter("wind_strength")
+				g.set_meta(&"wind_base", float(ws) if ws != null else GRASS_WIND_DEFAULT)
+			g.set_shader_parameter("wind_strength", float(g.get_meta(&"wind_base")) * wind_k)
 	if absf(wet - _wet_sent) > 0.01:
 		_wet_sent = wet
 		for m in _wet_mats:
@@ -181,6 +214,7 @@ func _ready() -> void:
 	_we = get_parent().get_node_or_null("WorldEnvironment") as WorldEnvironment
 	refresh_now()
 	wet = 1.0 if key == "rain" else 0.0   # G-0360 들어올 때 이미 비면 땅도 이미 젖어 있다
+	wind_k = wind_target(key)   # G-0363 들어올 때 바람이면 이미 분다
 
 
 func _process(delta: float) -> void:

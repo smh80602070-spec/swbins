@@ -61,6 +61,10 @@ func _init() -> void:
 	print("GO_WEATHER wet 비10초 %.2f · 그침30초 %.2f · 꽉 참 %.2f" % [w1, w2, w3])
 	if absf(w1 - 0.5) > 0.01 or absf(w2 - 0.5) > 0.01 or w3 != 1.0:
 		_fail("G-0359 젖음 셈 %.2f·%.2f·%.2f" % [w1, w2, w3])
+	var wt := [float(FallGd.call("wind_target", "wind")), float(FallGd.call("wind_target", "rain")), float(FallGd.call("wind_target", "clear"))]
+	print("GO_WEATHER wind 배율 %s" % [wt])
+	if wt != [2.6, 1.6, 1.0]:
+		_fail("G-0363 바람 배율 %s" % [wt])
 	WeatherGd.force("rain")
 	var fall2: Node = FallGd.new()
 	root.add_child(fall2)

@@ -11,6 +11,7 @@ extends "res://saga_core/world/weather_visual.gd"
 func _ready() -> void:
 	refresh_now()
 	wet = 1.0 if key == "rain" else 0.0   # G-0359 들어올 때 이미 비면 땅도 이미 젖어 있다
+	wind_k = wind_target(key)   # G-0363
 
 
 func key_now() -> String:
