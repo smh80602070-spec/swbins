@@ -174,6 +174,8 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
     for k, n in enumerate(names):
         a, b, r, _, _ = B[n]
         d = seg_dist(xs, ys, a, b) - r * (1.15 if n in FRONT else 1.0)
+        if j.get('skirt_cut') and j.get('skirt') and n in ('hip', 'chest'):   # 무릎 아래 단 — 둥근 끝이 단 아래 정강이를 먹지 않게 단에서 자름
+            d = np.where(ys > j['skirt'] + 6, 1e9, d)
         score[k] = d
     lab = np.argmin(score, 0)
     for s_, L_ in (('R', j['N']), ('L', j.get('F') or {})):

@@ -1,12 +1,27 @@
 {
- "generator": "tools/char-forge/cutout_parts.py (Blender 옆모습 부위 렌더 + 무기 부위)",
- "license": "MIT",
- "model": "",
- "model_license": "",
- "note": "렌더 대역(칠하기 미완, K-0150) · K-0169 어깨를 몸통에·무기 부위·attack 끝 자세",
  "id": "cutout_sg_zhugeliang",
- "picked_candidate": "render",
- "base_body": "tools/char-forge/_out/vroid/sg_zhugeliang/sg_zhugeliang.glb",
- "packed_by": "K-0169 tools/char-forge/cutout_parts.py --weapon → tools/ai-art/pack_cutout.py k169(무기 extra·안쪽 팔다리 어둡게·walk/attack 클립)",
- "weapon": "saga-assets/world/toon/wpn_dagger_legend.glb"
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short dark hair, gentle smile, black square scholar cap, long green robe over white inner robe, holding a round feather hand fan, cloth shoes, adult, tall, realistic body proportions, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, arms slightly away from body, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view",
+ "seed": 2026102493,
+ "steps": 30,
+ "cfg_scale": 6.0,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  768,
+  1152
+ ],
+ "seconds": 82.1,
+ "date": "2026-10-24",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "ticket": "K-0188",
+ "from": "tools/ai-art/_out/k188/p/sg_zhugeliang/side.png",
+ "tool": "tools/ai-art/k188_cutout.py cut",
+ "far": "copy",
+ "fill": "sd",
+ "joints": "tools/ai-art/k188/sg_zhugeliang.joints.json",
+ "packed_by": "K-0188 tools/ai-art/k188/person.sh(옆모습 일러스트 → 관절 → 가린 몸통 로컬 SD 인페인트 → k188_cutout.py cut) → publish.py",
+ "judge": "○"
 }

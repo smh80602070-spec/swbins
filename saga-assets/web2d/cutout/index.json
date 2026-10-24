@@ -1,6 +1,34 @@
 {
  "pools": {
+  "eu_davinci": "eu_davinci",
+  "eu_leonidas": "eu_leonidas",
+  "fu_jongwang": "fu_jongwang",
+  "hl_mukhyang": "hl_mukhyang",
+  "jp_hanzo": "jp_hanzo",
+  "jp_himiko": "jp_himiko",
+  "jp_musashi": "jp_musashi",
+  "jp_tomoegozen": "jp_tomoegozen",
+  "jp_yoshitsune": "jp_yoshitsune",
+  "kr_gyebaek": "kr_gyebaek",
+  "rf_gongsunzan": "rf_gongsunzan",
+  "rf_kongrong": "rf_kongrong",
+  "rf_lijue": "rf_lijue",
+  "rf_liubiao": "rf_liubiao",
+  "rf_sunce": "rf_sunce",
+  "rf_yuanshao": "rf_yuanshao",
+  "rf_yuanshu": "rf_yuanshu",
+  "ru_geohae": "ru_geohae",
+  "sg_caocao": "sg_caocao",
+  "sg_ganning": "sg_ganning",
+  "sg_huangzhong": "sg_huangzhong",
+  "sg_liubei": "sg_liubei",
+  "sg_lubu": "sg_lubu",
+  "sg_sunquan": "sg_sunquan",
+  "sg_taishici": "sg_taishici",
   "sg_zhugeliang": "sg_zhugeliang",
-  "hl_mukhyang": "hl_mukhyang"
+  "tb_baekgi": "tb_baekgi",
+  "wd_genghis": "wd_genghis",
+  "wd_ibnsina": "wd_ibnsina",
+  "wd_shaka": "wd_shaka"
  }
 }

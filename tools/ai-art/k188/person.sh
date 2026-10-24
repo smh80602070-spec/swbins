@@ -31,8 +31,10 @@ if [ "$STEP" = cut ]; then
 import sys, json, os
 from PIL import Image
 i, v, d = sys.argv[1:4]
-b = json.load(open('tools/ai-art/batches/k188_side30.json', encoding='utf-8'))
-it = next(x for x in b['items'] if x['id'] == i + '_side')
+for bf in ('k188_side30', 'k188_side'):   # ① 주인공(sg_zhugeliang)은 옛 배치에
+    b = json.load(open(f'tools/ai-art/batches/{bf}.json', encoding='utf-8'))
+    it = next((x for x in b['items'] if x['id'] == i + '_side'), None)
+    if it: break
 src = Image.open(f'tools/ai-art/_out/k188/side/{i}_side_v{v}.png').convert('RGB')
 j = json.load(open(d + '/joints.json'))
 if json.load(open(d + '/flip.json')).get('flip') if os.path.exists(d + '/flip.json') else False:
