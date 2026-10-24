@@ -9,6 +9,7 @@
 - 상태파일 꼴은 run_all.sh 와 같다(`chunk n: ok/fail` · `done`). 계정 이름은 `kaggle config view` 에서, 토큰은 %USERPROFILE%\\.kaggle (커밋 금지).
 - 무료 한도(주 30h)는 사용자 계정 — 걸린 시간은 times.json·상태파일에 남긴다. 같은 배치를 로컬 사슬과 동시에 돌리지 말 것(같은 _out).
 """
+import atexit
 import glob
 import hashlib
 import json
@@ -55,6 +56,7 @@ def out_dir(b, path):
 
 def build(batches, nv_arg):
     d = tempfile.mkdtemp(prefix='k140ds_')
+    atexit.register(shutil.rmtree, d, True)  # 끝나면 지움 — 안 지워 Temp 에 211개 21GB 쌓였던 일(10-25)
     for sub in ('ai-art', 'nodes', 'batches', 'init'):
         os.makedirs(os.path.join(d, sub))
     for f in ('gen.py', 'i2i_meta.py'):
@@ -107,6 +109,7 @@ def push(d, u):
             break
         time.sleep(15)
     k = tempfile.mkdtemp(prefix='k140kn_')
+    atexit.register(shutil.rmtree, k, True)  # 끝나면 지움 — 안 지워 Temp 에 211개 21GB 쌓였던 일(10-25)
     shutil.copy(os.path.join(HERE, 'sd_kaggle.py'), k)
     meta = json.load(open(os.path.join(HERE, 'kernel-metadata.json'), encoding='utf-8'))
     meta.update(id='%s/%s' % (u, KN), dataset_sources=['%s/%s' % (u, DS)])
@@ -176,6 +179,7 @@ def main():
             break
         time.sleep(poll)
     got = tempfile.mkdtemp(prefix='k140out_')
+    atexit.register(shutil.rmtree, got, True)  # 끝나면 지움 — 안 지워 Temp 에 211개 21GB 쌓였던 일(10-25)
     print(kg('kernels', 'output', '%s/%s' % (u, KN), '-p', got, '-o', check=False)[-300:])
     keep = os.path.join(AI, '_out', 'remote_sd')
     os.makedirs(keep, exist_ok=True)
