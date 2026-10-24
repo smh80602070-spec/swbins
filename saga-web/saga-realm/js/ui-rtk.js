@@ -255,7 +255,7 @@
       s2 += '</div>';
     }
     regionHudEl.innerHTML = s2;
-    if (!d3) { global.setTimeout(function () { var lg = doc.querySelector('#realm .rlegend'), t = lg ? lg.getBoundingClientRect().top : 0; if (t > 0 && regionHudEl) { regionBottom = Math.max(114, Math.round(global.innerHeight - t + 6)); regionHudEl.style.bottom = regionBottom + 'px'; } }, 0); }   // 폰 세로는 세력 범례가 높이 올라와 단추가 첫 줄을 가렸다 — 범례 위로
+    if (!d3) { global.setTimeout(function () { var lg = doc.querySelector('#realm .rlegend'), t = lg ? lg.getBoundingClientRect().top : 0; if (t > 0 && regionHudEl) { regionBottom = Math.max(114, Math.round(global.innerHeight - t + 6)); regionHudEl.style.bottom = regionBottom + 'px'; } var mc = doc.getElementById('rmapctl'); if (t > 0 && mc) { if (!mc.dataset.b0) { mc.dataset.b0 = parseFloat(global.getComputedStyle(mc).bottom) || 96; } mc.style.bottom = Math.max(+mc.dataset.b0, Math.round(global.innerHeight - t + 6)) + 'px'; } /* 확대·축소 단추도 범례 위로 — 폰 세로에서 범례 둘째 줄을 덮었다 */ }, 0); }   // 폰 세로는 세력 범례가 높이 올라와 단추가 첫 줄을 가렸다 — 범례 위로
     return '';
   }
   function regionAt(e) { var els2 = global.document.elementsFromPoint ? global.document.elementsFromPoint(e.clientX, e.clientY) : [], i, g; for (i = 0; i < els2.length; i++) { g = els2[i].closest && els2[i].closest('[data-region]'); if (g) { return g; } } return null; }

@@ -808,6 +808,10 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
   .dg-sk-e { font-size: 17px; line-height: 35px; }
   .dg-sk-cd { line-height: 35px; font-size: 11px; }
   .d2-belt .d2-cell { width: 25px; height: 25px; font-size: 13px; }
+  /* 가운데 칸이 69px 뿐이라 물약 넷(112px)이 파란 구슬 밑으로 넘쳐 3·4번을 못 눌렀다(390 폰 실측) — 두 줄 두 칸으로 접는다 */
+  .d2-belt { display: grid; grid-template-columns: repeat(2, 25px); gap: 3px; }
+  .d2-mid .d2-line { gap: 3px; }
+  .d2-boonline { font-size: 10px; width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 }
 
 /* 폰 가로(키 390) — 세로로 선 강공격·회피 넷(238px)이 화면 꼭대기까지 올라가 도구줄을 덮었다(tools/mobile-layout).
