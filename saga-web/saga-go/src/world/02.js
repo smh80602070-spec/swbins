@@ -805,7 +805,7 @@
     ctx.stroke();
     sp.stamp(ctx, {
       kind: 'beast', ref: fo.ref,
-      x: p.x + fa2.dx, y: p.y + fa2.dy, s: z * 1.25 * fo.h * fa2.k * bodyK(), facing: 1, phase: fo.phase, walking: fo.moving,   // W-0224 덮치기·맞음
+      x: p.x + fa2.dx, y: p.y + fa2.dy, s: z * 1.25 * fo.h * bodyK(), dk: fa2.k, facing: 1, phase: fo.phase, walking: fo.moving,   // W-0224 덮치기·맞음
       color: sp.beastColorOf(fo.ref), form: sp.beastFormOf(fo.ref), t: now
     }); ctx.globalAlpha = 1;
   }

@@ -205,7 +205,7 @@
   /* W-0389 ③-4 — 걷기 초반이 깎이던 것: 열쇠에 받은 타일 그림 수가 들어 있어 그림이 하나 올 때마다 보이는 조각 전부를 한 프레임에 다시 구웠다.
      이제 그림이 빠진 채 구운 조각(miss)만 표시해 두고 프레임마다 하나씩 다시 굽는다(그 사이엔 옛 조각) · 굽기가 없는 프레임엔 걷는 쪽 바깥 한 줄을 하나 미리 굽는다.
      손잡이 world.field2dPrebake 1(0 = 미리 굽기 끔) · 셈 = chunkStats() */
-  var CH = 8, chunks = {}, chunkN = 0, CHUNK_MAX = 28, chunkKey = null, frameBakes = 0, lastCam = null, ST = { bakes: 0, rebakes: 0, pre: 0, ms: 0, resets: 0, px: 0, cap: 28 };
+  var CH = 8, chunks = {}, chunkN = 0, CHUNK_MAX = 28, chunkKey = null, chunkK = 1, frameBakes = 0, lastCam = null, ST = { bakes: 0, rebakes: 0, pre: 0, ms: 0, resets: 0, px: 0, cap: 28 };
   function cacheOn() { var C = core(); return !(C && C.tuned && !+C.tuned('world.field2dCache', 1)) && typeof document !== 'undefined' && !global.DG_NO_DRAW; }
   /** 칸 하나의 땅 그림(결·경계·테두리) — 화면/조각 어디에 그리든 같다 */
   function paintTile(g, kind, tx, ty, sx, sy, Tw, Th, T, b, terrainAt, dual) {
@@ -222,8 +222,10 @@
   function chunkOf(cx, cy, T, b, terrainAt, pre) {
     var k = cx + ',' + cy, c = chunks[k], cv, t0 = global.performance ? global.performance.now() : 0;
     if (c && !(frameBakes < 1 && ((c.miss && c.ld !== tLoaded) || (c.pmiss && anyReady(c.pmiss))))) { if (!pre) { c.at = ++chunkN; } return c.cv; }
-    var px = Math.round(CH * T), g, i, j, sx, sy, Tw, Th;
-    if (c) { cv = c.cv; g = cv.getContext('2d'); g.clearRect(0, 0, cv.width, cv.height); ST.rebakes++; } else { cv = document.createElement('canvas'); cv.width = Math.max(1, px); cv.height = Math.max(1, px); g = cv.getContext('2d'); }
+    /* W-0389 ③-4 — 조각은 땅 캔버스 실제 배율(chunkK = 화소비, 땅은 1.5 까지)로 굽는다: 1배로 구우면 1.5배로 늘어나 결·소품이 매 프레임 그리던 때보다 흐렸다 */
+    var px = Math.round(CH * T * chunkK), g, i, j, sx, sy, Tw, Th;
+    if (c) { cv = c.cv; g = cv.getContext('2d'); g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, cv.width, cv.height); ST.rebakes++; } else { cv = document.createElement('canvas'); cv.width = Math.max(1, px); cv.height = Math.max(1, px); g = cv.getContext('2d'); }
+    g.setTransform(chunkK, 0, 0, chunkK, 0, 0);
     frameBakes++; ST.px = px; dualMiss = 0;
     var dual = drawDual(g, cx, cy, T, b, terrainAt) > 0, miss = dualMiss > 0, ld = tLoaded;   // W-0390 이중 격자 바탕(그림 왔을 때만)
     for (j = 0; j < CH; j++) { for (i = 0; i < CH; i++) {
@@ -267,7 +269,8 @@
     var t0y = Math.floor(camY / CELL) - 1, t1y = Math.ceil((camY + H / sc) / CELL) + 2;
     var tx, ty, kind, sx, sy, props = [], ps, i, deep = tallOn(), useCache = cacheOn(), baked = useCache && propsBaked(); tall = [];
     if (useCache) {
-      var key = T.toFixed(3) + '|' + (seasonMemo.k || '') + '|' + b + '|' + (autotileOn() ? 'a' + (tjson ? 'j' : '') : 'x') + (propsBaked() ? 'p' + (deep ? 'd' : '') : '');
+      var tf = ctx.getTransform ? ctx.getTransform() : null; chunkK = tf && tf.a > 0 ? Math.min(2, tf.a) : 1;
+      var key = chunkK.toFixed(2) + '|' + T.toFixed(3) + '|' + (seasonMemo.k || '') + '|' + b + '|' + (autotileOn() ? 'a' + (tjson ? 'j' : '') : 'x') + (propsBaked() ? 'p' + (deep ? 'd' : '') : '');
       if (chunkKey !== key) { chunks = {}; chunkKey = key; ST.resets++; }
       var c0x = Math.floor(t0x / CH), c1x = Math.floor(t1x / CH), c0y = Math.floor(t0y / CH), c1y = Math.floor(t1y / CH), cx, cy, ox, oy, nx, ny;
       frameBakes = 0; CHUNK_MAX = ST.cap = Math.max(28, (c1x - c0x + 3) * (c1y - c0y + 3) + 4);

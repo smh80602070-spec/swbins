@@ -730,7 +730,7 @@
   var stampCache = {};
   var stampOrder = [];
   var STAMP_MAX = 420;
-  var stat = { hit: 0, miss: 0 };
+  var stat = { hit: 0, miss: 0, recent: [] };
 
   function bucketScale(s) {
     return Math.max(SB, Math.round(s / SB) * SB);
@@ -800,7 +800,7 @@
     var c = (cpu && cv.getContext('2d', { willReadFrequently: true })) || cv.getContext('2d');
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    var useImg = false;
+    var useImg = false, pending = false;
     if (kind === 'human') {
       var himg = humanImg(humanIndexOf(o.ref));
       if (himg.complete && himg.naturalWidth) {
@@ -809,6 +809,7 @@
         c.imageSmoothingEnabled = false;
         c.drawImage(himg, footX - hdw / 2, footY - hdh, hdw, hdh);
       } else {
+        pending = !himg.complete;
         loadingMark(c, footX, footY, H, o.color);
       }
     } else {
@@ -819,12 +820,14 @@
         c.imageSmoothingEnabled = true; c.imageSmoothingQuality = 'high';   // W-0347 — 짐승 그림은 렌더(K-0114, 96px)라 최근접 확대면 점묘로 깨진다 · 사람(human_*) 16px 픽셀 그림만 최근접
         c.drawImage(bimg, footX - bdw / 2, footY - bdh, bdw, bdh);
       } else {
+        pending = !!(bimg && !bimg.complete);
         loadingMark(c, footX, footY, H, o.color);
       }
     }
     /* 여기서 한 번 훑는다 — 지도 위 스탬프는 어두운 배경에 서므로
        실루엣만 밝은 테를 둘러 형태가 묻히지 않게 한다 */
-    storyize(cv, { rim: STORY_RIM_MAP, inner: H >= 40 && !(useImg && kind === 'beast'), thick: 1 });   // W-0347 렌더 짐승 그림은 실루엣 테만 — 안쪽 선이 털 결을 점묘로 만든다
+    /* W-0389 ③-4 — 그림을 받는 중이면 자리표시는 곧 다시 굽는다(imgReady) — 화소 훑기(storyize)는 건너뛴다(걷기 중 굽기의 절반이 이것) */
+    if (!pending) { storyize(cv, { rim: STORY_RIM_MAP, inner: H >= 40 && !(useImg && kind === 'beast'), thick: 1 }); }   // W-0347 렌더 짐승 그림은 실루엣 테만 — 안쪽 선이 털 결을 점묘로 만든다
     if (cpu) { var gv = document.createElement('canvas'); gv.width = cv.width; gv.height = cv.height; gv.getContext('2d').drawImage(cv, 0, 0); cv = gv; }
     return { cv: cv, w: w, h: h, footX: footX, footY: footY, base: base, sc: sc, img: useImg };
   }
@@ -844,7 +847,7 @@
   function drawCrea(ctx, o) {
     var pool = petCrea(o.ref), M = global.DG.mode2d;
     if (!pool || !M.isOn()) { return false; }
-    return M.draw(ctx, { pool: pool, clip: o.walking ? 'walk' : 'idle', facing: o.facing || 1, ms: (o.t || Date.now()) + (o.phase || 0) * 160, x: o.x, y: o.y, scale: (o.s || 1) * 1.02 });
+    return M.draw(ctx, { pool: pool, clip: o.walking ? 'walk' : 'idle', facing: o.facing || 1, ms: (o.t || Date.now()) + (o.phase || 0) * 160, x: o.x, y: o.y, scale: (o.s || 1) * 1.02 * (o.dk || 1) });
   }
   function stamp(ctx, o) {
     var kind = o.kind === 'beast' ? 'beast' : 'human';
@@ -852,13 +855,14 @@
     var sc = bucketScale(o.s || 1);
     var pb = bucketPhase(o.phase || 0, !!o.walking);
     var id = (o.ref && (o.ref.id || o.ref.name)) || o.key || 'anon';
-    var key = kind + '|' + id + '|' + sc.toFixed(2) + '|' + pb + (o.bk && o.bk !== 1 ? '|' + o.bk.toFixed(2) : '') + (kind === 'beast' && petSheetOn() ? '' : '|p0');   // W-0349 같은 짐승도 스폰(bk)·들판 적(없음) 컷이 다르다 · W-0352 손잡이에 따라 그림이 다르다
+    var key = kind + '|' + id + '|' + sc.toFixed(2) + (o.bk && o.bk !== 1 ? '|' + o.bk.toFixed(2) : '') + (kind === 'beast' && petSheetOn() ? '' : '|p0');   // W-0349 같은 짐승도 스폰(bk)·들판 적(없음) 컷이 다르다 · W-0352 손잡이에 따라 그림이 다르다
 
-    var e = stampCache[key];
-    if (e && !e.img && imgReady(kind, o.ref)) { e = null; }   // 그림이 실리기 전에 구운 코드 그림 컷은 다시 굽는다
+    /* W-0389 ③-4 — 열쇠에 걷기 위상(pb)이 있었지만 bake 는 위상을 안 그린다(출렁임은 아래 bounce 로 붙일 때) — 같은 컷을 위상 8+1 번 구웠다 */
+    var e = stampCache[key], e0 = null;
+    if (e && !e.img && imgReady(kind, o.ref)) { e0 = e; e = null; }   // 그림이 실리기 전에 구운 코드 그림 컷은 다시 굽는다
     if (e) { stat.hit++; }
     else {
-      stat.miss++;
+      stat.miss++; stat.recent.push(key + (e0 ? " (그림 늦게)" : "")); if (stat.recent.length > 20) { stat.recent.shift(); }
       e = bake(kind, o.ref, sc, pb, o);
       stampCache[key] = e;
       stampOrder.push(key);
@@ -879,13 +883,14 @@
 
     ctx.save();
     ctx.translate(o.x, o.y - bounce);
+    if (o.dk && o.dk !== 1) { ctx.scale(o.dk, o.dk); }   // W-0389 ③-4 몸짓 배율(덮치기·맞음)은 붙일 때만 — s 에 곱하면 크기 구간이 바뀌어 몸짓마다 새로 구웠다
     if ((o.facing || 1) < 0) { ctx.scale(-1, 1); }
     ctx.drawImage(e.cv, -e.footX, -e.footY, e.w, e.h);
     ctx.restore();
   }
 
   function stampStats() {
-    return { hit: stat.hit, miss: stat.miss, size: stampOrder.length };
+    return { hit: stat.hit, miss: stat.miss, size: stampOrder.length, recent: stat.recent.slice() };
   }
 
   /* ── 그림책풍 후처리 ────────────────────────────────────

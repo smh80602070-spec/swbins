@@ -85,7 +85,7 @@ function tally(P) {
   P.samples.forEach((id, i) => { const dt = (dts[i + 1] != null ? dts[i + 1] : 0) / 1000, seen = new Set(); let n = byId.get(id); const sk = key(n); self.set(sk, (self.get(sk) || 0) + dt);
     if (/^(restore|getImageData|drawImage|save|fill|putImageData|getBoundingClientRect|getComputedStyle|offsetWidth|set innerHTML|set textContent|querySelector|querySelectorAll) @/.test(sk)) { let p = byId.get(parent.get(n.id)); while (p && /^CP\.|^\(anon\) @:/.test(key(p))) { p = byId.get(parent.get(p.id)); } const pk = sk.split(' ')[0] + ' ← ' + (p ? key(p) : '?'); callers.set(pk, (callers.get(pk) || 0) + dt); }
     const chain = []; while (n) { const k = key(n); chain.push(k); if (!seen.has(k)) { seen.add(k); inc.set(k, (inc.get(k) || 0) + dt); } n = byId.get(parent.get(n.id)); }
-    if (UNDER) { const j = chain.findIndex((k) => k.startsWith(UNDER + ' @')); if (j >= 0) { new Set(chain.slice(0, j + 1)).forEach((k) => under.set(k, (under.get(k) || 0) + dt)); } } });
+    if (UNDER) { const j = chain.findIndex((k) => k.startsWith(UNDER.includes(' @') ? UNDER : UNDER + ' @')); if (j >= 0) { new Set(chain.slice(0, j + 1)).forEach((k) => under.set(k, (under.get(k) || 0) + dt)); } } });
   return { inc, self, callers, under, total: (P.endTime - P.startTime) / 1000 };
 }
 if (PROF) { profs.forEach((P, r) => { const t = tally(P), top = (m, n) => [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, n);

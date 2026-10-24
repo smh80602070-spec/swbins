@@ -628,8 +628,8 @@
   /** ⑲-20 구름섬 — 나와 다른 층(섬 위·밑)의 적은 서로 못 본다(skyisle.apart). 층이 없으면 늘 false */
   function apart(f) { var SK = global.DG.skyIsle; return !!(SK && SK.apart && SK.apart(f)); }
   function living(S) {
-    var out = [];
-    for (var k in S.foes) { if (S.foes.hasOwnProperty(k) && !S.foes[k].dead && S.foes[k].st !== 'yield' && !apart(S.foes[k])) { out.push(S.foes[k]); } }
+    var out = [], SK = global.DG.skyIsle, lay = !!(SK && SK.layerOn && SK.layerOn()), me = lay && SK.meOnSky ? SK.meOnSky() : false, f;   // W-0389 ③-4 층 검사를 적마다 하던 것(2.9%) — 한 번만, apart 와 같은 식
+    for (var k in S.foes) { if (!S.foes.hasOwnProperty(k)) { continue; } f = S.foes[k]; if (!f.dead && f.st !== 'yield' && !(lay && !!f.sky !== me)) { out.push(f); } }
     return out;
   }
   function nearestFoe(S, px, py, r) {
