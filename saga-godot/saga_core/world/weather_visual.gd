@@ -51,13 +51,16 @@ var last := {}   # 점검용: key·fog_density·cloud_cover·sun_mul
 
 ## G-0359·G-0360 땅 젖음 — 비가 오면 땅 재질(아래 두 셰이더의 wet)을 WET_IN 초에 걸쳐 1 로, 그치면 WET_OUT 초에 걸쳐 0 으로.
 ## 땅 재질은 씬에서 그 셰이더를 쓰는 material_override 를 모은다(지역이 나중에 지어지니 WET_SCAN 초마다 다시). SAGA_WET=0 이면 안 적심.
-## 1만리 terrain_triplanar · 3마을(곡면) curved_triplanar. 4종횡 들판·5천하 땅은 StandardMaterial 이라 아직 안 젖는다.
+## 1만리 terrain_triplanar · 3마을(곡면) curved_triplanar. G-0361 — StandardMaterial 땅은 meta WET_META 를 단 것만(4종횡 들판):
+## 처음 색·거칠기를 meta 로 기억해 두고 젖은 만큼 색 ×0.64·거칠기 ×0.45 까지(웅덩이는 셰이더만).
+const WET_META := &"saga_wet"
 const WET_SHADERS := ["res://saga_core/shaders/terrain_triplanar.gdshader", "res://saga_core/shaders/curved_triplanar.gdshader"]
 const WET_IN := 20.0
 const WET_OUT := 60.0
 const WET_SCAN := 5.0
 var wet := 0.0
 var _wet_mats: Array[ShaderMaterial] = []
+var _wet_std: Array[StandardMaterial3D] = []
 var _wet_scan := 0.0
 var _wet_sent := -1.0
 
@@ -87,11 +90,37 @@ func _wet_tick(delta: float) -> void:
 	if _wet_scan <= 0.0:
 		_wet_scan = WET_SCAN
 		_wet_mats = terrain_mats(get_tree().current_scene)
+		_wet_std = std_wet_mats(get_tree().current_scene)
 		_wet_sent = -1.0
 	if absf(wet - _wet_sent) > 0.01:
 		_wet_sent = wet
 		for m in _wet_mats:
 			m.set_shader_parameter("wet", wet)
+		for s in _wet_std:
+			wet_std(s, wet)
+
+
+## G-0361 meta 단 StandardMaterial 땅들
+static func std_wet_mats(root: Node) -> Array[StandardMaterial3D]:
+	var out: Array[StandardMaterial3D] = []
+	if root == null:
+		return out
+	for n in root.find_children("*", "GeometryInstance3D", true, false):
+		var m := (n as GeometryInstance3D).material_override as StandardMaterial3D
+		if m != null and m.has_meta(WET_META) and not out.has(m):
+			out.append(m)
+	return out
+
+
+## G-0361 StandardMaterial 젖히기(처음 값은 meta 로 한 번만 기억)
+static func wet_std(m: StandardMaterial3D, w: float) -> void:
+	if not m.has_meta(&"wet_base"):
+		m.set_meta(&"wet_base", [m.albedo_color, m.roughness])
+	var b: Array = m.get_meta(&"wet_base")
+	var c: Color = b[0]
+	var k := lerpf(1.0, 0.64, w)
+	m.albedo_color = Color(c.r * k, c.g * k, c.b * k, c.a)
+	m.roughness = float(b[1]) * lerpf(1.0, 0.45, w)
 
 
 static func enabled() -> bool:

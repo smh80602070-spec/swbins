@@ -145,6 +145,7 @@ func _build_scenery() -> void:
 	gm.uv1_world_triplanar = true
 	gm.uv1_scale = Vector3(0.25, 0.25, 0.25)
 	gm.roughness = 0.95
+	gm.set_meta(&"saga_wet", true)   # G-0361 비 오면 공용 weather_visual 이 젖힌다
 	g.material_override = gm
 	g.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(g)
