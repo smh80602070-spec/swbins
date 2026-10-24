@@ -6,7 +6,7 @@ extends SceneTree
 ## 새로 생긴 노드(종류·스크립트)·더미 적 체력을 모아 한 줄 md5 로 낸다. 끝에 "PROBE story_golden OK md5=…".
 ## 기대값(GOLDEN)이 비어 있으면 값만 찍고 OK, 채워져 있으면 다르면 FAIL. 진짜 세이브는 안 건드린다(스킬 표만 임시로 갈아 끼우고 되돌림).
 
-const GOLDEN := "de2c70a2fdff13a05deef5e3cbcd2f6a"  # 분리 전 HEAD(2026-10-01)에서 잰 값
+const GOLDEN := "50cedb05dcaf854f533dc4078d69d94d"  # G-0356 다시 잼(10-25 HEAD) — 옛 10-01 값 de2c70a2… 뒤 의도 변경 여럿(G-0192 흔들림·G-0201 시전 그림·G-0283 몸짓·G-0314 띄우기·G-0331 무기 두 벌 등)
 const PLAYER_DIR := "res://games/saga_story/player/"
 const SEED := 20260824
 ## G-0246 — 5차 각성기(story_skills_awaken.gd)는 기준값 뒤에 생긴 것이라 그 시전·쿨다운 칸은 뺀다(점검은 probe_story_awaken) — 빼면 옛 92 무예 동작은 기준값 그대로.
