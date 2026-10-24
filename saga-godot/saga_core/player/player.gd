@@ -10,6 +10,7 @@ const BlobShadow := preload("res://saga_core/world/blob_shadow.gd")
 const FootLock := preload("res://saga_core/player/foot_lock.gd")   # G-0264 걸음새·디딘 발 잠금
 const LifePose := preload("res://saga_core/world/life_pose.gd")    # G-0265 쉬면 앉기·둘러보기
 const TalkFace := preload("res://saga_core/world/talk_face.gd")    # G-0287 주인공 얼굴 늘(깜박임·짧은 표정)
+const StepSounds := preload("res://saga_core/audio/step_sounds.gd")   # G-0369 발소리(2나락·3마을)
 
 const WALK_SPEED := 6.0
 const RUN_SPEED := 10.0
@@ -68,6 +69,7 @@ var _once_until := 0
 var _once_scaled := false   # 한 번짜리 동작이 빠르기를 바꿨으면 잠금 뒤 첫 _play_anim 이 1 로(walk·sprint 로 가도 — R-5)
 
 func _ready() -> void:
+	_attach_steps.call_deferred()
 	var found := get_tree().get_nodes_in_group("virtual_joystick")
 	if found.size() > 0:
 		_joystick = found[0]
@@ -182,6 +184,15 @@ func begin_fly() -> void:
 
 func end_fly() -> void:
 	fly_on = false
+
+## G-0369 — 발소리(2나락·3마을). 1만리는 제 MoveSounds(G-0176)가 있어 건너뛴다 — 씬 부모 _ready 가 붙인 뒤라 한 프레임 미룬다.
+func _attach_steps() -> void:
+	if get_node_or_null("MoveSounds") != null or get_node_or_null("StepSounds") != null or not StepSounds.enabled():
+		return
+	var s := StepSounds.new()
+	s.name = "StepSounds"
+	add_child(s)
+
 
 func is_flying_now() -> bool:
 	return fly_on

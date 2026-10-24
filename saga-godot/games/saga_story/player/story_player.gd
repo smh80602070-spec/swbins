@@ -1,6 +1,7 @@
 extends "res://games/saga_story/player/story_skills_awaken.gd"   # G-0246 5차 각성기(class_name 없이 경로로 잇는다)
 
 const LifePose := preload("res://saga_core/world/life_pose.gd")   # G-0266 쉬면 앉기
+const StepSounds := preload("res://saga_core/audio/step_sounds.gd")   # G-0369 발소리
 ## G-0299 자동 퀘스트(auto_quest_st)가 넣는 좌우 걷기(−1~1). 0 이면 전과 같음.
 var auto_x := 0.0
 var _life: Node = null
@@ -72,6 +73,10 @@ func _ready() -> void:
 		visual.scale *= StoryLook.BODY_SCALE   # G-0187 — 그림만 크게(판정 상자 그대로)
 		_anim = visual.find_child("AnimationPlayer", true, false)
 	visual.rotation.y = PI * 0.5  # 오른쪽(+X)을 보고 시작 — StoryPlayer.tscn 참고
+	if StepSounds.enabled() and get_node_or_null("StepSounds") == null:   # G-0369 발소리
+		var steps := StepSounds.new()
+		steps.name = "StepSounds"
+		add_child(steps)
 	for sk in visual.find_children("*", "Skeleton3D", true, false):   # G-0264 디딘 발 잠금(나만)
 		if FootLock.attach(sk as Skeleton3D) != null:
 			break

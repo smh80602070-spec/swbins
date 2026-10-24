@@ -108,7 +108,7 @@ func _initialize() -> void:
 			if c != p and not (c in dummies):
 				added.append(_describe(c))
 		for c in p.get_children():
-			if c.name != "CollisionShape3D" and c.name != "Visual":
+			if c.name != "CollisionShape3D" and c.name != "Visual" and c.name != "StepSounds":   # G-0369 발소리 노드는 무예 동작이 아니다
 				added.append("p/" + _describe(c))
 		if hp_sum > 0.0 or added.size() > 0:
 			effects += 1
