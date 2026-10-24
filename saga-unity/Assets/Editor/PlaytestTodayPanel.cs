@@ -30,6 +30,7 @@ namespace Saga.EditorTools
                     CheckGo();
                     CheckHud("2나락", Saga.Dungeon.UI.DungeonTodaySource.Install, Saga.Dungeon.UI.DungeonTodaySource.ButtonAt);
                     CheckDungeonRows(); // tasks U-0221 현상금 셋이 맨 위
+                    CheckStoryRows(); // tasks U-0222 둘째 묶음 카드 도감 줄
                     CheckHud("3마을", Saga.Forest.UI.ForestTodaySource.Install, Saga.Forest.UI.ForestTodaySource.ButtonAt);
                     CheckHud("4종횡", Saga.Story.UI.StoryTodaySource.Install, Saga.Story.UI.StoryTodaySource.ButtonAt);
                     CheckRealm();
@@ -115,6 +116,17 @@ namespace Saga.EditorTools
                 Saga.Go.Data.DailyTaskState.OffForTest = off;
                 if (p != null) UnityEngine.Object.DestroyImmediate(p.gameObject);
             }
+        }
+
+        /// <summary>tasks U-0222 — 4종횡 둘째 묶음 = 관문 대장 + 달 사명 + 카드 도감(끄면 둘).</summary>
+        private static void CheckStoryRows()
+        {
+            var today = new System.Collections.Generic.List<TodayRow>(); var week = new System.Collections.Generic.List<TodayRow>();
+            new Saga.Story.UI.StoryTodaySource().Rows(today, week);
+            bool on = Saga.Story.Data.StoryMonsterBook.On;
+            PlaytestKit.Check(week.Count == (on ? 3 : 2), $"4종횡 둘째 묶음 {week.Count} ≠ {(on ? 3 : 2)}");
+            PlaytestKit.Check(!on || week[week.Count - 1].Text.Contains("🃏"), "4종횡 마지막 줄이 카드 도감이 아님");
+            Debug.Log($"{Tag} 4종횡 rows OK - 둘째 {week.Count}(카드 도감「{(week.Count > 0 ? week[week.Count - 1].Text : "")}」)");
         }
 
         /// <summary>tasks U-0221 — 2나락 오늘 줄 = 현상금 셋 + 일과 + 도장(끄면 현상금 없음).</summary>
