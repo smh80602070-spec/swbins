@@ -318,7 +318,7 @@
     var hitR = 30 / sc;
     var best = null, bestD = Infinity;
     for (var i = 0; i < spawns.length; i++) {
-      var d = Math.hypot(spawns[i].x - wx, spawns[i].y - wy);
+      var sq = !pk && spawnOff && spawnOff.get(spawns[i]), d = sq ? Math.hypot(pos.x + sq.u / sc - wx, pos.y + sq.v / sc - wy) : Math.hypot(spawns[i].x - wx, spawns[i].y - wy);   // W-0408 그린 자리로 누른다
       if (d < hitR && d < bestD) { bestD = d; best = spawns[i]; }
     }
     // 성채 — 건물이 커서 히트 범위도 넓다
@@ -627,7 +627,7 @@
     var ppl = NP ? NP.live(pos) : [];
     if (global.DG.folk) { ppl = ppl.concat(global.DG.folk.live(pos)); }   // ⑱ 탑 둘레 세 시대 사람
     if (global.DG.story) { ppl = ppl.concat(global.DG.story.live(pos)); }  // ⑲-12 이야기 인물 셋
-    var uvs = spreadUV(ppl, pos, sc); for (var pi = 0; pi < ppl.length; pi++) {
+    var sf2 = +core.tuned('go.spreadFoe', 1) === 1 && !(global.DG.world3d && global.DG.world3d.active && global.DG.world3d.active()), idleF = sf2 && global.DG.fieldCombat ? global.DG.fieldCombat.live().filter(function (f) { return !f.dead && f.st === 'idle'; }) : [], uvsA = spreadUV(sf2 ? ppl.concat(spawns, idleF) : ppl, pos, sc, ppl.length + spawns.length), uvs = uvsA.slice(0, ppl.length); spawnOff = null; if (sf2) { spawnOff = new Map(); for (var soi = 0; soi < spawns.length + idleF.length; soi++) { spawnOff.set(soi < spawns.length ? spawns[soi] : idleF[soi - spawns.length], uvsA[ppl.length + soi]); } }   /* W-0408 들판 대상도 사람과 같은 벌림 — 촌장 위에 짐승이 겹쳐 서던 것(그리기 자리만, 누르기는 그린 자리로) */ for (var pi = 0; pi < ppl.length; pi++) {
       (function (n, q) {
         var u = q.u, v = q.v;
         items.push({ v: v, draw: function () { drawNpc(n, u, v, now); } });
@@ -650,7 +650,7 @@
     for (var fci = 0; fci < fcs.length; fci++) {
       (function (fo) {
         if (fo.dead) { return; }
-        var u = (fo.x - pos.x) * sc, v = (fo.y - pos.y) * sc;
+        var q = spawnOff && spawnOff.get(fo), u = q ? q.u : (fo.x - pos.x) * sc, v = q ? q.v : (fo.y - pos.y) * sc;   // W-0408 쉬는 적은 사람과 벌린 자리
         items.push({ v: v, draw: function () { drawFieldFoe(fo, u, v, now); } });
       })(fcs[fci]);
     }
@@ -658,7 +658,7 @@
     // 스폰
     for (var i = 0; i < spawns.length; i++) {
       (function (s) {
-        var u = (s.x - pos.x) * sc, v = (s.y - pos.y) * sc;
+        var q = spawnOff && spawnOff.get(s), u = q ? q.u : (s.x - pos.x) * sc, v = q ? q.v : (s.y - pos.y) * sc;
         items.push({ v: v, draw: function () { drawSpawn(s, u, v, now, pos, sc); } });
       })(spawns[i]);
     }
@@ -690,7 +690,7 @@
   }
 
   /* 성채·역참 한 채 그리기는 js/world-sites2d.js(R-4) — 같은 이름으로 넘긴다 */
-  var sitesObj = null; function SI() { return sitesObj || (sitesObj = global.DG.worldSites2d.make({ ctx: function () { return ctx; }, geom: function () { return geom; }, project: project, label: label, bodyK: bodyK, ENCOUNTER_RANGE: ENCOUNTER_RANGE })); }
+  var spawnOff = null; var sitesObj = null; function SI() { return sitesObj || (sitesObj = global.DG.worldSites2d.make({ ctx: function () { return ctx; }, geom: function () { return geom; }, project: project, label: label, bodyK: bodyK, ENCOUNTER_RANGE: ENCOUNTER_RANGE })); }
   function drawFort(ft, u, v, now, pos) { return SI().drawFort(ft, u, v, now, pos); }
   function drawStation(st, u, v, now, pos) { return SI().drawStation(st, u, v, now, pos); }
 
@@ -749,7 +749,7 @@
    * 그냥 여기 사는 사람이다. 그래서 발밑 등급 고리를 안 두르고(그림자만 둔다)
    * 이름표도 흐리게 단다. 가까이 가면 이름이 또렷해진다(말이 걸리는 거리다).
    */
-  /** W-0369 화면에서만 사람끼리·나와 몸 폭만큼 벌린다(세계 자리·대화 거리 그대로) — 출발 자리에 촌장·상인·역참지기가 나와 한 덩어리로 겹쳐 "나"가 안 보였다. 손잡이 go.spreadPx(0 = 끔) · 나(0,0)는 안 움직임 */ function spreadUV(list, pos, sc) { var out = [], i, j, it, a, b, dx, dy, d, k, m = +core.tuned('go.spreadPx', 46) * bodyK(); for (i = 0; i < list.length; i++) { out.push({ u: (list[i].x - pos.x) * sc, v: (list[i].y - pos.y) * sc }); } if (!(m > 0)) { return out; } for (it = 0; it < 4; it++) { for (i = 0; i < out.length; i++) { a = out[i]; for (j = -1; j < out.length; j++) { if (j === i) { continue; } b = j < 0 ? { u: 0, v: 0 } : out[j]; dx = a.u - b.u; dy = (a.v - b.v) * 1.6; d = Math.hypot(dx, dy); if (d >= m) { continue; } if (d < 0.01) { dx = i % 2 ? 1 : -1; dy = 0.3; d = Math.hypot(dx, dy); } k = (m - d) / d * (j < 0 ? 1 : 0.5); a.u += dx * k; a.v += dy * k / 1.6; } } } return out; } function drawNpc(n, u, v, now) {
+  /** W-0369 화면에서만 사람끼리·나와 몸 폭만큼 벌린다(세계 자리·대화 거리 그대로) — 출발 자리에 촌장·상인·역참지기가 나와 한 덩어리로 겹쳐 "나"가 안 보였다. 손잡이 go.spreadPx(0 = 끔) · 나(0,0)는 안 움직임 */ function spreadUV(list, pos, sc, meFrom) { var out = [], i, j, it, a, b, dx, dy, d, k, m = +core.tuned('go.spreadPx', 46) * bodyK(); for (i = 0; i < list.length; i++) { out.push({ u: (list[i].x - pos.x) * sc, v: (list[i].y - pos.y) * sc }); } if (!(m > 0)) { return out; } for (it = 0; it < 4; it++) { for (i = 0; i < out.length; i++) { a = out[i]; for (j = -1; j < out.length; j++) { if (j === i) { continue; } if (j < 0 && meFrom != null && i >= meFrom) { continue; } b = j < 0 ? { u: 0, v: 0 } : out[j]; dx = a.u - b.u; dy = (a.v - b.v) * 1.6; d = Math.hypot(dx, dy); if (d >= m) { continue; } if (d < 0.01) { dx = i % 2 ? 1 : -1; dy = 0.3; d = Math.hypot(dx, dy); } k = (m - d) / d * (j < 0 ? 1 : 0.5); a.u += dx * k; a.v += dy * k / 1.6; } } } return out; } function drawNpc(n, u, v, now) {
     var p = project(u, v);
     if (p.s < 0.25 || p.y < -80 || p.y > geom.H + 80) { return; }
     var z = core.clamp(p.s, 0.5, 1.6) * bodyK();   // W-0204
@@ -932,7 +932,7 @@
     REGION_SIZE: REGION_SIZE, ENCOUNTER_RANGE: ENCOUNTER_RANGE,
     init: function (objEl, groundEl) { initCanvas(objEl, groundEl); bindKeys(); tickSpawns(); },
     update: function (dt) { moveByKeys(dt); updatePlayerMotion(dt); wanderSpawns(dt); tickSpawns(); },
-    draw: draw, resize: resize, layoutLabels: layoutLabels, _makeSpawn: makeSpawn, _spreadUV: spreadUV, _landTex2D: function () { return LAND_TEX_VARIANTS; },   // W-0144·W-0152·W-0154 진단
+    draw: draw, resize: resize, layoutLabels: layoutLabels, _makeSpawn: makeSpawn, _spreadUV: spreadUV, _spawnOff: function () { return spawnOff; }, _landTex2D: function () { return LAND_TEX_VARIANTS; },   // W-0144·W-0152·W-0154 진단
     get spawns() { return spawns; },
     removeSpawn: removeSpawn,
     nearest: nearest, maxSpawns: maxSpawns, MAX_SPAWNS: MAX_SPAWNS, spawnSpecial: spawnSpecial,

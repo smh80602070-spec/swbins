@@ -17568,6 +17568,15 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       for (i = 0; i < 3; i++) { mn = Math.min(mn, Math.hypot(uv[i].u, uv[i].v * 1.6)); for (var j = i + 1; j < 3; j++) { mn = Math.min(mn, Math.hypot(uv[i].u - uv[j].u, (uv[i].v - uv[j].v) * 1.6)); } }
       return mn > 15 || ('실패 벌림 ' + mn.toFixed(1));
     });
+    t('W-0408 들판 대상도 화면에서 사람·나와 벌림(그리기 자리만) — 내 자리에 겹친 대상은 그린 자리가 비켜나고 누르기는 그 자리로', function () {
+      var Wd = DG.world; if (!Wd || !Wd._spawnOff || !Wd._makeSpawn) { return '실패 _spawnOff 없음'; }
+      if (DG.world3d && DG.world3d.active && DG.world3d.active()) { return true; }
+      var arr = Wd.spawns, pos = DG.core.save.player.pos, sp = Wd._makeSpawn(), q, r = '';
+      sp.x = pos.x + 0.3; sp.y = pos.y; arr.push(sp);
+      try { Wd.draw(); q = Wd._spawnOff() && Wd._spawnOff().get(sp); r = q ? Math.hypot(q.u, q.v * 1.6) : -1; } catch (e) { r = 'err ' + e.message; }
+      arr.splice(arr.indexOf(sp), 1);
+      return (typeof r === 'number' && r > 15) || ('실패 벌림 ' + r);
+    });
     t('W-0374 환경 연쇄 — 풀 칸 불 타격 → 불길(둘레 적 피해·이웃 풀 한 칸 번짐·3초 뒤 꺼짐) · 물 칸 번개 → 이웃 물 칸 적까지 · 물 타격은 불길 끔 · 길·마을 칸은 안 탐', function () {
       var FE = DG.fieldEnv, FC = DG.fieldCombat, W0 = DG.world; if (!FE || !FC) { return '실패 DG.fieldEnv 없음'; }
       var map = function (tx, ty) { return tx >= 10 ? 'water' : (tx === 3 ? 'road' : 'grass'); };
