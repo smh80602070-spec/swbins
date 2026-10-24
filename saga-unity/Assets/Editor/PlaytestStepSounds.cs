@@ -12,6 +12,7 @@ namespace Saga.EditorTools
     /// ② 물 튐: 젖음 0.3 → 0 · 0.6 → 발소리 수와 같음(음량 = 발소리 × 0.316 × 젖음) · 눈밭·집 안 나무·겨울 0
     /// ③ 세 판 플레이어에 `Steps` · 바닥(2나락 stone · 3마을 grass/집 안 wood · 4종횡 grass) ④ 1만리 `FootstepSfx` 젖으면 물 튐 = 발소리 · 마르면 0
     /// ⑤ 소리 파일 step 여섯 땅 × 1·2 = 12 + splash 불러옴.
+    /// ⑥ tasks U-0219 점프·착지(고돗 G-0370): 점프 1(0.8) · 착지 1(낙하 속도만큼 0.5~1) · 짧은 뜸·탈것·처음 바닥 전·끄면 0 · 착지 뒤 첫 발소리 반 걸음 미룸.
     /// </summary>
     public static class PlaytestStepSounds
     {
@@ -26,6 +27,7 @@ namespace Saga.EditorTools
                 {
                     CheckCount();
                     CheckSplash();
+                    CheckJumpLand();
                     CheckPlayers();
                     CheckGo();
                     CheckFiles();
@@ -108,8 +110,71 @@ namespace Saga.EditorTools
             Debug.Log($"{Tag} splash OK - 젖음 0.3 → 0 · 0.6 → {wet.Count("splash")} = 발소리 {steps} · 음량 {vol:0.000} · 눈밭·나무·겨울 0");
         }
 
+        /// <summary>tasks U-0219 — 땅 걷기 <paramref name="before"/>초 → 공중 <paramref name="air"/>초(중력 20 으로 떨어짐) → 땅 걷기 <paramref name="after"/>초.
+        /// <paramref name="firstStepX"/> = 다시 닿은 뒤 첫 발소리까지 간 거리.</summary>
+        private static Rec Hop(float speed, float before, float air, float after, out float firstStepX, bool blockedAir = false, StepSounds s = null)
+        {
+            var rec = new Rec();
+            s ??= new StepSounds(null);
+            s.Play = rec.Add;
+            const float dt = 1f / 60f;
+            var p = Vector3.zero;
+            if (before > 0f) s.Tick(p, true, false, StepSounds.Grass, dt);
+            for (int i = 0; i < Mathf.RoundToInt(before / dt); i++) { p.x += speed * dt; s.Tick(p, true, false, StepSounds.Grass, dt); }
+            float vy = 0f;
+            for (int i = 0; i < Mathf.RoundToInt(air / dt); i++) { vy -= 20f * dt; p.x += speed * dt; p.y += vy * dt; s.Tick(p, false, blockedAir, StepSounds.Grass, dt); }
+            int stepsBefore = rec.Count("step_grass");
+            firstStepX = -1f;
+            float x0 = p.x;
+            s.Tick(p, true, false, StepSounds.Grass, dt);
+            for (int i = 0; i < Mathf.RoundToInt(after / dt); i++)
+            {
+                p.x += speed * dt;
+                s.Tick(p, true, false, StepSounds.Grass, dt);
+                if (firstStepX < 0f && rec.Count("step_grass") > stepsBefore) firstStepX = p.x - x0;
+            }
+            return rec;
+        }
+
+        private static void CheckJumpLand()
+        {
+            StepSounds.ForcedEnabled = true; StepSounds.ForcedWet = 0f; WetGround.ForcedNoPuddles = false;
+            var js = new StepSounds(null); var jr = new Rec(); js.Play = jr.Add;
+            js.Jumped();
+            StepSounds.ForcedEnabled = false; js.Jumped(); StepSounds.ForcedEnabled = true;
+            float jv = jr.Calls.Where(c => c.n == "jump").Select(c => c.v).DefaultIfEmpty(0f).First();
+            PlaytestKit.Check(jr.Count("jump") == 1 && js.JumpCount == 1, $"점프 {jr.Count("jump")} ≠ 1(끄면 0)");
+            PlaytestKit.Check(Mathf.Abs(jv - 0.8f) < 1e-4f, $"점프 음량 {jv} ≠ 0.8(1만리)");
+
+            var land = Hop(0f, 0.5f, 0.6f, 0.5f, out _);
+            float lv = land.Calls.Where(c => c.n == "land").Select(c => c.v).DefaultIfEmpty(0f).First();
+            var high = Hop(0f, 0.5f, 1.2f, 0.5f, out _);
+            float hv = high.Calls.Where(c => c.n == "land").Select(c => c.v).DefaultIfEmpty(0f).First();
+            int shortHop = Hop(0f, 0.5f, 0.15f, 0.5f, out _).Count("land");
+            int ride = Hop(0f, 0.5f, 0.6f, 0.5f, out _, blockedAir: true).Count("land");
+            int spawn = Hop(0f, 0f, 0.6f, 0.5f, out _).Count("land");
+            StepSounds.ForcedEnabled = false;
+            int off = Hop(6f, 0.5f, 0.6f, 2f, out _).Calls.Count;
+            StepSounds.ForcedEnabled = true;
+            PlaytestKit.Check(land.Count("land") == 1, $"착지 {land.Count("land")} ≠ 1");
+            PlaytestKit.Check(lv >= 0.5f && lv < hv && hv <= 1f, $"착지 음량 {lv:0.00}·높이 {hv:0.00} — 낙하 속도만큼 0.5~1 아님");
+            PlaytestKit.Check(shortHop == 0, $"짧은 뜸(0.15초) 착지 {shortHop} ≠ 0");
+            PlaytestKit.Check(ride == 0, $"탈것 착지 {ride} ≠ 0");
+            PlaytestKit.Check(spawn == 0, $"처음 바닥 닿기 전 착지 {spawn} ≠ 0");
+            PlaytestKit.Check(off == 0, $"SAGA_STEP_SOUND=0 인데 {off}");
+
+            // 착지 뒤 첫 발소리 반 걸음 미룸 — 6 m/s 로 뛰어 착지 → 첫 걸음 3.6m(2.4 + 1.2) · 짧은 뜸(착지 아님)은 2.4m
+            Hop(6f, 1f, 0.6f, 2f, out float delayed);
+            Hop(6f, 1f, 0.15f, 2f, out float normal);
+            PlaytestKit.Check(Mathf.Abs(delayed - 3.6f) < 0.15f, $"착지 뒤 첫 발소리 {delayed:0.00}m ≠ 3.6");
+            PlaytestKit.Check(Mathf.Abs(normal - 2.4f) < 0.15f, $"짧은 뜸 뒤 첫 발소리 {normal:0.00}m ≠ 2.4");
+            Debug.Log($"{Tag} jumpland OK - 점프 1(음량 {jv:0.0}) · 착지 1(음량 {lv:0.00}·높이 {hv:0.00}) · 짧은 뜸 0 · 탈것 0 · 처음 0 · 끄면 0 · 첫 발소리 {normal:0.0}m → 착지 뒤 {delayed:0.0}m");
+        }
+
         private static void CheckPlayers()
         {
+            PlaytestKit.Check(SagaSfx.Has("jump") && SagaSfx.Has("land"), "sfx_jump·sfx_land 없음");
+            Debug.Log($"{Tag} jump files OK - sfx_jump·sfx_land · 점프 판 2나락·4종횡 · 3마을 착지만(점프 없음)");
             var types = new[] { typeof(Saga.Dungeon.Player.PlayerController), typeof(Saga.Forest.Player.PlayerController), typeof(Saga.Story.Player.StoryPlayerController) };
             foreach (var t in types) PlaytestKit.Check(t.GetProperty("Steps")?.PropertyType == typeof(StepSounds), $"{t.FullName} 에 Steps 없음");
             string dg = Saga.Dungeon.Player.PlayerController.StepSurface(Vector3.zero);

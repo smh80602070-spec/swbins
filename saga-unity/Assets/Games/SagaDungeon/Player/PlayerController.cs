@@ -290,7 +290,7 @@ namespace Saga.Dungeon.Player
         private void Update()
         {
             Step(Time.deltaTime);
-            Steps.Tick(transform.position, Mode == MoveMode.Ground && _controller.isGrounded, DungeonMounts.Riding != null, StepSurface(transform.position), Time.deltaTime); // tasks U-0218 발소리
+            Steps.Tick(transform.position, Mode == MoveMode.Ground && _controller.isGrounded, DungeonMounts.Riding != null || Mode == MoveMode.Climb || Mode == MoveMode.Mantle || Mode == MoveMode.Fly, StepSurface(transform.position), Time.deltaTime); // tasks U-0218 발소리 · U-0219 착지(기어오름·넘기·날기 중엔 공중 셈 안 함)
         }
 
         /// <summary>tasks U-0218 발소리(공용 <see cref="StepSounds"/>) — 2나락은 돌바닥.</summary>
@@ -357,6 +357,7 @@ namespace Saga.Dungeon.Player
             if (jumpPressed && _dodgeTimeLeft <= 0f && _controller.isGrounded)
             {
                 _verticalVelocity = JumpVelocity;
+                Steps.Jumped(); // tasks U-0219 점프 소리
                 if (animator != null && _hasJumpParam) animator.SetTrigger("Jump");
             }
 

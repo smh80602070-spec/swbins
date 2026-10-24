@@ -11,6 +11,9 @@ namespace Saga.Core
     /// 발소리마다 낮은 물 튐(`sfx_splash`, 발소리의 −10dB × 젖은 만큼 — 고돗 −16dB 발소리 · −26dB 물 튐)을 겹친다.
     /// 소리 재생은 판의 재생기(<see cref="Play"/> — 판 음량 설정 그대로). 손잡이 `SAGA_STEP_SOUND=0` = 조용(셈도 안 함).
     /// 음 높이 흔들기는 없다 — 판 재생기가 PlayOneShot 한 소스라 높이를 못 바꾼다(1만리와 같음, 1·2 번갈아로 대신).
+    /// tasks U-0219 점프·착지(고돗 G-0370 · 1만리 `FootstepSfx` 같은 결): 점프 = 판 컨트롤러가 점프 성사 자리에서 <see cref="Jumped"/> 한 줄(`sfx_jump` 0.8),
+    /// 착지 = 공중 <see cref="MinAirSec"/> 넘게 뜨고 낙하 <see cref="MinFallSpeed"/> m/s 넘던 뒤 바닥에 닿을 때 `sfx_land`(낙하 속도/20 만큼 0.5~1) ·
+    /// 탈것·줄·기어오름 중·처음 바닥 닿기 전·순간이동이면 없음 · 착지 바로 뒤 첫 발소리는 반 걸음 미룸(겹침 방지).
     /// </summary>
     public sealed class StepSounds
     {
@@ -20,6 +23,8 @@ namespace Saga.Core
         public const float WetMin = 0.4f;
         /// <summary>물 튐 음량 비(발소리 대비) — 고돗 −26dB/−16dB = 10^(−10/20).</summary>
         public const float SplashRatio = 0.316f;
+        /// <summary>tasks U-0219 — 1만리 `FootstepSfx.MinAirSec` 와 같음 · 낙하 문턱(멈춘 컨트롤러·비탈 깜빡임 거름) · 점프 음량(1만리 0.8).</summary>
+        public const float MinAirSec = 0.25f, MinFallSpeed = 2f, LandFullSpeed = 20f, JumpVolume = 0.8f;
         public const string Stone = "stone", Grass = "grass", Wood = "wood", Snow = "snow", Dirt = "dirt", Sand = "sand";
 
         /// <summary>판 재생기 — (이름, 음량 배율). 진단은 기록기로 바꿔 끼운다.</summary>
@@ -28,9 +33,13 @@ namespace Saga.Core
         private Vector3 _last;
         private bool _hasLast;
         private float _stride;
+        private float _airSec, _fallSpeed;
+        private bool _seenGround;
 
         public int StepCount { get; private set; }
         public int SplashCount { get; private set; }
+        public int JumpCount { get; private set; }
+        public int LandCount { get; private set; }
         public string LastSurface { get; private set; }
 
         public StepSounds(Action<string, float> play) { Play = play; }
@@ -55,7 +64,18 @@ namespace Saga.Core
         /// <summary>겨울(땅 웅덩이 없는 철) — 진단이 <see cref="WetGround.ForcedNoPuddles"/> 로 붙든다.</summary>
         public static bool Winter => WetGround.NoPuddles;
 
-        public void Reset() { _hasLast = false; _stride = 0f; }
+        public void Reset() { _hasLast = false; _stride = 0f; _airSec = 0f; _fallSpeed = 0f; _seenGround = false; }
+
+        /// <summary>순수 — 착지 음량(낙하 속도만큼 0.5~1, 1만리와 같음).</summary>
+        public static float LandVolume(float fallSpeed) => Mathf.Lerp(0.5f, 1f, Mathf.Clamp01(fallSpeed / LandFullSpeed));
+
+        /// <summary>tasks U-0219 — 판 컨트롤러가 점프가 성사된 순간 부른다(날개 탈것 날갯짓은 안 부름).</summary>
+        public void Jumped()
+        {
+            if (!Enabled) return;
+            JumpCount++;
+            Play?.Invoke("jump", JumpVolume);
+        }
 
         /// <summary>걸음 하나가 났으면 그 바닥에 물 튐까지 — 1만리 `FootstepSfx` 도 부른다(박자는 제 것). 물 튐을 냈으면 참.</summary>
         public static bool Splash(Action<string, float> play, string surface, float stepVolume)
@@ -74,9 +94,31 @@ namespace Saga.Core
             Vector3 d = _hasLast ? pos - _last : Vector3.zero;
             _last = pos;
             _hasLast = true;
-            if (!Enabled || !grounded || blocked) { _stride = 0f; return; }
+            bool seen = _seenGround;   // 처음 바닥 닿기 전(낙하로 시작하는 마당)은 착지 없음
+            if (grounded) _seenGround = true;
+            if (!Enabled || blocked) { _stride = 0f; _airSec = 0f; _fallSpeed = 0f; return; }
+            bool warp = d.magnitude / dt > 60f;   // 60 m/s 넘으면 순간이동(집 드나듦·되살아남)
+            if (!grounded)
+            {
+                _stride = 0f;
+                if (warp) { _airSec = 0f; _fallSpeed = 0f; return; }
+                _airSec += dt;
+                if (d.y < 0f) _fallSpeed = Mathf.Max(_fallSpeed, -d.y / dt);
+                return;
+            }
+            // tasks U-0219 착지 — 공중에 충분히 떠서 떨어지던 뒤 닿음(처음 바닥 닿기 전·순간이동 빼고)
+            bool landed = seen && _airSec >=MinAirSec && _fallSpeed >= MinFallSpeed && !warp;
+            _airSec = 0f;
+            float fall = _fallSpeed;
+            _fallSpeed = 0f;
+            if (landed)
+            {
+                LandCount++;
+                Play?.Invoke("land", LandVolume(fall));
+                _stride = -0.5f * WalkStride;   // 착지 바로 뒤 첫 발소리 반 걸음 미룸
+            }
             float speed = new Vector2(d.x, d.z).magnitude / dt;
-            if (speed < MinSpeed || speed > 60f) { _stride = 0f; return; }   // 60 m/s 넘으면 순간이동(집 드나듦·되살아남)
+            if (speed < MinSpeed || speed > 60f) { if (!landed) _stride = 0f; return; }
             _stride += speed * dt;
             float need = speed >= RunSpeed ? RunStride : WalkStride;
             if (_stride < need) return;

@@ -416,7 +416,7 @@ namespace Saga.Story.Player
         public void TriggerJump()
         {
             if (_onRope) return;
-            if (_controller.isGrounded) _verticalVelocity = JumpSpeed * StoryMounts.JumpMul;
+            if (_controller.isGrounded) { _verticalVelocity = JumpSpeed * StoryMounts.JumpMul; Steps.Jumped(); } // tasks U-0219 점프 소리
             else _jumpQueued = true; // 공중이면 날갯짓 요청(날개 탈것이 아니면 다음 Walk 에서 그냥 버려진다)
         }
 
@@ -539,7 +539,7 @@ namespace Saga.Story.Player
 
             bool jumpPressed = WantsJump() || _jumpQueued;
             _jumpQueued = false;
-            if (_controller.isGrounded && jumpPressed) _verticalVelocity = JumpSpeed * StoryMounts.JumpMul;
+            if (_controller.isGrounded && jumpPressed) { _verticalVelocity = JumpSpeed * StoryMounts.JumpMul; Steps.Jumped(); } // tasks U-0219 점프 소리(날갯짓은 없음)
             else if (fly && !_controller.isGrounded && jumpPressed && _flapCooldownLeft <= 0f)
             {
                 _verticalVelocity = JumpSpeed * StoryMounts.FlapVy;
@@ -627,6 +627,7 @@ namespace Saga.Story.Player
             {
                 _onRope = false;
                 _verticalVelocity = JumpSpeed * 0.6f;
+                Steps.Jumped(); // tasks U-0219 줄에서 뛰어내림
             }
         }
 
