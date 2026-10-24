@@ -231,6 +231,8 @@ static func move(b: Dictionary, uid: String, x: int, y: int) -> bool:
 	u.x = x
 	u.y = y
 	u.moved = true
+	if bool(b.get("srpg", false)):
+		check(b)   # G-0347 R-5 성문 칸에 서는 즉시 판정(옛 판은 걸음으로 끝나지 않아 웹 맞춤 그대로)
 	return true
 
 
@@ -313,6 +315,8 @@ static func act_auto(b: Dictionary, u: Dictionary) -> void:
 			u.x = int(pick.x)
 			u.y = int(pick.y)
 		u.moved = true
+		if bool(b.get("srpg", false)) and String(check(b)) != "":
+			return
 		tg = _best_target(b, u, foes)
 	if not tg.is_empty():
 		attack(b, String(u.uid), String(tg.uid))

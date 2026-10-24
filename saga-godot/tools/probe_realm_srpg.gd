@@ -116,6 +116,20 @@ func _run() -> void:
 	var k3 := String(T.call("check", b7))
 	check(k1 == "rout" and k2 == "rout" and k3 == "win", "⑤ 대장 격파 %s · 성문 %s · 6턴 버팀 %s" % [k1, k2, k3])
 
+	# ⑤-b G-0347 R-5 걸어서 성문에 서면 적 턴을 기다리지 않고 곧바로 대승
+	var b8 := _game(2)
+	var g8: Array = b8.gate
+	var gu: Dictionary = (T.call("alive", b8, "me") as Array)[0]
+	for u: Dictionary in b8.units:
+		if u != gu and int(u.x) >= int(g8[0]) - 1 and int(u.x) <= int(g8[0]) and absi(int(u.y) - int(g8[1])) <= 0:
+			u.y = 0 if int(g8[1]) != 0 else 1
+	(b8.cells as Array)[int(g8[1]) * int(b8.cols) + int(g8[0]) - 1] = "plain"
+	gu.x = int(g8[0]) - 1
+	gu.y = int(g8[1])
+	gu.moved = false
+	var stepped := bool(T.call("move", b8, String(gu.uid), int(g8[0]), int(g8[1])))
+	check(stepped and String(b8.done) == "rout", "⑤-b 걸어서 성문 → 곧바로 %s(걸음 %s)" % [String(b8.done), stepped])
+
 	# ⑥
 	var wins := 0
 	var turns := 0
