@@ -206,6 +206,9 @@
      이제 그림이 빠진 채 구운 조각(miss)만 표시해 두고 프레임마다 하나씩 다시 굽는다(그 사이엔 옛 조각) · 굽기가 없는 프레임엔 걷는 쪽 바깥 한 줄을 하나 미리 굽는다.
      손잡이 world.field2dPrebake 1(0 = 미리 굽기 끔) · 셈 = chunkStats() */
   var CH = 8, chunks = {}, chunkN = 0, CHUNK_MAX = 28, chunkKey = null, chunkK = 1, frameBakes = 0, lastCam = null, ST = { bakes: 0, rebakes: 0, pre: 0, ms: 0, resets: 0, px: 0, cap: 28 };
+  /** W-0413 조각 한 변 칸 수 — 화면 배율과 상관없이 8칸이면 폰 2264px(≈20MB)·PC ≈3400px(≈46MB) 조각을 28장까지 들었다(chunkStats 실측 T 283).
+   *  조각 한 장이 손잡이 world.field2dChunkPx(768) 안에 들도록 1~8칸 — 0 이면 옛 8칸. 순수 */
+  function chunkCells(T, k) { var C = core(), mx = C && C.tuned ? +C.tuned('world.field2dChunkPx', 768) : 768; if (!(mx > 0) || !(T > 0)) { return 8; } return Math.max(1, Math.min(8, Math.floor(mx / (T * (k || 1))))); }
   function cacheOn() { var C = core(); return !(C && C.tuned && !+C.tuned('world.field2dCache', 1)) && typeof document !== 'undefined' && !global.DG_NO_DRAW; }
   /** 칸 하나의 땅 그림(결·경계·테두리) — 화면/조각 어디에 그리든 같다 */
   function paintTile(g, kind, tx, ty, sx, sy, Tw, Th, T, b, terrainAt, dual) {
@@ -241,7 +244,7 @@
     if (global.performance) { ST.ms += global.performance.now() - t0; }
     return cv;
   }
-  function chunkStats() { return { n: Object.keys(chunks).length, key: chunkKey, bakes: ST.bakes, rebakes: ST.rebakes, pre: ST.pre, ms: Math.round(ST.ms), resets: ST.resets, px: ST.px, cap: ST.cap }; }
+  function chunkStats() { return { n: Object.keys(chunks).length, key: chunkKey, bakes: ST.bakes, rebakes: ST.rebakes, pre: ST.pre, ms: Math.round(ST.ms), resets: ST.resets, px: ST.px, cap: ST.cap, ch: CH, mb: Math.round(Object.keys(chunks).length * ST.px * ST.px * 4 / 1048576) }; }
   /* W-0389 ③-4 — 숲으로 걸어 들어가면 보이는 소품이 수백 개(큰 나무 96→267)라 매 프레임 낱개 그리기(그림자 타원 둘·save/restore·그림)가
      걷기 FPS 를 깎았다(30초 걷기에 프레임당 fill 272→937). 인물보다 늘 아래인 땅 소품(키 < TALL)은 그림자까지 조각에 굽고, 인물과 앞뒤를 가리는
      큰 소품은 그림자만 조각에 굽는다(그림은 매 프레임 — world 가 shadow:false 로). 조각 경계를 넘는 소품은 이웃 칸까지 훑어 양쪽 조각에 같이 그린다.
@@ -269,8 +272,8 @@
     var t0y = Math.floor(camY / CELL) - 1, t1y = Math.ceil((camY + H / sc) / CELL) + 2;
     var tx, ty, kind, sx, sy, props = [], ps, i, deep = tallOn(), useCache = cacheOn(), baked = useCache && propsBaked(); tall = [];
     if (useCache) {
-      var tf = ctx.getTransform ? ctx.getTransform() : null; chunkK = tf && tf.a > 0 ? Math.min(2, tf.a) : 1;
-      var key = chunkK.toFixed(2) + '|' + T.toFixed(3) + '|' + (seasonMemo.k || '') + '|' + b + '|' + (autotileOn() ? 'a' + (tjson ? 'j' : '') : 'x') + (propsBaked() ? 'p' + (deep ? 'd' : '') : '');
+      var tf = ctx.getTransform ? ctx.getTransform() : null; chunkK = tf && tf.a > 0 ? Math.min(2, tf.a) : 1; CH = chunkCells(T, chunkK);
+      var key = CH + 'c|' + chunkK.toFixed(2) + '|' + T.toFixed(3) + '|' + (seasonMemo.k || '') + '|' + b + '|' + (autotileOn() ? 'a' + (tjson ? 'j' : '') : 'x') + (propsBaked() ? 'p' + (deep ? 'd' : '') : '');
       if (chunkKey !== key) { chunks = {}; chunkKey = key; ST.resets++; }
       var c0x = Math.floor(t0x / CH), c1x = Math.floor(t1x / CH), c0y = Math.floor(t0y / CH), c1y = Math.floor(t1y / CH), cx, cy, ox, oy, nx, ny;
       frameBakes = 0; CHUNK_MAX = ST.cap = Math.max(28, (c1x - c0x + 3) * (c1y - c0y + 3) + 4);
@@ -332,5 +335,5 @@
   function npcMps(bodyM) { var C = core(), b = C && C.tuned ? +C.tuned('world.npc2dBps', 0.6) : 0.6; return bodyM > 0 && b > 0 ? b * bodyM : 0; }
   function strideMul() { var C = core(); return C && C.tuned ? Math.max(0.3, +C.tuned('world.stride2d', 1.45)) : 1.45; }
 
-  global.DG.field2d = { tall: function () { return tall; }, chunkStats: chunkStats, paintTile: paintTile, autotile: { on: autotileOn, baseOf: baseOf, pairFor: pairFor, dualIndex: dualIndex, seamed: seamed, loaded: function () { return tLoaded; }, json: function () { return tjson; }, _set: function (j) { tjson = j; kindBase = null; tjTried = true; } }, treeRects: treeRects, TALL: TALL, walkMps: walkMps, strideMul: strideMul, wander: wander, npcMps: npcMps, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
+  global.DG.field2d = { tall: function () { return tall; }, chunkStats: chunkStats, _chunkCells: chunkCells, paintTile: paintTile, autotile: { on: autotileOn, baseOf: baseOf, pairFor: pairFor, dualIndex: dualIndex, seamed: seamed, loaded: function () { return tLoaded; }, json: function () { return tjson; }, _set: function (j) { tjson = j; kindBase = null; tjTried = true; } }, treeRects: treeRects, TALL: TALL, walkMps: walkMps, strideMul: strideMul, wander: wander, npcMps: npcMps, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
 })(typeof window !== 'undefined' ? window : this);
