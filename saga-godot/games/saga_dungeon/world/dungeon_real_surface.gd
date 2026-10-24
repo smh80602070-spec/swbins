@@ -41,8 +41,26 @@ static var _two_sided: Shader = null
 static func two_sided_shader() -> Shader:
 	if _two_sided == null:
 		_two_sided = Shader.new()
-		_two_sided.code = WorldCurveMaterial.TRIPLANAR_SHADER.code.replace("cull_back", "cull_disabled")
+		_two_sided.code = cutaway_code(WorldCurveMaterial.TRIPLANAR_SHADER.code.replace("cull_back", "cull_disabled"))
 	return _two_sided
+
+
+## G-0378 앞벽 걷어내기 — 양면 변종에 uniform 셋과 fragment 첫 줄 discard 를 끼운다(cut_on 0 이면 옛 그림). 값은 dungeon_cutaway.gd 가 매 프레임.
+## 카메라→주인공 가로 선분에서 CUT_R 안 · 주인공보다 카메라 쪽(t > CUT_T0) · 바닥 위(y > CUT_Y).
+const CUT_R := 4.0
+const CUT_T0 := 0.08
+const CUT_Y := 0.35
+
+
+static func cutaway_code(code: String) -> String:
+	var uni := "uniform float cut_on = 0.0;\nuniform vec3 cut_cam = vec3(0.0);\nuniform vec3 cut_player = vec3(0.0);\n"
+	var body := "\tif (cut_on > 0.5 && world_pos.y > %.2f) {\n\t\tvec2 ca = cut_player.xz;\n\t\tvec2 cab = cut_cam.xz - ca;\n\t\tfloat ct = clamp(dot(world_pos.xz - ca, cab) / max(dot(cab, cab), 0.0001), 0.0, 1.0);\n\t\tif (ct > %.2f && length(world_pos.xz - (ca + cab * ct)) < %.2f) { discard; }\n\t}\n" % [CUT_Y, CUT_T0, CUT_R]
+	return code.replace("varying vec3 world_pos;", uni + "varying vec3 world_pos;").replace("void fragment() {", "void fragment() {\n" + body)
+
+
+## 지금까지 만든 PBR 재질들(앞벽 걷어내기가 값을 맞춘다).
+static func materials() -> Array:
+	return _cache.values()
 
 
 static func enabled() -> bool:

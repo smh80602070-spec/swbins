@@ -7,7 +7,7 @@ extends SceneTree
 ##   SHOT_DIR=<절대 경로> [SHOT_ONLY=이름,이름] "$GODOT_CONSOLE" --path saga-godot --rendering-method mobile \
 ##       --position -4000,0 --resolution 1280x720 --script res://tools/shot_scene.gd
 ##
-## CUTS 한 줄 = [이름, 씬, 단계들]. 단계(30프레임째 차례로):
+## CUTS 한 줄 = [이름, 씬, 단계들]. 단계(씬이 선 뒤 — 찍기 AFTER 프레임 전에 차례로):
 ##   ["near", <노드 경로>, dx, dz]   그 노드 자리 + (dx, 0, dz) 에 플레이어를 세운다(영역에 들어가면 그 신호가 그대로 돈다)
 ##   ["touch", <노드 경로>, <함수>]  플레이어를 넘겨 부른다(영역 들어감 흉내 — 예: 집 문)
 ##   ["call", <노드 경로>, <함수>, [인자…]]   부른다(인자 배열은 없어도 됨, 예: 메뉴 열기)
@@ -17,9 +17,9 @@ extends SceneTree
 ## near 의 노드 경로를 못 찾으면 그 이름의 첫 노드를 씬 전체에서 찾는다(지형 빌더가 만드는 LadderArea 등).
 ## SETTLE 프레임과 MIN_SEC 초(SHOT_MIN_SEC — 둘 다 지나야)(SHOT_SETTLE 로 늘릴 수 있음 — 비경 시작 대기처럼 몇 초 걸리는 컷, G-0112)에 뷰포트를 <이름>_<가로>x<세로>.png 로. 끝에 "SHOT_SCENE_DONE shots=N".
 
-const SETTLE := 120
+const SETTLE := 600   # 10-25 G-0377 — 120 은 화면 밖 창에서 씬이 덜 선다(여러 컷 이어 찍으면 더)
 const MIN_SEC := 5.0   # 10-25 — 화면 밖 창에선 120 프레임이 씬이 서기 전에 끝나(3마을 검붉음·도형 클로즈업) 실제 시간도 기다린다. SHOT_MIN_SEC 로 바꿈
-const STEP_AT := 30
+const AFTER := 90   # 단계 뒤 찍기까지(옛 120 − 30)
 const FOREST := "res://games/saga_forest/world/TestVillageForest.tscn"
 const DUNGEON := "res://games/saga_dungeon/world/TestRoom.tscn"
 const STORY_CAVE := "res://games/saga_story/world/CaveHuntGround.tscn"
@@ -232,14 +232,16 @@ func _initialize() -> void:
 			continue
 		change_scene_to_file(String(cut[1]))
 		var t0 := Time.get_ticks_msec()
+		## 씬이 서는 동안(settle − AFTER 프레임과 min_sec 초 둘 다) 기다린 뒤 단계를 하고, 단계 뒤는 옛 길 그대로 AFTER(90) 프레임 — 오래 기다려도 싸움 컷이 흘러가 버리지 않게
 		var f := 0
-		while f < settle or Time.get_ticks_msec() - t0 < int(min_sec * 1000.0):
+		while f < settle - AFTER or Time.get_ticks_msec() - t0 < int(min_sec * 1000.0):
 			await process_frame
-			if f == STEP_AT:
-				if perf:
-					(load(GFX) as GDScript).call("set_mode", "performance", self, false)
-				_steps(cut[2])
 			f += 1
+		if perf:
+			(load(GFX) as GDScript).call("set_mode", "performance", self, false)
+		_steps(cut[2])
+		for k in AFTER:
+			await process_frame
 		var img := root.get_viewport().get_texture().get_image()
 		var path := "%s/%s_%dx%d.png" % [dir, cut[0], img.get_width(), img.get_height()]
 		print("SHOT %s err=%d" % [cut[0], img.save_png(path)])

@@ -161,6 +161,7 @@ func _ready() -> void:
 	## 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게 + 기술 단추 줄이 길면 옆 줄로(hud_column_layout.gd).
 	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
 	add_child(preload("res://games/saga_dungeon/ui/hud_column_layout.gd").new())
+	preload("res://games/saga_dungeon/world/dungeon_cutaway.gd").attach(self)   # G-0378 앞벽 걷어내기
 	preload("res://saga_core/audio/bgm_picker.gd").attach(self, bgm_key)  # 배경음(G-0013) — 난입·보스 곁이면 전투곡
 	for i in range(ROOM_COUNT):
 		var origin_z := -float(i) * ROOM_SPACING
