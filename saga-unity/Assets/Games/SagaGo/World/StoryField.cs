@@ -1157,6 +1157,7 @@ namespace Saga.Go.World
         {
             var fc = FieldCombat.Instance;
             var pc = fc != null ? fc.GetComponent<PlayerController>() : null;
+            if (pc != null) ZoneCut.Cover("go.sail"); // tasks U-0225 구역 넘김 막
             if (pc != null) pc.Teleport(FolkWalker.Grounded(GoStory.SailDest(st) + Vector3.up * 1.5f) + Vector3.up * 0.1f);
             Toast(st.EnterKo != null ? GoLocalization.T(st.EnterKey, st.EnterKo) : st.ToIsle ? GoLocalization.T("story.sail_isle", "⛵ 사공의 배가 물살을 가른다 — 바위섬에 닿았다") : GoLocalization.T("story.sail_dock", "⛵ 배가 강가 나루에 닿았다"), 3.5f);
         }

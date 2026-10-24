@@ -289,6 +289,7 @@ namespace Saga.Dungeon.Player
 
         private void Update()
         {
+            if (ZoneCut.Busy) return; // tasks U-0225 구역 넘김 막이 덮인 동안 선다(진단은 Step 을 직접 부른다)
             Step(Time.deltaTime);
             Steps.Tick(transform.position, Mode == MoveMode.Ground && _controller.isGrounded, DungeonMounts.Riding != null || Mode == MoveMode.Climb || Mode == MoveMode.Mantle || Mode == MoveMode.Fly, StepSurface(transform.position), Time.deltaTime); // tasks U-0218 발소리 · U-0219 착지(기어오름·넘기·날기 중엔 공중 셈 안 함)
         }

@@ -123,6 +123,7 @@ namespace Saga.EditorTools
                 if (!PlaytestCameraZoom.Run("PlaytestForestHeadless", "forest")) _hadError = true; // tasks U-0161 휠 줌(끈 배율 되돌림)
                 if (!PlaytestForestScenario.Run()) _hadError = true; // PLAN.md 109-16 시나리오 — 과일·집·도감·손님·택배·행사를 되돌린다.
                 if (!PlaytestForestAutoQuest.Run()) _hadError = true; // tasks U-0166 자동 퀘스트 — 소포 하나 우체통까지 걸어가 배달·멈춤·▶(택배·과일·이야기·자리 되돌림)
+                if (!PlaytestZoneCut.Run("PlaytestForestHeadless", "forest")) _hadError = true; // tasks U-0225 구역 넘김 막
                 if (!PlaytestNpcModels.Forest()) _hadError = true; // PLAN.md 106-4 FOREST 몫 — 숲지기 사실 모델
             }
             if (_framesSeen >= FramesToRun)

@@ -1,3 +1,4 @@
+using Saga.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -84,6 +85,7 @@ namespace Saga.Realm.World
         {
             var b = T.Open(fromCityId, enemyId);
             if (b == null) return null;
+            if (!instant) ZoneCut.Cover("realm.tactics"); // tasks U-0225 구역 넘김 막(진단 instant 는 안 덮음)
             Close();
             var go = new GameObject("RealmTacticsView");
             go.transform.position = Origin;
@@ -106,6 +108,7 @@ namespace Saga.Realm.World
 
         private void Teardown()
         {
+            if (!_instant) ZoneCut.Cover("realm.tactics");
             if (Active == this) Active = null;
             foreach (var c in _hidden) if (c != null) c.enabled = true;
             foreach (var b in _paused) if (b != null) b.enabled = true;

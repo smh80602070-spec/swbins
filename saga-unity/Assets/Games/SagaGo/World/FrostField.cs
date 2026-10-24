@@ -1,3 +1,4 @@
+using Saga.Core;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -83,6 +84,7 @@ namespace Saga.Go.World
             _sites.Clear();
             var root = new GameObject("Frost_root");
             root.transform.SetParent(transform, false);
+            PocketVisibility.Attach(root, GoFrost.Center, new Vector3(GoFrost.HalfX + 20f, 0f, GoFrost.HalfZ + 20f)); // tasks U-0225 — 고원 밖이면 그리지 않음(충돌체는 그대로)
             Vector3 c0 = GoFrost.Center;
             var snow = Mat("snow", new Color(0.93f, 0.96f, 1f), 0f, 0.3f);
             var ground = P(PrimitiveType.Cube, root.transform, c0 + new Vector3(0f, -GoFrost.Thickness * 0.5f, 0f), new Vector3(GoFrost.HalfX * 2f, GoFrost.Thickness, GoFrost.HalfZ * 2f), snow, true);
@@ -512,6 +514,7 @@ namespace Saga.Go.World
             var fc = FieldCombat.Instance;
             var pc = fc != null ? fc.GetComponent<PlayerController>() : null;
             if (pc == null || fc.InCombat()) return false;
+            ZoneCut.Cover("go.frost"); // tasks U-0225 구역 넘김 막
             pc.Teleport(toFrost ? GoFrost.ArrivalPos : GoFrost.ReturnPos);
             if (_travel != null) _travel.gameObject.SetActive(false);
             return true;

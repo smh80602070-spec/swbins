@@ -1,3 +1,4 @@
+using Saga.Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -388,6 +389,7 @@ namespace Saga.Dungeon.World
         private void RepositionPlayerToEntry()
         {
             if (_player == null) return;
+            ZoneCut.Cover("dungeon.room"); // tasks U-0225 구역 넘김 막(방 넘김·층 내려감 — 방을 다시 지은 뒤 들어옴)
             Vector3 target = transform.TransformPoint(PlayerEntryOffset);
             if (_playerController != null) _playerController.enabled = false;
             _player.position = target;

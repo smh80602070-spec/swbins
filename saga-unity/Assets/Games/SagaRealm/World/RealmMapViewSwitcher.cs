@@ -18,7 +18,7 @@ namespace Saga.Realm.World
 
         private void Awake()
         {
-            RealmMapState.Changed += Apply;
+            RealmMapState.Changed += OnChanged;
         }
 
         private void Start()
@@ -28,12 +28,23 @@ namespace Saga.Realm.World
 
         private void OnDestroy()
         {
-            RealmMapState.Changed -= Apply;
+            RealmMapState.Changed -= OnChanged;
+        }
+
+        // tasks U-0225 구역 넘김 막 — 보기가 실제로 바뀔 때만 덮는다(Start 의 첫 Apply 는 안 덮음).
+        private bool _lastMap;
+        private bool _applied;
+
+        private void OnChanged()
+        {
+            if (_applied && RealmMapState.ViewingMap != _lastMap) Saga.Core.ZoneCut.Cover("realm.view");
+            Apply();
         }
 
         private void Apply()
         {
             bool viewingMap = RealmMapState.ViewingMap;
+            _lastMap = viewingMap; _applied = true;
             if (dioramaRoot != null) dioramaRoot.SetActive(!viewingMap);
             if (dioramaCameraRig != null) dioramaCameraRig.SetActive(!viewingMap);
             if (worldMapRoot != null) worldMapRoot.SetActive(viewingMap);

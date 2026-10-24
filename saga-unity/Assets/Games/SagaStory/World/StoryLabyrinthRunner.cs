@@ -1,3 +1,4 @@
+using Saga.Core;
 using System.Collections.Generic;
 using UnityEngine;
 using Saga.Story.Data;
@@ -407,6 +408,7 @@ namespace Saga.Story.World
 
         private static void TeleportPlayer(GameObject player, Vector3 position)
         {
+            ZoneCut.Cover("story.labyrinth"); // tasks U-0225 구역 넘김 막
             var controller = player.GetComponent<CharacterController>();
             if (controller != null) controller.enabled = false;
             player.transform.position = position;

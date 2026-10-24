@@ -1,3 +1,4 @@
+using Saga.Core;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -106,6 +107,7 @@ namespace Saga.Go.World
         {
             var root = new GameObject("Area_" + a.Id);
             root.transform.SetParent(transform, false);
+            PocketVisibility.Attach(root, a.Center, new Vector3(GoAreas.HalfX + 20f, 0f, GoAreas.HalfZ + 20f)); // tasks U-0225 — 이 땅 밖이면 그리지 않음(충돌체는 그대로)
             Vector3 c0 = a.Center;
             var ground = P(PrimitiveType.Cube, root.transform, "Area_ground", c0 + new Vector3(0f, -GoAreas.Thickness * 0.5f, 0f), new Vector3(GoAreas.HalfX * 2f, GoAreas.Thickness, GoAreas.HalfZ * 2f), Mat("ground_" + a.Id, Hex(a.GroundHex), 0f, 0.1f), true);
             // 바깥 보이지 않는 벽 넷
@@ -802,6 +804,7 @@ namespace Saga.Go.World
             var pc = fc != null ? fc.GetComponent<PlayerController>() : null;
             if (pc == null || fc.InCombat()) return false;
             if (toArea && !a.Open()) return false;
+            ZoneCut.Cover("go.area"); // tasks U-0225 구역 넘김 막
             pc.Teleport(toArea ? a.ArrivalPos : a.ReturnPos);
             SkyFor(toArea ? a.ArrivalPos : a.ReturnPos);
             if (_travel != null) _travel.gameObject.SetActive(false);

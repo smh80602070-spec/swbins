@@ -322,6 +322,7 @@ namespace Saga.Forest.World
         {
             if (_player == null) ResolvePlayer();
             if (_player == null) return;
+            ZoneCut.Cover("forest.cave"); // tasks U-0225 구역 넘김 막
             if (_cc != null) _cc.enabled = false;
             _player.position = pos;
             if (_cc != null) _cc.enabled = true;

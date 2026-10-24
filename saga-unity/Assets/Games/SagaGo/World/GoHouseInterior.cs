@@ -1,3 +1,4 @@
+using Saga.Core;
 using System.Collections.Generic;
 using UnityEngine;
 using Saga.Core.Region;
@@ -156,6 +157,7 @@ namespace Saga.Go.World
 
         private void Move(Vector3 pos)
         {
+            ZoneCut.Cover("go.house"); // tasks U-0225 구역 넘김 막(들기·나기)
             if (_pc != null) _pc.Teleport(pos);
             else _player.position = pos;
         }

@@ -87,6 +87,7 @@ namespace Saga.Forest.Player
 
         private void Update()
         {
+            if (ZoneCut.Busy) return; // tasks U-0225 구역 넘김 막이 덮인 동안 선다(진단은 Step 을 직접 부른다)
             Step(Time.deltaTime);
             Steps.Tick(transform.position, _controller.enabled && _controller.isGrounded, ForestMounts.Riding != null, StepSurface(transform.position), Time.deltaTime); // tasks U-0218 발소리
         }

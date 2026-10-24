@@ -1,3 +1,4 @@
+using Saga.Core;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -67,6 +68,7 @@ namespace Saga.Realm.World
         public static RealmBattlefield Show(RealmWarState.AttackResult r)
         {
             if (!r.Ok || string.IsNullOrEmpty(r.EnemyId)) return null;
+            ZoneCut.Cover("realm.battle"); // tasks U-0225 구역 넘김 막
             Hide();
             var go = new GameObject("RealmBattlefield");
             go.transform.position = Origin;
@@ -79,6 +81,7 @@ namespace Saga.Realm.World
         public static void Hide()
         {
             if (Active == null) return;
+            ZoneCut.Cover("realm.battle");
             var go = Active.gameObject;
             Active = null;
             if (Application.isPlaying) Destroy(go); else DestroyImmediate(go);

@@ -1245,6 +1245,7 @@ namespace Saga.EditorTools
                     if (!PlaytestRealmLaws.Run()) { Fail(); return; } // tasks U-0182 법령 — 세이브 JSON 으로 되돌린다.
                     if (!PlaytestRealmFocus.Run()) { Fail(); return; } // tasks U-0193 국가 방침 — 세이브 JSON 으로 되돌린다.
                     if (!PlaytestRealmWorkers.Run()) { Fail(); return; } // tasks U-0224 눈에 보이는 일꾼 — 성 값·디오라마를 되돌린다.
+                    if (!PlaytestZoneCut.Run("PlaytestRealmSlice", "realm")) { Fail(); return; } // tasks U-0225 구역 넘김 막
                     if (!PlaytestRealmAges.Run()) { Fail(); return; } // tasks U-0187 국세 — 세이브 JSON 으로 되돌린다.
                     if (!PlaytestRealmAutoRule.Run()) { Fail(); return; } // tasks U-0167 시정 위임 — 고름·성마다 하나·다음 달·금 바닥·단추(세이브 JSON 으로 되돌린다)
                     _phase = Phase.QuizCorrect;

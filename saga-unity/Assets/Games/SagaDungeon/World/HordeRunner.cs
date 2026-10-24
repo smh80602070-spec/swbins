@@ -260,6 +260,7 @@ namespace Saga.Dungeon.World
         private void TeleportPlayer(Vector3 targetWorldPos)
         {
             if (_player == null) return;
+            ZoneCut.Cover("dungeon.horde"); // tasks U-0225 구역 넘김 막
             if (_playerController != null) _playerController.enabled = false;
             _player.position = targetWorldPos;
             if (_playerController != null) _playerController.enabled = true;

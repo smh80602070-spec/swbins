@@ -1,3 +1,4 @@
+using Saga.Core;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine;
@@ -122,6 +123,7 @@ namespace Saga.Go.UI
             var fc = FieldCombat.Instance;
             var pc = fc != null ? fc.GetComponent<PlayerController>() : Object.FindFirstObjectByType<PlayerController>();
             if (pc == null) return false;
+            ZoneCut.Cover("go.map"); // tasks U-0225 구역 넘김 막
             pc.Teleport(FrostJumpPos(i));
             foreach (var e in FieldEnemy.All) e.ForceReturn();
             Close();
@@ -629,6 +631,7 @@ namespace Saga.Go.UI
             var fc = FieldCombat.Instance;
             var pc = fc != null ? fc.GetComponent<PlayerController>() : Object.FindFirstObjectByType<PlayerController>();
             if (pc == null) return false;
+            ZoneCut.Cover("go.map");
             pc.Teleport(GoWorldMap.PeakArrival(p));
             foreach (var e in FieldEnemy.All) e.ForceReturn();
             Close();
@@ -649,6 +652,7 @@ namespace Saga.Go.UI
             var fc = FieldCombat.Instance;
             var pc = fc != null ? fc.GetComponent<PlayerController>() : Object.FindFirstObjectByType<PlayerController>();
             if (pc == null) return false;
+            ZoneCut.Cover("go.map");
             pc.Teleport(GoWorldMap.ArrivalPos(w));
             foreach (var e in FieldEnemy.All) e.ForceReturn();
             Close();

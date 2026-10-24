@@ -1,3 +1,4 @@
+using Saga.Core;
 using System.Collections.Generic;
 using UnityEngine;
 using Saga.Forest.Data;
@@ -70,6 +71,10 @@ namespace Saga.Forest.World
         private void Awake()
         {
             if (transform.childCount == 0) Build();
+            // tasks U-0225 — 마을에 있으면 +500m 집 안 방은 그리지 않음(충돌체는 그대로, 원거리 1000m 안이라 안개 속에서도 그려졌다).
+            // 방은 편집 시점 씬 빌드가 지어 두므로 여기(Play)서 붙인다.
+            var indoor = transform.Find("IndoorRoom");
+            if (indoor != null) Saga.Core.PocketVisibility.Attach(indoor.gameObject, indoor.position, new Vector3(RoomSize.x * 0.5f + 6f, 0f, RoomSize.z * 0.5f + 6f));
 
             _entryTriggerPos = transform.position + new Vector3(0f, 0f, -2.5f);
             _exitLandingPos = transform.position + new Vector3(0f, 0.1f, -5f);
@@ -91,6 +96,7 @@ namespace Saga.Forest.World
         /// 를 겪기 전에).</summary>
         private void TeleportPlayer(Vector3 position)
         {
+            ZoneCut.Cover("forest.house"); // tasks U-0225 구역 넘김 막(집 들기·나기)
             if (_playerController != null) _playerController.enabled = false;
             _player.position = position;
             if (_playerController != null) _playerController.enabled = true;

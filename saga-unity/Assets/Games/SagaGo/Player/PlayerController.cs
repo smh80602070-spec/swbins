@@ -321,6 +321,7 @@ namespace Saga.Go.Player
 
         private void Update()
         {
+            if (ZoneCut.Busy) return; // tasks U-0225 구역 넘김 막이 덮인 동안 선다(진단은 Step 을 직접 부른다)
             // PLAN.md 106-9 — 등장 컷 동안은 선다(진단은 Step 을 직접 부르므로 여기서만 막는다).
             if (Saga.Go.Cinematics.GoCutscenes.Playing)
             {
