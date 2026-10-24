@@ -2287,7 +2287,7 @@
   "fun": {},
   "ticket": "U-0204",
   "since": "2026-10-25",
-  "note": "D2(U-0204): PlaytestRealmSlice regions table·view·map·follow·card·off OK — 성 58 → 9지역(≤8곳), 끝판에도 한 화면 8곳·화살표 3 · 촬영 worldmap △(끝판 세이브 정복 승리 카드가 지도를 가림 — 화살표 이름만 보임)"
+  "note": "D2(U-0204): PlaytestRealmSlice regions table·view·map·follow·card·off OK — 성 58 → 9지역(≤8곳), 끝판에도 한 화면 8곳·화살표 3 · 촬영 worldmap △(끝판 세이브 정복 승리 카드가 지도를 가림) · R-3 10-25 lgregion(카드 닫고 140m) △ — 중원 성 이름(허창·진류·낙양)만 보여 지역 화면은 맞음, 지도 안개가 짙어 표지가 흐리고 이웃 화살표(땅 가장자리)는 화면 밖 — 화살표·안개는 다음 촬영 후보"
  },
  {
   "id": "un.rk.srpg",

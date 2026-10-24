@@ -734,6 +734,18 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] lgbond 무사{Saga.Dungeon.Data.DungeonBond.Tag(Saga.Dungeon.Data.PartyRole.Guard)} 술사{Saga.Dungeon.Data.DungeonBond.Tag(Saga.Dungeon.Data.PartyRole.Mystic)} 호령 {cmd}");
                         break;
                     }
+                    case "lgregion":   // U-0204 5천하 지역 지도 — 정복 카드 닫고 지도를 켜 중원 화면(내 성·회색 적 성·이웃 화살표)
+                    {
+                        foreach (var card in Object.FindObjectsByType<Saga.Core.SessionCard>(FindObjectsSortMode.None)) card.Hide();
+                        if (!Saga.Realm.Data.RealmMapState.ViewingMap) Saga.Realm.Data.RealmMapState.Toggle();
+                        Saga.Realm.Data.RealmRegions.SetView("zhongyuan");
+                        var map = Object.FindFirstObjectByType<Saga.Realm.World.RealmWorldMap>();
+                        map?.Rebuild();
+                        var cam = Object.FindFirstObjectByType<Saga.Realm.Player.RealmWorldMapCamera>();
+                        cam?.SetView(140f, 0.9f);
+                        Debug.Log($"[ShowcaseGui] lgregion 화면 {Saga.Realm.Data.RealmRegions.View} · 내 성 {Saga.Realm.Data.RealmRegions.VisibleOwned().Count} · 화살표 {(map != null ? string.Join(",", map.ArrowRegions) : "-")}");
+                        break;
+                    }
                     case "lggather":   // U-0200 3마을 채집 — 주인공 줍기 동작
                     {
                         var pc = Object.FindFirstObjectByType<Saga.Forest.Player.PlayerController>();
