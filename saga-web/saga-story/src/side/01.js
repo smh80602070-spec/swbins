@@ -855,7 +855,7 @@
     if (rare) { hp = Math.round(hp * RARE_HP_MUL); dmgMul *= RARE_DMG_MUL; }
     if (boost) { hp = Math.round(hp * boost.hp); dmgMul *= boost.dmg; }
     var e = {
-      ref: ref, x: x, y: y - 22, w: 34, h: 34,
+      ref: ref, x: x, y: y - 22, w: 34, h: 34, pi: pl && y === pl[1] ? stg.plats.indexOf(pl) : -1,   // 선 발판(-1 = 바닥) — 끝에서 돌아선다
       hp: hp, hpMax: hp, dmg: Math.round((4 + lv * 1.6) * dmgMul * E_DMG * RF()),
       dir: Math.random() < 0.5 ? -1 : 1,
       spd: spd, phase: Math.random() * 6.28, hurt: 0, cd: 0,
