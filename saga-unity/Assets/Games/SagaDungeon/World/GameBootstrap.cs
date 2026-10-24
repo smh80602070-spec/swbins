@@ -57,6 +57,7 @@ namespace Saga.Dungeon.World
             MountField.Install(); // PLAN.md 109-15 탈것·비행 — H 타기·Shift+H 고르기·X/Z 오르내림(Play 때, 씬 재빌드 없이).
             CeilingView.Install(); // tasks U-0198 천장 — 카메라 높이로 보임/그림자만
             DungeonSeasonUi.Install(); // tasks U-0195 시즌 — 일시정지 왼쪽 🏆 창(Play 때, 씬 재빌드 없이)
+            DungeonTodaySource.Install(); // tasks U-0213 「오늘」 창 — 일과 셋·시즌 사다리를 한 창에(📅, Play 때)
             if (DungeonSeason.Roll(out string seasonLine) > 0 || seasonLine.Length > 0) DialogueLabel.Instance?.Show(seasonLine, 5f); // 켤 때 지난 시즌이 끝났으면 닫는다
             DungeonAutoQuest.Install(); // tasks U-0164 자동 퀘스트 — 목표판 왼쪽 ▶(방 적 → 인영 → 다음 문, Play 때).
             if (DungeonFloorRunner.Instance != null) DungeonFloorRunner.Instance.FloorDescended += OnFloorDescended;

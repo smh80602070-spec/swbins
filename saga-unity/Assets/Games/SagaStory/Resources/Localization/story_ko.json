@@ -753,6 +753,11 @@
     { "key": "sbond.line.virtue1", "value": "그대 곁에 있으면 마음이 놓입니다." },
     { "key": "sbond.line.virtue2", "value": "그대를 위해서라면 무엇이든 나누겠습니다." },
     { "key": "sbond.up", "value": "{0} {1}의 우정 Lv.{2} · {3} — \"{4}\"" },
-    { "key": "sbond.knot_atk", "value": " · 나와 있을 때 공격 ×{0:0.00}" }
+    { "key": "sbond.knot_atk", "value": " · 나와 있을 때 공격 ×{0:0.00}" },
+    { "key": "today.week_month", "value": "이번 주 · 이번 달" },
+    { "key": "today.guild_none", "value": "🏯 문파에 들면 날마다 의뢰 사냥터가 열린다(처치 공 ×2)" },
+    { "key": "today.guild_hunt", "value": "🏯 오늘의 의뢰 사냥터 — {0} (처치 공 ×2)" },
+    { "key": "today.champion", "value": "👑 관문 대장 — 이번 주 아직(두목이 대장으로 나온다)" },
+    { "key": "today.champion_done", "value": "✓ 👑 관문 대장 — 이번 주 이김" }
   ]
 }

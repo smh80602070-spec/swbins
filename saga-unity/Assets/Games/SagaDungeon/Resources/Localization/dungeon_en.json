@@ -922,6 +922,9 @@
     { "key": "friend.line.virtue0", "value": "So we walk together now. I'm glad to have you." },
     { "key": "friend.line.virtue1", "value": "I feel at ease by your side." },
     { "key": "friend.line.virtue2", "value": "For you, I would share anything." },
-    { "key": "friend.up", "value": "{0} Bond with {1} Lv.{2} · {3} — \"{4}\"" }
+    { "key": "friend.up", "value": "{0} Bond with {1} Lv.{2} · {3} — \"{4}\"" },
+    { "key": "today.season", "value": "🏆 Season" },
+    { "key": "today.season_next", "value": "{1} pts to next tier {0}" },
+    { "key": "today.season_top", "value": "Top tier — hold it until the season ends" }
   ]
 }

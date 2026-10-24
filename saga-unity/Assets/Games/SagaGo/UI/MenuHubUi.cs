@@ -17,6 +17,8 @@ namespace Saga.Go.UI
 
         private Saga.Core.MenuGrid _grid;
         private float _tick;
+        private Saga.Core.TodayPanel _today;
+        public Saga.Core.TodayPanel Today => _today;
 
         public Button OpenButton { get; private set; }
         public Button CloseButton => _grid.CloseButton;
@@ -53,6 +55,15 @@ namespace Saga.Go.UI
             _grid.Register("U", () => WeeklyUi.Instance != null ? WeeklyUi.Instance.OpenLabel : "", () => WeeklyUi.Instance?.Open(), () => WeeklyUi.Instance != null, "ui_clipboard_list");
             _grid.Register("N", () => CycleUi.Instance != null ? CycleUi.Instance.OpenLabel : "", () => CycleUi.Instance?.Open(), () => CycleUi.Instance != null, "ui_rotate_ccw");
             _grid.Register("I", () => EggUi.Instance != null ? EggUi.Instance.OpenLabel : "", () => EggUi.Instance?.Open(), () => EggUi.Instance != null, "ui_sparkles");
+            // tasks U-0213 「오늘」 창(고돗 G-0351 짝) — 여섯째 칸. 의뢰 넷·주간 도전 다섯·덤 받기를 한 창에(받을 게 있으면 ●N, 키 없음).
+            _today = Saga.Core.TodayPanel.Create(new GoTodaySource(), transform);
+            _grid.Register(null, TodayLabel, () => _today?.Open(), () => _today != null, "ui_flag");
+        }
+
+        private string TodayLabel()
+        {
+            int n = _today != null ? _today.ClaimableCount() : 0;
+            return GoLocalization.T("today.button", "오늘") + (n > 0 ? " ●" + n : "");
         }
 
         public void Toggle() { if (IsOpen) Close(); else Open(); }

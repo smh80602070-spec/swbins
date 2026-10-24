@@ -3370,6 +3370,10 @@
     { "key": "friend.line.virtue0", "value": "함께 걷게 되었군요. 잘 부탁드립니다." },
     { "key": "friend.line.virtue1", "value": "그대 곁에 있으면 마음이 놓입니다." },
     { "key": "friend.line.virtue2", "value": "그대를 위해서라면 무엇이든 나누겠습니다." },
-    { "key": "friend.up", "value": "{0} {1}의 우정 Lv.{2} · {3} — \"{4}\"" }
+    { "key": "friend.up", "value": "{0} {1}의 우정 Lv.{2} · {3} — \"{4}\"" },
+    { "key": "today.button", "value": "오늘" },
+    { "key": "today.week", "value": "이번 주" },
+    { "key": "today.daily_bonus", "value": "넷 다 하면 마무리 — 금 {0} · 강화석 {1} · 인연 매듭 {2}" },
+    { "key": "today.week_bonus", "value": "다섯 다 받으면 완주 — {0}" }
   ]
 }

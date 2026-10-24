@@ -922,6 +922,9 @@
     { "key": "friend.line.virtue0", "value": "함께 걷게 되었군요. 잘 부탁드립니다." },
     { "key": "friend.line.virtue1", "value": "그대 곁에 있으면 마음이 놓입니다." },
     { "key": "friend.line.virtue2", "value": "그대를 위해서라면 무엇이든 나누겠습니다." },
-    { "key": "friend.up", "value": "{0} {1}의 우정 Lv.{2} · {3} — \"{4}\"" }
+    { "key": "friend.up", "value": "{0} {1}의 우정 Lv.{2} · {3} — \"{4}\"" },
+    { "key": "today.season", "value": "🏆 시즌" },
+    { "key": "today.season_next", "value": "다음 단계 {0}까지 {1}점" },
+    { "key": "today.season_top", "value": "맨 위 단계 — 시즌 끝까지 지키기" }
   ]
 }

@@ -166,6 +166,22 @@ namespace Saga.Dungeon.Data
             return string.Format(DungeonLocalization.T("task.week", "일과 도장 {0}/{1}(다음 보상까지 {2})"), rem, StampsPerReward, need);
         }
 
+        // ---- tasks U-0213 「오늘」 창 — 칸별 읽기만(셈·세이브 안 바꿈) ----
+
+        /// <summary>오늘 뽑힌 일과 수(EnsureToday 뒤).</summary>
+        public static int TaskCount { get { EnsureToday(); return _selected.Length; } }
+
+        /// <summary>i 번째 일과 한 줄(끝났으면 ✓).</summary>
+        public static string TaskLine(int i)
+        {
+            EnsureToday();
+            if (i < 0 || i >= _selected.Length) return "";
+            var def = Pool[_selected[i]];
+            return (_done[i] ? "✓ " : "") + string.Format(DungeonLocalization.T("task." + KindKey(def.Kind), def.Label), _progress[i], def.Target);
+        }
+
+        public static bool TaskDone(int i) { EnsureToday(); return i >= 0 && i < _done.Length && _done[i]; }
+
         /// <summary>110 ⑤c-2c — 번역 표 키(task.&lt;이것&gt;).</summary>
         private static string KindKey(Kind k) => k switch
         {

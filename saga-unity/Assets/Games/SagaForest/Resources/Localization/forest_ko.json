@@ -735,6 +735,12 @@
     { "key": "bees.catch_btn", "value": "🕸 잡기" },
     { "key": "bees.caught", "value": "🕸 벌떼를 잡았다! — {0}" },
     { "key": "bees.stung", "value": "🐝 벌에 쏘였다! 😵" },
-    { "key": "bees.fled", "value": "🐝 벌떼가 흩어졌다." }
+    { "key": "bees.fled", "value": "🐝 벌떼가 흩어졌다." },
+    { "key": "today.festival", "value": "🎉 축제" },
+    { "key": "today.talk", "value": "💬 주민과 이야기 {0}/{1}" },
+    { "key": "today.gift", "value": "🎁 이웃 선물 {0}/{1}" },
+    { "key": "today.gift_none", "value": "🎁 눌러앉은 이웃이 생기면 날마다 작은 선물" },
+    { "key": "today.visitor", "value": "{0} 오늘 손님 {1} — 부탁 들어주기" },
+    { "key": "today.visitor_done", "value": "✓ {0} 오늘 손님 {1} — 부탁 마침" }
   ]
 }

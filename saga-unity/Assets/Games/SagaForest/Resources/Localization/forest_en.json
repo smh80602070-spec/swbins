@@ -735,6 +735,12 @@
     { "key": "bees.catch_btn", "value": "🕸 Catch" },
     { "key": "bees.caught", "value": "🕸 Caught the swarm! — {0}" },
     { "key": "bees.stung", "value": "🐝 Stung by bees! 😵" },
-    { "key": "bees.fled", "value": "🐝 The swarm scattered." }
+    { "key": "bees.fled", "value": "🐝 The swarm scattered." },
+    { "key": "today.festival", "value": "🎉 Festival" },
+    { "key": "today.talk", "value": "💬 Talk with villagers {0}/{1}" },
+    { "key": "today.gift", "value": "🎁 Neighbor gifts {0}/{1}" },
+    { "key": "today.gift_none", "value": "🎁 Once neighbors settle in, they give a small gift each day" },
+    { "key": "today.visitor", "value": "{0} Today's guest {1} — help with the request" },
+    { "key": "today.visitor_done", "value": "✓ {0} Today's guest {1} — request done" }
   ]
 }
