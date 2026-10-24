@@ -13,7 +13,7 @@ const { page } = r;
 const ev = (fn, arg) => page.evaluate(fn, arg);
 
 /** 떠 있는 카드(이정표·사건)를 닫는다 — 화면이 그러듯 closeEnc 로 */
-async function clearCards() { for (let i = 0; i < 8 && await ev(() => { var e = document.getElementById('encounter'); return !!(e && e.classList.contains('show')); }); i++) { await ev(() => { DG.ui.closeEnc(); }); await sleep(250); } }
+async function clearCards() { for (let i = 0; i < 8 && await ev(() => { var e = document.getElementById('encounter'), T = DG.tacticsView; return !!((e && e.classList.contains('show')) || (T && T.cur && T.cur())); }); i++) { await ev(() => { var T = DG.tacticsView; if (T && T.cur && T.cur()) { T.quit(); if (T.go) { T.go(); } } else { DG.ui.closeEnc(); } }); await sleep(400); } }   // 달이 넘을 때 쳐들어온 방어 전술판(W-0403)도 맡김으로 닫는다 — 열린 판이 ▶ 다음 달을 가려 30초 막혔다(10-25 qc 무작위 FAIL)
 async function nextMonth() { await clearCards(); await page.locator('[data-act="next-month"]').click(); await sleep(1500); await clearCards(); }
 try {
   await page.goto(r.url('index.html')); await sleep(1500);
