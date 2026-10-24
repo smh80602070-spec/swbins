@@ -2281,12 +2281,12 @@
   "tests": [
    "PlaytestGoWeakPart"
   ],
-  "level": "D2",
-  "verified": "2026-10-24 claude",
+  "level": "D3",
+  "verified": "2026-10-24 qc+claude",
   "fun": {},
   "ticket": "U-0203",
   "since": "2026-10-24",
-  "note": "D2(R-3 10-24 촬영 lgweakpart ○ — 수호장 몸 위 주황 빛 공 또렷, 게임 카메라 앞을 바위가 반 가림) · 앞 D1(U-0203): PlaytestHeadless weakpart mark·break·weak·reset·off OK · 1만리 진단 FAIL 0 · 이 트랙 급소는 들키지 않은 적에게만이라 가득 당긴 화살로 · 촬영 없음(R-3 후보)"
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261024b.json · 앞 D2(R-3 10-24 촬영 lgweakpart ○ — 수호장 몸 위 주황 빛 공 또렷, 게임 카메라 앞을 바위가 반 가림) · 앞 D1(U-0203): PlaytestHeadless weakpart mark·break·weak·reset·off OK · 1만리 진단 FAIL 0 · 이 트랙 급소는 들키지 않은 적에게만이라 가득 당긴 화살로 · 촬영 없음(R-3 후보)"
  },
  {
   "id": "un.go.standoff",
@@ -2298,12 +2298,12 @@
   "tests": [
    "PlaytestGoStandoff"
   ],
-  "level": "D2",
-  "verified": "2026-10-24 claude",
+  "level": "D3",
+  "verified": "2026-10-24 qc+claude",
   "fun": {},
   "ticket": "U-0202",
   "since": "2026-10-24",
-  "note": "D2(R-3 10-24 촬영 lgstandoff gamecam 10칸 ○ — 노려봄 → 한 마리 달려와 붙음·「!」 → 창 놓치니 무리 전원 덤빔. 한 칼 장면은 촬영이 평타를 못 눌러 없음) · 앞 D1(U-0202): PlaytestHeadless standoff start·strike·miss·rash·feint·leave·off OK · 1만리 진단 전체 FAIL 0 · 촬영 없음(1~2초 순간 — R-3 촬영 컷 후보)"
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261024b.json · 앞 D2(R-3 10-24 촬영 lgstandoff gamecam 10칸 ○ — 노려봄 → 한 마리 달려와 붙음·「!」 → 창 놓치니 무리 전원 덤빔. 한 칼 장면은 촬영이 평타를 못 눌러 없음) · 앞 D1(U-0202): PlaytestHeadless standoff start·strike·miss·rash·feint·leave·off OK · 1만리 진단 전체 FAIL 0 · 촬영 없음(1~2초 순간 — R-3 촬영 컷 후보)"
  },
  {
   "id": "un.all.motion30",
@@ -2315,12 +2315,12 @@
   "tests": [
    "PlaytestMotion30"
   ],
-  "level": "D2",
-  "verified": "2026-10-24 claude",
+  "level": "D3",
+  "verified": "2026-10-24 qc+claude",
   "fun": {},
   "ticket": "U-0200",
   "since": "2026-10-24",
-  "note": "R-3 10-24 촬영 lgmotion player ○(1만리 주인공 땅에 무릎 세워 앉음) · D2(U-0200): PlaytestDungeonHeadless motion30 clips·pose·blend·move·off OK · 눈 ○ 여덟(줍기·낚싯대·앉기·한 팔·호령·사다리·젓기·절, BakeClips30.Shot) · 5천하 인물(시각으로 자세)은 후속"
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261024b.json · 앞 R-3 10-24 촬영 lgmotion player ○(1만리 주인공 땅에 무릎 세워 앉음) · D2(U-0200): PlaytestDungeonHeadless motion30 clips·pose·blend·move·off OK · 눈 ○ 여덟(줍기·낚싯대·앉기·한 팔·호령·사다리·젓기·절, BakeClips30.Shot) · 5천하 인물(시각으로 자세)은 후속"
  },
  {
   "id": "un.props.selfpairs-done",
@@ -2351,12 +2351,12 @@
   "tests": [
    "PlaytestDungeonBond"
   ],
-  "level": "D2",
-  "verified": "2026-10-24 claude",
+  "level": "D3",
+  "verified": "2026-10-24 qc+claude",
   "fun": {},
   "ticket": "U-0201",
   "since": "2026-10-24",
-  "note": "D2(U-0201): PlaytestDungeonHeadless bond tier·room·knot·hud·save·off OK · PlaytestHeadless friend 여섯 줄 그대로(공용으로 옮긴 뒤) · 촬영 안 함(알림·HUD 꼬리표 한 줄)"
+  "note": "D3(qc+claude, R-3): docs/playcheck/d3-r3-20261024b.json · 앞 D2(U-0201): PlaytestDungeonHeadless bond tier·room·knot·hud·save·off OK · PlaytestHeadless friend 여섯 줄 그대로(공용으로 옮긴 뒤) · 촬영 안 함(알림·HUD 꼬리표 한 줄)"
  },
  {
   "id": "un.go.friendship",

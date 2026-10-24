@@ -726,6 +726,22 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] lgmotion sit_ground {Saga.Core.Motion30.CurrentOf(pc.Animator)}");
                         break;
                     }
+                    case "lgbond":   // U-0201 2나락 부대 우정 — 무사 Lv6·술사 Lv3 으로 두고 무사 명령(호령 동작 U-0200)
+                    {
+                        Saga.Dungeon.Data.DungeonBond.Restore("{\"pts\":[210,95],\"knot\":[false,false]}");
+                        var pc = Object.FindFirstObjectByType<Saga.Dungeon.Player.PlayerController>();
+                        bool cmd = pc != null && Saga.Core.Motion30.Play(pc.Animator, "command");
+                        Debug.Log($"[ShowcaseGui] lgbond 무사{Saga.Dungeon.Data.DungeonBond.Tag(Saga.Dungeon.Data.PartyRole.Guard)} 술사{Saga.Dungeon.Data.DungeonBond.Tag(Saga.Dungeon.Data.PartyRole.Mystic)} 호령 {cmd}");
+                        break;
+                    }
+                    case "lggather":   // U-0200 3마을 채집 — 주인공 줍기 동작
+                    {
+                        var pc = Object.FindFirstObjectByType<Saga.Forest.Player.PlayerController>();
+                        bool ok = pc != null && Saga.Core.Motion30.Play(pc.Animator, "gather");
+                        if (!ok) { Skip(act); return; }
+                        Debug.Log("[ShowcaseGui] lggather gather");
+                        break;
+                    }
                     default: Skip(act); return;
                 }
                 Debug.Log($"[ShowcaseGui] act {act}");

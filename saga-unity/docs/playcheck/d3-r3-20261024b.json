@@ -1,0 +1,23 @@
+{
+ "date": "2026-10-24",
+ "ticket": "R-3 (U-0200~0203 오늘 넣은 넷)",
+ "how": "PlaytestShowcaseGui GUI 촬영(SAGA_SHOT_ACT lgstandoff·lgweakpart·lgmotion — TestVillage · lgbond — TestDungeon screen·player · lggather — TestVillageForest) + BakeClips30.Shot 여덟 자세 → Claude 가 PNG 를 Read 로 판정. PNG 커밋 안 함.",
+ "shots": {
+  "un.go.standoff": {
+   "verdict": "○",
+   "seen": "gamecam 10칸 — 무리 셋이 멈춰 노려봄 → 한 마리 달려와 주인공 앞에 붙음·머리 위 「!」 → 입력 없어 창 놓침 → 무리 전원 덤벼 예고 원. 한 칼(「일격!」) 장면은 촬영 도구가 평타를 못 눌러 없음(진단 strike 줄 몫)"
+  },
+  "un.go.weakpart": {
+   "verdict": "○",
+   "seen": "수호장(보라 반투명 몸) 위쪽에 주황 빛 공 또렷 · 게임 카메라 앞을 바위가 반 가림(촬영 자리 탓)"
+  },
+  "un.all.motion30": {
+   "verdict": "○",
+   "seen": "구운 자세 여덟(줍기 쪼그림·낚싯대 어깨 위·땅에 앉기·한 팔 번쩍·팔 뻗어 호령·사다리·젓기·절) · 1만리 주인공 땅에 무릎 세워 앉음 · 3마을 채집 2~4장 쪼그려 줍고 5~6장 일어섬 · 2나락 칼 든 팔 앞으로 뻗어 호령"
+  },
+  "un.dg.party-bond": {
+   "verdict": "○",
+   "seen": "부대 HUD 「무사 😊5 [1]」·「술사 😊3 [2]」 꼬리표(이름 옆, 명령 키 앞)"
+  }
+ }
+}
