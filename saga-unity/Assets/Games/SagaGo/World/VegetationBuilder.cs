@@ -130,8 +130,32 @@ namespace Saga.Go.World
             // 또 돌리는데, 편집기 빌드 스크립트가 이미 자식들을 만들어 둔
             // 뒤라 그대로 두면 나무·바위가 두 벌씩 겹쳐 생긴다 —
             // NpcBuilder.cs와 같은 방어(2026-09-12 GLB 교체 때 같이 발견).
-            if (transform.childCount > 0) return;
+            if (transform.childCount > 0) { RegisterGrassWind(); return; }
             Build();
+            RegisterGrassWind();
+        }
+
+        /// <summary>tasks U-0216 — 풀 포기 재질을 흔들림 사본(`Saga/GrassSway`)으로 바꿔 끼우고 <see cref="Saga.Core.GrassWind"/> 에 등록(Play 때 Awake ·
+        /// 진단은 직접). 높이 맞춤은 원본 GLB 메시(정적 배칭 뒤 렌더러 메시는 합친 것이라) — 통일 세트 이름(`grass_tuft_*`)으로 찾는다. 바꾼 재질 수.</summary>
+        public int RegisterGrassWind()
+        {
+            var grass = transform.Find("Grass");
+            if (grass == null) return 0;
+            int n = 0;
+            foreach (var r in grass.GetComponentsInChildren<MeshRenderer>(true))
+            {
+                Mesh src = null;
+                for (var t = r.transform; t != null && t != grass && src == null; t = t.parent)
+                {
+                    if (System.Array.IndexOf(UnifiedGrass, t.name) < 0) continue;
+                    var prefab = WorldModels.Load(t.name);
+                    var mf = prefab != null ? prefab.GetComponentInChildren<MeshFilter>(true) : null;
+                    src = mf != null ? mf.sharedMesh : null;
+                }
+                if (src == null && !r.isPartOfStaticBatch) { var own = r.GetComponent<MeshFilter>(); src = own != null ? own.sharedMesh : null; }
+                n += Saga.Core.GrassWind.Own(r, src, r.transform.lossyScale.y);
+            }
+            return n;
         }
 
         public void Build()

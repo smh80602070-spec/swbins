@@ -166,6 +166,7 @@ namespace Saga.Core
             sw.Build();
             sw.Refresh();
             WetGround.SetWet(sw.RainWets ? 1f : 0f); // U-0212 들어올 때 이미 비면 바로 젖음
+            GrassWind.SetMul(GrassWind.Target(sw.Kind)); // U-0216 들어올 때 이미 바람이면 이미 분다(고돗 G-0363)
             return sw;
         }
 
@@ -412,6 +413,7 @@ namespace Saga.Core
             PlaceFogPuffs();
             LookDownFogFloor();
             WetGround.Tick(RainWets, Time.deltaTime); // U-0212 비 오면 땅 젖음(20초 젖음·60초 마름)
+            GrassWind.Tick(Kind, Time.deltaTime); // U-0216 풀 흔들림 날씨 배율(초당 0.5 씩 · 0.5초 묶음)
             for (int i = 0; i < 3; i++)
                 if (_layers[i] != null) _layers[i].Rotate(0f, SpinDegPerSec[i] * _windMul * Time.deltaTime, 0f, Space.World);
         }

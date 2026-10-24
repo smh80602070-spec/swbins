@@ -27,6 +27,7 @@ namespace Saga.EditorTools
             "Saga/WaterfallUnlit",
             "Saga/VertexColorLit",
             "Saga/ForestWorldCurve",
+            "Saga/GrassSway", // tasks U-0216 1만리 풀 흔들림 사본(GrassWind.ShaderName)
         };
 
         /// <summary>항상 포함하지 않아도 되는 이름(머티리얼이 넉넉히 참조하거나 기본 포함).</summary>
