@@ -111,6 +111,7 @@ namespace Saga.EditorTools
                 if (!PlaytestForestCraft.Run()) _hadError = true; // tasks U-0095 제작대·채집 손 — 손·열매를 되돌린다.
                 if (!PlaytestForestMoveIn.Run()) _hadError = true; // tasks U-0127 입주 조건 — 열매·집·창고·단골·날짜를 되돌린다.
                 if (!PlaytestForestLivestock.Run()) _hadError = true; // tasks U-0173 가축 기르기 — 열매·가축·날짜를 되돌린다.
+                if (!PlaytestForestCrops.Run()) _hadError = true; // tasks U-0223 밭 작물 — 열매·밭·날짜·날씨를 되돌린다.
                 if (!PlaytestForestRelics.Run()) _hadError = true; // tasks U-0177 유적 발굴·복원 — 유적·열매를 되돌린다.
                 if (!PlaytestForestBrew.Run()) _hadError = true; // tasks U-0180 물약 양조 — 양조·열매·하트를 되돌린다.
                 if (!PlaytestForestBees.Run()) _hadError = true; // tasks U-0206 벌집 — 굴림·쫓음·잡기·쏘임·흩어짐·손잡이(도감·벌떼·탈것 손잡이·시계 되돌림)

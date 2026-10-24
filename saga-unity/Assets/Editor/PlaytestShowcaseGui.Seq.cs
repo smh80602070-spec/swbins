@@ -614,6 +614,29 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] lgstock 우리 {Saga.Forest.Data.ForestLivestock.HasPen} · 마리 {Saga.Forest.Data.ForestLivestock.Count} · 몸 {lr.Bodies.Count}");
                         break;
                     }
+                    case "lgcrops":   // U-0223 3마을 밭 — 열매를 채워 밭을 짓고 네 칸 다 자람·자람·싹·씨로 두고 밭 앞 4m 로
+                    {
+                        var cr = Saga.Forest.World.ForestCropRunner.Instance;
+                        var who = GameObject.FindWithTag("Player");
+                        if (cr == null || who == null) { Skip(act); return; }
+                        Saga.Forest.Data.ForestState.Restore(Mathf.Max(500, Saga.Forest.Data.ForestState.FruitCount));
+                        Saga.Forest.Data.ForestCrops.ResetForTest();
+                        Saga.Forest.Data.ForestCrops.Build();
+                        var cropWx = Saga.Core.SkyWeatherRules.ForcedWeather;
+                        Saga.Core.SkyWeatherRules.ForcedWeather = Saga.Core.SkyWeatherRules.Kind.Clear;
+                        int cropDay = Saga.Forest.Data.ForestVisitors.Today;
+                        for (int ci = 0; ci < Saga.Forest.Data.ForestCrops.Plots; ci++) Saga.Forest.Data.ForestCrops.Sow(ci);
+                        Saga.Forest.Data.ForestCrops.Tick(cropDay - 3);
+                        for (int cd = 0; cd < 3; cd++)
+                        {
+                            for (int ci = 0; ci < Saga.Forest.Data.ForestCrops.Plots - 1 - cd; ci++) Saga.Forest.Data.ForestCrops.Water(ci);
+                            Saga.Forest.Data.ForestCrops.Tick(cropDay - 2 + cd);
+                        }
+                        Saga.Core.SkyWeatherRules.ForcedWeather = cropWx;
+                        Teleport(who.transform, cr.Center + new Vector3(0f, 0.3f, -4f));
+                        Debug.Log($"[ShowcaseGui] lgcrops 밭 {Saga.Forest.Data.ForestCrops.HasField} · 단계 {Saga.Forest.Data.ForestCrops.StageOf(0)}/{Saga.Forest.Data.ForestCrops.StageOf(1)}/{Saga.Forest.Data.ForestCrops.StageOf(2)}/{Saga.Forest.Data.ForestCrops.StageOf(3)} · 모델 {cr.ModelAt(0)}");
+                        break;
+                    }
                     case "lgcamp":   // U-0188 4종횡 모닥불 — 멀리 갔다 와서(앉을 준비) 불 곁에 세워 앉힌다
                     {
                         var cs = Saga.Story.World.StoryCampfireSpot.Instance;

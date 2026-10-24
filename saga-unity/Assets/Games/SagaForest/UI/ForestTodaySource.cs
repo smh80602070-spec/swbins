@@ -49,6 +49,15 @@ namespace Saga.Forest.UI
                 ? ForestLocalization.T("today.visitor_done", "✓ {0} 오늘 손님 {1} — 부탁 마침")
                 : ForestLocalization.T("today.visitor", "{0} 오늘 손님 {1} — 부탁 들어주기"), v.Emoji, ForestVisitors.Name(v)), done));
 
+            // tasks U-0223 밭 — 지었을 때만: 다 자란 칸이 있으면 거두기, 아니면 물 주기 n/m(자라는 칸이 없으면 씨 뿌리기 권함)
+            if (ForestCrops.HasField)
+            {
+                int ripe = ForestCrops.RipeCount, grow = ForestCrops.GrowingCount, wet = ForestCrops.WateredCount;
+                if (ripe > 0) today.Add(TodayRow.Line(string.Format(ForestLocalization.T("today.crop_ripe", "🌾 밭 거둘 칸 {0}"), ripe)));
+                else if (grow > 0) today.Add(TodayRow.Line(string.Format(ForestLocalization.T("today.crop_water", "💧 밭 물 주기 {0}/{1}"), wet, grow), wet >= grow));
+                else today.Add(TodayRow.Line(ForestLocalization.T("today.crop_sow", "🌱 밭에 씨를 뿌리자")));
+            }
+
             week.Add(TodayRow.Line(ForestFestivalState.GoalLineText(), ForestFestivalState.IsDoneToday()));
         }
 
