@@ -102,6 +102,9 @@ func break_prop(b: Node3D, push: Vector3) -> void:
 		return
 	b.remove_from_group("dungeon_breakable")
 	broken += 1
+	var bounty_nm: String = preload("res://games/saga_dungeon/data/dungeon_bounty.gd").prop()   # G-0372 현상금 — 통·항아리
+	if bounty_nm != "":
+		preload("res://saga_core/ui/toast.gd").show(self, "📜 현상금 채움 — " + bounty_nm, 2.5)
 	var model := String(b.get_meta("model"))
 	var at := b.global_position
 	var dir := Vector3(push.x, 0.0, push.z).normalized() if Vector2(push.x, push.z).length() > 0.05 else Vector3.FORWARD

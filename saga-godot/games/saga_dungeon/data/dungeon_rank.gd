@@ -11,6 +11,7 @@ extends RefCounted
 const RunRank := preload("res://saga_core/data/runrank.gd")
 const DungeonMode := preload("res://games/saga_dungeon/data/dungeon_mode.gd")
 const Season := preload("res://games/saga_dungeon/data/dungeon_season.gd")   # G-0334 로컬 시즌·래더
+const Bounty := preload("res://games/saga_dungeon/data/dungeon_bounty.gd")   # G-0372 현상금 — 같은 판 고리
 
 static var counter: RefCounted = RunRank.Counter.new()
 static var best: Dictionary = {}
@@ -32,6 +33,7 @@ static func tier_now() -> int:
 static func begin() -> void:
 	if on():
 		counter.call("begin", DungeonGoldState.gold, tier_now())
+	Bounty.begin(tier_now())
 
 
 static func hit() -> void:
@@ -42,13 +44,18 @@ static func hurt() -> void:
 	counter.call("hurt")
 
 
-static func kill() -> void:
+## elite — 정예면 현상금 정예 셈도. 이번에 채운 현상금 이름들(토스트용).
+static func kill(elite: bool = false) -> Array[String]:
 	counter.call("kill")
+	return Bounty.kill(elite)
 
 
 ## 판을 닫고 덤 금을 더한다 — 결과(등급 없으면 {})
 static func finish(dead: bool = false) -> Dictionary:
 	var r: Dictionary = counter.call("finish", DungeonGoldState.gold, dead)
+	var br := Bounty.finish(r, dead)   # G-0372 끝 판정 현상금·덤 금(쓰러지면 0)
+	if int(br.get("gold", 0)) > 0:
+		DungeonGoldState.add(int(br.gold))
 	if r.is_empty():
 		last = {}
 		return {}
@@ -56,6 +63,7 @@ static func finish(dead: bool = false) -> Dictionary:
 		DungeonGoldState.add(int(r.bonus_gold))
 	var mk: String = DungeonMode.run_mode if DungeonMode.run_mode != "" else DungeonMode.chosen
 	r.merge(RunRank.best_up(best, mk, String(r.rank)), true)
+	r["bounty"] = br
 	r["season"] = Season.record(r)   # G-0334 살아 나온 판만 래더에(쓰러지면 {})
 	last = r
 	return r
@@ -73,7 +81,8 @@ static func text(r: Dictionary) -> String:
 		return ""
 	var l2 := RunRank.line2(r, ["💀 쓰러져 덤 없음"] if bool(r.get("dead", false)) else [])
 	var sl := Season.line(r.get("season", {}))
-	return line(r) + ("\n" + l2 if l2 != "" else "") + ("\n" + sl if sl != "" else "")
+	var bl := Bounty.text(r.get("bounty", {}))
+	return line(r) + ("\n" + l2 if l2 != "" else "") + ("\n" + bl if bl != "" else "") + ("\n" + sl if sl != "" else "")
 
 
 static func restore(saved: Variant) -> void:

@@ -196,7 +196,10 @@ func _ready() -> void:
 	var season_r: Dictionary = preload("res://games/saga_dungeon/data/dungeon_season.gd").roll()   # G-0334 시즌이 바뀌었으면 지난 시즌 닫고 덤 금
 	if not season_r.is_empty():
 		Toast.show(self, preload("res://games/saga_dungeon/data/dungeon_season.gd").roll_text(season_r), 6.0)
-	preload("res://games/saga_dungeon/data/dungeon_rank.gd").begin()   # G-0312 한 판 등급 셈 시작(난도·부적이 굳은 뒤)
+	preload("res://games/saga_dungeon/data/dungeon_rank.gd").begin()   # G-0312 한 판 등급 셈 시작(난도·부적이 굳은 뒤) · G-0372 현상금도 건다
+	var bounty_line: String = preload("res://games/saga_dungeon/data/dungeon_bounty.gd").begin_text()
+	if bounty_line != "":
+		Toast.show(self, bounty_line, 5.0)
 	for i in range(ROOM_COUNT):
 		var cleared: bool = loaded and DungeonSaveState.is_room_cleared(i)
 		if not cleared:

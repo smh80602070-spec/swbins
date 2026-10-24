@@ -13,8 +13,8 @@ const GoalsPanel := preload("res://saga_core/ui/goals_panel.gd")
 const SCENES := {"go": "res://games/saga_go/world/TestVillage.tscn", "dungeon": "res://games/saga_dungeon/world/TestRoom.tscn",
 	"forest": "res://games/saga_forest/world/TestVillageForest.tscn", "story": "res://games/saga_story/world/SinyaField.tscn",
 	"realm": "res://games/saga_realm/world/TestCity.tscn"}   # G-0364 5천하 「이번 달」
-## [오늘 줄 수, 주간 줄 수]
-const WANT := {"go": [4, 5], "dungeon": [0, 2], "forest": [2, 0], "story": [2, 1], "realm": [2, 3]}
+## [오늘 줄 수, 주간 줄 수] — 2나락 오늘 칸 = 이번 판 현상금 셋(G-0372)
+const WANT := {"go": [4, 5], "dungeon": [3, 2], "forest": [2, 0], "story": [2, 1], "realm": [2, 3]}
 
 var fails := 0
 var game := "go"

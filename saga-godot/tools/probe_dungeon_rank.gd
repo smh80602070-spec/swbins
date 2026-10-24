@@ -18,6 +18,7 @@ func check(cond: bool, msg: String) -> void:
 
 
 func _initialize() -> void:
+	OS.set_environment("SAGA_BOUNTY", "0")   # G-0372 현상금 덤 금은 probe_dungeon_bounty 몫 — 여기선 등급 덤만 잰다
 	await process_frame
 	var RR: GDScript = load("res://saga_core/data/runrank.gd")
 	var DR: GDScript = load("res://games/saga_dungeon/data/dungeon_rank.gd")
@@ -113,7 +114,7 @@ func _initialize() -> void:
 		src[p] = FileAccess.get_file_as_string("res://games/saga_dungeon/" + p)
 	check(String(src["player/melee_attack.gd"]).contains("dungeon_rank.gd\").hit()") and String(src["player/skill_caster.gd"]).contains("dungeon_rank.gd\").hit()")
 		and String(src["player/player_health.gd"]).contains(".hurt()") and String(src["player/player_health.gd"]).contains(".finish(true)")
-		and String(src["world/dungeon_enemy.gd"]).contains(".kill()") and String(src["world/test_room.gd"]).contains("dungeon_rank.gd\").begin()")
+		and String(src["world/dungeon_enemy.gd"]).contains(".kill(elite_key") and String(src["world/test_room.gd"]).contains("dungeon_rank.gd\").begin()")
 		and String(src["world/test_room.gd"]).contains(".finish(false) if is_final"), "⑥ 배선 일곱 자리")
 
 	G.gold = saved.gold
