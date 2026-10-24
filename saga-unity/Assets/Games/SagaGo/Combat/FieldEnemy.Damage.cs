@@ -23,6 +23,12 @@ namespace Saga.Go.Combat
         /// <summary>tasks U-0174 — 내 쪽 타격이 산 적에 닿은 순간(방패에 막혀도) — 무리 토벌 등급(`GoRunRank`)이 듣는다.</summary>
         public static event Action<FieldEnemy> Struck;
 
+        // tasks U-0220 종 연구 과제 — 막타 표식(TakeHit 이 ApplyDamage 둘레에만 세움)·그 목숨 동안 쳐냄·던짐. Die 가 읽고 지운다.
+        private GoHuntResearch.Tag _rsHit;
+        private bool _rsParried, _rsThrown;
+        /// <summary>tasks U-0220 던져졌다(`FieldCombat.Land` 가 떨어뜨리기 직전) — 그 목숨 동안.</summary>
+        public void MarkThrownForResearch() { if (Alive) _rsThrown = true; }
+
         public float TakeHit(float amount, GoElement element, float atk, out GoReaction reaction, bool heavy = false, bool crit = false)
         {
             Saga.Go.Audio.GoSfx.Play(HitSfxName(), 0.9f, 0.07f); // U-0048·U-0051 활성 인물 무기 종류별
@@ -87,6 +93,7 @@ namespace Saga.Go.Combat
             Saga.Go.Player.CameraRig.Current?.Shake(big ? HitShakeBig : HitShakeSmall, big ? 0.15f : 0.08f);
 
             // 109-14-5a 치명타는 굵고 크게(금빛)
+            _rsHit = (crit ? GoHuntResearch.Tag.Weak : GoHuntResearch.Tag.None) | (reaction != GoReaction.None ? GoHuntResearch.Tag.React : GoHuntResearch.Tag.None); // tasks U-0220 막타 표식 — 이 타격 동안만(Die 가 읽음)
             float dealt = ApplyDamage(amount, crit ? new Color(1f, 0.82f, 0.3f) : element == GoElement.Physical ? Color.white : GoElements.ColorOf(element), crit ? 1.45f : 1f);
 
             if (reaction == GoReaction.Overload)
@@ -165,6 +172,7 @@ namespace Saga.Go.Combat
                 QuickenLeft = GoElements.QuickenSec;
             }
 
+            _rsHit = GoHuntResearch.Tag.None; // tasks U-0220 막타 아닌 급소·반응은 안 셈
             Aggro();
             Reacted?.Invoke(this, element, reaction, amount); // tasks U-0175 땅이 받아친다(풀불·물벼락·불 끔)
             return dealt;
@@ -233,6 +241,7 @@ namespace Saga.Go.Combat
         public void Parried(float sec)
         {
             if (!Alive) return;
+            _rsParried = true; // tasks U-0220 종 연구 — 그 목숨 동안 쳐냄
             _alertText.gameObject.SetActive(false);
             _warnRing.enabled = false;
             TintVisual(Color.white, false);

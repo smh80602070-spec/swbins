@@ -207,6 +207,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoTrack.Run("PlaytestHeadless")) _hadError = true; // tasks U-0096 사냥 의뢰(흔적·큰 짐승·강화석·무기 빛 — 세이브 JSON·날짜 시계 되돌림)
                 if (!PlaytestGoPath.Run("PlaytestHeadless")) _hadError = true; // tasks U-0130 길 행동(조사·도발·이끌기 — 세이브 JSON·날짜·굴림·자리 되돌림)
                 if (!PlaytestGoHunt.Run("PlaytestHeadless")) _hadError = true; // tasks U-0031 사냥 기록(실제 처치·화면·세이브 — 기록·돈·재료·강화석·연마석 되돌림)
+                if (!PlaytestGoHuntResearch.Run()) _hadError = true; // tasks U-0220 종 연구 과제(급소·반응·쳐냄·던짐·우두머리·완료 덤·끔·세이브 — 연구·기록·금·재료·레벨·세이브 되돌림)
                 if (!PlaytestGoHelp.Run("PlaytestHeadless")) _hadError = true; // tasks U-0043 도움말 창(F1) — 단추·닫기·세 칸·세이브 불변
                 if (!PlaytestGoWeekly.Run("PlaytestHeadless")) _hadError = true; // tasks U-0044 주간 도전 — 진짜 셈으로 채워 창·받기·세이브(금·재료·업적 셈·세이브 되돌림)
                 if (!PlaytestGoCycle.Run("PlaytestHeadless")) _hadError = true; // tasks U-0045 별배 재출항(회차) — 두 번 눌러 재출항·상자 되살림·세이브(모든 상태 되돌림)

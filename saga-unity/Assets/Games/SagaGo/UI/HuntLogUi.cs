@@ -194,7 +194,9 @@ namespace Saga.Go.UI
                 : string.Format(GoLocalization.T("hunt.progress", "{0}/{1} 마리"), Mathf.Min(kills, tiers[reached]), tiers[reached]);
             int claimed = HuntState.ClaimedTiers(k);
             string next = reached > claimed ? GoHunt.RewardText(GoHunt.RewardsOf(k)[claimed]) : full ? "" : GoHunt.RewardText(GoHunt.RewardsOf(k)[reached]);
-            return $"<b>{name}</b>  <color=#ffd54a>{Stars(k)}</color>  <size=15>{prog}</size>" + (next.Length > 0 ? $"  <size=13><color=#b9c2cc>{next}</color></size>" : "");
+            string rs = GoHuntResearch.RowText(k); // tasks U-0220 종 연구
+            return $"<b>{name}</b>  <color=#ffd54a>{Stars(k)}</color>  <size=15>{prog}</size>" + (next.Length > 0 ? $"  <size=13><color=#b9c2cc>{next}</color></size>" : "")
+                + (rs.Length > 0 ? $"  <size=13><color=#8fd3ff>{rs}</color></size>" : "");
         }
 
         public void Refresh()

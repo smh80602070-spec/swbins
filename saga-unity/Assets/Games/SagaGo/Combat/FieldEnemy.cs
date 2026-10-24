@@ -1005,6 +1005,8 @@ namespace Saga.Go.Combat
         private void Die()
         {
             if (IsHero) { Yield(); return; }
+            var rsTags = _rsHit | (_rsParried ? GoHuntResearch.Tag.Parried : GoHuntResearch.Tag.None) | (_rsThrown ? GoHuntResearch.Tag.Thrown : GoHuntResearch.Tag.None); // tasks U-0220
+            _rsHit = GoHuntResearch.Tag.None; _rsParried = _rsThrown = false;
             Hp = 0f;
             CurrentState = State.Dead;
             MarkLeft = 0f; // 109-14-15 쓰러지면 표식도 사라진다
@@ -1023,6 +1025,7 @@ namespace Saga.Go.Combat
             if (!(IsGuardian && BossDefeated)) PlayerStats.AddExp(ExpReward); // 109-14-10 다시 선 수호장은 경험 없이 꽃만
             DailyTaskState.ReportProgress(DailyTaskState.Kind.FieldKill, 1); // 109-14-8 일일 의뢰 — 들판 적
             AchieveState.Bump("kills"); // 109-14-25 업적 — 들판 처치
+            GoHuntResearch.OnKill(kind, rsTags); // tasks U-0220 종 연구 과제(막타·쳐냄·던짐 — 덤·알림)
             HuntState.Record(kind); // U-0031 사냥 기록 — 종별(업적과 같은 범위: 도메인·이야기 적은 위에서 return)
             if (IsGuardian) { AchieveState.Bump("boss"); Saga.Go.Audio.GoSfx.Play("victory"); Saga.Core.SagaVoice.System("victory"); /* U-0068 */ }
             if (IsElemental && ShieldMax > 0f && !IsGuardian && !IsHero) AchieveState.Bump("elite");
@@ -1085,6 +1088,7 @@ namespace Saga.Go.Combat
         private void Revive()
         {
             CancelInvoke(nameof(HideBody));
+            _rsHit = GoHuntResearch.Tag.None; _rsParried = _rsThrown = false; // tasks U-0220
             Hp = MaxHp;
             ResetShields();
             ClearLingeringState(); // tasks U-0015

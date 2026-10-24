@@ -122,6 +122,7 @@ namespace Saga.Go.Combat
             _grab = null;
             f.EndHold(g.To);
             Vector3 at = f.transform.position;
+            f.MarkThrownForResearch(); // tasks U-0220 종 연구 — 던진 적
             LastThrowDmg = f.TakeHit(g.Atk * GrabMul, GoElement.Physical, g.Atk * ReactMul, out _);
             f.KnockDown(GrabDownSec);
             int n = 0;
