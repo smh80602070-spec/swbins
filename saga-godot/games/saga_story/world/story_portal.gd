@@ -114,7 +114,7 @@ func _process(_delta: float) -> void:
 func go(x_m: float) -> void:
 	StorySaveState.set_pending_spawn(x_m)
 	StorySaveState.end_run(false)   # G-0197 — 사냥터에서 나가면 등급(들어간 적 없으면 아무 일 없음)
-	get_tree().change_scene_to_file(target_scene)
+	preload("res://saga_core/ui/zone_cut.gd").change_scene(get_tree(), target_scene)   # G-0384 넘김 막
 
 
 ## G-0309 지름길 — 목적지가 지도 완성한 사냥터면 입구·가운데·끝 고르기(창을 띄웠으면 true)

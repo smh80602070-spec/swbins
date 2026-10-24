@@ -126,7 +126,7 @@ func _open_menu() -> void:
 func _on_enter(layer_box: Dictionary) -> void:
 	_close(layer_box)
 	StoryLabyrinthState.start_run()
-	get_tree().change_scene_to_file(target_scene)
+	preload("res://saga_core/ui/zone_cut.gd").change_scene(get_tree(), target_scene)   # G-0384 넘김 막
 
 
 func _on_upgrade(layer_box: Dictionary) -> void:

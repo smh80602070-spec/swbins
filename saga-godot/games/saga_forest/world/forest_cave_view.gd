@@ -148,6 +148,7 @@ func enter() -> void:
 		return
 	if _player == null:
 		_player = get_tree().get_first_node_in_group("player")
+	preload("res://saga_core/ui/zone_cut.gd").begin(get_tree())   # G-0384 넘김 막 — 굴 짓는 동안 덮음
 	inside = true
 	run = Cave.new_run()
 	_darken(true)
@@ -170,6 +171,7 @@ func enter() -> void:
 func leave() -> void:
 	if not inside:
 		return
+	preload("res://saga_core/ui/zone_cut.gd").begin(get_tree())
 	inside = false
 	_darken(false)
 	if player_light and is_instance_valid(player_light):

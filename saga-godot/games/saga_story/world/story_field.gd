@@ -94,7 +94,7 @@ func _on_fall(player: Node) -> void:
 
 func _return_to_town() -> void:
 	StorySaveState.set_pending_spawn(TOWN_ARRIVAL_X)
-	get_tree().change_scene_to_file(TOWN_SCENE)
+	preload("res://saga_core/ui/zone_cut.gd").change_scene(get_tree(), TOWN_SCENE)   # G-0384 넘김 막
 
 
 ## G-0292 쓰러짐 글 — 잃은 것(이번 사냥터 주운 금 절반)과 남은 것을 같이(SAGA-DESIGN §3 F "죽어도 남는 것 명시").

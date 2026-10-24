@@ -418,6 +418,7 @@ func _interior_wall(size: Vector3, local_pos: Vector3, mat: StandardMaterial3D, 
 func _on_enter_house(body: Node3D) -> void:
 	if not body.is_in_group("player"):
 		return
+	preload("res://saga_core/ui/zone_cut.gd").begin(get_tree())   # G-0384 넘김 막 — 집 안·밖 순간이동
 	body.global_position = _interior_spawn
 	_player_indoors = true
 	Toast.show(self, "집 안으로 들어왔다 — 굽었던 땅이 평평해졌다.", 3.0)
@@ -426,6 +427,7 @@ func _on_enter_house(body: Node3D) -> void:
 func _on_exit_house(body: Node3D) -> void:
 	if not body.is_in_group("player"):
 		return
+	preload("res://saga_core/ui/zone_cut.gd").begin(get_tree())
 	body.global_position = _exterior_spawn
 	_player_indoors = false
 	Toast.show(self, "밖으로 나왔다 — 다시 마을이 둥글게 휘어 보인다.", 3.0)

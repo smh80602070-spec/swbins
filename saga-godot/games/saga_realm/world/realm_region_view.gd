@@ -56,6 +56,8 @@ func region() -> String:
 func set_region(r: String) -> void:
 	if Regions.by_id(r).is_empty():
 		return
+	if r != RealmSaveState.view_region:
+		preload("res://saga_core/ui/zone_cut.gd").begin(get_tree())   # G-0384 넘김 막 — 다른 지역으로
 	RealmSaveState.view_region = r
 	_cards.visible = false
 

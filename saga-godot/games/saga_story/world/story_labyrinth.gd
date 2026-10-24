@@ -362,4 +362,4 @@ func _on_defeated() -> void:
 
 func _return_to_town() -> void:
 	StorySaveState.set_pending_spawn(TOWN_ARRIVAL_X)
-	get_tree().change_scene_to_file(TOWN_SCENE)
+	preload("res://saga_core/ui/zone_cut.gd").change_scene(get_tree(), TOWN_SCENE)   # G-0384 넘김 막
