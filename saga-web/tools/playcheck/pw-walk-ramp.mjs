@@ -20,6 +20,7 @@ const bi = argv.indexOf('--base');
 const BASE = (bi >= 0 ? argv[bi + 1] : (process.env.PW_BASE || 'http://127.0.0.1:8871/')).replace(/\/?$/, '/');
 const opt = (k, d) => { const a = argv.find((x) => x.startsWith('--' + k + '=')); return a ? +a.slice(k.length + 3) : d; };
 const UNDER = (argv.find((a) => a.startsWith('--under=')) || '').slice(8);   // --under=함수이름: 그 함수 아래(자손) 포함 시간만 따로
+const PC = argv.includes('--pc'), THR = opt('throttle', PC ? 1 : 4), MODE = (argv.find((a) => a.startsWith('--mode=')) || '--mode=2d').slice(7);   // --pc: 1280×800·화소비 1·감속 없음(PC 체감) · --throttle=N · --mode=2d|3d
 const SECS = opt('secs', 14), RUNS = opt('runs', 2), PROF = argv.includes('--profile');   // --profile: 걷는 동안 CDP 프로파일 → 포함(inclusive)·자기(self) 시간 상위 표
 let profs = [], cpu = [];
 const TUNES = [['perf.auto', 0], ['perf.startTier', 'LOW']].concat(argv.map((a, i) => (a === '--tune' ? argv[i + 1] : null)).filter(Boolean)
@@ -46,13 +47,13 @@ const RAMP = async (secs) => {
 };
 
 async function one(browser) {
-  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
-  const page = await ctx.newPage(), cdp = await ctx.newCDPSession(page), url = BASE + 'saga-go/?mode=2d';
+  const ctx = await browser.newContext(PC ? { viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1, serviceWorkers: 'block' } : { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, serviceWorkers: 'block' });
+  const page = await ctx.newPage(), cdp = await ctx.newCDPSession(page), url = BASE + 'saga-go/?mode=' + MODE;
   try { await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true }); } catch (e) { /* 없음 */ }
   await cdp.send('Network.enable'); await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 90000 }); await sleep(1500);
   await page.evaluate((tn) => { try { localStorage.clear(); } catch (e) { /* 없음 */ } DG.account.create('예산'); tn.forEach(([k, v]) => DG.core.setTune(k, v)); }, TUNES);
-  await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+  await cdp.send('Emulation.setCPUThrottlingRate', { rate: THR });
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 120000 }); await sleep(4000);
   await page.evaluate(() => { const b = document.getElementById('title-continue'); if (b) { b.click(); } }); await sleep(4000);
   await clearOverlays(page, 'saga-go'); await sleep(6000);
