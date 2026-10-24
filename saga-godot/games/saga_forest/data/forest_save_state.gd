@@ -73,6 +73,7 @@ var livestock: Dictionary = {}
 var relics: Dictionary = {}
 ## G-0320 물약 양조 — {found: [재료…], drunk: 재료, day: 날}. 순수 추가 칸. data/forest_brew.gd.
 var brew: Dictionary = {}
+var contest: Dictionary = {}   # G-0373 낚시 대회 {day, sizes, tier} — 규칙은 forest_contest.gd
 ## G-0330 집 계절 심사 — {season: "YYYY-n", best: 별}. 순수 추가 칸. data/forest_hha.gd.
 var hha: Dictionary = {}
 ## G-0242 땅 아래 층 — {deepest, torch_until(unix 초), relic, dug{day, got}}, 없으면 {}. 순수 추가 칸. data/forest_cave.gd.
@@ -478,6 +479,7 @@ func save() -> bool:
 		"livestock": livestock,   # G-0311
 		"relics": relics,   # G-0315
 		"brew": brew,   # G-0320
+		"contest": contest,   # G-0373
 		"hha": hha,   # G-0330
 		"tools": tools,
 		"tool_lv": tool_lv,   # G-0196
@@ -547,6 +549,8 @@ func try_load() -> bool:
 	relics = (loaded_rl as Dictionary).duplicate(true) if typeof(loaded_rl) == TYPE_DICTIONARY else {}
 	var loaded_brew: Variant = data.get("brew", {})   # G-0320 — 옛 세이브는 빈 것
 	brew = (loaded_brew as Dictionary).duplicate(true) if typeof(loaded_brew) == TYPE_DICTIONARY else {}
+	var loaded_contest: Variant = data.get("contest", {})   # G-0373 — 옛 세이브는 빈 것
+	contest = (loaded_contest as Dictionary).duplicate(true) if typeof(loaded_contest) == TYPE_DICTIONARY else {}
 	var loaded_hha: Variant = data.get("hha", {})   # G-0330 — 옛 세이브는 심사 없음
 	hha = (loaded_hha as Dictionary).duplicate(true) if typeof(loaded_hha) == TYPE_DICTIONARY else {}
 	var loaded_cave: Variant = data.get("cave", {})   # G-0242 — 옛 세이브는 굴 기록 없음

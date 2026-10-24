@@ -202,3 +202,8 @@ func _hook() -> void:
 		ForestSaveState.add_item(FISH_ITEM_LABEL, n)
 		Toast.show(self, "🐟 낚았다 — %s +%d" % [FISH_ITEM_LABEL, n], 2.5)
 		CombatFeel.pickup(self, "%s +%d" % [FISH_ITEM_LABEL, n])
+		var quality := 1.0 - float(now - _bite_at_ms) / float(maxi(_ends_at_ms - _bite_at_ms, 1))   # G-0373 낚시 대회 — 입질 곧바로 당길수록 큰 고기
+		var Contest := preload("res://games/saga_forest/data/forest_contest.gd")
+		var cr: Dictionary = Contest.on_catch(ForestSaveState, ForestDay.epoch_day_index(), quality, randf())
+		if not cr.is_empty():
+			Toast.show(self, Contest.toast_text(cr), 3.5)
