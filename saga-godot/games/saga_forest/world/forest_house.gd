@@ -107,10 +107,18 @@ var _wall_mat: StandardMaterial3D = null
 var _in_finish_shop := false
 var _interior_node: Node3D = null
 var _player_indoors := false
+## G-0376 집 안에서 저장한 판을 불러오면 몸은 집 안 좌표(INTERIOR_ORIGIN 둘레)에 서는데 _player_indoors 는 false 라 집 안 일(줍기·놓기·솜씨도 되돌리기)이
+## 문을 나갔다 들어올 때까지 안 됐다 — 첫 _process(불러오기 뒤)에 몸 자리로 한 번 맞춘다.
+const INDOOR_R := 60.0
+var _indoor_checked := false
 
 
 func is_player_indoors() -> bool:
 	return _player_indoors
+
+
+static func indoors_at(p: Vector3) -> bool:
+	return Vector2(p.x - INTERIOR_ORIGIN.x, p.z - INTERIOR_ORIGIN.z).length() < INDOOR_R
 
 var _home_items_synced := false
 var _applied_wall := ""   # G-0047 — 무늬는 키가 바뀔 때만 바꾼다(_apply_finish_visuals 가 매 프레임 불린다)
@@ -147,6 +155,11 @@ func _process(_delta: float) -> void:
 		_home_items_synced = true
 		for it: Dictionary in ForestSaveState.home_items:
 			_spawn_furniture_visual(it)
+	if not _indoor_checked:
+		_indoor_checked = true
+		var pl := get_tree().get_first_node_in_group("player") as Node3D
+		if pl != null and indoors_at(pl.global_position):
+			_player_indoors = true
 	_sync_partner()
 	if _in_finish_shop and Input.is_action_just_pressed("forest_gather"):
 		_open_finish_menu()
