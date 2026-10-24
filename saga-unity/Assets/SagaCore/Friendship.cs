@@ -41,12 +41,13 @@ namespace Saga.Core
             return tier >= KnotTier && !string.IsNullOrEmpty(quote) ? quote : fallback;
         }
 
-        /// <summary>이름 뒤 와/과(받침 있으면 과).</summary>
+        /// <summary>이름 뒤 와/과(받침 있으면 과) — 끝 글자가 한글(가~힣)이 아니면 이름 그대로(영어 이름 뒤 "와" 없음, U-0210).</summary>
         public static string WithWa(string nm)
         {
             if (string.IsNullOrEmpty(nm)) return nm;
             char c = nm[nm.Length - 1];
-            return nm + (c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 != 0 ? "과" : "와");
+            if (c < 0xAC00 || c > 0xD7A3) return nm;
+            return nm + ((c - 0xAC00) % 28 != 0 ? "과" : "와");
         }
 
         /// <summary>오름 알림 — "💛 무사와의 우정 Lv.7 · 신뢰 — "대사"".</summary>

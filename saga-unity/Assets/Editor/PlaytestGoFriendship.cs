@@ -37,7 +37,7 @@ namespace Saga.EditorTools
                 if (GoFriendship.LevelOf(19) != 0 || GoFriendship.LevelOf(20) != 1 || GoFriendship.LevelOf(649) != 9 || GoFriendship.LevelOf(9999) != 10) Fail("Lv 문턱");
                 if (GoFriendship.TierOf(2) != 0 || GoFriendship.TierOf(3) != 1 || GoFriendship.TierOf(6) != 2 || GoFriendship.TierOf(9) != 3) Fail("단계 묶음");
                 if (GoFriendship.ToNext(15f) != 5 || GoFriendship.ToNext(700f) != 0) Fail("다음까지");
-                if (GoFriendship.WithWa("명운") != "명운과" || GoFriendship.WithWa("현책") != "현책과" || GoFriendship.WithWa("미호") != "미호와") Fail("와/과");
+                if (GoFriendship.WithWa("명운") != "명운과" || GoFriendship.WithWa("현책") != "현책과" || GoFriendship.WithWa("미호") != "미호와" || GoFriendship.WithWa("Vanguard") != "Vanguard") Fail("와/과");
                 End("tier OK - 누적 20 → Lv1 · 650 → Lv10 · 낯섦 0~2·친근 3~5·신뢰 6~8·지기 9~10 · 다음까지 · 와/과");
 
                 // ② 점수
