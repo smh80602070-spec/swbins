@@ -431,3 +431,15 @@ static func st_combo(tree: SceneTree) -> void:
 		var C: GDScript = load("res://games/saga_story/world/story_combo_kill.gd")
 		for i in 10:
 			C.call("on_kill", tree.current_scene, pl.global_position + Vector3(4.5, 0.0, 0.0), 5.0, false))
+
+
+## G-0346 3마을 벌집 — 내 옆에서 벌떼가 나와 쫓아오는 중(벌집 알림)
+static func fs_bees(tree: SceneTree) -> void:
+	_later(tree, 82, func() -> void:
+		for n in tree.root.find_children("TalkBox*", "", true, false):
+			n.queue_free()
+		tree.paused = false
+		var pl := _player(tree)
+		if pl == null:
+			return
+		load("res://games/saga_forest/world/forest_bees.gd").call("spawn", tree.current_scene, pl.global_position + Vector3(3.5, 0.0, 1.5)))

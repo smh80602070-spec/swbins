@@ -6065,5 +6065,22 @@
   "ticket": "G-0345",
   "since": "2026-10-24",
   "note": "장부 story.md 콤보 킬(메이플) · SAGA_COMBO_KILL=0 · 촬영 shot_scene lg_st_combo"
+ },
+ {
+  "id": "gd.fs.bees",
+  "name": "3마을 벌집 — 나무·소나무 흔들 때 그날 씨앗 20% 벌떼가 쫓아옴(7m/s), 붙어 모이는 0.6초에 [G] 면 잡음(곤충 +2), 놓치면 1.2초 쏘임, 8초 못 붙으면 흩어짐",
+  "files": [
+   "games/saga_forest/world/forest_bees.gd",
+   "games/saga_forest/world/gatherable_builder.gd"
+  ],
+  "tests": [
+   "bees"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0346",
+  "since": "2026-10-24",
+  "note": "장부 forest.md 벌집(동물의숲·웹 bug.js) · SAGA_BEES=0 · 촬영 shot_scene lg_fs_bees"
  }
 ]

@@ -179,3 +179,5 @@ func _gather(d: Dictionary) -> void:
 	if pl != null and pl.has_method("play_once"):   # G-0282 삽 자리는 파기, 나머지는 허리 굽혀 줍기
 		pl.call("play_once", "dig" if String(d.tool) == "spade" else "gather", 1.2 if String(d.tool) == "spade" else 0.9)
 	CombatFeel.pickup(_roots.get(d.id), "%s +%d" % [d.item_label, n])
+	if preload("res://games/saga_forest/world/forest_bees.gd").hive_roll(today, String(d.id)) and _roots.get(d.id) is Node3D:   # G-0346 벌집 — 나무·소나무, 그날 씨앗
+		preload("res://games/saga_forest/world/forest_bees.gd").spawn(self, (_roots.get(d.id) as Node3D).global_position)
