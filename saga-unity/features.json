@@ -2275,12 +2275,12 @@
   "tests": [
    "PlaytestGoWeakPart"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-24 claude",
   "fun": {},
   "ticket": "U-0203",
   "since": "2026-10-24",
-  "note": "D1(U-0203): PlaytestHeadless weakpart mark·break·weak·reset·off OK · 1만리 진단 FAIL 0 · 이 트랙 급소는 들키지 않은 적에게만이라 가득 당긴 화살로 · 촬영 없음(R-3 후보)"
+  "note": "D2(R-3 10-24 촬영 lgweakpart ○ — 수호장 몸 위 주황 빛 공 또렷, 게임 카메라 앞을 바위가 반 가림) · 앞 D1(U-0203): PlaytestHeadless weakpart mark·break·weak·reset·off OK · 1만리 진단 FAIL 0 · 이 트랙 급소는 들키지 않은 적에게만이라 가득 당긴 화살로 · 촬영 없음(R-3 후보)"
  },
  {
   "id": "un.go.standoff",
@@ -2292,12 +2292,12 @@
   "tests": [
    "PlaytestGoStandoff"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": "2026-10-24 claude",
   "fun": {},
   "ticket": "U-0202",
   "since": "2026-10-24",
-  "note": "D1(U-0202): PlaytestHeadless standoff start·strike·miss·rash·feint·leave·off OK · 1만리 진단 전체 FAIL 0 · 촬영 없음(1~2초 순간 — R-3 촬영 컷 후보)"
+  "note": "D2(R-3 10-24 촬영 lgstandoff gamecam 10칸 ○ — 노려봄 → 한 마리 달려와 붙음·「!」 → 창 놓치니 무리 전원 덤빔. 한 칼 장면은 촬영이 평타를 못 눌러 없음) · 앞 D1(U-0202): PlaytestHeadless standoff start·strike·miss·rash·feint·leave·off OK · 1만리 진단 전체 FAIL 0 · 촬영 없음(1~2초 순간 — R-3 촬영 컷 후보)"
  },
  {
   "id": "un.all.motion30",
@@ -2314,7 +2314,7 @@
   "fun": {},
   "ticket": "U-0200",
   "since": "2026-10-24",
-  "note": "D2(U-0200): PlaytestDungeonHeadless motion30 clips·pose·blend·move·off OK · 눈 ○ 여덟(줍기·낚싯대·앉기·한 팔·호령·사다리·젓기·절, BakeClips30.Shot) · 5천하 인물(시각으로 자세)은 후속"
+  "note": "R-3 10-24 촬영 lgmotion player ○(1만리 주인공 땅에 무릎 세워 앉음) · D2(U-0200): PlaytestDungeonHeadless motion30 clips·pose·blend·move·off OK · 눈 ○ 여덟(줍기·낚싯대·앉기·한 팔·호령·사다리·젓기·절, BakeClips30.Shot) · 5천하 인물(시각으로 자세)은 후속"
  },
  {
   "id": "un.props.selfpairs-done",

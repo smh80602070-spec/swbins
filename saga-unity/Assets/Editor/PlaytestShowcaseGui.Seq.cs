@@ -693,6 +693,39 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] lglaws 창 {lu.PanelOpen} · 법전 {Saga.Realm.Data.RealmLaws.Enacted.Count}/{Saga.Realm.Data.RealmLaws.Slots}");
                         break;
                     }
+                    case "lgstandoff":   // U-0202 1만리 대치 — 셋 넘는 쉬는 무리 곁 8m 에 세운다(헛몸짓 끔 — 노려봄 → 달려듦 "!")
+                    {
+                        var who = GameObject.FindWithTag("Player");
+                        var grp = Saga.Go.Combat.FieldEnemy.All.Where(e => e != null && e.StandoffOk && !string.IsNullOrEmpty(e.GroupId)).GroupBy(e => e.GroupId)
+                            .Where(x => x.Count() >= 3).OrderBy(x => x.Key).FirstOrDefault();
+                        if (who == null || grp == null) { Skip(act); return; }
+                        var m0 = grp.First();
+                        Saga.Go.Combat.FieldCombat.StandFeintChance = 0f;
+                        Teleport(who.transform, m0.transform.position + new Vector3(8f, 1f, 0f));
+                        who.transform.rotation = Quaternion.LookRotation(Vector3.left);
+                        Debug.Log($"[ShowcaseGui] lgstandoff 무리 {grp.Key} {grp.Count()} @ {m0.transform.position}");
+                        break;
+                    }
+                    case "lgweakpart":   // U-0203 1만리 보스 약점 — 수호장 앞 14m · 약점 40% 깎아 둠(빛 공)
+                    {
+                        var who = GameObject.FindWithTag("Player");
+                        var boss = Saga.Go.Combat.FieldEnemy.GuardianInstance;
+                        if (who == null || boss == null) { Skip(act); return; }
+                        boss.EnsurePartMark();
+                        boss.PartHit(boss.PartMax * 0.4f);
+                        Teleport(who.transform, boss.transform.position + new Vector3(0f, 1f, -14f));
+                        who.transform.rotation = Quaternion.LookRotation(Vector3.forward);
+                        Debug.Log($"[ShowcaseGui] lgweakpart {boss.name} 약점 {boss.PartHp:0}/{boss.PartMax:0} 빛 {boss.PartMark != null && boss.PartMark.activeSelf}");
+                        break;
+                    }
+                    case "lgmotion":   // U-0200 ① 모션 30 — 1만리 주인공이 땅에 앉는다(고리 10초)
+                    {
+                        var pc = Object.FindFirstObjectByType<Saga.Go.Player.PlayerController>();
+                        bool ok = pc != null && Saga.Core.Motion30.Play(pc.Animator, "sit_ground", 10f);
+                        if (!ok) { Skip(act); return; }
+                        Debug.Log($"[ShowcaseGui] lgmotion sit_ground {Saga.Core.Motion30.CurrentOf(pc.Animator)}");
+                        break;
+                    }
                     default: Skip(act); return;
                 }
                 Debug.Log($"[ShowcaseGui] act {act}");
