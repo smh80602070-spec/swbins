@@ -598,7 +598,8 @@
   function march(fromId, toId, officerIds, troops, opts) {
     var setup = setupMarch(fromId, toId, officerIds, troops);
     if (!setup.ok) { return setup; }
-    if (opts && opts.grid && opts.grid.kind) { setup.atk.grid = opts.grid; }   // W-0403 방어 판 결과 — 공격군 보정(stepRound 한 곳), 없으면 옛 판정 그대로
+    if (opts && opts.grid && opts.grid.kind) { setup.atk.grid = opts.grid; }
+    if (opts && opts.out && opts.out.length) { setup.def.officers = setup.def.officers.filter(function (id) { return opts.out.indexOf(id) < 0; }); }   // W-0403 방어 판에서 쓰러지거나 다친 장수는 빠진다   // W-0403 방어 판 결과 — 공격군 보정(stepRound 한 곳), 없으면 옛 판정 그대로
     var report = fight(setup.atk, setup.def, setup.to, setup.toId, setup.land, false);
     return finishMarch(setup, report);
   }

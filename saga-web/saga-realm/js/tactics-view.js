@@ -292,7 +292,8 @@
     if (v.plot && sel) {   // W-0401 책략 — 불은 칸, 혼란·회복은 유닛
       var pr = v.plot === 'fire' ? T().fire(b, sel.uid, x, y) : (here ? T().plot(b, sel.uid, v.plot, here.uid) : { ok: false });
       v.plot = null;
-      if (pr.ok) { v.sel = null; settle(); render(); return; }
+      if (pr.ok) { v.sel = null; settle(); }
+      render(); return;   // 대상이 아니면 책략만 풀고 끝 — 같은 누르기가 이동·공격으로 흘러가 행동을 써 버렸다
     }
     if (here && here.side === 'me') { v.sel = here.uid; v.plot = null; render(); return; }
     if (here && here.side === 'foe' && sel) {

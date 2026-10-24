@@ -219,7 +219,7 @@
     return out;
   }
   /** W-0400 ③ 「🗺 천하도」 — 지도 왼쪽 위 단추(지금 지역 이름) · 누르면 지역 카드 목록(이름·성·내 성·⚔ 맞닿음). 지형 그림 없음, 카드를 누르면 그 지역 */
-  var regionListOpen = false, regionHudEl = null, regionAlert = null;   // W-0400 ⑤ 다른 지역 내 성 피습 — { rid, city } · 「그 지역 보기」 한 번 누르거나 그 지역으로 가면 지움
+  var regionListOpen = false, regionHudEl = null, regionAlert = null, regionBottom = 114;   // W-0400 ⑤ 다른 지역 내 성 피습 — { rid, city } · 「그 지역 보기」 한 번 누르거나 그 지역으로 가면 지움
   /** W-0400 ⑤ 다른 지역 소식 — 내 원정(rtk:journey 도착)은 그 지역으로 곧바로 넘기고, 다른 지역 내 성이 맞으면(rtk:battle) 알림 단추만. 맞닿은 성 출진은 안 넘김(자동 넘김은 내 원정만) */
   function regionOnNews(kind, ev) {
     var V = RVw(), rid = V && ev && ev.to ? V.regionOf(ev.to) : '';
@@ -240,7 +240,7 @@
     }
     if (!regionHudEl) { return ''; }
     if (!V || !st.started) { regionHudEl.innerHTML = ''; return ''; }
-    regionHudEl.style.cssText = 'position:fixed;left:12px;' + (d3 ? 'top:205px' : 'bottom:114px') + ';z-index:35;max-width:calc(100vw - 24px)';
+    regionHudEl.style.cssText = 'position:fixed;left:12px;' + (d3 ? 'top:205px' : 'bottom:' + regionBottom + 'px') + ';z-index:35;max-width:calc(100vw - 24px)';   // 범례 위 자리(regionBottom)는 기억해 둔 값 — 매번 114 로 되돌렸다 튀던 것
     s2 += '<div class="rregion-btn" data-act="region-list" style="display:inline-block;padding:6px 10px;border-radius:10px;background:rgba(30,22,10,0.82);border:1px solid #f3d27a;color:#fff4d6;font-weight:700;font-size:14px;cursor:pointer">🗺 ' + esc(V.name(regionShown || V.current())) + ' ▾</div>';
     if (regionAlert && regionAlert.rid === regionShown) { regionAlert = null; }
     if (regionAlert) { s2 += ' <div class="rregion-alert" data-region="' + regionAlert.rid + '" style="display:inline-block;padding:6px 10px;border-radius:10px;background:rgba(120,20,14,0.88);border:1px solid #ff8a6a;color:#fff4d6;font-weight:700;font-size:14px;cursor:pointer">⚠ ' + esc(V.name(regionAlert.rid)) + ' ' + esc((CD.find(regionAlert.city) || {}).name || '') + ' 피습 — 그 지역 보기</div>'; }
@@ -255,7 +255,7 @@
       s2 += '</div>';
     }
     regionHudEl.innerHTML = s2;
-    if (!d3) { global.setTimeout(function () { var lg = doc.querySelector('#realm .rlegend'), t = lg ? lg.getBoundingClientRect().top : 0; if (t > 0 && regionHudEl) { regionHudEl.style.bottom = Math.max(114, Math.round(global.innerHeight - t + 6)) + 'px'; } }, 0); }   // 폰 세로는 세력 범례가 높이 올라와 단추가 첫 줄을 가렸다 — 범례 위로
+    if (!d3) { global.setTimeout(function () { var lg = doc.querySelector('#realm .rlegend'), t = lg ? lg.getBoundingClientRect().top : 0; if (t > 0 && regionHudEl) { regionBottom = Math.max(114, Math.round(global.innerHeight - t + 6)); regionHudEl.style.bottom = regionBottom + 'px'; } }, 0); }   // 폰 세로는 세력 범례가 높이 올라와 단추가 첫 줄을 가렸다 — 범례 위로
     return '';
   }
   function regionAt(e) { var els2 = global.document.elementsFromPoint ? global.document.elementsFromPoint(e.clientX, e.clientY) : [], i, g; for (i = 0; i < els2.length; i++) { g = els2[i].closest && els2[i].closest('[data-region]'); if (g) { return g; } } return null; }
@@ -697,7 +697,7 @@
       return;
     }
     if (a === 'def-board' || a === 'def-auto') { defenseGo(a === 'def-board'); return; }
-    if (a === 'close-enc') { if (defCur && !defCur.done && global.DG.tacticsView.cur()) { global.DG.tacticsView.quit(); global.DG.tacticsView.go(); return; } closeEnc(); defenseNext(); return; }   // W-0403 방어 판 도중 닫으면 무승부로 접고 판정
+    if (a === 'close-enc') { if (defCur && !defCur.done) { if (global.DG.tacticsView.cur()) { global.DG.tacticsView.quit(); global.DG.tacticsView.go(); } else { defenseGo(false); } return; } closeEnc(); defenseNext(); return; }   // W-0403 방어 카드·판 도중 닫으면 = 맡김·무승부로 판정(공격·달 카드가 사라지지 않게)   // W-0403 방어 판 도중 닫으면 무승부로 접고 판정
     if (a === 'ev-pick') {
       var er = global.DG.event.choose(g('data-k'));
       if (!er.ok) { toast(er.why); return; }
@@ -893,9 +893,9 @@
 
   /* ── W-0403 방어전 — 줄(war.pendingDefense)을 하나씩: 카드 → 판(또는 맡김) → 같은 war.march 한 번 → 전황 카드 → 다음 ── */
   var defCur = null;
-  function runDefense(after) { var W = global.DG.war, d = W.takeDefense(); if (!d) { defCur = null; after(); return; } var to = R().city(d.to); if (!to || to.force !== R().me() || !W.canMarch(d.from, d.to, d.troops).ok) { runDefense(after); return; } /* 그새 성 주인이 바뀌었거나 칠 수 없게 됐다 */ defCur = { d: d, after: after }; var names = d.lead.map(function (id) { var h = off().find(id); return h ? esc(h.name) : ''; }).filter(Boolean).join(' · '); showEnc('<h3 style="margin:0 0 6px;font-size:18px">⚔️ ' + esc(R().forceName(d.force)) + '군이 ' + esc(CD.find(d.to).name) + '을(를) 친다</h3>' + '<small class="muted">🪖 ' + core.fmt(d.troops) + (names ? ' · 장수 ' + names : '') + ' — 우리 성 🪖 ' + core.fmt(to.troops) + '</small>' + '<div class="tag" style="margin:8px 0">🎯 6턴 버티면 적 위력이 꺾인다 · 성벽이 우리 쪽</div>' + '<button class="btn primary wide" data-act="def-board">♟️ 막는다 — 전술판</button><button class="btn ghost wide" data-act="def-auto">🤖 맡긴다 — 자동 판정</button>' + '<div class="tacview" id="tacview"></div>', 'battle'); }
+  function runDefense(after) { var W = global.DG.war, d = W.takeDefense(); if (!d) { defCur = null; after(); return; } var to = R().city(d.to); if (!to || to.force !== R().me() || !W.canMarch(d.from, d.to, d.troops).ok) { toast('🏳️ ' + R().forceName(d.force) + '군이 ' + CD.find(d.to).name + ' 앞에서 물러갔다'); runDefense(after); return; } /* 그새 성 주인이 바뀌었거나 칠 수 없게 됐다 */ defCur = { d: d, after: after }; var names = d.lead.map(function (id) { var h = off().find(id); return h ? esc(h.name) : ''; }).filter(Boolean).join(' · '); showEnc('<h3 style="margin:0 0 6px;font-size:18px">⚔️ ' + esc(R().forceName(d.force)) + '군이 ' + esc(CD.find(d.to).name) + '을(를) 친다</h3>' + '<small class="muted">🪖 ' + core.fmt(d.troops) + (names ? ' · 장수 ' + names : '') + ' — 우리 성 🪖 ' + core.fmt(to.troops) + '</small>' + '<div class="tag" style="margin:8px 0">🎯 6턴 버티면 적 위력이 꺾인다 · 성벽이 우리 쪽</div>' + '<button class="btn primary wide" data-act="def-board">♟️ 막는다 — 전술판</button><button class="btn ghost wide" data-act="def-auto">🤖 맡긴다 — 자동 판정</button>' + '<div class="tacview" id="tacview"></div>', 'battle'); }
   function defenseGo(board) { var c = defCur; if (!c) { return; } var T = global.DG.tactics; if (board && T && T.defenseOpts && $('tacview')) { var o = T.defenseOpts(c.d); o.face = function (id) { var h = off().find(id); return h ? p3src(h, 64, 64, function () { return global.DG.sprite.portrait('hero', h, 64); }).src : ''; }; global.DG.tacticsView.open($('tacview'), o, function (out) { defenseEnd(out); }); return; } defenseEnd(null); }
-  function defenseEnd(out) { var c = defCur; if (!c) { return; } defCur = { d: null, after: c.after, done: true }; var res = global.DG.tactics.defenseApply(c.d, out), rep = global.DG.war.march(c.d.from, c.d.to, c.d.lead, c.d.troops, res.grid ? { grid: res.grid } : null); renderTop(); renderMap(); renderSheet(); if (rep && rep.ok) { rep.log = res.lines.concat(rep.log || []); lastBattle = rep; showBattle(rep); } else { closeEnc(); defenseNext(); } }
+  function defenseEnd(out) { var c = defCur; if (!c) { return; } defCur = { d: null, after: c.after, done: true }; var res = global.DG.tactics.defenseApply(c.d, out), rep = global.DG.war.march(c.d.from, c.d.to, c.d.lead, c.d.troops, res.grid ? { grid: res.grid, out: res.out } : null); renderTop(); renderMap(); renderSheet(); if (rep && rep.ok) { rep.log = res.lines.concat(rep.log || []); lastBattle = rep; showBattle(rep); } else { closeEnc(); defenseNext(); } }
   /** 전황 카드를 닫으면 다음 방어(close-enc 가 부른다) */
   function defenseNext() { var c = defCur; if (c && c.done) { defCur = null; runDefense(c.after); } }
 

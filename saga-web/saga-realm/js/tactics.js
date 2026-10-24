@@ -154,6 +154,7 @@
     if (!moves(b, uid).some(function (c) { return c.x === x && c.y === y; })) { return false; }
     if (b.srpg && (x !== u.x || y !== u.y)) { faceTo(u, x + (x - u.x), y + (y - u.y)); }   // W-0401 걸어간 쪽을 본다
     u.x = x; u.y = y; u.moved = true;
+    if (b.srpg) { check(b); }   // 성문 칸에 서는 순간 점령(적 턴을 기다리면 그 사이 쓰러져 승리를 놓쳤다)
     return true;
   }
 
@@ -533,7 +534,8 @@
     var A = apply(out, { to: d.to }), R = global.DG.rtk;
     fallOut(R.me(), A, d.to, out.by, R.forceName(d.force) + '군', function (l) { lines.push(l); });
     lines.unshift('♟️ 방어 판 ' + out.name + ' — 적 위력 ' + (A.winPct > 0 ? '−' : '+') + Math.abs(A.winPct) + '%' + (A.kind === 'rout' ? ' · 적이 받는 피해 ×1.3' : ''));
-    return { grid: { give: 1 - A.winPct / 100, take: A.kind === 'rout' ? 1.3 : 1, kind: 'def-' + A.kind }, lines: lines, A: A };
+    var out2 = A.wounded.map(function (w) { return w.id; }).concat(A.fallen);   // 쓰러지거나 다친 내 장수는 이어지는 판정에서 수비에 안 선다(march opts.out)
+    return { grid: { give: 1 - A.winPct / 100, take: A.kind === 'rout' ? 1.3 : 1, kind: 'def-' + A.kind }, out: out2, lines: lines, A: A };
   }
 
   /** 진단·균형용 — 양쪽 다 AI 로 끝까지 둔다 */

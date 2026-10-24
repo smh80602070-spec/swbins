@@ -46,7 +46,7 @@
   function baseZoom(hh) {   // hh = 화면 키(진단 — 없으면 지금 캔버스)
     var H = hh || H0();
     var C = global.DG.core, k = C && C.tuned ? +C.tuned('side.baseZoom', 1.9) : 1.9;   // W-0204 1.35 → 1.9(몸 81 → ≈114px/720 — RPG 처럼 1/6)
-    return (H >= 600 ? Math.max(1, Math.min(2.4, k, H / 300)) : 1) * ((W && W < H0()) || H < 600 ? 1 : +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('mode2d.vwScale', ((global.DG.cfg && global.DG.cfg.mode2d) || {}).vwScale || 1) : 1) || 1);   // 세로 폰은 화면이 이미 좁고, 가로 폰(키 600 아래)은 확대 중심이 가운데라 왼쪽 주인공이 HUD 밑으로 밀려 — 둘 다 큰 몸 배율을 안 곱한다 · 키가 낮은 2D 는 resize 가 논리 높이 650 으로 그린다   // W-0402 ② 큰 몸 = 카메라 당김(사용자 10-25 「카메라를 당긴다」) — 손잡이 mode2d.vwScale, 판 기본 cfg.mode2d.vwScale
+    return (H >= 600 ? Math.max(1, Math.min(2.4, k, H / 300)) : 1) * ((W && W < H0()) || (global.innerHeight || 720) < 600 ? 1 : +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('mode2d.vwScale', ((global.DG.cfg && global.DG.cfg.mode2d) || {}).vwScale || 1) : 1) || 1);   // 세로 폰은 화면이 이미 좁고, 가로 폰(키 600 아래)은 확대 중심이 가운데라 왼쪽 주인공이 HUD 밑으로 밀려 — 둘 다 큰 몸 배율을 안 곱한다 · 키가 낮은 2D 는 resize 가 논리 높이 650 으로 그린다   // W-0402 ② 큰 몸 = 카메라 당김(사용자 10-25 「카메라를 당긴다」) — 손잡이 mode2d.vwScale, 판 기본 cfg.mode2d.vwScale
   }
   /** W-0155 — 폰 가로(키 500 아래·폭 780 넘음)면 시작 자리를 ◀▶ 조작판 오른쪽 끝 + 24px 뒤로(세계 좌표). 화면 x = 세계 x × 배율 ÷ lowK.
       조작판이 보이면 실제 끝을, 안 보이면 가로 CSS 값(14 + 44·2 + 8 = 110). PC·세로는 0(= 옛 80 그대로) */
@@ -62,7 +62,7 @@
   /** 화면에 실제로 곱하는 배율 — 사람 줌 × 기본 × 보스 */
   function portK() { return W < H ? +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitBgK', 0.55) : 0.55) : 1; }   /* W-0366 세로 폰 겹 배경 층 배율(1 = 옛) */ function effZoom() { return viewZoom * baseZoom() * (1 + bossZoomK * BOSS_ZOOM_EXTRA); }
   function applyZoomTransform() {
-    if (cv && Math.abs(sharpWant(global.innerWidth, global.innerHeight) - sharpK) > 0.12) { resize(); }   // W-0407 확대가 바뀌면 비트맵도
+    if (cv && Math.abs(sharpWant(global.innerWidth, global.innerHeight) - sharpK) > 0.12) { if (sharpTimer) { global.clearTimeout(sharpTimer); } sharpTimer = global.setTimeout(function () { sharpTimer = 0; resize(); }, 250); }   // W-0407 확대가 바뀌면 비트맵도 — 핀치가 멎은 뒤 한 번
     var t = 'scale(' + effZoom().toFixed(3) + ')', run = S && S.raw ? S.raw() : null, fl = run && run.stage ? run.stage.floor : 560;
     if (fl > H) { fl = H * 0.75; }   /* W-0188 폰 가로 3D(lowK 1·키 390) — 바닥 선이 논리 화면 밖이라 옛 식이 기준점을 수천 px 아래로 풀어 화면이 통째로 위로 밀렸다(두목 확대 때). 3D 카메라는 바닥을 가운데께 두니 그 근처를 기준으로 */
     var z = effZoom(), want = W < H ? H * +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitFloor', 0.64) : 0.64) : Math.min(fl, H * 0.8), oy =Math.abs(1 - z) < 1e-3 ? fl : (want - fl * z) / (1 - z);   // 바닥 선이 화면의 want 자리에 오게 기준점(px)을 푼다
@@ -172,10 +172,10 @@
   }
 
   /** W-0407 선명 배율 — 사람이 잡은 확대 × 기본 확대(두목 확대 덧은 뺌)만큼, 비트맵 화소 상한 side.sharpPx(PC 900만 · 폰 0 = 끔 — 폰 예산 A/B 사냥터 18→9fps, 폰은 dpr 2 라 덜 흐림) 안에서. 손잡이 side.sharp 0 = 옛(CSS 확대만) */
-  var sharpK = 1;
+  var sharpK = 1, sharpTimer = 0;
   function sharpWant(iw, ih) {
     var C = global.DG.core, on = !(C && C.tuned && !+C.tuned('side.sharp', 1)), z = viewZoom * baseZoom(), ph = Math.min(iw, ih) < 520, cap = +(C && C.tuned ? C.tuned('side.sharpPx', ph ? 0 : 9e6) : 9e6);
-    if (!on || !(z > 1.05)) { return 1; }
+    if (!on || !(z > 1.05) || (global.DG.sideView3d && global.DG.sideView3d.ready && global.DG.sideView3d.ready())) { return 1; }   // 3D 면 2D 덧그림 캔버스는 안 키운다
     var px = iw * ih * dpr * dpr;
     return Math.max(1, Math.min(z, Math.sqrt(cap / Math.max(1, px))));
   }

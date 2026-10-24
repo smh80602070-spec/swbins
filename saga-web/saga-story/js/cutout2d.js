@@ -187,10 +187,10 @@
   function stubOf(seed) { var k = String(seed || ''); return STUB[k] || (STUB[k] = { ok: true, rig: stubRig(seed), imgs: {} }); }
   /** W-0402 ③ 공격 끝 멈춤(손맛) — 공격류 클립 뒤 곧바로 서기·걷기·달리기로 바뀌어도 끝 자세를 hold ms(손잡이 cutout2d.hold, 기본 140) 붙든다.
    *  배우(key)마다 마지막 공격 그린 때만 기억한다. 순수에 가깝다(now 를 받는다) — 진단이 부른다. → { clip, t } */
-  var HOLD_FROM = { attack: 1, attack2: 1, heavy: 1 }, HOLD_TO = { idle: 1, walk: 1, run: 1 }, lastAtk = {};
+  var HOLD_FROM = { attack: 1, attack2: 1, heavy: 1 }, HOLD_TO = { idle: 1, walk: 1, run: 1 }, lastAtk = {}, holdN = 0;
   function holdClip(key, clip, t, now) {
     var k = String(key || 'x'), ms = +tuned('cutout2d.hold', 140) || 0;
-    if (HOLD_FROM[clip]) { lastAtk[k] = { at: now, clip: clip }; return { clip: clip, t: t }; }
+    if (HOLD_FROM[clip]) { lastAtk[k] = { at: now, clip: clip }; holdN++; if (holdN > 200) { holdN = 0; for (var kk in lastAtk) { if (now - lastAtk[kk].at > 2000) { delete lastAtk[kk]; } } } return { clip: clip, t: t }; }
     var a = lastAtk[k];
     if (a && HOLD_TO[clip] && now - a.at < ms) { return { clip: a.clip, t: 1e9 }; }   // 한 번 클립은 끝에 머문다(phaseOf)
     if (a && now - a.at >= ms) { delete lastAtk[k]; }
@@ -204,7 +204,7 @@
     if (mode >= 2) { R = stubOf(o.pool); }
     else { var id = rigIdFor(o.pool); R = id ? rigOf(id) : null; }
     if (!R) { return false; }
-    var hc = holdClip(o.key || o.pool, o.clip, o.t, global.performance ? global.performance.now() : Date.now());   // W-0402 ③
+    var hc = o.key ? holdClip(o.key, o.clip, o.t, global.performance ? global.performance.now() : Date.now()) : { clip: o.clip, t: o.t };   // W-0402 ③ — 배우 열쇠가 있을 때만(같은 풀 둘이 멈춤을 나눠 쓰지 않게)
     return drawRig(ctx, R, { x: o.x, y: o.y, h: bodyPx, clip: hc.clip, t: hc.t, facing: o.facing, key: o.key || o.pool, alpha: o.alpha });
   }
 
