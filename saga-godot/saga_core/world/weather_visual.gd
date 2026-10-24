@@ -9,6 +9,7 @@ extends Node
 ## 손잡이: SAGA_WEATHER=<키>(clear·cloud·rain·wind·fog·snow) 면 그 날씨 고정 · SAGA_WEATHER=0 이면 안 단다.
 ## environment_profile._pick_environment 이 _real_sky_scene(GO 밖) 이면 DayLight 옆에 단다. 1만리 코드는 부르지 않는다(값만 옮겨 적음).
 
+const WeatherSound := preload("res://saga_core/audio/weather_sound.gd")   # G-0367 빗소리·바람 소리
 const FDay := preload("res://games/saga_forest/data/forest_day.gd")   # check_refs:allow — 3마을 게임 날짜(달) 읽기, 순수 함수 하나
 const GROUP := "saga_weather_visual"
 const CHECK_SEC := 60.0
@@ -66,6 +67,7 @@ const GRASS_SHADER := "res://saga_core/shaders/grass_blades.gdshader"
 const WIND_MUL := {"wind": 2.6, "rain": 1.6, "snow": 1.3}
 const GRASS_WIND_DEFAULT := 0.16   # grass_blades.gdshader wind_strength 기본값(안 넣은 손잡이는 get 이 null)
 var wind_k := 1.0
+var _sound: Node = null   # G-0367
 var _grass: Array[ShaderMaterial] = []
 var _sway: Array[ShaderMaterial] = []   # G-0365 meta grass_sway 단 메시 표면 재질(3마을 풀 포기)
 var _wind_sent := -1.0
@@ -129,7 +131,19 @@ static func wet_step(w: float, raining: bool, dt: float) -> float:
 	return minf(1.0, w + dt / WET_IN) if raining else maxf(0.0, w - dt / WET_OUT)
 
 
+## G-0367 — 날씨 소리 노드에 지금 키를 알린다(처음 부를 때 붙임, SAGA_WEATHER_SOUND=0 이면 안 붙음).
+func _sound_tick() -> void:
+	if not WeatherSound.enabled():
+		return
+	if _sound == null:
+		_sound = WeatherSound.new()
+		_sound.name = "WeatherSound"
+		add_child(_sound)
+	_sound.call("set_weather", key)
+
+
 func _wet_tick(delta: float) -> void:
+	_sound_tick()
 	if OS.get_environment("SAGA_WET") == "0":
 		return
 	wet = wet_step(wet, key == "rain", delta)
