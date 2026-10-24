@@ -99,6 +99,7 @@ const FLOWER_GLB := "res://assets/world/flower_patch_01.glb"
 const FLOWER_SCALE := 0.5    # 0.28 / 0.559
 const FERN_GLB := "res://assets/world/grass_tuft_01.glb"   # 고사리 자리 — 짝이 되는 풀 포기
 const FERN_SCALE := 0.552    # 0.4 / 0.724
+const FERN_SWAY := 0.12   # G-0365 풀 포기 흔들림(곡면 컷아웃 셰이더 sway — 바람 날엔 weather_visual 이 배율)
 
 ## G-0019 — 통일 툰 GLB 한 개를 곡률 재질(표면별 텍스처)로 놓는다. 꽃·풀·버섯·바위 공용.
 ## G-0123 — 곡률 재질을 입힌 메시는 GLB 마다 한 벌(예전엔 소품마다 메시 복제 + 셰이더 재질 새로 — 묶어 그리지 못하고 메모리도 소품 수만큼).
@@ -107,6 +108,8 @@ func _spawn_prop(glb: String, pos: Vector3, s: float, yaw: float) -> void:
 	if not _prop_mesh.has(glb):
 		var src: Mesh = GLBUtils.extract_mesh(glb)
 		_prop_mesh[glb] = WorldCurveMaterial.textured_surfaces(src, CURVE_AMOUNT, 0.9) if src != null else null
+		if glb == FERN_GLB and _prop_mesh[glb] != null:
+			_sway(_prop_mesh[glb] as Mesh)
 	var mesh: Mesh = _prop_mesh[glb]
 	if mesh == null:
 		return
@@ -121,6 +124,15 @@ func _spawn_prop(glb: String, pos: Vector3, s: float, yaw: float) -> void:
 ## forest_vegetation_builder.gd `_hash(gx,gy,salt)`와 완전히 같은
 ## 알고리즘 — 각자 자기 파일에 둔다(공용화할 이유가 없다는 이 코드베이스의
 ## 확립된 결, forest_turnip.gd·forest_planting.gd와 같은 이유).
+## G-0365 — 풀 포기 메시의 곡면 컷아웃 재질에 흔들림을 켜고 날씨가 찾을 표시(meta grass_sway = 기준 세기)를 단다.
+static func _sway(mesh: Mesh) -> void:
+	for i in mesh.get_surface_count():
+		var m := mesh.surface_get_material(i) as ShaderMaterial
+		if m != null and m.shader != null and m.shader.resource_path.ends_with("curved_textured_cutout.gdshader"):
+			m.set_shader_parameter("sway", FERN_SWAY)
+			m.set_meta(&"grass_sway", FERN_SWAY)
+
+
 static func _hash(gx: int, gy: int, salt: int) -> float:
 	var h := (gx * 374761393) ^ (gy * 668265263) ^ (salt * 2246822519)
 	h = (h ^ (h >> 13)) * 1274126177

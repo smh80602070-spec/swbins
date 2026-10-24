@@ -67,12 +67,33 @@ const WIND_MUL := {"wind": 2.6, "rain": 1.6, "snow": 1.3}
 const GRASS_WIND_DEFAULT := 0.16   # grass_blades.gdshader wind_strength 기본값(안 넣은 손잡이는 get 이 null)
 var wind_k := 1.0
 var _grass: Array[ShaderMaterial] = []
+var _sway: Array[ShaderMaterial] = []   # G-0365 meta grass_sway 단 메시 표면 재질(3마을 풀 포기)
 var _wind_sent := -1.0
 
 
 ## 젖음·바람 배율 목표(순수)
 static func wind_target(k: String) -> float:
 	return float(WIND_MUL.get(k, 1.0))
+
+
+## G-0365 — 메시 표면(MeshInstance·MultiMesh 의 mesh)에 붙은 meta grass_sway 재질
+static func sway_mats(root: Node) -> Array[ShaderMaterial]:
+	var out: Array[ShaderMaterial] = []
+	if root == null:
+		return out
+	for n in root.find_children("*", "GeometryInstance3D", true, false):
+		var mesh: Mesh = null
+		if n is MeshInstance3D:
+			mesh = (n as MeshInstance3D).mesh
+		elif n is MultiMeshInstance3D and (n as MultiMeshInstance3D).multimesh != null:
+			mesh = (n as MultiMeshInstance3D).multimesh.mesh
+		if mesh == null:
+			continue
+		for i in mesh.get_surface_count():
+			var m := mesh.surface_get_material(i) as ShaderMaterial
+			if m != null and m.has_meta(&"grass_sway") and not out.has(m):
+				out.append(m)
+	return out
 
 
 static func grass_mats(root: Node) -> Array[ShaderMaterial]:
@@ -115,6 +136,7 @@ func _wet_tick(delta: float) -> void:
 		_wet_mats = terrain_mats(get_tree().current_scene)
 		_wet_std = std_wet_mats(get_tree().current_scene)
 		_grass = grass_mats(get_tree().current_scene)
+		_sway = sway_mats(get_tree().current_scene)
 		_wet_sent = -1.0
 		_wind_sent = -1.0
 	wind_k = move_toward(wind_k, wind_target(key), delta * 0.5)
@@ -125,6 +147,8 @@ func _wet_tick(delta: float) -> void:
 				var ws = g.get_shader_parameter("wind_strength")
 				g.set_meta(&"wind_base", float(ws) if ws != null else GRASS_WIND_DEFAULT)
 			g.set_shader_parameter("wind_strength", float(g.get_meta(&"wind_base")) * wind_k)
+		for s in _sway:
+			s.set_shader_parameter("sway", float(s.get_meta(&"grass_sway")) * wind_k)
 	if absf(wet - _wet_sent) > 0.01:
 		_wet_sent = wet
 		for m in _wet_mats:
