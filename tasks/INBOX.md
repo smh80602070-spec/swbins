@@ -13,5 +13,5 @@
 - [x] 10-23 · (K-0180 끝) · **→ W-0392(10-24)** · W-0356: 2나락 빌린 괴물 일곱 → 자체 몸 `shared/assets/creatures3d` armored_alpaca·bumble_knight·bumble_puff·tabby_ball·hen_ball·gape_fish·finback_brute(동작 7) — 짝 `tools/world-forge/data/k122_monsters.json` built, 웹 참조 바꾸기 · 웹/2나락 · 끝 W-0392(10-25)
 - [ ] 10-23 · (G-0311 고돗 3마을 가축) · **→ K-0186(이미 있음)(10-24)** · 닭·염소 몸 `saga-assets/creatures3d/farm_hen·farm_goat.glb` 을 고돗 `assets/creatures/` 에 놓기(지금 코드 도형 대역 — `games/saga_forest/world/forest_livestock_view.gd` `_body` 만 바꾸면 됨) · 자체툴
 - [x] 10-23 · (K-0183 끝) · **→ W-0394(10-24)** · illust 한 벌 shared — `saga-web/shared/assets/illust` 116명, 다섯 판 manifest 새로(1만리·3마을 manifest 도 새로, base `../shared/assets/illust/`) · illust.js 가 base 따름 · 웹 · 끝 W-0394(10-25)
-- [ ] 10-24 · (K-0184 끝) · illust shared 116→316명(후기 인물 200 더함), 다섯 판 manifest ids 갱신·dist 셋 다시 묶음 · 웹은 코드 일 없음(illust.js 가 manifest 따름) — 도감·대화에서 새 200명 일러스트가 뜨는지 QC 로 한 번 확인 · 웹
+- [x] 10-24 · (K-0184 끝) · illust shared 116→316명(후기 인물 200 더함), 다섯 판 manifest ids 갱신·dist 셋 다시 묶음 · 웹은 코드 일 없음(illust.js 가 manifest 따름) — 도감·대화에서 새 200명 일러스트가 뜨는지 QC 로 한 번 확인 · 웹 · 끝 10-25 확인(다섯 판 manifest 316·파일 빠짐 0·도감 id 316/316·인물마다 다섯 장, 진단 1만리 988/988·5천하 455/455)
 - [ ] 10-25 · (W-0406 → K) · 3마을 2D 겹 배경·지평선 그림(saga-forest/assets/web2d/bg/ — 1만리·2나락처럼 layers.json 꼴) 필요 — 사용자 「2d 는 기존 화면이 아닌 에셋 맵이어야」 · 자체툴
