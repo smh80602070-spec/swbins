@@ -34,7 +34,8 @@
   "ticket": "W-0396",
   "since": "2026-10-25",
   "note": "D2(페이블 10-25): 진단 ○(2964·처음 덤 없음·S×5=25 백은·뒤로 무시·넘김 +300·지난 기록) · 촬영 shots/w0396/party.png — 부대 시트 「🏆 시즌 2964 · 남은 3일 · 22점 🥉청동 · 백은까지 3」 B·3급 +9 / A·2급 +8 / S·1급 +5 · 단계 표."
- }, {
+ },
+ {
   "id": "dg.gearMastery",
   "name": "장비 숙련(W-0396 ② 웹 역이식 — 고돗 G-0317 수치) — 선두 무기 처치마다·갑주 피격마다 +1, 문턱 10·30·60·100·150 단계(최고 5), 공격 +3%/단계·받는 피해 −2%/단계, 무기 아닌 부위 교체 시 절반 물려받음(item.equip 감쌈) · it.mx · 부대 시트 ⚙️ 카드",
   "files": [
@@ -51,7 +52,8 @@
   "ticket": "W-0396",
   "since": "2026-10-25",
   "note": "D2(페이블 10-25): 진단 ○(문턱·무기 9→10 1단계 +3%·갑주 30 2단계 −4%) · 촬영 shots/w0396/party.png — 「⚙️ 장비 숙련」 카드(새 계정이라 무기·갑주 없음 → 「없음」)."
- }, {
+ },
+ {
   "id": "dg.enemySheets42",
   "name": "적 종 시트 42 + 자체 괴물 일곱(W-0392 — K-0170·K-0180 배선) — 공장 시트(sprites2d_sheets index.json factory)가 있는 body 는 2D 에서 그 시트(별명: 코끼리병 beast_big → dg_elephant, ninja → ninja_2 …, 생성기 gen-monster-portrait-ids C2D·SHEET_ALIAS) · 3D 빌린 quaternius 일곱 + 반려 고양이 → crea:armored_alpaca·bumble_knight·bumble_puff·tabby_ball·hen_ball·finback_brute·gape_fish",
   "files": [
@@ -68,7 +70,8 @@
   "ticket": "W-0392",
   "since": "2026-10-25",
   "note": "D2(페이블 10-25, 판정기 = 진단): 「적 종 시트 42(W-0392)」 코끼리병 dg_elephant·닌자 ninja_2·종 시트 짝 114/…·빌린 0 · W-0129 시트 짝 진단도 별명 받음 · C2D 13 → 55(생성기가 공장 시트·factory_alias 도 읽음). 2D 전투·3D 던전 촬영은 후속(R-3)."
- }, {
+ },
+ {
   "id": "dg.dungeon",
   "name": "던전 회차(층·방·문·은사·역참 5층·결사·난도)",
   "files": [
@@ -1793,5 +1796,27 @@
   "ticket": "W-0371",
   "since": "2026-10-23",
   "note": "10-23: 4종횡 폰 촬영으로 확인한 같은 공용 길 · D2(claude 2026-10-23 R-3): 폰 390×844 마을 → 도감 상세(장려제) 카드 자리에 반신 일러스트(평온) Read ○"
+ },
+ {
+  "id": "dg.zoneCut",
+  "name": "2나락 화면 넘김(W-0405) — 방·층·던전 들어감·마을 돌아옴·구역(세계 지도 판 마을↔들판)마다 곧장 어둡게 덮고 3D 는 짓기·그림 끝난 뒤, 2D 는 0.18초 뒤 걷음 · 덮인 동안 들판 짓기 예산 40ms · 손잡이 loadVeil.cut",
+  "files": [
+   "js/load-veil.js",
+   "src/dungeon3d/01.js",
+   "src/dungeon3d/02.js",
+   "src/dungeon3d/04.js"
+  ],
+  "tests": [
+   "test-web 592/592",
+   "2D 방 넘김 촬영·3D 들어가기 헤드리스"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {
+   "A": "로딩이 안 보임"
+  },
+  "ticket": "W-0405",
+  "since": "2026-10-25",
+  "note": "D2(claude 2026-10-25)"
  }
 ]

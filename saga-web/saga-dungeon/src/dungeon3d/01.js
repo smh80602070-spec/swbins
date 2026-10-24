@@ -45,7 +45,7 @@
   var frame = 0;
   var camPos = null, camLook = null;
   var camAnc = null;               // camPos·camLook 이 기대는 앵커(바뀌면 rebaseCam 이 옮긴다)
-  var roomKey = null;              // 지금 세워 둔 방 (바뀌면 벽을 다시 세운다)
+  var roomKey = null, areaKey = null;   // 지금 세워 둔 방 (바뀌면 벽을 다시 세운다) · W-0405 지금 구역(마을·층·방·이름) — 바뀌면 화면 넘김(load-veil cut)
   var fieldWinKey = null;          // 지금 세워 둔 들판 창 위치 (roomKey와 분리 — 아래 buildRoom 주석 참고)
   /** 가림 페이드(§56, 2026-09-06 실기기 제보 "큰 물체 때문에 안 보여") —
    *  카메라~플레이어 사이에 낀 것을 옅게 만든다. `raycaster`는 지연 생성.

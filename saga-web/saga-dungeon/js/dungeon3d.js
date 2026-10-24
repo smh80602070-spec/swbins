@@ -45,7 +45,7 @@
   var frame = 0;
   var camPos = null, camLook = null;
   var camAnc = null;               // camPos·camLook 이 기대는 앵커(바뀌면 rebaseCam 이 옮긴다)
-  var roomKey = null;              // 지금 세워 둔 방 (바뀌면 벽을 다시 세운다)
+  var roomKey = null, areaKey = null;   // 지금 세워 둔 방 (바뀌면 벽을 다시 세운다) · W-0405 지금 구역(마을·층·방·이름) — 바뀌면 화면 넘김(load-veil cut)
   var fieldWinKey = null;          // 지금 세워 둔 들판 창 위치 (roomKey와 분리 — 아래 buildRoom 주석 참고)
   /** 가림 페이드(§56, 2026-09-06 실기기 제보 "큰 물체 때문에 안 보여") —
    *  카메라~플레이어 사이에 낀 것을 옅게 만든다. `raycaster`는 지연 생성.
@@ -1293,7 +1293,7 @@
     lastFrameHadBuild = true;   // 조각 몇 개라도 지었으면 이 프레임 측정치도 평균에서 뺀다
     var J = fieldJob;
     fieldTarget = J.g || fieldGroup;
-    var deadline = nowMs() + FIELD_BUILD_BUDGET_MS;
+    var LV = global.DG.loadVeil, deadline = nowMs() + (LV && LV.cutShown && LV.cutShown() ? 40 : FIELD_BUILD_BUDGET_MS);   // W-0405 넘김 막이 덮은 동안은 한 프레임에 더 많이(안 보이니 끊겨도 된다)
     while (J.idx < J.coords.length && nowMs() < deadline) {
       var cx = J.coords[J.idx], cz = J.coords[J.idx + 1];
       J.idx += 2;
@@ -2277,7 +2277,7 @@
     var roomRk = (run.town ? 'town' : run.floor) + ':' + run.roomIdx + ':' +
              (run.room && run.room.cleared ? 'c' : 'o') + pzProg + capProg + ':sec' + secFound + forageProg;
     var fwRk = (wmNow ? 'w' : '') + fldCx0 + '_' + fldCz0;
-    var roomChanged = (roomRk !== roomKey);
+    var roomChanged = (roomRk !== roomKey), areaRk = (run.town ? 'town' : run.floor) + ':' + run.roomIdx + ':' + ((run.room && (run.room.title || run.room.kind)) || '');   /* W-0405 구역 — 깬 표시·퍼즐 진행은 빼고 자리만 */ if (areaRk !== areaKey) { if (areaKey !== null && global.DG.loadVeil && global.DG.loadVeil.cut) { global.DG.loadVeil.cut(); } areaKey = areaRk; }   // 마을↔마을·마을↔들판(세계 지도 판)도 화면 넘김
     if (roomChanged) {
       roomKey = roomRk;
       lastFrameHadBuild = true;

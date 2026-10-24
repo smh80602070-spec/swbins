@@ -199,7 +199,7 @@
     lastFrameHadBuild = true;   // 조각 몇 개라도 지었으면 이 프레임 측정치도 평균에서 뺀다
     var J = fieldJob;
     fieldTarget = J.g || fieldGroup;
-    var deadline = nowMs() + FIELD_BUILD_BUDGET_MS;
+    var LV = global.DG.loadVeil, deadline = nowMs() + (LV && LV.cutShown && LV.cutShown() ? 40 : FIELD_BUILD_BUDGET_MS);   // W-0405 넘김 막이 덮은 동안은 한 프레임에 더 많이(안 보이니 끊겨도 된다)
     while (J.idx < J.coords.length && nowMs() < deadline) {
       var cx = J.coords[J.idx], cz = J.coords[J.idx + 1];
       J.idx += 2;

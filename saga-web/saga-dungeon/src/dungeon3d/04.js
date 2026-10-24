@@ -103,7 +103,7 @@
     var roomRk = (run.town ? 'town' : run.floor) + ':' + run.roomIdx + ':' +
              (run.room && run.room.cleared ? 'c' : 'o') + pzProg + capProg + ':sec' + secFound + forageProg;
     var fwRk = (wmNow ? 'w' : '') + fldCx0 + '_' + fldCz0;
-    var roomChanged = (roomRk !== roomKey);
+    var roomChanged = (roomRk !== roomKey), areaRk = (run.town ? 'town' : run.floor) + ':' + run.roomIdx + ':' + ((run.room && (run.room.title || run.room.kind)) || '');   /* W-0405 구역 — 깬 표시·퍼즐 진행은 빼고 자리만 */ if (areaRk !== areaKey) { if (areaKey !== null && global.DG.loadVeil && global.DG.loadVeil.cut) { global.DG.loadVeil.cut(); } areaKey = areaRk; }   // 마을↔마을·마을↔들판(세계 지도 판)도 화면 넘김
     if (roomChanged) {
       roomKey = roomRk;
       lastFrameHadBuild = true;
