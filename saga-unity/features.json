@@ -16,13 +16,19 @@
  {
   "id": "un.go.animals",
   "name": "동물 Group·나그네",
-  "files": [],
-  "tests": [],
-  "level": "D0",
-  "verified": null,
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/World/WanderingAnimal.cs",
+   "saga-unity/Assets/Games/SagaGo/World/AnimalBuilder.cs"
+  ],
+  "tests": [
+   "PlaytestGoAnimals"
+  ],
+  "level": "D1",
+  "verified": "2026-10-24 claude",
   "fun": {},
-  "ticket": null,
-  "since": "2026-09-16"
+  "ticket": "R-3",
+  "since": "2026-09-16",
+  "note": "D1(R-3 10-24): PlaytestHeadless animals exist·wander·flee·calm OK — 동물 4·충돌 0·나그네 있음 · 쉼 끝 배회(서식지 24m 안) · 16m 놀람·40m 무리 전파 · 30m 진정. 10-01 엔 '씬 배회라 규칙 층으로 못 닫음'이었으나 진단이 플레이 모드라 규칙(Update)을 직접 한 번씩 돌려 닫음"
  },
  {
   "id": "un.go.hidden-treasure",

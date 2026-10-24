@@ -54,6 +54,18 @@ namespace Saga.Go.World
             Active.Remove(this);
         }
 
+        // ---- 진단(tasks R-3 un.go.animals) — 규칙 그대로 한 번 돌리고 상태를 읽는다 ----
+        public static IReadOnlyList<WanderingAnimal> All => Active;
+        public string StateName => _state.ToString();
+        public Vector3 Origin => _origin;
+        public Vector3 Target => _target;
+        public const float FleeAlertRadiusForTest = FleeAlertRadius, FleeStopRadiusForTest = FleeStopRadius, GroupAlertRadiusForTest = GroupAlertRadius, WanderRadiusForTest = WanderRadius;
+        /// <summary>쉼을 끝내고 한 번 돈다(배회 목표를 고른다).</summary>
+        public void EndIdleForTest() { _idleUntil = 0f; }
+        public void TickForTest() => Update();
+        /// <summary>제자리·쉼으로(진단 뒤).</summary>
+        public void ResetForTest() { transform.position = _origin; _target = _origin; PickIdle(); }
+
         private void Update()
         {
             if (_state == State.Flee)
