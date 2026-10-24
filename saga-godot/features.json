@@ -6025,11 +6025,11 @@
   "tests": [
    "standoff"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0343",
   "since": "2026-10-24",
-  "note": "장부 go.md 대치(고스트 오브 쓰시마) · SAGA_STANDOFF=0 · 웅크림은 몰래 다가가기 길"
+  "note": "장부 go.md 대치(고스트 오브 쓰시마) · SAGA_STANDOFF=0 · 웅크림은 몰래 다가가기 길 · 촬영 shot_scene lg_go_standoff"
  }
 ]

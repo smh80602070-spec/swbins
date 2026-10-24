@@ -166,8 +166,10 @@ func begin(id: String, list: Array) -> void:
 	var pl := _player()
 	if pl != null:
 		var n := _nearest(pl, members)
-		if n != null and _fc.has_method("_reaction_text"):
-			_fc.call("_reaction_text", n, "⚔", COLOR)
+		if _fc.has_method("_reaction_text"):
+			_fc.call("_reaction_text", pl, "⚔ 대치", COLOR)
+			if n != null:
+				_fc.call("_reaction_text", n, "⚔", COLOR)
 
 
 func _wait(sec: float) -> void:
@@ -195,7 +197,7 @@ func tick(delta: float) -> void:
 			if _t <= 0.0:
 				if state == S.WAIT and challenger == null and _rng.randf() < FEINT_P:
 					challenger = _nearest(pl, live)
-					challenger.call("_set_tell", true)
+					_cue(challenger)
 					state = S.FEINT
 					_t = FEINT_SEC
 				else:
@@ -222,9 +224,17 @@ func _lunge(e: Node3D) -> void:
 	challenger = e
 	_from = e.global_position
 	e.set_physics_process(false)
-	e.call("_set_tell", true)
+	_cue(e)
 	state = S.LUNGE
 	_t = window
+
+
+## 예고(! 글·몸 부풂·공격 몸짓) — 제자리 공격 부채꼴은 끈다(달려듦엔 안 맞는 자리 표시, 촬영 lg_go_standoff 에서 반대로 그려짐)
+func _cue(e: Node) -> void:
+	e.call("_set_tell", true)
+	var fan: Variant = e.get("_tell_fan")
+	if fan is Node3D and is_instance_valid(fan):
+		(fan as Node3D).visible = false
 
 
 ## 평타 첫머리(field_combat attack) — 한 칼이면 true(평타 대신). 달려들기 전이면 성급(대치 깨고 false → 평타 그대로).

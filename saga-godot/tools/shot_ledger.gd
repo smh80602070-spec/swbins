@@ -370,3 +370,44 @@ static func go_weakpart(tree: SceneTree) -> void:
 		var rig := tree.get_first_node_in_group("camera_rig")
 		if rig != null:
 			rig.call("talk_shot", best.global_position, pl.global_position))
+
+
+## G-0343 1만리 대치 — 가까운 무리 곁에 세워 맞서게 하고, 찍기 직전 가장 가까운 놈이 달려드는 중간(예고 빛)에서 멈춘다
+static func go_standoff(tree: SceneTree) -> void:
+	OS.set_environment("SAGA_BOSS_INTRO", "0")
+	_later(tree, 75, func() -> void:
+		var pl := _player(tree)
+		var so := tree.get_first_node_in_group("go_field_standoff")
+		if pl == null or so == null:
+			return
+		var list: Array = []
+		var bd := INF
+		var camps := {}
+		for e in tree.get_nodes_in_group("field_enemy"):
+			if e.has_meta("go_camp") and not e.call("is_dead"):
+				var id := String(e.get_meta("go_camp"))
+				if not camps.has(id):
+					camps[id] = []
+				camps[id].append(e)
+		for id in camps:
+			var d := ((camps[id][0]) as Node3D).global_position.distance_to(pl.global_position)
+			if (camps[id] as Array).size() >= 2 and d < bd:
+				bd = d
+				list = camps[id]
+		if list.is_empty():
+			return
+		var m0 := list[0] as Node3D
+		for e in list:
+			e.set("asleep", false)
+			e.set("ai", 0)
+		var c := Vector3.ZERO
+		for e in list:
+			c += (e as Node3D).global_position
+		c /= float(list.size())
+		var dir := Vector3(m0.global_position.x - c.x, 0.0, m0.global_position.z - c.z).normalized()
+		pl.global_position = m0.global_position + dir * 9.0 + Vector3.UP * 0.5
+		so.set_physics_process(false)
+		so.call("begin", "shot", list)
+		_later(tree, 8, func() -> void:
+			so.call("_lunge", so.call("_nearest", pl, list))
+			so.call("tick", 0.25)))
