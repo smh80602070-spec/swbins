@@ -64,7 +64,26 @@
     var e = el; e.classList.add('out');
     global.setTimeout(function () { if (e.parentNode) { e.parentNode.removeChild(e); } if (el === e) { el = null; bar = null; hiding = false; } }, 380);
   }
+  /* W-0405 화면 넘김(사용자 10-25 「맵들을 분리해줘 화면이 넘어가면 넘어가는 형식으로」) — 방·층·던전 들어감·마을로 돌아옴(dungeon:room/floor/enter/end)마다 곧장 어둡게 덮고,
+     3D 짓기 줄(dungeon3d.busy)이 비고 높은 줄 그림(pending)이 다 오면 0.3초에 걷는다(최소 0.18초 · 최대 loadVeil.cutMax 1.6초). 손잡이 loadVeil.cut(1) */
+  var cutEl = null, cutAt = 0, hooked = false;
+  function cutBusy() { var D3 = global.DG && global.DG.dungeon3d; return !!(D3 && D3.busy && D3.busy()); }
+  function cut() {
+    if (!doc || !doc.body || global.DG_NO_DRAW || !+tuned('loadVeil.cut', 1)) { return false; }
+    if (!cutEl) { cutEl = doc.createElement('div'); cutEl.id = 'zone-cut'; cutEl.style.cssText = 'position:fixed;inset:0;z-index:62;background:#0b0907;opacity:0;pointer-events:none'; doc.body.appendChild(cutEl); }
+    cutEl.style.transition = 'none'; cutEl.style.opacity = '1'; cutAt = now();
+    return true;
+  }
+  function cutStep() {
+    if (!cutEl || cutEl.style.opacity !== '1') { return; }
+    var ms = now() - cutAt;
+    var D3 = global.DG && global.DG.dungeon3d, d3 = !!(D3 && D3.active && D3.active());   // 2D 는 3D 짓기·그림 줄을 안 기다린다(0.18초 넘김만)
+    if (ms < 180 || (d3 && ms < tuned('loadVeil.cutMax', 1600) && (cutBusy() || pending() > 0))) { return; }
+    cutEl.style.transition = 'opacity .3s ease-out'; cutEl.style.opacity = '0';
+  }
+  function hook() { var C = global.DG && global.DG.core; if (hooked || !C || !C.on) { return; } hooked = true; ['dungeon:room', 'dungeon:floor', 'dungeon:enter', 'dungeon:end'].forEach(function (e) { C.on(e, function () { cut(); }); }); }
   function step() {
+    hook(); cutStep();
     if (!tuned('loadVeil.on', 1)) { if (el) { hide(); } return; }
     var a = area(), t = now();
     if (a !== key) { key = a; armed = !!a; armAt = t; }
@@ -80,6 +99,6 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.loadVeil = { shouldHide: shouldHide, step: step, shown: function () { return !!el && !hiding; }, why: function () { return why; }, _hide: hide };
+  global.DG.loadVeil = { shouldHide: shouldHide, step: step, cut: cut, cutShown: function () { return !!cutEl && cutEl.style.opacity === '1'; }, shown: function () { return !!el && !hiding; }, why: function () { return why; }, _hide: hide };
   if (!global.DG_NO_DRAW && global.setInterval) { global.setInterval(step, 100); }
 })(window);

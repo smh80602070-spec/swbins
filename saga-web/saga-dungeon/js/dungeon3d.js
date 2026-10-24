@@ -2765,7 +2765,7 @@
 
   global.DG = global.DG || {};
   global.DG.dungeon3d = {
-    init: init, resize: resize, render: render,
+    init: init, resize: resize, render: render, busy: function () { return !!fieldJob; },   /* W-0405 들판 짓는 중 — 화면 넘김 막이 기다린다 */
     available: available, active: active, wanted: wanted,
     /* 값을 내는 함수 — three 없이도 돈다(자가진단이 이것만 따로 본다) */
     camAim: camAim, userZoom: USERZOOM, lightPlan: lightPlan, markModel: markModel,
