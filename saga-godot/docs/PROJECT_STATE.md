@@ -17,19 +17,18 @@
 
 **공통(saga_core)**: `data/characters.gd`(인물 105, id 불변)·`data/pets.gd`(신수 11) · `ui/toast.gd`·`ui/virtual_joystick.gd`·`ui/goal_board.gd`+`ui/session_card.gd`(101-4, 목표판 3줄·마무리 카드, 다섯 판 전부 붙음)·`ui/duel_hud.gd` · `combat_feel.gd`(101-3, 다섯 판 끝, 09-20㉒ 타격음 배선, 09-21 UI 사운드(`ui()`) 신설+`session_card.gd` "닫기" 배선) · `world/world_curve_material.gd`+`shaders/curved_*`(FOREST 구면) · `world/density_report.gd`(104-5, 발견 밀도, FOREST는 반경 10m) · `shaders/cel_toon.gdshader`+`cel_shader_apply.gd`(66-2/102-3, hit_flash+아웃라인 next_pass 자동) · `world/glb_utils.gd::fit_height()`(102-1, 여전히 미호출). 렌더러 Forward+/Mobile 이중(66-1, `env_pc.tres`·`env_mobile.tres`, 102-2 값).
 
-## 현재 작업 — 중단 지점(2026-10-21)
+## 현재 작업 — 중단 지점(2026-10-25)
 
-- 닫은 티켓 줄거리는 `tasks/godot/done/` 티켓 메모가 정본. 10-21: G-0270~0285(에셋 임포트·얼굴 SDF·자연물 사실판·2나락 킷·모캡 12·주역 몸·밤 불빛·☰ 메뉴 다섯 판·괴물 creatures 일곱 + 원소 색·4종횡/2나락/1만리 공격·무예 몸짓·3마을 곡면 재질 법선 맵) + R-5 고침 다섯(16f49be23).
-- 큐 = **G-0282 모캡 30 배선 하나 — 대기 K**(K-0161 `saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb` 를 고돗 `assets/anim_mocap/` 로 place 해야 풀림, 수신함 K 줄).
-- 웹 끝난 티켓의 고돗 짝은 다 맞춤(W-0357 → G-0284 · W-0358 → G-0285). 빌린 에셋 0.
-- 이 PC: Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe` · **로컬 main 이 옛 커밋 둘에 묶여 있어 커밋은 임시 worktree(`/c/swt-g270`, origin/main detach)에서 만들어 `push origin HEAD:main`** — 사용자가 `! bash fix.sh` 돌리면 맞춰짐 · `.import` 13(로컬 uid 갈림)은 커밋 안 함.
-- 함정: 헤드리스는 실시간보다 빨리 돎 — 동작 잠금은 물리 프레임으로 · creatures 몸은 스킨 바인드 포즈에 배율(메시 상자 ≠ 그려지는 크기, MonsterBody._posed_box) · 옛 valid=false .import(gitignore)가 남으면 --import 가 다시 안 함(지우고) · 1만리 첫 안내 창을 지우면 봉화대 안내가 깨짐(숨기기만) · 셰이더 그림 uniform 은 `albedo_texture` 여야 material_audit 통과 · 장부 `tasks/gameplay/graphics.md` 6KB 턱밑.
+- 닫은 티켓 줄거리는 `tasks/godot/done/` 티켓 메모가 정본. 10-25: R-5 G-0347(성문 걸음 판정) · G-0349 1만리 비·눈 입자 · G-0350 2나락 벨트 줌 초점 · G-0351 「오늘」 창(네 판, 5천하 ✗) · G-0352 **Forward+ MSAA 끔(검은 네모 깨짐)** · G-0353 4종횡 하늘 안개·앞 풀 역광 · G-0354·0356·0357 점검 고침(traversal cast·kits 착지·story_golden 다시 잼·nature 사실판 길) · G-0355 윈도 10 이모지.
+- 큐 빔·장부 고돗 칸 빈 줄 없음. 전체 probe_all(273) 10-25: 남은 FAIL = go_cave(cave_hole_01 에셋 없음 — K) 뿐, 흔들림 = weapon·path_action·story talk_face(혼자 돌리면 OK).
+- 이 PC: Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe` · GPU Radeon Pro 570X · `.import` 부작용(로컬 uid)은 커밋 안 함.
+- 함정: **촬영(shot_scene) 기본 `--rendering-method mobile` 은 Forward+ 깨짐을 못 본다** — 그래픽 고친 뒤 플래그 없이 한 장 · SceneTree 점검 `_init` 에서 root.add_child 뒤 한 프레임 기다려야 뷰포트 · probe_all 은 다른 Godot 과 같이 돌리면 시간 점검이 흔들림 · 헤드리스는 실시간보다 빨리 돎 · creatures 몸은 스킨 바인드 포즈 배율 · 셰이더 그림 uniform 은 `albedo_texture` · 장부 `tasks/gameplay/`
 
 ## 다음 작업 (우선순위)
 
-0. G-0282(K place 뒤) — 채집·낚시·말·사다리·매달리기 등 판별 행동에 모캡 30.
-1. 장부 우선 2 남은 것 — 물 셰이더·보스 등장 카메라: 웹이 아직 안 함(규칙 "웹 검증 뒤 이식") → 웹이 먼저 하거나 사용자가 고돗 먼저 허락하면 R-0.
-2. 1만리 괴물 남은 몸(물거북·보스 — creatures 짝 없음)은 K.
+1. 큐·장부 빔 → RECURRING(R-3 남은 D1 다섯 — gfx-baseline 은 기준 PNG 사용자 승인, player-face 는 K 모프, shake-spec·rise-in 은 영상 몫) 또는 장부에 새 줄.
+2. 후보: 1만리 비 오는 날 땅 젖음·물웅덩이(셰이더) · 바람 날씨 그림(풀 눕힘) · 5천하는 실제 시계 대신 "이번 달" 목표 창.
+3. 에셋(K): 3마을 닭·염소 GLB 놓기(INBOX) · cave_hole_01 · 옛 rock_moss_01.glb 키(비교 모드만) · 1만리 괴물 남은 몸.
 
 ## 알려진 오류
 
