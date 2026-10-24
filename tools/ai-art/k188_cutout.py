@@ -176,8 +176,9 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             pm = Image.new('L', (W, H), 0); ImageDraw.Draw(pm).polygon([tuple(q) for q in L_['poly']], fill=255)
             pm = np.asarray(pm) > 0
             arm_ids = [names.index(x + s_) for x in ('armU', 'armL', 'hand') if x + s_ in names]
-            sub = np.argmin(score[arm_ids], 0)
-            lab = np.where(pm, np.array(arm_ids)[sub], lab)
+            sub = np.argmin(score[arm_ids], 0); best = np.min(score[arm_ids], 0)
+            near = best < j.get('w', {}).get('arm', 40) * L_.get('reach', 0.6)   # 윤곽 안이라도 팔 선분 가까이만 — 손 둘레 갑옷·치마는 몸에 남김
+            lab = np.where(pm & near, np.array(arm_ids)[sub], np.where(pm & ~near & np.isin(lab, arm_ids), names.index('chest'), lab))
     for key, bone in (('chest_poly', 'chest'), ('hip_poly', 'hip')):   # 망토·앞자락처럼 몸통·허리에 묶을 영역(팔·다리 거리로 가면 떠다닌다)
         for poly in j.get(key, []):
             pm = Image.new('L', (W, H), 0); ImageDraw.Draw(pm).polygon([tuple(q) for q in poly], fill=255)
@@ -202,13 +203,14 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         cap = (np.hypot(xs - pv[0], ys - pv[1]) < r * 0.9) & alpha
         if j.get('skirt') and n[:4] in ('legU', 'legL') and pv[1] < j['skirt']:
             cap = cap & False                              # 옷자락 속 관절 — 둘레 원을 가져가면 도포 조각이 떠다닌다
-        m2 = m | (cap & (lab >= 0))
+        kin = [k] + ([names.index(par)] if par in names else []) + [names.index(c_) for c_, v_ in B.items() if v_[4] == n and c_ != 'weapon']
+        m2 = m | (cap & np.isin(lab, kin))                 # 덧살은 이웃 부위 픽셀만 — 손 둘레 갑옷·치마를 끌고 가지 않게
         if not m2.any():
             continue
         # 아이 관절 둘레도 가져간다(아이가 돌면 부모 끝이 납작하게 잘린 게 보이지 않게)
         for c_, (_, _, cr, cpv, cpar) in B.items():
             if cpar == n and c_ != 'weapon' and not (j.get('skirt') and cpv[1] < j['skirt']):
-                m2 = m2 | ((np.hypot(xs - cpv[0], ys - cpv[1]) < cr * 0.9) & alpha)
+                m2 = m2 | ((np.hypot(xs - cpv[0], ys - cpv[1]) < cr * 0.9) & alpha & np.isin(lab, [k, names.index(c_)]))
         if n in ('chest', 'hip') and fill != 'none':
             # 팔·다리에 가린 몸통·허리 자리(돌리면 드러남) — 제 캡슐 안인데 팔·다리가 가져간 곳을 둘레 색으로 채움
             a, b, rr, _, _ = B[n]
