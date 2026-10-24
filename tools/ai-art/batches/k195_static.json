@@ -1,0 +1,84 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k195_static",
+ "kit": {
+  "spec": "sprite",
+  "style": "C"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "puzzle_stone_01",
+   "seed": 4012144170,
+   "prompt": "(flat mossy field stone:1.15), lichen and moss on top, tufts of grass around the base, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k195_static_init/puzzle_stone_01.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "puzzle_stone_01_open",
+   "seed": 2529435404,
+   "prompt": "(flat mossy stone rolled aside:1.15), small dug hole in the soil with three glowing golden seeds, tufts of grass, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k195_static_init/puzzle_stone_01_open.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "flower_ring_01",
+   "seed": 2440952270,
+   "prompt": "(small fairy ring of five blooming flowers:1.15), red yellow white blue orange flowers in a circle on a ring of grass, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k195_static_init/flower_ring_01.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "flower_ring_01_wilt",
+   "seed": 3466936322,
+   "prompt": "(small ring of five wilted flowers:1.15), drooping faded brown stems in a circle on a ring of grass, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k195_static_init/flower_ring_01_wilt.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "pinwheel_01_full",
+   "seed": 2170911873,
+   "prompt": "(toy pinwheel on a wooden stick:1.15), four folded vanes red yellow blue white, stick pushed into the ground, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k195_static_init/pinwheel_01_full.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "chest_cursed_01",
+   "seed": 2167781448,
+   "prompt": "(cursed dark wooden treasure chest:1.15), wrapped in iron chains, big padlock, faint purple glow leaking from the lid seam, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k195_static_init/chest_cursed_01.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "chest_bounty_01",
+   "seed": 380871178,
+   "prompt": "(dark wooden treasure chest with gold trim:1.15), gold corner caps, a wanted poster paper pinned on the front, gold lock, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k195_static_init/chest_bounty_01.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "grain_pile_01",
+   "seed": 4062225425,
+   "prompt": "(heap of golden grain:1.15), two tied burlap sacks beside it, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k195_static_init/grain_pile_01.png",
+   "denoise": 0.6
+  }
+ ]
+}

@@ -40,8 +40,10 @@ SPEC = {
     'realm_stone': ('stone', 17907, '5천하 돌바닥 — 조금 더 큰 판석'),
     'go_water': ('water', 17901, '1만리 물 — 청록 물(water_tile)'),
     'go_grass': ('grass', 17908, '1만리 풀 — 짧은 풀잎 얼룩(비늘 반복 무늬를 바꿈)'),
+    'forest_plot': ('furrow', 19501, '3마을 밭 두둑 — 마른 흙 고랑 넷(밭 작물 칸 바닥)'),
+    'forest_plot_wet': ('furrow_wet', 19502, '3마을 밭 두둑 — 물 준 날(짙고 촉촉한 흙)'),
 }
-TICKET = {'sand': 'K-0179', 'stone': 'K-0179', 'water': 'K-0179'}
+TICKET = {'sand': 'K-0179', 'stone': 'K-0179', 'water': 'K-0179', 'furrow': 'K-0195', 'furrow_wet': 'K-0195'}
 GRASS_BLOT = {'go_grass': 0.12}   # 큰 얼룩 세기 — 1만리는 칸이 작게 보여 칸마다 짙은 얼룩이 격자로 읽힘(K-0179)
 STONE = {'go_stone': 7, 'realm_stone': 6}       # 한 변 칸 수(감싼 보로노이 씨앗 격자)
 
@@ -216,6 +218,22 @@ def stone(name, seed):
     return wrap_blur(Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8), 'RGB'), 0.6)
 
 
+def furrow(name, seed, wet=False):
+    """밭 두둑(K-0195) — 1만리 흙 결 위에 가로 고랑 넷(256 주기, 고랑 선이 살짝 굽음) · 마루 밝게·골 어둡게 · wet = 짙고 푸른 기 + 물 고인 골."""
+    rgb = np.asarray(dirt('go_dirt', seed), np.float32)
+    yy = np.mgrid[0:N, 0:N][0].astype(np.float32)
+    wob = periodic_noise2(seed + 5, terms=((1, 1.0), (2, 0.5))) * 5
+    ph = 2 * np.pi * 4 * (yy + wob) / N
+    ridge = np.sin(ph)
+    rgb = rgb * (1 + 0.2 * ridge[..., None]) * 0.92
+    rgb = rgb * (1 - 0.25 * np.clip(-ridge - 0.6, 0, 1)[..., None] / 0.4)          # 골 바닥 그늘
+    if wet:
+        rgb = rgb * 0.68 + np.array([6, 10, 18], np.float32)
+        pool = np.clip((-ridge - 0.85) / 0.15, 0, 1) * np.clip(periodic_noise2(seed + 6, terms=((5, 1.0), (8, 0.6))) * 2 + 0.3, 0, 1)
+        rgb = rgb * (1 - 0.5 * pool[..., None]) + np.array([92, 112, 128], np.float32) * 0.5 * pool[..., None]
+    return wrap_blur(Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8), 'RGB'), 0.6)
+
+
 def water(name, seed):
     from water_tile import make
     return make(name)
@@ -251,8 +269,9 @@ def main(argv):
     os.makedirs(out, exist_ok=True)
     for n in names:
         kind, seed, desc = SPEC[n]
-        before = stripe_score(Image.open(src_path(n)).convert('RGB'))
-        im = {'dirt': dirt, 'grass': grass, 'meadow': meadow, 'flatten': flatten, 'sand': sand, 'stone': stone, 'water': water}[kind](n, seed)
+        before = 0.0 if kind.startswith('furrow') else stripe_score(Image.open(src_path(n)).convert('RGB'))   # 밭 두둑은 새 타일(원본 없음)
+        im = {'dirt': dirt, 'grass': grass, 'meadow': meadow, 'flatten': flatten, 'sand': sand, 'stone': stone, 'water': water,
+              'furrow': furrow, 'furrow_wet': lambda a, b: furrow(a, b, True)}[kind](n, seed)
         p = os.path.join(out, n + '.webp')
         im.save(p, 'WEBP', quality=90, method=6)
         im = Image.open(p).convert('RGB')
@@ -265,9 +284,9 @@ def main(argv):
             lic = {'id': n, 'generator': 'tools/ai-art/ground_tile.py', 'model': '', 'license': 'CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)',
                    'derived': '주기 사인 합 얼룩 + 감싼 점 찍기(%s) — 256 주기 이음매 없음, 색은 옛 SD 타일 평균에서' % {
                        'dirt': '잔돌·금', 'grass': '풀잎 획', 'meadow': '풀잎 획·데이지', 'sand': '모래알·조개', 'stone': '감싼 보로노이 판석·줄눈',
-                       'water': '깊이 얼룩·잔물결·마루 선(water_tile)'}[kind],
-                   'note': desc + (' · K-0162 SD 타일(만화경 거울 무늬)을 바꿈' if kind in TICKET else ' · K-0162 SD 타일(가로 줄무늬)을 바꿈'),
-                   'px': N, 'date': '2026-10-22', 'ticket': TICKET.get(kind, 'K-0171')}
+                       'water': '깊이 얼룩·잔물결·마루 선(water_tile)', 'furrow': '흙 결 위 고랑 넷', 'furrow_wet': '흙 결 위 고랑 넷·젖은 흙·고인 물'}[kind],
+                   'note': desc + ('' if kind.startswith('furrow') else ' · K-0162 SD 타일(만화경 거울 무늬)을 바꿈' if kind in TICKET else ' · K-0162 SD 타일(가로 줄무늬)을 바꿈'),
+                   'px': N, 'date': '2026-10-25' if kind.startswith('furrow') else '2026-10-22', 'ticket': TICKET.get(kind, 'K-0171')}
         if out == os.path.join(ROOT, 'saga-assets', 'web2d', 'tile') or '--lic' in argv:
             json.dump(lic, open(os.path.join(out, n + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         print('GROUND', n, kind, 'stripe %.2f -> %.2f' % (before, after), 'seam_excess=%.2f' % e, os.path.getsize(p) // 1024, 'KB')

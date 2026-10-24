@@ -1,0 +1,11 @@
+{
+ "id": "forest_plot",
+ "generator": "tools/ai-art/ground_tile.py",
+ "model": "",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "derived": "주기 사인 합 얼룩 + 감싼 점 찍기(흙 결 위 고랑 넷) — 256 주기 이음매 없음, 색은 옛 SD 타일 평균에서",
+ "note": "3마을 밭 두둑 — 마른 흙 고랑 넷(밭 작물 칸 바닥)",
+ "px": 256,
+ "date": "2026-10-25",
+ "ticket": "K-0195"
+}
