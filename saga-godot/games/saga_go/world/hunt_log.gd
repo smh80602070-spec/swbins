@@ -4,12 +4,14 @@ extends Node
 ##   들판의 적이 쓰러질 때마다(FieldEnemy died) 그 종의 마릿수를 센다 — 지금 있는 적 + 나중에 생기는 적(node_added) 모두.
 ##   H(왼쪽 위 "사냥 기록" 단추) → 종 목록(만난 적 없으면 "???"): 이름·원소·마릿수·다음 단계 막대·"받기". 아래 "모두 받기".
 ##   새 단계에 닿으면 알린다.
+## G-0371 종 연구 과제(data/hunt_research.gd) — 쓰러질 때 적에 남은 표식(막타 급소·반응·쳐냄·던짐)을 읽어 과제를 세고, 줄 끝에 "연구 n/4"(마우스 올리면 과제별).
 
 signal recorded(kind: String, count: int)
 signal tier_reached(kind: String, tier: int)
 signal claimed(kind: String, items: Dictionary)
 
 const Hunt := preload("res://games/saga_go/data/hunt.gd")
+const Research := preload("res://games/saga_go/data/hunt_research.gd")   # G-0371 종 연구 과제
 const Growth := preload("res://games/saga_go/data/growth.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
@@ -49,14 +51,24 @@ func _on_node_added(n: Node) -> void:
 func _hook_enemy(e: Node) -> void:
 	if e.has_signal("died") and not e.is_connected("died", _on_died):
 		e.connect("died", _on_died)
+	if e.has_signal("thrown_landed") and not e.is_connected("thrown_landed", _on_thrown):
+		e.connect("thrown_landed", _on_thrown)
+
+
+func _on_thrown(enemy: Node) -> void:
+	enemy.set_meta("rs_thrown", true)
 
 
 func _on_died(enemy: Node) -> void:
-	on_kill(String(enemy.get("kind")))
+	var tags := Research.tags_from(int(enemy.get_meta("rs_hit", 0)), int(enemy.get_meta("parried_until", 0)) > 0, bool(enemy.get_meta("rs_thrown", false)))
+	for m in ["rs_hit", "parried_until", "rs_thrown"]:
+		if enemy.has_meta(m):
+			enemy.set_meta(m, 0 if m != "rs_thrown" else false)   # 다시 서는 목숨은 새로 센다
+	on_kill(String(enemy.get("kind")), tags)
 
 
 ## 한 마리 쓰러뜨림 — 점검이 직접 부르기도 한다.
-func on_kill(kind: String) -> void:
+func on_kill(kind: String, tags: Array = []) -> void:
 	var before := Hunt.tier_reached(kind)
 	var n := Hunt.record(kind)
 	if n <= 0:
@@ -68,6 +80,11 @@ func on_kill(kind: String) -> void:
 	if after > before:
 		tier_reached.emit(kind, after)
 		Toast.show(self, "📖 %s 사냥 기록 %d단계! — H 에서 보상 받기" % [Hunt.display_name(kind), after], 3.5)
+	for t in Research.record(kind, tags):
+		if t == "done":
+			Toast.show(self, "🔬 %s 연구 완료! — 덤 냥 %d·견문록" % [Hunt.display_name(kind), int(Research.DONE_REWARD.mora)], 3.5)
+		else:
+			Toast.show(self, "🔬 %s 연구 — %s %d/%d 채움 (냥 +%d)" % [Hunt.display_name(kind), Research.task_name(t), Research.goal_of(kind), Research.goal_of(kind), int(Research.TASK_REWARD.mora)], 3.0)
 	if is_open:
 		_refresh()
 
@@ -256,6 +273,14 @@ func _refresh() -> void:
 		cnt.text = "%d/%d · %d단계" % [n, goal, reached] if reached < tiers.size() else "%d · 완성" % n
 		cnt.custom_minimum_size = Vector2(120, 0)
 		row.add_child(cnt)
+		if Research.on() and n > 0:
+			var rs := Label.new()
+			rs.text = Research.row_text(id)
+			rs.tooltip_text = Research.tooltip(id)
+			rs.mouse_filter = Control.MOUSE_FILTER_STOP
+			rs.custom_minimum_size = Vector2(84, 0)
+			rs.add_theme_color_override("font_color", Color(1.0, 0.85, 0.4) if Research.complete(id) else Color(0.7, 0.85, 1.0))
+			row.add_child(rs)
 		var c := Hunt.claimable(id)
 		var b := Button.new()
 		b.text = "받기 ●%d" % c if c > 0 else "—"

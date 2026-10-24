@@ -6,10 +6,12 @@ extends Node
 ##
 ## ① 표(종 목록·이름·단계 오름·보상 아이템이 실제 가방 항목) ② 마릿수 → 단계(문턱 9/10 · 39/40 · 119/120, 우두머리 1·3·10)
 ## ③ 받기: 닿은 단계만·한 번만·가방에 들어감 · 모두 받기 ④ 진짜 들판 적이 쓰러지면(died 신호) 그 종이 셈 ⑤ 세이브 JSON 을 거쳐도 그대로
-## ⑥ 화면: 열면 얼림·줄 수 · 만난 적 없는 종은 "???" · 닫으면 풀림. 기록·가방·경험은 끝에 되돌린다.
+## ⑥ 화면: 열면 얼림·줄 수 · 만난 적 없는 종은 "???" · 닫으면 풀림.
+## ⑦ G-0371 종 연구: 표식 → 태그 · 급소 3번이면 과제 하나·덤 한 번 · 넷 다 채우면 완료 덤 · 우두머리는 셋·1번 · 진짜 적 표식(rs_hit·던짐)이 died 때 셈·지워짐 · 줄 글자 기록·가방·경험은 끝에 되돌린다.
 
 const Hunt := preload("res://games/saga_go/data/hunt.gd")
 const Growth := preload("res://games/saga_go/data/growth.gd")
+const Research := preload("res://games/saga_go/data/hunt_research.gd")
 
 var _p: Node3D
 var _n: Node
@@ -135,6 +137,42 @@ func _run() -> void:
 	_n.call("close_screen")
 	_check("screen", opened and frozen and kids == sp.size() + 1 and found_names == 1 and unknown == sp.size() - 1 and not bool(_p.get("frozen")),
 		"opened=%s frozen=%s kids=%d wolf=%d unknown=%d" % [opened, frozen, kids, found_names, unknown])
+
+	# ⑦ 종 연구
+	PartyState.hunt = {}
+	var tg := Research.tags_from(3, true, false)
+	var m0: int = PartyState.count("mora")
+	var f1 := Research.record("wolf", ["weak"])
+	Research.record("wolf", ["weak"])
+	var f3 := Research.record("wolf", ["weak", "nothing"])
+	var f4 := Research.record("wolf", ["weak"])
+	var mora1: int = PartyState.count("mora")
+	for tk in ["react", "parried"]:
+		for i in Research.GOAL:
+			Research.record("wolf", [tk])
+	var last: Array[String] = []
+	for i in Research.GOAL:
+		last = Research.record("wolf", ["thrown"])
+	var bt2 := Research.tasks_of(boss)
+	var bf := Research.record(boss, ["weak", "thrown"])
+	var rr_ok := tg == ["weak", "react", "parried"] and f1.is_empty() and f3 == ["weak"] and f4.is_empty() and mora1 == m0 + int(Research.TASK_REWARD.mora)
+	rr_ok = rr_ok and last == ["thrown", "done"] and Research.complete("wolf") and Research.row_text("wolf") == "연구 완료"
+	rr_ok = rr_ok and bt2.size() == 3 and not bt2.has("thrown") and bf == ["weak"] and Research.row_text(boss) == "연구 1/3"
+	_check("research", rr_ok, "tags=%s f3=%s f4=%s mora+%d last=%s boss=%s bf=%s row=%s" % [tg, f3, f4, mora1 - m0, last, bt2, bf, Research.row_text(boss)])
+	PartyState.hunt = {}
+	var e2: Node = null
+	for x in get_tree().get_nodes_in_group("field_enemy"):
+		if not Hunt.is_boss(String(x.get("kind"))):
+			e2 = x
+			break
+	var k2 := String(e2.get("kind")) if e2 != null else ""
+	if e2 != null:
+		e2.set_meta("rs_hit", 2)
+		e2.emit_signal("thrown_landed", e2)
+		e2.emit_signal("died", e2)
+	var real_ok := e2 != null and Research.count(k2, "weak") == 1 and Research.count(k2, "thrown") == 1 and Research.count(k2, "react") == 0
+	real_ok = real_ok and int(e2.get_meta("rs_hit", 0)) == 0 and not bool(e2.get_meta("rs_thrown", false))
+	_check("research_real", real_ok, "kind=%s weak=%d thrown=%d" % [k2, Research.count(k2, "weak"), Research.count(k2, "thrown")])
 
 	PartyState.hunt = _saved.hunt
 	PartyState.bag = _saved.bag

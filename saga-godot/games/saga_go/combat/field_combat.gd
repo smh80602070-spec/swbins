@@ -1303,6 +1303,7 @@ func _deal(enemy: Node, base: float, element: String, dir: Vector3) -> float:
 	## 09-28 맞은 자리 불꽃(combat_fx.gd) — 원소 색, 치명타·반응이면 크게.
 	CombatFx.spark(self, (enemy as Node3D).global_position + Vector3.UP * 0.9, Elements.color_of(element) if element != "" else CombatFx.PHYSICAL, crit > 1.0 or reaction != "")
 	if has_node("FieldEnv"): get_node("FieldEnv").call("on_hit", enemy, base, element, reaction)   # G-0303 땅이 받아침
+	enemy.set_meta("rs_hit", (2 if force_crit else 0) | (1 if reaction != "" or bonus != "" else 0))   # G-0371 종 연구 막타 표식(hunt_research)
 	return enemy.call("apply_damage", amount * crit * _dmg_bonus(element), reaction != "" or bonus != "" or crit > 1.0, dir)
 
 ## 원소(물리) 피해 보너스 — 치는 인물(_crit_id)이 있을 때만.
