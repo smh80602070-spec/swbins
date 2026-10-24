@@ -120,7 +120,7 @@ static func officer_unit(id: String, side: String, stats: Dictionary) -> Diction
 	var command := float(stats.get("command", 60))
 	var hp := 50.0 + command
 	return {"uid": side + ":" + id, "id": id, "side": side, "kind": "officer", "hp": hp, "max": hp, "atk": 10.0 + might / 5.0, "def": might / 10.0,
-		"mov": MOV, "rng": 2 if wisdom >= might else 1, "x": 0, "y": 0, "moved": false, "acted": false}
+		"mov": MOV, "rng": 2 if wisdom >= might else 1, "x": 0, "y": 0, "moved": false, "acted": false, "wis": wisdom}   # wis — G-0347 화계(웹엔 없음, 덧붙임만)
 
 
 static func troop_unit(n: int, side: String, troops: int) -> Dictionary:
@@ -323,6 +323,9 @@ static func ai_turn(b: Dictionary) -> String:
 	auto_side(b, "foe")
 	if String(b.done) != "":
 		return b.done
+	burn_tick(b)   # G-0347 화계 — 불 없으면 아무것도 안 함(웹 맞춤 그대로)
+	if String(b.done) != "":
+		return b.done
 	b.turn = int(b.turn) + 1
 	for u: Dictionary in b.units:
 		u.moved = false
@@ -402,3 +405,103 @@ static func auto_play(b: Dictionary) -> Dictionary:
 			break
 		ai_turn(b)
 	return outcome(b)
+
+
+# ── G-0347 화계(코에이 삼국지 — 구조만, 웹엔 없음) ──
+## 지력 FIRE_WIS 이상 내 장수가 이동·공격 대신 FIRE_RANGE 칸(맨해튼) 안 숲 칸에 불을 놓는다(그 장수 차례 끝).
+## 성공 = clamp(40 + (지력 − 60)×2, 30, 90)% · 붙으면 그 칸 + 이웃 숲 칸마다 50% 번짐 — 불 칸 위 유닛은 적·아군 가리지 않고 곧바로 한 번,
+## 그리고 적 턴이 끝날 때마다(burn_tick) 다시 탄다. 불은 FIRE_TURNS 번 타고 꺼진다. 피해 = FIRE_DMG + 지력/10.
+## 굴림은 판 순번(roll)을 쓴다 — 불을 안 쓰면 판·결과가 웹과 같다. 기록은 b.fire_log(공격 log 와 따로 — 화면 diff 가 안 섞이게).
+
+const FIRE_WIS := 70.0
+const FIRE_RANGE := 3
+const FIRE_TURNS := 2
+const FIRE_DMG := 6.0
+const FIRE_SPREAD := 0.5
+
+
+static func can_fire(b: Dictionary, uid: String) -> bool:
+	var u := unit(b, uid)
+	return not u.is_empty() and String(u.kind) == "officer" and String(u.side) == "me" and String(b.side) == "me" and String(b.done) == "" \
+		and float(u.hp) > 0.0 and not bool(u.acted) and float(u.get("wis", 0.0)) >= FIRE_WIS
+
+
+static func fire_chance(u: Dictionary) -> int:
+	return clampi(40 + int((float(u.get("wis", 0.0)) - 60.0) * 2.0), 30, 90)
+
+
+static func burning(b: Dictionary) -> Dictionary:
+	if not b.has("fire"):
+		b.fire = {}
+	return b.fire
+
+
+## 불 놓을 수 있는 칸 [{x, y}]
+static func fire_cells(b: Dictionary, uid: String) -> Array:
+	var out: Array = []
+	if not can_fire(b, uid):
+		return out
+	var u := unit(b, uid)
+	for y in ROWS:
+		for x in COLS:
+			if cell_at(b, x, y) == "forest" and absi(x - int(u.x)) + absi(y - int(u.y)) <= FIRE_RANGE and not burning(b).has("%d,%d" % [x, y]):
+				out.append({"x": x, "y": y})
+	return out
+
+
+static func _burn_units(b: Dictionary, dmg: int) -> Array:
+	var hits: Array = []
+	for u: Dictionary in b.units:
+		if float(u.hp) > 0.0 and burning(b).has("%d,%d" % [int(u.x), int(u.y)]):
+			u.hp = maxf(0.0, float(u.hp) - float(dmg))
+			hits.append({"uid": u.uid, "dmg": dmg, "killed": float(u.hp) <= 0.0})
+	return hits
+
+
+## 불을 놓는다 — {ok, lit, chance, cells:[[x,y]…], hits:[{uid,dmg,killed}…]}
+static func fire(b: Dictionary, uid: String, x: int, y: int) -> Dictionary:
+	if not fire_cells(b, uid).has({"x": x, "y": y}):
+		return {"ok": false}
+	var u := unit(b, uid)
+	var ch := fire_chance(u)
+	var lit := roll(b, "f") * 100.0 < float(ch)
+	var cells: Array = []
+	var hits: Array = []
+	var dmg := js_round(FIRE_DMG + float(u.wis) / 10.0)
+	if lit:
+		burning(b)["%d,%d" % [x, y]] = {"left": FIRE_TURNS, "dmg": dmg}
+		cells.append([x, y])
+		for d: Vector2i in DIRS:
+			var nx := x + d.x
+			var ny := y + d.y
+			if nx >= 0 and ny >= 0 and nx < COLS and ny < ROWS and cell_at(b, nx, ny) == "forest" and not burning(b).has("%d,%d" % [nx, ny]) and roll(b, "s") < FIRE_SPREAD:
+				burning(b)["%d,%d" % [nx, ny]] = {"left": FIRE_TURNS, "dmg": dmg}
+				cells.append([nx, ny])
+		hits = _burn_units(b, dmg)
+	u.acted = true
+	u.moved = true
+	if not b.has("fire_log"):
+		b.fire_log = []
+	(b.fire_log as Array).append({"t": b.turn, "a": uid, "lit": lit, "cells": cells, "hits": hits})
+	check(b)
+	return {"ok": true, "lit": lit, "chance": ch, "cells": cells, "hits": hits}
+
+
+## 적 턴 끝 — 불 칸 위 유닛이 타고, 불이 한 번 줄고 0 이면 꺼진다. 탄 것 [{uid,dmg,killed}…]
+static func burn_tick(b: Dictionary) -> Array:
+	if not b.has("fire") or (b.fire as Dictionary).is_empty():
+		return []
+	var hits: Array = []
+	for k: String in (b.fire as Dictionary).keys():
+		var f: Dictionary = b.fire[k]
+		var xy := k.split(",")
+		for u: Dictionary in b.units:
+			if float(u.hp) > 0.0 and int(u.x) == int(xy[0]) and int(u.y) == int(xy[1]):
+				u.hp = maxf(0.0, float(u.hp) - float(f.dmg))
+				hits.append({"uid": u.uid, "dmg": int(f.dmg), "killed": float(u.hp) <= 0.0})
+		f.left = int(f.left) - 1
+		if int(f.left) <= 0:
+			(b.fire as Dictionary).erase(k)
+	b.burn_last = hits
+	check(b)
+	return hits

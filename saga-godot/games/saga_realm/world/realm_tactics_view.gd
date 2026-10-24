@@ -33,6 +33,7 @@ const HI_MOVE := Color(0.5, 0.82, 1.0, 0.42)
 const HI_ATTACK := Color(1.0, 0.36, 0.3, 0.5)
 const HI_SEL := Color(1.0, 0.88, 0.54, 0.85)
 const HI_CURSOR := Color(1.0, 1.0, 1.0, 0.5)
+const HI_FIRE := Color(1.0, 0.55, 0.12, 0.6)   # G-0347 화계 놓을 칸
 const SIDE_COL := {"me": Color(0.35, 0.62, 1.0), "foe": Color(0.95, 0.35, 0.3)}
 const CAM_PITCH := 50.0
 const CAM_DIST := 17.0
@@ -76,6 +77,9 @@ var _auto_mode := false
 var cut_count := 0         # 점검용 — 컷을 몇 번 했나
 var _idle_t := 0.0          # G-0266 대기 몸짓 타이머(하나)
 var _idle_rng := RandomNumberGenerator.new()   # 규칙 난수와 따로(전술 결과 그대로)
+var _fire_mode := false   # G-0347 화계 — 🔥 단추로 켜고, 주황 숲 칸을 고르면 불
+var _fire_btn: Button = null
+var _flames := {}   # "x,y" → 불 표식 노드
 var _swing_n := 0          # G-0253 — 뷰 안 연타 셈(궤적 기울기 차례)
 
 
@@ -349,6 +353,13 @@ func _build_ui() -> void:
 		b.pressed.connect(spec[1])
 		row.add_child(b)
 		_buttons.append(b)
+	_fire_btn = Button.new()   # G-0347 지력 높은 장수를 골랐을 때만 보인다
+	_fire_btn.text = "🔥 화계"
+	_fire_btn.custom_minimum_size = Vector2(190, 64)
+	_fire_btn.add_theme_font_size_override("font_size", 24)
+	_fire_btn.visible = false
+	_fire_btn.pressed.connect(_on_fire_toggle)
+	row.add_child(_fire_btn)
 
 
 func _hide_hud(hide: bool) -> void:
@@ -501,6 +512,12 @@ func _refresh() -> void:
 			_add_shield(int(t.x), int(t.y))
 			tips.append("%s %d%%%s" % [_unit_name(t), RealmTactics.hit_chance(u, t, cv), (" 엄폐 −%d" % cv) if cv > 0 else ""])
 		_hint.text = "%s — 파란 칸으로 옮기고 붉은 칸을 친다%s" % [_unit_name(u), ("  (명중 " + " · ".join(tips) + ")") if not tips.is_empty() else ""]
+		if _fire_mode:
+			_clear_hi()
+			_show_hi(int(u.x), int(u.y), HI_SEL)
+			for c: Dictionary in RealmTactics.fire_cells(board, _sel):
+				_show_hi(int(c.x), int(c.y), HI_FIRE)
+			_hint.text = "%s — 🔥 주황 숲 칸에 불을 놓는다(성공 %d%% · 이웃 숲으로 번짐 · 적·아군 가리지 않고 두 턴 탐)" % [_unit_name(u), RealmTactics.fire_chance(u)]
 	else:
 		_hint.text = "내 장수를 고르세요 · 숲은 명중 −30% · 성벽은 −50% · 3턴 안에 적을 무너뜨리면 대승"
 	var cur := _hi.get("%d,%d" % [_cursor.x, _cursor.y]) as MeshInstance3D
@@ -508,6 +525,11 @@ func _refresh() -> void:
 		_show_hi(_cursor.x, _cursor.y, HI_CURSOR)
 	for b: Button in _buttons:
 		b.disabled = _busy
+	if _fire_btn != null:
+		_fire_btn.visible = _sel != "" and RealmTactics.can_fire(board, _sel)
+		_fire_btn.disabled = _busy
+		_fire_btn.text = "✋ 화계 그만" if _fire_mode else "🔥 화계"
+	_sync_flames()
 
 
 # ── 입력 ────────────────────────────────────────────
@@ -569,6 +591,14 @@ func pick_cell(x: int, y: int) -> void:
 			_select(String(there.uid))
 		return
 	var u := RealmTactics.unit(board, _sel)
+	if _fire_mode:   # G-0347 화계 — 주황 칸이면 불, 아니면 화계만 그만
+		_fire_mode = false
+		if RealmTactics.fire_cells(board, _sel).has({"x": x, "y": y}):
+			await _do_fire(_sel, x, y)
+			_sel = ""
+		_refresh()
+		_after_action()
+		return
 	if not there.is_empty() and there.side == "foe" and _targets_of(_sel).has(there):
 		await _do_attack(_sel, String(there.uid))
 		_sel = ""
@@ -811,6 +841,8 @@ func _on_end_turn() -> void:
 	var log0 := (board.log as Array).size()
 	RealmTactics.ai_turn(board)
 	await _play_diff(snap, log0)
+	await _apply_burn(board.get("burn_last", []))   # G-0347 불 칸 위가 탐
+	board.burn_last = []
 	_foe_turn = false
 	_busy = false
 	_refresh()
@@ -835,6 +867,93 @@ func _on_auto() -> void:
 	else:
 		_after_action()
 	_auto_mode = false
+
+
+
+## G-0347 화계 ────────────────────────────────────────
+
+func _on_fire_toggle() -> void:
+	if _busy or _sel == "" or not RealmTactics.can_fire(board, _sel):
+		return
+	_fire_mode = not _fire_mode
+	_refresh()
+
+
+func _do_fire(uid: String, x: int, y: int) -> void:
+	_busy = true
+	_refresh()
+	var r: Dictionary = RealmTactics.fire(board, uid, x, y)
+	if bool(r.get("ok", false)):
+		_play(uid, "attack")
+		var at := cell_center(x, y) + Vector3(0, 1.2, 0)
+		_float_text(at, "🔥 화계!" if bool(r.lit) else "화계 실패", Color(1.0, 0.6, 0.2) if bool(r.lit) else Color(0.8, 0.85, 0.9))
+		_sync_flames()
+		if bool(r.lit) and not instant:
+			CombatFx.element_burst(self, at, 1.4, Color(1.0, 0.5, 0.1), 0.5, "", false)
+		await _wait(0.5)
+		await _apply_burn(r.hits)
+		_play(uid, "idle")
+	_busy = false
+
+
+## 탄 유닛 — 숫자·체력 글·쓰러짐(공격과 같은 쓰러짐 연출)
+func _apply_burn(hits: Array) -> void:
+	for h: Dictionary in hits:
+		var uid := String(h.uid)
+		if not _units.has(uid):
+			continue
+		var tn: Node3D = _units[uid].node
+		_units[uid].hp = float(RealmTactics.unit(board, uid).hp)
+		_float_text(tn.position, "🔥-%d" % int(h.dmg), Color(1.0, 0.55, 0.2))
+		_set_label(uid)
+		if bool(h.killed):
+			_play(uid, "death")
+			var ap: AnimationPlayer = _units[uid].ap
+			if not instant and (ap == null or not ap.has_animation("death")):
+				tn.rotation.x = -PI * 0.5
+			await _wait(0.4)
+			tn.visible = false
+	_sync_flames()
+
+
+## 불 칸 표식 — 판의 불(board.fire)과 맞춘다(주황 빛 기둥 + 남은 턴)
+func _sync_flames() -> void:
+	var fire: Dictionary = board.get("fire", {})
+	for k in _flames.keys():
+		if not fire.has(k):
+			(_flames[k] as Node).queue_free()
+			_flames.erase(k)
+	for k: String in fire:
+		var xy := k.split(",")
+		if not _flames.has(k):
+			var root := Node3D.new()
+			root.name = "Flame_%s" % k.replace(",", "_")
+			var mi := MeshInstance3D.new()
+			var cm := CylinderMesh.new()
+			cm.top_radius = 0.15
+			cm.bottom_radius = CELL * 0.38
+			cm.height = 1.3
+			mi.mesh = cm
+			var m := _mat(Color(1.0, 0.45, 0.08, 0.7), true)
+			m.emission_enabled = true
+			m.emission = Color(1.0, 0.45, 0.08)
+			mi.material_override = m
+			mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+			mi.position.y = 0.65
+			root.add_child(mi)
+			var l := Label3D.new()
+			l.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+			l.no_depth_test = true
+			l.font_size = 40
+			l.outline_size = 8
+			l.pixel_size = 0.008
+			l.position.y = 1.6
+			l.name = "Left"
+			root.add_child(l)
+			add_child(root)
+			root.position = cell_center(int(xy[0]), int(xy[1])) + Vector3(0, float(TOP.forest), 0)
+			_flames[k] = root
+		((_flames[k] as Node).get_node("Left") as Label3D).text = "🔥%d" % int(fire[k].left)
 
 
 func _on_cancel() -> void:
