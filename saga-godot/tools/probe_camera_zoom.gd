@@ -60,6 +60,17 @@ func _init() -> void:
 				for _k in 40:
 					rig.call("_unhandled_input", _wheel(true))
 				var near := float(rig.get("zoom_mul"))
+				for _k in 60:   # G-0350 가까이 끝에서 내가 화면 가운데 근처(벨트 초점이 나를 따라옴)
+					await process_frame
+				var cam0: Camera3D = arm.get_node("Camera3D")
+				var pl := get_first_node_in_group("player") as Node3D
+				var vs := cam0.get_viewport().get_visible_rect().size
+				var sp := cam0.unproject_position(pl.global_position + Vector3(0, 0.9, 0))
+				if cam0.is_position_behind(pl.global_position) or absf(sp.x / vs.x - 0.5) > 0.2 or absf(sp.y / vs.y - 0.5) > 0.3:
+					_fail("② %s 가까이 끝에서 내가 화면 밖 %.2f,%.2f" % [g, sp.x / vs.x, sp.y / vs.y])
+				print("ZOOM %s 가까이 나 %.2f,%.2f" % [g, sp.x / vs.x, sp.y / vs.y])
+				for m in get_nodes_in_group("ui_modal"):   # 기다리는 사이 뜬 창(3마을 안내 등)이 휠을 막는다
+					m.remove_from_group("ui_modal")
 				for _k in 40:
 					rig.call("_unhandled_input", _wheel(false))
 				if not is_equal_approx(near, 0.2) or not is_equal_approx(float(rig.get("zoom_mul")), 1.8):

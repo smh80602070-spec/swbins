@@ -5203,12 +5203,12 @@
   "tests": [
    "camera_zoom"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": "G-0294",
+  "ticket": "G-0350",
   "since": "2026-10-22",
-  "note": "기본값 그대로 · 창이 떠 있으면 휠 안 먹음"
+  "note": "기본값 그대로 · 창이 떠 있으면 휠 안 먹음 · G-0350 2나락 벨트 가까이 = 초점이 나를 따름(zoom_follow) · 촬영 lg_go_zoom·lg_dg_zoom"
  },
  {
   "id": "gd.realm.me-portrait",

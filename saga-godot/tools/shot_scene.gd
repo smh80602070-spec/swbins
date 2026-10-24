@@ -173,6 +173,9 @@ const CUTS := [
 	["lg_rk_region_cards", REALM, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "rk_region_cards", ["@tree"]]]],   # G-0347 ② 천하도 지역 카드 창
 	["lg_rk_plot", REALM, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "rk_plot", ["@tree"]]]],   # G-0347 ⑤ 📜 책략(화계 칸·남은 횟수)
 	["lg_rk_duel", REALM, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "rk_duel", ["@tree"]]]],   # G-0347 ⑤-c 전장 일기토 첫 합 고르기
+	["lg_go_zoom", GO, [["free_modal"], ["call", "Player/CameraRig", "_zoom", [-40.0]]]],   # R-3 ← G-0294 1만리 휠 가장 가까이(2.2 에서 멈춤)
+	["lg_dg_zoom", DUNGEON, [["free_modal"], ["call", "CameraRig", "set_zoom", [0.05]]]],   # R-3 ← G-0294 2나락 가장 가까이(0.2 에서 멈춤)
+	["lg_go_wx", GO, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 12.0]]],   # R-3 ← G-0267 SAGA_WEATHER=<키> 로 돌려 날씨 고정(환경으로만)
 	["lg_dg_trail", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_legend", ["@tree"]], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0325 ← G-0290 전설 잔광
 	["lg_dg_rise", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rise", ["@tree"]]]],   # G-0325 ← G-0293 난입 솟음(한 컷씩 — time_scale)
 	["lg_dg_break", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_breakables", ["@tree"]]]],   # G-0325 ← G-0307 부서지는 통

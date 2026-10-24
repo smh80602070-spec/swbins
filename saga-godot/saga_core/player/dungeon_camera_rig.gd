@@ -102,6 +102,7 @@ func _process(delta: float) -> void:
 		var p := get_parent() as Node3D
 		if p != null:
 			var want := belt_focus(p.global_position, _rooms) + Vector3(0, _rest_pos.y, 0)
+			want = want.lerp(p.global_position + Vector3(0, _rest_pos.y, 0), zoom_follow(zoom_mul))   # G-0350 당길수록 방 가운데 대신 나를 본다
 			_belt_focus = _belt_focus.lerp(want, clampf(BELT_LERP * delta, 0.0, 1.0))
 		var shake := Vector3.ZERO
 		if Time.get_ticks_msec() < _shake_until_msec:
@@ -142,6 +143,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not get_tree().get_nodes_in_group("ui_modal").is_empty():
 		return
 	set_zoom(zoom_mul / ZOOM_STEP if mb.button_index == MOUSE_BUTTON_WHEEL_UP else zoom_mul * ZOOM_STEP)
+
+
+## G-0350 — 벨트 초점이 나를 따르는 몫: 배율 1 이상 = 0(방 가운데, 옛 그대로) · ZOOM_MIN = 1(나) · 사이는 곧은 비율.
+## 가까이(끈 2.4m)선 화면 폭이 몇 m 뿐이라 방 가운데 초점이면 내가 화면 밖에 있었다.
+static func zoom_follow(m: float) -> float:
+	return clampf((1.0 - m) / (1.0 - ZOOM_MIN), 0.0, 1.0)
 
 
 func set_zoom(m: float) -> void:
