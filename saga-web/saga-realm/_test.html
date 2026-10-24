@@ -7506,6 +7506,62 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       delete st.view; DG.ui.renderMap();
       return (stay && !!al && go && gone && keep && auto) || ('실패 머묾 ' + stay + ' · 단추 ' + !!al + ' · 누름 ' + go + '/' + gone + ' · 출진 머묾 ' + keep + ' · 원정 넘김 ' + auto);
     });
+    /* W-0401 격자 SRPG 본전투 — 고돗 probe_realm_srpg 와 같은 판·같은 수치(세 트랙 같은 결과) */
+    function srpgGame(i) {
+      var T = DG.tactics, lands = ['plain', 'river', 'hill', 'mount'], goal = T.GOALS[i % 4], seed = 'srpg-' + i, mine = ['m1', 'm2', 'm3'], foes = ['f1', 'f2', 'f3'], st = {};
+      mine.concat(foes).forEach(function (id) { st[id] = { might: 55 + Math.trunc(T.hash(seed, id + 'm') * 35), wisdom: 50 + Math.trunc(T.hash(seed, id + 'w') * 45), command: 55 + Math.trunc(T.hash(seed, id + 'c') * 35) }; });
+      var b = T.makeBoardSrpg(seed, lands[i % 4], goal === 'gate' || i % 3 === 0, goal);
+      T.unitsOfSrpg(b, mine, foes, [1500 + (i % 5) * 400], { stats: st }, [1500 + ((i + 2) % 5) * 400]);
+      return b;
+    }
+    t('W-0401 SRPG — 판 크기 넷·언덕·성문 · 병종 수치·대장 하나 · 덤(높이+10·상성±20·뒤+20) · 걸어간 쪽을 봄 · 승리 조건 넷(전멸·대장·성문·6턴 버팀)', function () {
+      var T = DG.tactics, sz = {}, i;
+      ['plain', 'river', 'hill', 'mount'].forEach(function (l) { var b = T.makeBoardSrpg('size', l, false, 'rout'); sz[l] = b.cols + 'x' + b.rows; });
+      var hills = T.makeBoardSrpg('hills', 'hill', false, 'rout').cells.filter(function (c) { return c === 'hill'; }).length;
+      var sb = T.makeBoardSrpg('siege', 'plain', true, 'gate'), fb = T.makeBoardSrpg('nogate', 'plain', false, 'gate');
+      var ok1 = JSON.stringify(sz) === '{"plain":"10x8","river":"11x8","hill":"11x9","mount":"12x10"}' && hills > 3 && T.cellAt(sb, sb.gate[0], sb.gate[1]) === 'gate' && fb.goal === 'rout';
+      var b2 = srpgGame(0), lead = 0, ok2 = true, arms = {};
+      b2.units.forEach(function (u) { if (u.leader) { lead++; } if (u.kind === 'troop') { arms[u.arm] = 1; if ((u.arm === 'cav' && u.mov !== 3) || (u.arm === 'bow' && u.rng !== 2) || (u.arm === 'spear' && u.def !== 4)) { ok2 = false; } } });
+      var b3 = T.makeBoardSrpg('mods', 'plain', false, 'rout'); b3.cells[2 * b3.cols + 2] = 'hill';
+      var a = { x: 2, y: 2, arm: 'spear', fx: 1, fy: 0, atk: 20, def: 2 }, m1 = T.hitMods(b3, a, { x: 3, y: 2, arm: 'cav', fx: 1, fy: 0, atk: 20, def: 2 }), m2 = T.hitMods(b3, a, { x: 3, y: 2, arm: 'bow', fx: -1, fy: 0, atk: 20, def: 2 });
+      var nm = function (L) { return L.map(function (m) { return m[0] + (m[1] > 0 ? '+' : '') + m[1]; }).join(','); }, ok3 = nm(m1) === '높이+10,상성+20,뒤+20' && nm(m2) === '높이+10,상성-20';
+      var b4 = srpgGame(1), me = T.alive(b4, 'me')[0], dn = T.moves(b4, me.uid).filter(function (c) { return c.y > me.y && c.x === me.x; })[0], faced = false;
+      if (dn) { T.move(b4, me.uid, dn.x, dn.y); faced = me.fx === 0 && me.fy === 1; }
+      var b5 = srpgGame(1); b5.goal = 'leader'; b5.units.forEach(function (u) { if (u.leader) { u.hp = 0; } }); var k1 = T.outcome(b5).kind;
+      var b6 = srpgGame(2); b6.goal = 'gate'; var mu = T.alive(b6, 'me')[0]; mu.x = b6.gate[0]; mu.y = b6.gate[1]; var k2 = b6.gate[0] >= 0 ? T.outcome(b6).kind : 'rout';
+      var b7 = srpgGame(3); b7.goal = 'hold'; b7.turn = 7; var k3 = T.outcome(b7).kind;
+      var b8 = srpgGame(0); b8.units.forEach(function (u) { if (u.side === 'foe') { u.hp = 0; } }); var k4 = T.outcome(b8).kind;
+      var oldB = T.makeBoard('old', 'plain', false), old = oldB.cols + 'x' + oldB.rows + (oldB.srpg ? ' srpg' : '');
+      return (ok1 && ok2 && lead === 1 && ok3 && faced && k1 === 'rout' && k2 === 'rout' && k3 === 'win' && k4 === 'rout' && old === '8x6') ||
+        ('실패 판 ' + JSON.stringify(sz) + ' 언덕 ' + hills + ' · 병종 ' + ok2 + '/' + Object.keys(arms) + ' 대장 ' + lead + ' · 덤 ' + nm(m1) + ' | ' + nm(m2) + ' · 방향 ' + faced + ' · 대장 ' + k1 + ' 성문 ' + k2 + ' 버팀 ' + k3 + ' 전멸 ' + k4 + ' · 옛 판 ' + old);
+    });
+    t('W-0401 SRPG 자동 대국 60판 — 승률 45~65% · 평균 턴 ≤ 12 · 목표 넷 다 나옴(고돗 G-0347 과 같은 57%·5.5턴)', function () {
+      var wins = 0, turns = 0, by = {}, i;
+      for (i = 0; i < 60; i++) { var b = srpgGame(i), o = DG.tactics.autoPlay(b), w = o.kind === 'rout' || o.kind === 'win'; if (w) { wins++; } turns += o.turn; by[b.goal] = (by[b.goal] || 0) + 1; }
+      var rate = wins / 60, avg = turns / 60, line = '승률 ' + Math.round(rate * 100) + '% · 평균 ' + avg.toFixed(1) + '턴 · ' + JSON.stringify(by);
+      return (rate >= 0.45 && rate <= 0.65 && avg <= 12 && Object.keys(by).length === 4) || ('실패 ' + line);
+    });
+    t('W-0401 SRPG 책략 — 지력 70 이상 장수만 · 한 판 두 번 · 화계(숲 불·번짐·적 턴 끝 탐·두 턴 꺼짐) · 혼란(한 차례 쉼) · 회복(최대 안 넘음)', function () {
+      var T = DG.tactics, b = T.makeBoardSrpg('plot', 'mount', false, 'rout'), st = { s: { might: 40, wisdom: 95, command: 70 }, d: { might: 80, wisdom: 30, command: 70 }, f: { might: 60, wisdom: 40, command: 60 } };
+      T.unitsOfSrpg(b, ['s', 'd'], ['f'], [2000], { stats: st }, []);
+      var s = T.unit(b, 'me:s'), d = T.unit(b, 'me:d'), f = T.unit(b, 'foe:f'), dumb = !T.canPlot(b, 'me:d') && T.canPlot(b, 'me:s');
+      f.x = s.x + 2; f.y = s.y; var cf = T.plot(b, 'me:s', 'confuse', 'foe:f');
+      s.acted = false; s.moved = false; d.hp = d.max - 30; d.x = s.x; d.y = s.y + 1; var hl = T.plot(b, 'me:s', 'heal', 'me:d');
+      s.acted = false; var third = T.plot(b, 'me:s', 'heal', 'me:d').ok || T.canPlot(b, 'me:s');
+      var hpOk = d.hp <= d.max && hl.amount === Math.min(30, T.healAmount(s));
+      /* 화계 — 숲 칸에 적을 세우고 불(굴림이 실패하면 다음 씨앗) */
+      var lit = null, k, bf, burnt = false, out = false;
+      for (k = 0; k < 20 && !lit; k++) {
+        bf = T.makeBoardSrpg('fire' + k, 'mount', false, 'rout'); T.unitsOfSrpg(bf, ['s'], ['f'], [2000], { stats: st }, []);
+        var fs2 = T.unit(bf, 'me:s'), ff = T.unit(bf, 'foe:f'), cells = T.fireCells(bf, 'me:s');
+        if (!cells.length) { continue; }
+        ff.x = cells[0].x; ff.y = cells[0].y; var hp0 = ff.hp, r = T.fire(bf, 'me:s', cells[0].x, cells[0].y);
+        if (r.ok && r.lit) { lit = r; var hp1 = ff.hp; T.burnTick(bf); burnt = hp0 > hp1 && hp1 > ff.hp || ff.hp === 0; T.burnTick(bf); out = !Object.keys(bf.fire || {}).length; }
+      }
+      var conf = true; if (cf.ok && cf.hit) { var fx0 = f.x, fy0 = f.y; b.side = 'foe'; T.aiTurn(b); conf = f.x === fx0 && f.y === fy0 && !f.confused; }
+      return (dumb && cf.ok && hl.ok && !third && hpOk && !!lit && burnt && out && conf && b.plots === 0) ||
+        ('실패 문턱 ' + dumb + ' · 혼란 ' + JSON.stringify(cf) + ' 쉼 ' + conf + ' · 회복 ' + JSON.stringify(hl) + ' ' + hpOk + ' · 셋째 막힘 ' + !third + ' · 화계 ' + !!lit + ' 탐 ' + burnt + ' 꺼짐 ' + out + ' · 남은 ' + b.plots);
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

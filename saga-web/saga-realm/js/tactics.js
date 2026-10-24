@@ -87,7 +87,7 @@
     var s = stats || (OFF() ? OFF().stats(id) : { might: 60, wisdom: 60, command: 60 });
     var hp = 50 + s.command;
     return { uid: side + ':' + id, id: id, side: side, kind: 'officer', hp: hp, max: hp, atk: 10 + s.might / 5, def: s.might / 10,
-      mov: MOV, rng: s.wisdom >= s.might ? 2 : 1, x: 0, y: 0, moved: false, acted: false };
+      mov: MOV, rng: s.wisdom >= s.might ? 2 : 1, x: 0, y: 0, moved: false, acted: false, wis: s.wisdom };   // wis — W-0401 책략
   }
   /** 부대 유닛 — 병력에서 */
   function troopUnit(n, side, troops) {
@@ -150,6 +150,7 @@
     var u = unit(b, uid);
     if (!u || u.side !== b.side || u.moved || b.done) { return false; }
     if (!moves(b, uid).some(function (c) { return c.x === x && c.y === y; })) { return false; }
+    if (b.srpg && (x !== u.x || y !== u.y)) { faceTo(u, x + (x - u.x), y + (y - u.y)); }   // W-0401 걸어간 쪽을 본다
     u.x = x; u.y = y; u.moved = true;
     return true;
   }
@@ -163,7 +164,9 @@
   function attack(b, uid, tuid) {
     var a = unit(b, uid), t = unit(b, tuid);
     if (!a || !t || a.hp <= 0 || t.hp <= 0 || a.acted || a.side === t.side || a.side !== b.side || b.done || !inRange(a, t)) { return { ok: false }; }
-    var ch = hitChance(a, t, coverAt(b, t.x, t.y)), hit = roll(b, 'h') * 100 < ch, dmg = 0;
+    var ch = hitChanceB(b, a, t);   // W-0401 SRPG 판이면 높이·상성·뒤까지
+    if (b.srpg) { faceTo(a, t.x, t.y); }
+    var hit = roll(b, 'h') * 100 < ch, dmg = 0;
     if (hit) { dmg = Math.max(1, Math.round(a.atk * DMG() * (0.8 + roll(b, 'd') * 0.4))); t.hp = Math.max(0, t.hp - dmg); }
     a.acted = true; a.moved = true;
     b.log.push({ t: b.turn, a: uid, to: tuid, hit: hit, dmg: dmg, ch: ch });
@@ -175,11 +178,12 @@
 
   function actAuto(b, u) {
     if (u.hp <= 0 || b.done) { return; }
+    if (u.confused) { u.confused = false; u.moved = true; u.acted = true; return; }   // W-0401 혼란 — 이번 차례를 쉬고 풀린다
     var foes = alive(b, u.side === 'me' ? 'foe' : 'me');
     if (!foes.length) { return; }
     function bestTarget() {
       var best = null, bc = -1;
-      foes.forEach(function (t) { if (t.hp > 0 && inRange(u, t)) { var c = hitChance(u, t, coverAt(b, t.x, t.y)); if (c > bc) { bc = c; best = t; } } });
+      foes.forEach(function (t) { if (t.hp > 0 && inRange(u, t)) { var c = hitChanceB(b, u, t); if (c > bc) { bc = c; best = t; } } });
       return best;
     }
     var tg = bestTarget();
@@ -190,7 +194,7 @@
         var d = Math.max(0, dist(c, near) - u.rng), cv = coverAt(b, c.x, c.y);
         if (d < pd || (d === pd && cv > pc)) { pick = c; pd = d; pc = cv; }
       });
-      if (pick) { u.x = pick.x; u.y = pick.y; }
+      if (pick) { if (b.srpg && (pick.x !== u.x || pick.y !== u.y)) { faceTo(u, pick.x + (pick.x - u.x), pick.y + (pick.y - u.y)); } u.x = pick.x; u.y = pick.y; }
       u.moved = true;
       tg = bestTarget();
     }
@@ -207,6 +211,8 @@
   function aiTurn(b) {
     if (b.done) { return b.done; }
     autoSide(b, 'foe');
+    if (b.done) { return b.done; }
+    burnTick(b);   // 화계 — 불 없으면 아무것도 안 함
     if (b.done) { return b.done; }
     b.turn++;
     b.units.forEach(function (u) { u.moved = false; u.acted = false; });
@@ -226,6 +232,7 @@
   }
   function check(b) {
     if (b.done) { return b.done; }
+    if (b.srpg) { return checkSrpg(b); }
     if (!alive(b, 'foe').length) { b.done = 'rout'; }
     else if (!alive(b, 'me').length) { b.done = 'lose'; }
     else if (b.turn > TURNS) {
@@ -240,7 +247,7 @@
     if (!k) { return null; }
     var down = b.units.filter(function (u) { return u.side === 'me' && u.kind === 'officer' && u.hp <= 0; }).map(function (u) { return u.id; });
     var pd = permadeath(), o = OUT[k];
-    return { kind: k, name: o.name, winPct: o.winPct, lossMul: o.lossMul, turn: Math.min(b.turn, TURNS),
+    return { kind: k, name: o.name, winPct: o.winPct, lossMul: o.lossMul, turn: b.srpg ? b.turn : Math.min(b.turn, TURNS),
       hpMe: Math.round(hpFrac(b, 'me') * 100), hpFoe: Math.round(hpFrac(b, 'foe') * 100),
       fallen: pd ? down : [], wounded: pd ? [] : down, foeDown: b.units.filter(function (u) { return u.side === 'foe' && u.hp <= 0; }).map(function (u) { return u.id || u.uid; }) };
   }
@@ -311,10 +318,193 @@
     return A;   // 저장은 출진이 끝날 때(finishMarch) 한 번 — 여기서 저장하면 나간 병력만 빠진 반쪽 판이 남는다
   }
 
+  /* ── W-0401 격자 SRPG 본전투(PLAN §5-17 · 고돗 G-0347 ③⑤ 와 같은 수치·같은 굴림) ─────────
+   * 옛 판(makeBoard, 8×6·3턴)은 그대로 두고 makeBoardSrpg 로 만든 판(b.srpg)만 아래 규칙을 쓴다.
+   *   판      땅 꼴별 크기 SRPG_SIZE(평지 10×8 · 강 11×8 · 구릉 11×9 · 산 12×10) · 언덕 칸(hill — 높이 1, 위에서 치면 명중 +HEIGHT_HIT)
+   *           공성이면 성벽 줄 + 가운데 성문 칸(gate — 지나갈 수 있음)
+   *   병종    부대마다(내 부대 둘까지도) 창·기·궁(씨앗) — 창>기>궁>창 이기면 +COUNTER_HIT, 지면 −COUNTER_HIT · 기 이동 3 · 궁 사거리 2 · 창 방어 +2
+   *   방향    유닛은 걸어간 쪽·친 쪽을 본다(fx, fy). 뒤에서 치면(대상이 보는 방향의 반대편) +BACK_HIT
+   *   승리    goal 하나: rout 전멸 · leader 적 대장(첫 적 장수) 격파 · gate 성문 칸 점령 · hold HOLD_TURNS 턴 버팀
+   *           내 전멸 = 패 · SRPG_CAP 턴 넘으면 옛 체력 비율 판정. 대장·성문 = 대승(rout) · 버팀 = 승(win)
+   *   책략    한 판 PLOTS 번, 지력 FIRE_WIS 이상 내 장수 — 화계(숲에 불, 번짐·두 턴 탐) · 혼란(적 한 차례 쉼) · 회복
+   */
+  var SRPG_SIZE = { plain: [10, 8], river: [11, 8], hill: [11, 9], mount: [12, 10] };
+  var HILL_MIX = { plain: 0.08, river: 0.06, hill: 0.25, mount: 0.2 };
+  var HEIGHT_HIT = 10, COUNTER_HIT = 20, BACK_HIT = 20;
+  var ARMS = ['spear', 'cav', 'bow'], BEATS = { spear: 'cav', cav: 'bow', bow: 'spear' }, ARM_NAME = { spear: '창', cav: '기', bow: '궁' };
+  var GOALS = ['rout', 'leader', 'gate', 'hold'], GOAL_NAME = { rout: '적 전멸', leader: '적 대장 격파', gate: '성문 점령', hold: '%d턴 버티기' };
+  var HOLD_TURNS = 6, SRPG_CAP = 30, PLOTS = 2;
+  var FIRE_WIS = 70, FIRE_RANGE = 3, FIRE_TURNS = 2, FIRE_DMG = 6, FIRE_SPREAD = 0.5, PLOT_RANGE = 3, HEAL_RANGE = 2, HEAL_BASE = 15;
+  var PLOT_NAME = { fire: '화계', confuse: '혼란', heal: '회복' };
+
+  function makeBoardSrpg(seed, terrain, siege, goal) {
+    var CD = global.DG.cityData, land = terrain;
+    if (CD && CD.find && CD.find(terrain)) { land = CD.landOf(terrain).key; }
+    var key = MIX[land] ? land : 'plain', mx = MIX[key], cols = SRPG_SIZE[key][0], rows = SRPG_SIZE[key][1], cells = [], x, y;
+    for (y = 0; y < rows; y++) {
+      for (x = 0; x < cols; x++) {
+        var t = 'plain', r = hash(seed, 'c' + x + ',' + y), h = hash(seed, 'h' + x + ',' + y);
+        if (x >= 2 && x <= cols - 3 && r < mx.forest) { t = 'forest'; }
+        else if (mx.rocks && x >= 3 && x <= cols - 4 && r > 1 - mx.rocks) { t = 'wall'; }
+        else if (x >= 1 && x <= cols - 2 && h < HILL_MIX[key]) { t = 'hill'; }
+        cells.push(t);
+      }
+    }
+    if (mx.river) {
+      var rx = Math.floor(cols / 2) - 1 + (hash(seed, 'rx') < 0.5 ? 0 : 1), f1 = Math.floor(hash(seed, 'f1') * rows), f2 = (f1 + 2 + Math.floor(hash(seed, 'f2') * (rows - 3))) % rows;
+      for (y = 0; y < rows; y++) { cells[y * cols + rx] = (y === f1 || y === f2) ? 'plain' : 'river'; }
+    }
+    var g = GOALS.indexOf(goal) >= 0 ? goal : 'rout', gate = [-1, -1];
+    if (g === 'gate' && !siege) { g = 'rout'; }
+    if (siege) {
+      for (y = 0; y < rows; y++) { if (y % 2 === 0) { cells[y * cols + (cols - 3)] = 'wall'; } }
+      gate = [cols - 3, Math.floor(rows / 2)];
+      cells[gate[1] * cols + gate[0]] = 'gate';
+    }
+    return { seed: String(seed), land: key, siege: !!siege, cols: cols, rows: rows, cells: cells, units: [], turn: 1, side: 'me', n: 0, done: null, log: [],
+      srpg: true, goal: g, gate: gate, hold: HOLD_TURNS, plots: PLOTS };
+  }
+  /** SRPG 판에 두 편 — unitsOf 그대로 세운 뒤 내 부대(둘까지)·병종·방향·대장을 붙인다 */
+  function unitsOfSrpg(b, mine, foes, foeTroops, opts, myTroops) {
+    var list = unitsOf(b, mine, foes, foeTroops, opts), k, y, i;
+    for (k = 0; k < Math.min((myTroops || []).length, 2); k++) {
+      var t = troopUnit(k, 'me', myTroops[k]), placed = false;
+      for (y = 0; y < b.rows && !placed; y++) {
+        var yy = (y * 2 + 1) % b.rows, xs = [1, 2, 0];
+        for (i = 0; i < 3; i++) { var c = cellAt(b, xs[i], yy); if (c !== 'river' && c !== 'wall' && !occupied(b, xs[i], yy)) { t.x = xs[i]; t.y = yy; placed = true; break; } }
+      }
+      list.push(t);
+    }
+    b.units = list;
+    k = 0;
+    list.forEach(function (u) {
+      u.fx = u.side === 'me' ? 1 : -1; u.fy = 0; u.arm = '';
+      if (u.kind === 'troop') {
+        var arm = ARMS[(Math.floor(hash(b.seed, 'arm') * 3) + k) % 3]; k++;
+        u.arm = arm;
+        if (arm === 'cav') { u.mov = 3; } else if (arm === 'bow') { u.rng = 2; } else { u.def += 2; }
+      }
+    });
+    for (i = 0; i < list.length; i++) { if (list[i].side === 'foe' && list[i].kind === 'officer') { list[i].leader = true; break; } }
+    return list;
+  }
+  function faceTo(u, x, y) {
+    var dx = x - u.x, dy = y - u.y;
+    if (!dx && !dy) { return; }
+    if (Math.abs(dx) >= Math.abs(dy)) { u.fx = Math.sign(dx); u.fy = 0; } else { u.fx = 0; u.fy = Math.sign(dy); }
+  }
+  function heightAt(b, x, y) { return cellAt(b, x, y) === 'hill' ? 1 : 0; }
+  /** 뒤치기 — 공격자가 대상이 보는 방향의 반대편(옆은 아님) */
+  function isBack(att, tgt) { return (att.x - tgt.x) * (tgt.fx || 0) + (att.y - tgt.y) * (tgt.fy || 0) < 0; }
+  /** 명중 덤 내역 [[이름, %p]…] — 화면 풀이·진단 */
+  function hitMods(b, att, tgt) {
+    var out = [];
+    if (!b.srpg) { return out; }
+    if (heightAt(b, att.x, att.y) > heightAt(b, tgt.x, tgt.y)) { out.push(['높이', HEIGHT_HIT]); }
+    if (att.arm && tgt.arm) { if (BEATS[att.arm] === tgt.arm) { out.push(['상성', COUNTER_HIT]); } else if (BEATS[tgt.arm] === att.arm) { out.push(['상성', -COUNTER_HIT]); } }
+    if (isBack(att, tgt)) { out.push(['뒤', BACK_HIT]); }
+    return out;
+  }
+  /** 판을 보는 명중률 — SRPG 판이면 높이·상성·뒤까지(옛 판은 hitChance 그대로) */
+  function hitChanceB(b, att, tgt) {
+    var base = hitChance(att, tgt, coverAt(b, tgt.x, tgt.y)), mods = hitMods(b, att, tgt), add = 0;
+    if (!mods.length) { return base; }
+    mods.forEach(function (m) { add += m[1]; });
+    return Math.max(HIT_MIN, Math.min(HIT_MAX, base + add));
+  }
+  function goalText(b) { var g = b.goal || 'rout'; return g === 'hold' ? GOAL_NAME.hold.replace('%d', b.hold) : GOAL_NAME[g]; }
+  function checkSrpg(b) {
+    if (!alive(b, 'foe').length) { b.done = 'rout'; }
+    else if (!alive(b, 'me').length) { b.done = 'lose'; }
+    else {
+      if (b.goal === 'leader') { if (b.units.some(function (u) { return u.leader && u.hp <= 0; })) { b.done = 'rout'; } }
+      else if (b.goal === 'gate') { if (alive(b, 'me').some(function (u) { return u.x === b.gate[0] && u.y === b.gate[1]; })) { b.done = 'rout'; } }
+      else if (b.goal === 'hold') { if (b.turn > b.hold) { b.done = 'win'; } }
+      if (!b.done && b.turn > SRPG_CAP) { var m = hpFrac(b, 'me'), f = hpFrac(b, 'foe'); b.done = (f <= 0 || m / f >= 1.5) ? 'win' : 'draw'; }
+    }
+    return b.done;
+  }
+
+  /* 책략 — 화계·혼란·회복. 굴림은 판 순번(roll) — 안 쓰면 판·결과가 그대로. 기록은 b.fire_log(공격 log 와 따로) */
+  function canPlot(b, uid) {
+    var u = unit(b, uid);
+    return !!u && u.kind === 'officer' && u.side === 'me' && b.side === 'me' && !b.done && u.hp > 0 && !u.acted && (u.wis || 0) >= FIRE_WIS && (b.plots == null ? PLOTS : b.plots) > 0;
+  }
+  function fireChance(u) { return Math.max(30, Math.min(90, 40 + Math.trunc(((u.wis || 0) - 60) * 2))); }
+  function burning(b) { if (!b.fire) { b.fire = {}; } return b.fire; }
+  function fireCells(b, uid) {
+    var out = [], u = unit(b, uid), x, y;
+    if (!canPlot(b, uid)) { return out; }
+    for (y = 0; y < b.rows; y++) { for (x = 0; x < b.cols; x++) { if (cellAt(b, x, y) === 'forest' && Math.abs(x - u.x) + Math.abs(y - u.y) <= FIRE_RANGE && !burning(b)[x + ',' + y]) { out.push({ x: x, y: y }); } } }
+    return out;
+  }
+  function burnUnits(b, dmg) {
+    var hits = [];
+    b.units.forEach(function (u) { if (u.hp > 0 && burning(b)[u.x + ',' + u.y]) { u.hp = Math.max(0, u.hp - dmg); hits.push({ uid: u.uid, dmg: dmg, killed: u.hp <= 0 }); } });
+    return hits;
+  }
+  function plotDone(b, u, rec) {
+    b.plots = (b.plots == null ? PLOTS : b.plots) - 1;
+    u.acted = true; u.moved = true;
+    if (!b.fire_log) { b.fire_log = []; }
+    b.fire_log.push(rec);
+    check(b);
+  }
+  /** 불을 놓는다 — {ok, lit, chance, cells:[[x,y]…], hits:[{uid,dmg,killed}…]} */
+  function fire(b, uid, x, y) {
+    if (!fireCells(b, uid).some(function (c) { return c.x === x && c.y === y; })) { return { ok: false }; }
+    var u = unit(b, uid), ch = fireChance(u), lit = roll(b, 'f') * 100 < ch, cells = [], hits = [], dmg = Math.round(FIRE_DMG + u.wis / 10);
+    if (lit) {
+      burning(b)[x + ',' + y] = { left: FIRE_TURNS, dmg: dmg }; cells.push([x, y]);
+      [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) {
+        var nx = x + d[0], ny = y + d[1];
+        if (nx >= 0 && ny >= 0 && nx < b.cols && ny < b.rows && cellAt(b, nx, ny) === 'forest' && !burning(b)[nx + ',' + ny] && roll(b, 's') < FIRE_SPREAD) { burning(b)[nx + ',' + ny] = { left: FIRE_TURNS, dmg: dmg }; cells.push([nx, ny]); }
+      });
+      hits = burnUnits(b, dmg);
+    }
+    plotDone(b, u, { t: b.turn, a: uid, plot: 'fire', lit: lit, cells: cells, hits: hits });
+    return { ok: true, lit: lit, chance: ch, cells: cells, hits: hits };
+  }
+  /** 적 턴 끝 — 불 칸 위 유닛이 타고, 불이 한 번 줄고 0 이면 꺼진다 */
+  function burnTick(b) {
+    if (!b.fire) { return []; }
+    var hits = [];
+    Object.keys(b.fire).forEach(function (k) {
+      var f = b.fire[k], xy = k.split(',');
+      b.units.forEach(function (u) { if (u.hp > 0 && u.x === +xy[0] && u.y === +xy[1]) { u.hp = Math.max(0, u.hp - f.dmg); hits.push({ uid: u.uid, dmg: f.dmg, killed: u.hp <= 0 }); } });
+      f.left--; if (f.left <= 0) { delete b.fire[k]; }
+    });
+    b.burn_last = hits;
+    check(b);
+    return hits;
+  }
+  function confuseChance(u, t) { return Math.max(20, Math.min(90, 50 + Math.trunc(((u.wis || 0) - (t.wis == null ? 40 : t.wis)) * 2))); }
+  function healAmount(u) { return Math.round(HEAL_BASE + (u.wis || 0) / 5); }
+  /** 혼란·회복을 걸 수 있는 대상 [uid…] */
+  function plotTargets(b, uid, plot) {
+    var out = [], u = unit(b, uid);
+    if (!canPlot(b, uid)) { return out; }
+    alive(b).forEach(function (t) {
+      var d = dist(u, t);
+      if (plot === 'confuse' && t.side !== u.side && d <= PLOT_RANGE && !t.confused) { out.push(t.uid); }
+      else if (plot === 'heal' && t.side === u.side && d <= HEAL_RANGE && t.hp < t.max) { out.push(t.uid); }
+    });
+    return out;
+  }
+  /** 혼란·회복을 건다 — {ok, plot, hit, chance, amount} */
+  function plot(b, uid, key, tuid) {
+    if (plotTargets(b, uid, key).indexOf(tuid) < 0) { return { ok: false }; }
+    var u = unit(b, uid), t = unit(b, tuid), r = { ok: true, plot: key, to: tuid, hit: true, chance: 100, amount: 0 };
+    if (key === 'confuse') { r.chance = confuseChance(u, t); r.hit = roll(b, 'cf') * 100 < r.chance; if (r.hit) { t.confused = true; } }
+    else { var before = t.hp; t.hp = Math.min(t.max, before + healAmount(u)); r.amount = Math.round(t.hp - before); }
+    plotDone(b, u, { t: b.turn, a: uid, plot: key, to: tuid, hit: r.hit, amount: r.amount });
+    return r;
+  }
+
   /** 진단·균형용 — 양쪽 다 AI 로 끝까지 둔다 */
   function autoPlay(b) {
     var guard = 0;
-    while (!b.done && guard++ < 20) { autoSide(b, 'me'); check(b); if (b.done) { break; } aiTurn(b); }
+    while (!b.done && guard++ < (b.srpg ? SRPG_CAP + 5 : 20)) { autoSide(b, 'me'); check(b); if (b.done) { break; } aiTurn(b); }
     return outcome(b);
   }
 
@@ -324,6 +514,10 @@
     hash: hash, makeBoard: makeBoard, cellAt: cellAt, coverAt: coverAt, officerUnit: officerUnit, troopUnit: troopUnit, unitsOf: unitsOf,
     unit: unit, alive: alive, moves: moves, move: move, hitChance: hitChance, attack: attack,
     aiTurn: aiTurn, endTurn: endTurn, outcome: outcome, apply: apply, annalize: annalize, autoPlay: autoPlay, permadeath: permadeath,
-    marchGrid: marchGrid, marchApply: marchApply
+    marchGrid: marchGrid, marchApply: marchApply,
+    SRPG_SIZE: SRPG_SIZE, HEIGHT_HIT: HEIGHT_HIT, COUNTER_HIT: COUNTER_HIT, BACK_HIT: BACK_HIT, ARMS: ARMS, BEATS: BEATS, ARM_NAME: ARM_NAME, GOALS: GOALS, GOAL_NAME: GOAL_NAME,
+    HOLD_TURNS: HOLD_TURNS, SRPG_CAP: SRPG_CAP, PLOTS: PLOTS, FIRE_WIS: FIRE_WIS, PLOT_NAME: PLOT_NAME,
+    makeBoardSrpg: makeBoardSrpg, unitsOfSrpg: unitsOfSrpg, heightAt: heightAt, isBack: isBack, hitMods: hitMods, hitChanceB: hitChanceB, goalText: goalText,
+    canPlot: canPlot, fireCells: fireCells, fire: fire, burnTick: burnTick, plotTargets: plotTargets, plot: plot, confuseChance: confuseChance, healAmount: healAmount
   };
 })(window);
