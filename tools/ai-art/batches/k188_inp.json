@@ -1,0 +1,33 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k188/inp",
+ "kit": {
+  "spec": "character_tall",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 1152,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes",
+  "variants": 3
+ },
+ "items": [
+  {
+   "id": "sg_zhugeliang_side_noarm",
+   "seed": 2026102470,
+   "prompt": "(1boy:1.15), male focus, young adult man, short dark hair, gentle smile, black square scholar cap, long green robe over white inner robe, cloth shoes, adult, tall, realistic body proportions, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, (arms behind back:1.2), plain robe torso, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, arm, hand, sleeve in front",
+   "subject_ko": "K-0188 ⓑ 팔 밑 몸통 인페인트",
+   "init_image": "tools/ai-art/_out/k188/side/sg_zhugeliang_side_v06.png",
+   "mask_image": "tools/ai-art/_out/k188/under_side.png",
+   "denoise": 0.9,
+   "width": 768,
+   "height": 1152
+  }
+ ]
+}
