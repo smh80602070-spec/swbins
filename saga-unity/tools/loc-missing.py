@@ -51,11 +51,15 @@ def main():
         g0 = game_of(f)
         if g0 is None:
             continue
+        remap = re.search(r'StartsWith\("friend\."[^?]*\?\s*"(\w+)\."\s*\+\s*k\.Substring\(7\)', s)
         for m in pair.finditer(s):
             if s[max(0, m.start() - 5):m.start()] == 'Pick(':
                 continue   # GoStory.Pick("k", a, b) 는 k.a·k.b 를 읽는다(U-0210 오탐)
             if KEY.match(m.group(1)) and HANGUL.search(m.group(2)):
-                found[g0].setdefault(m.group(1), unesc(m.group(2)))
+                k = m.group(1)
+                if remap and k.startswith('friend.'):   # StoryBond 같은 판은 공용 friend.* 를 이 판 앞붙이로 읽는다(U-0213 오탐)
+                    k = remap.group(1) + k[6:]
+                found[g0].setdefault(k, unesc(m.group(2)))
         for m in kv.finditer(s):
             if KEY.match(m.group(2)):   # Key = "normal" 같은 한 낱말 id 는 앞붙이("mode."+Key)로 읽는다(U-0210 오탐)
                 found[g0].setdefault(m.group(2), unesc(m.group(3)))
