@@ -2272,6 +2272,42 @@
   "note": "U-0197: 목표가 창 밖이면 가까운 칸 1200 까지 — 길 내기 7.3 → 2.9ms(에디터) · D3(qc+claude, R-3): docs/playcheck/d3-r3-20261023b.json — 위 1만리 촬영과 같은 판 — 모서리에서 돌아가는 길 · 앞 D2(U-0190): PlaytestHeadless autopath OK — 가짜 격자(곧은 들판 경유점 하나·담 돌아감 3·갇힘 null·3m 턱 안 오름)·앞 막힘·진짜 임시 벽 돌아감 3 · autoquest OK 그대로"
  },
  {
+  "id": "un.rk.region-view",
+  "name": "U-0204 ① 5천하 지역 단위 전략 지도 — 한 화면 = 한 지역(웹 prov 묶음: 하북·중원·강동·형익 + 확장 지역) · 내 성 + 회색 적 성 + 이웃 화살표 · 「🗺 천하도」 지역 카드 창 · 지금 성 따라감 · 세이브 viewRegion",
+  "files": [
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmRegions.cs",
+   "saga-unity/Assets/Games/SagaRealm/World/RealmWorldMap.cs",
+   "saga-unity/Assets/Games/SagaRealm/UI/RealmRegionUi.cs"
+  ],
+  "tests": [
+   "PlaytestRealmRegions"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "U-0204",
+  "since": "2026-10-25",
+  "note": "D2(U-0204): PlaytestRealmSlice regions table·view·map·follow·card·off OK — 성 58 → 9지역(≤8곳), 끝판에도 한 화면 8곳·화살표 3 · 촬영 worldmap △(끝판 세이브 정복 승리 카드가 지도를 가림 — 화살표 이름만 보임)"
+ },
+ {
+  "id": "un.rk.srpg",
+  "name": "U-0204 ③④⑤ 5천하 격자 SRPG 본전투 — 출진 = 늘 판(평지 10×8·강 11×9·공성 12×10) · 목표 대장 격파/성문 점령/버팀 · 병종 창>기>궁 · 언덕 +10 · 뒤치기 +20 · 책략 화계·혼란·회복 · 일기토·설전 · 자동 전투 · 손잡이 세 상태",
+  "files": [
+   "saga-unity/Assets/Games/SagaRealm/Data/RealmTactics.cs",
+   "saga-unity/Assets/Games/SagaRealm/World/RealmTacticsView.cs",
+   "saga-unity/Assets/Games/SagaRealm/UI/RealmCommandUi.cs"
+  ],
+  "tests": [
+   "PlaytestRealmSrpg"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "U-0204",
+  "since": "2026-10-25",
+  "note": "D2(U-0204): PlaytestRealmSlice srpg board·units·hit·goal·cmd·balance·entry OK — 자동 대국 60판 승률 53%·평균 4.9턴(적 세기 ×2.1) · 옛 판(PlaytestRealmTactics, 웹 W-0107 비트 단위)은 손잡이 끄고 그대로 · 촬영 realmtactics ○(공성 12×10·목표 성문 점령·명령 다섯·자동 전투)"
+ },
+ {
   "id": "un.go.weakpart",
   "name": "U-0203 1만리 보스 약점 부수기 — 보스 몸 높이 0.85 주황 빛 공 · 가득 당긴 화살 피해로 약점 체력(최대×0.12) 깎음 → 부서지면 예고 끊고 2.5초 비틀·이후 공격 ×0.85·빛 꺼짐 · 되살기·귀가 때 다시(고돗 G-0342·웹 W-0395 짝)",
   "files": [

@@ -26,7 +26,7 @@ namespace Saga.Realm.World
         public const float StepS = 0.25f, SwingS = 0.4f, PitchDeg = 50f, Fov = 40f, CamDist = 11.5f, EndHold = 1.2f;
         public const float OfficerHeight = 1.35f, TroopHeight = 1.0f;   // 칸 1m — 0.95·0.66 은 촬영에서 너무 작아 읽기 어려웠다
 
-        private static readonly Color Plain = Hex(0xc8b47a), Forest = Hex(0x5f8446), River = Hex(0x4f86b3), WallC = Hex(0x857563);
+        private static readonly Color Plain = Hex(0xc8b47a), Forest = Hex(0x5f8446), River = Hex(0x4f86b3), WallC = Hex(0x857563), HillC = Hex(0x9c8a5a), GateC = Hex(0x6b4a2e);
         private static readonly Color Me = Hex(0x3d8bd9), Foe = Hex(0xd24b3c);
         private static readonly Color MoveMark = new Color(0.55f, 0.82f, 1f), TargetMark = new Color(0.95f, 0.35f, 0.3f), SelMark = new Color(1f, 0.85f, 0.3f);
         private static readonly Color Field = new Color(0.4f, 0.5f, 0.32f), Sky = new Color(0.62f, 0.75f, 0.86f), TreeC = new Color(0.27f, 0.45f, 0.24f);
@@ -62,17 +62,19 @@ namespace Saga.Realm.World
 
         /* ── 순수 함수(진단) ── */
 
-        /// <summary>칸 (x, y) 가운데 — 판 로컬, 내 편(x 작음)이 왼쪽·0행이 먼 쪽.</summary>
-        public static Vector3 CellCenter(int x, int y) => new Vector3(x - (T.Cols - 1) / 2f, 0f, (T.Rows - 1) / 2f - y);
+        /// <summary>칸 (x, y) 가운데 — 판 로컬, 내 편(x 작음)이 왼쪽·0행이 먼 쪽. w·h = 판 크기(옛 판 8×6, SRPG 10×8~12×10 — tasks U-0204).</summary>
+        public static Vector3 CellCenter(int x, int y, int w = T.Cols, int h = T.Rows) => new Vector3(x - (w - 1) / 2f, 0f, (h - 1) / 2f - y);
 
         /// <summary>판 로컬 점 → 칸. 판 밖이면 (−1, −1).</summary>
-        public static Vector2Int CellOf(Vector3 local)
+        public static Vector2Int CellOf(Vector3 local, int w = T.Cols, int h = T.Rows)
         {
-            int x = Mathf.FloorToInt(local.x + T.Cols / 2f), y = Mathf.FloorToInt(T.Rows / 2f - local.z);
-            return x < 0 || y < 0 || x >= T.Cols || y >= T.Rows ? new Vector2Int(-1, -1) : new Vector2Int(x, y);
+            int x = Mathf.FloorToInt(local.x + w / 2f), y = Mathf.FloorToInt(h / 2f - local.z);
+            return x < 0 || y < 0 || x >= w || y >= h ? new Vector2Int(-1, -1) : new Vector2Int(x, y);
         }
 
-        public static float Height(T.Cell c) => c == T.Cell.Forest ? 0.2f : c == T.Cell.River ? -0.3f : c == T.Cell.Wall ? 0.8f : 0f;
+        public static float Height(T.Cell c) => c == T.Cell.Forest ? 0.2f : c == T.Cell.River ? -0.3f : c == T.Cell.Wall ? 0.8f : c == T.Cell.Hill ? 0.45f : c == T.Cell.Gate ? 0.1f : 0f;
+
+        private Vector3 CC(int x, int y) => CellCenter(x, y, Board.W, Board.H);
 
         /* ── 열기·닫기 ── */
 
@@ -114,20 +116,25 @@ namespace Saga.Realm.World
         private void Build()
         {
             Spawn("Field", PrimitiveType.Cube, new Vector3(0f, -0.55f, 0f), new Vector3(34f, 0.1f, 34f), Field);
-            for (int y = 0; y < T.Rows; y++)
+            for (int y = 0; y < Board.H; y++)
             {
-                for (int x = 0; x < T.Cols; x++)
+                for (int x = 0; x < Board.W; x++)
                 {
                     var c = T.CellAt(Board, x, y).Value;
                     float h = Height(c);
-                    var at = CellCenter(x, y);
-                    var col = c == T.Cell.Forest ? Forest : c == T.Cell.River ? River : c == T.Cell.Wall ? WallC : Plain;
+                    var at = CC(x, y);
+                    var col = c == T.Cell.Forest ? Forest : c == T.Cell.River ? River : c == T.Cell.Wall ? WallC : c == T.Cell.Hill ? HillC : c == T.Cell.Gate ? GateC : Plain;
                     if (((x + y) & 1) == 1) col *= 0.94f; // 칸 경계가 보이게 바둑 무늬로 살짝
                     Spawn($"Cell_{x}_{y}", PrimitiveType.Cube, at + new Vector3(0f, h - 0.25f, 0f), new Vector3(0.97f, 0.5f, 0.97f), col);
                     if (c == T.Cell.Forest)
                     {
                         Cone("Tree", at + new Vector3(-0.2f, h, 0.18f), 0.17f, 0.62f, TreeC);
                         Cone("Tree", at + new Vector3(0.22f, h, -0.15f), 0.14f, 0.5f, TreeC);
+                    }
+                    else if (c == T.Cell.Gate) // tasks U-0204 성문 — 문짝 둘(목표 칸)
+                    {
+                        Spawn("GateDoor", PrimitiveType.Cube, at + new Vector3(0f, h + 0.35f, -0.3f), new Vector3(0.8f, 0.7f, 0.08f), GateC * 0.8f);
+                        Spawn("GateDoor", PrimitiveType.Cube, at + new Vector3(0f, h + 0.35f, 0.3f), new Vector3(0.8f, 0.7f, 0.08f), GateC * 0.8f);
                     }
                     else if (c == T.Cell.Wall)
                     {
@@ -141,7 +148,7 @@ namespace Saga.Realm.World
             {
                 bool me = u.Side == "me";
                 var fig = RealmFigure.Create(u.Uid, transform, UnitPos(u), me ? 90f : -90f, me ? Me : Foe,
-                    u.Kind == "officer" ? OfficerHeight : TroopHeight, (u.X * 7 + u.Y) * 0.13f,
+                    u.Kind == "officer" || u.Kind == "chief" ? OfficerHeight : TroopHeight, (u.X * 7 + u.Y) * 0.13f,
                     u.Kind == "officer" ? RealmBodies.Role.Officer : RealmBodies.Role.Wanderer,
                     u.Kind == "officer" ? u.Id : Board.EnemyId + ":" + u.Uid);
                 Spawn("Disc", PrimitiveType.Cylinder, new Vector3(0f, 0.02f, 0f), new Vector3(0.78f, 0.015f, 0.78f), me ? Me : Foe, fig.transform);
@@ -152,7 +159,8 @@ namespace Saga.Realm.World
             var camGo = new GameObject("TacticsCam");
             camGo.transform.SetParent(transform, false);
             float p = PitchDeg * Mathf.Deg2Rad;
-            camGo.transform.localPosition = new Vector3(0f, CamDist * Mathf.Sin(p), -CamDist * Mathf.Cos(p) - 0.4f);
+            float dist = CamDist * Mathf.Max(1f, Mathf.Max(Board.W / (float)T.Cols, Board.H / (float)T.Rows)); // tasks U-0204 큰 판은 멀리서
+            camGo.transform.localPosition = new Vector3(0f, dist * Mathf.Sin(p), -dist * Mathf.Cos(p) - 0.4f);
             camGo.transform.LookAt(transform.position + new Vector3(0f, 0f, -0.4f));
             Cam = camGo.AddComponent<Camera>();
             Cam.clearFlags = CameraClearFlags.SolidColor;
@@ -182,7 +190,14 @@ namespace Saga.Realm.World
             ((RectTransform)bar.transform).anchoredPosition = new Vector2(0f, -16f);
             _info = RealmUiKit.NewText(bar.transform, "", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1150f, 90f), 26);
             RealmUiKit.NewButton(_canvas.transform, RealmLocalization.T("tactics.end_turn", "턴 끝"), new Vector2(1f, 0f), new Vector2(-24f, 24f), new Vector2(200f, 96f), PressEndTurn);
-            RealmUiKit.NewButton(_canvas.transform, RealmLocalization.T("tactics.delegate", "맡기기"), new Vector2(1f, 0f), new Vector2(-240f, 24f), new Vector2(200f, 96f), PressDelegate);
+            RealmUiKit.NewButton(_canvas.transform, Board.IsSrpg ? RealmLocalization.T("tactics.auto", "자동 전투") : RealmLocalization.T("tactics.delegate", "맡기기"), new Vector2(1f, 0f), new Vector2(-240f, 24f), new Vector2(200f, 96f), PressDelegate);
+            // tasks U-0204 ⑤ 장수 명령 — 고른 장수가 아직 안 움직였을 때 왼쪽 아래 줄(누르면 그 명령의 대상만 붉게, 대상을 누르면 실행)
+            if (Board.IsSrpg)
+                for (int i = 0; i < Commands.Length; i++)
+                {
+                    string kind = Commands[i];
+                    _cmdButtons[kind] = RealmUiKit.NewButton(_canvas.transform, RealmLocalization.T("tactics.cmd_" + kind, CommandKo[i]), new Vector2(0f, 0f), new Vector2(24f + 170f * i, 24f), new Vector2(160f, 96f), () => PressCommand(kind));
+                }
             RealmUiKit.NewButton(_canvas.transform, RealmLocalization.T("tactics.retreat", "취소 — 물러남"), new Vector2(1f, 0f), new Vector2(-456f, 24f), new Vector2(200f, 96f), Retreat);
 
             foreach (var u in Board.Units)
@@ -224,7 +239,7 @@ namespace Saga.Realm.World
         public Vector2Int PickCell(Vector2 screen)
         {
             var o = transform.position;
-            float cellPx = (Cam.WorldToScreenPoint(o + CellCenter(1, 0)) - Cam.WorldToScreenPoint(o + CellCenter(0, 0))).magnitude;
+            float cellPx = (Cam.WorldToScreenPoint(o + CC(1, 0)) - Cam.WorldToScreenPoint(o + CC(0, 0))).magnitude;
             float best = cellPx * 0.5f;
             var hit = new Vector2Int(-1, -1);
             foreach (var u in Board.Units)
@@ -239,13 +254,13 @@ namespace Saga.Realm.World
             var ray = Cam.ScreenPointToRay(screen);
             if (Mathf.Abs(ray.direction.y) < 1e-4f) return hit;
             float near = float.MaxValue;
-            for (int y = 0; y < T.Rows; y++)
-                for (int x = 0; x < T.Cols; x++)
+            for (int y = 0; y < Board.H; y++)
+                for (int x = 0; x < Board.W; x++)
                 {
                     float top = o.y + Height(T.CellAt(Board, x, y).Value);
                     float d = (top - ray.origin.y) / ray.direction.y;
                     if (d <= 0f || d >= near) continue;
-                    if (CellOf(ray.origin + ray.direction * d - o) == new Vector2Int(x, y)) { near = d; hit = new Vector2Int(x, y); }
+                    if (CellOf(ray.origin + ray.direction * d - o, Board.W, Board.H) == new Vector2Int(x, y)) { near = d; hit = new Vector2Int(x, y); }
                 }
             return hit;
         }
@@ -261,7 +276,7 @@ namespace Saga.Realm.World
                 bool show = fig != null && fig.gameObject.activeSelf;
                 t.gameObject.SetActive(show);
                 if (!show) continue;
-                t.transform.position = fig.transform.position + Vector3.up * (u.Kind == "officer" ? 1.9f : 1.5f);
+                t.transform.position = fig.transform.position + Vector3.up * (u.Kind == "troop" ? 1.5f : 1.9f);
                 t.transform.rotation = Cam.transform.rotation;
             }
         }
@@ -274,16 +289,17 @@ namespace Saga.Realm.World
             if (Board.Done != null || _busy || _closing) return;
             T.Unit at = null;
             foreach (var u in Board.Units) if (u.Hp > 0 && u.X == x && u.Y == y) { at = u; break; }
+            var s = Selected != null ? T.UnitOf(Board, Selected) : null;
+            if (s != null && _cmd != null && at != null && _targets.Contains(at.Uid)) { DoCommand(s, _cmd, at); return; } // 회복은 아군을 누른다
             if (at != null && at.Side == "me")
             {
                 if (!at.Acted) Select(at.Uid); else Deselect();
                 return;
             }
-            var s = Selected != null ? T.UnitOf(Board, Selected) : null;
             if (s != null)
             {
                 if (at != null && _targets.Contains(at.Uid)) { DoAttack(s, at); return; }
-                if (at == null && !s.Moved && _moveCells.Contains(y * T.Cols + x)) { DoMove(s, x, y); return; }
+                if (at == null && !s.Moved && _moveCells.Contains(y * Board.W + x)) { DoMove(s, x, y); return; }
             }
             Deselect();
         }
@@ -305,7 +321,7 @@ namespace Saga.Realm.World
             if (_instant)
             {
                 int guard = 0;
-                while (Board.Done == null && guard++ < 20) { T.AutoTurn(Board); if (Board.Done != null) break; T.EndTurn(Board); }
+                while (Board.Done == null && guard++ < T.TurnCap + 2) { T.AutoTurn(Board); if (Board.Done != null) break; T.EndTurn(Board); }
                 SnapToBoard();
                 AfterStep();
                 return;
@@ -328,10 +344,11 @@ namespace Saga.Realm.World
         private void Select(string uid)
         {
             Selected = uid;
+            _cmd = null;
             var u = T.UnitOf(Board, uid);
             _moveCells.Clear(); _targets.Clear();
-            if (!u.Moved) foreach (var c in T.Moves(Board, uid)) if (c.x != u.X || c.y != u.Y) _moveCells.Add(c.y * T.Cols + c.x);
-            if (!u.Acted)
+            if (!u.Moved) foreach (var c in T.Moves(Board, uid)) if (c.x != u.X || c.y != u.Y) _moveCells.Add(c.y * Board.W + c.x);
+            if (!u.Acted && u.Confused <= 0)
                 foreach (var f in T.Alive(Board, "foe"))
                     if (Mathf.Abs(f.X - u.X) + Mathf.Abs(f.Y - u.Y) <= u.Rng) _targets.Add(f.Uid);
             Refresh();
@@ -340,8 +357,50 @@ namespace Saga.Realm.World
         private void Deselect()
         {
             Selected = null;
+            _cmd = null;
             _moveCells.Clear(); _targets.Clear();
             Refresh();
+        }
+
+        /* ── tasks U-0204 ⑤ 장수 명령 ── */
+
+        public static readonly string[] Commands = { "fire", "confuse", "heal", "duel", "debate" };
+        private static readonly string[] CommandKo = { "화계", "혼란", "회복", "일기토", "설전" };
+        private readonly Dictionary<string, UnityEngine.UI.Button> _cmdButtons = new Dictionary<string, UnityEngine.UI.Button>();
+        private string _cmd;
+        /// <summary>지금 고른 명령(없으면 null) — 진단.</summary>
+        public string Command => _cmd;
+
+        /// <summary>명령 단추 — 고른 장수(아직 행동 전)의 그 명령 대상만 붉게. 같은 단추를 또 누르면 평타로 돌아감.</summary>
+        public void PressCommand(string kind)
+        {
+            var s = Selected != null ? T.UnitOf(Board, Selected) : null;
+            if (s == null || s.Kind != "officer" || s.Acted || s.Confused > 0 || _busy || Board.Done != null) return;
+            if (_cmd == kind) { Select(s.Uid); return; }
+            _cmd = kind;
+            _targets.Clear(); _moveCells.Clear();
+            bool scheme = kind == "fire" || kind == "confuse" || kind == "heal";
+            if (scheme && Board.Schemes["me"] <= 0) { Refresh(); return; }
+            foreach (var t in Board.Units)
+            {
+                if (t.Hp <= 0) continue;
+                int d = Mathf.Abs(t.X - s.X) + Mathf.Abs(t.Y - s.Y);
+                bool ok = kind == "heal" ? t.Side == "me" && t != s && d <= T.SchemeRange && t.Hp < t.Max
+                    : kind == "duel" ? t.Side == "foe" && d == 1 && (t.Kind == "officer" || t.Kind == "chief") && !s.Dueled
+                    : kind == "debate" ? t.Side == "foe" && d <= T.DebateRange && (t.Kind == "officer" || t.Kind == "chief")
+                    : t.Side == "foe" && d <= T.SchemeRange;
+                if (ok) _targets.Add(t.Uid);
+            }
+            Refresh();
+        }
+
+        private void DoCommand(T.Unit s, string kind, T.Unit t)
+        {
+            int n0 = Board.Log.Count;
+            var r = kind == "duel" ? T.Duel(Board, s.Uid, t.Uid) : kind == "debate" ? T.Debate(Board, s.Uid, t.Uid) : T.Scheme(Board, s.Uid, kind, t.Uid);
+            if (!r.Ok) return;
+            Deselect();
+            Play(Strikes(n0, null), AfterStep);
         }
 
         private void DoMove(T.Unit s, int x, int y)
@@ -404,7 +463,7 @@ namespace Saga.Realm.World
         private IEnumerator DelegateRun()
         {
             int guard = 0;
-            while (Board.Done == null && guard++ < 20)
+            while (Board.Done == null && guard++ < T.TurnCap + 2)
             {
                 var snap = Snap();
                 T.AutoTurn(Board);
@@ -460,7 +519,8 @@ namespace Saga.Realm.World
             }
             fig.transform.localPosition = PosAt(tx, ty);
             fig.Play("idle");
-            Face(fig, new Vector3(u.Side == "me" ? 1f : -1f, 0f, 0f));
+            if (Board.IsSrpg) Face(fig, new Vector3(u.Fx, 0f, -u.Fy));   // tasks U-0204 보는 쪽(뒤치기)
+            else Face(fig, new Vector3(u.Side == "me" ? 1f : -1f, 0f, 0f));
         }
 
         private IEnumerator Strike(T.LogEntry e)
@@ -470,14 +530,30 @@ namespace Saga.Realm.World
             a.Play("attack");
             yield return Wait(SwingS * 0.6f);
             string pop;
-            if (e.Hit)
+            if (e.What == "heal")
+            {
+                _shownHp[e.To] = Mathf.Min(T.UnitOf(Board, e.To).Max, _shownHp[e.To] + e.Dmg);
+                pop = $"<color=#7dff9a>+{e.Dmg}</color>";
+            }
+            else if (e.What == "confuse" || e.What == "debate")
+            {
+                pop = e.Hit ? $"<color=#d9a6ff>{RealmLocalization.T("tactics.confused", "혼란!")}</color>" : $"<color=#cfd8e3>{RealmLocalization.T("tactics.resist", "버팀")}</color>";
+                if (e.What == "debate" && !e.Hit) { RefreshLabel(e.A, $"<color=#d9a6ff>{RealmLocalization.T("tactics.confused", "혼란!")}</color>"); }
+            }
+            else if (e.What == "duel" && !e.Hit)
+            {
+                _shownHp[e.A] = Mathf.Max(1, _shownHp[e.A] - e.Dmg);
+                RefreshLabel(e.A, $"<color=#ff6b5a>−{e.Dmg}</color>");
+                pop = $"<color=#cfd8e3>{RealmLocalization.T("tactics.duel_lost", "일기토 패")}</color>";
+            }
+            else if (e.Hit)
             {
                 t.Play("hit");
                 RealmCamShake.Hit(Cam, t.transform.position + Vector3.up * t.Height * 0.6f, false); // tasks U-0149
                 _shownHp[e.To] = Mathf.Max(0, _shownHp[e.To] - e.Dmg);
-                pop = $"<color=#ff6b5a>−{e.Dmg}</color>";
+                pop = $"<color=#ff6b5a>−{e.Dmg}</color>" + (e.What == "fire" ? " 🔥" : e.What == "duel" ? " ⚔" : "");
             }
-            else pop = $"<color=#cfd8e3>{RealmLocalization.T("tactics.miss", "빗나감")}</color>";
+            else pop = $"<color=#cfd8e3>{RealmLocalization.T(e.What == "fire" ? "tactics.fail" : "tactics.miss", e.What == "fire" ? "실패" : "빗나감")}</color>";
             RefreshLabel(e.To, pop);
             yield return Wait(SwingS * 0.4f + 0.25f);
             a.Play("idle");
@@ -504,7 +580,7 @@ namespace Saga.Realm.World
         private Vector3 PosAt(int x, int y)
         {
             var c = T.CellAt(Board, x, y);
-            return CellCenter(x, y) + Vector3.up * (c.HasValue ? Height(c.Value) : 0f);
+            return CC(x, y) + Vector3.up * (c.HasValue ? Height(c.Value) : 0f);
         }
 
         private Vector3 UnitPos(T.Unit u) => PosAt(u.X, u.Y);
@@ -558,10 +634,13 @@ namespace Saga.Realm.World
         {
             if (_info == null || Board == null) return;
             string city = RealmEnemyCity.Get(Board.EnemyId)?.Name ?? Board.EnemyId;
-            string head = string.Format(RealmLocalization.T("tactics.head", "♟️ 전술판 — {0} · {1}/{2}턴"), city, Mathf.Min(Board.Turn, T.Turns), T.Turns);
+            string head = Board.IsSrpg
+                ? string.Format(RealmLocalization.T("tactics.head_srpg", "♟️ {0} · {1}턴 · 목표 {2} · 책략 {3}"), city, Board.Turn, T.GoalText(Board), Board.Schemes["me"])
+                : string.Format(RealmLocalization.T("tactics.head", "♟️ 전술판 — {0} · {1}/{2}턴"), city, Mathf.Min(Board.Turn, T.Turns), T.Turns);
             string hint = _busy ? RealmLocalization.T("tactics.hint_busy", "움직이는 중…")
                 : Selected == null ? RealmLocalization.T(Engaged ? "tactics.hint_pick2" : "tactics.hint_pick",
                     Engaged ? "파랑 원 장수를 고르세요 · 다 두면 「턴 끝」 · 이제 물러나면 패" : "파랑 원 장수를 고르세요 · 다 두면 「턴 끝」 · 지금 물러나면 출진 취소")
+                : _cmd != null ? RealmLocalization.T("tactics.hint_cmd", "붉은 판 = 명령 대상 · 같은 단추 = 평타로")
                 : RealmLocalization.T("tactics.hint_act", "하늘빛 칸 = 갈 곳 · 붉은 판 = 칠 적(명중 %)");
             _info.text = head + "\n" + hint;
             ClearMarks();
@@ -569,24 +648,31 @@ namespace Saga.Realm.World
             {
                 var s = T.UnitOf(Board, Selected);
                 Mark(s.X, s.Y, SelMark);
-                foreach (var k in _moveCells) Mark(k % T.Cols, k / T.Cols, MoveMark);
+                foreach (var k in _moveCells) Mark(k % Board.W, k / Board.W, MoveMark);
                 foreach (var id in _targets) { var f = T.UnitOf(Board, id); Mark(f.X, f.Y, TargetMark); }
             }
             foreach (var u in Board.Units) RefreshLabel(u.Uid, null);
+            var sel = Selected != null ? T.UnitOf(Board, Selected) : null;
+            foreach (var kv in _cmdButtons)
+                if (kv.Value != null) kv.Value.gameObject.SetActive(sel != null && sel.Kind == "officer" && !sel.Acted && sel.Confused <= 0 && !_busy);
         }
 
         private void RefreshLabel(string uid, string pop)
         {
             if (!_labels.TryGetValue(uid, out var t)) return;
             var u = T.UnitOf(Board, uid);
-            string name = u.Kind == "officer" ? (RealmOfficerPool.Get(u.Id)?.Name ?? u.Id) : RealmLocalization.T("tactics.troop", "부대");
+            string name = u.Kind == "officer" ? (RealmOfficerPool.Get(u.Id)?.Name ?? u.Id) : u.Kind == "chief" ? RealmLocalization.T("tactics.chief", "적 대장") : RealmLocalization.T("tactics.troop", "부대");
+            if (Board.IsSrpg && u.Arm.Length > 0) name += " " + (u.Arm == "spear" ? "🔱" : u.Arm == "cav" ? "🐎" : "🏹");
+            if (u.Confused > 0) name += " 💫";
             int hp = _shownHp.TryGetValue(uid, out var h) ? h : u.Hp;
             string line = $"{name}\n<size=80%>{hp}/{u.Max}</size>";
             if (pop != null) line += "\n" + pop;
             else if (_targets.Contains(uid) && Selected != null)
             {
                 var s = T.UnitOf(Board, Selected);
-                line += $"\n<color=#ffd94a>{RealmLocalization.T("tactics.hit", "명중")} {T.HitChance(s, u, T.CoverAt(Board, u.X, u.Y))}%</color>";
+                string pct = _cmd == null ? $"{T.HitOf(Board, s, u)}%"
+                    : _cmd == "duel" ? $"{T.DuelChance(s, u)}%" : _cmd == "heal" ? "" : $"{T.SchemeChance(s, u)}%";
+                line += $"\n<color=#ffd94a>{RealmLocalization.T(_cmd == null ? "tactics.hit" : "tactics.chance", _cmd == null ? "명중" : "확률")} {pct}</color>";
             }
             t.text = line;
         }

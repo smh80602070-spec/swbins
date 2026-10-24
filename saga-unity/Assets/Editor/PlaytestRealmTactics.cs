@@ -32,6 +32,8 @@ namespace Saga.EditorTools
             var rnd0 = Random.state;
             bool pd0 = U.Permadeath;
             int gold0 = RealmCityState.Gold, roster0 = RealmCityState.RosterIds.Count;
+            bool srpg0 = U.Srpg;
+            U.Srpg = false; // tasks U-0204 — 이 진단은 웹 W-0107 과 비트 단위 같은 옛 판(8×6·3턴)을 잰다 · SRPG 는 PlaytestRealmSrpg
             try
             {
                 // ⓪ 웹과 같은 판 — 기준값은 node 로 tactics.js 를 돌려 뽑았다(tasks U-0098 메모)
@@ -221,6 +223,7 @@ namespace Saga.EditorTools
                 RealmSaveState.ApplyJson(json0);
                 Random.state = rnd0;
                 U.Permadeath = pd0;
+                U.Srpg = srpg0;
             }
             if (RealmCityState.Gold != gold0 || RealmCityState.RosterIds.Count != roster0) Fail("상태 되돌림");
             if (_ok) Debug.Log($"{T} OK - 웹 판 셋 같음·판 모양 200씨앗·명중·AI·결과 넷·결정성 · grid 없는 Attack = Fight 직접 · 대승/패 보정 · 전사·열전·중상 3달·군주 중상·세이브 왕복 |{m}");
@@ -490,7 +493,7 @@ namespace Saga.EditorTools
         }
 
         /// <summary>시작 장수·수도가 아닌 우리 성 하나에서 칠 적 성을 다시 세우고(함락 풂), 시험 장수 셋을 그 성에 들인다.</summary>
-        private static bool Setup(out string from, out string enemy, out List<string> tester)
+        internal static bool Setup(out string from, out string enemy, out List<string> tester)
         {
             from = enemy = null; tester = new List<string>();
             foreach (var id in RealmEnemyCity.AllIds)

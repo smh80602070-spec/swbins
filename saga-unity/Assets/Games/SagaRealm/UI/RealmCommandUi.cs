@@ -775,17 +775,26 @@ namespace Saga.Realm.UI
             _gridToggleLabel = gridToggleButton.GetComponentInChildren<TextMeshProUGUI>();
         }
 
+        /// <summary>tasks U-0204 — 세 상태를 돈다: ♟ SRPG(출진 = 늘 본전투, 기본) → 전술판 끔(옛 흐름) → 옛 전술판 켬(8×6·3턴) → SRPG.</summary>
         private void ToggleGrid()
         {
-            _gridEnabled = !_gridEnabled;
+            if (RealmTactics.Srpg) { RealmTactics.Srpg = false; _gridEnabled = false; }
+            else if (!_gridEnabled) _gridEnabled = true;
+            else { _gridEnabled = false; RealmTactics.Srpg = true; }
             _gridToggleLabel.text = GridToggleLabelText();
+            if (_duelToggleLabel != null) _duelToggleLabel.text = DuelToggleLabelText();
         }
 
         private string GridToggleLabelText()
         {
+            if (RealmTactics.Srpg) return RealmLocalization.T("command.grid_srpg", "♟ 본전투:SRPG");
             string state = RealmLocalization.T(_gridEnabled ? "state.on" : "state.off");
             return $"{RealmLocalization.T("command.grid", "♟ 전술판")}:{state}";
         }
+
+        /// <summary>진단 — 전술판 토글을 누른 것과 같다.</summary>
+        public void ToggleGridForTest() => ToggleGrid();
+        public string GridLabelForTest => _gridToggleLabel != null ? _gridToggleLabel.text : GridToggleLabelText();
 
         private void RelocalizeBaked()
         {
@@ -1082,7 +1091,7 @@ namespace Saga.Realm.UI
             _pendingGrid = null;
             // tasks U-0099 — 전술판이 켜져 있고 칠 수 있는 출진이면 판 먼저. 아무것도 안 하고 물러나면(null) 출진을 거둔다(R-5 리뷰 — 「취소」인데 나가던 것),
             // 맞붙은 뒤 물러나면 판이 패로 끝낸다. 못 여는 출진은 지금 흐름이 이유를 말한다.
-            if (_gridEnabled && Saga.Realm.World.RealmTacticsView.Open(RealmCityState.CurrentCity, enemyId, OnGridDone) != null)
+            if ((_gridEnabled || RealmTactics.Srpg) && Saga.Realm.World.RealmTacticsView.Open(RealmCityState.CurrentCity, enemyId, OnGridDone) != null) // tasks U-0204 SRPG = 늘 판
             {
                 CloseAllPanels();
                 return;
@@ -1099,7 +1108,7 @@ namespace Saga.Realm.UI
 
         private void ContinueAttackFlow()
         {
-            if (_duelEnabled)
+            if (_duelEnabled && !(RealmTactics.Srpg && _pendingGrid != null)) // tasks U-0204 SRPG — 일기토는 판 안 명령(출진 전 카드 건너뜀)
             {
                 StartDuel();
             }
@@ -1207,6 +1216,7 @@ namespace Saga.Realm.UI
 
         private string DuelToggleLabelText()
         {
+            if (RealmTactics.Srpg) return RealmLocalization.T("command.duel_srpg", "일기토:판 안"); // tasks U-0204
             string state = RealmLocalization.T(_duelEnabled ? "state.on" : "state.off");
             return $"{RealmLocalization.T("command.duel", "일기토")}:{state}";
         }
