@@ -158,7 +158,8 @@
    "face_xy": [
     404,
     355
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "ac_suap",
@@ -198,14 +199,15 @@
    ],
    "bust_pick": "ac_sumbi_v01",
    "expr_pick": {
-    "happy": "ac_sumbi__happy_v02",
+    "happy": "ac_sumbi__happy_v01",
     "angry": "ac_sumbi__angry_v01",
     "sad": "ac_sumbi__sad_v01"
    },
    "face_xy": [
     370,
     348
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "aq_byeolgil",
@@ -230,7 +232,8 @@
    "face_xy": [
     384,
     352
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "aq_cheongok",
@@ -299,7 +302,8 @@
    "face_xy": [
     380,
     372
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "aq_nokju",
@@ -407,12 +411,13 @@
    "expr_pick": {
     "happy": "aq_yeolsa__happy_v01",
     "angry": "aq_yeolsa__angry_v01",
-    "sad": "aq_yeolsa__sad_v02"
+    "sad": "aq_yeolsa__sad_v01"
    },
    "face_xy": [
     365,
     395
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "bw_bitnae",
@@ -437,7 +442,8 @@
    "face_xy": [
     366,
     360
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "bw_cheolgi",
@@ -554,7 +560,8 @@
    "face_xy": [
     374,
     385
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "bw_seolgu",
@@ -579,7 +586,8 @@
    "face_xy": [
     358,
     378
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "bw_sungeom",
@@ -597,14 +605,15 @@
    ],
    "bust_pick": "bw_sungeom_v01",
    "expr_pick": {
-    "happy": "bw_sungeom__happy_v02",
+    "happy": "bw_sungeom__happy_v01",
     "angry": "bw_sungeom__angry_v02",
     "sad": "bw_sungeom__sad_v01"
    },
    "face_xy": [
     387,
     382
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "bw_yanggil",
@@ -736,14 +745,15 @@
    ],
    "bust_pick": "cs_jeongbi_v01",
    "expr_pick": {
-    "happy": "cs_jeongbi__happy_v01",
+    "happy": "cs_jeongbi__happy_v02",
     "angry": "cs_jeongbi__angry_v01",
     "sad": "cs_jeongbi__sad_v01"
    },
    "face_xy": [
     370,
     352
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "cs_noseon",
@@ -768,7 +778,8 @@
    "face_xy": [
     376,
     350
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "cs_seoktan",
@@ -810,12 +821,13 @@
    "expr_pick": {
     "happy": "cs_seungmu__happy_v01",
     "angry": "cs_seungmu__angry_v01",
-    "sad": "cs_seungmu__sad_v02"
+    "sad": "cs_seungmu__sad_v01"
    },
    "face_xy": [
     370,
     362
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "cs_yeokjang",
@@ -950,7 +962,8 @@
    "face_xy": [
     380,
     345
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "dk_mullae",
@@ -1189,7 +1202,8 @@
    "face_xy": [
     393,
     355
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "fy_seomgil",
@@ -1236,7 +1250,8 @@
    "face_xy": [
     344,
     380
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "fy_unwon",
@@ -1419,7 +1434,8 @@
    "face_xy": [
     358,
     342
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "gm_myeongseok",
@@ -1509,12 +1525,13 @@
    "expr_pick": {
     "happy": "gr_haetbit__happy_v02",
     "angry": "gr_haetbit__angry_v01",
-    "sad": "gr_haetbit__sad_v02"
+    "sad": "gr_haetbit__sad_v01"
    },
    "face_xy": [
     380,
     342
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "gr_iseul",
@@ -1694,14 +1711,15 @@
    ],
    "bust_pick": "hb_bisang_v01",
    "expr_pick": {
-    "happy": "hb_bisang__happy_v01",
+    "happy": "hb_bisang__happy_v02",
     "angry": "hb_bisang__angry_v01",
     "sad": "hb_bisang__sad_v01"
    },
    "face_xy": [
     373,
     340
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "hb_gisang",
@@ -1770,7 +1788,8 @@
    "face_xy": [
     376,
     365
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "hb_hwaljuro",
@@ -1811,13 +1830,14 @@
    "bust_pick": "hb_jeomgeom_v01",
    "expr_pick": {
     "happy": "hb_jeomgeom__happy_v01",
-    "angry": "hb_jeomgeom__angry_v02",
-    "sad": "hb_jeomgeom__sad_v02"
+    "angry": "hb_jeomgeom__angry_v01",
+    "sad": "hb_jeomgeom__sad_v01"
    },
    "face_xy": [
     388,
     350
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "hb_mangwon",
@@ -1864,7 +1884,8 @@
    "face_xy": [
     387,
     360
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "hb_seonhoe",
@@ -1933,7 +1954,8 @@
    "face_xy": [
     370,
     355
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "hl_geumsil",
@@ -2090,7 +2112,8 @@
    "face_xy": [
     356,
     352
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "hq_eodeok",
@@ -2267,13 +2290,14 @@
    "bust_pick": "hq_yongpa_v01",
    "expr_pick": {
     "happy": "hq_yongpa__happy_v01",
-    "angry": "hq_yongpa__angry_v02",
-    "sad": "hq_yongpa__sad_v01"
+    "angry": "hq_yongpa__angry_v01",
+    "sad": "hq_yongpa__sad_v02"
    },
    "face_xy": [
     388,
     345
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "js_bodo",
@@ -2335,14 +2359,15 @@
    ],
    "bust_pick": "js_eumseong_v01",
    "expr_pick": {
-    "happy": "js_eumseong__happy_v02",
-    "angry": "js_eumseong__angry_v01",
+    "happy": "js_eumseong__happy_v01",
+    "angry": "js_eumseong__angry_v02",
     "sad": "js_eumseong__sad_v01"
    },
    "face_xy": [
     385,
     348
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "js_hyeonjang",
@@ -2361,13 +2386,14 @@
    "bust_pick": "js_hyeonjang_v01",
    "expr_pick": {
     "happy": "js_hyeonjang__happy_v01",
-    "angry": "js_hyeonjang__angry_v02",
+    "angry": "js_hyeonjang__angry_v01",
     "sad": "js_hyeonjang__sad_v01"
    },
    "face_xy": [
     376,
     338
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "js_jamak",
@@ -2462,7 +2488,8 @@
    "face_xy": [
     394,
     355
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "js_teukjong",
@@ -2548,12 +2575,13 @@
    "expr_pick": {
     "happy": "kd_hoero__happy_v01",
     "angry": "kd_hoero__angry_v01",
-    "sad": "kd_hoero__sad_v02"
+    "sad": "kd_hoero__sad_v01"
    },
    "face_xy": [
     368,
     365
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "kd_jeonji",
@@ -3042,7 +3070,8 @@
    "face_xy": [
     395,
     370
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "mr_cheotbom",
@@ -3083,13 +3112,14 @@
    "bust_pick": "mr_gaecheok_v01",
    "expr_pick": {
     "happy": "mr_gaecheok__happy_v01",
-    "angry": "mr_gaecheok__angry_v01",
+    "angry": "mr_gaecheok__angry_v02",
     "sad": "mr_gaecheok__sad_v01"
    },
    "face_xy": [
     378,
     365
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "mr_gwangmul",
@@ -3184,7 +3214,8 @@
    "face_xy": [
     406,
     377
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "nc_baekdo",
@@ -3235,7 +3266,8 @@
    "face_xy": [
     388,
     368
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "nc_geori",
@@ -3319,14 +3351,15 @@
    ],
    "bust_pick": "nc_jeongmyeong_v01",
    "expr_pick": {
-    "happy": "nc_jeongmyeong__happy_v02",
+    "happy": "nc_jeongmyeong__happy_v01",
     "angry": "nc_jeongmyeong__angry_v01",
     "sad": "nc_jeongmyeong__sad_v01"
    },
    "face_xy": [
     377,
     345
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "nc_sinho",
@@ -3441,13 +3474,14 @@
    "bust_pick": "ns_buho_v01",
    "expr_pick": {
     "happy": "ns_buho__happy_v01",
-    "angry": "ns_buho__angry_v01",
+    "angry": "ns_buho__angry_v02",
     "sad": "ns_buho__sad_v01"
    },
    "face_xy": [
     373,
     348
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "ns_eungdap",
@@ -3662,13 +3696,14 @@
    "bust_pick": "ob_gongjeon_v01",
    "expr_pick": {
     "happy": "ob_gongjeon__happy_v01",
-    "angry": "ob_gongjeon__angry_v01",
+    "angry": "ob_gongjeon__angry_v02",
     "sad": "ob_gongjeon__sad_v01"
    },
    "face_xy": [
     384,
     337
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "ob_jungnyeok",
@@ -3688,12 +3723,13 @@
    "expr_pick": {
     "happy": "ob_jungnyeok__happy_v01",
     "angry": "ob_jungnyeok__angry_v01",
-    "sad": "ob_jungnyeok__sad_v02"
+    "sad": "ob_jungnyeok__sad_v01"
    },
    "face_xy": [
     372,
     345
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "ob_mujung",
@@ -3779,12 +3815,13 @@
    "expr_pick": {
     "happy": "ob_taeyang__happy_v01",
     "angry": "ob_taeyang__angry_v01",
-    "sad": "ob_taeyang__sad_v02"
+    "sad": "ob_taeyang__sad_v01"
    },
    "face_xy": [
     372,
     370
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "ob_tongsin",
@@ -3809,7 +3846,8 @@
    "face_xy": [
     388,
     352
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "ob_yeonryo",
@@ -4010,7 +4048,8 @@
    "face_xy": [
     384,
     372
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "rg_yeonseup",
@@ -4179,7 +4218,8 @@
    "face_xy": [
     372,
     337
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "sn_ppuri",
@@ -4197,14 +4237,15 @@
    ],
    "bust_pick": "sn_ppuri_v01",
    "expr_pick": {
-    "happy": "sn_ppuri__happy_v01",
+    "happy": "sn_ppuri__happy_v02",
     "angry": "sn_ppuri__angry_v01",
     "sad": "sn_ppuri__sad_v01"
    },
    "face_xy": [
     390,
     333
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "sn_saessak",
@@ -4317,7 +4358,8 @@
    "face_xy": [
     400,
     352
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "tw_girok",
@@ -4453,14 +4495,15 @@
    ],
    "bust_pick": "tw_yegyeon_v01",
    "expr_pick": {
-    "happy": "tw_yegyeon__happy_v01",
-    "angry": "tw_yegyeon__angry_v01",
+    "happy": "tw_yegyeon__happy_v02",
+    "angry": "tw_yegyeon__angry_v02",
     "sad": "tw_yegyeon__sad_v01"
    },
    "face_xy": [
     389,
     367
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "yk_amsu",
@@ -4616,12 +4659,13 @@
    "expr_pick": {
     "happy": "yk_sanyeom__happy_v01",
     "angry": "yk_sanyeom__angry_v01",
-    "sad": "yk_sanyeom__sad_v02"
+    "sad": "yk_sanyeom__sad_v01"
    },
    "face_xy": [
     375,
     362
-   ]
+   ],
+   "eye": "o"
   },
   {
    "id": "yk_seolmae",

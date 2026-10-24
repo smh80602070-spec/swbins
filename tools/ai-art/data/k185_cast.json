@@ -1296,644 +1296,1288 @@
    "game": "shared",
    "name": "십책",
    "role": "삼국지 위",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_guojia_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_guosi",
    "game": "shared",
    "name": "낙하",
    "role": "삼국지 군웅",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_guosi_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_handang",
    "game": "shared",
    "name": "조수",
    "role": "삼국지 오",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_handang_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_hansui",
    "game": "shared",
    "name": "반맹",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_hansui_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_huanggai",
    "game": "shared",
    "name": "화신",
    "role": "삼국지 오",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_huanggai_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_huangzu",
    "game": "shared",
    "name": "강수",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_huangzu_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_jianyong",
    "game": "shared",
    "name": "언변",
    "role": "삼국지 촉",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_jianyong_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_jiaxu",
    "game": "shared",
    "name": "생책",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_jiaxu_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_jiling",
    "game": "shared",
    "name": "중극",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_jiling_v04",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_jushou",
    "game": "shared",
    "name": "존왕",
    "role": "삼국지 군웅",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_jushou_v02",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_kuailiang",
    "game": "shared",
    "name": "향로",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_kuailiang_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_lidian",
    "game": "shared",
    "name": "공심",
    "role": "삼국지 위",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_lidian_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_liuzhang",
    "game": "shared",
    "name": "인목",
    "role": "삼국지 군웅",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_liuzhang_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_mateng",
    "game": "shared",
    "name": "노기",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_mateng_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_mizhu",
    "game": "shared",
    "name": "재헌",
    "role": "삼국지 촉",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_mizhu_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_pangde",
    "game": "shared",
    "name": "관전",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_pangde_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_shenpei",
    "game": "shared",
    "name": "북향",
    "role": "삼국지 군웅",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_shenpei_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_tianfeng",
    "game": "shared",
    "name": "직간",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_tianfeng_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_wenchou",
    "game": "shared",
    "name": "쌍극",
    "role": "삼국지 군웅",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_wenchou_v04",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_wenpin",
    "game": "shared",
    "name": "북수",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_wenpin_v01",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_wuanguo",
    "game": "shared",
    "name": "철퇴",
    "role": "삼국지 군웅",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_wuanguo_v01",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_wuyi",
    "game": "shared",
    "name": "익병",
    "role": "삼국지 군웅",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_wuyi_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_xiahouyuan",
    "game": "shared",
    "name": "표기",
    "role": "삼국지 위",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_xiahouyuan_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_xuchu",
    "game": "shared",
    "name": "맹호",
    "role": "삼국지 위",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_xuchu_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_yangang",
    "game": "shared",
    "name": "백봉",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_yangang_v04",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_yanghong",
    "game": "shared",
    "name": "개창",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_yanghong_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_yangren",
    "game": "shared",
    "name": "산로",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_yangren_v04",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_yangsong",
    "game": "shared",
    "name": "탐금",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_yangsong_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_yanliang",
    "game": "shared",
    "name": "북창",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_yanliang_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_yanyan",
    "game": "shared",
    "name": "노장",
    "role": "삼국지 군웅",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_yanyan_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_yuejin",
    "game": "shared",
    "name": "첨병",
    "role": "삼국지 위",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_yuejin_v02",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_yujin",
    "game": "shared",
    "name": "엄율",
    "role": "삼국지 위",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_yujin_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_zhanghe",
    "game": "shared",
    "name": "산략",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_zhanghe_v01",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_zhangji",
    "game": "shared",
    "name": "양도",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_zhangji_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_zhanglu",
    "game": "shared",
    "name": "선치",
    "role": "삼국지 군웅",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "rf_zhanglu_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_zhangren",
    "game": "shared",
    "name": "충절",
    "role": "삼국지 군웅",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_zhangren_v03",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "rf_zhoutai",
    "game": "shared",
    "name": "상흔",
    "role": "삼국지 오",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "rf_zhoutai_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ru_busaeng",
    "game": "shared",
    "name": "부생",
    "role": "폐허(가상) 폐도",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "ru_busaeng_v02",
+   "face": [
+    383,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ru_doksi",
    "game": "shared",
    "name": "독시",
    "role": "폐허(가상) 잔향",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "ru_doksi_v02",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ru_gogol",
    "game": "shared",
    "name": "고골",
    "role": "폐허(가상) 잔재",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "ru_gogol_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ru_mangdok",
    "game": "shared",
    "name": "망독",
    "role": "폐허(가상) 잔재",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "ru_mangdok_v02",
+   "face": [
+    384,
+    281,
+    203,
+    159
+   ]
   },
   {
    "id": "ru_sanaek",
    "game": "shared",
    "name": "산액",
    "role": "폐허(가상) 오염",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "ru_sanaek_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "ru_sayeong",
    "game": "shared",
    "name": "사영",
    "role": "폐허(가상) 침묵",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "ru_sayeong_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "ru_seogun",
    "game": "shared",
    "name": "서군",
    "role": "폐허(가상) 회곡",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "ru_seogun_v04",
+   "face": [
+    384,
+    284,
+    203,
+    159
+   ]
   },
   {
    "id": "ru_wadok",
    "game": "shared",
    "name": "와독",
    "role": "폐허(가상) 역병",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "ru_wadok_v01",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sl_cheonsan",
    "game": "shared",
    "name": "천산",
    "role": "실크로드(가상) 오손",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "sl_cheonsan_v04",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sl_daetaek",
    "game": "shared",
    "name": "대택",
    "role": "실크로드(가상) 엄채",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "sl_daetaek_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sl_geumhwa",
    "game": "shared",
    "name": "금화",
    "role": "실크로드(가상) 귀상",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "sl_geumhwa_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sl_heupu",
    "game": "shared",
    "name": "흡후",
    "role": "실크로드(가상) 휴밀",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "sl_heupu_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sl_hosang",
    "game": "shared",
    "name": "호상",
    "role": "실크로드(가상) 강거",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "sl_hosang_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sl_hwachin",
    "game": "shared",
    "name": "화친",
    "role": "실크로드(가상) 오손",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "sl_hwachin_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sl_josang",
    "game": "shared",
    "name": "조상",
    "role": "실크로드(가상) 귀상",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "sl_josang_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "sl_nakta",
    "game": "shared",
    "name": "낙타",
    "role": "실크로드(가상) 강거",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "sl_nakta_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "sl_wangjeong",
    "game": "shared",
    "name": "왕정",
    "role": "실크로드(가상) 감씨",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "sl_wangjeong_v02",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tb_amseup",
    "game": "shared",
    "name": "암습",
    "role": "묘역(가상) 혼로",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tb_amseup_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "tb_ganghae",
    "game": "shared",
    "name": "강해",
    "role": "묘역(가상) 백골",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tb_ganghae_v03",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "tb_gojeon",
    "game": "shared",
    "name": "고전",
    "role": "묘역(가상) 침관",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tb_gojeon_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tb_heukju",
    "game": "shared",
    "name": "흑주",
    "role": "묘역(가상) 심연",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "tb_heukju_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tb_jamhon",
    "game": "shared",
    "name": "잠혼",
    "role": "묘역(가상) 진혼",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tb_jamhon_v02",
+   "face": [
+    384,
+    281,
+    203,
+    159
+   ]
   },
   {
    "id": "tb_japgol",
    "game": "shared",
    "name": "잡골",
    "role": "묘역(가상) 백골",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tb_japgol_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tb_jongja",
    "game": "shared",
    "name": "종자",
    "role": "묘역(가상) 침관",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "tb_jongja_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "tb_saryeong",
    "game": "shared",
    "name": "사령",
    "role": "묘역(가상) 유골",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tb_saryeong_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "tz_beonwang",
    "game": "shared",
    "name": "번왕",
    "role": "천축(가상) 신독",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tz_beonwang_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "tz_daehacheon",
    "game": "shared",
    "name": "대하천",
    "role": "천축(가상) 대하",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tz_daehacheon_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tz_ganda",
    "game": "shared",
    "name": "간다",
    "role": "천축(가상) 건타라",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tz_ganda_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "tz_hangha",
    "game": "shared",
    "name": "항하",
    "role": "천축(가상) 마게타",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tz_hangha_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tz_hyanggae",
    "game": "shared",
    "name": "향개",
    "role": "천축(가상) 신독",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tz_hyanggae_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tz_sanri",
    "game": "shared",
    "name": "산리",
    "role": "천축(가상) 오익산리",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tz_sanri_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tz_sawi",
    "game": "shared",
    "name": "사위",
    "role": "천축(가상) 사위",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tz_sawi_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "tz_seoksang",
    "game": "shared",
    "name": "석상",
    "role": "천축(가상) 건타라",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "tz_seoksang_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "tz_seolsan",
    "game": "shared",
    "name": "설산",
    "role": "천축(가상) 계빈",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "tz_seolsan_v02",
+   "face": [
+    385,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "xb_bonghwa",
    "game": "shared",
    "name": "봉화",
    "role": "선비(가상) 고류",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xb_bonghwa_v03",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xb_daein",
    "game": "shared",
    "name": "대인",
    "role": "선비(가상) 탄한산",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xb_daein_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xb_eoryang",
    "game": "shared",
    "name": "어량",
    "role": "선비(가상) 요락수",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xb_eoryang_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xb_gaseul",
    "game": "shared",
    "name": "가슬",
    "role": "선비(가상) 탄한산",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xb_gaseul_v03",
+   "face": [
+    384,
+    284,
+    203,
+    159
+   ]
   },
   {
    "id": "xb_gyeon",
    "game": "shared",
    "name": "견마",
    "role": "선비(가상) 고류",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xb_gyeon_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "xb_hoja",
    "game": "shared",
    "name": "호각",
    "role": "선비(가상) 선비산",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xb_hoja_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "xb_hondo",
    "game": "shared",
    "name": "혼도",
    "role": "선비(가상) 적산",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xb_hondo_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xb_honin",
    "game": "shared",
    "name": "혼인",
    "role": "선비(가상) 요락수",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xb_honin_v04",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "xb_yong",
    "game": "shared",
    "name": "용맹",
    "role": "선비(가상) 용성",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xb_yong_v03",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_banwol",
    "game": "shared",
    "name": "반월",
    "role": "서역(가상) 소륵",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xiyu_banwol_v01",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_cheonma",
    "game": "shared",
    "name": "천마",
    "role": "서역(가상) 대완",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xiyu_cheonma_v02",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_chongryeong",
    "game": "shared",
    "name": "총령",
    "role": "서역(가상) 사차",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xiyu_chongryeong_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_dansu",
    "game": "shared",
    "name": "단수",
    "role": "서역(가상) 언기",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xiyu_dansu_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_gumo",
    "game": "shared",
    "name": "구모",
    "role": "서역(가상) 구자",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "xiyu_gumo_v04",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_gyoha",
    "game": "shared",
    "name": "교하",
    "role": "서역(가상) 차사",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xiyu_gyoha_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_jeongcheon",
    "game": "shared",
    "name": "정천",
    "role": "서역(가상) 정절",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xiyu_jeongcheon_v01",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_mokjil",
    "game": "shared",
    "name": "목질",
    "role": "서역(가상) 누란",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "xiyu_mokjil_v03",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_ochi",
    "game": "shared",
    "name": "오지",
    "role": "서역(가상) 우전",
-   "sex": "f"
+   "sex": "f",
+   "stand_pick": "xiyu_ochi_v02",
+   "face": [
+    385,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_sarim",
    "game": "shared",
    "name": "사림",
    "role": "서역(가상) 소륵",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xiyu_sarim_v02",
+   "face": [
+    384,
+    282,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_talban",
    "game": "shared",
    "name": "탈반",
    "role": "서역(가상) 돈황",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xiyu_talban_v02",
+   "face": [
+    384,
+    283,
+    203,
+    159
+   ]
   },
   {
    "id": "xiyu_yeoje",
    "game": "shared",
    "name": "여저",
    "role": "서역(가상) 돈황",
-   "sex": "m"
+   "sex": "m",
+   "stand_pick": "xiyu_yeoje_v03",
+   "face": [
+    383,
+    282,
+    203,
+    159
+   ]
   }
  ]
 }
