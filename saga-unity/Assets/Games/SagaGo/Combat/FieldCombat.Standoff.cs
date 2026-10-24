@@ -32,6 +32,7 @@ namespace Saga.Go.Combat
 
         private readonly List<FieldEnemy> _standFoes = new List<FieldEnemy>();
         private readonly Dictionary<string, float> _standCool = new Dictionary<string, float>();
+        private readonly List<string> _standKeys = new List<string>();
         private Vector3 _standAnchor;
         private System.Random _standRng = new System.Random(20260824);
 
@@ -46,8 +47,9 @@ namespace Saga.Go.Combat
         {
             if (_standCool.Count > 0)
             {
-                var keys = new List<string>(_standCool.Keys);
-                foreach (var k in keys) { _standCool[k] -= dt; if (_standCool[k] <= 0f) _standCool.Remove(k); }
+                _standKeys.Clear();
+                _standKeys.AddRange(_standCool.Keys); // 매 프레임 새 목록을 안 만든다(R-5)
+                foreach (var k in _standKeys) { _standCool[k] -= dt; if (_standCool[k] <= 0f) _standCool.Remove(k); }
             }
             if (Stand == StandPhase.None) { ScanStandoff(); return; }
 

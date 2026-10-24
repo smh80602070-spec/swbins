@@ -199,6 +199,7 @@ namespace Saga.Core
         private bool BusyClip()
         {
             if (_animator == null || !_animator.isActiveAndEnabled || _animator.runtimeAnimatorController == null) return false;
+            if (Motion30.CurrentOf(_animator) != "") return true; // tasks U-0200 R-5 — 행동 클립(줍기·앉기·사다리…) 위에 몸짓을 겹치지 않는다
             var s = _animator.GetCurrentAnimatorStateInfo(0);
             foreach (var n in BusyStates) if (s.IsName(n)) return true;
             return _animator.IsInTransition(0) && !_animator.GetNextAnimatorStateInfo(0).IsName("Idle");
