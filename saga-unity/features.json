@@ -2266,6 +2266,41 @@
   "note": "U-0197: 목표가 창 밖이면 가까운 칸 1200 까지 — 길 내기 7.3 → 2.9ms(에디터) · D3(qc+claude, R-3): docs/playcheck/d3-r3-20261023b.json — 위 1만리 촬영과 같은 판 — 모서리에서 돌아가는 길 · 앞 D2(U-0190): PlaytestHeadless autopath OK — 가짜 격자(곧은 들판 경유점 하나·담 돌아감 3·갇힘 null·3m 턱 안 오름)·앞 막힘·진짜 임시 벽 돌아감 3 · autoquest OK 그대로"
  },
  {
+  "id": "un.all.motion30",
+  "name": "U-0200 ① 모션 30(K-0161) — 팩을 주인공 Humanoid 아바타로 구운 .anim 30(BakeClips30, 로컬) + 공용 Motion30(컨트롤러 위 0.2초 섞기·걸으면 풀림) · 1만리 줍기·젓기·기쁨·모닥불 앉기 · 3마을 채집 · 2나락 동료 명령 호령 · 4종횡 줄 사다리",
+  "files": [
+   "saga-unity/Assets/SagaCore/Motion30.cs",
+   "saga-unity/Assets/Editor/BakeClips30.cs"
+  ],
+  "tests": [
+   "PlaytestMotion30"
+  ],
+  "level": "D2",
+  "verified": "2026-10-24 claude",
+  "fun": {},
+  "ticket": "U-0200",
+  "since": "2026-10-24",
+  "note": "D2(U-0200): PlaytestDungeonHeadless motion30 clips·pose·blend·move·off OK · 눈 ○ 여덟(줍기·낚싯대·앉기·한 팔·호령·사다리·젓기·절, BakeClips30.Shot) · 5천하 인물(시각으로 자세)은 후속"
+ },
+ {
+  "id": "un.props.selfpairs-done",
+  "name": "U-0200 ② 빌린 소품 끝 — K-0172 10종 짝(SelfPairs 11줄·옛 상자 Measure) → 씬 셋 재빌드 → Assets/Art/Props/PolyHaven 폴더 지움(guid 참조 0) · rock_moss_01 새 바위로 1만리·2나락 바위 FAIL 사라짐 · sg_liubei 새 몸(K-0168) 설치 · UI 스킨(K-0173)·깨지는 조각(K-0174, 대신 False) 확인",
+  "files": [
+   "saga-unity/Assets/Editor/SelfPairs.cs",
+   "saga-unity/Assets/Scenes/TestVillage.unity"
+  ],
+  "tests": [
+   "PlaytestGoRegionProps",
+   "PlaytestDungeonBreakable"
+  ],
+  "level": "D2",
+  "verified": "2026-10-24 claude",
+  "fun": {},
+  "ticket": "U-0200",
+  "since": "2026-10-24",
+  "note": "D2(U-0200): 다섯 판 진단 FAIL 0(1만리 136·2나락 110·3마을 72·4종횡 83·5천하 148 OK) · CharactersDex FAIL = eu_hannibal 1.18m(전부터 → K-0187)"
+ },
+ {
   "id": "un.dg.party-bond",
   "name": "U-0201 2나락 부대 우정 — 무사·술사 자리마다 점수(방을 깸 +5 · 층을 다 깨고 내려감 +10) → Lv 0~10·낯섦·친근·신뢰·지기, 기질 대사(무사 = 무·술사 = 지), 지기 처음 금 +500, 오름 알림·부대 HUD 꼬리표(고돗 G-0341 짝) · 셈·글 공용 Saga.Core.Friendship(1만리 GoFriendship 도 이걸로)",
   "files": [

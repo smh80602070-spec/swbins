@@ -31,6 +31,7 @@ namespace Saga.Forest.World
         public static void Play(Vector3 worldPos, Transform visual, string label)
         {
             TriggerCount++;
+            Saga.Core.Motion30.Play(Object.FindFirstObjectByType<Saga.Forest.Player.PlayerController>()?.Animator, "gather"); // tasks U-0200 ① 줍기·채집
             bool bonus = ForestGatherStreak.ReportGather();
             if (bonus)
             {

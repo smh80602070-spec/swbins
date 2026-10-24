@@ -177,6 +177,7 @@ namespace Saga.Go.World
                 if (e != null && GoWorldMap.RegionAt(e.Home) == f.Site.Id && e.ReviveSoon()) revived++;
             LastSat = f.Site.Id;
             LastRevived = revived;
+            Motion30.Play(Object.FindFirstObjectByType<Saga.Go.Player.PlayerController>()?.Animator, "sit_ground", 4f); // tasks U-0200 ① 모닥불 곁에 앉음
             Refresh();
             string where = GoWorldMap.RegionName(f.Site.Id);
             DialogueLabel.Instance?.Show((first

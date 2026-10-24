@@ -54,8 +54,8 @@ namespace Saga.Core
                 TitleKo = "모델·효과음", TitleEn = "Models & sound effects",
                 BodyKo = "Kenney (kenney.nl) — CC0", BodyEn = "Kenney (kenney.nl) — CC0" },
 
-            new Entry { Id = "polyhaven", Paths = new[] { "Assets/Art/Environment/PBR/", "Assets/Art/Props/PolyHaven/" },
-                TitleKo = "재질·스캔 소품", TitleEn = "Materials & scanned props",
+            new Entry { Id = "polyhaven", Paths = new[] { "Assets/Art/Environment/PBR/" }, // tasks U-0200 스캔 소품 폴더는 자체 짝으로 다 바꿔 지움
+                TitleKo = "재질", TitleEn = "Materials",
                 BodyKo = "Poly Haven (polyhaven.com) — CC0", BodyEn = "Poly Haven (polyhaven.com) — CC0" },
 
             new Entry { Id = "creatures_self", Paths = new[] { "Assets/Art/CreaturesSelf/", "Assets/Art/Creatures/" }, // Art/Creatures = 그 glb 로 구운 프리팹·클립(U-0151)

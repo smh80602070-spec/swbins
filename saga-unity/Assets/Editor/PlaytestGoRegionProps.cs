@@ -72,7 +72,8 @@ namespace Saga.EditorTools
 
         private static string CheckBuilt(RegionPropsBuilder builder)
         {
-            int pieces = 0, lodPieces = 0, lights = 0;
+            int pieces = 0, lodPieces = 0, lights = 0, oldPieces = 0;
+            var oldIds = new HashSet<string>();
             long tris0 = 0, tris1 = 0, heaviest = 0;
             string heaviestId = "";
             foreach (var c in GoRegionProps.Clusters)
@@ -90,6 +91,7 @@ namespace Saga.EditorTools
                     var p = c.Pieces[i];
                     var go = list[i].gameObject;
                     pieces++;
+                    if (p.Model != GoRegionProps.Pillar && SelfPairs.PairModel(SelfPairs.IdOf(p.Model)) == null) { oldPieces++; oldIds.Add(p.Model); } // 돌기둥은 Kenney // tasks U-0200 — 짝 없는 옛 Poly Haven 조각
                     if (!RegionPropsBuilderBounds(go, out var b)) { Fail($"{c.Id} {go.name} 렌더러 없음"); continue; }
                     float want = root.position.y + p.Y - p.Sink;
                     // 밑면은 빌더와 같이 꼭짓점 최저점(U-0151 — 기울인 두꺼운 짝 방패는 렌더러 상자가 0.05~0.4m 헐겁다)
@@ -144,7 +146,8 @@ namespace Saga.EditorTools
                 }
             }
             if (lights != 2) Fail($"지역 소품 불빛 {lights} ≠ 2");
-            if (lodPieces == 0) Fail("LOD 붙은 조각이 없다(tools/polyhaven_lod1.py 산출물?)");
+            // tasks U-0200 — 조각이 다 자체 짝(LOD 없음, 옛 Poly Haven lod1 는 지움)이라 LOD 0 이 맞다 · 짝 없는 옛 조각이 남으면 실패
+            if (oldPieces > 0) Fail($"짝 없는 옛 Poly Haven 조각 {oldPieces}(폴더는 지움): {string.Join(",", oldIds)}");
             return $" 무더기 {GoRegionProps.Clusters.Length}·조각 {pieces}(LOD {lodPieces})·삼각형 가까이 {tris0 / 1000}k·멀리 {(tris0 - Tris0OfLod(builder) + tris1) / 1000}k·가장 무거운 무더기 {heaviestId} {heaviest / 1000}k·불빛 {lights}";
         }
 

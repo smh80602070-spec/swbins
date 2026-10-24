@@ -623,7 +623,11 @@ namespace Saga.Story.Player
         private void CheckRope()
         {
             if (_onRope || _ropeArea == null) return;
-            if (Mathf.Abs(ClimbInput()) > 0.05f) _onRope = true;
+            if (Mathf.Abs(ClimbInput()) > 0.05f)
+            {
+                _onRope = true;
+                Motion30.Play(animator, "ladder", 600f, () => !_onRope, stopOnMove: false); // tasks U-0200 ① 줄을 잡는 동안 사다리 오르기
+            }
         }
 
         /// <summary>StoryRope.cs가 트리거 진입/이탈 때 부른다(플레이어는

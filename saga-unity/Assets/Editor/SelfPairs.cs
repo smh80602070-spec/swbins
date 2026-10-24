@@ -28,6 +28,11 @@ namespace Saga.EditorTools
             { "rock_moss_set_02", "rock_moss_01" }, { "round_spectacles", "acc_glasses_round" }, { "stone_fire_pit", "campfire_logs_01" },
             { "vintage_spacecraft_instrument", "terminal_01" }, { "wine_barrel_01", "keg_01" }, { "wooden_axe", "wpn_axe_common" },
             { "wooden_crate_01", "crate_small_01" }, { "wooden_handle_saber", "wpn_sword_common" }, { "wooden_lantern_01", "hanging_lantern_01" },
+            // tasks U-0200 ② K-0172 마지막 10종(표의 `new:` 가 놓임)
+            { "concrete_road_barrier_02", "road_barrier_01" }, { "covered_car", "covered_car_01" }, { "old_tyre", "old_tyre_01" },
+            { "portable_generator", "generator_01" }, { "portable_searchlight", "searchlight_01" }, { "power_box_01", "power_box_01" },
+            { "utility_box_01", "power_box_01" }, { "security_camera_02", "security_camera_01" }, { "wicker_basket_01", "wicker_basket_01" },
+            { "wooden_bucket_01", "wooden_bucket_01" }, { "seadogs_compass", "pocket_compass_01" },
         };
 
         /// <summary>옛 Poly Haven 모델(키 = 표의 `Model` — `#조각` 이면 그 조각)의 제 좌표 경계 상자: 가운데 xyz · 최대 변 w. `Measure` 가 찍은 값.</summary>
@@ -60,6 +65,18 @@ namespace Saga.EditorTools
             { "wooden_crate_01", new Vector4(0f, 0.167f, 0.008f, 0.825f) }, // 옛 0.83×0.35×0.41 · 짝 0.52×0.46×0.52
             { "wooden_handle_saber", new Vector4(0f, 0.372f, -0.004f, 0.935f) }, // 옛 0.03×0.94×0.12 · 짝 0.25×1.12×0.06
             { "wooden_lantern_01", new Vector4(0f, 0.254f, 0.007f, 0.53f) }, // 옛 0.22×0.53×0.23 · 짝 0.40×0.75×0.40
+            // tasks U-0200 ② K-0172 10종(10-24 Measure)
+            { "concrete_road_barrier_02", new Vector4(-0.007f, 0.553f, -0.033f, 1.565f) }, // 옛 1.57×1.11×0.44 · 짝 1.56×1.10×0.44
+            { "covered_car", new Vector4(-0.048f, 0.706f, 0.024f, 4.38f) }, // 옛 1.79×1.41×4.38 · 짝 4.40×1.63×1.84
+            { "old_tyre", new Vector4(0f, 0f, 0f, 0.6f) }, // 옛 0.60×0.60×0.17 · 짝 0.60×0.17×0.60
+            { "portable_generator", new Vector4(0.005f, 0.289f, 0f, 0.818f) }, // 옛 0.82×0.58×0.56 · 짝 0.79×0.56×0.56
+            { "portable_searchlight", new Vector4(0f, 0.01f, -0.001f, 0.253f) }, // 옛 0.17×0.19×0.25 · 짝 0.15×0.26×0.15
+            { "power_box_01", new Vector4(0.056f, 0f, 0.153f, 0.503f) }, // 옛 0.46×0.50×0.40 · 짝 0.54×1.12×0.44
+            { "seadogs_compass", new Vector4(-0.003f, 0.044f, -0.012f, 0.15f) }, // 옛 0.08×0.09×0.15 · 짝 0.08×0.10×0.03
+            { "security_camera_02", new Vector4(0f, 0.06f, 0.197f, 0.394f) }, // 옛 0.14×0.21×0.39 · 짝 0.12×0.26×0.35
+            { "utility_box_01", new Vector4(0f, 0.56f, 0.006f, 1.12f) }, // 옛 0.52×1.12×0.43 · 짝 0.54×1.12×0.44
+            { "wicker_basket_01", new Vector4(0f, 0.058f, 0f, 0.383f) }, // 옛 0.38×0.12×0.30 · 짝 0.39×0.30×0.39
+            { "wooden_bucket_01", new Vector4(0.001f, 0.275f, 0.001f, 0.55f) }, // 옛 0.37×0.55×0.34 · 짝 0.35×0.35×0.35
         };
 
         /// <summary>옛 키(m) — `keepHeight` 면 짝이 옛것보다 납작할 때 이 키에 맞춘다(1만리 여울 바위가 물에 잠기지 않게 · 2나락 방은 커지면 벽에 박혀 안 씀). 바위만.</summary>

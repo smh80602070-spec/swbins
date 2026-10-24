@@ -32,6 +32,7 @@ namespace Saga.Forest.Player
         // 44장 "Player" 교체 — GO PlayerController.cs와 같은 결(Maria가
         // 배정되면 채워짐, 이 게임엔 전투가 없어 Speed만 씀).
         [SerializeField] private Animator animator;
+        public Animator Animator => animator; // tasks U-0200 ① 모션 30 이 튼다
 
         private CharacterController _controller;
         private InputAction _moveAction;

@@ -105,6 +105,17 @@ namespace Saga.Go.Player
         // 프로퍼티와 같은 결).
         public Animator Animator => animator;
 
+        private void OnMotionPicked(string _) => Motion30.Play(animator, "gather");
+        private void OnMotionCooked(string _) => Motion30.Play(animator, "stir", 2.5f);
+        private void OnMotionCaught(string _) => Motion30.Play(animator, "cheer");
+
+        private void OnDestroy()
+        {
+            CookState.Picked -= OnMotionPicked;
+            CookState.Cooked -= OnMotionCooked;
+            FishState.Caught -= OnMotionCaught;
+        }
+
         /// <summary>PLAN.md 101-3 G "장비 가시화"(2026-09-17) — `WeaponVisual`이
         /// 무기 소켓을 심을 자리를 찾으려고 읽는다(DUNGEON `PlayerController.
         /// Visual`과 같은 결).</summary>
@@ -242,6 +253,10 @@ namespace Saga.Go.Player
             LastLand = transform.position;
             // tasks U-0146 — 가만히 8초면 앉는다(땅 위 걷기 모드만, 탈것·돌진·조작 잠금 중엔 안 함).
             if (Application.isPlaying) LifePose.Attach(gameObject, false, () => !OnFoot || GoMounts.Riding != null || MoveLocked || IsDashing);
+            // tasks U-0200 ① 모션 30 — 재료 줍기·요리·물고기 잡음(모닥불 앉기는 RestSiteField.Sit)
+            CookState.Picked += OnMotionPicked;
+            CookState.Cooked += OnMotionCooked;
+            FishState.Caught += OnMotionCaught;
 
             if (inputActions != null)
             {

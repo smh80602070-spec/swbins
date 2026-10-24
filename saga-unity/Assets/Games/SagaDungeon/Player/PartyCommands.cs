@@ -74,6 +74,7 @@ namespace Saga.Dungeon.Player
                 return false;
             }
             guard.OrderTaunt();
+            Saga.Core.Motion30.Play(_controller != null ? _controller.Animator : null, "command"); // tasks U-0200 ① 호령
             return true;
         }
 
@@ -88,6 +89,7 @@ namespace Saga.Dungeon.Player
                 return false;
             }
             mystic.OrderHeal();
+            Saga.Core.Motion30.Play(_controller != null ? _controller.Animator : null, "command"); // tasks U-0200 ① 호령
             return true;
         }
 
