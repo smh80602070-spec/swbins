@@ -22,6 +22,7 @@
   var TILE = 40;                 // 한 타일 = 몇 단위 (그림 크기와 무관한 논리값)
   var SPEED = 118;               // 걸음 (단위/초)
   var REACH = 46;                // 사물에 손이 닿는 거리
+  function CAST_R() { return +core.tuned('fish.castR', 180); }   // W-0416 낚싯줄 닿는 거리 — 낚시터가 물 안쪽에 놓여 물가(≈160)에서 손이 안 닿아 낚시를 아예 못 했다(첫 10분 「물고기 0/3」)
 
   /* 걸음 배속만 **매번 읽는다** — 어드민에서 돌리면 곧바로 듣는다.
      나머지 손잡이는 모듈이 켜질 때 한 번 읽으므로 새로고침이 필요하다 */
@@ -1496,7 +1497,7 @@
     if (fishing) {
       var pr = null, i;
       for (i = 0; i < props.length; i++) { if (props[i].id === fishing.propId) { pr = props[i]; } }
-      if (pr && Math.hypot(pr.x - player.x, pr.y - player.y) > REACH * 1.4) {
+      if (pr && Math.hypot(pr.x - player.x, pr.y - player.y) > Math.max(REACH, CAST_R()) * 1.4) {
         fishing = null;
         core.emit('village:fish', { state: 'miss' });
       }
@@ -1553,7 +1554,7 @@
     var best = null, bd = REACH;
     for (i = 0; i < props.length; i++) {
       if (props[i].deco) { continue; }    // 숲 고리 장식(PLAN 40절 PHASE 3) — 손이 안 닿는다
-      d = Math.hypot(props[i].x - player.x, props[i].y - player.y);
+      d = Math.hypot(props[i].x - player.x, props[i].y - player.y); if (VD.PROPS[props[i].kind] && VD.PROPS[props[i].kind].gather === 'fish') { if (d > REACH) { d = Math.max(REACH * 0.95, d - Math.max(0, CAST_R() - REACH)) + d * 0.0001; } }   // W-0416 낚시터는 줄 거리만큼 멀리서도
       if (d < bd) { bd = d; best = { type: 'prop', obj: props[i], dist: d }; }
     }
     for (i = 0; i < residents.length; i++) {
@@ -2125,7 +2126,7 @@
 
   global.DG = global.DG || {};
   global.DG.village = {
-    W: W, H: H, TILE: TILE, REACH: REACH,
+    W: W, H: H, TILE: TILE, REACH: REACH, castR: CAST_R,
     init: init, update: update, bindKeys: bindKeys, walkTo: walkTo, setJoy: setJoy,
     keymap: keymap, beginRemap: beginRemap, remapping: function () { return remapping; },
     tileAt: tileAt, walkable: walkable, snapToLand: snapToLand, ringSpotOk: ringSpotOk,

@@ -89,7 +89,7 @@
 
   global.DG = global.DG || {};
   global.DG.village = {
-    W: W, H: H, TILE: TILE, REACH: REACH,
+    W: W, H: H, TILE: TILE, REACH: REACH, castR: CAST_R,
     init: init, update: update, bindKeys: bindKeys, walkTo: walkTo, setJoy: setJoy,
     keymap: keymap, beginRemap: beginRemap, remapping: function () { return remapping; },
     tileAt: tileAt, walkable: walkable, snapToLand: snapToLand, ringSpotOk: ringSpotOk,

@@ -2236,7 +2236,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       standAt(spot);
       V.interact();
       var raw = V.raw();
-      raw.player.x = spot.x + V.REACH * 3;        // 걸어서 멀어진다
+      raw.player.x = spot.x + Math.max(V.REACH, V.castR ? V.castR() : 0) * 3;        // 걸어서 멀어진다(W-0416 줄 거리 넘게)
       raw.player.walking = true;
       V.update(0.05);
       return V.fishState() === null && '줄이 끊김 확인';

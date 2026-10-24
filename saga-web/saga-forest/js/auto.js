@@ -148,7 +148,7 @@
   /** 아직 여문 사물 중 가까운 것 */
   function freshProp(raw) {
     var V = global.DG.village, VD = global.DG.villageData;
-    var best = null, bs = -1e9;
+    var best = null, bs = -1e9, want = {}; Object.keys((VD && VD.QUESTS) || {}).forEach(function (k) { var q = VD.QUESTS[k], p = V.questProgress ? V.questProgress(k) : null; if (q.type === 'bagcat' && p && !p.done && p.have < p.need) { want[q.cat] = 1; } });
     for (var i = 0; i < raw.props.length; i++) {
       var pr = raw.props[i];
       var def = VD.PROPS[pr.kind];
@@ -161,7 +161,7 @@
       if (def.tool && !V.hasTool(def.tool)) { continue; }
       var d = dist(pr, raw.player);
       /* 가까운 것 우선. 낚시터는 계속 되니 조금 뒤로 미룬다(다른 걸 놓치지 않게) */
-      var score = -d - (def.reset ? 0 : 240);
+      var score = -d - (def.reset ? 0 : 240) + (want[def.gather] ? 600 : 0);   // W-0416 아직 덜 찬 마을 일(씨알 좋은 물고기 등)이 바라는 종류는 앞으로 — 낚시를 늘 뒤로 미뤄 첫 10분 「물고기 2/3」에서 4분 막혔다
       if (score > bs) { bs = score; best = pr; }
     }
     return best ? { type: 'prop', obj: best, dist: dist(best, raw.player) } : null;
@@ -216,7 +216,7 @@
       aim = pick;
       if (aim) {
         if (watch.o !== aim.obj || aim.dist < watch.best - 20) { watch.o = aim.obj; watch.best = aim.dist; watch.t = 0; }
-        else if (aim.dist > (V.REACH || 60) * 1.5 && (watch.t += 0.4) >= 4) { skip.push({ o: aim.obj, until: Date.now() + 120000 }); watch.o = null; aim = null; doing = '🤖 닿을 수 없어 2분 미룸'; return; }
+        else if (aim.dist > ((aim.obj && global.DG.villageData.PROPS[aim.obj.kind] && global.DG.villageData.PROPS[aim.obj.kind].gather === 'fish' && V.castR) ? V.castR() : (V.REACH || 60)) * 1.5 && (watch.t += 0.4) >= 4) { skip.push({ o: aim.obj, until: Date.now() + 120000 }); watch.o = null; aim = null; doing = '🤖 닿을 수 없어 2분 미룸'; return; }
         else if (aim.dist <= (V.REACH || 60) * 1.5) { watch.t = 0; }
         goTo(V, raw, aim.obj.x, aim.obj.y + 6);
         var VD = global.DG.villageData;

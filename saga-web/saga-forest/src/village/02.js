@@ -402,7 +402,7 @@
     if (fishing) {
       var pr = null, i;
       for (i = 0; i < props.length; i++) { if (props[i].id === fishing.propId) { pr = props[i]; } }
-      if (pr && Math.hypot(pr.x - player.x, pr.y - player.y) > REACH * 1.4) {
+      if (pr && Math.hypot(pr.x - player.x, pr.y - player.y) > Math.max(REACH, CAST_R()) * 1.4) {
         fishing = null;
         core.emit('village:fish', { state: 'miss' });
       }
@@ -459,7 +459,7 @@
     var best = null, bd = REACH;
     for (i = 0; i < props.length; i++) {
       if (props[i].deco) { continue; }    // 숲 고리 장식(PLAN 40절 PHASE 3) — 손이 안 닿는다
-      d = Math.hypot(props[i].x - player.x, props[i].y - player.y);
+      d = Math.hypot(props[i].x - player.x, props[i].y - player.y); if (VD.PROPS[props[i].kind] && VD.PROPS[props[i].kind].gather === 'fish') { if (d > REACH) { d = Math.max(REACH * 0.95, d - Math.max(0, CAST_R() - REACH)) + d * 0.0001; } }   // W-0416 낚시터는 줄 거리만큼 멀리서도
       if (d < bd) { bd = d; best = { type: 'prop', obj: props[i], dist: d }; }
     }
     for (i = 0; i < residents.length; i++) {
