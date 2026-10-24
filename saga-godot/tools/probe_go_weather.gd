@@ -54,6 +54,20 @@ func _init() -> void:
 	print("GO_WEATHER fall ", seen)
 	if seen != ["rain:비", "snow:눈", "clear:"]:
 		_fail("G-0349 입자 %s" % [seen])
+	var FallGd: GDScript = load("res://games/saga_go/world/go_weather_fall.gd")
+	var w1 := float(FallGd.call("wet_step", 0.0, true, 10.0))
+	var w2 := float(FallGd.call("wet_step", 1.0, false, 30.0))
+	var w3 := float(FallGd.call("wet_step", 0.9, true, 10.0))
+	print("GO_WEATHER wet 비10초 %.2f · 그침30초 %.2f · 꽉 참 %.2f" % [w1, w2, w3])
+	if absf(w1 - 0.5) > 0.01 or absf(w2 - 0.5) > 0.01 or w3 != 1.0:
+		_fail("G-0359 젖음 셈 %.2f·%.2f·%.2f" % [w1, w2, w3])
+	WeatherGd.force("rain")
+	var fall2: Node = FallGd.new()
+	root.add_child(fall2)
+	await process_frame
+	if float(fall2.get("wet")) != 1.0:
+		_fail("G-0359 비 오는 중 들어오면 이미 젖음 — wet %.2f" % float(fall2.get("wet")))
+	fall2.free()
 	fall.free()
 	WeatherGd.force("")
 	if absf(WeatherGd.exp_bonus_mul() - 1.10) > 0.0001:

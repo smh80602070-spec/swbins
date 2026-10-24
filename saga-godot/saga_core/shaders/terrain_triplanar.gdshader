@@ -38,6 +38,7 @@ uniform float tile_scale : hint_range(0.05, 2.0) = 0.4; // 텍스처 반복 밀�
 uniform float patch_scale : hint_range(0.02, 1.0) = 0.12; // 얼룩 크기
 uniform vec3 dry_tint = vec3(1.18, 1.03, 0.62); // G-0137 풀빛 큰 얼룩(누렇게 바랜 풀) — 정점색에 곱한다
 // 2026-09-30 — 풀 텍스처의 초록기를 얼마나 뺄지(0 = 그대로). 가을빛 지역(정점색이 누런 땅)만 올린다.
+uniform float wet : hint_range(0.0, 1.0) = 0.0; // G-0359 비 젖음(1만리 go_weather_fall 이 넣는다 — 0 = 옛 화면 그대로)
 uniform float hue_desat : hint_range(0.0, 1.0) = 0.0;
 uniform vec3 cliff_color = vec3(0.62, 0.53, 0.42); // 가파른 비탈 빛깔(terrain_builder.gd CLIFF_COLOR)
 
@@ -273,4 +274,16 @@ void fragment() {
 	NORMAL_MAP = mix(NORMAL_MAP, vec3(0.5, 0.5, 1.0), max(ice_w, snow_w * 0.3));
 	// G-0228 — 눈 세트면 눈 법선 결을 눈 위에(얼음은 매끈하게 두고 옅게만)
 	NORMAL_MAP = mix(NORMAL_MAP, mix(vec3(0.0, 0.0, 1.0), normalize(dirt_n), 0.6) * 0.5 + 0.5, snow_slot * max(snow_w * 0.8, ice_w * 0.2));
+	// G-0359 비 젖음 — 땅이 한 단 어둡고 덜 거칠게(젖은 윤기), 평평한 곳엔 물웅덩이 얼룩(거의 매끈 — 하늘빛을 비춘다). 눈·얼음엔 안 얹는다.
+	if (wet > 0.001) {
+		float ww = wet * (1.0 - snow_w) * (1.0 - ice_w);
+		float flat_w = 1.0 - smoothstep(0.08, 0.25, slope);
+		float pn = _value_noise(world_pos.xz * 0.09 + vec2(13.0, 5.0)) * 0.75 + _value_noise(world_pos.xz * 0.35 + vec2(2.0, 9.0)) * 0.25;
+		float puddle = smoothstep(0.6, 0.68, pn) * flat_w * ww;
+		ALBEDO *= mix(1.0, 0.64, ww);
+		ALBEDO = mix(ALBEDO, ALBEDO * 0.55, puddle);
+		ROUGHNESS = mix(ROUGHNESS, ROUGHNESS * 0.45, ww);
+		ROUGHNESS = mix(ROUGHNESS, 0.04, puddle);
+		NORMAL_MAP = mix(NORMAL_MAP, vec3(0.5, 0.5, 1.0), puddle);
+	}
 }
