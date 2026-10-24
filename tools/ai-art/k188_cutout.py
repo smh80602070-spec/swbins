@@ -1,6 +1,7 @@
 """K-0188 바닐라웨어식 컷아웃 — 손그림 일러스트 한 장을 뼈 16 부위로 잘라 `cutout2d.js` 규격(rig.json + 부위 webp)으로.
 
   py tools/ai-art/k188_cutout.py grid <그림.png|webp> <out.jpg>                 # 관절 찍기용 격자판(64px 굵은 줄·숫자)
+  py tools/ai-art/k188_cutout.py auto <옆모습 그림> <joints.json> <확인판.jpg>     # 관절 자동 추정(실루엣 비율) + 점 덧그린 확인판 — 틀린 점만 손으로
   py tools/ai-art/k188_cutout.py cut <그림> <joints.json> <rig 폴더> [--far copy|own] [--fill none|smear|sd]
                                                                                # 부위 자르기 → <rig>/rig.json·<부위>.webp·rig.license.json
   py tools/ai-art/k188_cutout.py preview <rig 폴더> <out 줄기> [--h 520]          # 엔진과 같은 뼈 계산으로 walk·attack·idle 프레임 → <줄기>.png(띠)·<줄기>.gif
@@ -49,6 +50,52 @@ def grid(src, out):
     for v in range(0, max(im.size), 64):
         d.text((v + 2, 2), str(v), fill=(200, 0, 0, 255)); d.text((2, v + 2), str(v), fill=(0, 0, 200, 255))
     bg.convert('RGB').save(out, quality=88); print(out, im.size)
+
+
+# ---------------------------------------------------------------- 관절 자동 추정(옆모습)
+# 비율 = sg_zhugeliang 옆모습에 손으로 찍은 값(머리 끝 0 · 발바닥 1) — 사람 손은 덧그린 점 확인판을 보고 틀린 것만 고친다
+PROP = {'neck': 0.139, 'sh': 0.219, 'el': 0.384, 'wr': 0.342, 'pelvis': 0.432, 'hip': 0.467, 'kn': 0.68, 'an': 0.95}
+
+
+def row_span(a, y):
+    xs = np.nonzero(a[int(y)])[0]
+    return (xs.min(), xs.max()) if len(xs) else (None, None)
+
+
+def auto(src, out_json, out_jpg, skirt=True):
+    im = load_rgba(src); a = np.asarray(im)[..., 3] > 40
+    rows = np.nonzero(a.any(1))[0]; top, foot = int(rows.min()), int(rows.max())
+    Hh = foot - top; Y = lambda f: top + f * Hh
+    # 몸통 가운데 x = 목~허리 띠의 실루엣 가운데(부채·무기처럼 옆으로 뻗은 건 띠 중앙값으로 무시)
+    mid = lambda f0, f1: float(np.median([sum(row_span(a, y)) / 2 for y in range(int(Y(f0)), int(Y(f1)), 4) if row_span(a, y)[0] is not None]))
+    cx_t, cx_l = mid(0.15, 0.42), mid(0.75, 0.93)
+    head_x = mid(0.03, 0.12)
+    j = {'top': [round(head_x), top], 'neck': [round(cx_t), round(Y(PROP['neck']))], 'pelvis': [round(cx_t), round(Y(PROP['pelvis']))], 'foot': foot,
+         'N': {'sh': [round(cx_t - Hh * 0.03), round(Y(PROP['sh']))], 'el': [round(cx_t + Hh * 0.02), round(Y(PROP['el']))],
+               'wr': [round(cx_t + Hh * 0.09), round(Y(PROP['wr']))], 'tip': [round(cx_t + Hh * 0.14), round(Y(PROP['wr']) - Hh * 0.015)],
+               'hip': [round(cx_t + Hh * 0.01), round(Y(PROP['hip']))], 'kn': [round((cx_t + cx_l) / 2 + Hh * 0.02), round(Y(PROP['kn']))],
+               'an': [round(cx_l - Hh * 0.02), round(Y(PROP['an']))], 'toe': [round(cx_l + Hh * 0.08), foot - 5]},
+         'w': {'chest': round(Hh * 0.091), 'arm': round(Hh * 0.043), 'leg': round(Hh * 0.031), 'head': round(Hh * 0.05), 'hip': round(Hh * 0.105)}}
+    if skirt:
+        # 옷자락 끝 = 아래에서 위로 올라가며 실루엣 폭이 처음 다리 폭(머리 키 0.6배)을 넘는 줄
+        lw = Hh * 0.075
+        for y in range(foot - 5, int(Y(0.6)), -2):
+            l, r = row_span(a, y)
+            if l is not None and r - l > lw * 2.2:
+                j['skirt'] = y; break
+    json.dump(j, open(out_json, 'w'), indent=0)
+    bg = Image.new('RGBA', im.size, (235, 235, 235, 255)); bg.alpha_composite(im); d = ImageDraw.Draw(bg)
+    pts = [('top', j['top']), ('neck', j['neck']), ('pelvis', j['pelvis'])] + [(k, v) for k, v in j['N'].items()]
+    for k, (x, y) in pts:
+        d.ellipse((x - 7, y - 7, x + 7, y + 7), fill=(255, 0, 0, 255)); d.text((x + 9, y - 6), k, fill=(200, 0, 0, 255))
+    for a_, b_ in (('sh', 'el'), ('el', 'wr'), ('wr', 'tip'), ('hip', 'kn'), ('kn', 'an'), ('an', 'toe')):
+        d.line((*j['N'][a_], *j['N'][b_]), fill=(255, 0, 0, 255), width=3)
+    if j.get('skirt'):
+        d.line((0, j['skirt'], im.width, j['skirt']), fill=(0, 160, 0, 255), width=2)
+    for v in range(0, max(im.size), 64):
+        d.line((v, 0, v, im.height), fill=(255, 190, 190, 255)); d.line((0, v, im.width, v), fill=(190, 190, 255, 255))
+        d.text((v + 2, 2), str(v), fill=(200, 0, 0, 255)); d.text((2, v + 2), str(v), fill=(0, 0, 200, 255))
+    bg.convert('RGB').save(out_jpg, quality=86); print(out_json)
 
 
 # ---------------------------------------------------------------- 자르기
@@ -314,6 +361,8 @@ if __name__ == '__main__':
     opt = lambda k, d: a[a.index(k) + 1] if k in a else d
     if a[0] == 'grid':
         grid(a[1], a[2])
+    elif a[0] == 'auto':
+        auto(a[1], a[2], a[3])
     elif a[0] == 'cut':
         cut(a[1], a[2], a[3], far=opt('--far', 'copy'), fill=opt('--fill', 'smear'))
     elif a[0] == 'preview':
