@@ -232,4 +232,5 @@ script = ExtResource("menu_hook")
 burger_top = 236.0
 game = "story"
 me_adapter = "res://games/saga_story/ui/me_adapter.gd"
+goals_adapter = "res://games/saga_story/ui/goals_adapter.gd"
 items = PackedStringArray("@me|👤|내 정보", "ConstellationButton|✨|성좌 (L)", "GuildButton|🏯|문파", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")

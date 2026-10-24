@@ -176,6 +176,10 @@ const CUTS := [
 	["lg_go_zoom", GO, [["free_modal"], ["call", "Player/CameraRig", "_zoom", [-40.0]]]],   # R-3 ← G-0294 1만리 휠 가장 가까이(2.2 에서 멈춤)
 	["lg_dg_zoom", DUNGEON, [["free_modal"], ["call", "CameraRig", "set_zoom", [0.05]]]],   # R-3 ← G-0294 2나락 가장 가까이(0.2 에서 멈춤)
 	["lg_go_wx", GO, [["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 12.0]]],   # R-3 ← G-0267 SAGA_WEATHER=<키> 로 돌려 날씨 고정(환경으로만)
+	["lg_go_goals", GO, [["free_modal"], ["static", "res://games/saga_go/ui/go_menu.gd", "open_goals", ["@tree"]]]],   # G-0351 「오늘」 창 — 의뢰 넷·주간 도전 다섯
+	["lg_dg_goals", DUNGEON, [["free_modal"], ["call", "MenuHook", "open_goals"]]],   # G-0351 2나락 시즌
+	["lg_fs_goals", FOREST, [["free_modal"], ["call", "MenuHook", "open_goals"]]],   # G-0351 3마을 이야기·선물
+	["lg_st_goals", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["call", "MenuHook", "open_goals"]]],   # G-0351 4종횡 일일 사명·관문 대장
 	["lg_dg_trail", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_legend", ["@tree"]], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0325 ← G-0290 전설 잔광
 	["lg_dg_rise", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rise", ["@tree"]]]],   # G-0325 ← G-0293 난입 솟음(한 컷씩 — time_scale)
 	["lg_dg_break", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_breakables", ["@tree"]]]],   # G-0325 ← G-0307 부서지는 통

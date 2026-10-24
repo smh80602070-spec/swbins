@@ -119,6 +119,8 @@ func _one() -> void:
 		var hk := sc.find_child("MenuHook", true, false)
 		if hk != null:
 			extra = Array(hk.get("items")).filter(func(l): return String(l).begins_with("@")).size()
+			if String(hk.get("goals_adapter")) != "" and not Array(hk.get("items")).any(func(l): return String(l).begins_with("@goals")):
+				extra += 1   # G-0351 「오늘」 칸은 줄 없이 「내 정보」 뒤에 붙는다
 	var grid := menu.find_child("MenuGrid", true, false)
 	if grid == null or grid.get_child_count() != items.size() + extra:
 		_fail("② 칸 수 %d != %d" % [grid.get_child_count() if grid else -1, items.size() + extra])

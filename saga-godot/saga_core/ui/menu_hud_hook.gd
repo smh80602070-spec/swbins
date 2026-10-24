@@ -5,15 +5,18 @@ extends Node
 ## 그 HUD 단추를 숨기고 칸으로 — 칸을 누르면 단추 pressed 를 그대로 emit(단추 스크립트 안 고침, 단축키 F2·L 은 단추에 남아 그대로).
 ## HUD 에 없는 단추 줄은 건너뛴다. SAGA_MENU_SCREEN=0 이면 attach 가 null → 단추를 안 숨긴다(메뉴 없이 단추만 사라지는 일 없게).
 ## G-0286 — 줄이 "@me|아이콘|이름" 이면 단추 대신 「내 정보」 창(me_panel — 판 어댑터 경로는 tscn 의 me_adapter).
+## G-0351 — 줄이 "@goals|아이콘|이름" 이면 「오늘」 창(goals_panel — 판 어댑터 경로는 tscn 의 goals_adapter). 줄이 없어도 goals_adapter 가 있으면 「내 정보」 다음에 붙인다.
 ## 판 색 테마는 HUD 맨 위 Control(단추 빼고)에 ui_kit.apply.
 
 const MenuScreen := preload("res://saga_core/ui/menu_screen.gd")
 const UiKit := preload("res://saga_core/ui/ui_kit.gd")
 const MePanel := preload("res://saga_core/ui/me_panel.gd")
+const GoalsPanel := preload("res://saga_core/ui/goals_panel.gd")
 
 @export var game := "dungeon"
 @export var items: PackedStringArray = []
 @export var me_adapter := ""   # G-0286 판 「내 정보」 어댑터 스크립트(model(hud))
+@export var goals_adapter := ""   # G-0351 판 「오늘」 어댑터 스크립트(model(hud))
 @export var burger_top := 52.0   # ☰ 위 여백(1280×720 기준) — 판 HUD 오른쪽 위와 안 겹치게
 
 var menu: Node = null
@@ -35,6 +38,12 @@ func _attach() -> void:
 		if p[0] == "@me":
 			list.append({"id": "me", "icon": p[1] if p.size() > 1 else "👤", "name": p[2] if p.size() > 2 else "내 정보",
 				"open": open_me})
+			if goals_adapter != "" and not Array(items).any(func(s: String) -> bool: return s.begins_with("@goals")):
+				list.append({"id": "goals", "icon": "📅", "name": "오늘", "open": open_goals})
+			continue
+		if p[0] == "@goals":
+			list.append({"id": "goals", "icon": p[1] if p.size() > 1 else "📅", "name": p[2] if p.size() > 2 else "오늘",
+				"open": open_goals})
 			continue
 		var b := hud.get_node_or_null(p[0]) as Button
 		if b == null:
@@ -56,3 +65,8 @@ func _attach() -> void:
 ## 「내 정보」 창(G-0286) — ☰ 칸·촬영(shot_scene "call MenuHook open_me")이 부른다.
 func open_me() -> void:
 	MePanel.open_for(get_parent(), game, me_adapter)
+
+
+## 「오늘」 창(G-0351) — ☰ 칸·촬영("call MenuHook open_goals")이 부른다.
+func open_goals() -> void:
+	GoalsPanel.open_for(get_parent(), game, goals_adapter)

@@ -1,6 +1,8 @@
 extends RefCounted
 
 const UiKit := preload("res://saga_core/ui/ui_kit.gd")
+const GoalsPanel := preload("res://saga_core/ui/goals_panel.gd")
+const GOALS_ADAPTER := "res://games/saga_go/ui/goals_adapter.gd"
 
 ## G-0278 1만리 ☰ 메뉴 칸 표 — saga_core/ui/menu_screen.gd 에 넘긴다. 순서 = 격자 순서.
 ## 주요 화면은 원래 키(액션)를 한 번 누른 것처럼, hud_menu(2026-09-30 세로 목록) 항목은 그 open_entry·badge_of·shown 그대로.
@@ -38,6 +40,12 @@ static func apply_theme(scene: Node) -> int:
 	return n
 
 
+## G-0351 「오늘」 창(saga_core goals_panel + 1만리 어댑터) — ☰ 칸·촬영(shot_scene static)이 부른다. node = 씬 안 아무 노드, SceneTree 도 됨.
+static func open_goals(node: Object) -> void:
+	var n: Node = (node as SceneTree).current_scene if node is SceneTree else node as Node
+	GoalsPanel.open_for(n, "go", GOALS_ADAPTER)
+
+
 static func items(hud_menu: Node) -> Array:
 	var out: Array = [
 		{"id": "character", "name": "인물 (C)", "icon": "🧑", "action": "go_character"},
@@ -50,6 +58,7 @@ static func items(hud_menu: Node) -> Array:
 	]
 	if hud_menu == null:
 		return out
+	out.insert(6, {"id": "goals", "name": "오늘", "icon": "📅", "open": open_goals.bind(hud_menu)})   # G-0351 「오늘」 창
 	for e in hud_menu.get("ENTRIES"):
 		var g := String(e[0])
 		out.append({"id": g.trim_prefix("go_"), "name": String(e[1]).trim_prefix("✨ "), "icon": String(HUD_ICONS.get(g, "•")),
