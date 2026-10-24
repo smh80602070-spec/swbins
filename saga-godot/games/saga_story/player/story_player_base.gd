@@ -310,6 +310,7 @@ var max_mp: float:
 func _effective_atk() -> float:
 	var atk := StoryCombat.START_ATK + float(StorySaveState.gear_totals().atk) + float(StorySaveState.job_grow().atk)
 	atk *= preload("res://games/saga_story/data/story_guild.gd").mul(StorySaveState, "atk")   # G-0333 검각
+	atk *= preload("res://games/saga_story/data/story_monster_book.gd").atk_mul(StorySaveState)   # G-0374 다 모은 카드 종마다
 	atk *= StoryCombat.BRACE_ATK_MUL if _buff_time_left > 0.0 else 1.0
 	## **2026-09-13 추가(같은 날 더 더)** — 캐스팅 시점에 저장해 둔
 	## `_job_buff_atk_mul`을 그대로 쓴다(변수 선언부 머리말 참고).

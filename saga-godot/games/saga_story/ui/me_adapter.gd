@@ -3,6 +3,7 @@ extends RefCounted
 ## G-0286 4종횡 「내 정보」 model(웹 saga-story/js/me-adapter.js 짝) — 열 부위 · 공격·방어(피해 줄임)·체력 · 사방 성좌.
 ## 공격은 story_player_base._effective_atk 의 바탕 줄(시작 + 장비 + 전직) — 그 함수는 한 방 배율을 소비해 부르지 않는다(기합·버프 뺀 값).
 ## 체력은 플레이어 몸의 max_hp(성좌·비경 배율 포함), 몸이 없으면 바탕 합.
+## G-0374 괴물 카드 도감 줄(모은 종/전체 · 다 모음 · 공격 +%).
 
 
 static func model(hud: Node) -> Dictionary:
@@ -24,6 +25,10 @@ static func model(hud: Node) -> Dictionary:
 		{"label": "방어", "value": "%d" % roundi(def), "detail": "받는 피해 −%d%%" % roundi(StoryCombat.damage_cut(def) * 100.0)},
 		{"label": "체력", "value": "%d" % roundi(hp)},
 	]
+	var MB := preload("res://games/saga_story/data/story_monster_book.gd")
+	if MB.on():
+		stats.append({"label": "🃏 카드 도감", "value": "%d/%d" % [MB.found_count(StorySaveState), MB.species().size()],
+			"detail": "다 모음 %d종 · 공격 +%.1f%%" % [MB.complete_count(StorySaveState), (MB.atk_mul(StorySaveState) - 1.0) * 100.0]})
 	var job := String(StoryCombat.job_info(StorySaveState.job).get("name", "")) if StorySaveState.job != "none" else "무직"
 	var cb := hud.get_node_or_null("ConstellationButton") if hud != null else null
 	var grow := {}
