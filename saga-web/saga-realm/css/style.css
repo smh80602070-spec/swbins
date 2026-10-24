@@ -1562,3 +1562,11 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
   body.hud-diet #profile:not(.hud-open) { align-self: start; }
   body.hud-diet #profile:not(.hud-open) .avatar-pt img { width: 30px; height: 30px; }
 }
+
+/* 폰 가로(키 ≤500) — 지갑(103~159)과 범례(282~) 사이 123px 에 조이스틱·확대 단추 셋(세로 144)·지역 단추가 겹쳤다(844×390 실측: 단추 열이 지갑을, 지역 단추가 조이스틱을 덮음).
+   확대 단추는 가로 한 줄 · 지역 단추는 그 오른쪽 · 조이스틱은 범례 위로 */
+@media (max-height: 500px) and (min-width: 600px) {
+  #rmapctl.show { flex-direction: row; }
+  #rjoy { bottom: calc(114px + var(--safe-b)); }
+  #rregion-hud { left: 284px !important; }
+}

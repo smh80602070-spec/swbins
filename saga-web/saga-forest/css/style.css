@@ -1438,3 +1438,9 @@ body.tilted3 #vignette {
   body.hud-diet .focus-card { padding: 4px 6px; gap: 6px; }
   body.hud-diet .focus-card .fc-ico { width: 32px; height: 32px; font-size: 19px; }
 }
+
+/* 폰 가로(키 ≤500) — 조이스틱(왼쪽, 바닥 150 위)이 지갑 줄(12,122~282,161)을 덮었다(844×390 실측). 미니맵 오른쪽 바닥으로 */
+@media (max-height: 500px) and (min-width: 600px) {
+  #vjoy, #vpad { left: calc(162px + var(--safe-l, 0px)); bottom: calc(14px + var(--safe-b)); top: auto; }   /* #vpad = 마우스 PC 방향 단추(키 낮은 창) */
+  body { --cam2d-right: 76px; }   /* ＋/－ 가 오른쪽 독(가방·지도·메뉴, 774~832 · 186~)의 가방을 덮었다 — 독 왼쪽으로 */
+}

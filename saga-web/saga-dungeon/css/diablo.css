@@ -857,3 +857,7 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
   body.hud-diet #dg-bottom { background: none !important; border-top: 0 !important; box-shadow: none !important; }
   body.hud-diet #dg-bottom::before { display: none; }
 }
+/* 폰 가로(키 ≤500) 던전 — 미니맵(왼쪽 아래)이 체력 구슬을 덮었다(844×390 실측 10,240~146,376 ⊃ 구슬 10,272~122,384). 오른쪽 위 탈출 단추 밑으로 작게(눌러 큰 지도 그대로) */
+@media (max-height: 500px) and (min-width: 600px) {
+  body:not(.town-open) #dg-minimap { top: calc(44px + var(--safe-t, 0px)); bottom: auto; left: auto; right: calc(10px + var(--safe-r, 0px)); transform: scale(.6); transform-origin: 100% 0; }
+}
