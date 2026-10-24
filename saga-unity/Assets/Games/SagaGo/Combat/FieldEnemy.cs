@@ -767,6 +767,7 @@ namespace Saga.Go.Combat
             Vector3 toPlayer = playerOk ? Flat(fc.transform.position - transform.position) : Vector3.zero;
             float distPlayer = playerOk ? toPlayer.magnitude : float.MaxValue;
 
+            if (PartMark == null && IsFieldBoss) EnsurePartMark(); // tasks U-0203 약점 빛 공(한 번)
             if (_knock.sqrMagnitude > 0.01f)
             {
                 MoveBy(_knock * dt);
@@ -892,11 +893,11 @@ namespace Saga.Go.Combat
             {
                 // 109-14-16 제단을 노린 한 대 — 제단만 친다
                 _siegeStrike = false;
-                if (Siege.HasValue && Flat(Siege.Value - StrikePoint).magnitude <= StrikeReach + SiegeBody) SiegeHit?.Invoke(this, Atk * _moveMul);
+                if (Siege.HasValue && Flat(Siege.Value - StrikePoint).magnitude <= StrikeReach + SiegeBody) SiegeHit?.Invoke(this, Atk * _moveMul * PartMul);
             }
             else if (fc != null && fc.CanBeTargeted && InStrike(fc.transform.position))
             {
-                fc.ReceiveStrike(Atk * _moveMul, this);
+                fc.ReceiveStrike(Atk * _moveMul * PartMul, this); // tasks U-0203 약점 부서지면 ×0.85
             }
             if (_rot != null && _rot[_rotI % _rot.Length] == BossMove.Rift && _tidePts.Count > 0) RiftBlink(_tidePts[_tidePts.Count - 1]); // 109-14-30 줄 끝으로
             if (_rot != null) { _rotI++; ClearMove(); } // 109-14-14 다음 수

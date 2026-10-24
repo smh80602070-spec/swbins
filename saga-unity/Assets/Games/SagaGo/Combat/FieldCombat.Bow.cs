@@ -211,7 +211,8 @@ namespace Saga.Go.Combat
                 cm = 1f + md.CritDmg + ab.CritDmg + CookState.Buff("crit_dmg"); // 급소 — 반드시 치명
             }
             else cm = CritMul(a.Owner, out crit);
-            e.TakeHit(a.Amount * cm, a.El, a.React, out _, crit: crit);
+            float dealt = e.TakeHit(a.Amount * cm, a.El, a.React, out _, crit: crit);
+            if (a.Full) e.PartHit(dealt); // tasks U-0203 가득 당긴 화살 — 보스 약점
             if (sneak) { AchieveState.Bump("weak"); FieldDamageText.Spawn(e.transform.position + Vector3.up * 5f, GoLocalization.T("field.sneak", "급소!"), new Color(1f, 0.85f, 0.3f), 1.2f); } // 109-14-25 업적 — 급소
             var m = Active;
             if (m != null && m.Id == a.Owner) m.Energy = Mathf.Min(BurstCost, m.Energy + EnergyPerHit * EnergyMul);

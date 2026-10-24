@@ -2266,6 +2266,23 @@
   "note": "U-0197: 목표가 창 밖이면 가까운 칸 1200 까지 — 길 내기 7.3 → 2.9ms(에디터) · D3(qc+claude, R-3): docs/playcheck/d3-r3-20261023b.json — 위 1만리 촬영과 같은 판 — 모서리에서 돌아가는 길 · 앞 D2(U-0190): PlaytestHeadless autopath OK — 가짜 격자(곧은 들판 경유점 하나·담 돌아감 3·갇힘 null·3m 턱 안 오름)·앞 막힘·진짜 임시 벽 돌아감 3 · autoquest OK 그대로"
  },
  {
+  "id": "un.go.weakpart",
+  "name": "U-0203 1만리 보스 약점 부수기 — 보스 몸 높이 0.85 주황 빛 공 · 가득 당긴 화살 피해로 약점 체력(최대×0.12) 깎음 → 부서지면 예고 끊고 2.5초 비틀·이후 공격 ×0.85·빛 꺼짐 · 되살기·귀가 때 다시(고돗 G-0342·웹 W-0395 짝)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldEnemy.WeakPart.cs",
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldCombat.Bow.cs"
+  ],
+  "tests": [
+   "PlaytestGoWeakPart"
+  ],
+  "level": "D1",
+  "verified": "2026-10-24 claude",
+  "fun": {},
+  "ticket": "U-0203",
+  "since": "2026-10-24",
+  "note": "D1(U-0203): PlaytestHeadless weakpart mark·break·weak·reset·off OK · 1만리 진단 FAIL 0 · 이 트랙 급소는 들키지 않은 적에게만이라 가득 당긴 화살로 · 촬영 없음(R-3 후보)"
+ },
+ {
   "id": "un.go.standoff",
   "name": "U-0202 1만리 대치 — 쉬는 무리 곁 어그로+2m 에서 맞섬·노려봄 → 1~2.2초 뒤 한 마리 달려듦(0.25초) → 0.45초 창(×0.85 이어짐) 안 평타 = 한 칼, 이르면·헛몸짓(25%)이면 성급, 놓치면 한 방·깨짐, 6m 벗어나면 풂, 깬 무리 60초(고돗 G-0343 짝)",
   "files": [

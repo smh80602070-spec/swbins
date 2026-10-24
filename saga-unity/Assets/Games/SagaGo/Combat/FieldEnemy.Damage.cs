@@ -392,6 +392,7 @@ namespace Saga.Go.Combat
         /// <summary>방패를 처음 모양으로(수호장은 겉 겹부터 다시).</summary>
         private void ResetShields()
         {
+            ResetPart(); // tasks U-0203 약점도 다시
             ShieldHp = ShieldMax;
             if (TwoLayered)
             {
