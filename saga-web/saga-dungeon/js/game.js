@@ -365,6 +365,7 @@
       global.setTimeout(function () { requestAnimationFrame(loop); }, 500);
       return;
     }
+    var pcap = global.DG.deviceMode && global.DG.deviceMode.fpsCap ? global.DG.deviceMode.fpsCap() : 0; if (pcap && now - lastFrame < 1000 / pcap - 2) { requestAnimationFrame(loop); return; }   // W-0417 폰 30fps 상한(발열)
     try {
       var wallNow = performance.now();
       if (lastLoopWallT !== 0) {

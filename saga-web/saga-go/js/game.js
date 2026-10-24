@@ -358,6 +358,7 @@
    *  돌므로(world3d → encounter3d.tick) 묶지 않는다 */
   function frameGapMs() {
     var fps = core.tuned ? core.tuned('perf.fps', 60) : 60;
+    var pc = global.DG.deviceMode && global.DG.deviceMode.fpsCap ? global.DG.deviceMode.fpsCap() : 0; if (pc) { fps = fps ? Math.min(fps, pc) : pc; }   // W-0417 폰 30fps 상한(발열)
     var b = document.body;
     if (b && b.classList.contains('sheet-open') && (global.innerWidth || 0) <= 780) { fps = fps ? Math.min(fps, 30) : 30; }
     return fps > 0 ? 1000 / fps : 0;

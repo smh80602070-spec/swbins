@@ -102,10 +102,10 @@
     /* 밤에는 지도 자체가 어두워야 한다 — 타일 색에 조명의 물감을 곱한다.
        (지도 이미지는 늘 한낮 그림이라, 안 곱하면 밤에 땅만 대낮이다) */
     var tint = lightNow ? lightNow.tint : 0xffffff;
-    var gk = cx + '/' + cy + '/' + mpp + '/' + tint + '/' + R + '/' + (RELIEF_ON() ? 1 : 0), gNow = Date.now();
+    var gk = (+core.tuned('go.zoneM', 576) > 0 ? Math.floor(pos.x / +core.tuned('go.zoneM', 576) + 0.5) + 'z' + Math.floor(pos.y / +core.tuned('go.zoneM', 576) + 0.5) + '/' : '') + cx + '/' + cy + '/' + mpp + '/' + tint + '/' + R + '/' + (RELIEF_ON() ? 1 : 0), gNow = Date.now();
     if (gk === groundKey && gNow - groundAt < GROUND_REFRESH_MS) { return; }
     var groundPending = false;
-    syncGen++;
+    syncGen++; var gZM = +core.tuned('go.zoneGround', 1) === 1 ? +core.tuned('go.zoneM', 576) : 0, gZP = 160, gZx0 = gZM ? (Math.floor(pos.x / gZM + 0.5) - 0.5) * gZM - gZP : 0, gZy0 = gZM ? (Math.floor(pos.y / gZM + 0.5) - 0.5) * gZM - gZP : 0, gZx1 = gZx0 + gZM + 2 * gZP, gZy1 = gZy0 + gZM + 2 * gZP;
 
     for (var dy = -R; dy <= R; dy++) {
       for (var dx = -R; dx <= R; dx++) {
@@ -113,7 +113,7 @@
         var key = tx + '/' + ty;
         live[key] = 1;
         var mesh = tileMeshes[key];
-        var corner = worldOfLatLng(tile2lat(ty, W), tile2lng(tx, W));
+        var corner = worldOfLatLng(tile2lat(ty, W), tile2lng(tx, W)); if (gZM > 0 && (corner.x + span < gZx0 || corner.x > gZx1 || corner.y + span < gZy0 || corner.y > gZy1)) { delete live[key]; continue; }   // W-0417 구역(go.zoneM)+여유 밖 땅은 안 짓는다 — 폰 발열(49장 → ≈9장), 경계는 안개 벽(zone-wire)
         if (!mesh) {
           /* **한 장을 잘게 나눈다.** 여태 네 꼭짓점뿐이라 아무리 높이를 줘도
              땅이 기울 뿐 굽지 않았다. 241m 타일을 `RELIEF_SEG` 칸으로 나누면

@@ -310,7 +310,7 @@
     syncTreeSeason();
     var raw = V.raw(), props = raw.props.concat(raw.animals || []), px = raw.player.x, py = raw.player.y;
     var scale = WORLD_SCALE(), renderU = RENDER_R() / scale, cullU = CULL_R() / scale, ZM = +C().tuned('village3d.zoneM', 64), ZB = ZM > 0 && !!global.DG.zoneCut, zu = ZM / scale, zx = Math.floor(px / zu), zy = Math.floor(py / zu), zp = 16 / scale, inZ = function (x, y) { return x >= zx * zu - zp && x <= (zx + 1) * zu + zp && y >= zy * zu - zp && y <= (zy + 1) * zu + zp; };   /* W-0414 ② 구역(ZM m 정사각)째 — 걸으며 반경 따라 솟지 않게, 넘김 막 아래서 통째로 */
-    var within = {}, budget = ZB && global.DG.zoneCut.shown() ? 999 : MAX_BUILD_PER_STEP(); syncScatter.pend = 0;
+    var within = {}, budget = ZB && global.DG.zoneCut.shown() ? 999 : MAX_BUILD_PER_STEP(); syncScatter.pend = 0; if (ZB && global.DG.zoneCut.walls && scene) { if (!syncScatter.walls) { syncScatter.walls = global.DG.zoneCut.walls(scene, three()); } var zwl = syncScatter.walls; if (zwl) { var zm0 = 14 / scale; zwl.set((zx * zu - zm0 - px) * scale, (zy * zu - zm0 - py) * scale, ((zx + 1) * zu + zm0 - px) * scale, ((zy + 1) * zu + zm0 - py) * scale, scene.fog && scene.fog.color ? scene.fog.color.getHex() : 0xdfe8e0, 14); } } else if (syncScatter.walls) { syncScatter.walls.group.visible = false; }   /* W-0417 구역 경계 안개 벽(인물 기준 자리라 매 프레임 — 바뀔 때만 다시 놓음) */
     var i, p, key, ent, d;
 
     for (i = 0; i < props.length; i++) {

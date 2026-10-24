@@ -44,5 +44,7 @@
   function syncBlur() { var d = global.document && global.document.documentElement, C = global.DG && global.DG.core; if (!d) { return; } var v = C && C.tuned ? +C.tuned('ui.blur', 1) : 1; d.classList.toggle('no-blur', !v); }
   if (global.setInterval && global.document) { global.setInterval(syncBlur, 2000); global.setTimeout(syncBlur, 50); }
   global.DG = global.DG || {};
-  global.DG.deviceMode = { phone: phone, want3d: want3d, mark: mark, test: test, _reset: function () { cached = null; } };
+  /** W-0417 폰 발열(사용자 10-25 「사양이 너무 타서 폰이 발열해」) — 폰이면 손잡이 perf.phoneFps(30) 를 상한으로, 아니면 0(상한 없음) */
+  function fpsCap() { var C = global.DG && global.DG.core; if (!phone()) { return 0; } var v = C && C.tuned ? +C.tuned('perf.phoneFps', 30) : 30; return v > 0 ? v : 0; }
+  global.DG.deviceMode = { fpsCap: fpsCap, phone: phone, want3d: want3d, mark: mark, test: test, _reset: function () { cached = null; } };
 })(window);

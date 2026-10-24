@@ -7,6 +7,8 @@
  *   DG.zoneCut.cut({ wait, min, max })  wait() 참이면 아직 짓는 중 · min 최소 덮음(기본 180ms) · max 상한(손잡이 zoneCut.max 1600)
  *   DG.zoneCut.shown()                  덮여 있나
  *   DG.zoneCut.threeBusy()              three.js 기본 로딩 관리자(GLTFLoader 등 manager 안 준 것)가 받는 중인 수 > 0 — 3D 판 wait 에 공통으로
+ *   DG.zoneCut.walls(scene, T)          W-0417 구역 경계 안개 벽 네 장 — .set(x0, z0, x1, z1, colorHex, h) 로 자리(바뀔 때만 다시 놓음). 아래가 짙고 위로 옅어지는 판,
+ *                                       깊이 안 씀·안개(fog) 안 받음 — 구역 밖(안 지은 땅)을 자연스럽게 가린다. 손잡이 zoneCut.wall 1
  *   DG.zoneCut.hookKey(fnKey, opts)     매 프레임 fnKey() 를 보고 값이 바뀌면 cut(opts) — 걸어서 넘는 경계용(첫 값은 안 덮음)
  * 손잡이 zoneCut.on 1(0 = 옛 그대로). 판정·세이브는 안 건드린다(그리기만 가린다). id 는 2나락 #zone-cut 과 겹치지 않게 #zone-cut2.
  */
@@ -49,7 +51,25 @@
     }
     if (keys.length || (el && el.style.opacity === '1')) { raf(step); } else { ticking = false; }
   }
+  var wallTex = null;
+  function walls(scene, T) {
+    if (!scene || !T || !doc) { return null; }
+    if (!wallTex) { var cv = doc.createElement('canvas'); cv.width = 4; cv.height = 128; var g = cv.getContext('2d'), gr = g.createLinearGradient(0, 0, 0, 128); gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(0.45, 'rgba(255,255,255,0.55)'); gr.addColorStop(1, 'rgba(255,255,255,1)'); g.fillStyle = gr; g.fillRect(0, 0, 4, 128); wallTex = new T.CanvasTexture(cv); }
+    var grp = new T.Group(), ms = [], i, key = '';
+    for (i = 0; i < 4; i++) { var m = new T.Mesh(new T.PlaneGeometry(1, 1), new T.MeshBasicMaterial({ map: wallTex, transparent: true, depthWrite: false, fog: false, side: T.DoubleSide, color: 0xc8d0d8 })); m.renderOrder = 5; grp.add(m); ms.push(m); }
+    grp.name = 'zone-walls'; scene.add(grp);
+    return { group: grp, set: function (x0, z0, x1, z1, col, h) {
+      grp.visible = !!tuned('zoneCut.wall', 1); if (!grp.visible) { return; }
+      h = h || 60; var k = [Math.round(x0), Math.round(z0), Math.round(x1), Math.round(z1), col, h].join(','); if (k === key) { return; } key = k;
+      var w = x1 - x0, d = z1 - z0, cx = (x0 + x1) / 2, cz = (z0 + z1) / 2;
+      ms[0].scale.set(w, h, 1); ms[0].position.set(cx, h / 2, z0); ms[0].rotation.set(0, 0, 0);
+      ms[1].scale.set(w, h, 1); ms[1].position.set(cx, h / 2, z1); ms[1].rotation.set(0, Math.PI, 0);
+      ms[2].scale.set(d, h, 1); ms[2].position.set(x0, h / 2, cz); ms[2].rotation.set(0, Math.PI / 2, 0);
+      ms[3].scale.set(d, h, 1); ms[3].position.set(x1, h / 2, cz); ms[3].rotation.set(0, -Math.PI / 2, 0);
+      for (var j = 0; j < 4; j++) { ms[j].material.color.setHex(col == null ? 0xc8d0d8 : col); ms[j].material.map.flipY = true; }
+    }, move: function (dx, dz) { grp.position.set(dx, 0, dz); } };
+  }
   function hookKey(fn, o) { keys.push({ fn: fn, o: o || {}, last: null }); if (!ticking) { ticking = true; raf(step); } }
   global.DG = global.DG || {};
-  global.DG.zoneCut = { cut: cut, hookKey: hookKey, threeBusy: threeBusy, shown: function () { return !!el && el.style.opacity === '1'; }, _busy: busy };
+  global.DG.zoneCut = { cut: cut, hookKey: hookKey, threeBusy: threeBusy, walls: walls, shown: function () { return !!el && el.style.opacity === '1'; }, _busy: busy };
 })(typeof window !== 'undefined' ? window : this);

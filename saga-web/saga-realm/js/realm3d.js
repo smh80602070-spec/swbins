@@ -1393,7 +1393,7 @@
     if (enc && enc.classList.contains('show')) { return 100; }
     var b = document.body;
     var sheet = b && b.classList.contains('sheet-open') && (global.innerWidth || 0) <= 780;
-    if (sheet || !mapBusy()) { fps = fps ? Math.min(fps, 30) : 30; }
+    if (sheet || !mapBusy()) { fps = fps ? Math.min(fps, 30) : 30; } var pc = global.DG.deviceMode && global.DG.deviceMode.fpsCap ? global.DG.deviceMode.fpsCap() : 0; if (pc) { fps = fps ? Math.min(fps, pc) : pc; }   // W-0417 폰 30fps 상한(발열)
     return fps > 0 ? 1000 / fps : 0;
   }
 
