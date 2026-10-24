@@ -240,7 +240,7 @@
     }
     if (!regionHudEl) { return ''; }
     if (!V || !st.started) { regionHudEl.innerHTML = ''; return ''; }
-    regionHudEl.style.cssText = 'position:fixed;left:12px;' + (d3 ? 'top:205px' : 'bottom:114px') + ';z-index:40;max-width:calc(100vw - 24px)';
+    regionHudEl.style.cssText = 'position:fixed;left:12px;' + (d3 ? 'top:205px' : 'bottom:114px') + ';z-index:35;max-width:calc(100vw - 24px)';
     s2 += '<div class="rregion-btn" data-act="region-list" style="display:inline-block;padding:6px 10px;border-radius:10px;background:rgba(30,22,10,0.82);border:1px solid #f3d27a;color:#fff4d6;font-weight:700;font-size:14px;cursor:pointer">🗺 ' + esc(V.name(regionShown || V.current())) + ' ▾</div>';
     if (regionAlert && regionAlert.rid === regionShown) { regionAlert = null; }
     if (regionAlert) { s2 += ' <div class="rregion-alert" data-region="' + regionAlert.rid + '" style="display:inline-block;padding:6px 10px;border-radius:10px;background:rgba(120,20,14,0.88);border:1px solid #ff8a6a;color:#fff4d6;font-weight:700;font-size:14px;cursor:pointer">⚠ ' + esc(V.name(regionAlert.rid)) + ' ' + esc((CD.find(regionAlert.city) || {}).name || '') + ' 피습 — 그 지역 보기</div>'; }
@@ -682,16 +682,22 @@
       return;
     }
     if (a === 'next-month') {
-      var was = R().state();
+      var was = R().state(), WD = global.DG.war;
       if (was.result) { return; }
-      var moved = R().endMonth();
+      if (WD && WD.armDefend) { WD.armDefend(true); }   // W-0403 — 사람이 넘긴 달만 내 성 방어를 판으로 미룬다
+      var moved;
+      try { moved = R().endMonth(); } finally { if (WD && WD.armDefend) { WD.armDefend(false); } }
       renderTop(); renderMap(); renderSheet();
       /* 이정표·승리·도전 카드가 이미 떠 있으면 그 뒤에 줄을 선다. 판이 닫혔으면 끝 카드만 */
-      var inCard = moved && moved.report && monthCardOn() && !R().state().result && showMonthCard(moved.report);   // W-0177 고를 사연·소식은 그 카드 안 칸으로
-      if (!R().state().result && !inCard) { showEvent(); }
+      var afterMonth = function () {
+        var inCard = moved && moved.report && monthCardOn() && !R().state().result && showMonthCard(moved.report);   // W-0177 고를 사연·소식은 그 카드 안 칸으로
+        if (!R().state().result && !inCard) { showEvent(); }
+      };
+      if (WD && WD.pendingDefense && WD.pendingDefense().length && !R().state().result) { runDefense(afterMonth); } else { afterMonth(); }
       return;
     }
-    if (a === 'close-enc') { closeEnc(); return; }
+    if (a === 'def-board' || a === 'def-auto') { defenseGo(a === 'def-board'); return; }
+    if (a === 'close-enc') { if (defCur && !defCur.done && global.DG.tacticsView.cur()) { global.DG.tacticsView.quit(); global.DG.tacticsView.go(); return; } closeEnc(); defenseNext(); return; }   // W-0403 방어 판 도중 닫으면 무승부로 접고 판정
     if (a === 'ev-pick') {
       var er = global.DG.event.choose(g('data-k'));
       if (!er.ok) { toast(er.why); return; }
@@ -884,6 +890,14 @@
     core.persist();
     renderTop(); renderMap(); renderSheet();
   }
+
+  /* ── W-0403 방어전 — 줄(war.pendingDefense)을 하나씩: 카드 → 판(또는 맡김) → 같은 war.march 한 번 → 전황 카드 → 다음 ── */
+  var defCur = null;
+  function runDefense(after) { var W = global.DG.war, d = W.takeDefense(); if (!d) { defCur = null; after(); return; } var to = R().city(d.to); if (!to || to.force !== R().me() || !W.canMarch(d.from, d.to, d.troops).ok) { runDefense(after); return; } /* 그새 성 주인이 바뀌었거나 칠 수 없게 됐다 */ defCur = { d: d, after: after }; var names = d.lead.map(function (id) { var h = off().find(id); return h ? esc(h.name) : ''; }).filter(Boolean).join(' · '); showEnc('<h3 style="margin:0 0 6px;font-size:18px">⚔️ ' + esc(R().forceName(d.force)) + '군이 ' + esc(CD.find(d.to).name) + '을(를) 친다</h3>' + '<small class="muted">🪖 ' + core.fmt(d.troops) + (names ? ' · 장수 ' + names : '') + ' — 우리 성 🪖 ' + core.fmt(to.troops) + '</small>' + '<div class="tag" style="margin:8px 0">🎯 6턴 버티면 적 위력이 꺾인다 · 성벽이 우리 쪽</div>' + '<button class="btn primary wide" data-act="def-board">♟️ 막는다 — 전술판</button><button class="btn ghost wide" data-act="def-auto">🤖 맡긴다 — 자동 판정</button>' + '<div class="tacview" id="tacview"></div>', 'battle'); }
+  function defenseGo(board) { var c = defCur; if (!c) { return; } var T = global.DG.tactics; if (board && T && T.defenseOpts && $('tacview')) { var o = T.defenseOpts(c.d); o.face = function (id) { var h = off().find(id); return h ? p3src(h, 64, 64, function () { return global.DG.sprite.portrait('hero', h, 64); }).src : ''; }; global.DG.tacticsView.open($('tacview'), o, function (out) { defenseEnd(out); }); return; } defenseEnd(null); }
+  function defenseEnd(out) { var c = defCur; if (!c) { return; } defCur = { d: null, after: c.after, done: true }; var res = global.DG.tactics.defenseApply(c.d, out), rep = global.DG.war.march(c.d.from, c.d.to, c.d.lead, c.d.troops, res.grid ? { grid: res.grid } : null); renderTop(); renderMap(); renderSheet(); if (rep && rep.ok) { rep.log = res.lines.concat(rep.log || []); lastBattle = rep; showBattle(rep); } else { closeEnc(); defenseNext(); } }
+  /** 전황 카드를 닫으면 다음 방어(close-enc 가 부른다) */
+  function defenseNext() { var c = defCur; if (c && c.done) { defCur = null; runDefense(c.after); } }
 
   function doMarch(fromId, toId) {
     var c = R().city(fromId);
@@ -1775,7 +1789,8 @@
 
   global.DG = global.DG || {};
   global.DG.ui = {
-    init: init, toast: toast,
+    init: init, toast: toast, _defense: runDefense,   /* W-0403 진단·촬영 */
+   
     openSheet: openSheet, closeSheet: closeSheet, openCity: openCity,
     renderTop: renderTop, renderMap: renderMap, renderSheet: renderSheet,
     showScenPick: showScenPick, showForcePick: showForcePick,

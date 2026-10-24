@@ -222,7 +222,8 @@
   function resultHtml(v) {
     var o = v.out, A = T().apply(o, { where: v.opts.where });
     var line = v.b.srpg && o.kind === 'rout' && v.b.goal !== 'rout' && T().alive(v.b, 'foe').length ? '🏆 ' + esc(T().goalText(v.b)) + ' — 이겼다' : v.b.srpg && o.kind === 'win' && v.b.goal === 'hold' ? '✅ 끝까지 버텼다' : o.kind === 'rout' ? '🏆 적을 모두 꺾었다' : o.kind === 'win' ? '✅ 판을 쥐었다' : o.kind === 'lose' ? '💀 우리 장수가 모두 쓰러졌다' : '➖ 승부가 나지 않았다';
-    var mod = '공 위력 ' + (A.winPct >= 0 ? '+' : '') + A.winPct + '%' + (A.lossMul !== 1 ? ' · 받는 피해 ×' + A.lossMul : '');
+    var mod = v.opts.defend ? '적 위력 ' + (A.winPct > 0 ? '−' : '+') + Math.abs(A.winPct) + '%' + (A.kind === 'rout' ? ' · 적이 받는 피해 ×1.3' : '') :   // W-0403 방어 판
+      '공 위력 ' + (A.winPct >= 0 ? '+' : '') + A.winPct + '%' + (A.lossMul !== 1 ? ' · 받는 피해 ×' + A.lossMul : '');
     /* 군주는 판이 끝나지 않게 중상으로 돌린다(tactics.marchApply) — 카드 글도 그렇게 */
     var lord = global.DG.off && global.DG.rtk ? global.DG.off.lordOf(global.DG.rtk.me()) : '', nm = v.opts.name || offName;
     var dead = o.fallen.filter(function (id) { return id !== lord; }), hurt = o.wounded.concat(o.fallen.filter(function (id) { return id === lord; }));
@@ -359,6 +360,7 @@
     /* 그릴 자리가 없으면(전장 카드가 다른 카드로 바뀜) 판 없이 곧장 끝낸다 — 안 그러면 출진이 멈춘 채 남는다 */
     if (!host) { cur = null; if (done) { done(null); } return null; }
     var b = opts.srpg && T().makeBoardSrpg ? T().makeBoardSrpg(opts.seed, opts.land, opts.siege, opts.goal) : T().makeBoard(opts.seed, opts.land, opts.siege);   // W-0401 SRPG 본전투 판
+    if (b.srpg && opts.defend && T().mirror) { T().mirror(b); }   // W-0403 방어 판 — 성벽이 내 쪽
     if (b.srpg) { T().unitsOfSrpg(b, opts.mine, opts.foes, opts.foeTroops, null, opts.myTroops || []); } else { T().unitsOf(b, opts.mine, opts.foes, opts.foeTroops); }
     host.classList.add('show');   // 먼저 보여야 폭을 잰다(display:none 이면 0)
     if (!host.__tvBound) { host.addEventListener('click', onClick); host.__tvBound = true; }

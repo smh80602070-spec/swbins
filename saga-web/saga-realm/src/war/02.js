@@ -265,6 +265,7 @@
     HISTORY_BRANCHES: HISTORY_BRANCHES, checkHistoryBranch: checkHistoryBranch,
     reinforce: reinforce, reliefOf: reliefOf, forecast: forecast,
     canMarch: canMarch, march: march, marchInteractive: marchInteractive, capture: capture,
+    armDefend: armDefend, wantDefend: wantDefend, queueDefense: queueDefense, takeDefense: takeDefense, pendingDefense: pendingDefense,
     transfer: transfer, moveOfficer: moveOfficer,
     camps: camps, campsOf: campsOf, campById: campById, campAt: campAt,
     besieged: besieged, monthsLeft: monthsLeft,

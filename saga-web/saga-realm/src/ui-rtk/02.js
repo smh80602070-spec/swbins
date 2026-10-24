@@ -530,7 +530,8 @@
 
   global.DG = global.DG || {};
   global.DG.ui = {
-    init: init, toast: toast,
+    init: init, toast: toast, _defense: runDefense,   /* W-0403 진단·촬영 */
+   
     openSheet: openSheet, closeSheet: closeSheet, openCity: openCity,
     renderTop: renderTop, renderMap: renderMap, renderSheet: renderSheet,
     showScenPick: showScenPick, showForcePick: showForcePick,

@@ -300,6 +300,7 @@
     var chk = war.canMarch(best.from, best.to, real);
     if (!chk.ok) { return null; }
     for (var k = 0; k < best.lead.length; k++) { off.rec(best.lead[k]).done = true; }
+    if (war.wantDefend && war.wantDefend(best.to)) { war.queueDefense({ force: forceId, from: best.from, to: best.to, lead: best.lead.slice(), troops: real }); return { from: best.from, to: best.to, won: false, send: real, deferred: true }; }   // W-0403 방어전 — 사람이 판을 둔다
     var rep = war.march(best.from, best.to, best.lead, real);
     return rep && rep.ok ? { from: best.from, to: best.to, won: rep.won, send: real } : null;
   }

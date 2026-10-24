@@ -595,12 +595,25 @@
    * @param officerIds 데려갈 무장 (이 성에 있고, 성한 사람만)
    * @returns 전황 보고 { won, log[], lossA, lossD, taken, duel }
    */
-  function march(fromId, toId, officerIds, troops) {
+  function march(fromId, toId, officerIds, troops, opts) {
     var setup = setupMarch(fromId, toId, officerIds, troops);
     if (!setup.ok) { return setup; }
+    if (opts && opts.grid && opts.grid.kind) { setup.atk.grid = opts.grid; }   // W-0403 방어 판 결과 — 공격군 보정(stepRound 한 곳), 없으면 옛 판정 그대로
     var report = fight(setup.atk, setup.def, setup.to, setup.toId, setup.land, false);
     return finishMarch(setup, report);
   }
+
+  /* ── W-0403 방어전 — AI 가 내 성을 치면 사람이 단추로 넘긴 달에만(armDefend) 그 공격을 이 줄에 미뤄 두고, 화면이 판을 둔 뒤 march(…, {grid}) 한 번.
+     줄은 저장하지 않는다(탭을 닫으면 그 공격은 없던 일 — 반쪽 상태 없음). 진단·자동 대국이 부르는 endMonth 는 armDefend 를 안 켜니 옛 길 그대로 ── */
+  var defQ = [], defArmed = false;
+  function armDefend(on) { if (on) { defQ = []; } defArmed = !!on; }
+  function wantDefend(toId) {
+    var R = global.DG.rtk, c = R.city(toId), TS = global.DG.tactics;
+    return defArmed && !!c && c.force === R.me() && !!(TS && TS.srpgOn && TS.srpgOn()) && !!core.tuned('rtk.srpgDefend', 1) && defQ.length < (+core.tuned('rtk.defendMax', 2) || 0);
+  }
+  function queueDefense(d) { defQ.push(d); return defQ.length; }
+  function takeDefense() { return defQ.shift() || null; }
+  function pendingDefense() { return defQ.slice(); }
 
   /**
    * 친다 — **개입형**. `march()` 와 사전 준비는 완전히 같지만, 판정을 합마다
@@ -1452,6 +1465,7 @@
     HISTORY_BRANCHES: HISTORY_BRANCHES, checkHistoryBranch: checkHistoryBranch,
     reinforce: reinforce, reliefOf: reliefOf, forecast: forecast,
     canMarch: canMarch, march: march, marchInteractive: marchInteractive, capture: capture,
+    armDefend: armDefend, wantDefend: wantDefend, queueDefense: queueDefense, takeDefense: takeDefense, pendingDefense: pendingDefense,
     transfer: transfer, moveOfficer: moveOfficer,
     camps: camps, campsOf: campsOf, campById: campById, campAt: campAt,
     besieged: besieged, monthsLeft: monthsLeft,

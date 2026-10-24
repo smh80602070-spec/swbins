@@ -293,27 +293,31 @@
     });
     return true;
   }
-  /** 판 결과를 그 출진에 — 보정·전사(dead)·중상(hurt)·열전·사연 카드. 군주는 판이 끝나지 않게 중상으로 돌린다 */
-  function marchApply(m, out) {
-    var atk = m.atk, A = apply(out, { to: m.toId, where: m.toId }), off = OFF(), R = global.DG.rtk, st = R.state(), CD = global.DG.cityData;
-    var by = out.by || {}, foeName = R.forceName(m.def.force) + '군', hurt = A.wounded.slice(), dead = [];
-    atk.grid = { give: 1 + A.winPct / 100, take: A.lossMul, kind: A.kind };
-    m.lines('♟️ 전술판 ' + out.name + ' — 남은 합 공 위력 ' + (A.winPct >= 0 ? '+' : '') + A.winPct + '%' + (A.lossMul !== 1 ? ' · 받는 피해 ×' + A.lossMul : ''));
-    A.fallen.forEach(function (id) { if (off.lordOf(atk.force) === id) { hurt.push({ id: id, months: WOUND_MONTHS }); } else { dead.push(id); } });
-    function drop(id) { var i = atk.officers.indexOf(id); if (i >= 0) { atk.officers.splice(i, 1); } }
+  /** 판에서 쓰러진 내 장수 — 전사(dead)·중상(hurt)·열전. 군주는 판이 끝나지 않게 중상으로 돌린다. 출진(marchApply)·방어(defenseApply) 공용(W-0403) */
+  function fallOut(force, A, whereId, by, foeName, line) {
+    var off = OFF(), R = global.DG.rtk, CD = global.DG.cityData, hurt = A.wounded.slice(), dead = [];
+    A.fallen.forEach(function (id) { if (off.lordOf(force) === id) { hurt.push({ id: id, months: WOUND_MONTHS }); } else { dead.push(id); } });
     dead.forEach(function (id) {
       var rc = off.rec(id), c = rc.city ? R.city(rc.city) : null;
       rc.dead = true;
       if (c && c.gov === id) { c.gov = null; }
-      drop(id);
-      annalize([id], m.toId, by[id] || foeName);
-      m.lines('⚰️ ' + off.find(id).name + ' 이(가) ' + CD.find(m.toId).name + ' 아래에서 쓰러졌다');
+      annalize([id], whereId, (by || {})[id] || foeName);
+      line('⚰️ ' + off.find(id).name + ' 이(가) ' + CD.find(whereId).name + ' 아래에서 쓰러졌다');
     });
     hurt.forEach(function (w) {
       off.rec(w.id).hurt = Math.max(off.rec(w.id).hurt || 0, w.months);
-      drop(w.id);
-      m.lines('🩹 ' + off.find(w.id).name + ' 이(가) 크게 다쳐 물러났다(' + w.months + '달)');
+      line('🩹 ' + off.find(w.id).name + ' 이(가) 크게 다쳐 물러났다(' + w.months + '달)');
     });
+    return { dead: dead, hurt: hurt };
+  }
+  /** 판 결과를 그 출진에 — 보정·전사(dead)·중상(hurt)·열전·사연 카드 */
+  function marchApply(m, out) {
+    var atk = m.atk, A = apply(out, { to: m.toId, where: m.toId }), R = global.DG.rtk, st = R.state();
+    atk.grid = { give: 1 + A.winPct / 100, take: A.lossMul, kind: A.kind };
+    m.lines('♟️ 전술판 ' + out.name + ' — 남은 합 공 위력 ' + (A.winPct >= 0 ? '+' : '') + A.winPct + '%' + (A.lossMul !== 1 ? ' · 받는 피해 ×' + A.lossMul : ''));
+    var fo = fallOut(atk.force, A, m.toId, out.by, R.forceName(m.def.force) + '군', m.lines), dead = fo.dead;
+    function drop(id) { var i = atk.officers.indexOf(id); if (i >= 0) { atk.officers.splice(i, 1); } }
+    dead.forEach(drop); fo.hurt.forEach(function (w) { drop(w.id); });
     /* 열전 사연 카드 한 장(tactics-view.js 가 정의) — 이미 떠 있는 사연이 있으면 덮지 않는다(기록은 annals 에 남았다) */
     var E = global.DG.event;
     if (dead.length && E && E.DEFS && E.DEFS.tac_fallen && st.events && !st.events.pending && atk.force === st.me) {
@@ -505,6 +509,33 @@
     return r;
   }
 
+  /* ── W-0403 방어전 — 내 성(d.to)을 d.force 가 친다. 내 편 = 그 성 장수 셋(다친 사람 빼고)·성 병력 부대, 적 = 공격 장수·병력.
+     목표는 늘 hold(6턴 버티기), 공성 판을 좌우로 뒤집어 성벽이 내 쪽 ── */
+  /** 방어 판 열쇠(tacticsView.open 의 opts) — d = { force, from, to, lead, troops } */
+  function defenseOpts(d) {
+    var R = global.DG.rtk, CD = global.DG.cityData, off = OFF(), to = R.city(d.to), st = R.state();
+    var mine = off.atCity(d.to, to.force).filter(function (h) { return !off.rec(h.id).hurt; }).slice(0, 3).map(function (h) { return h.id; });
+    return { seed: 'def|' + d.to + '|' + (st.turn || 0), land: CD.landOf(d.to).key, siege: true, defend: true, srpg: true, goal: 'hold',
+      mine: mine, foes: (d.lead || []).slice(0, 3), foeTroops: [d.troops], myTroops: [to.troops], to: d.to, where: CD.find(d.to).name };
+  }
+  /** 판을 좌우로 뒤집는다(성벽·성문이 왼쪽 = 내 쪽) — 유닛 세우기 전에 */
+  function mirror(b) {
+    var x, y, row, c2 = [];
+    for (y = 0; y < b.rows; y++) { row = b.cells.slice(y * b.cols, (y + 1) * b.cols).reverse(); for (x = 0; x < b.cols; x++) { c2.push(row[x]); } }
+    b.cells = c2;
+    if (b.gate && b.gate[0] >= 0) { b.gate = [b.cols - 1 - b.gate[0], b.gate[1]]; }
+    return b;
+  }
+  /** 방어 판 결과(내 쪽에서 본 outcome) → 공격군 보정 · 쓰러진 내 장수 처리. out 이 없으면(맡김) 보정 없음 */
+  function defenseApply(d, out) {
+    var lines = [];
+    if (!out) { return { grid: null, lines: lines }; }
+    var A = apply(out, { to: d.to }), R = global.DG.rtk;
+    fallOut(R.me(), A, d.to, out.by, R.forceName(d.force) + '군', function (l) { lines.push(l); });
+    lines.unshift('♟️ 방어 판 ' + out.name + ' — 적 위력 ' + (A.winPct > 0 ? '−' : '+') + Math.abs(A.winPct) + '%' + (A.kind === 'rout' ? ' · 적이 받는 피해 ×1.3' : ''));
+    return { grid: { give: 1 - A.winPct / 100, take: A.kind === 'rout' ? 1.3 : 1, kind: 'def-' + A.kind }, lines: lines, A: A };
+  }
+
   /** 진단·균형용 — 양쪽 다 AI 로 끝까지 둔다 */
   function autoPlay(b) {
     var guard = 0;
@@ -518,7 +549,7 @@
     hash: hash, makeBoard: makeBoard, cellAt: cellAt, coverAt: coverAt, officerUnit: officerUnit, troopUnit: troopUnit, unitsOf: unitsOf,
     unit: unit, alive: alive, moves: moves, move: move, hitChance: hitChance, attack: attack,
     aiTurn: aiTurn, endTurn: endTurn, outcome: outcome, apply: apply, annalize: annalize, autoPlay: autoPlay, permadeath: permadeath,
-    marchGrid: marchGrid, marchApply: marchApply, srpgOn: srpgOn,
+    marchGrid: marchGrid, marchApply: marchApply, srpgOn: srpgOn, fallOut: fallOut, defenseOpts: defenseOpts, defenseApply: defenseApply, mirror: mirror,
     SRPG_SIZE: SRPG_SIZE, HEIGHT_HIT: HEIGHT_HIT, COUNTER_HIT: COUNTER_HIT, BACK_HIT: BACK_HIT, ARMS: ARMS, BEATS: BEATS, ARM_NAME: ARM_NAME, GOALS: GOALS, GOAL_NAME: GOAL_NAME,
     HOLD_TURNS: HOLD_TURNS, SRPG_CAP: SRPG_CAP, PLOTS: PLOTS, FIRE_WIS: FIRE_WIS, PLOT_NAME: PLOT_NAME,
     makeBoardSrpg: makeBoardSrpg, unitsOfSrpg: unitsOfSrpg, heightAt: heightAt, isBack: isBack, hitMods: hitMods, hitChanceB: hitChanceB, goalText: goalText,

@@ -1695,5 +1695,29 @@
   "ticket": "W-0401",
   "since": "2026-10-25",
   "note": "D2(claude 2026-10-25): pw-tac-check srpg PC·폰 세로·가로 촬영 ○(12×10 산·공성·성문 고리·자동 전투) · 60판 57%·5.5턴"
+ },
+ {
+  "id": "rk.srpgDefend",
+  "name": "방어전 SRPG 판(W-0403) — AI 가 내 성을 치면(사람이 단추로 넘긴 달만) 공격을 미뤄 「⚔️ ○○군이 □□을 친다」 카드 → ♟️ 6턴 버티기 판(성벽 내 쪽) 또는 🤖 맡김 → 결과를 공격군 보정으로 같은 war.march 한 번 · 한 달 둘까지(rtk.defendMax) · 손잡이 rtk.srpgDefend(1 기본)",
+  "files": [
+   "src/war/01.js",
+   "src/war/02.js",
+   "js/rtk-ai.js",
+   "js/tactics.js",
+   "js/tactics-view.js",
+   "src/ui-rtk/01.js"
+  ],
+  "tests": [
+   "test-web W-0403 방어전",
+   "방어 60판 55%·5.6턴"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {
+   "B": "막는 싸움도 손으로"
+  },
+  "ticket": "W-0403",
+  "since": "2026-10-25",
+  "note": "D2(claude 2026-10-25): PC·폰 촬영 ○"
  }
 ]

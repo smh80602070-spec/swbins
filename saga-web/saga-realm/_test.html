@@ -7607,6 +7607,19 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var h1 = K.holdClip('__t', 'attack', 300, 1000), h2 = K.holdClip('__t', 'idle', 0, 1100), h3 = K.holdClip('__t', 'walk', 0, 1300), hold = h1.clip === 'attack' && h2.clip === 'attack' && h2.t > 1e6 && h3.clip === 'walk';   // ③ 공격 끝 0.14초 멈춤
       return (on && seen.length >= 2 && !bad.length && none && hold) ? ((idx ? 'K 그림 ' : '대역(시험 서버) ') + seen.join(', ') + ' · 없는 풀 = 시트 · 공격 끝 멈춤') : ('실패 켬 ' + on + ' · ' + seen.join(', ') + ' · 어긋남 ' + bad.join(',') + ' · 없는 풀 시트 ' + none + ' · 멈춤 ' + hold);
     });
+    t('W-0403 방어전 — 사람이 넘긴 달만 미룸(armDefend) · 내 성만 · 한 달 둘까지 · 방어 판 열쇠(hold·성벽 내 쪽) · 결과 → 공격군 보정(대승 위력 −25%·피해 ×1.3 / 패 +25%) · 맡김 = 보정 없음', function () {
+      fresh('cao'); var W = DG.war, T = DG.tactics, me = R.me(), mine = null, foeC = null, i, j;
+      for (i = 0; i < CD.CITIES.length && !mine; i++) { var c = CD.CITIES[i]; if (R.city(c.id).force !== me) { continue; } for (j = 0; j < c.adj.length; j++) { var o = R.city(c.adj[j]); if (o && o.force && o.force !== me) { mine = c.id; foeC = c.adj[j]; break; } } }
+      if (!mine) { return '(맞닿은 적 성 없음 — 생략)'; }
+      var off0 = W.wantDefend(mine); W.armDefend(true); var on1 = W.wantDefend(mine), notMine = W.wantDefend(foeC);
+      var d = { force: R.city(foeC).force, from: foeC, to: mine, lead: off.atCity(foeC, R.city(foeC).force).slice(0, 2).map(function (h) { return h.id; }), troops: 3000 };
+      W.queueDefense(d); W.queueDefense(d); var full = W.wantDefend(mine); W.armDefend(false); var after = W.wantDefend(mine) === false && W.pendingDefense().length === 2;
+      var o2 = T.defenseOpts(d), b = T.makeBoardSrpg(o2.seed, o2.land, true, o2.goal); var g0 = b.gate[0]; T.mirror(b);
+      var gr = T.defenseApply(d, { kind: 'rout', name: '대승', winPct: 25, lossMul: 0.7, fallen: [], wounded: [] }).grid, gl = T.defenseApply(d, { kind: 'lose', name: '패', winPct: -25, lossMul: 1, fallen: [], wounded: [] }).grid, ga = T.defenseApply(d, null).grid;
+      W.takeDefense(); W.takeDefense();
+      var ok = off0 === false && on1 === true && notMine === false && full === false && after && o2.goal === 'hold' && o2.defend && o2.siege && b.gate[0] === b.cols - 1 - g0 && Math.abs(gr.give - 0.75) < 1e-9 && gr.take === 1.3 && Math.abs(gl.give - 1.25) < 1e-9 && ga === null;
+      return ok || ('실패 ' + JSON.stringify({ off0: off0, on1: on1, notMine: notMine, full: full, after: after, goal: o2.goal, gate: [g0, b.gate[0], b.cols], gr: gr, gl: gl, ga: ga }));
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
