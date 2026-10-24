@@ -44,6 +44,7 @@ uniform float detile : hint_range(0.0, 1.0) = 0.0;
 uniform float detile_rot = 0.6;
 uniform float detile_patch = 0.45;
 
+uniform float wet : hint_range(0.0, 1.0) = 0.0; // G-0360 비 젖음(공용 weather_visual 이 넣는다 — 0 = 옛 화면 그대로)
 varying vec3 world_pos;
 varying vec3 world_normal;
 
@@ -170,4 +171,16 @@ void fragment() {
 	}
 	NORMAL_MAP = detail_normal * 0.5 + 0.5;
 	ROUGHNESS = detail_rough;
+	// G-0360 비 젖음 — terrain_triplanar(G-0359)와 같은 값: 한 단 어둡고 덜 거칠게, 평평한 곳엔 물웅덩이
+	if (wet > 0.001) {
+		float slope = 1.0 - clamp(normalize(world_normal).y, 0.0, 1.0);
+		float flat_w = 1.0 - smoothstep(0.08, 0.25, slope);
+		float pn = _value_noise(world_pos.xz * 0.09 + vec2(13.0, 5.0)) * 0.75 + _value_noise(world_pos.xz * 0.35 + vec2(2.0, 9.0)) * 0.25;
+		float puddle = smoothstep(0.6, 0.68, pn) * flat_w * wet;
+		ALBEDO *= mix(1.0, 0.64, wet);
+		ALBEDO = mix(ALBEDO, ALBEDO * 0.55, puddle);
+		ROUGHNESS = mix(ROUGHNESS, ROUGHNESS * 0.45, wet);
+		ROUGHNESS = mix(ROUGHNESS, 0.04, puddle);
+		NORMAL_MAP = mix(NORMAL_MAP, vec3(0.5, 0.5, 1.0), puddle);
+	}
 }

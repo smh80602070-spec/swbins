@@ -49,6 +49,50 @@ var _rain: CPUParticles3D
 var _snow: CPUParticles3D
 var last := {}   # 점검용: key·fog_density·cloud_cover·sun_mul
 
+## G-0359·G-0360 땅 젖음 — 비가 오면 땅 재질(아래 두 셰이더의 wet)을 WET_IN 초에 걸쳐 1 로, 그치면 WET_OUT 초에 걸쳐 0 으로.
+## 땅 재질은 씬에서 그 셰이더를 쓰는 material_override 를 모은다(지역이 나중에 지어지니 WET_SCAN 초마다 다시). SAGA_WET=0 이면 안 적심.
+## 1만리 terrain_triplanar · 3마을(곡면) curved_triplanar. 4종횡 들판·5천하 땅은 StandardMaterial 이라 아직 안 젖는다.
+const WET_SHADERS := ["res://saga_core/shaders/terrain_triplanar.gdshader", "res://saga_core/shaders/curved_triplanar.gdshader"]
+const WET_IN := 20.0
+const WET_OUT := 60.0
+const WET_SCAN := 5.0
+var wet := 0.0
+var _wet_mats: Array[ShaderMaterial] = []
+var _wet_scan := 0.0
+var _wet_sent := -1.0
+
+
+## 젖음 셰이더를 쓰는 땅 재질들(씬 전체 — 지역 빌더가 만든 것)
+static func terrain_mats(root: Node) -> Array[ShaderMaterial]:
+	var out: Array[ShaderMaterial] = []
+	if root == null:
+		return out
+	for n in root.find_children("*", "GeometryInstance3D", true, false):
+		var m := (n as GeometryInstance3D).material_override as ShaderMaterial
+		if m != null and m.shader != null and WET_SHADERS.has(m.shader.resource_path) and not out.has(m):
+			out.append(m)
+	return out
+
+
+## 젖음 한 걸음(순수) — 비면 WET_IN 초에 1 까지, 아니면 WET_OUT 초에 0 까지
+static func wet_step(w: float, raining: bool, dt: float) -> float:
+	return minf(1.0, w + dt / WET_IN) if raining else maxf(0.0, w - dt / WET_OUT)
+
+
+func _wet_tick(delta: float) -> void:
+	if OS.get_environment("SAGA_WET") == "0":
+		return
+	wet = wet_step(wet, key == "rain", delta)
+	_wet_scan -= delta
+	if _wet_scan <= 0.0:
+		_wet_scan = WET_SCAN
+		_wet_mats = terrain_mats(get_tree().current_scene)
+		_wet_sent = -1.0
+	if absf(wet - _wet_sent) > 0.01:
+		_wet_sent = wet
+		for m in _wet_mats:
+			m.set_shader_parameter("wet", wet)
+
 
 static func enabled() -> bool:
 	return OS.get_environment("SAGA_WEATHER") != "0"
@@ -106,12 +150,14 @@ func _ready() -> void:
 	add_to_group(GROUP)
 	_we = get_parent().get_node_or_null("WorldEnvironment") as WorldEnvironment
 	refresh_now()
+	wet = 1.0 if key == "rain" else 0.0   # G-0360 들어올 때 이미 비면 땅도 이미 젖어 있다
 
 
 func _process(delta: float) -> void:
 	_check -= delta
 	if _check <= 0.0:
 		refresh_now()
+	_wet_tick(delta)
 	var p: CPUParticles3D = _rain if _rain and _rain.emitting else (_snow if _snow and _snow.emitting else null)
 	if p:
 		var cam := get_viewport().get_camera_3d()
