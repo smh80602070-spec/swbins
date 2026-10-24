@@ -17,7 +17,7 @@ const ORE_INFO := {
 	"iron": {"name": "철석", "emoji": "⛏️", "label": "광석"},
 	"copper": {"name": "구리", "emoji": "🟤", "label": "광석"},
 	"silver": {"name": "은괴", "emoji": "⚪", "label": "광석"},
-	"oldcoin": {"name": "옛 동전", "emoji": "🪙", "label": "광석"},
+	"oldcoin": {"name": "옛 동전", "emoji": "💰", "label": "광석"},
 	"shard": {"name": "토기 조각", "emoji": "🏺", "label": "화석"},
 	"fern": {"name": "고사리 화석", "emoji": "🌿", "label": "화석"},
 	"fishf": {"name": "물고기 화석", "emoji": "🐟", "label": "화석"},
@@ -104,7 +104,7 @@ static func label_of(F: Node, run: Dictionary, o: Dictionary) -> String:
 		"torch":
 			return "🔥 횃불 받침 — " + ("%d초 남음" % torch_left(F) if lit(F) else "솔방울 1 로 2분 밝힌다 [G]")
 		"ladder":
-			return "🪜 %d층으로 내려간다 [G]%s" % [f + 1, "" if f == 0 or (run.shooed as Dictionary).has(f) else " (짐승이 지킨다)"]
+			return "🧗 %d층으로 내려간다 [G]%s" % [f + 1, "" if f == 0 or (run.shooed as Dictionary).has(f) else " (짐승이 지킨다)"]
 		"relic":
 			return "🏺 유물 자리 (가져갔다)" if bool(st(F).relic) else "🏺 옛 유물 — 가져간다 [G]"
 	return String(o.t)
@@ -164,7 +164,7 @@ static func down(F: Node, run: Dictionary) -> Dictionary:
 	var s := st(F)
 	if f > int(s.deepest):
 		s["deepest"] = f
-	return {"ok": true, "kind": "down", "floor": f, "text": "🪜 지하 %d층 — %s" % [f, "횃불이 밝다" if lit(F) else "어둡다, 횃불 받침을 찾자"]}
+	return {"ok": true, "kind": "down", "floor": f, "text": "🧗 지하 %d층 — %s" % [f, "횃불이 밝다" if lit(F) else "어둡다, 횃불 받침을 찾자"]}
 
 
 ## 위로 — 0층에서 부르면 {kind: "leave"}(마을로 나간다).
@@ -173,7 +173,7 @@ static func up(run: Dictionary) -> Dictionary:
 	if f <= 0:
 		return {"ok": true, "kind": "leave", "text": "밖으로 나왔다 — 다시 마을이 둥글게 휘어 보인다."}
 	run["floor"] = f - 1
-	return {"ok": true, "kind": "up", "floor": f - 1, "text": "🪜 지하 %d층으로 올라왔다" % (f - 1) if f - 1 > 0 else "🪜 굴 첫 방으로 올라왔다"}
+	return {"ok": true, "kind": "up", "floor": f - 1, "text": "🧗 지하 %d층으로 올라왔다" % (f - 1) if f - 1 > 0 else "🧗 굴 첫 방으로 올라왔다"}
 
 
 static func hud(F: Node, run: Dictionary) -> String:

@@ -1136,7 +1136,7 @@ const SKILLS: Array[Dictionary] = [
 		"shape": "nova", "icon": "⚡", "cd": 10.0, "r": 3.82, "el": "lit",
 		"eff": "", "v": 2.4, "grow": 0.55, "desc": "벼락 감옥이 둘레를 가둔다." },
 	{ "key": "s_flamefan", "cls": "scholar", "br": 6, "row": 1, "name": "화선(火扇)",
-		"shape": "swing", "icon": "🪭", "cd": 6.0, "r": 3.2, "el": "fire",
+		"shape": "swing", "icon": "🎐", "cd": 6.0, "r": 3.2, "el": "fire",
 		"eff": "", "v": 1.7, "grow": 0.4, "desc": "부채에 불을 실어 앞 부채꼴을 쓸어 태운다." },
 	{ "key": "s_chichain", "cls": "scholar", "br": 6, "row": 2, "name": "기쇄(氣鎖)",
 		"shape": "chain", "icon": "🔗", "cd": 9.0, "r": 7.65, "el": "chi",

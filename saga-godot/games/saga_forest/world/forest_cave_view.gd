@@ -265,7 +265,7 @@ func _build_floor() -> void:
 	door.position = _spot("door") - CAVE_ORIGIN
 	_room.add_child(door)
 	_ladder(door, 2.6)
-	door.add_child(_label("🪜 위로%s [G]" % (" — 마을로" if int(run.floor) == 0 else ""), Vector3(0, 2.9, 0)))
+	door.add_child(_label("🧗 위로%s [G]" % (" — 마을로" if int(run.floor) == 0 else ""), Vector3(0, 2.9, 0)))
 	for o: Dictionary in Cave.objects(int(run.floor)):
 		var n := Node3D.new()
 		n.name = "Cave_" + String(o.id)

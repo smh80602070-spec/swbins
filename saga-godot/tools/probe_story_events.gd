@@ -259,7 +259,7 @@ func _initialize() -> void:
 	var lo := roundi(40.0 * 0.8)
 	var hi := roundi(40.0 * 1.2)
 	check(not_yet and sp.rescue.done and got == sp.rescue_gold and got >= lo and got <= hi
-		and toast.text == "🙏 구해줘서 고맙다며 사례금을 줬다 · 🪙+%d" % got and not is_instance_valid(captive),
+		and toast.text == "🙏 구해줘서 고맙다며 사례금을 줬다 · 💰+%d" % got and not is_instance_valid(captive),
 		"⑥ 하나 잡으면 아직 · 둘 다 잡으면 금 +%d(%d~%d) · 토스트 \"%s\" · 사람 몸 사라짐" % [got, lo, hi, toast.text])
 	ss.gold = g0
 	sp.free()
@@ -285,7 +285,7 @@ func _initialize() -> void:
 	var item_name := String(SC.item_def(key).get("name", ""))
 	check(shut and sp.chest.opened and cg == sp.chest_gold and cg >= roundi(52 * 0.8) and cg <= roundi(52 * 1.4)
 		and pickups.size() == 1 and SC.gear_pool_for(1.0).has(key) and absf(pickups[0].position.x - 20.0) < 0.01
-		and not chest_box.visible and once_c and toast_c == "💰 보물상자! 🪙+%d · 📦 %s" % [cg, item_name],
+		and not chest_box.visible and once_c and toast_c == "💰 보물상자! 💰+%d · 📦 %s" % [cg, item_name],
 		"⑦ 상자 R 밖(1.0m) 닫힘 · R 안(0.8m) 금 +%d(42~73) · 장비 %s 줍기 하나(풀 안) · 상자 숨음 · 한 번만 · 토스트 \"%s\"" % [cg, key, toast_c])
 	ss.gold = gc0
 	## R-5 리뷰 — 지금 낀 바로 그 키는 상자 후보에서 빠진다(같은 걸 다시 끼면 주문서 강화가 지워짐)

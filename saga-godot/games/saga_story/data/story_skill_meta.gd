@@ -129,7 +129,7 @@ const SKILLS := {
 	"p_banner": {"fx": "buff", "name": "군신강림(軍神降臨)", "emoji": "🏵️", "school": "w_su", "desc": "20초간 전장의 이름을 몸에 둘렀다"},
 	"p_stars": {"fx": "volley", "name": "성궁만천(星弓滿天)", "emoji": "🌌", "school": "a_yeon", "desc": "화살 열여섯이 별처럼 흩어진다"},
 	"p_sun": {"fx": "bolt", "name": "일월시(日月矢)", "emoji": "🌞", "school": "a_gwan", "desc": "해와 달을 한 살에 꿴다"},
-	"p_afterimage": {"fx": "melee", "name": "무영참(無影斬)", "emoji": "🫥", "school": "r_cham", "desc": "열두 번 그은 뒤에야 모습이 남는다"},
+	"p_afterimage": {"fx": "melee", "name": "무영참(無影斬)", "emoji": "👣", "school": "r_cham", "desc": "열두 번 그은 뒤에야 모습이 남는다"},
 	"p_gate": {"fx": "dash", "name": "유명문(幽冥門)", "emoji": "🚪", "school": "r_bo", "desc": "문을 열고 닫는 사이에 건너간다"},
 	"p_void": {"fx": "aoe", "name": "태허붕(太虛崩)", "emoji": "🌑", "school": "m_jin", "desc": "비어 있던 자리가 한꺼번에 무너져 내린다"},
 	"p_all": {"fx": "heal", "name": "만상환생(萬象還生)", "emoji": "🌱", "school": "m_saeng", "desc": "모든 모습이 처음으로 돌아간다 (체력 80%+)"},

@@ -18,7 +18,7 @@ const BRANCHES := [
 		{"id": "f5", "name": "향약 세우기", "desc": "내정 +5%", "stats": {"govPct": 5}},
 		{"id": "f6", "name": "물레방아", "desc": "군량 +10%", "stats": {"foodPct": 10}},
 	]},
-	{"key": "trade", "name": "상", "emoji": "🪙", "desc": "금과 길", "nodes": [
+	{"key": "trade", "name": "상", "emoji": "💰", "desc": "금과 길", "nodes": [
 		{"id": "t1", "name": "저자 열기", "desc": "금 수입 +5%", "stats": {"goldPct": 5}},
 		{"id": "t2", "name": "나루 짓기", "desc": "조선 비용 -20%", "cost": {"order": "ships", "mul": 0.8}},
 		{"id": "t3", "name": "되 맞추기", "desc": "금 수입 +5%", "stats": {"goldPct": 5}},

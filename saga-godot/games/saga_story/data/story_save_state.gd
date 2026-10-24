@@ -879,7 +879,7 @@ static func run_line2(r: Dictionary) -> String:
 		return ""
 	var p: Array[String] = []
 	if int(r.get("bonus_gold", 0)) > 0:
-		p.append("🪙 등급 덤 +%d" % int(r.bonus_gold))
+		p.append("💰 등급 덤 +%d" % int(r.bonus_gold))
 	if int(r.get("shard", 0)) > 0:
 		p.append("💠 기억 조각 +%d" % int(r.shard))
 	if bool(r.get("best", false)):

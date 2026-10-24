@@ -241,7 +241,7 @@ func _physics_process(_delta: float) -> void:
 		StorySaveState.add_gold(chest_gold)
 		var pool: Array = chest_pool(lv)
 		chest_gear = String(pool[_ev_rng.randi() % pool.size()]) if not pool.is_empty() else ""
-		var msg := "💰 보물상자! 🪙+%d" % chest_gold
+		var msg := "💰 보물상자! 💰+%d" % chest_gold
 		if chest_gear != "":
 			StoryGearPickup.spawn_at(self, Vector3(float(chest.x), GROUND_Y, 0.0), chest_gear)
 			msg += " · 📦 %s" % String(StoryCombat.item_def(chest_gear).get("name", chest_gear))
@@ -280,7 +280,7 @@ func _physics_process(_delta: float) -> void:
 			if _captive != null:
 				_captive.queue_free()
 				_captive = null
-			Toast.show(self, "🙏 구해줘서 고맙다며 사례금을 줬다 · 🪙+%d" % rescue_gold, 2.5)
+			Toast.show(self, "🙏 구해줘서 고맙다며 사례금을 줬다 · 💰+%d" % rescue_gold, 2.5)
 
 
 ## 자리 x 에 잡몹 하나 — 종은 이 사냥터 단계 풀에서, 걷는 방향도 같은 RNG 로.

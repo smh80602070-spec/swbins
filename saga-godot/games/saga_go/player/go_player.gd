@@ -114,7 +114,7 @@ var _last_move_dir := Vector3.ZERO
 var _action_t := 0.0
 var _action_move := 1.0
 var _plunge := false
-## G-0230 몰래 다가가기 — 웅크리기(Ctrl·폰 🫥): 걸음 ×0.5·달리기 안 됨. is_running = 이번 틱 달렸나(신수 시야 판정이 읽는다).
+## G-0230 몰래 다가가기 — 웅크리기(Ctrl·폰 👣): 걸음 ×0.5·달리기 안 됨. is_running = 이번 틱 달렸나(신수 시야 판정이 읽는다).
 const CROUCH_MUL := 0.5
 var crouching := false
 var is_running := false
@@ -908,7 +908,7 @@ func set_crouch(on: bool) -> void:
 	crouching = on
 	if not on:
 		_anim_scale(1.0)
-	Toast.show(self, "🫥 웅크렸다 — 걸음 절반 · 시야 안에서도 안 들킨다" if on else "🧍 일어섰다", 2.0)
+	Toast.show(self, "👣 웅크렸다 — 걸음 절반 · 시야 안에서도 안 들킨다" if on else "🧍 일어섰다", 2.0)
 
 func _build_hud() -> void:
 	var layer := CanvasLayer.new()
@@ -936,7 +936,7 @@ func _build_hud() -> void:
 		layer.add_child(b)
 		var c := Button.new()   # G-0230 웅크리기 — 점프 위 한 칸
 		c.name = "CrouchButton"
-		c.text = "🫥"
+		c.text = "👣"
 		c.custom_minimum_size = Vector2(90, 90)
 		c.anchor_left = 1.0
 		c.anchor_right = 1.0

@@ -10,7 +10,7 @@ const LEAN_BACK := -0.32   # 라디안 — 칼집에 넣듯 뒤로
 const LEAN_FWD := 0.18     # 새 무기를 뽑아 들며 앞으로
 const LOOK_EMOJI := {
 	"sword": "🗡️", "bow": "🏹", "spear": "🔱", "club": "🏏", "guandao": "⚔️", "axe": "🪓", "halberd": "🪓",
-	"staff": "🪄", "fan": "🪭", "brush": "🖌️", "scroll": "📜", "gauntlet": "🥊",
+	"staff": "✨", "fan": "🎐", "brush": "🖌️", "scroll": "📜", "gauntlet": "🥊",
 }
 
 var pose_left := 0.0   # 남은 자세 시간(점검이 읽는다)
