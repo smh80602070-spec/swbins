@@ -684,8 +684,8 @@
   }
   function flushTags() {
     ctx.textAlign = 'center';
-    tagQ.forEach(function (q) { ctx.font = '600 ' + q.px + 'px system-ui, sans-serif'; q.w = ctx.measureText(q.t).width + 4; q.h = q.px + 5; });   // W-0205 줄 사이 여유(옛 +2 — 붙어 보였다)
-    layoutLabels(tagQ).forEach(function (q) { if (!q.alpha) { return; } ctx.globalAlpha = q.ga || 1; if (q.lead) { ctx.strokeStyle = q.shade; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(q.x, q.y + 3); ctx.lineTo(q.x, q.oy - q.h * 0.7); ctx.stroke(); } ctx.font = '600 ' + q.px + 'px system-ui, sans-serif'; ctx.fillStyle = q.shade; ctx.fillText(q.t, q.x + 1, q.y + 1); ctx.fillStyle = q.fill; ctx.fillText(q.t, q.x, q.y); });
+    tagQ.forEach(function (q) { q.w = txtWidth(q.t, q.px) + 4; q.h = q.px + 5; });   // W-0205 줄 사이 여유(옛 +2 — 붙어 보였다)
+    layoutLabels(tagQ).forEach(function (q) { if (!q.alpha) { return; } ctx.globalAlpha = q.ga || 1; if (q.lead) { ctx.strokeStyle = q.shade; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(q.x, q.y + 3); ctx.lineTo(q.x, q.oy - q.h * 0.7); ctx.stroke(); } txtDraw(ctx, q.t, q.px, q.fill, q.shade, q.x, q.y, 'center'); });
     ctx.textAlign = 'left'; ctx.globalAlpha = 1; tagQ.length = 0;
   }
 
@@ -890,8 +890,34 @@
     });
   }
 
+  /* W-0389 ③-4 — 이름표 글자(그림자 + 글자, 프레임당 50여 번 fillText·글꼴 지정)를 작은 캔버스에 한 번 그려 두고 붙인다(캔버스 배율로 굽기).
+     글자 폭(measureText)도 기억 · 손잡이 world.labelCache 0 = 옛 길 */
+  var txtC = {}, txtN = 0, txtWs = {}, txtWN = 0, txtM = null;
+  function txtFont(px) { return '600 ' + px + 'px system-ui, sans-serif'; }
+  function txtOn() { return !!+core.tuned('world.labelCache', 1) && typeof document !== 'undefined'; }
+  function txtWidth(t, px) {
+    var k = t + '\u0001' + px, w = txtWs[k];
+    if (w === undefined) { if (!txtM) { txtM = document.createElement('canvas').getContext('2d'); } if (txtWN > 800) { txtWs = {}; txtWN = 0; } txtM.font = txtFont(px); w = txtWs[k] = txtM.measureText(t).width; txtWN++; }
+    return w;
+  }
+  function txtDraw(c, t, px, fill, shade, x, y, align) {
+    if (!txtOn()) { c.textAlign = align || 'left'; c.font = txtFont(px); c.fillStyle = shade; c.fillText(t, x + 1, y + 1); c.fillStyle = fill; c.fillText(t, x, y); c.textAlign = 'left'; return; }
+    var tf = c.getTransform ? c.getTransform() : null, kk = tf && tf.a > 0 ? tf.a : 1, key = t + '\u0001' + px + '\u0001' + fill + '\u0001' + shade + '\u0001' + kk, e = txtC[key];
+    if (!e) {
+      if (txtN > 600) { txtC = {}; txtN = 0; }
+      var cv = document.createElement('canvas'), g = cv.getContext('2d'), m, asc, dsc, w, h;
+      g.font = txtFont(px); m = g.measureText(t);
+      asc = Math.ceil(m.actualBoundingBoxAscent > 0 ? m.actualBoundingBoxAscent : px * 0.95) + 1; dsc = Math.ceil(m.actualBoundingBoxDescent > 0 ? m.actualBoundingBoxDescent : px * 0.3) + 3; w = Math.ceil(m.width) + 4; h = asc + dsc;
+      cv.width = Math.max(1, Math.ceil(w * kk)); cv.height = Math.max(1, Math.ceil(h * kk));
+      g = cv.getContext('2d'); g.scale(kk, kk); g.font = txtFont(px);
+      g.fillStyle = shade; g.fillText(t, 2, asc + 1); g.fillStyle = fill; g.fillText(t, 1, asc);
+      e = txtC[key] = { cv: cv, w: w, h: h, asc: asc, tw: m.width }; txtN++;
+    }
+    c.drawImage(e.cv, x - (align === 'center' ? 1 + e.tw / 2 : align === 'right' ? 1 + e.tw : 1), y - e.asc, e.w, e.h);
+  }
   function label(ctx, text, x, y, color, align, z) {
     z = core.clamp(z || 1, 0.6, 1.3);
+    if (txtOn()) { txtDraw(ctx, text, Math.round(12 * z), color, 'rgba(0,0,0,0.6)', x, y, align || 'left'); return; }
     ctx.textAlign = align || 'left';
     ctx.font = '600 ' + Math.round(12 * z) + 'px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(0,0,0,0.6)';

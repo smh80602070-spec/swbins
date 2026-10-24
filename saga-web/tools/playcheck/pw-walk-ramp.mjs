@@ -31,7 +31,7 @@ const RAMP = async (secs) => {
   const F = () => (DG.field2d && DG.field2d.chunkStats ? DG.field2d.chunkStats() : {});
   const CP = CanvasRenderingContext2D.prototype, cnt = { drawImage: 0, fill: 0, getImageData: 0, fillText: 0, createCanvas: 0 }, keep = {};
   const stk = () => (new Error().stack || '').split('\n').slice(3, 6).map((l) => { const m = l.match(/at (\S+)/), q = l.match(/:(\d+):\d+\)?$/); return (m ? m[1] : '?') + ':' + (q ? q[1] : ''); }).join(' < ');
-  ['drawImage', 'fill', 'getImageData', 'fillText'].forEach((k) => { keep[k] = CP[k]; CP[k] = function () { cnt[k]++; if (window.__WR_STACK && (k === 'fill' || k === 'drawImage') && cnt[k] % 23 === 0) { const B = window.__WR_STACK, kk = k + ' ' + stk(); B[kk] = (B[kk] || 0) + 1; } return keep[k].apply(this, arguments); }; });
+  ['drawImage', 'fill', 'getImageData', 'fillText'].forEach((k) => { keep[k] = CP[k]; CP[k] = function () { cnt[k]++; if (window.__WR_STACK && (k === 'fill' || k === 'drawImage' || k === 'fillText') && cnt[k] % 23 === 0) { const B = window.__WR_STACK, kk = k + ' ' + stk(); B[kk] = (B[kk] || 0) + 1; } return keep[k].apply(this, arguments); }; });
   const dce = document.createElement; document.createElement = function (t) { if (t === 'canvas') { cnt.createCanvas++; } return dce.apply(this, arguments); };
   const out = []; let n = 0, worst = 0, last = performance.now(), t0 = last, s0 = F();
   await new Promise((done) => {
