@@ -548,5 +548,6 @@ func _die() -> void:
 			parent.add_child(kid)
 			kid.global_position = global_position + offset
 		Toast.show(parent, "👤 그림자가 갈라졌다", 2.5)
+	preload("res://games/saga_dungeon/world/health_globe.gd").drop(get_parent(), global_position, is_boss, not elite_key.is_empty())   # G-0344 피 구슬
 	LootPickup.spawn_at(get_parent(), global_position, _floor_num, is_boss, not elite_key.is_empty(), 1.0, _mode_on)
 	queue_free()

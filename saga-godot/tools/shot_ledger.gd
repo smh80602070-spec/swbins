@@ -411,3 +411,12 @@ static func go_standoff(tree: SceneTree) -> void:
 		_later(tree, 8, func() -> void:
 			so.call("_lunge", so.call("_nearest", pl, list))
 			so.call("tick", 0.25)))
+
+
+## G-0344 2나락 피 구슬 — 체력 가득인 채 내 앞에 우두머리 몫 셋을 떨궈 둔다(가득이면 끌려오지 않고 남음)
+static func dg_globe(tree: SceneTree) -> void:
+	_later(tree, 40, func() -> void:
+		var pl := _player(tree)
+		if pl == null:
+			return
+		preload("res://games/saga_dungeon/world/health_globe.gd").drop(tree.current_scene, pl.global_position + Vector3(-2.4, 0.0, 0.4), true, false))

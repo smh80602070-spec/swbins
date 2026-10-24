@@ -166,6 +166,7 @@ const CUTS := [
 	["lg_dg_bond", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_bond", ["@tree"]]]],   # G-0341 HUD 부대 줄 우정 꼬리표
 	["lg_go_weakpart", GO, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "go_weakpart", ["@tree"]]]],   # G-0342 보스 약점 표식(주황 빛 공)
 	["lg_go_standoff", GO, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "go_standoff", ["@tree"]]]],   # G-0343 대치 — 달려드는 놈 예고 빛·대치 알림
+	["lg_dg_globe", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_globe", ["@tree"]]]],   # G-0344 피 구슬 셋(가득이라 남음)
 	["lg_dg_trail", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_legend", ["@tree"]], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0325 ← G-0290 전설 잔광
 	["lg_dg_rise", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rise", ["@tree"]]]],   # G-0325 ← G-0293 난입 솟음(한 컷씩 — time_scale)
 	["lg_dg_break", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_breakables", ["@tree"]]]],   # G-0325 ← G-0307 부서지는 통

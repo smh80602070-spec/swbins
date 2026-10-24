@@ -6031,5 +6031,22 @@
   "ticket": "G-0343",
   "since": "2026-10-24",
   "note": "장부 go.md 대치(고스트 오브 쓰시마) · SAGA_STANDOFF=0 · 웅크림은 몰래 다가가기 길 · 촬영 shot_scene lg_go_standoff"
+ },
+ {
+  "id": "gd.dg.globe",
+  "name": "2나락 피 구슬 — 적이 쓰러지며 붉은 구슬(잡졸 22%·정예 1·우두머리 3), 3m 안이면 끌려와 최대 체력 12% 회복, 가득이면 남음, 25초 뒤 사라짐",
+  "files": [
+   "games/saga_dungeon/world/health_globe.gd",
+   "games/saga_dungeon/world/dungeon_enemy.gd"
+  ],
+  "tests": [
+   "globe"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0344",
+  "since": "2026-10-24",
+  "note": "장부 dungeon.md 피 구슬(디아블로 3) · SAGA_GLOBE=0 · 촬영 shot_scene lg_dg_globe"
  }
 ]
