@@ -19,6 +19,7 @@ const CombatFx := preload("res://saga_core/combat_fx.gd")
 ## 프로파일 같은 값 — 66-1 "톤은 같게"). 안개 색 = 지평선 색(102-2 규칙).
 const SKY_HORIZON := Color(0.76, 0.88, 0.96)
 const SKY_HORIZON_REAL := Color(0.72, 0.81, 0.92)   # G-0141 — 사실적 하늘 지평선(조금 더 희뿌옇게)
+const STORY_FOG_SKY := 0.05   # G-0353 4종횡 하늘에 덮는 안개 몫(공용 env_pc 0.3)
 const TOON_SKY_SCENE_PREFIX := "res://games/saga_go/"  # check_refs:allow — 씬 경로 판별용 문자열일 뿐 GO 스크립트를 부르지 않는다
 ## GO 만 안개를 옅게 — env_*.tres 의 0.012 는 방 하나·마을 하나 크기 판(다섯 판 공용) 값이라, 이어진 네 지역을 걷는 GO 에선
 ## 맑은 날(날씨 배율 0.6)에도 100m 앞이 절반 가려져 화면이 뿌옜다(2026-09-26 창 모드 촬영). 원신처럼 멀리 산이 비치게.
@@ -70,6 +71,10 @@ func _pick_environment() -> void:
 		if _real_sky_scene(scene_path):
 			var env2 := base.duplicate() as Environment
 			env2.sky = _real_sky()
+			## G-0353 — 4종횡은 옆에서 보는 판이라 하늘이 화면 뒤 전체 — 공용 안개가 하늘을 30% 덮어 흰 보랏빛으로 씻었다("뿌옇다").
+			## 하늘은 하늘빛 그대로(GO 가 0.35 로 낮춘 것과 같은 까닭), 먼 숲·언덕 안개는 그대로.
+			if scene_path.begins_with("res://games/saga_story/"):   # check_refs:allow — 경로 판별 문자열
+				env2.fog_sky_affect = STORY_FOG_SKY
 			environment = env2
 			## G-0250 — 시간대 빛(새벽·낮·노을·밤). 씬 뿌리에 형제로(형제 _ready 가 다 돈 뒤 — story_sky 가 env 를 갈아 끼운 다음).
 			if DayLight.enabled() and owner != null:

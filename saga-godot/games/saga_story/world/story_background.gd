@@ -24,6 +24,7 @@ const CaveBackdrop := preload("res://games/saga_story/world/story_cave_backdrop.
 const StoryLook := preload("res://games/saga_story/data/story_look.gd")   # G-0187
 const FG_GRASS_GLB := "res://assets/world/grass_tuft_01.glb"
 const FG_ROCK_GLB := "res://assets/world/rock_small_01.glb"
+const FG_GRASS_BACKLIGHT := Color(0.42, 0.5, 0.26)   # G-0353 앞 풀 역광 투과 — 해가 장면 뒤라 해 등진 잎이 거의 검었다
 
 const TREE_GLB := "res://assets/world/tree_broadleaf_01.glb"
 const HILL_GLB := "res://assets/world/hill_01.glb"
@@ -106,7 +107,20 @@ func _build_foreground() -> void:
 		mmi.name = String(spec[3])
 		mmi.multimesh = mm
 		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		if float(spec[2]) == 0.0:
+			_grass_backlight(mmi, mesh)
 		add_child(mmi)
+
+
+## G-0353 — 풀 GLB 제 재질 사본에 역광 투과(잎을 뒤에서 비추는 해가 앞으로 비쳐 보임). 다른 재질(셰이더)이면 그대로.
+static func _grass_backlight(mmi: MultiMeshInstance3D, mesh: Mesh) -> void:
+	var m := mesh.surface_get_material(0) as StandardMaterial3D
+	if m == null:
+		return
+	var c := m.duplicate() as StandardMaterial3D
+	c.backlight_enabled = true
+	c.backlight = FG_GRASS_BACKLIGHT
+	mmi.material_override = c
 
 
 func _build_scenery() -> void:
