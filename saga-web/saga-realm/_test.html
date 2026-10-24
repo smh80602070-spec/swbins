@@ -154,6 +154,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/ui-rtk-cards.js"></script>
 <script src="js/live-portrait.js"></script>
 <script src="js/rtk-hand.js"></script>
+<script src="js/region-view.js"></script>
 <script src="js/ui-rtk.js"></script>
 <script src="js/menu-grid.js"></script>
 <script src="js/me-adapter.js"></script>
@@ -3050,7 +3051,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var svg = document.querySelector('#realm .rmap');
       var cities = svg ? svg.querySelectorAll('[data-city]').length : 0;
       var links = svg ? svg.querySelectorAll('.rlink').length : 0;
-      return cities === CD.CITIES.length && links > 30 && ('성 ' + cities + ' 점 · 길 ' + links + ' 줄');
+      var RVt = DG.regionView && DG.regionView.on() ? DG.regionView : null, want = RVt ? RVt.cities(RVt.current()).length : CD.CITIES.length;   // W-0400 지역 화면이면 그 지역 성만
+      return cities === want && links > (RVt ? 3 : 30) && ('성 ' + cities + ' 점 · 길 ' + links + ' 줄');
     });
 
     t('성을 열면 명령표가 뜬다', function () {
@@ -7481,6 +7483,16 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var ok = Array.isArray(m.today) && Array.isArray(m.week) && rows.every(function (r) { return r.label && r.max > 0; }) && (rows.length > 0 || !!m.note);
       var h = P.render(m), drew = h.indexOf('goals-panel') > 0 && (m.today || []).every(function (r, k) { return h.indexOf('data-gp-row="t' + k + '"') > 0; }) && (m.week || []).every(function (r, k) { return h.indexOf('data-gp-row="w' + k + '"') > 0; });
       return ok && drew && P.left(3700) === '1시간 1분' && ('오늘 ' + m.today.length + ' · 이번 주 ' + m.week.length + (m.claim ? ' · 보상 ' + m.claim.state : '')) || '실패 ' + ok + ',' + drew + ' ' + JSON.stringify(m).slice(0, 200);
+    });
+    t('W-0400 지역 단위 전략 지도 — 성 전부 한 지역·이웃 대칭·고립 0 · 첫 화면 = 내 성 많은 지역 · 지도엔 그 지역 성만(≤12) · 화살표 누르면 이웃 지역 · 손잡이 0 이면 옛 전체', function () {
+      var V = DG.regionView; if (!V) { return '실패 regionView 없음'; }
+      var none = DG.cityData.CITIES.filter(function (d) { return !V.regionOf(d.id); }).length, asym = 0, iso = 0;
+      V.REGIONS.forEach(function (r) { var nb = V.neighbors(r.id); if (!nb.length) { iso++; } nb.forEach(function (n) { if (V.neighbors(n).indexOf(r.id) < 0) { asym++; } }); });
+      fresh('cao'); var st = DG.rtk.state(); delete st.view; var home = V.home(), cur = V.current(); DG.ui.renderMap();
+      var shown = document.querySelectorAll('#realm .rcity').length, out = document.querySelectorAll('#realm [data-region]').length, nb0 = V.neighbors(cur)[0];
+      V.set(nb0); DG.ui.renderMap(); var moved = V.current() === nb0 && st.view.region === nb0;
+      DG.core.setTune('realm.regionView', 0); DG.ui.renderMap(); var all = document.querySelectorAll('#realm .rcity').length; DG.core.setTune('realm.regionView', 1); delete st.view; DG.ui.renderMap();
+      return (none === 0 && asym === 0 && iso === 0 && cur === home && shown > 0 && shown <= 12 && out === V.neighbors(home).length && moved && all > shown) || ('실패 지역 없음 ' + none + ' · 비대칭 ' + asym + ' · 고립 ' + iso + ' · 첫 ' + cur + '/' + home + ' · 성 ' + shown + ' · 화살표 ' + out + ' · 넘김 ' + moved + ' · 옛 전체 ' + all);
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

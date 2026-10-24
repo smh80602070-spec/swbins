@@ -199,6 +199,56 @@
      -30/180 → -55/205 로(아래쪽 150 은 그대로 유지) 다시 넓혔다. */
   var MAP_VB = { x: -140, y: -55, w: 380, h: 205 };
   var MAP_ZOOM_MAX = 6;
+  /* W-0400 지역 단위 전략 지도(region-view.js) — 전체 범위 MAP_VB 를 지금 지역 경계로 바꿔 끼우고 그 지역 성만 그린다. 손잡이 realm.regionView 0 = 옛 전체 */
+  var MAP_VB_ALL = { x: -140, y: -55, w: 380, h: 205 }, regionShown = null;
+  function RVw() { var V = global.DG.regionView; return V && V.on() ? V : null; }
+  function inRegion(d) { var V = RVw(); return !V || V.regionOf(d.id) === regionShown; }
+  function regionSync() { var V = RVw(), rid = V ? V.current() : null, b = (rid && V.bbox(rid)) || MAP_VB_ALL; if (rid === regionShown && (rid || MAP_VB.w === b.w)) { return false; } regionShown = rid; MAP_VB.x = b.x; MAP_VB.y = b.y; MAP_VB.w = b.w; MAP_VB.h = b.h; mapCx = b.x + b.w / 2; mapCy = b.y + b.h / 2; mapZoom = 1; return true; }
+  /** 이웃 지역 화살표 — 이웃마다 하나(지역 밖으로 나가는 첫 길 쪽), 누르면 그 지역(data-region) */
+  function regionArrows() {
+    var V = RVw(), L = V ? V.links(regionShown) : [], seen = {}, out = '', i, a, b, dx, dy, d, x, y, B = MAP_VB;
+    for (i = 0; i < L.length; i++) {
+      if (seen[L[i].rid]) { continue; } seen[L[i].rid] = 1;
+      a = L[i].from; b = L[i].to; dx = b.x - a.x; dy = b.y - a.y; d = Math.max(0.001, Math.hypot(dx, dy));
+      x = core.clamp(a.x + dx / d * 5, B.x + 7, B.x + B.w - 7); y = core.clamp(a.y + dy / d * 5, B.y + 5, B.y + B.h - 7);
+      out += '<g class="rgo" data-region="' + L[i].rid + '" style="cursor:pointer"><line x1="' + a.x + '" y1="' + a.y + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '" stroke="#f3d27a" stroke-width="0.4" stroke-dasharray="0.9 0.6"/>' +
+        '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="1.5" fill="rgba(30,22,10,0.78)" stroke="#f3d27a" stroke-width="0.5"/>' +
+        '<text x="' + x.toFixed(1) + '" y="' + (y + 0.55).toFixed(1) + '" font-size="1.5" text-anchor="middle" fill="#f3d27a">➜</text>' +
+        '<text x="' + x.toFixed(1) + '" y="' + (y + 3.4).toFixed(1) + '" font-size="1.7" text-anchor="middle" fill="#fff4d6" stroke="rgba(0,0,0,0.7)" stroke-width="0.5" paint-order="stroke">' + V.name(L[i].rid) + '</text></g>';
+    }
+    return out;
+  }
+  /** W-0400 ③ 「🗺 천하도」 — 지도 왼쪽 위 단추(지금 지역 이름) · 누르면 지역 카드 목록(이름·성·내 성·⚔ 맞닿음). 지형 그림 없음, 카드를 누르면 그 지역 */
+  var regionListOpen = false, regionHudEl = null;
+  /** 화면 고정 층(#rregion-hud) — 2D 지도 상자(#realm)는 3D 모드에서 숨어 있어 그 안에 두면 PC 에서 안 보였다. 3D 면 왼쪽 위 행동 줄 아래, 2D 면 지도 왼쪽 아래 */
+  function regionPanel(st) {
+    var V = RVw(), doc = global.document, s2 = '', i, r, L, mine, foe, j, c, d3 = !!(global.DG.realm3d && global.DG.realm3d.active && global.DG.realm3d.active());
+    if (!regionHudEl && doc && doc.body) {
+      regionHudEl = doc.createElement('div'); regionHudEl.id = 'rregion-hud'; doc.body.appendChild(regionHudEl);
+      regionHudEl.addEventListener('click', function (e) {
+        var t = e.target.closest('[data-act="region-list"],[data-region]'); if (!t || !RVw()) { return; }
+        if (t.getAttribute('data-act') === 'region-list') { regionListOpen = !regionListOpen; } else { regionListOpen = false; RVw().set(t.getAttribute('data-region')); }
+        renderMap();
+      });
+    }
+    if (!regionHudEl) { return ''; }
+    if (!V || !st.started) { regionHudEl.innerHTML = ''; return ''; }
+    regionHudEl.style.cssText = 'position:fixed;left:12px;' + (d3 ? 'top:205px' : 'bottom:114px') + ';z-index:40;max-width:calc(100vw - 24px)';
+    s2 += '<div class="rregion-btn" data-act="region-list" style="display:inline-block;padding:6px 10px;border-radius:10px;background:rgba(30,22,10,0.82);border:1px solid #f3d27a;color:#fff4d6;font-weight:700;font-size:14px;cursor:pointer">🗺 ' + esc(V.name(regionShown || V.current())) + ' ▾</div>';
+    if (regionListOpen) {
+      s2 += '<div class="rregion-list" style="position:absolute;left:0;' + (d3 ? 'top:40px' : 'bottom:42px') + ';width:min(520px,calc(100vw - 24px));max-height:55vh;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;padding:8px;border-radius:12px;background:rgba(20,15,8,0.94);border:1px solid #f3d27a">';
+      for (i = 0; i < V.REGIONS.length; i++) {
+        r = V.REGIONS[i]; L = V.cities(r.id); mine = 0; foe = 0;
+        for (j = 0; j < L.length; j++) { c = st.cities[L[j].id]; if (c && c.force === st.me) { mine++; } else if (c && c.force) { foe++; } }
+        s2 += '<div class="rregion-card" data-region="' + r.id + '" style="cursor:pointer;padding:6px 8px;border-radius:8px;background:' + (r.id === regionShown ? 'rgba(243,210,122,0.28)' : 'rgba(255,255,255,0.06)') + ';border:1px solid rgba(243,210,122,0.45);color:#fff4d6;font-size:13px">' +
+          '<b>' + esc(r.name) + '</b>' + (mine && foe ? ' ⚔' : '') + '<br><span style="opacity:.85">성 ' + L.length + (mine ? ' · 내 성 ' + mine : '') + '</span></div>';
+      }
+      s2 += '</div>';
+    }
+    regionHudEl.innerHTML = s2;
+    return '';
+  }
+  function regionAt(e) { var els2 = global.document.elementsFromPoint ? global.document.elementsFromPoint(e.clientX, e.clientY) : [], i, g; for (i = 0; i < els2.length; i++) { g = els2[i].closest && els2[i].closest('[data-region]'); if (g) { return g; } } return null; }
   var mapCx = MAP_VB.x + MAP_VB.w / 2, mapCy = MAP_VB.y + MAP_VB.h / 2, mapZoom = 1;
   var MAP_PAN_SPEED = 0.022;   // 조이스틱을 완전히 기울였을 때 프레임당 이동(뷰포트 폭의 비율)
 
@@ -251,6 +301,7 @@
   function centerOnMine(zoomTo) {
     var st = R().state();
     if (!st.started) { return; }
+    if (RVw() && (RVw().set(RVw().home()) || regionSync())) { renderMap(); }   // W-0400 내 땅으로 = 내 지역으로
     var xs = [], ys = [], i;
     for (i = 0; i < CD.CITIES.length; i++) {
       var d = CD.CITIES[i];
@@ -493,6 +544,7 @@
 
     els.realm.addEventListener('click', function (e) {
       if (mapDragMoved) { mapDragMoved = false; return; }
+      var rg = RVw() && (e.target.closest('[data-region]') || regionAt(e)); if (rg) { regionListOpen = false; RVw().set(rg.getAttribute('data-region')); renderMap(); return; }   // W-0400 이웃 지역 화살표·천하도 카드
       var n = e.target.closest('[data-city]') || (global.DG.cpanel && global.DG.cpanel.at(e));   /* 지도 포인터 캡처 때문에 마우스 클릭은 #realm 으로 온다 — 좌표로 성을 찾는다(W-0027) */
       if (n) { if (global.DG.cpanel && global.DG.cpanel.pick(n.getAttribute('data-city'))) { return; } openCity(n.getAttribute('data-city')); return; }
       if (e.target.closest('[data-act="center-mine"]')) { centerOnMine(); }

@@ -31,7 +31,7 @@
     return { x: segs[segs.length - 1].b.x, y: segs[segs.length - 1].b.y };
   }
 
-  var mapDone = 0, mapSeq = 0, mapRaf = 0; function renderMap() { mapDone = mapSeq; var WIN = mapWin(), VIS = CD.CITIES.filter(function (d) { return inWin(WIN, d); }); rendWin = WIN;   /* W-0367 보이는 창 +35% 안의 성만 그린다(폰 탭이 죽던 지도 통째 그리기) — 창이 그 밖으로 나가면 applyMapViewNow 가 다시 그린다 */
+  var mapDone = 0, mapSeq = 0, mapRaf = 0; function renderMap() { mapDone = mapSeq; regionSync(); var WIN = mapWin(), VIS = CD.CITIES.filter(function (d) { return inWin(WIN, d) && inRegion(d); }); rendWin = WIN;   /* W-0367 보이는 창 +35% 안의 성만 그린다(폰 탭이 죽던 지도 통째 그리기) — 창이 그 밖으로 나가면 applyMapViewNow 가 다시 그린다 */
     if (global.DG.mount && global.DG.mount.frame) { global.DG.mount.frame(); }
     var st = R().state();
     if (!st.started) { els.realm.innerHTML = ''; return; }
@@ -62,7 +62,7 @@
       for (j = 0; j < a.adj.length; j++) {
         var b = CD.find(a.adj[j]);
         var key = a.id < b.id ? a.id + b.id : b.id + a.id;
-        if (drawn[key] || (!inWin(WIN, a) && !inWin(WIN, b))) { continue; }
+        if (drawn[key] || (!inWin(WIN, a) && !inWin(WIN, b)) || !inRegion(a) || !inRegion(b)) { continue; }
         drawn[key] = true;
         var fa = st.cities[a.id].force, fb = st.cities[b.id].force;
         var same = fa && fa === fb;
@@ -102,7 +102,7 @@
       if (!pos) { continue; }
       s += mapMark('flag', pos.x, pos.y, 3.4, 'rjourney', '🚩', forceColor(jn[i].force));   // W-0330 깃발 그림(map_flag)
     }
-    if (global.DG.supplyLine) { s += global.DG.supplyLine.svg(); } if (global.DG.trade) { s += global.DG.trade.svg(); } s += '</svg>';   // W-0278 진 뒤 보급 길(초록 이어짐·빨강 끊김)
+    if (global.DG.supplyLine) { s += global.DG.supplyLine.svg(); } if (global.DG.trade) { s += global.DG.trade.svg(); } s += regionArrows() + '</svg>';   // W-0278 진 뒤 보급 길(초록 이어짐·빨강 끊김)
 
     /* 범례 — 살아 있는 세력 */
     var rank = R().ranking();
@@ -115,6 +115,7 @@
         esc(rank[i].name) + ' <b>' + rank[i].cities + '</b></span>';
     }
     s += '</div>';
+    s += regionPanel(st);   // W-0400 ③
 
     els.realm.innerHTML = s; declutterLabels(els.realm.querySelector('.rmap')); if (global.DG.rtkHand) { global.DG.rtkHand.redraw(); }   // W-0177 솟는 결과 글자를 다시 그려도 잃지 않게
     syncMapControls();

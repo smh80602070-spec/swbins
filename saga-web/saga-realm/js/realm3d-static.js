@@ -90,6 +90,8 @@
     statCullPV = null;     // 다음 프레임에 한 번 자른다
   }
   var statFreezeStats = null;
+  /** W-0400 지역 단위 — 지역이 바뀌어 정적 층을 다시 지을 때: 굳힌 인스턴스를 떼고 굳힘 표시를 푼다(도형·재질은 공유라 안 버림) */
+  function reset() { statInst.forEach(function (im) { if (im.parent) { im.parent.remove(im); } if (im.dispose) { im.dispose(); } }); statInst = []; statFrozen = false; statFreezeStats = null; statCullPV = null; }
 
   /** 묶은 정적 소품을 자리마다 자른다 — 카메라 시야 밖·안개 끝 너머(안개 색뿐)만 뺀다. 그림은 그대로다 */
   var statCullPV = null, statCullFr = null, statCullNow = null, statCullStat = { all: 0, drawn: 0, runs: 0 };
@@ -146,7 +148,7 @@
 
   api = { setup: setup, pend: pend, maybeFreezeStatic: maybeFreezeStatic, statCull: statCull, matSig: matSig,
     stats: function () { return statFreezeStats; },
-    cullStats: function () { return { all: statCullStat.all, drawn: statCullStat.drawn, runs: statCullStat.runs }; } };
+    reset: reset, cullStats: function () { return { all: statCullStat.all, drawn: statCullStat.drawn, runs: statCullStat.runs }; } };
   global.DG = global.DG || {};
   global.DG.realm3dStatic = api;
 })(typeof window !== 'undefined' ? window : this);

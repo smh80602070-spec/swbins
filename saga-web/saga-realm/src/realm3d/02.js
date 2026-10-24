@@ -409,7 +409,7 @@
    *  전부 성 좌표·land(둘 다 static)만으로 정해진다(static) — 2026-09-14,
    *  `buildStaticOnce()`가 한 번만 부른다. */
   function scatterField(seq, grp) {
-    var cities = cityData().CITIES, i, k;
+    var cities = regCities(), i, k;   // W-0400 지역 경계 안만
     var minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
     for (i = 0; i < cities.length; i++) {
       var wx = worldX(cities[i].x), wz = worldZ(cities[i].y);
@@ -550,11 +550,11 @@
    *  `clearDyn()`이 안 건드리는 별도 그룹이라 여기 얹은 것은 게임이 끝날
    *  때까지(페이지가 살아있는 동안) 그대로 남는다 — 성 목록 자체가
    *  시나리오·세력이 바뀌어도 안 바뀌므로 다시 지을 이유가 없다. */
-  function buildStaticOnce() {
-    if (staticBuilt || !statGrp) { return; }
+  var staticRid = null; function regNow() { var V = global.DG.regionView; return V && V.on() ? V.current() : ''; } function regCities() { var V = global.DG.regionView, rid = regNow(), all = cityData().CITIES; return rid ? all.filter(function (c) { return V.regionOf(c.id) === rid; }) : all; } function regionFocus() { var V = global.DG.regionView, b = V && regNow() ? V.bbox(regNow()) : null; if (b) { panTo(b.x + b.w / 2, b.y + b.h / 2, Math.max(b.w, b.h)); } }   /* W-0400 지역 단위 — 3D 도 지금 지역 성만(손잡이 realm.regionView 0 = 옛 전체) */ function buildStaticOnce() {
+    if (!statGrp || (staticBuilt && staticRid === regNow())) { return; } if (staticBuilt) { ST().reset(); statGrp.clear(); } staticRid = regNow();   // W-0400 지역이 바뀌면 정적 층을 그 지역으로 다시
     ST().pend(1);                       // 다 부르기 전에 묶이지 않게(동기로 떨어지는 도형 소품이 있다)
     staticBuilt = true;
-    var cities = cityData().CITIES, i;
+    var cities = regCities(), i;
     for (i = 0; i < cities.length; i++) {
       var city = cities[i];
       var tier = cityTier(city), h = TIER_H[tier], footprint = Math.max(3.2, h * 0.5);
@@ -578,13 +578,13 @@
     var st = R().state();
     if (!st || !st.started) { syncActors(null); return; }
     buildStaticOnce();
-    var cities = cityData().CITIES, i, j, drawn = {};
+    var cities = regCities(), i, j, drawn = {}, inReg = {}; cities.forEach(function (c) { inReg[c.id] = 1; });
 
     for (i = 0; i < cities.length; i++) {
       var a = cities[i];
       for (j = 0; j < a.adj.length; j++) {
         var b = cityData().find(a.adj[j]);
-        if (!b) { continue; }
+        if (!b || !inReg[b.id]) { continue; }   // W-0400 지역 밖 길은 안 그림
         var key = a.id < b.id ? a.id + b.id : b.id + a.id;
         if (drawn[key]) { continue; }
         drawn[key] = true;
@@ -825,5 +825,5 @@
 
   /* 세력이 바뀌거나(정벌·외교) 달이 넘어가면 다시 짓는다 — 켜져 있을 때만.
    * core.js 는 이 스크립트보다 앞서 실려 있다(index.html 순서) */
-  global.DG.core.on('changed', function () { if (active()) { rebuild(); } });
+  global.DG.core.on('changed', function () { if (active()) { rebuild(); } }); global.DG.core.on('region', function () { if (active()) { rebuild(); regionFocus(); } });   // W-0400 지역을 넘기면 3D 도
 })(window);
