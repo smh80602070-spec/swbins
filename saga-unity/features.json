@@ -2430,6 +2430,23 @@
   "note": "D2(U-0206): PlaytestForestHeadless bees roll·chase·catch·sting·scatter·off OK(자리 1000 에 194) · OK 줄 78·FAIL 0·종료 0 · error CS 0 · 촬영 안 함(작은 알갱이 — 진단 줄로)"
  },
  {
+  "id": "un.st.combokill",
+  "name": "U-0207 4종횡 콤보 킬 — 처치가 5초 안에 이어지면 수가 오르고 3부터 머리 위 \"콤보 킬 n\"(늘 하나, 10·30·50 에서 색 진해짐), 10마다 파란 경험치 구슬(3.5m 안 10m/s 끌림·0.8m 먹기 = 잡졸 경험 × (3 + n/10, 최대 8) × 회차 배율 · \"EXP +n\", 20초 수명), 끊기면 1부터·이번 실행 최고만(저장 안 함) · SAGA_COMBO_KILL=0 끔(고돗 G-0345 짝)",
+  "files": [
+   "saga-unity/Assets/Games/SagaStory/World/StoryComboKill.cs",
+   "saga-unity/Assets/Games/SagaStory/World/StoryEnemy.cs"
+  ],
+  "tests": [
+   "PlaytestStoryComboKill"
+  ],
+  "level": "D2",
+  "verified": "2026-10-24 claude",
+  "fun": {},
+  "ticket": "U-0207",
+  "since": "2026-10-24",
+  "note": "D2(U-0207): PlaytestStorySlice combo count·break·orb·mul·best·off OK · 슬라이스 OK(종료 0)·FAIL 0 · error CS 0 · 촬영 안 함(작은 공·글 — 진단 줄로)"
+ },
+ {
   "id": "un.go.friendship",
   "name": "U-0199 1만리 동료 우정 — 편성 동료마다 점수(적 쓰러짐 앞 +2·다른 +1·탐사 돌아옴 +15) → Lv 0~10·낯섦·친근·신뢰·지기, 기질별 단계 대사(지기 = 그 인물 한마디), 지기 처음 인연 매듭 1, 오름 알림·도감 상세 줄(고돗 G-0340)",
   "files": [

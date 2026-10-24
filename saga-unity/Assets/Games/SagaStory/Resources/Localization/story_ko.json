@@ -733,6 +733,8 @@
     { "key": "guild.rankup", "value": "🏯 {0} {1} — {2} +{3:0}%" },
     { "key": "guild.title", "value": "🏯 문파" },
     { "key": "guild.leave", "value": "나가기(공 0)" },
-    { "key": "guild.close", "value": "닫기" }
+    { "key": "guild.close", "value": "닫기" },
+    { "key": "combo.label", "value": "콤보 킬 {0}" },
+    { "key": "combo.exp", "value": "EXP +{0}" }
   ]
 }

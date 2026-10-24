@@ -220,6 +220,7 @@ namespace Saga.EditorTools
                     if (!PlaytestStoryLaunch.Run()) { Fail(); return; } // tasks U-0176 띄우기·공중 콤보 — 복제 잡졸(판 등급 셈·소환 게이지·자리 되돌림)
                     if (!PlaytestStoryHidden.Run()) { Fail(); return; } // tasks U-0181 숨은 우두머리 — 복제 두목 처치(사명·직업·판 등급·소환·달 사명·숨은 기록 되돌림)
                     if (!PlaytestStoryGuild.Run()) { Fail(); return; } // tasks U-0192 문파 — 들기·공·덤·창·세이브(문파·레벨·경험·채집 되돌림)
+                    if (!PlaytestStoryComboKill.Run()) { Fail(); return; } // tasks U-0207 콤보 킬 — 셈·끊김·구슬·배율·최고·손잡이(셈·구슬·레벨·경험·회차 되돌림)
                     _enemyIndex = 0;
                     _phase = Phase.TalkNpc;
                     break;

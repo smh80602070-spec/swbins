@@ -733,6 +733,8 @@
     { "key": "guild.rankup", "value": "🏯 {0} {1} — {2} +{3:0}%" },
     { "key": "guild.title", "value": "🏯 Guild" },
     { "key": "guild.leave", "value": "Leave (merit 0)" },
-    { "key": "guild.close", "value": "Close" }
+    { "key": "guild.close", "value": "Close" },
+    { "key": "combo.label", "value": "Combo Kill {0}" },
+    { "key": "combo.exp", "value": "EXP +{0}" }
   ]
 }
