@@ -62,6 +62,7 @@
   /** 화면에 실제로 곱하는 배율 — 사람 줌 × 기본 × 보스 */
   function portK() { return W < H ? +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitBgK', 0.55) : 0.55) : 1; }   /* W-0366 세로 폰 겹 배경 층 배율(1 = 옛) */ function effZoom() { return viewZoom * baseZoom() * (1 + bossZoomK * BOSS_ZOOM_EXTRA); }
   function applyZoomTransform() {
+    if (cv && Math.abs(sharpWant(global.innerWidth, global.innerHeight) - sharpK) > 0.12) { resize(); }   // W-0407 확대가 바뀌면 비트맵도
     var t = 'scale(' + effZoom().toFixed(3) + ')', run = S && S.raw ? S.raw() : null, fl = run && run.stage ? run.stage.floor : 560;
     if (fl > H) { fl = H * 0.75; }   /* W-0188 폰 가로 3D(lowK 1·키 390) — 바닥 선이 논리 화면 밖이라 옛 식이 기준점을 수천 px 아래로 풀어 화면이 통째로 위로 밀렸다(두목 확대 때). 3D 카메라는 바닥을 가운데께 두니 그 근처를 기준으로 */
     var z = effZoom(), want = W < H ? H * +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitFloor', 0.64) : 0.64) : Math.min(fl, H * 0.8), oy =Math.abs(1 - z) < 1e-3 ? fl : (want - fl * z) / (1 - z);   // 바닥 선이 화면의 want 자리에 오게 기준점(px)을 푼다
@@ -170,6 +171,14 @@
     }
   }
 
+  /** W-0407 선명 배율 — 사람이 잡은 확대 × 기본 확대(두목 확대 덧은 뺌)만큼, 비트맵 화소 상한 side.sharpPx(PC 900만 · 폰 0 = 끔 — 폰 예산 A/B 사냥터 18→9fps, 폰은 dpr 2 라 덜 흐림) 안에서. 손잡이 side.sharp 0 = 옛(CSS 확대만) */
+  var sharpK = 1;
+  function sharpWant(iw, ih) {
+    var C = global.DG.core, on = !(C && C.tuned && !+C.tuned('side.sharp', 1)), z = viewZoom * baseZoom(), ph = Math.min(iw, ih) < 520, cap = +(C && C.tuned ? C.tuned('side.sharpPx', ph ? 0 : 9e6) : 9e6);
+    if (!on || !(z > 1.05)) { return 1; }
+    var px = iw * ih * dpr * dpr;
+    return Math.max(1, Math.min(z, Math.sqrt(cap / Math.max(1, px))));
+  }
   function resize() {
     dpr = Math.min(global.devicePixelRatio || 1, 2);
     /* W-0132 — 2D 이고 화면 키가 600 보다 낮으면(폰 가로) 논리 높이 650 으로 그려 화면에 맞춰 줄인다. 바닥 선(560)이
@@ -178,11 +187,12 @@
     lowK = !u3 && ih < 600 ? 650 / ih : 1;
     W = iw * lowK; H = ih * lowK;
     miniBotAt = 0;
-    cv.width = Math.floor(iw * dpr);
-    cv.height = Math.floor(ih * dpr);
+    sharpK = sharpWant(iw, ih);   // W-0407 — CSS scale(effZoom) 로 늘리던 비트맵을 그 배율만큼 크게 그려 흐림 없앰(그리기 좌표는 그대로)
+    cv.width = Math.floor(iw * dpr * sharpK);
+    cv.height = Math.floor(ih * dpr * sharpK);
     cv.style.width = iw + 'px';
     cv.style.height = ih + 'px';
-    ctx.setTransform(dpr / lowK, 0, 0, dpr / lowK, 0, 0);
+    ctx.setTransform(dpr * sharpK / lowK, 0, 0, dpr * sharpK / lowK, 0, 0);
     if (global.DG.sideView3d) { global.DG.sideView3d.resize(); }
   }
 
@@ -423,6 +433,7 @@
     }
 
     if (global.DG.sideHand) { global.DG.sideHand.draw(ctx, camX); }   // W-0176 옛 조각·숨은 상자
+    if (!use3d) { drawNpcs2d(); }   // W-0407 2D 마을 사람 — 전엔 3D(side-view3d rebuildNpcs)에서만 세워 2D 마을이 텅 비었다
     drawMe(p);
     if (!use3d && global.DG.sideBg2d) { global.DG.sideBg2d.drawFront(ctx, { region: rg, camX: camX, W: W, H: H, portK: portK() }); global.DG.sideBg2d.tint(ctx, W, H); }   // W-0296 앞 층(발 살짝 가림)·시간대 곱하기 색
     drawFx();
@@ -1062,7 +1073,8 @@
     var clip = e.hurt > 0 ? 'hit' : (e.atkAnim > 0 ? 'attack' : 'walk');
     var ms = clip === 'attack' ? (0.28 - e.atkAnim) * 1000 : (clip === 'hit' ? Math.max(0, 0.3 - e.hurt) * 1000 : Date.now() + (e.phase || 0) * 160);
     var sz = e.boss ? 1.9 : (e.mini || e.rare ? 1.25 : 1); if (M.shadow) { M.shadow(ctx, x, y, 30 * sz * (bz && !crea ? bz.k : 1), { a: 0.3 }); }   /* W-0368 발 닿는 그림자 */
-    return M.draw(ctx, { pool: pool, clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: (bz && !crea ? bz.k : 1) * sz }) ||
+    var ck = crea ? (+(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.creaK', 1.5) : 1.5) || 1) : 1;   /* W-0407 몬스터 시트는 사람 몸 칸 배율이라 짐승(들개 등)이 주인공 발목만 했다 — 2D 판은 키워 보이게 */
+    return M.draw(ctx, { pool: pool, clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: (bz && !crea ? bz.k : 1) * sz * ck }) ||
       (crea && (bz || e.ref.kind === 'human') ? M.draw(ctx, { pool: bz ? bz.pool : M.pick('t' + (e.ref.tier || 1), e.ref.name), clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: (bz ? bz.k : 1) * sz }) : false);   // 시트 manifest 받기 전엔 옛 길
   }
 
@@ -1118,6 +1130,19 @@
     ctx.fillRect(x - w / 2, y - 52, w * r, 4);
   }
 
+  /** W-0407 2D 마을 사람 — run.npcs({x, key, name}, side.js buildNpcs) 를 바닥에 주인공과 같은 몸 척도로, 몸은 역할 키 해시(3D 와 같은 요령), 머리 위 이름. 그림이 없으면 옛 스탬프 */
+  function drawNpcs2d() {
+    var run = S.raw(), L = (run && run.npcs) || [], M = global.DG.mode2d, fl = (run && run.stage && run.stage.floor) || 560, now = Date.now(), i, n, x, ok, tH = ((global.DG.cfg && global.DG.cfg.mode2d) || {}).targetH || 62, bodyH = (S.P_H || 54) * 1.12;
+    for (i = 0; i < L.length; i++) {
+      n = L[i]; x = n.x - camX;
+      if (x < -80 || x > W + 80) { continue; }
+      var pool = M && M.pick ? M.pick('me', 'npc:' + n.key) : null;
+      ok = !!(pool && M.draw(ctx, { pool: pool, clip: 'idle', facing: run.player && run.player.x > n.x ? 1 : -1, ms: now + i * 700, x: x, y: fl, scale: bodyH / tH, town: true }));
+      if (!ok && global.DG.sprite) { global.DG.sprite.stamp(ctx, { kind: 'human', ref: { name: n.name }, x: x, y: fl, s: 0.8, facing: 1, phase: i, walking: false, color: '#c8b090', look: {}, t: now }); }
+      ctx.save(); ctx.font = '700 13px sans-serif'; ctx.textAlign = 'center'; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,.7)'; ctx.fillStyle = '#fff4d6';
+      ctx.strokeText(n.name || '', x, fl - bodyH - 10); ctx.fillText(n.name || '', x, fl - bodyH - 10); ctx.restore();
+    }
+  }
   function drawMe(p) {
     var ref = S.meRef();
     var x = p.x + S.P_W / 2 - camX, y = p.y + S.P_H;
