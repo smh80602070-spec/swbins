@@ -23,6 +23,11 @@ Shader "Saga/CelToon"
         _OutlineWidth("외곽선 두께(0=끔)", Range(0, 0.05)) = 0
         _OutlinePx("외곽선 화면 두께(1080p 픽셀, 0=끔 · 쓰면 _OutlineWidth 대신)", Range(0, 6)) = 0
 
+        // tasks U-0217 얼굴 그림자(원신식, 고돗 G-0248) — FaceLight 가 얼굴 표면 재질 사본에만 1·머리 앞(월드). 0 이면 옛 픽셀 그대로.
+        [HideInInspector] _FaceMode("얼굴 표면(0/1)", Float) = 0
+        _FaceFlatten("얼굴 법선 → 머리 앞 섞음", Range(0, 1)) = 0.65
+        [HideInInspector] _HeadFwd("머리 앞(월드)", Vector) = (0, 0, 0, 0)
+
         [HideInInspector] _Surface("_Surface", Float) = 0
         [HideInInspector] _Cull("_Cull", Float) = 2
     }
@@ -104,9 +109,32 @@ Shader "Saga/CelToon"
                 return saturate(lerp(banded, banded + stepSize, t));
             }
 
+            // tasks U-0217 — 얼굴 표면의 빛 세기(0~1), cel_toon.gdshader face_ndotl 과 같은 식. 얼굴 아니면(_FaceMode 0) 법선·빛 그대로.
+            // 얼굴 법선·빛을 둘 다 수평(월드 위 성분 뺌)으로 눌러 머리 앞과 _FaceFlatten 만큼 섞는다 — 코·입가·턱 밑 얼룩 그늘 없이 좌우 반쪽 경계.
+            // 해가 높을수록 고르게 밝게 · 머리 앞을 모르면(0 벡터) 그늘 바닥만 0.7 로 올린다.
+            half FaceNdotL(half3 n, half3 l)
+            {
+                half plain = saturate(dot(n, l));
+                if (_FaceMode < 0.5) return plain;
+                float3 hw = _HeadFwd.xyz;
+                float2 hf2 = hw.xz;
+                if (dot(hw, hw) < 0.25 || dot(hf2, hf2) < 1e-4)
+                    return lerp(plain, max(plain, 0.7h * smoothstep(0.0h, 0.15h, plain)), (half)_FaceFlatten);
+                float3 hf = float3(normalize(hf2), 0.0).xzy;
+                float lv = l.y;
+                float3 lh = float3(l.x, 0.0, l.z);
+                float lhl = length(lh);
+                if (lhl < 0.05) return lv > 0.0 ? 1.0h : 0.0h;   // 바로 위(아래)에서 오는 빛
+                lh /= lhl;
+                float3 nh = float3(n.x, 0.0, n.z);
+                float3 fn = normalize(lerp(nh, hf, _FaceFlatten) + hf * 1e-3);
+                float d = saturate(dot(fn, lh));
+                return (half)lerp(d, 1.0, smoothstep(0.8, 0.98, lv));
+            }
+
             half3 CelLight(Light light, half3 albedo, half3 normalWS, half3 viewDirWS)
             {
-                half ndotl = saturate(dot(normalWS, light.direction));
+                half ndotl = FaceNdotL(normalWS, light.direction);
                 half lit = CelBand(ndotl);
                 half rim = pow(1.0h - saturate(dot(normalWS, viewDirWS)), _RimPower) * _RimStrength;
                 rim *= smoothstep(0.0h, 0.3h, ndotl);
