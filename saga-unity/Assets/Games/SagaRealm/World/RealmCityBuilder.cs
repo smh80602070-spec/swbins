@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Saga.Core;
 using UnityEngine;
 using Saga.Realm.Data;
@@ -28,9 +29,10 @@ namespace Saga.Realm.World
     /// </summary>
     public class RealmCityBuilder : MonoBehaviour
     {
-        private const int MaxFarms = 10;
-        private const int MaxMarkets = 10;
-        private const int MaxGranaries = 6;
+        public const int MaxFarms = 10;
+        public const int MaxMarkets = 10;
+        public const int MaxGranaries = 6;
+        public const float GroundDiameter = 26f;
 
         private static readonly Color GroundColor = new Color(0.42f, 0.55f, 0.32f);
         private static readonly Color WallColor = new Color(0.55f, 0.52f, 0.46f);
@@ -104,12 +106,16 @@ namespace Saga.Realm.World
             BuildWallAndTowers(WallTier(record.Wall, def));
             BuildKeep();
             BuildRosterFlags();
-            BuildCountedProps("Farm", Mathf.Clamp(record.Agri / 90, 0, MaxFarms), FarmColor,
-                PrimitiveType.Cube, new Vector3(1.4f, 0.3f, 1.4f), radius: 5.5f, y: 0.15f, pbrMaterial: farmMaterial);
-            BuildCountedProps("Market", Mathf.Clamp(record.Comm / 80, 0, MaxMarkets), MarketColor,
-                PrimitiveType.Cube, new Vector3(1.0f, 0.9f, 1.0f), radius: 7.5f, y: 0.45f, pbrMaterial: marketMaterial);
-            BuildCountedProps("Granary", Mathf.Clamp(record.Food / 400, 0, MaxGranaries), GranaryColor,
-                PrimitiveType.Cylinder, new Vector3(1.1f, 1.4f, 1.1f), radius: 9.2f, y: 0.7f, pbrMaterial: wallMaterial);
+            var farms = BuildCountedProps("Farm", Mathf.Clamp(record.Agri / 90, 0, MaxFarms), FarmColor,
+                PrimitiveType.Cube, new Vector3(1.4f, 0.3f, 1.4f), radius: 5.5f, y: 0.15f, pbrMaterial: farmMaterial, half: 0.9f);
+            var markets = BuildCountedProps("Market", Mathf.Clamp(record.Comm / 80, 0, MaxMarkets), MarketColor,
+                PrimitiveType.Cube, new Vector3(1.0f, 0.9f, 1.0f), radius: 7.5f, y: 0.45f, pbrMaterial: marketMaterial, half: 0.7f);
+            var granaries = BuildCountedProps("Granary", Mathf.Clamp(record.Food / 400, 0, MaxGranaries), GranaryColor,
+                PrimitiveType.Cylinder, new Vector3(1.1f, 1.4f, 1.1f), radius: 9.2f, y: 0.7f, pbrMaterial: wallMaterial, half: 0.55f);
+            // tasks U-0224 — 소품 자리를 넘겨 일꾼을 세운다(Play 때만, 같은 성 = 같은 사람).
+            if (Application.isPlaying)
+                RealmWorkers.Build(transform, farms, markets, granaries, record.Agri, record.Comm, record.Food, record.Pop,
+                    RealmBodies.Hash(RealmCityState.CurrentCity ?? ""));
         }
 
         private static GameObject Spawn(string name, Transform parent, PrimitiveType type, Vector3 localPos,
@@ -135,9 +141,11 @@ namespace Saga.Realm.World
 
         private void BuildGround()
         {
-            var mat = groundMaterial != null ? EnvironmentMaterial.MakeTiled(groundMaterial, 14f, 14f) : null;
+            // tasks U-0224 — 원기둥 기본 지름이 1 이라 옛 14 는 반지름 7 뿐이었다(성벽 11·시장 7.5·곡창 9.2 가 허공에 뜸).
+            // 지름 26 = 반지름 13 — 성벽과 남문 앞 일꾼 출발점(12.2)까지 덮는다.
+            var mat = groundMaterial != null ? EnvironmentMaterial.MakeTiled(groundMaterial, GroundDiameter, GroundDiameter) : null;
             Spawn("Ground", transform, PrimitiveType.Cylinder, new Vector3(0f, -0.05f, 0f),
-                new Vector3(14f, 0.1f, 14f), GroundColor, mat);
+                new Vector3(GroundDiameter, 0.1f, GroundDiameter), GroundColor, mat);
         }
 
         /// <summary>PLAN.md 103-1 "성벽 3단" — `record.Wall`을 `def.BaseWall`
@@ -247,10 +255,11 @@ namespace Saga.Realm.World
             }
         }
 
-        private void BuildCountedProps(string label, int count, Color color, PrimitiveType type, Vector3 scale,
-            float radius, float y, Material pbrMaterial = null)
+        private List<RealmWorkers.Prop> BuildCountedProps(string label, int count, Color color, PrimitiveType type, Vector3 scale,
+            float radius, float y, Material pbrMaterial = null, float half = 0.5f)
         {
-            if (count <= 0) return;
+            var placed = new List<RealmWorkers.Prop>();
+            if (count <= 0) return placed;
             var root = new GameObject($"{label}s");
             root.transform.SetParent(transform, false);
             // 소품 하나하나가 전부 같은 크기라 재질 인스턴스도 하나만 구워
@@ -262,7 +271,9 @@ namespace Saga.Realm.World
                 Vector3 pos = new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad) * radius, y,
                     Mathf.Cos(angle * Mathf.Deg2Rad) * radius);
                 Spawn($"{label}_{i}", root.transform, type, pos, scale, color, tiled);
+                placed.Add(new RealmWorkers.Prop { Pos = new Vector3(pos.x, 0f, pos.z), Half = half });
             }
+            return placed;
         }
     }
 }

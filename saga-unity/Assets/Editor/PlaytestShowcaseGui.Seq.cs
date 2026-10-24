@@ -342,6 +342,20 @@ namespace Saga.EditorTools
                         if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null) { Skip(act); return; }
                         RealmEras();
                         break;
+                    case "realmworkers":   // U-0224 사가천하 — 디오라마 보기로, 밭·시장·곡창이 서게 내정 값을 올려 일꾼을 세운다
+                    {
+                        if (Saga.Realm.Data.RealmMapState.ViewingMap) Saga.Realm.Data.RealmMapState.Toggle();
+                        var cb = Object.FindFirstObjectByType<Saga.Realm.World.RealmCityBuilder>();
+                        var rec = Saga.Realm.Data.RealmCityState.CityRecord(Saga.Realm.Data.RealmCityState.CurrentCity);
+                        if (cb == null || rec == null) { Skip(act); return; }
+                        rec.Agri = Mathf.Max(rec.Agri, 360); rec.Comm = Mathf.Max(rec.Comm, 240); rec.Food = Mathf.Max(rec.Food, 800);
+                        cb.Rebuild();
+                        var card = GameObject.Find("SessionCard");
+                        if (card != null) card.SetActive(false);
+                        var wr = cb.transform.Find("Workers");
+                        Debug.Log($"[ShowcaseGui] realmworkers 일꾼 {(wr != null ? wr.childCount : 0)} · 군중 목록 {Saga.Core.CrowdBodies.Available}");
+                        break;
+                    }
                     case "realmzoom":   // U-0102 사가천하 — 지도를 켜고 지금 성 둘레 40m·기울기 0.6(태수·재야·이름표)
                     {
                         if (!Saga.Realm.Data.RealmMapState.ViewingMap) Saga.Realm.Data.RealmMapState.Toggle();

@@ -38,6 +38,6 @@
 | 2나락 | **부서지는 통·항아리** — 방 소품을 치면 3D 물리 파편으로 깨지고 금·물약이 튐(디아블로) | **○ U-0158**(10-22) — `World/DungeonBreakable.cs` · 평타·강공격·회전베기 · 진단 `breakable OK` · 조각은 대신 조각(K-0174) | 깨지는 소품 조각 모델(K — world-forge 조각 분할) | 중간 |
 | 3마을 | **밭 작물** — 씨 뿌리고 물 주면 날마다 자라 거두는 밭(스타듀 밸리) | **○ U-0223**(10-25) — `Data/ForestCrops.cs`·`World/ForestCropRunner.cs` · 제작대 「🌾 밭」 · 진단 `crops field·sow·grow·skip·harvest·save·off OK` · 모델은 있던 `wheat_sprout/growing/ripe_01` | 작물 단계별 모델 3~4(K) | 큼 |
 | 4종횡 | **띄우기·공중 콤보** — 올려 베기로 적을 띄워 공중에서 이어 치기(던전앤파이터) | 없음 — `grep -rniE "launch\|airborne\|띄우" Games/SagaStory` 전투 쪽 0 · 장부 `tasks/gameplay/story.md` 18행(웹 W-0345 먼저) | 없음(동작은 기존 클립 재생 속도) | 중간 |
-| 5천하 | **눈에 보이는 일꾼 채집** — 성 둘레 들판에서 일꾼이 나무·돌·곡식을 실제로 나르는 3D 경제(에이지 오브 엠파이어) | 없음 — `grep -rliE "villager\|worker\|일꾼" Games/SagaRealm` 0 (경영은 숫자 정산) | 군중 몸 재사용 + 짐 소품(K 일부) | 큼 |
+| 5천하 | **눈에 보이는 일꾼 채집** — 성 둘레 들판에서 일꾼이 나무·돌·곡식을 실제로 나르는 3D 경제(에이지 오브 엠파이어) | **○ U-0224**(10-25) — `World/RealmWorkers.cs` · 디오라마 밭·시장·곡창 ↔ 남문을 군중 몸이 자루·상자 지고 오감(보이기만, 상한 12) · 진단 `workers count·rebuild·walk·cargo·path·seed·off` | 군중 몸 재사용 + 짐 소품(K 일부) | 큼 |
 
 고르는 순서 제안(다음 R-0): 에셋이 덜 드는 4종횡 띄우기(웹 W-0345 뒤) → ~~1만리 쳐내기~~(U-0157 끝) → ~~2나락 부서지는 소품~~(U-0158 끝) → ~~3마을 작물~~(U-0223 끝) → 5천하 일꾼.
