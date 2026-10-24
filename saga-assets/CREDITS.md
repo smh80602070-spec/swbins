@@ -4,7 +4,6 @@
 
 ## 필수 표기 (저작자 표시)
 
-- AvatarSample_A — pixiv VRoid Project (VRM `creditNotation: required`)
 - © Poly by Google, CC-BY 3.0 <https://creativecommons.org/licenses/by/3.0/> — Bear.glb("Black bear"), Boar.glb, Crane.glb("Sandhill crane"), Elephant, Elephant (`models/standin/Elephant.glb`), Elephant.glb, Mesh_Crow.gltf+.bin, Tex_Crow.webp, Monkey.glb, Owl.glb, Paint Brush, Panda.glb, Tiger.glb
 - © CreativeTechLab, CC-BY 3.0 — Helmet, helmet
 - © Michael Fuchs, CC-BY 3.0 — Viking Helmet, gapju(대역: Viking Helmet)
@@ -120,7 +119,6 @@
 ## VRoid 샘플
 
 35벌 사용(개작본 재배포 허용·상업 허용). VRM 이용 조건상 상업·개작본 재배포 허용인 샘플(대부분 pixiv VRoid Project). 직접 만든 모델은 표에 있어도 만든 이 본인 것. restricted = 배치된 VRM 메타가 개작본 재배포를 허용하지 않음 — 원본 그대로만 쓴다(조합·변주 재료 금지).
-- 원본 그대로만: AvatarSample_A (`AvatarSample_A.glb`, modification `allowModification`)
 - 원본 그대로만: AvatarSample_T (`avatar_sample_t.glb`, modification `allowModification`)
 
 ## 출처 문서(ASSET_LICENSES·ASSET_GUIDE) 요약

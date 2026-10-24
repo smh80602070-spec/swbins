@@ -163,20 +163,8 @@
    "avatarsample_y_vrm10",
    "avatarsample_z_vrm10"
   ],
-  "credit_required": [
-   {
-    "model": "AvatarSample_A",
-    "authors": [
-     "pixiv VRoid Project"
-    ]
-   }
-  ],
+  "credit_required": [],
   "restricted": [
-   {
-    "model": "AvatarSample_A",
-    "file": "AvatarSample_A.glb",
-    "modification": "allowModification"
-   },
    {
     "model": "AvatarSample_T",
     "file": "avatar_sample_t.glb",
