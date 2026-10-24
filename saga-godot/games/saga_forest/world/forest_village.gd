@@ -56,6 +56,7 @@ func _ready() -> void:
 	if not lsm.is_empty() and String(lsm.text) != "":
 		Toast.show(self, String(lsm.text), 4.0)
 	add_child(preload("res://games/saga_forest/world/forest_livestock_view.gd").new())   # G-0311 작은 우리(길 남쪽)
+	preload("res://games/saga_forest/world/forest_stars.gd").attach(self)   # G-0381 별똥별 소원
 	add_child(preload("res://games/saga_forest/world/forest_cave_view.gd").new())   # G-0242 땅 아래 층(바위 아치 [G])
 	var e := ForestFestival.event_of_today()
 	if not e.is_empty():

@@ -554,7 +554,7 @@ func _die() -> void:
 	StorySaveState.add_mentor_bond((8 if is_boss else 1) + (12 if is_champion else 0))
 	var rare_mul: float = RARE_GAIN_MUL if is_rare else (MINI_GAIN_MUL if is_mini else 1.0)   # G-0210 웹 1181·1204 희귀 ×4 · G-0211 미니 ×8
 	var reward_mul: float = (CHAMPION_EXP_MUL if is_champion else 1.0) * rare_mul
-	StorySaveState.add_exp(roundi(StoryCombat.enemy_exp(is_boss, enemy_lv) * reward_mul))
+	StorySaveState.add_exp(roundi(StoryCombat.enemy_exp(is_boss, enemy_lv) * reward_mul * preload("res://games/saga_story/world/story_rune.gd").exp_mul()))   # G-0382 룬 버프
 	preload("res://games/saga_story/world/story_combo_kill.gd").on_kill(get_parent(), global_position, enemy_lv, is_boss)   # G-0345 콤보 킬
 	if not species.is_empty() and not is_boss and get_parent() != null:   # G-0374 괴물 카드 도감
 		var MB := preload("res://games/saga_story/data/story_monster_book.gd")

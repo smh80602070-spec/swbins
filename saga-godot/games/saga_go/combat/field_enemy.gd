@@ -807,6 +807,10 @@ func _die() -> void:
 	PartyState.add_exp(def.exp)
 	## 106장 ⑩ — 육성 재료(냥·전리품·원소 결정·견문록). 정해진 양(growth.gd KILL_DROPS).
 	var loot: Dictionary = Adventure.scale_loot(Growth.KILL_DROPS.get(kind, {}), maxi(world_lv, 0))
+	var blood_mul: int = preload("res://games/saga_go/world/go_blood_moon.gd").loot_mul()   # G-0379 핏빛 달 밤 ×2
+	if blood_mul > 1:
+		for k in loot:
+			loot[k] = int(loot[k]) * blood_mul
 	if not loot.is_empty():
 		PartyState.add_items(loot)
 		## 106장 ⑰ — 원소 괴물은 ★4 성유물 하나.

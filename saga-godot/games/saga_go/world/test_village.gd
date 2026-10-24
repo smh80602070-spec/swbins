@@ -283,6 +283,7 @@ func _ready() -> void:
 	add_child(weekly_goals)
 	if OS.get_environment("SAGA_WEEKLYGOAL_PROBE") != "":
 		add_child(load("res://tools/probe_weekly_goals.gd").new())
+	preload("res://games/saga_go/world/go_blood_moon.gd").attach(self)   # G-0379 핏빛 달 밤
 	var hunt_log := preload("res://games/saga_go/world/hunt_log.gd").new()
 	hunt_log.name = "HuntLog"
 	add_child(hunt_log)

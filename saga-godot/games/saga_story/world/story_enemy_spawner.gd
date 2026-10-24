@@ -104,6 +104,7 @@ func _ready() -> void:
 	_map = (load(map_path) as GDScript).new()
 	_rng.seed = hash(String(_map.stage_key())) % 100000 + 211
 	add_to_group("story_hunt_events")   # G-0212 채집이 배수를 묻는 곳
+	preload("res://games/saga_story/world/story_rune.gd").attach(self)   # G-0382 룬(사냥터에만)
 	for x: float in _map.enemy_positions_m():
 		spawn_at(x)
 	if event_seed < 0:
