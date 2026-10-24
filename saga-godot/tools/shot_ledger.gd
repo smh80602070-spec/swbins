@@ -443,3 +443,24 @@ static func fs_bees(tree: SceneTree) -> void:
 		if pl == null:
 			return
 		load("res://games/saga_forest/world/forest_bees.gd").call("spawn", tree.current_scene, pl.global_position + Vector3(3.5, 0.0, 1.5)))
+
+
+## G-0347 ② 5천하 지역 단위 지도 — 시나리오를 확정해(성표가 서야 한다 — rk_map_wide 는 고르기 창 상태라 성표 0) 지도를 켠다
+static func rk_region(tree: SceneTree) -> void:
+	var rs: Node = tree.root.get_node("/root/RealmSaveState")
+	rs.set("scenario_ready", true)
+	rs.set("view_region", "")
+	_later(tree, 5, func() -> void: rs.set("viewing_map", true))
+
+
+## G-0347 ② 천하도 카드 창(지역 고르기) — 이야기 카드는 닫는다
+static func rk_region_cards(tree: SceneTree) -> void:
+	rk_region(tree)
+	_later(tree, 40, func() -> void:
+		for m in tree.get_nodes_in_group("ui_modal"):
+			if m is CanvasItem or m is CanvasLayer:
+				m.set("visible", false)
+		var rv := tree.get_first_node_in_group("realm_region_view")
+		if rv != null:
+			rv.call("_fill_cards")
+			(rv.get("_cards") as Control).visible = true)

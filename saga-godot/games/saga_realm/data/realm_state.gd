@@ -113,6 +113,7 @@ func session_cities_gained() -> int:
 ## 2026-09-11부터 기본 on이지만, 그건 30개 성 전체를 다루는 원작 얘기고
 ## 이 슬라이스는 아직 지도가 순전히 조망용이라 디오라마가 더 자주 쓰인다).
 var viewing_map := false
+var view_region := ""   # G-0347 지금 보는 지역(data/realm_regions.gd) — "" 면 지금 성 지역. 저장함(순수 추가)
 
 var roster: Array = [RealmOfficerPool.STARTING_OFFICER]
 var found: Array = []               # 수색으로 찾아냈지만 아직 등용 전

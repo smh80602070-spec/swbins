@@ -102,6 +102,7 @@ var _base_color: Dictionary = {} # city_id -> Color(강조 아닐 때 되돌아�
 var _annexed_seen: Dictionary = {} # eid -> true(색을 이미 우호색으로 한 번 바꿨다)
 var _last_current := ""
 var _last_visible := false
+var _flags: Dictionary = {}     # G-0347 city_id -> 깃발(지역 거르기가 같이 숨긴다)
 var _markers_built := false  # RealmSaveState.scenario_ready가 false인 동안 미룬다
 
 
@@ -131,6 +132,7 @@ func _ready() -> void:
 	_env_original = _world_env.environment
 	if RealmSaveState.scenario_ready:
 		_build_all_markers()
+	preload("res://games/saga_realm/world/realm_region_view.gd").attach(self)   # G-0347 지역 단위 지도(SAGA_REALM_SRPG=0 이면 없음)
 
 
 ## **실기로 발견(2026-09-22)** — env_pc.tres의 안개(fog_density 0.012)는
@@ -186,7 +188,7 @@ func _process(_delta: float) -> void:
 		_last_visible = visible
 		_apply_fog_override(visible)
 		for city_id: String in _areas:
-			(_areas[city_id] as Area3D).input_ray_pickable = visible
+			(_areas[city_id] as Area3D).input_ray_pickable = visible and (_areas[city_id] as Area3D).is_visible_in_tree()   # G-0347 다른 지역 성표는 숨어 있음
 	if not _markers_built:
 		if not RealmSaveState.scenario_ready:
 			return  # 아직 시나리오를 안 골랐다 — 이번 프레임엔 할 일이 없다
@@ -316,7 +318,7 @@ func _build_marker(c: Dictionary, color: Color, is_enemy: bool) -> void:
 		add_child(monster)
 		_monsters[city_id] = monster
 	else:
-		_build_flag(pos)
+		_flags[city_id] = _build_flag(pos)
 
 	var area := Area3D.new()
 	area.input_ray_pickable = false  # 처음엔 숨김 상태 — _process()가 보일 때 켠다

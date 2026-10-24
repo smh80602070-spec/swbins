@@ -57,6 +57,7 @@ func save() -> bool:
 		"officer_hurt": officer_hurt,   # G-0182
 		"annals": annals,
 		"news": news,   # G-0194
+		"view_region": view_region,   # G-0347 지역 단위 지도 — 순수 추가(버전 그대로)
 	}
 	return SafeFile.write_text(save_path(), JSON.stringify(data))
 
@@ -153,6 +154,7 @@ func try_load() -> bool:
 	officer_hurt = loaded_hurt if typeof(loaded_hurt) == TYPE_DICTIONARY else {}
 	var loaded_annals: Variant = data.get("annals", {})
 	annals = loaded_annals if typeof(loaded_annals) == TYPE_DICTIONARY else {}
+	view_region = String(data.get("view_region", ""))   # G-0347 — 옛 세이브는 "" = 지금 성 지역
 	var loaded_news: Variant = data.get("news", [])   # G-0194 — 옛 세이브는 빈 값
 	news = (loaded_news as Array).duplicate(true) if typeof(loaded_news) == TYPE_ARRAY else []
 	_done_this_month.clear()

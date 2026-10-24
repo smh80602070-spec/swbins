@@ -63,7 +63,8 @@ var _drag_confirmed := false
 func _process(_delta: float) -> void:
 	current = RealmSaveState.viewing_map
 	if current:
-		_look_at = RealmCities.world_pos(RealmSaveState.current_city)
+		var rv := get_tree().get_first_node_in_group("realm_region_view")   # G-0347 지역 단위 — 지금 성이 다른 지역이면 그 지역 가운데
+		_look_at = rv.call("focus") if rv != null else RealmCities.world_pos(RealmSaveState.current_city)
 		_apply_transform()
 
 

@@ -3,6 +3,7 @@ extends SceneTree
 ##   godot --headless --path saga-godot --script res://tools/probe_realm_regions.gd   → "PROBE realm_regions OK" / "FAIL n"
 ## ① 성 107 전부 한 지역 ② 지역마다 성 1~12(첫 화면 ≤ 12) ③ 이웃 대칭·자기 자신 없음 ④ 고립 지역 없음(길로 다 이어짐)
 ## ⑤ 허창(옛 기본 성)은 중원 · 이름 표
+## ⑥ 지도(TestCity): 지금 지역 성표만 보임 · 지역 바꾸면 거르기·화살표(이웃 수)·초점 ⑦ 천하도 카드 글 ⑧ view_region 저장 왕복 ⑨ SAGA_REALM_SRPG=0 → 안 붙음
 
 var fails := 0
 
@@ -72,6 +73,62 @@ func _run() -> void:
 	check(String(R.call("region_of", "xuchang")) == "zhongyuan" and String(R.call("name_of", "zhongyuan")) == "중원", "⑤ 허창 = 중원")
 	for r: Dictionary in regions:
 		print("    %s %s 성 %d · 이웃 %s" % [r.id, r.name, sizes[r.id], R.call("neighbors", r.id)])
+
+	# ⑥
+	var sc := (load("res://games/saga_realm/world/TestCity.tscn") as PackedScene).instantiate()   # check_refs:allow — 5천하 대표 씬
+	root.add_child(sc)
+	current_scene = sc
+	for _i in 20:
+		await process_frame
+	var rs: Node = root.get_node("/root/RealmSaveState")
+	rs.set("scenario_ready", true)
+	rs.set("view_region", "")
+	rs.set("viewing_map", true)
+	for _i in 10:
+		await process_frame
+	var wm := sc.get_node("WorldMap")
+	var rv := get_first_node_in_group("realm_region_view")
+	var cur_r := String(R.call("region_of", String(rs.get("current_city"))))
+	var markers: Dictionary = wm.get("_markers")
+	var vis_ok := markers.size() > 0
+	for cid: String in markers:
+		if (markers[cid] as Node3D).visible != (String(R.call("region_of", cid)) == cur_r):
+			vis_ok = false
+	check(rv != null and String(rv.call("region")) == cur_r and vis_ok, "⑥ 첫 지도 = 지금 성 지역 %s · 성표 %d 중 그 지역만 보임" % [cur_r, markers.size()])
+	rs.set("view_region", "hebei")
+	for _i in 5:
+		await process_frame
+	var hidden_all := true
+	for cid: String in markers:
+		if String(R.call("region_of", cid)) != "hebei" and (markers[cid] as Node3D).visible:
+			hidden_all = false
+	var arrows := rv.find_children("Arrow_*", "", false, false).filter(func(n: Node) -> bool: return not n.is_queued_for_deletion())
+	var fc: Vector3 = rv.call("focus")
+	var want: Vector3 = load("res://games/saga_realm/world/realm_region_view.gd").call("center", "hebei")
+	check(hidden_all and arrows.size() == (R.call("neighbors", "hebei") as Array).size() and fc.is_equal_approx(want), "⑥ 하북으로 — 다른 지역 숨김 · 화살표 %d · 초점 지역 가운데" % arrows.size())
+
+	# ⑦
+	var ct := String(rv.call("card_text", "hebei"))
+	check(ct.begins_with("● 하북 · 성 6"), "⑦ 천하도 카드 「%s」" % ct)
+
+	# ⑧
+	var old_path := String(rs.get("path_override"))
+	rs.set("path_override", "user://probe_realm_regions.json")
+	rs.set("view_region", "kr")
+	rs.call("save")
+	rs.set("view_region", "")
+	rs.call("try_load")
+	var back := String(rs.get("view_region"))
+	DirAccess.remove_absolute(ProjectSettings.globalize_path("user://probe_realm_regions.json"))
+	rs.set("path_override", old_path)
+	check(back == "kr", "⑧ view_region 저장 왕복 %s" % back)
+
+	# ⑨
+	OS.set_environment("SAGA_REALM_SRPG", "0")
+	check(load("res://games/saga_realm/world/realm_region_view.gd").call("attach", Node3D.new()) == null, "⑨ SAGA_REALM_SRPG=0 → 안 붙음")
+	OS.set_environment("SAGA_REALM_SRPG", "")
+	rs.set("view_region", "")
+	rs.set("viewing_map", false)
 	_finish()
 
 
