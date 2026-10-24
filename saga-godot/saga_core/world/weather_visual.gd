@@ -96,6 +96,7 @@ func _wet_tick(delta: float) -> void:
 		_wet_sent = wet
 		for m in _wet_mats:
 			m.set_shader_parameter("wet", wet)
+			m.set_shader_parameter("rain", 1.0 if key == "rain" else 0.0)   # G-0362 웅덩이 물결은 내리는 동안만
 		for s in _wet_std:
 			wet_std(s, wet)
 

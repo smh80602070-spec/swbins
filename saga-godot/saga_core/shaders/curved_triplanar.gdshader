@@ -44,6 +44,7 @@ uniform float detile : hint_range(0.0, 1.0) = 0.0;
 uniform float detile_rot = 0.6;
 uniform float detile_patch = 0.45;
 
+uniform float rain : hint_range(0.0, 1.0) = 0.0; // G-0362 지금 비가 내리나(웅덩이 물결 — weather_visual 이 넣는다)
 uniform float wet : hint_range(0.0, 1.0) = 0.0; // G-0360 비 젖음(공용 weather_visual 이 넣는다 — 0 = 옛 화면 그대로)
 varying vec3 world_pos;
 varying vec3 world_normal;
@@ -67,6 +68,25 @@ void vertex() {
 	VERTEX = saga_apply_world_curve(VERTEX, MODEL_MATRIX, curve_amount);
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	world_normal = (MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz;
+}
+
+// G-0362 빗방울 물결 — 0.7m 칸마다 제 박자로 퍼지는 동그라미 하나(법선 xy 를 바깥으로 민다). 칸 안 자리·박자는 해시.
+vec2 _rain_rings(vec2 p, float t) {
+	vec2 cell = floor(p / 0.7);
+	vec2 acc = vec2(0.0);
+	for (int i = -1; i <= 1; i++) {
+		for (int j = -1; j <= 1; j++) {
+			vec2 c = cell + vec2(float(i), float(j));
+			float h = _hash(c);
+			vec2 ctr = (c + vec2(fract(h * 13.7), fract(h * 71.3)) * 0.8 + 0.1) * 0.7;
+			float ph = fract(t * 0.9 + h);
+			vec2 d = p - ctr;
+			float r = length(d);
+			float ring = (1.0 - smoothstep(0.0, 0.035, abs(r - ph * 0.42))) * (1.0 - ph);
+			acc += (r > 0.001 ? d / r : vec2(0.0)) * ring;
+		}
+	}
+	return acc;
 }
 
 vec4 _triplanar(sampler2D tex, vec3 pos, vec3 n, float scale) {
@@ -182,5 +202,9 @@ void fragment() {
 		ROUGHNESS = mix(ROUGHNESS, ROUGHNESS * 0.45, wet);
 		ROUGHNESS = mix(ROUGHNESS, 0.04, puddle);
 		NORMAL_MAP = mix(NORMAL_MAP, vec3(0.5, 0.5, 1.0), puddle);
+		if (rain > 0.001 && puddle > 0.01) {
+			vec2 rr = _rain_rings(world_pos.xz, TIME) * 0.45 * rain * puddle;
+			NORMAL_MAP = normalize(NORMAL_MAP * 2.0 - 1.0 + vec3(rr, 0.0)) * 0.5 + 0.5;
+		}
 	}
 }

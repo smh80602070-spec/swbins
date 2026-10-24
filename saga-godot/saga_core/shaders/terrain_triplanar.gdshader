@@ -38,6 +38,7 @@ uniform float tile_scale : hint_range(0.05, 2.0) = 0.4; // 텍스처 반복 밀�
 uniform float patch_scale : hint_range(0.02, 1.0) = 0.12; // 얼룩 크기
 uniform vec3 dry_tint = vec3(1.18, 1.03, 0.62); // G-0137 풀빛 큰 얼룩(누렇게 바랜 풀) — 정점색에 곱한다
 // 2026-09-30 — 풀 텍스처의 초록기를 얼마나 뺄지(0 = 그대로). 가을빛 지역(정점색이 누런 땅)만 올린다.
+uniform float rain : hint_range(0.0, 1.0) = 0.0; // G-0362 지금 비가 내리나(웅덩이 물결 — weather_visual 이 넣는다)
 uniform float wet : hint_range(0.0, 1.0) = 0.0; // G-0359 비 젖음(1만리 go_weather_fall 이 넣는다 — 0 = 옛 화면 그대로)
 uniform float hue_desat : hint_range(0.0, 1.0) = 0.0;
 uniform vec3 cliff_color = vec3(0.62, 0.53, 0.42); // 가파른 비탈 빛깔(terrain_builder.gd CLIFF_COLOR)
@@ -103,6 +104,25 @@ vec4 _triplanar(sampler2D tex, vec3 pos, vec3 n, float scale) {
 	vec4 yz = texture(tex, pos.zy * scale);
 	vec4 xz = texture(tex, pos.xz * scale);
 	return xz * w.y + yz * w.x + xy * w.z;
+}
+
+// G-0362 빗방울 물결 — 0.7m 칸마다 제 박자로 퍼지는 동그라미 하나(법선 xy 를 바깥으로 민다). 칸 안 자리·박자는 해시.
+vec2 _rain_rings(vec2 p, float t) {
+	vec2 cell = floor(p / 0.7);
+	vec2 acc = vec2(0.0);
+	for (int i = -1; i <= 1; i++) {
+		for (int j = -1; j <= 1; j++) {
+			vec2 c = cell + vec2(float(i), float(j));
+			float h = _hash(c);
+			vec2 ctr = (c + vec2(fract(h * 13.7), fract(h * 71.3)) * 0.8 + 0.1) * 0.7;
+			float ph = fract(t * 0.9 + h);
+			vec2 d = p - ctr;
+			float r = length(d);
+			float ring = (1.0 - smoothstep(0.0, 0.035, abs(r - ph * 0.42))) * (1.0 - ph);
+			acc += (r > 0.001 ? d / r : vec2(0.0)) * ring;
+		}
+	}
+	return acc;
 }
 
 void fragment() {
@@ -285,5 +305,9 @@ void fragment() {
 		ROUGHNESS = mix(ROUGHNESS, ROUGHNESS * 0.45, ww);
 		ROUGHNESS = mix(ROUGHNESS, 0.04, puddle);
 		NORMAL_MAP = mix(NORMAL_MAP, vec3(0.5, 0.5, 1.0), puddle);
+		if (rain > 0.001 && puddle > 0.01) {
+			vec2 rr = _rain_rings(world_pos.xz, TIME) * 0.45 * rain * puddle;
+			NORMAL_MAP = normalize(NORMAL_MAP * 2.0 - 1.0 + vec3(rr, 0.0)) * 0.5 + 0.5;
+		}
 	}
 }
