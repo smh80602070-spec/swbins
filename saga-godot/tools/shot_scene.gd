@@ -180,6 +180,7 @@ const CUTS := [
 	["lg_dg_goals", DUNGEON, [["free_modal"], ["call", "MenuHook", "open_goals"]]],   # G-0351 2나락 시즌
 	["lg_fs_goals", FOREST, [["free_modal"], ["call", "MenuHook", "open_goals"]]],   # G-0351 3마을 이야기·선물
 	["lg_st_goals", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["call", "MenuHook", "open_goals"]]],   # G-0351 4종횡 일일 사명·관문 대장
+	["lg_rk_goals", REALM, [["free_modal"], ["call", "MenuHook", "open_goals"]]],   # G-0364 5천하 「이번 달」·천하 승리 셋
 	["lg_dg_trail", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_legend", ["@tree"]], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0325 ← G-0290 전설 잔광
 	["lg_dg_rise", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rise", ["@tree"]]]],   # G-0325 ← G-0293 난입 솟음(한 컷씩 — time_scale)
 	["lg_dg_break", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_breakables", ["@tree"]]]],   # G-0325 ← G-0307 부서지는 통

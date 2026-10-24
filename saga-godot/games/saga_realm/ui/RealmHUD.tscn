@@ -339,4 +339,5 @@ script = ExtResource("14")
 script = ExtResource("menu_hook")
 game = "realm"
 me_adapter = "res://games/saga_realm/ui/me_adapter.gd"
+goals_adapter = "res://games/saga_realm/ui/goals_adapter.gd"
 items = PackedStringArray("@me|👤|내 정보", "TechButton|📜|연구", "StatecraftButton|🧭|경륜 (F2)", "WonderButton|🏛️|불가사의", "TradeButton|🐫|교역", "LawButton|📜|법령", "FocusButton|🎯|방침", "DiploButton|🤝|외교", "PlotButton|🕵️|계략", "PromoteButton|🎖️|승진", "SuccessionButton|👑|계승", "EventButton|📯|사건", "QuizButton|❓|문답", "ArchiveButton|📚|서고", "TransferSaveButton|📲|세이브 옮기기", "GraphicsButton|🖼️|화질")

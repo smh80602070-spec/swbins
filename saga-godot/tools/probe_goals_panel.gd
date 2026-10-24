@@ -5,15 +5,16 @@ extends SceneTree
 ## 네 판(1만리·2나락·3마을·4종횡) 씬마다: ① ☰ 메뉴에 goals 칸 ② 칸 → 창(group goals_panel·ui_modal)·멈춤
 ## ③ rows 줄 수 = 판 기존 값(1만리 오늘 의뢰 넷·주간 다섯 · 2나락 시즌 둘 · 3마을 오늘 둘 · 4종횡 오늘 둘·주간 하나)
 ## ④ 1만리 받기: 주간 도전 하나를 끝낸 상태로 만들면 받기 단추가 켜지고, 누르면 claimed 에 들어감(메모리에서만)
-## ⑤ Esc → 창 닫힘·멈춤 풀림 ⑥ 줄 글 함수(line_text·left_text). SAGA_GOALS_GAME=<판> 이면 그 판만. 5천하는 실제 시계 일일이 없어 뺌(✗).
+## ⑤ Esc → 창 닫힘·멈춤 풀림 ⑥ 줄 글 함수(line_text·left_text). SAGA_GOALS_GAME=<판> 이면 그 판만. 5천하는 G-0364 「이번 달」(게임 달 — 시계 없음).
 
 const MenuScreen := preload("res://saga_core/ui/menu_screen.gd")
 const GoalsPanel := preload("res://saga_core/ui/goals_panel.gd")
 
 const SCENES := {"go": "res://games/saga_go/world/TestVillage.tscn", "dungeon": "res://games/saga_dungeon/world/TestRoom.tscn",
-	"forest": "res://games/saga_forest/world/TestVillageForest.tscn", "story": "res://games/saga_story/world/SinyaField.tscn"}
+	"forest": "res://games/saga_forest/world/TestVillageForest.tscn", "story": "res://games/saga_story/world/SinyaField.tscn",
+	"realm": "res://games/saga_realm/world/TestCity.tscn"}   # G-0364 5천하 「이번 달」
 ## [오늘 줄 수, 주간 줄 수]
-const WANT := {"go": [4, 5], "dungeon": [0, 2], "forest": [2, 0], "story": [2, 1]}
+const WANT := {"go": [4, 5], "dungeon": [0, 2], "forest": [2, 0], "story": [2, 1], "realm": [2, 3]}
 
 var fails := 0
 var game := "go"

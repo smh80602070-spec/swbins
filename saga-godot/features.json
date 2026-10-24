@@ -5051,6 +5051,7 @@
    "games/saga_dungeon/ui/goals_adapter.gd",
    "games/saga_forest/ui/goals_adapter.gd",
    "games/saga_story/ui/goals_adapter.gd",
+   "games/saga_realm/ui/goals_adapter.gd",
    "tools/probe_goals_panel.gd"
   ],
   "tests": [
@@ -5062,7 +5063,7 @@
   "fun": {},
   "ticket": "G-0351",
   "since": "2026-10-25",
-  "note": "읽기만 — 받기만 판 기존 함수 · 촬영 lg_go_goals·lg_dg_goals·lg_fs_goals·lg_st_goals"
+  "note": "읽기만 — 받기만 판 기존 함수 · 촬영 lg_go_goals·lg_dg_goals·lg_fs_goals·lg_st_goals · G-0364 5천하 「이번 달」(realm goals_adapter·today_head/week_head) lg_rk_goals"
  },
  {
   "id": "gd.core.render-budget",

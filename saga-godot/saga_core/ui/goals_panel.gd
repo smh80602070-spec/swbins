@@ -2,7 +2,7 @@ extends CanvasLayer
 
 ## G-0351 「오늘」 창(웹 W-0380 goals-panel.js 짝) — ☰ 칸 하나: 오늘 줄 · 이번 주 줄 · 다 하면 받는 보상 단추 · 다음 갈림까지.
 ## 판 어댑터(판 MenuHook 의 `goals_adapter` 경로 — saga_core 는 판 경로를 모른다)의 `model(hud)` 가 판 기존 함수만 읽어 model 을 준다:
-##   {title, reset_in(초 — 다음 갈림, 0 = 모름), reset_label(기본 "새 날까지"), today:[{label, cur, max, done, go:Callable}], week:[같은 꼴],
+##   {title, today_head·week_head(머리글 — 기본 "오늘"·"이번 주", G-0364 5천하 "이번 달"·"천하"), reset_in(초 — 다음 갈림, 0 = 모름), reset_label(기본 "새 날까지"), today:[{label, cur, max, done, go:Callable}], week:[같은 꼴],
 ##    claim:{label, ready, done, take:Callable} | {}, note}
 ## 창은 읽기만 — 받기 단추만 판의 기존 받기 함수(take)를 부른다(세이브·균형은 판 몫). 열린 동안 멈춤, Esc·✕ 로 닫힘.
 ## 줄을 누르면 go() — 판의 기존 창·자리로(창을 닫고 다음 차례에). 점검은 `rows(model)` 글 줄을 본다(화면 없이).
@@ -69,7 +69,7 @@ static func rows(m: Dictionary) -> PackedStringArray:
 		var list: Array = m.get(k, [])
 		if list.is_empty():
 			continue
-		out.append("오늘" if k == "today" else "이번 주")
+		out.append(String(m.get("today_head", "오늘")) if k == "today" else String(m.get("week_head", "이번 주")))
 		for g: Dictionary in list:
 			out.append(line_text(g))
 	var c: Dictionary = m.get("claim", {})
@@ -127,8 +127,8 @@ func _build() -> void:
 	close.custom_minimum_size = Vector2(44, 40)
 	close.pressed.connect(close_panel)
 	top.add_child(close)
-	_section("오늘", model.get("today", []))
-	_section("이번 주", model.get("week", []))
+	_section(String(model.get("today_head", "오늘")), model.get("today", []))
+	_section(String(model.get("week_head", "이번 주")), model.get("week", []))
 	var c: Dictionary = model.get("claim", {})
 	if not c.is_empty():
 		var b := Button.new()
