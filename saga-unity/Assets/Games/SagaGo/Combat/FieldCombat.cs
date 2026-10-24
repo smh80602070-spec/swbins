@@ -408,6 +408,7 @@ namespace Saga.Go.Combat
             TickArrows(dt); // 109-14-22
             TickGrab(dt); // U-0125
             TickParry(dt); // U-0157
+            TickStandoff(dt); // tasks U-0202 대치
             _sinceHit += dt;
             _calmT += dt;
             if (_sinceHit >= RegenDelaySec)
@@ -425,6 +426,7 @@ namespace Saga.Go.Combat
         public int Attack()
         {
             if (!CanAct() || _attackCd > 0f || FallLeft > 0f) return -1; // U-0171 낙마 0.8초
+            if (TryStandoffStrike()) { _attackCd = StandStrikeCd; if (player != null && player.Animator != null) player.Animator.SetTrigger("Attack"); return 1; } // tasks U-0202 대치 — 창 안이면 그 한 칼이 이 평타(이르면 성급 — 평타는 그대로)
             Saga.Core.SagaVoice.Say("shout", Active.Id); // U-0068 — 가끔 외침(확률·간격은 SagaVoice)
             // 109-14-5a 든 무기 모양 — 칼·대도·창은 앞 120° 붙어 치기, 서책(인물 원소)·활은 사거리 안 가장 가까운 하나. 대도는 무거운 타격(깨뜨림)
             var md = WeaponState.ModsOf(Active.Id);
@@ -1166,6 +1168,7 @@ namespace Saga.Go.Combat
             ClearArrows();
             ClearGrab(); // U-0125
             ClearParry(); // U-0157
+            ClearStandoff(); // tasks U-0202
             _shells.Clear();
             foreach (var m in _party) m.InfuseLeft = 0f;
             ApplyLook();

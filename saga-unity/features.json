@@ -2266,6 +2266,23 @@
   "note": "U-0197: 목표가 창 밖이면 가까운 칸 1200 까지 — 길 내기 7.3 → 2.9ms(에디터) · D3(qc+claude, R-3): docs/playcheck/d3-r3-20261023b.json — 위 1만리 촬영과 같은 판 — 모서리에서 돌아가는 길 · 앞 D2(U-0190): PlaytestHeadless autopath OK — 가짜 격자(곧은 들판 경유점 하나·담 돌아감 3·갇힘 null·3m 턱 안 오름)·앞 막힘·진짜 임시 벽 돌아감 3 · autoquest OK 그대로"
  },
  {
+  "id": "un.go.standoff",
+  "name": "U-0202 1만리 대치 — 쉬는 무리 곁 어그로+2m 에서 맞섬·노려봄 → 1~2.2초 뒤 한 마리 달려듦(0.25초) → 0.45초 창(×0.85 이어짐) 안 평타 = 한 칼, 이르면·헛몸짓(25%)이면 성급, 놓치면 한 방·깨짐, 6m 벗어나면 풂, 깬 무리 60초(고돗 G-0343 짝)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldCombat.Standoff.cs",
+   "saga-unity/Assets/Games/SagaGo/Combat/FieldEnemy.Standoff.cs"
+  ],
+  "tests": [
+   "PlaytestGoStandoff"
+  ],
+  "level": "D1",
+  "verified": "2026-10-24 claude",
+  "fun": {},
+  "ticket": "U-0202",
+  "since": "2026-10-24",
+  "note": "D1(U-0202): PlaytestHeadless standoff start·strike·miss·rash·feint·leave·off OK · 1만리 진단 전체 FAIL 0 · 촬영 없음(1~2초 순간 — R-3 촬영 컷 후보)"
+ },
+ {
   "id": "un.all.motion30",
   "name": "U-0200 ① 모션 30(K-0161) — 팩을 주인공 Humanoid 아바타로 구운 .anim 30(BakeClips30, 로컬) + 공용 Motion30(컨트롤러 위 0.2초 섞기·걸으면 풀림) · 1만리 줍기·젓기·기쁨·모닥불 앉기 · 3마을 채집 · 2나락 동료 명령 호령 · 4종횡 줄 사다리",
   "files": [

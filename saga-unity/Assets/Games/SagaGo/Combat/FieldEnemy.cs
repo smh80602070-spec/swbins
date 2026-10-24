@@ -776,6 +776,7 @@ namespace Saga.Go.Combat
             switch (CurrentState)
             {
                 case State.Wander:
+                    if (TickStand(toPlayer, dt)) break; // tasks U-0202 대치 — 노려봄·달려듦(어그로 안 함)
                     if (IsHero) { SetMoveAnim(0f); if (playerOk) Face(toPlayer); break; } // 109-6 — 인물은 겨루기가 열려야 움직인다
                     if (DomainFoe || distPlayer < (IsGuardian ? GuardianDetectRadius : DetectRadius)) { EnterChase(); break; }
                     _timer -= dt;

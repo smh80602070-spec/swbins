@@ -212,6 +212,7 @@ namespace Saga.Go.Combat
             _knock = Vector3.zero;
             _siegeStrike = false;
             HoldState = Hold.None; // U-0125
+            Stand = StandPose.None; // U-0202 대치
             DownedLeft = 0f;
             LayDown(false);
         }
