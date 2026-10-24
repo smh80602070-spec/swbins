@@ -17,7 +17,13 @@
     203,
     159
    ],
-   "bust_pick": "ac_balgwang_v01"
+   "bust_pick": "ac_balgwang_v01",
+   "expr_pick": {
+    "happy": "ac_balgwang__happy_v01",
+    "angry": "ac_balgwang__angry_v01",
+    "sad": "ac_balgwang__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ac_choeumpa",
@@ -33,7 +39,13 @@
     203,
     159
    ],
-   "bust_pick": "ac_choeumpa_v01"
+   "bust_pick": "ac_choeumpa_v01",
+   "expr_pick": {
+    "happy": "ac_choeumpa__happy_v01",
+    "angry": "ac_choeumpa__angry_v01",
+    "sad": "ac_choeumpa__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ac_gipo",
@@ -49,7 +61,13 @@
     203,
     159
    ],
-   "bust_pick": "ac_gipo_v01"
+   "bust_pick": "ac_gipo_v01",
+   "expr_pick": {
+    "happy": "ac_gipo__happy_v02",
+    "angry": "ac_gipo__angry_v01",
+    "sad": "ac_gipo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ac_haebit",
@@ -65,7 +83,13 @@
     203,
     159
    ],
-   "bust_pick": "ac_haebit_v01"
+   "bust_pick": "ac_haebit_v01",
+   "expr_pick": {
+    "happy": "ac_haebit__happy_v02",
+    "angry": "ac_haebit__angry_v01",
+    "sad": "ac_haebit__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ac_haecho",
@@ -81,7 +105,13 @@
     203,
     159
    ],
-   "bust_pick": "ac_haecho_v01"
+   "bust_pick": "ac_haecho_v01",
+   "expr_pick": {
+    "happy": "ac_haecho__happy_v01",
+    "angry": "ac_haecho__angry_v01",
+    "sad": "ac_haecho__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ac_haemun",
@@ -97,7 +127,13 @@
     203,
     159
    ],
-   "bust_pick": "ac_haemun_v01"
+   "bust_pick": "ac_haemun_v01",
+   "expr_pick": {
+    "happy": "ac_haemun__happy_v02",
+    "angry": "ac_haemun__angry_v02",
+    "sad": "ac_haemun__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ac_simyeon",
@@ -113,7 +149,12 @@
     203,
     159
    ],
-   "bust_pick": "ac_simyeon_v01"
+   "bust_pick": "ac_simyeon_v01",
+   "expr_pick": {
+    "happy": "ac_simyeon__happy_v01",
+    "angry": "ac_simyeon__angry_v01",
+    "sad": "ac_simyeon__sad_v01"
+   }
   },
   {
    "id": "ac_suap",
@@ -129,7 +170,13 @@
     203,
     159
    ],
-   "bust_pick": "ac_suap_v01"
+   "bust_pick": "ac_suap_v01",
+   "expr_pick": {
+    "happy": "ac_suap__happy_v01",
+    "angry": "ac_suap__angry_v01",
+    "sad": "ac_suap__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ac_sumbi",
@@ -145,7 +192,12 @@
     203,
     159
    ],
-   "bust_pick": "ac_sumbi_v01"
+   "bust_pick": "ac_sumbi_v01",
+   "expr_pick": {
+    "happy": "ac_sumbi__happy_v02",
+    "angry": "ac_sumbi__angry_v01",
+    "sad": "ac_sumbi__sad_v01"
+   }
   },
   {
    "id": "aq_byeolgil",
@@ -161,7 +213,12 @@
     203,
     159
    ],
-   "bust_pick": "aq_byeolgil_v01"
+   "bust_pick": "aq_byeolgil_v01",
+   "expr_pick": {
+    "happy": "aq_byeolgil__happy_v01",
+    "angry": "aq_byeolgil__angry_v01",
+    "sad": "aq_byeolgil__sad_v01"
+   }
   },
   {
    "id": "aq_cheongok",
@@ -177,7 +234,13 @@
     203,
     159
    ],
-   "bust_pick": "aq_cheongok_v01"
+   "bust_pick": "aq_cheongok_v01",
+   "expr_pick": {
+    "happy": "aq_cheongok__happy_v01",
+    "angry": "aq_cheongok__angry_v01",
+    "sad": "aq_cheongok__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "aq_dalgu",
@@ -193,7 +256,13 @@
     203,
     159
    ],
-   "bust_pick": "aq_dalgu_v01"
+   "bust_pick": "aq_dalgu_v01",
+   "expr_pick": {
+    "happy": "aq_dalgu__happy_v02",
+    "angry": "aq_dalgu__angry_v02",
+    "sad": "aq_dalgu__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "aq_gyeongbong",
@@ -209,7 +278,12 @@
     203,
     159
    ],
-   "bust_pick": "aq_gyeongbong_v01"
+   "bust_pick": "aq_gyeongbong_v01",
+   "expr_pick": {
+    "happy": "aq_gyeongbong__happy_v01",
+    "angry": "aq_gyeongbong__angry_v01",
+    "sad": "aq_gyeongbong__sad_v01"
+   }
   },
   {
    "id": "aq_nokju",
@@ -225,7 +299,13 @@
     203,
     159
    ],
-   "bust_pick": "aq_nokju_v01"
+   "bust_pick": "aq_nokju_v01",
+   "expr_pick": {
+    "happy": "aq_nokju__happy_v01",
+    "angry": "aq_nokju__angry_v01",
+    "sad": "aq_nokju__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "aq_saebom",
@@ -241,7 +321,13 @@
     203,
     159
    ],
-   "bust_pick": "aq_saebom_v01"
+   "bust_pick": "aq_saebom_v01",
+   "expr_pick": {
+    "happy": "aq_saebom__happy_v01",
+    "angry": "aq_saebom__angry_v01",
+    "sad": "aq_saebom__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "aq_sanghwa",
@@ -257,7 +343,13 @@
     203,
     159
    ],
-   "bust_pick": "aq_sanghwa_v01"
+   "bust_pick": "aq_sanghwa_v01",
+   "expr_pick": {
+    "happy": "aq_sanghwa__happy_v01",
+    "angry": "aq_sanghwa__angry_v01",
+    "sad": "aq_sanghwa__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "aq_sapung",
@@ -273,7 +365,13 @@
     203,
     159
    ],
-   "bust_pick": "aq_sapung_v01"
+   "bust_pick": "aq_sapung_v01",
+   "expr_pick": {
+    "happy": "aq_sapung__happy_v01",
+    "angry": "aq_sapung__angry_v01",
+    "sad": "aq_sapung__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "aq_yeolsa",
@@ -289,7 +387,12 @@
     203,
     159
    ],
-   "bust_pick": "aq_yeolsa_v01"
+   "bust_pick": "aq_yeolsa_v01",
+   "expr_pick": {
+    "happy": "aq_yeolsa__happy_v01",
+    "angry": "aq_yeolsa__angry_v01",
+    "sad": "aq_yeolsa__sad_v02"
+   }
   },
   {
    "id": "bw_bitnae",
@@ -305,7 +408,12 @@
     203,
     159
    ],
-   "bust_pick": "bw_bitnae_v01"
+   "bust_pick": "bw_bitnae_v01",
+   "expr_pick": {
+    "happy": "bw_bitnae__happy_v01",
+    "angry": "bw_bitnae__angry_v01",
+    "sad": "bw_bitnae__sad_v01"
+   }
   },
   {
    "id": "bw_cheolgi",
@@ -325,7 +433,13 @@
     384,
     420
    ],
-   "bust_pick": "bw_cheolgi_v01"
+   "bust_pick": "bw_cheolgi_v01",
+   "expr_pick": {
+    "happy": "bw_cheolgi__happy_v01",
+    "angry": "bw_cheolgi__angry_v01",
+    "sad": "bw_cheolgi__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "bw_gamu",
@@ -341,7 +455,13 @@
     203,
     159
    ],
-   "bust_pick": "bw_gamu_v01"
+   "bust_pick": "bw_gamu_v01",
+   "expr_pick": {
+    "happy": "bw_gamu__happy_v01",
+    "angry": "bw_gamu__angry_v01",
+    "sad": "bw_gamu__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "bw_gomnae",
@@ -357,7 +477,13 @@
     203,
     159
    ],
-   "bust_pick": "bw_gomnae_v01"
+   "bust_pick": "bw_gomnae_v01",
+   "expr_pick": {
+    "happy": "bw_gomnae__happy_v01",
+    "angry": "bw_gomnae__angry_v01",
+    "sad": "bw_gomnae__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "bw_hwaro",
@@ -373,7 +499,13 @@
     203,
     159
    ],
-   "bust_pick": "bw_hwaro_v01"
+   "bust_pick": "bw_hwaro_v01",
+   "expr_pick": {
+    "happy": "bw_hwaro__happy_v01",
+    "angry": "bw_hwaro__angry_v01",
+    "sad": "bw_hwaro__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "bw_sangwol",
@@ -389,7 +521,12 @@
     203,
     159
    ],
-   "bust_pick": "bw_sangwol_v01"
+   "bust_pick": "bw_sangwol_v01",
+   "expr_pick": {
+    "happy": "bw_sangwol__happy_v01",
+    "angry": "bw_sangwol__angry_v01",
+    "sad": "bw_sangwol__sad_v01"
+   }
   },
   {
    "id": "bw_seolgu",
@@ -405,7 +542,12 @@
     203,
     159
    ],
-   "bust_pick": "bw_seolgu_v01"
+   "bust_pick": "bw_seolgu_v01",
+   "expr_pick": {
+    "happy": "bw_seolgu__happy_v01",
+    "angry": "bw_seolgu__angry_v01",
+    "sad": "bw_seolgu__sad_v01"
+   }
   },
   {
    "id": "bw_sungeom",
@@ -421,7 +563,12 @@
     203,
     159
    ],
-   "bust_pick": "bw_sungeom_v01"
+   "bust_pick": "bw_sungeom_v01",
+   "expr_pick": {
+    "happy": "bw_sungeom__happy_v02",
+    "angry": "bw_sungeom__angry_v02",
+    "sad": "bw_sungeom__sad_v01"
+   }
   },
   {
    "id": "bw_yanggil",
@@ -437,7 +584,13 @@
     203,
     159
    ],
-   "bust_pick": "bw_yanggil_v01"
+   "bust_pick": "bw_yanggil_v01",
+   "expr_pick": {
+    "happy": "bw_yanggil__happy_v01",
+    "angry": "bw_yanggil__angry_v01",
+    "sad": "bw_yanggil__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "cs_cheolgil",
@@ -453,7 +606,13 @@
     203,
     159
    ],
-   "bust_pick": "cs_cheolgil_v01"
+   "bust_pick": "cs_cheolgil_v01",
+   "expr_pick": {
+    "happy": "cs_cheolgil__happy_v01",
+    "angry": "cs_cheolgil__angry_v01",
+    "sad": "cs_cheolgil__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "cs_gijeok",
@@ -469,7 +628,13 @@
     203,
     159
    ],
-   "bust_pick": "cs_gijeok_v01"
+   "bust_pick": "cs_gijeok_v01",
+   "expr_pick": {
+    "happy": "cs_gijeok__happy_v01",
+    "angry": "cs_gijeok__angry_v01",
+    "sad": "cs_gijeok__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "cs_gyeongjeok",
@@ -489,7 +654,13 @@
     384,
     390
    ],
-   "bust_pick": "cs_gyeongjeok_v01"
+   "bust_pick": "cs_gyeongjeok_v01",
+   "expr_pick": {
+    "happy": "cs_gyeongjeok__happy_v01",
+    "angry": "cs_gyeongjeok__angry_v01",
+    "sad": "cs_gyeongjeok__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "cs_hwamul",
@@ -505,7 +676,13 @@
     203,
     159
    ],
-   "bust_pick": "cs_hwamul_v01"
+   "bust_pick": "cs_hwamul_v01",
+   "expr_pick": {
+    "happy": "cs_hwamul__happy_v01",
+    "angry": "cs_hwamul__angry_v01",
+    "sad": "cs_hwamul__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "cs_jeongbi",
@@ -521,7 +698,12 @@
     203,
     159
    ],
-   "bust_pick": "cs_jeongbi_v01"
+   "bust_pick": "cs_jeongbi_v01",
+   "expr_pick": {
+    "happy": "cs_jeongbi__happy_v01",
+    "angry": "cs_jeongbi__angry_v01",
+    "sad": "cs_jeongbi__sad_v01"
+   }
   },
   {
    "id": "cs_noseon",
@@ -537,7 +719,12 @@
     203,
     159
    ],
-   "bust_pick": "cs_noseon_v01"
+   "bust_pick": "cs_noseon_v01",
+   "expr_pick": {
+    "happy": "cs_noseon__happy_v01",
+    "angry": "cs_noseon__angry_v01",
+    "sad": "cs_noseon__sad_v01"
+   }
   },
   {
    "id": "cs_seoktan",
@@ -553,7 +740,13 @@
     203,
     159
    ],
-   "bust_pick": "cs_seoktan_v01"
+   "bust_pick": "cs_seoktan_v01",
+   "expr_pick": {
+    "happy": "cs_seoktan__happy_v01",
+    "angry": "cs_seoktan__angry_v01",
+    "sad": "cs_seoktan__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "cs_seungmu",
@@ -569,7 +762,12 @@
     203,
     159
    ],
-   "bust_pick": "cs_seungmu_v01"
+   "bust_pick": "cs_seungmu_v01",
+   "expr_pick": {
+    "happy": "cs_seungmu__happy_v01",
+    "angry": "cs_seungmu__angry_v01",
+    "sad": "cs_seungmu__sad_v02"
+   }
   },
   {
    "id": "cs_yeokjang",
@@ -585,7 +783,13 @@
     203,
     159
    ],
-   "bust_pick": "cs_yeokjang_v01"
+   "bust_pick": "cs_yeokjang_v01",
+   "expr_pick": {
+    "happy": "cs_yeokjang__happy_v02",
+    "angry": "cs_yeokjang__angry_v01",
+    "sad": "cs_yeokjang__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "dk_amgyeol",
@@ -601,7 +805,13 @@
     203,
     159
    ],
-   "bust_pick": "dk_amgyeol_v01"
+   "bust_pick": "dk_amgyeol_v01",
+   "expr_pick": {
+    "happy": "dk_amgyeol__happy_v01",
+    "angry": "dk_amgyeol__angry_v01",
+    "sad": "dk_amgyeol__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "dk_gulttuk",
@@ -617,7 +827,13 @@
     203,
     159
    ],
-   "bust_pick": "dk_gulttuk_v01"
+   "bust_pick": "dk_gulttuk_v01",
+   "expr_pick": {
+    "happy": "dk_gulttuk__happy_v02",
+    "angry": "dk_gulttuk__angry_v01",
+    "sad": "dk_gulttuk__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "dk_gyedo",
@@ -633,7 +849,13 @@
     203,
     159
    ],
-   "bust_pick": "dk_gyedo_v01"
+   "bust_pick": "dk_gyedo_v01",
+   "expr_pick": {
+    "happy": "dk_gyedo__happy_v02",
+    "angry": "dk_gyedo__angry_v01",
+    "sad": "dk_gyedo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "dk_jeoljeong",
@@ -649,7 +871,13 @@
     203,
     159
    ],
-   "bust_pick": "dk_jeoljeong_v02"
+   "bust_pick": "dk_jeoljeong_v02",
+   "expr_pick": {
+    "happy": "dk_jeoljeong__happy_v01",
+    "angry": "dk_jeoljeong__angry_v02",
+    "sad": "dk_jeoljeong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "dk_meari",
@@ -665,7 +893,12 @@
     203,
     159
    ],
-   "bust_pick": "dk_meari_v01"
+   "bust_pick": "dk_meari_v01",
+   "expr_pick": {
+    "happy": "dk_meari__happy_v01",
+    "angry": "dk_meari__angry_v01",
+    "sad": "dk_meari__sad_v01"
+   }
   },
   {
    "id": "dk_mullae",
@@ -676,12 +909,16 @@
    "look": "young adult, auburn hair, green eyes, highland valley clan member, woven patterned tunic, wool shawl, gentle kind smile",
    "stand_pick": "dk_mullae_v02",
    "face": [
-    384,
-    283,
+    397,
+    408,
     203,
     159
    ],
-   "bust_pick": "dk_mullae_v01"
+   "bust_pick": "dk_mullae_v01",
+   "face_xy": [
+    397,
+    408
+   ]
   },
   {
    "id": "dk_pungnyeon",
@@ -697,7 +934,13 @@
     203,
     159
    ],
-   "bust_pick": "dk_pungnyeon_v01"
+   "bust_pick": "dk_pungnyeon_v01",
+   "expr_pick": {
+    "happy": "dk_pungnyeon__happy_v01",
+    "angry": "dk_pungnyeon__angry_v01",
+    "sad": "dk_pungnyeon__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "dk_saneum",
@@ -708,12 +951,16 @@
    "look": "young adult, brown hair, light brown eyes, highland valley clan member, woven patterned tunic, wool shawl, calm clever gaze",
    "stand_pick": "dk_saneum_v03",
    "face": [
-    384,
-    282,
+    368,
+    388,
     203,
     159
    ],
-   "bust_pick": "dk_saneum_v01"
+   "bust_pick": "dk_saneum_v01",
+   "face_xy": [
+    368,
+    388
+   ]
   },
   {
    "id": "dk_suro",
@@ -729,7 +976,13 @@
     203,
     159
    ],
-   "bust_pick": "dk_suro_v01"
+   "bust_pick": "dk_suro_v01",
+   "expr_pick": {
+    "happy": "dk_suro__happy_v01",
+    "angry": "dk_suro__angry_v01",
+    "sad": "dk_suro__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "fy_baramgae",
@@ -745,7 +998,13 @@
     203,
     159
    ],
-   "bust_pick": "fy_baramgae_v01"
+   "bust_pick": "fy_baramgae_v01",
+   "expr_pick": {
+    "happy": "fy_baramgae__happy_v01",
+    "angry": "fy_baramgae__angry_v02",
+    "sad": "fy_baramgae__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "fy_buyang",
@@ -761,7 +1020,13 @@
     203,
     159
    ],
-   "bust_pick": "fy_buyang_v01"
+   "bust_pick": "fy_buyang_v01",
+   "expr_pick": {
+    "happy": "fy_buyang__happy_v01",
+    "angry": "fy_buyang__angry_v01",
+    "sad": "fy_buyang__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "fy_cheonggong",
@@ -777,7 +1042,13 @@
     203,
     159
    ],
-   "bust_pick": "fy_cheonggong_v01"
+   "bust_pick": "fy_cheonggong_v01",
+   "expr_pick": {
+    "happy": "fy_cheonggong__happy_v01",
+    "angry": "fy_cheonggong__angry_v01",
+    "sad": "fy_cheonggong__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "fy_gitteol",
@@ -788,12 +1059,16 @@
    "look": "young adult, blonde hair, light brown eyes, cloud garden keeper, futuristic pastel smock, flower pin, calm clever gaze",
    "stand_pick": "fy_gitteol_v01",
    "face": [
-    384,
-    283,
+    386,
+    412,
     203,
     159
    ],
-   "bust_pick": "fy_gitteol_v01"
+   "bust_pick": "fy_gitteol_v01",
+   "face_xy": [
+    386,
+    412
+   ]
   },
   {
    "id": "fy_mujigae",
@@ -804,12 +1079,16 @@
    "look": "young adult, blonde hair, blue eyes, cloud garden keeper, futuristic pastel smock, flower pin, gentle kind smile",
    "stand_pick": "fy_mujigae_v04",
    "face": [
-    384,
-    282,
+    366,
+    402,
     203,
     159
    ],
-   "bust_pick": "fy_mujigae_v01"
+   "bust_pick": "fy_mujigae_v01",
+   "face_xy": [
+    366,
+    402
+   ]
   },
   {
    "id": "fy_paran",
@@ -825,7 +1104,12 @@
     203,
     159
    ],
-   "bust_pick": "fy_paran_v01"
+   "bust_pick": "fy_paran_v01",
+   "expr_pick": {
+    "happy": "fy_paran__happy_v02",
+    "angry": "fy_paran__angry_v01",
+    "sad": "fy_paran__sad_v01"
+   }
   },
   {
    "id": "fy_seomgil",
@@ -841,7 +1125,13 @@
     203,
     159
    ],
-   "bust_pick": "fy_seomgil_v01"
+   "bust_pick": "fy_seomgil_v01",
+   "expr_pick": {
+    "happy": "fy_seomgil__happy_v01",
+    "angry": "fy_seomgil__angry_v01",
+    "sad": "fy_seomgil__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "fy_ttangkkeut",
@@ -857,7 +1147,12 @@
     203,
     159
    ],
-   "bust_pick": "fy_ttangkkeut_v01"
+   "bust_pick": "fy_ttangkkeut_v01",
+   "expr_pick": {
+    "happy": "fy_ttangkkeut__happy_v01",
+    "angry": "fy_ttangkkeut__angry_v01",
+    "sad": "fy_ttangkkeut__sad_v01"
+   }
   },
   {
    "id": "fy_unwon",
@@ -873,7 +1168,13 @@
     203,
     159
    ],
-   "bust_pick": "fy_unwon_v01"
+   "bust_pick": "fy_unwon_v01",
+   "expr_pick": {
+    "happy": "fy_unwon__happy_v01",
+    "angry": "fy_unwon__angry_v01",
+    "sad": "fy_unwon__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gm_cheolbu",
@@ -884,12 +1185,16 @@
    "look": "young adult, blonde hair, green eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, fierce determined expression",
    "stand_pick": "gm_cheolbu_v01",
    "face": [
-    384,
-    282,
+    385,
+    405,
     203,
     159
    ],
-   "bust_pick": "gm_cheolbu_v01"
+   "bust_pick": "gm_cheolbu_v01",
+   "face_xy": [
+    385,
+    405
+   ]
   },
   {
    "id": "gm_dolbae",
@@ -905,7 +1210,13 @@
     203,
     159
    ],
-   "bust_pick": "gm_dolbae_v02"
+   "bust_pick": "gm_dolbae_v02",
+   "expr_pick": {
+    "happy": "gm_dolbae__happy_v01",
+    "angry": "gm_dolbae__angry_v02",
+    "sad": "gm_dolbae__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gm_gaenghwa",
@@ -921,7 +1232,13 @@
     203,
     159
    ],
-   "bust_pick": "gm_gaenghwa_v01"
+   "bust_pick": "gm_gaenghwa_v01",
+   "expr_pick": {
+    "happy": "gm_gaenghwa__happy_v02",
+    "angry": "gm_gaenghwa__angry_v01",
+    "sad": "gm_gaenghwa__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gm_geumhyeol",
@@ -937,7 +1254,13 @@
     203,
     159
    ],
-   "bust_pick": "gm_geumhyeol_v01"
+   "bust_pick": "gm_geumhyeol_v01",
+   "expr_pick": {
+    "happy": "gm_geumhyeol__happy_v02",
+    "angry": "gm_geumhyeol__angry_v01",
+    "sad": "gm_geumhyeol__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gm_hwangma",
@@ -953,7 +1276,13 @@
     203,
     159
    ],
-   "bust_pick": "gm_hwangma_v01"
+   "bust_pick": "gm_hwangma_v01",
+   "expr_pick": {
+    "happy": "gm_hwangma__happy_v01",
+    "angry": "gm_hwangma__angry_v01",
+    "sad": "gm_hwangma__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gm_jeongdong",
@@ -969,7 +1298,13 @@
     203,
     159
    ],
-   "bust_pick": "gm_jeongdong_v01"
+   "bust_pick": "gm_jeongdong_v01",
+   "expr_pick": {
+    "happy": "gm_jeongdong__happy_v01",
+    "angry": "gm_jeongdong__angry_v01",
+    "sad": "gm_jeongdong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gm_mahyang",
@@ -985,7 +1320,12 @@
     203,
     159
    ],
-   "bust_pick": "gm_mahyang_v01"
+   "bust_pick": "gm_mahyang_v01",
+   "expr_pick": {
+    "happy": "gm_mahyang__happy_v01",
+    "angry": "gm_mahyang__angry_v01",
+    "sad": "gm_mahyang__sad_v01"
+   }
   },
   {
    "id": "gm_myeongseok",
@@ -996,12 +1336,16 @@
    "look": "young adult, blonde hair, grey eyes, mining guild worker, heavy canvas work jacket, soot smudges, goggles around neck, calm clever gaze",
    "stand_pick": "gm_myeongseok_v02",
    "face": [
-    384,
-    283,
+    390,
+    372,
     203,
     159
    ],
-   "bust_pick": "gm_myeongseok_v01"
+   "bust_pick": "gm_myeongseok_v01",
+   "face_xy": [
+    390,
+    372
+   ]
   },
   {
    "id": "gm_sanul",
@@ -1017,7 +1361,13 @@
     203,
     159
    ],
-   "bust_pick": "gm_sanul_v01"
+   "bust_pick": "gm_sanul_v01",
+   "expr_pick": {
+    "happy": "gm_sanul__happy_v01",
+    "angry": "gm_sanul__angry_v01",
+    "sad": "gm_sanul__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gr_bangpung",
@@ -1033,7 +1383,13 @@
     203,
     159
    ],
-   "bust_pick": "gr_bangpung_v01"
+   "bust_pick": "gr_bangpung_v01",
+   "expr_pick": {
+    "happy": "gr_bangpung__happy_v01",
+    "angry": "gr_bangpung__angry_v02",
+    "sad": "gr_bangpung__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gr_haetbit",
@@ -1049,7 +1405,12 @@
     203,
     159
    ],
-   "bust_pick": "gr_haetbit_v01"
+   "bust_pick": "gr_haetbit_v01",
+   "expr_pick": {
+    "happy": "gr_haetbit__happy_v02",
+    "angry": "gr_haetbit__angry_v01",
+    "sad": "gr_haetbit__sad_v02"
+   }
   },
   {
    "id": "gr_iseul",
@@ -1060,12 +1421,16 @@
    "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, seed vault scientist, white lab coat, seed pouches on belt, calm clever gaze",
    "stand_pick": "gr_iseul_v02",
    "face": [
-    384,
-    283,
+    372,
+    385,
     203,
     159
    ],
-   "bust_pick": "gr_iseul_v01"
+   "bust_pick": "gr_iseul_v01",
+   "face_xy": [
+    372,
+    385
+   ]
   },
   {
    "id": "gr_kkulbeol",
@@ -1081,7 +1446,13 @@
     203,
     159
    ],
-   "bust_pick": "gr_kkulbeol_v01"
+   "bust_pick": "gr_kkulbeol_v01",
+   "expr_pick": {
+    "happy": "gr_kkulbeol__happy_v01",
+    "angry": "gr_kkulbeol__angry_v01",
+    "sad": "gr_kkulbeol__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gr_mojong",
@@ -1097,7 +1468,13 @@
     203,
     159
    ],
-   "bust_pick": "gr_mojong_v01"
+   "bust_pick": "gr_mojong_v01",
+   "expr_pick": {
+    "happy": "gr_mojong__happy_v02",
+    "angry": "gr_mojong__angry_v01",
+    "sad": "gr_mojong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gr_nokhwa",
@@ -1113,7 +1490,13 @@
     203,
     159
    ],
-   "bust_pick": "gr_nokhwa_v01"
+   "bust_pick": "gr_nokhwa_v01",
+   "expr_pick": {
+    "happy": "gr_nokhwa__happy_v01",
+    "angry": "gr_nokhwa__angry_v01",
+    "sad": "gr_nokhwa__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gr_ssiat",
@@ -1124,12 +1507,16 @@
    "look": "young adult, brown hair, light brown eyes, seed vault scientist, white lab coat, seed pouches on belt, calm clever gaze",
    "stand_pick": "gr_ssiat_v04",
    "face": [
-    384,
-    283,
+    362,
+    385,
     203,
     159
    ],
-   "bust_pick": "gr_ssiat_v01"
+   "bust_pick": "gr_ssiat_v01",
+   "face_xy": [
+    362,
+    385
+   ]
   },
   {
    "id": "gr_supgil",
@@ -1145,7 +1532,13 @@
     203,
     159
    ],
-   "bust_pick": "gr_supgil_v01"
+   "bust_pick": "gr_supgil_v01",
+   "expr_pick": {
+    "happy": "gr_supgil__happy_v02",
+    "angry": "gr_supgil__angry_v02",
+    "sad": "gr_supgil__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "gr_toyang",
@@ -1161,7 +1554,13 @@
     203,
     159
    ],
-   "bust_pick": "gr_toyang_v01"
+   "bust_pick": "gr_toyang_v01",
+   "expr_pick": {
+    "happy": "gr_toyang__happy_v02",
+    "angry": "gr_toyang__angry_v01",
+    "sad": "gr_toyang__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hb_bisang",
@@ -1177,7 +1576,12 @@
     203,
     159
    ],
-   "bust_pick": "hb_bisang_v01"
+   "bust_pick": "hb_bisang_v01",
+   "expr_pick": {
+    "happy": "hb_bisang__happy_v01",
+    "angry": "hb_bisang__angry_v01",
+    "sad": "hb_bisang__sad_v01"
+   }
   },
   {
    "id": "hb_gisang",
@@ -1193,7 +1597,13 @@
     203,
     159
    ],
-   "bust_pick": "hb_gisang_v01"
+   "bust_pick": "hb_gisang_v01",
+   "expr_pick": {
+    "happy": "hb_gisang__happy_v01",
+    "angry": "hb_gisang__angry_v01",
+    "sad": "hb_gisang__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hb_gwanje",
@@ -1209,7 +1619,13 @@
     203,
     159
    ],
-   "bust_pick": "hb_gwanje_v01"
+   "bust_pick": "hb_gwanje_v01",
+   "expr_pick": {
+    "happy": "hb_gwanje__happy_v01",
+    "angry": "hb_gwanje__angry_v01",
+    "sad": "hb_gwanje__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "hb_gyeongro",
@@ -1225,7 +1641,12 @@
     203,
     159
    ],
-   "bust_pick": "hb_gyeongro_v01"
+   "bust_pick": "hb_gyeongro_v01",
+   "expr_pick": {
+    "happy": "hb_gyeongro__happy_v01",
+    "angry": "hb_gyeongro__angry_v01",
+    "sad": "hb_gyeongro__sad_v01"
+   }
   },
   {
    "id": "hb_hwaljuro",
@@ -1241,7 +1662,13 @@
     203,
     159
    ],
-   "bust_pick": "hb_hwaljuro_v01"
+   "bust_pick": "hb_hwaljuro_v01",
+   "expr_pick": {
+    "happy": "hb_hwaljuro__happy_v01",
+    "angry": "hb_hwaljuro__angry_v01",
+    "sad": "hb_hwaljuro__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hb_jeomgeom",
@@ -1257,7 +1684,12 @@
     203,
     159
    ],
-   "bust_pick": "hb_jeomgeom_v01"
+   "bust_pick": "hb_jeomgeom_v01",
+   "expr_pick": {
+    "happy": "hb_jeomgeom__happy_v01",
+    "angry": "hb_jeomgeom__angry_v02",
+    "sad": "hb_jeomgeom__sad_v02"
+   }
   },
   {
    "id": "hb_mangwon",
@@ -1273,7 +1705,13 @@
     203,
     159
    ],
-   "bust_pick": "hb_mangwon_v01"
+   "bust_pick": "hb_mangwon_v01",
+   "expr_pick": {
+    "happy": "hb_mangwon__happy_v01",
+    "angry": "hb_mangwon__angry_v02",
+    "sad": "hb_mangwon__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hb_sangae",
@@ -1289,7 +1727,12 @@
     203,
     159
    ],
-   "bust_pick": "hb_sangae_v01"
+   "bust_pick": "hb_sangae_v01",
+   "expr_pick": {
+    "happy": "hb_sangae__happy_v01",
+    "angry": "hb_sangae__angry_v01",
+    "sad": "hb_sangae__sad_v01"
+   }
   },
   {
    "id": "hb_seonhoe",
@@ -1305,7 +1748,13 @@
     203,
     159
    ],
-   "bust_pick": "hb_seonhoe_v01"
+   "bust_pick": "hb_seonhoe_v01",
+   "expr_pick": {
+    "happy": "hb_seonhoe__happy_v01",
+    "angry": "hb_seonhoe__angry_v01",
+    "sad": "hb_seonhoe__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hl_baekhwa",
@@ -1321,7 +1770,13 @@
     203,
     159
    ],
-   "bust_pick": "hl_baekhwa_v01"
+   "bust_pick": "hl_baekhwa_v01",
+   "expr_pick": {
+    "happy": "hl_baekhwa__happy_v01",
+    "angry": "hl_baekhwa__angry_v01",
+    "sad": "hl_baekhwa__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hl_damhwa",
@@ -1337,7 +1792,12 @@
     203,
     159
    ],
-   "bust_pick": "hl_damhwa_v01"
+   "bust_pick": "hl_damhwa_v01",
+   "expr_pick": {
+    "happy": "hl_damhwa__happy_v01",
+    "angry": "hl_damhwa__angry_v01",
+    "sad": "hl_damhwa__sad_v01"
+   }
   },
   {
    "id": "hl_geumsil",
@@ -1353,7 +1813,13 @@
     203,
     159
    ],
-   "bust_pick": "hl_geumsil_v01"
+   "bust_pick": "hl_geumsil_v01",
+   "expr_pick": {
+    "happy": "hl_geumsil__happy_v01",
+    "angry": "hl_geumsil__angry_v01",
+    "sad": "hl_geumsil__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hl_gyeongun",
@@ -1369,7 +1835,13 @@
     203,
     159
    ],
-   "bust_pick": "hl_gyeongun_v01"
+   "bust_pick": "hl_gyeongun_v01",
+   "expr_pick": {
+    "happy": "hl_gyeongun__happy_v01",
+    "angry": "hl_gyeongun__angry_v01",
+    "sad": "hl_gyeongun__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hl_hwaseo",
@@ -1385,7 +1857,13 @@
     203,
     159
    ],
-   "bust_pick": "hl_hwaseo_v01"
+   "bust_pick": "hl_hwaseo_v01",
+   "expr_pick": {
+    "happy": "hl_hwaseo__happy_v02",
+    "angry": "hl_hwaseo__angry_v01",
+    "sad": "hl_hwaseo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hl_jeongwon",
@@ -1401,7 +1879,13 @@
     203,
     159
    ],
-   "bust_pick": "hl_jeongwon_v01"
+   "bust_pick": "hl_jeongwon_v01",
+   "expr_pick": {
+    "happy": "hl_jeongwon__happy_v01",
+    "angry": "hl_jeongwon__angry_v01",
+    "sad": "hl_jeongwon__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hl_kkotbi",
@@ -1417,7 +1901,13 @@
     203,
     159
    ],
-   "bust_pick": "hl_kkotbi_v01"
+   "bust_pick": "hl_kkotbi_v01",
+   "expr_pick": {
+    "happy": "hl_kkotbi__happy_v01",
+    "angry": "hl_kkotbi__angry_v01",
+    "sad": "hl_kkotbi__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hl_noeul",
@@ -1433,7 +1923,13 @@
     203,
     159
    ],
-   "bust_pick": "hl_noeul_v01"
+   "bust_pick": "hl_noeul_v01",
+   "expr_pick": {
+    "happy": "hl_noeul__happy_v01",
+    "angry": "hl_noeul__angry_v01",
+    "sad": "hl_noeul__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hq_dotdae",
@@ -1449,7 +1945,12 @@
     203,
     159
    ],
-   "bust_pick": "hq_dotdae_v01"
+   "bust_pick": "hq_dotdae_v01",
+   "expr_pick": {
+    "happy": "hq_dotdae__happy_v01",
+    "angry": "hq_dotdae__angry_v01",
+    "sad": "hq_dotdae__sad_v01"
+   }
   },
   {
    "id": "hq_eodeok",
@@ -1469,7 +1970,13 @@
     384,
     378
    ],
-   "bust_pick": "hq_eodeok_v01"
+   "bust_pick": "hq_eodeok_v01",
+   "expr_pick": {
+    "happy": "hq_eodeok__happy_v01",
+    "angry": "hq_eodeok__angry_v01",
+    "sad": "hq_eodeok__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hq_gaebeol",
@@ -1485,7 +1992,13 @@
     203,
     159
    ],
-   "bust_pick": "hq_gaebeol_v01"
+   "bust_pick": "hq_gaebeol_v01",
+   "expr_pick": {
+    "happy": "hq_gaebeol__happy_v01",
+    "angry": "hq_gaebeol__angry_v02",
+    "sad": "hq_gaebeol__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "hq_haeryeong",
@@ -1501,7 +2014,13 @@
     203,
     159
    ],
-   "bust_pick": "hq_haeryeong_v01"
+   "bust_pick": "hq_haeryeong_v01",
+   "expr_pick": {
+    "happy": "hq_haeryeong__happy_v01",
+    "angry": "hq_haeryeong__angry_v01",
+    "sad": "hq_haeryeong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hq_jamsu",
@@ -1517,7 +2036,13 @@
     203,
     159
    ],
-   "bust_pick": "hq_jamsu_v01"
+   "bust_pick": "hq_jamsu_v01",
+   "expr_pick": {
+    "happy": "hq_jamsu__happy_v01",
+    "angry": "hq_jamsu__angry_v02",
+    "sad": "hq_jamsu__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hq_jugwang",
@@ -1533,7 +2058,13 @@
     203,
     159
    ],
-   "bust_pick": "hq_jugwang_v01"
+   "bust_pick": "hq_jugwang_v01",
+   "expr_pick": {
+    "happy": "hq_jugwang__happy_v01",
+    "angry": "hq_jugwang__angry_v01",
+    "sad": "hq_jugwang__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hq_mulgyeol",
@@ -1549,7 +2080,13 @@
     203,
     159
    ],
-   "bust_pick": "hq_mulgyeol_v01"
+   "bust_pick": "hq_mulgyeol_v01",
+   "expr_pick": {
+    "happy": "hq_mulgyeol__happy_v01",
+    "angry": "hq_mulgyeol__angry_v01",
+    "sad": "hq_mulgyeol__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hq_sanho",
@@ -1565,7 +2102,13 @@
     203,
     159
    ],
-   "bust_pick": "hq_sanho_v01"
+   "bust_pick": "hq_sanho_v01",
+   "expr_pick": {
+    "happy": "hq_sanho__happy_v01",
+    "angry": "hq_sanho__angry_v02",
+    "sad": "hq_sanho__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "hq_yongpa",
@@ -1581,7 +2124,12 @@
     203,
     159
    ],
-   "bust_pick": "hq_yongpa_v01"
+   "bust_pick": "hq_yongpa_v01",
+   "expr_pick": {
+    "happy": "hq_yongpa__happy_v01",
+    "angry": "hq_yongpa__angry_v02",
+    "sad": "hq_yongpa__sad_v01"
+   }
   },
   {
    "id": "js_bodo",
@@ -1597,7 +2145,13 @@
     203,
     159
    ],
-   "bust_pick": "js_bodo_v01"
+   "bust_pick": "js_bodo_v01",
+   "expr_pick": {
+    "happy": "js_bodo__happy_v01",
+    "angry": "js_bodo__angry_v01",
+    "sad": "js_bodo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "js_dalli",
@@ -1613,7 +2167,13 @@
     203,
     159
    ],
-   "bust_pick": "js_dalli_v01"
+   "bust_pick": "js_dalli_v01",
+   "expr_pick": {
+    "happy": "js_dalli__happy_v01",
+    "angry": "js_dalli__angry_v01",
+    "sad": "js_dalli__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "js_eumseong",
@@ -1629,7 +2189,12 @@
     203,
     159
    ],
-   "bust_pick": "js_eumseong_v01"
+   "bust_pick": "js_eumseong_v01",
+   "expr_pick": {
+    "happy": "js_eumseong__happy_v02",
+    "angry": "js_eumseong__angry_v01",
+    "sad": "js_eumseong__sad_v01"
+   }
   },
   {
    "id": "js_hyeonjang",
@@ -1645,7 +2210,12 @@
     203,
     159
    ],
-   "bust_pick": "js_hyeonjang_v01"
+   "bust_pick": "js_hyeonjang_v01",
+   "expr_pick": {
+    "happy": "js_hyeonjang__happy_v01",
+    "angry": "js_hyeonjang__angry_v02",
+    "sad": "js_hyeonjang__sad_v01"
+   }
   },
   {
    "id": "js_jamak",
@@ -1661,7 +2231,13 @@
     203,
     159
    ],
-   "bust_pick": "js_jamak_v01"
+   "bust_pick": "js_jamak_v01",
+   "expr_pick": {
+    "happy": "js_jamak__happy_v01",
+    "angry": "js_jamak__angry_v01",
+    "sad": "js_jamak__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "js_jeonpa",
@@ -1672,12 +2248,16 @@
    "look": "young adult, black hair, light brown eyes, modern news anchor, tailored blazer, press badge, calm clever gaze",
    "stand_pick": "js_jeonpa_v02",
    "face": [
+    394,
     384,
-    283,
     203,
     159
    ],
-   "bust_pick": "js_jeonpa_v01"
+   "bust_pick": "js_jeonpa_v01",
+   "face_xy": [
+    394,
+    384
+   ]
   },
   {
    "id": "js_jomyeong",
@@ -1693,7 +2273,13 @@
     203,
     159
    ],
-   "bust_pick": "js_jomyeong_v01"
+   "bust_pick": "js_jomyeong_v01",
+   "expr_pick": {
+    "happy": "js_jomyeong__happy_v02",
+    "angry": "js_jomyeong__angry_v01",
+    "sad": "js_jomyeong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "js_saengbang",
@@ -1709,7 +2295,12 @@
     203,
     159
    ],
-   "bust_pick": "js_saengbang_v01"
+   "bust_pick": "js_saengbang_v01",
+   "expr_pick": {
+    "happy": "js_saengbang__happy_v01",
+    "angry": "js_saengbang__angry_v01",
+    "sad": "js_saengbang__sad_v01"
+   }
   },
   {
    "id": "js_teukjong",
@@ -1725,7 +2316,13 @@
     203,
     159
    ],
-   "bust_pick": "js_teukjong_v01"
+   "bust_pick": "js_teukjong_v01",
+   "expr_pick": {
+    "happy": "js_teukjong__happy_v02",
+    "angry": "js_teukjong__angry_v02",
+    "sad": "js_teukjong__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "kd_cheolsim",
@@ -1741,7 +2338,13 @@
     203,
     159
    ],
-   "bust_pick": "kd_cheolsim_v01"
+   "bust_pick": "kd_cheolsim_v01",
+   "expr_pick": {
+    "happy": "kd_cheolsim__happy_v01",
+    "angry": "kd_cheolsim__angry_v01",
+    "sad": "kd_cheolsim__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kd_cheongram",
@@ -1757,7 +2360,13 @@
     203,
     159
    ],
-   "bust_pick": "kd_cheongram_v01"
+   "bust_pick": "kd_cheongram_v01",
+   "expr_pick": {
+    "happy": "kd_cheongram__happy_v01",
+    "angry": "kd_cheongram__angry_v01",
+    "sad": "kd_cheongram__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kd_hoero",
@@ -1773,7 +2382,12 @@
     203,
     159
    ],
-   "bust_pick": "kd_hoero_v01"
+   "bust_pick": "kd_hoero_v01",
+   "expr_pick": {
+    "happy": "kd_hoero__happy_v01",
+    "angry": "kd_hoero__angry_v01",
+    "sad": "kd_hoero__sad_v02"
+   }
   },
   {
    "id": "kd_jeonji",
@@ -1784,12 +2398,16 @@
    "look": "young adult, auburn hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze",
    "stand_pick": "kd_jeonji_v03",
    "face": [
-    385,
-    283,
+    380,
+    388,
     203,
     159
    ],
-   "bust_pick": "kd_jeonji_v01"
+   "bust_pick": "kd_jeonji_v01",
+   "face_xy": [
+    380,
+    388
+   ]
   },
   {
    "id": "kd_nalgae",
@@ -1805,7 +2423,13 @@
     203,
     159
    ],
-   "bust_pick": "kd_nalgae_v01"
+   "bust_pick": "kd_nalgae_v01",
+   "expr_pick": {
+    "happy": "kd_nalgae__happy_v01",
+    "angry": "kd_nalgae__angry_v01",
+    "sad": "kd_nalgae__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kd_seolgye",
@@ -1821,7 +2445,13 @@
     203,
     159
    ],
-   "bust_pick": "kd_seolgye_v01"
+   "bust_pick": "kd_seolgye_v01",
+   "expr_pick": {
+    "happy": "kd_seolgye__happy_v01",
+    "angry": "kd_seolgye__angry_v01",
+    "sad": "kd_seolgye__sad_v02"
+   },
+   "eye": "o"
   },
   {
    "id": "kd_seorim",
@@ -1837,7 +2467,13 @@
     203,
     159
    ],
-   "bust_pick": "kd_seorim_v01"
+   "bust_pick": "kd_seorim_v01",
+   "expr_pick": {
+    "happy": "kd_seorim__happy_v01",
+    "angry": "kd_seorim__angry_v01",
+    "sad": "kd_seorim__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "kd_silheom",
@@ -1848,12 +2484,16 @@
    "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, light brown eyes, engineering university student, zip-up hoodie, lanyard id card, calm clever gaze",
    "stand_pick": "kd_silheom_v03",
    "face": [
-    384,
-    282,
+    386,
+    392,
     203,
     159
    ],
-   "bust_pick": "kd_silheom_v01"
+   "bust_pick": "kd_silheom_v01",
+   "face_xy": [
+    386,
+    392
+   ]
   },
   {
    "id": "kd_yongjeop",
@@ -1869,7 +2509,13 @@
     203,
     159
    ],
-   "bust_pick": "kd_yongjeop_v01"
+   "bust_pick": "kd_yongjeop_v01",
+   "expr_pick": {
+    "happy": "kd_yongjeop__happy_v01",
+    "angry": "kd_yongjeop__angry_v01",
+    "sad": "kd_yongjeop__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "lg_baekgeom",
@@ -1885,7 +2531,13 @@
     203,
     159
    ],
-   "bust_pick": "lg_baekgeom_v01"
+   "bust_pick": "lg_baekgeom_v01",
+   "expr_pick": {
+    "happy": "lg_baekgeom__happy_v01",
+    "angry": "lg_baekgeom__angry_v01",
+    "sad": "lg_baekgeom__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "lg_ilwol",
@@ -1901,7 +2553,13 @@
     203,
     159
    ],
-   "bust_pick": "lg_ilwol_v01"
+   "bust_pick": "lg_ilwol_v01",
+   "expr_pick": {
+    "happy": "lg_ilwol__happy_v01",
+    "angry": "lg_ilwol__angry_v01",
+    "sad": "lg_ilwol__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "lg_mugyeong",
@@ -1917,7 +2575,13 @@
     203,
     159
    ],
-   "bust_pick": "lg_mugyeong_v01"
+   "bust_pick": "lg_mugyeong_v01",
+   "expr_pick": {
+    "happy": "lg_mugyeong__happy_v01",
+    "angry": "lg_mugyeong__angry_v01",
+    "sad": "lg_mugyeong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "mh_bungdae",
@@ -1933,7 +2597,13 @@
     203,
     159
    ],
-   "bust_pick": "mh_bungdae_v01"
+   "bust_pick": "mh_bungdae_v01",
+   "expr_pick": {
+    "happy": "mh_bungdae__happy_v01",
+    "angry": "mh_bungdae__angry_v01",
+    "sad": "mh_bungdae__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "mh_gangin",
@@ -1944,12 +2614,16 @@
    "look": "young adult, brown hair, light brown eyes, paramedic, rescue uniform with reflective stripes, fierce determined expression",
    "stand_pick": "mh_gangin_v01",
    "face": [
-    384,
-    282,
+    375,
+    362,
     203,
     159
    ],
-   "bust_pick": "mh_gangin_v01"
+   "bust_pick": "mh_gangin_v01",
+   "face_xy": [
+    375,
+    362
+   ]
   },
   {
    "id": "mh_ganhui",
@@ -1965,7 +2639,13 @@
     203,
     159
    ],
-   "bust_pick": "mh_ganhui_v01"
+   "bust_pick": "mh_ganhui_v01",
+   "expr_pick": {
+    "happy": "mh_ganhui__happy_v02",
+    "angry": "mh_ganhui__angry_v01",
+    "sad": "mh_ganhui__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "mh_gugeup",
@@ -1981,7 +2661,13 @@
     203,
     159
    ],
-   "bust_pick": "mh_gugeup_v01"
+   "bust_pick": "mh_gugeup_v01",
+   "expr_pick": {
+    "happy": "mh_gugeup__happy_v02",
+    "angry": "mh_gugeup__angry_v01",
+    "sad": "mh_gugeup__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "mh_maekbak",
@@ -1997,7 +2683,13 @@
     203,
     159
    ],
-   "bust_pick": "mh_maekbak_v01"
+   "bust_pick": "mh_maekbak_v01",
+   "expr_pick": {
+    "happy": "mh_maekbak__happy_v01",
+    "angry": "mh_maekbak__angry_v01",
+    "sad": "mh_maekbak__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "mh_muha",
@@ -2008,12 +2700,16 @@
    "look": "young adult, black hair, brown eyes, hospital doctor, white coat, stethoscope around neck, gentle kind smile",
    "stand_pick": "mh_muha_v01",
    "face": [
-    384,
-    281,
+    355,
+    405,
     203,
     159
    ],
-   "bust_pick": "mh_muha_v01"
+   "bust_pick": "mh_muha_v01",
+   "face_xy": [
+    355,
+    405
+   ]
   },
   {
    "id": "mh_onyu",
@@ -2029,7 +2725,13 @@
     203,
     159
    ],
-   "bust_pick": "mh_onyu_v01"
+   "bust_pick": "mh_onyu_v01",
+   "expr_pick": {
+    "happy": "mh_onyu__happy_v01",
+    "angry": "mh_onyu__angry_v01",
+    "sad": "mh_onyu__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "mh_sabang",
@@ -2045,7 +2747,13 @@
     203,
     159
    ],
-   "bust_pick": "mh_sabang_v01"
+   "bust_pick": "mh_sabang_v01",
+   "expr_pick": {
+    "happy": "mh_sabang__happy_v01",
+    "angry": "mh_sabang__angry_v01",
+    "sad": "mh_sabang__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "mh_yakseon",
@@ -2056,12 +2764,16 @@
    "look": "adult, brown hair, brown eyes, hospital doctor, white coat, stethoscope around neck, calm clever gaze",
    "stand_pick": "mh_yakseon_v02",
    "face": [
-    384,
-    282,
+    380,
+    372,
     203,
     159
    ],
-   "bust_pick": "mh_yakseon_v01"
+   "bust_pick": "mh_yakseon_v01",
+   "face_xy": [
+    380,
+    372
+   ]
   },
   {
    "id": "mr_bakwi",
@@ -2077,7 +2789,13 @@
     203,
     159
    ],
-   "bust_pick": "mr_bakwi_v01"
+   "bust_pick": "mr_bakwi_v01",
+   "expr_pick": {
+    "happy": "mr_bakwi__happy_v01",
+    "angry": "mr_bakwi__angry_v01",
+    "sad": "mr_bakwi__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "mr_bingha",
@@ -2088,12 +2806,16 @@
    "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, brown hair, teal eyes, mars colonist, rust orange environment suit, high collar, mission patch, calm clever gaze",
    "stand_pick": "mr_bingha_v04",
    "face": [
-    385,
-    283,
+    374,
+    395,
     203,
     159
    ],
-   "bust_pick": "mr_bingha_v01"
+   "bust_pick": "mr_bingha_v01",
+   "face_xy": [
+    374,
+    395
+   ]
   },
   {
    "id": "mr_cheolgu",
@@ -2109,7 +2831,12 @@
     203,
     159
    ],
-   "bust_pick": "mr_cheolgu_v01"
+   "bust_pick": "mr_cheolgu_v01",
+   "expr_pick": {
+    "happy": "mr_cheolgu__happy_v01",
+    "angry": "mr_cheolgu__angry_v01",
+    "sad": "mr_cheolgu__sad_v01"
+   }
   },
   {
    "id": "mr_cheotbom",
@@ -2125,7 +2852,13 @@
     203,
     159
    ],
-   "bust_pick": "mr_cheotbom_v01"
+   "bust_pick": "mr_cheotbom_v01",
+   "expr_pick": {
+    "happy": "mr_cheotbom__happy_v02",
+    "angry": "mr_cheotbom__angry_v01",
+    "sad": "mr_cheotbom__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "mr_gaecheok",
@@ -2141,7 +2874,12 @@
     203,
     159
    ],
-   "bust_pick": "mr_gaecheok_v01"
+   "bust_pick": "mr_gaecheok_v01",
+   "expr_pick": {
+    "happy": "mr_gaecheok__happy_v01",
+    "angry": "mr_gaecheok__angry_v01",
+    "sad": "mr_gaecheok__sad_v01"
+   }
   },
   {
    "id": "mr_gwangmul",
@@ -2157,7 +2895,13 @@
     203,
     159
    ],
-   "bust_pick": "mr_gwangmul_v01"
+   "bust_pick": "mr_gwangmul_v01",
+   "expr_pick": {
+    "happy": "mr_gwangmul__happy_v01",
+    "angry": "mr_gwangmul__angry_v01",
+    "sad": "mr_gwangmul__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "mr_jeoksa",
@@ -2173,7 +2917,13 @@
     203,
     159
    ],
-   "bust_pick": "mr_jeoksa_v01"
+   "bust_pick": "mr_jeoksa_v01",
+   "expr_pick": {
+    "happy": "mr_jeoksa__happy_v01",
+    "angry": "mr_jeoksa__angry_v01",
+    "sad": "mr_jeoksa__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "mr_onsil",
@@ -2184,12 +2934,16 @@
    "look": "young adult, brown hair, brown eyes, mars colonist, rust orange environment suit, high collar, mission patch, gentle kind smile",
    "stand_pick": "mr_onsil_v02",
    "face": [
-    384,
-    283,
+    382,
+    370,
     203,
     159
    ],
-   "bust_pick": "mr_onsil_v01"
+   "bust_pick": "mr_onsil_v01",
+   "face_xy": [
+    382,
+    370
+   ]
   },
   {
    "id": "mr_sumteo",
@@ -2205,7 +2959,12 @@
     203,
     159
    ],
-   "bust_pick": "mr_sumteo_v01"
+   "bust_pick": "mr_sumteo_v01",
+   "expr_pick": {
+    "happy": "mr_sumteo__happy_v01",
+    "angry": "mr_sumteo__angry_v01",
+    "sad": "mr_sumteo__sad_v01"
+   }
   },
   {
    "id": "nc_baekdo",
@@ -2216,12 +2975,16 @@
    "look": "young adult, blonde hair, grey eyes, neon market merchant, glossy jacket, holographic accessories, calm clever gaze",
    "stand_pick": "nc_baekdo_v02",
    "face": [
-    384,
-    283,
+    390,
+    360,
     203,
     159
    ],
-   "bust_pick": "nc_baekdo_v01"
+   "bust_pick": "nc_baekdo_v01",
+   "face_xy": [
+    390,
+    360
+   ]
   },
   {
    "id": "nc_bitsal",
@@ -2237,7 +3000,12 @@
     203,
     159
    ],
-   "bust_pick": "nc_bitsal_v01"
+   "bust_pick": "nc_bitsal_v01",
+   "expr_pick": {
+    "happy": "nc_bitsal__happy_v01",
+    "angry": "nc_bitsal__angry_v01",
+    "sad": "nc_bitsal__sad_v01"
+   }
   },
   {
    "id": "nc_geori",
@@ -2253,7 +3021,13 @@
     203,
     159
    ],
-   "bust_pick": "nc_geori_v01"
+   "bust_pick": "nc_geori_v01",
+   "expr_pick": {
+    "happy": "nc_geori__happy_v01",
+    "angry": "nc_geori__angry_v01",
+    "sad": "nc_geori__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "nc_hamseong",
@@ -2269,7 +3043,13 @@
     203,
     159
    ],
-   "bust_pick": "nc_hamseong_v01"
+   "bust_pick": "nc_hamseong_v01",
+   "expr_pick": {
+    "happy": "nc_hamseong__happy_v01",
+    "angry": "nc_hamseong__angry_v01",
+    "sad": "nc_hamseong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "nc_hwalgi",
@@ -2285,7 +3065,13 @@
     203,
     159
    ],
-   "bust_pick": "nc_hwalgi_v01"
+   "bust_pick": "nc_hwalgi_v01",
+   "expr_pick": {
+    "happy": "nc_hwalgi__happy_v01",
+    "angry": "nc_hwalgi__angry_v01",
+    "sad": "nc_hwalgi__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "nc_jeongmyeong",
@@ -2301,7 +3087,12 @@
     203,
     159
    ],
-   "bust_pick": "nc_jeongmyeong_v01"
+   "bust_pick": "nc_jeongmyeong_v01",
+   "expr_pick": {
+    "happy": "nc_jeongmyeong__happy_v02",
+    "angry": "nc_jeongmyeong__angry_v01",
+    "sad": "nc_jeongmyeong__sad_v01"
+   }
   },
   {
    "id": "nc_sinho",
@@ -2317,7 +3108,13 @@
     203,
     159
    ],
-   "bust_pick": "nc_sinho_v01"
+   "bust_pick": "nc_sinho_v01",
+   "expr_pick": {
+    "happy": "nc_sinho__happy_v01",
+    "angry": "nc_sinho__angry_v01",
+    "sad": "nc_sinho__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "nc_ullim",
@@ -2328,12 +3125,16 @@
    "look": "forehead visible, high collar, closed jacket, fully clothed, adult, brown hair, grey eyes, neon market merchant, glossy jacket, holographic accessories, gentle kind smile",
    "stand_pick": "nc_ullim_v04",
    "face": [
-    384,
-    283,
+    372,
+    365,
     203,
     159
    ],
-   "bust_pick": "nc_ullim_v01"
+   "bust_pick": "nc_ullim_v01",
+   "face_xy": [
+    372,
+    365
+   ]
   },
   {
    "id": "nc_yagyeong",
@@ -2349,7 +3150,13 @@
     203,
     159
    ],
-   "bust_pick": "nc_yagyeong_v01"
+   "bust_pick": "nc_yagyeong_v01",
+   "expr_pick": {
+    "happy": "nc_yagyeong__happy_v01",
+    "angry": "nc_yagyeong__angry_v01",
+    "sad": "nc_yagyeong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ns_banghwabyeok",
@@ -2360,12 +3167,16 @@
    "look": "adult, brown hair, brown eyes, virtual reality netrunner, long tech coat, visor hanging around neck, fierce determined expression",
    "stand_pick": "ns_banghwabyeok_v03",
    "face": [
-    384,
-    282,
+    378,
+    218,
     203,
     159
    ],
-   "bust_pick": "ns_banghwabyeok_v01"
+   "bust_pick": "ns_banghwabyeok_v01",
+   "face_xy": [
+    378,
+    218
+   ]
   },
   {
    "id": "ns_buho",
@@ -2381,7 +3192,12 @@
     203,
     159
    ],
-   "bust_pick": "ns_buho_v01"
+   "bust_pick": "ns_buho_v01",
+   "expr_pick": {
+    "happy": "ns_buho__happy_v01",
+    "angry": "ns_buho__angry_v01",
+    "sad": "ns_buho__sad_v01"
+   }
   },
   {
    "id": "ns_eungdap",
@@ -2397,7 +3213,13 @@
     203,
     159
    ],
-   "bust_pick": "ns_eungdap_v01"
+   "bust_pick": "ns_eungdap_v01",
+   "expr_pick": {
+    "happy": "ns_eungdap__happy_v02",
+    "angry": "ns_eungdap__angry_v02",
+    "sad": "ns_eungdap__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ns_gieok",
@@ -2408,12 +3230,16 @@
    "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, gentle kind smile",
    "stand_pick": "ns_gieok_v03",
    "face": [
-    384,
-    282,
+    382,
+    380,
     203,
     159
    ],
-   "bust_pick": "ns_gieok_v01"
+   "bust_pick": "ns_gieok_v01",
+   "face_xy": [
+    382,
+    380
+   ]
   },
   {
    "id": "ns_hakseup",
@@ -2424,12 +3250,16 @@
    "look": "forehead visible, high collar, closed jacket, fully clothed, young adult, blonde hair, grey eyes, virtual reality netrunner, long tech coat, visor hanging around neck, calm clever gaze",
    "stand_pick": "ns_hakseup_v04",
    "face": [
-    384,
-    283,
+    377,
+    385,
     203,
     159
    ],
-   "bust_pick": "ns_hakseup_v01"
+   "bust_pick": "ns_hakseup_v01",
+   "face_xy": [
+    377,
+    385
+   ]
   },
   {
    "id": "ns_hwamyeon",
@@ -2445,7 +3275,13 @@
     203,
     159
    ],
-   "bust_pick": "ns_hwamyeon_v01"
+   "bust_pick": "ns_hwamyeon_v01",
+   "expr_pick": {
+    "happy": "ns_hwamyeon__happy_v02",
+    "angry": "ns_hwamyeon__angry_v01",
+    "sad": "ns_hwamyeon__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ns_jeopsok",
@@ -2465,7 +3301,13 @@
     384,
     200
    ],
-   "bust_pick": "ns_jeopsok_v01"
+   "bust_pick": "ns_jeopsok_v01",
+   "expr_pick": {
+    "happy": "ns_jeopsok__happy_v01",
+    "angry": "ns_jeopsok__angry_v01",
+    "sad": "ns_jeopsok__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ns_singyeong",
@@ -2476,12 +3318,16 @@
    "look": "young adult, blonde hair, grey eyes, neural city hacker, dark coat with glowing circuit lines, calm clever gaze",
    "stand_pick": "ns_singyeong_v01",
    "face": [
-    384,
-    283,
+    385,
+    385,
     203,
     159
    ],
-   "bust_pick": "ns_singyeong_v01"
+   "bust_pick": "ns_singyeong_v01",
+   "face_xy": [
+    385,
+    385
+   ]
   },
   {
    "id": "ns_yeongyeol",
@@ -2497,7 +3343,13 @@
     203,
     159
    ],
-   "bust_pick": "ns_yeongyeol_v01"
+   "bust_pick": "ns_yeongyeol_v01",
+   "expr_pick": {
+    "happy": "ns_yeongyeol__happy_v01",
+    "angry": "ns_yeongyeol__angry_v01",
+    "sad": "ns_yeongyeol__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ob_byeolbit",
@@ -2508,12 +3360,16 @@
    "look": "young adult, blonde hair, blue eyes, space station crew member, fitted crew uniform, mission patches, gentle kind smile",
    "stand_pick": "ob_byeolbit_v02",
    "face": [
-    384,
-    284,
+    386,
+    378,
     203,
     159
    ],
-   "bust_pick": "ob_byeolbit_v01"
+   "bust_pick": "ob_byeolbit_v01",
+   "face_xy": [
+    386,
+    378
+   ]
   },
   {
    "id": "ob_gongjeon",
@@ -2529,7 +3385,12 @@
     203,
     159
    ],
-   "bust_pick": "ob_gongjeon_v01"
+   "bust_pick": "ob_gongjeon_v01",
+   "expr_pick": {
+    "happy": "ob_gongjeon__happy_v01",
+    "angry": "ob_gongjeon__angry_v01",
+    "sad": "ob_gongjeon__sad_v01"
+   }
   },
   {
    "id": "ob_jungnyeok",
@@ -2545,7 +3406,12 @@
     203,
     159
    ],
-   "bust_pick": "ob_jungnyeok_v01"
+   "bust_pick": "ob_jungnyeok_v01",
+   "expr_pick": {
+    "happy": "ob_jungnyeok__happy_v01",
+    "angry": "ob_jungnyeok__angry_v01",
+    "sad": "ob_jungnyeok__sad_v02"
+   }
   },
   {
    "id": "ob_mujung",
@@ -2561,7 +3427,13 @@
     203,
     159
    ],
-   "bust_pick": "ob_mujung_v01"
+   "bust_pick": "ob_mujung_v01",
+   "expr_pick": {
+    "happy": "ob_mujung__happy_v01",
+    "angry": "ob_mujung__angry_v01",
+    "sad": "ob_mujung__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ob_sanso",
@@ -2577,7 +3449,13 @@
     203,
     159
    ],
-   "bust_pick": "ob_sanso_v01"
+   "bust_pick": "ob_sanso_v01",
+   "expr_pick": {
+    "happy": "ob_sanso__happy_v01",
+    "angry": "ob_sanso__angry_v01",
+    "sad": "ob_sanso__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ob_seongun",
@@ -2593,7 +3471,13 @@
     203,
     159
    ],
-   "bust_pick": "ob_seongun_v01"
+   "bust_pick": "ob_seongun_v01",
+   "expr_pick": {
+    "happy": "ob_seongun__happy_v02",
+    "angry": "ob_seongun__angry_v01",
+    "sad": "ob_seongun__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "ob_taeyang",
@@ -2609,7 +3493,12 @@
     203,
     159
    ],
-   "bust_pick": "ob_taeyang_v01"
+   "bust_pick": "ob_taeyang_v01",
+   "expr_pick": {
+    "happy": "ob_taeyang__happy_v01",
+    "angry": "ob_taeyang__angry_v01",
+    "sad": "ob_taeyang__sad_v02"
+   }
   },
   {
    "id": "ob_tongsin",
@@ -2625,7 +3514,12 @@
     203,
     159
    ],
-   "bust_pick": "ob_tongsin_v01"
+   "bust_pick": "ob_tongsin_v01",
+   "expr_pick": {
+    "happy": "ob_tongsin__happy_v01",
+    "angry": "ob_tongsin__angry_v01",
+    "sad": "ob_tongsin__sad_v01"
+   }
   },
   {
    "id": "ob_yeonryo",
@@ -2641,7 +3535,13 @@
     203,
     159
    ],
-   "bust_pick": "ob_yeonryo_v01"
+   "bust_pick": "ob_yeonryo_v01",
+   "expr_pick": {
+    "happy": "ob_yeonryo__happy_v01",
+    "angry": "ob_yeonryo__angry_v01",
+    "sad": "ob_yeonryo__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "rg_eungwon",
@@ -2657,7 +3557,13 @@
     203,
     159
    ],
-   "bust_pick": "rg_eungwon_v01"
+   "bust_pick": "rg_eungwon_v01",
+   "expr_pick": {
+    "happy": "rg_eungwon__happy_v01",
+    "angry": "rg_eungwon__angry_v01",
+    "sad": "rg_eungwon__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "rg_gyeolseung",
@@ -2673,7 +3579,13 @@
     203,
     159
    ],
-   "bust_pick": "rg_gyeolseung_v01"
+   "bust_pick": "rg_gyeolseung_v01",
+   "expr_pick": {
+    "happy": "rg_gyeolseung__happy_v01",
+    "angry": "rg_gyeolseung__angry_v01",
+    "sad": "rg_gyeolseung__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "rg_gyesan",
@@ -2689,7 +3601,13 @@
     203,
     159
    ],
-   "bust_pick": "rg_gyesan_v01"
+   "bust_pick": "rg_gyesan_v01",
+   "expr_pick": {
+    "happy": "rg_gyesan__happy_v01",
+    "angry": "rg_gyesan__angry_v01",
+    "sad": "rg_gyesan__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "rg_jagal",
@@ -2705,7 +3623,13 @@
     203,
     159
    ],
-   "bust_pick": "rg_jagal_v01"
+   "bust_pick": "rg_jagal_v01",
+   "expr_pick": {
+    "happy": "rg_jagal__happy_v02",
+    "angry": "rg_jagal__angry_v01",
+    "sad": "rg_jagal__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "rg_jilju",
@@ -2721,7 +3645,13 @@
     203,
     159
    ],
-   "bust_pick": "rg_jilju_v01"
+   "bust_pick": "rg_jilju_v01",
+   "expr_pick": {
+    "happy": "rg_jilju__happy_v01",
+    "angry": "rg_jilju__angry_v01",
+    "sad": "rg_jilju__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "rg_saekdong",
@@ -2737,7 +3667,13 @@
     203,
     159
    ],
-   "bust_pick": "rg_saekdong_v01"
+   "bust_pick": "rg_saekdong_v01",
+   "expr_pick": {
+    "happy": "rg_saekdong__happy_v01",
+    "angry": "rg_saekdong__angry_v01",
+    "sad": "rg_saekdong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "rg_singi",
@@ -2753,7 +3689,13 @@
     203,
     159
    ],
-   "bust_pick": "rg_singi_v01"
+   "bust_pick": "rg_singi_v01",
+   "expr_pick": {
+    "happy": "rg_singi__happy_v01",
+    "angry": "rg_singi__angry_v01",
+    "sad": "rg_singi__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "rg_suri",
@@ -2769,7 +3711,12 @@
     203,
     159
    ],
-   "bust_pick": "rg_suri_v01"
+   "bust_pick": "rg_suri_v01",
+   "expr_pick": {
+    "happy": "rg_suri__happy_v01",
+    "angry": "rg_suri__angry_v01",
+    "sad": "rg_suri__sad_v01"
+   }
   },
   {
    "id": "rg_yeonseup",
@@ -2785,7 +3732,13 @@
     203,
     159
    ],
-   "bust_pick": "rg_yeonseup_v01"
+   "bust_pick": "rg_yeonseup_v01",
+   "expr_pick": {
+    "happy": "rg_yeonseup__happy_v01",
+    "angry": "rg_yeonseup__angry_v01",
+    "sad": "rg_yeonseup__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sn_bitdol",
@@ -2805,7 +3758,13 @@
     384,
     400
    ],
-   "bust_pick": "sn_bitdol_v01"
+   "bust_pick": "sn_bitdol_v01",
+   "expr_pick": {
+    "happy": "sn_bitdol__happy_v01",
+    "angry": "sn_bitdol__angry_v01",
+    "sad": "sn_bitdol__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sn_deonggul",
@@ -2821,7 +3780,13 @@
     203,
     159
    ],
-   "bust_pick": "sn_deonggul_v01"
+   "bust_pick": "sn_deonggul_v01",
+   "expr_pick": {
+    "happy": "sn_deonggul__happy_v01",
+    "angry": "sn_deonggul__angry_v01",
+    "sad": "sn_deonggul__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sn_gojeok",
@@ -2837,7 +3802,13 @@
     203,
     159
    ],
-   "bust_pick": "sn_gojeok_v01"
+   "bust_pick": "sn_gojeok_v01",
+   "expr_pick": {
+    "happy": "sn_gojeok__happy_v01",
+    "angry": "sn_gojeok__angry_v01",
+    "sad": "sn_gojeok__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sn_horang",
@@ -2848,12 +3819,16 @@
    "look": "young adult, black hair, brown eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, fierce determined expression",
    "stand_pick": "sn_horang_v04",
    "face": [
-    384,
-    282,
+    345,
+    452,
     203,
     159
    ],
-   "bust_pick": "sn_horang_v01"
+   "bust_pick": "sn_horang_v01",
+   "face_xy": [
+    345,
+    452
+   ]
   },
   {
    "id": "sn_milhyang",
@@ -2864,12 +3839,16 @@
    "look": "young adult, blonde hair, grey eyes, jungle village hunter, leaf patterned wrap tunic, bead necklace, calm clever gaze",
    "stand_pick": "sn_milhyang_v02",
    "face": [
-    385,
-    283,
+    387,
+    380,
     203,
     159
    ],
-   "bust_pick": "sn_milhyang_v01"
+   "bust_pick": "sn_milhyang_v01",
+   "face_xy": [
+    387,
+    380
+   ]
   },
   {
    "id": "sn_nuri",
@@ -2885,7 +3864,12 @@
     203,
     159
    ],
-   "bust_pick": "sn_nuri_v01"
+   "bust_pick": "sn_nuri_v01",
+   "expr_pick": {
+    "happy": "sn_nuri__happy_v01",
+    "angry": "sn_nuri__angry_v01",
+    "sad": "sn_nuri__sad_v01"
+   }
   },
   {
    "id": "sn_ppuri",
@@ -2901,7 +3885,12 @@
     203,
     159
    ],
-   "bust_pick": "sn_ppuri_v01"
+   "bust_pick": "sn_ppuri_v01",
+   "expr_pick": {
+    "happy": "sn_ppuri__happy_v01",
+    "angry": "sn_ppuri__angry_v01",
+    "sad": "sn_ppuri__sad_v01"
+   }
   },
   {
    "id": "sn_saessak",
@@ -2917,7 +3906,13 @@
     203,
     159
    ],
-   "bust_pick": "sn_saessak_v01"
+   "bust_pick": "sn_saessak_v01",
+   "expr_pick": {
+    "happy": "sn_saessak__happy_v02",
+    "angry": "sn_saessak__angry_v01",
+    "sad": "sn_saessak__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "sn_seokhwan",
@@ -2933,7 +3928,13 @@
     203,
     159
    ],
-   "bust_pick": "sn_seokhwan_v01"
+   "bust_pick": "sn_seokhwan_v01",
+   "expr_pick": {
+    "happy": "sn_seokhwan__happy_v01",
+    "angry": "sn_seokhwan__angry_v01",
+    "sad": "sn_seokhwan__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "tw_baekya",
@@ -2949,7 +3950,13 @@
     203,
     159
    ],
-   "bust_pick": "tw_baekya_v01"
+   "bust_pick": "tw_baekya_v01",
+   "expr_pick": {
+    "happy": "tw_baekya__happy_v01",
+    "angry": "tw_baekya__angry_v01",
+    "sad": "tw_baekya__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "tw_bunchim",
@@ -2965,7 +3972,13 @@
     203,
     159
    ],
-   "bust_pick": "tw_bunchim_v01"
+   "bust_pick": "tw_bunchim_v01",
+   "expr_pick": {
+    "happy": "tw_bunchim__happy_v01",
+    "angry": "tw_bunchim__angry_v01",
+    "sad": "tw_bunchim__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "tw_cheonryu",
@@ -2981,7 +3994,12 @@
     203,
     159
    ],
-   "bust_pick": "tw_cheonryu_v01"
+   "bust_pick": "tw_cheonryu_v01",
+   "expr_pick": {
+    "happy": "tw_cheonryu__happy_v01",
+    "angry": "tw_cheonryu__angry_v01",
+    "sad": "tw_cheonryu__sad_v01"
+   }
   },
   {
    "id": "tw_girok",
@@ -2997,7 +4015,13 @@
     203,
     159
    ],
-   "bust_pick": "tw_girok_v01"
+   "bust_pick": "tw_girok_v01",
+   "expr_pick": {
+    "happy": "tw_girok__happy_v01",
+    "angry": "tw_girok__angry_v01",
+    "sad": "tw_girok__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "tw_hoegwi",
@@ -3013,7 +4037,13 @@
     203,
     159
    ],
-   "bust_pick": "tw_hoegwi_v01"
+   "bust_pick": "tw_hoegwi_v01",
+   "expr_pick": {
+    "happy": "tw_hoegwi__happy_v01",
+    "angry": "tw_hoegwi__angry_v01",
+    "sad": "tw_hoegwi__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "tw_jogak",
@@ -3024,12 +4054,16 @@
    "look": "young adult, brown hair, light brown eyes, time observatory scholar, long dark coat, clockwork brooch, gentle kind smile",
    "stand_pick": "tw_jogak_v02",
    "face": [
-    384,
-    282,
+    365,
+    382,
     203,
     159
    ],
-   "bust_pick": "tw_jogak_v01"
+   "bust_pick": "tw_jogak_v01",
+   "face_xy": [
+    365,
+    382
+   ]
   },
   {
    "id": "tw_jongsori",
@@ -3040,12 +4074,16 @@
    "look": "young adult, blonde hair, light brown eyes, clockmaker, leather apron, brass gears, magnifier loupe on chain, gentle kind smile",
    "stand_pick": "tw_jongsori_v04",
    "face": [
-    384,
-    283,
+    386,
+    392,
     203,
     159
    ],
-   "bust_pick": "tw_jongsori_v01"
+   "bust_pick": "tw_jongsori_v01",
+   "face_xy": [
+    386,
+    392
+   ]
   },
   {
    "id": "tw_topni",
@@ -3061,7 +4099,13 @@
     203,
     159
    ],
-   "bust_pick": "tw_topni_v01"
+   "bust_pick": "tw_topni_v01",
+   "expr_pick": {
+    "happy": "tw_topni__happy_v01",
+    "angry": "tw_topni__angry_v01",
+    "sad": "tw_topni__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "tw_yegyeon",
@@ -3077,7 +4121,12 @@
     203,
     159
    ],
-   "bust_pick": "tw_yegyeon_v01"
+   "bust_pick": "tw_yegyeon_v01",
+   "expr_pick": {
+    "happy": "tw_yegyeon__happy_v01",
+    "angry": "tw_yegyeon__angry_v01",
+    "sad": "tw_yegyeon__sad_v01"
+   }
   },
   {
    "id": "yk_amsu",
@@ -3093,7 +4142,13 @@
     203,
     159
    ],
-   "bust_pick": "yk_amsu_v01"
+   "bust_pick": "yk_amsu_v01",
+   "expr_pick": {
+    "happy": "yk_amsu__happy_v01",
+    "angry": "yk_amsu__angry_v01",
+    "sad": "yk_amsu__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "yk_baekyeong",
@@ -3109,7 +4164,13 @@
     203,
     159
    ],
-   "bust_pick": "yk_baekyeong_v01"
+   "bust_pick": "yk_baekyeong_v01",
+   "expr_pick": {
+    "happy": "yk_baekyeong__happy_v01",
+    "angry": "yk_baekyeong__angry_v01",
+    "sad": "yk_baekyeong__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "yk_cheonro",
@@ -3125,7 +4186,13 @@
     203,
     159
    ],
-   "bust_pick": "yk_cheonro_v01"
+   "bust_pick": "yk_cheonro_v01",
+   "expr_pick": {
+    "happy": "yk_cheonro__happy_v01",
+    "angry": "yk_cheonro__angry_v01",
+    "sad": "yk_cheonro__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "yk_hyangdo",
@@ -3136,12 +4203,16 @@
    "look": "adult, brown hair, green eyes, highland nomad, felt coat, sheepskin collar, calm clever gaze",
    "stand_pick": "yk_hyangdo_v01",
    "face": [
-    385,
-    283,
+    375,
+    365,
     203,
     159
    ],
-   "bust_pick": "yk_hyangdo_v01"
+   "bust_pick": "yk_hyangdo_v01",
+   "face_xy": [
+    375,
+    365
+   ]
   },
   {
    "id": "yk_jinbaek",
@@ -3157,7 +4228,13 @@
     203,
     159
    ],
-   "bust_pick": "yk_jinbaek_v01"
+   "bust_pick": "yk_jinbaek_v01",
+   "expr_pick": {
+    "happy": "yk_jinbaek__happy_v01",
+    "angry": "yk_jinbaek__angry_v01",
+    "sad": "yk_jinbaek__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "yk_pungdeung",
@@ -3173,7 +4250,13 @@
     203,
     159
    ],
-   "bust_pick": "yk_pungdeung_v01"
+   "bust_pick": "yk_pungdeung_v01",
+   "expr_pick": {
+    "happy": "yk_pungdeung__happy_v01",
+    "angry": "yk_pungdeung__angry_v02",
+    "sad": "yk_pungdeung__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "yk_sanyeom",
@@ -3189,7 +4272,12 @@
     203,
     159
    ],
-   "bust_pick": "yk_sanyeom_v01"
+   "bust_pick": "yk_sanyeom_v01",
+   "expr_pick": {
+    "happy": "yk_sanyeom__happy_v01",
+    "angry": "yk_sanyeom__angry_v01",
+    "sad": "yk_sanyeom__sad_v02"
+   }
   },
   {
    "id": "yk_seolmae",
@@ -3205,7 +4293,13 @@
     203,
     159
    ],
-   "bust_pick": "yk_seolmae_v01"
+   "bust_pick": "yk_seolmae_v01",
+   "expr_pick": {
+    "happy": "yk_seolmae__happy_v01",
+    "angry": "yk_seolmae__angry_v01",
+    "sad": "yk_seolmae__sad_v01"
+   },
+   "eye": "o"
   },
   {
    "id": "yk_unsu",
@@ -3221,7 +4315,13 @@
     203,
     159
    ],
-   "bust_pick": "yk_unsu_v01"
+   "bust_pick": "yk_unsu_v01",
+   "expr_pick": {
+    "happy": "yk_unsu__happy_v01",
+    "angry": "yk_unsu__angry_v01",
+    "sad": "yk_unsu__sad_v01"
+   },
+   "eye": "o"
   }
  ]
 }
