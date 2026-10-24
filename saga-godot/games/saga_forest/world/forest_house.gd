@@ -95,6 +95,10 @@ const HOUSE_GRID := Vector2i(15, 9)  # village_map.gd의 "H" 타일과 같은 �
 ## 마을과 절대 안 겹치는 먼 좌표 — 씬 전환 없이 텔레포트만으로 오간다.
 const INTERIOR_ORIGIN := Vector3(500, 0, 500)
 const INTERIOR_WALL_HEIGHT := 4.0
+## G-0358 — Forward+ 에선 SDFGI 가 벽에 가린 하늘빛을 빼 집 안이 거의 깜깜(가구·주인공이 검은 덩어리) — 모바일은 그 셈이 없어 밝다.
+## 천장 아래 따뜻한 빛 하나(Forward+ 일 때만 — 모바일에 더하면 하얗게 뜬다). 세기·색은 촬영으로 맞춤.
+const INTERIOR_LIGHT_COLOR := Color(1.0, 0.93, 0.82)
+const INTERIOR_LIGHT_ENERGY := 1.3
 
 var _exterior_spawn := Vector3.ZERO
 var _interior_spawn := Vector3.ZERO
@@ -328,6 +332,18 @@ func _rebuild_interior_shell() -> void:
 		Vector3(south_seg_center, INTERIOR_WALL_HEIGHT * 0.5, -_half_z), _wall_mat, interior))
 	_shell_nodes.append(_interior_wall(Vector3(south_seg_len, INTERIOR_WALL_HEIGHT, 1.0),
 		Vector3(-south_seg_center, INTERIOR_WALL_HEIGHT * 0.5, -_half_z), _wall_mat, interior))
+
+	if RenderingServer.get_current_rendering_method() == "forward_plus" and OS.get_environment("SAGA_INTERIOR_LIGHT") != "0":
+		var lamp := OmniLight3D.new()
+		lamp.name = "InteriorLight"
+		lamp.position = Vector3(0, INTERIOR_WALL_HEIGHT - 0.5, 0)
+		lamp.light_color = INTERIOR_LIGHT_COLOR
+		lamp.light_energy = INTERIOR_LIGHT_ENERGY
+		lamp.omni_range = maxf(_half_x, _half_z) * 2.2
+		lamp.omni_attenuation = 0.6
+		lamp.shadow_enabled = false
+		interior.add_child(lamp)
+		_shell_nodes.append(lamp)
 
 	## 제외 목록 6번(벽지/장판) — 방 한쪽 구석에 둔 "장"(가구 없이 자리만).
 	## 문(-z)·나가는 자리와 충분히 떨어져 있어(FINISH_SHOP_RADIUS=1.6m)
