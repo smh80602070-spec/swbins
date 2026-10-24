@@ -4,6 +4,7 @@ extends Node
 ## 걷고 뛰고 굴러도 조용했다. 플레이어(부모, go_player.gd) 상태를 매 물리 프레임 **읽기만** 해서 소리를 낸다 — 플레이어 코드는 안 고친다.
 ##   발소리: 땅 위(mode GROUND)·평면 속도 > STEP_MIN_SPEED·탈것 아님 — 걸음 간격 STEP_SEC_WALK(6m/s)~STEP_SEC_RUN(10m/s), 지역마다 땅 소리, 1·2 번갈아·음 높이 ±6%
 ##   점프: GROUND → AIR 이고 위로 JUMP_VY 넘게 · 착지: AIR/GLIDE → GROUND 이고 직전 낙하 속도 < −LAND_VY · 대시: _dodge_t 가 0 에서 오름
+## G-0368 젖은 발소리 — 땅이 젖었으면(WeatherFall.wet > WET_MIN, 눈밭 아님) 발소리마다 낮은 물 튀는 소리(sfx_splash)를 겹친다(젖은 만큼 크게).
 ## 소리는 처음 한 번 load 해 두고, 종류마다 AudioStreamPlayer 하나를 돌려 쓴다(매번 만들지 않음). counts 는 점검(probe_move_sounds.gd)용.
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
@@ -14,12 +15,14 @@ const STEP_SEC_RUN := 0.3
 const JUMP_VY := 2.0
 const LAND_VY := 6.0
 const PITCH_JITTER := 0.06
-const DB := {"step": -16.0, "jump": -10.0, "land": -8.0, "dodge": -10.0}
+const DB := {"step": -16.0, "jump": -10.0, "land": -8.0, "dodge": -10.0, "splash": -26.0}
+const WET_MIN := 0.4
 const DIR := "res://assets/audio/sfx/"
 ## 지역 → 땅 소리(없는 지역은 풀)
 const SURFACE := {"frost": "snow", "coast": "sand", "ruins": "stone", "vault": "stone", "amber": "stone", "fork": "stone"}
 
-var counts := {"step": 0, "jump": 0, "land": 0, "dodge": 0}
+var counts := {"step": 0, "jump": 0, "land": 0, "dodge": 0, "splash": 0}
+var _fall: Node = null   # G-0368 WeatherFall(1만리 비 노드) — 처음 찾을 때 한 번
 var _p: CharacterBody3D
 var _streams := {}
 var _players := {}
@@ -40,7 +43,7 @@ func _ready() -> void:
 	for s in ["dirt", "grass", "sand", "snow", "stone", "wood"]:
 		for n in [1, 2]:
 			_load("step_%s_%d" % [s, n])
-	for k in ["jump", "land", "dodge"]:
+	for k in ["jump", "land", "dodge", "splash"]:
 		_load(k)
 
 
@@ -77,6 +80,17 @@ func _physics_process(delta: float) -> void:
 		_step_alt = 1 - _step_alt
 		var surf := String(SURFACE.get(TestMap.region_at(_p.global_position), "grass"))
 		_play("step", "step_%s_%d" % [surf, _step_alt + 1])
+		var w := _wet()
+		if w > WET_MIN and surf != "snow":
+			(_players["splash"] as AudioStreamPlayer).volume_db = float(DB.splash) + linear_to_db(w)
+			_play("splash", "splash")
+
+
+## G-0368 지금 땅 젖음(0~1) — WeatherFall 이 없으면 0
+func _wet() -> float:
+	if _fall == null or not is_instance_valid(_fall):
+		_fall = get_tree().current_scene.find_child("WeatherFall", true, false) if get_tree().current_scene else null
+	return float(_fall.get("wet")) if _fall else 0.0
 
 
 func _play(kind: String, key: String) -> void:
