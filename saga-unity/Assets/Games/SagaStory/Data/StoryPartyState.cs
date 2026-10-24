@@ -63,7 +63,7 @@ namespace Saga.Story.Data
         public static event Action<int> Swapped;
 
         public static Companion Active => Roster[ActiveIndex];
-        public static float AtkMultiplier => Active.AtkMultiplier * StoryBond.AtkMul; // tasks U-0208 지기 곱(한 번 닿으면 ×1.05, 아니면 ×1)
+        public static float AtkMultiplier => Active.AtkMultiplier * StoryBond.AtkMul * StoryMonsterBook.AtkMul; // tasks U-0222 다 모은 종마다 +0.2% // tasks U-0208 지기 곱(한 번 닿으면 ×1.05, 아니면 ×1)
         public static float CooldownLeft => _cooldownLeft;
 
         public static void TickCooldown(float dt) => _cooldownLeft = Mathf.Max(0f, _cooldownLeft - dt);

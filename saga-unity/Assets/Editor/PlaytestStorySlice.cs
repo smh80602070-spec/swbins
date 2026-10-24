@@ -222,6 +222,7 @@ namespace Saga.EditorTools
                     if (!PlaytestStoryGuild.Run()) { Fail(); return; } // tasks U-0192 문파 — 들기·공·덤·창·세이브(문파·레벨·경험·채집 되돌림)
                     if (!PlaytestStoryComboKill.Run()) { Fail(); return; } // tasks U-0207 콤보 킬 — 셈·끊김·구슬·배율·최고·손잡이(셈·구슬·레벨·경험·회차 되돌림)
                     if (!PlaytestStoryBond.Run()) { Fail(); return; } // tasks U-0208 동료 우정 — 처치·교대·단·지기 곱·꼬리표·세이브(우정·나와 있는 동료 되돌림)
+                    if (!PlaytestStoryMonsterBook.Run()) { Fail(); return; } // tasks U-0222 괴물 카드 도감 — 종·확률·다 모음·곱·끔·저장·진짜 처치(카드·사명·문파·우정·콤보·판 등급 되돌림)
                     _enemyIndex = 0;
                     _phase = Phase.TalkNpc;
                     break;

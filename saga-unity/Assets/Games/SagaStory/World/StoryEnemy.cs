@@ -96,6 +96,8 @@ namespace Saga.Story.World
         private Coroutine _flashRoutine;
 
         public bool IsBoss => isBoss;
+        /// <summary>tasks U-0222 괴물 카드 도감 종(모르면 빈 글).</summary>
+        public string BookSpecies => StoryMonsterBook.SpeciesOf(_hidden, isBoss, BossSigId, era, eraNameKey);
 
         // ── PLAN.md 109-3 세 시대(2026-09-25) ──────────────────────
         // `StoryEnemySpawner`·`StoryLabyrinthRunner` 가 Awake 전에 넣는다. 과거면 예전 황건적 그대로.
@@ -530,6 +532,8 @@ namespace Saga.Story.World
             // tasks U-0192 문파 공 — 들판·비경 어디서든(두목·숨은 우두머리 +10, 오늘 의뢰 사냥터 ×2), 단계가 오르면 알림
             int guildUp = StoryGuild.OnKill(isLabyrinthEnemy, isBoss || _hidden);
             if (guildUp >= 0) DialogueLabel.Instance?.Show(StoryGuild.RankUpLine(guildUp), 4f);
+            var card = StoryMonsterBook.OnKill(BookSpecies, StoryMonsterBook.Chance(_hidden, isBoss, _isChampion)); // tasks U-0222 괴물 카드 — 제 난수(전역 흐름 안 건드림)
+            if (card.HasValue) DialogueLabel.Instance?.Show(StoryMonsterBook.ToastText(card.Value), 4f);
             string bondUp = StoryBond.OnKill(isBoss || _hidden); // tasks U-0208 동료 우정 — 나와 있는 동료 +1(두목·숨은 우두머리 +10), 단이 오르면 알림
             if (bondUp.Length > 0) DialogueLabel.Instance?.Show(bondUp, 4f);
             Destroy(gameObject);

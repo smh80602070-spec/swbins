@@ -117,6 +117,7 @@ namespace Saga.Story.Data
             public string monthJson; // tasks U-0162 달 사명 — 버전 그대로: 옛 세이브는 null → 빈 칸.
             public string campWarmth; // tasks U-0170 모닥불 온기(동료 id) — 버전 그대로: 옛 세이브는 null → 온기 없음.
             public string guildJson; // tasks U-0192 문파 — 버전 그대로: 옛 세이브는 null → 문파 없음.
+            public string cardsJson; // tasks U-0222 괴물 카드 도감 — 버전 그대로: 옛 세이브는 null → 카드 0.
             public string bondJson; // tasks U-0208 동료 우정 — 버전 그대로: 옛 세이브는 null → 셋 다 0.
             public string hiddenJson; // tasks U-0181 숨은 우두머리 — 버전 그대로: 옛 세이브는 null → 안 읽음·처치 0.
             public string lifeJson; // tasks U-0133 생활 기술(채집) — 버전 그대로: 옛 세이브는 null → F·재료 0.
@@ -178,6 +179,7 @@ namespace Saga.Story.Data
             data.lifeJson = StoryLife.Snapshot(); // tasks U-0133
             data.hiddenJson = StoryHidden.Snapshot(); // tasks U-0181
             data.guildJson = StoryGuild.Snapshot(); // tasks U-0192
+            data.cardsJson = StoryMonsterBook.Snapshot(); // tasks U-0222
             data.bondJson = StoryBond.Snapshot(); // tasks U-0208
             data.campWarmth = StoryCampfire.Snapshot(); // tasks U-0170
             data.monthJson = StoryMonthly.Snapshot(); // tasks U-0162
@@ -237,6 +239,7 @@ namespace Saga.Story.Data
             StoryLife.Restore(data.lifeJson); // tasks U-0133
             StoryHidden.Restore(data.hiddenJson); // tasks U-0181
             StoryGuild.Restore(data.guildJson); // tasks U-0192
+            StoryMonsterBook.Restore(data.cardsJson); // tasks U-0222
             StoryBond.Restore(data.bondJson); // tasks U-0208
             StoryCampfire.Restore(data.campWarmth); // tasks U-0170
             StoryMonthly.Restore(data.monthJson); // tasks U-0162

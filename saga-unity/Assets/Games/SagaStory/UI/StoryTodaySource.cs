@@ -42,6 +42,7 @@ namespace Saga.Story.UI
                 ? StoryLocalization.T("today.champion", "👑 관문 대장 — 이번 주 아직(두목이 대장으로 나온다)")
                 : StoryLocalization.T("today.champion_done", "✓ 👑 관문 대장 — 이번 주 이김"), !champ));
             week.Add(TodayRow.Line(StoryMonthly.Line(), StoryMonthly.Done));
+            if (StoryMonsterBook.On) week.Add(TodayRow.Line(StoryMonsterBook.Line(), StoryMonsterBook.CompleteCount() >= StoryMonsterBook.Species.Length)); // tasks U-0222 카드 도감
         }
 
         public void Claim(int claimId) { }
