@@ -19,7 +19,7 @@
 
 ## 현재 작업 — 중단 지점(2026-10-25)
 
-- 닫은 티켓 줄거리는 `tasks/godot/done/` 티켓 메모가 정본. 10-25: R-5 G-0347(성문 걸음 판정) · G-0349 1만리 비·눈 입자 · G-0350 2나락 벨트 줌 초점 · G-0351 「오늘」 창(네 판, 5천하 ✗) · G-0352 **Forward+ MSAA 끔(검은 네모 깨짐)** · G-0353 4종횡 하늘 안개·앞 풀 역광 · G-0354·0356·0357 점검 고침(traversal cast·kits 착지·story_golden 다시 잼·nature 사실판 길) · G-0355 윈도 10 이모지.
+- 닫은 티켓 줄거리는 `tasks/godot/done/` 티켓 메모가 정본. 10-25: R-5 G-0347(성문 걸음 판정) · G-0349 1만리 비·눈 입자 · G-0350 2나락 벨트 줌 초점 · G-0351 「오늘」 창(네 판, 5천하 ✗) · G-0352 **Forward+ MSAA 끔(검은 네모 깨짐)** · G-0353 4종횡 하늘 안개·앞 풀 역광 · G-0354·0356·0357 점검 고침(traversal cast·kits 착지·story_golden 다시 잼·nature 사실판 길) · G-0355 윈도 10 이모지 · G-0358 3마을 집 안 Forward+ 천장 빛.
 - 큐 빔·장부 고돗 칸 빈 줄 없음. 전체 probe_all(273) 10-25: 남은 FAIL = go_cave(cave_hole_01 에셋 없음 — K) 뿐, 흔들림 = weapon·path_action·story talk_face(혼자 돌리면 OK).
 - 이 PC: Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe` · GPU Radeon Pro 570X · `.import` 부작용(로컬 uid)은 커밋 안 함.
 - 함정: **촬영(shot_scene) 기본 `--rendering-method mobile` 은 Forward+ 깨짐을 못 본다** — 그래픽 고친 뒤 플래그 없이 한 장 · SceneTree 점검 `_init` 에서 root.add_child 뒤 한 프레임 기다려야 뷰포트 · probe_all 은 다른 Godot 과 같이 돌리면 시간 점검이 흔들림 · 헤드리스는 실시간보다 빨리 돎 · creatures 몸은 스킨 바인드 포즈 배율 · 셰이더 그림 uniform 은 `albedo_texture` · 장부 `tasks/gameplay/`
@@ -29,6 +29,7 @@
 1. 큐·장부 빔 → RECURRING(R-3 남은 D1 다섯 — gfx-baseline 은 기준 PNG 사용자 승인, player-face 는 K 모프, shake-spec·rise-in 은 영상 몫) 또는 장부에 새 줄.
 2. 후보: 1만리 비 오는 날 땅 젖음·물웅덩이(셰이더) · 바람 날씨 그림(풀 눕힘) · 5천하는 실제 시계 대신 "이번 달" 목표 창.
 3. 에셋(K): 3마을 닭·염소 GLB 놓기(INBOX) · cave_hole_01 · 옛 rock_moss_01.glb 키(비교 모드만) · 1만리 괴물 남은 몸.
+4. 모바일 렌더러 3마을 집 안 흰 십자 번짐(G-0358 메모) — 고돗 폰 빌드 전엔 낮음.
 
 ## 알려진 오류
 
