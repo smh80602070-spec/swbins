@@ -171,6 +171,7 @@ namespace Saga.EditorTools
                 if (!PlaytestDungeonBreakable.Run()) _hadError = true; // tasks U-0158 부서지는 통·항아리 — 방 짓기·평타·회전베기·보상·조각(층·영웅·자리 되돌림, 조각 지움)
                 if (!PlaytestDungeonHitFx.Run()) _hadError = true; // tasks U-0159 흔들림 규격·무기 등급 잔광(무기 되돌림)
                 if (!PlaytestDungeonRunRank.Run()) _hadError = true; // tasks U-0169 한 판 결과 등급 — 식·계단 판 덤·쓰러진 판·피격 훅·기록·세이브(층·영웅·시나리오·기록 되돌림)
+                if (!PlaytestDungeonBounty.Run()) _hadError = true; // tasks U-0221 현상금 — 고르기·판 도중 셈·끝 판정·진짜 계단 덤·쓰러짐·건너뜀·끔·「오늘」(층·영웅·시나리오·기록·시즌·우정 되돌림)
                 if (!PlaytestDungeonAutoQuest.Run()) _hadError = true; // tasks U-0164 자동 퀘스트 — 2층 전투방 치우고 문 밟기·멈춤 둘·▶(층·영웅·시나리오·자리 되돌림)
                 if (!PlaytestCameraZoom.Run("PlaytestDungeonHeadless", "dungeon")) _hadError = true; // tasks U-0161 휠 줌 한계(줌 되돌림)
                 if (!PlaytestHurtSignal.Run("PlaytestDungeonHeadless", "dg")) _hadError = true; // tasks U-0105 "내가 맞았다" 신호 — 진짜 TakeDamage 번쩍·붉은 숫자·흔들림·맥박(체력·무적·피격자 되돌림)

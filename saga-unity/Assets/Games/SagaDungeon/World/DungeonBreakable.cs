@@ -41,6 +41,8 @@ namespace Saga.Dungeon.World
         public static bool LastShardsFallback { get; private set; }
         /// <summary>진단 — 지금까지 깬 수(`ResetForTest` 가 0).</summary>
         public static int BrokenCount { get; private set; }
+        /// <summary>tasks U-0221 하나 깰 때마다(현상금 셈 — `DungeonRunRank` 가 듣는다).</summary>
+        public static event System.Action AnyBroken;
 
         private GameObject _body;
 
@@ -137,6 +139,7 @@ namespace Saga.Dungeon.World
             if (Broken) return;
             Broken = true;
             BrokenCount++;
+            AnyBroken?.Invoke(); // tasks U-0221
             Active.Remove(this);
             var col = GetComponent<Collider>();
             if (col != null) col.enabled = false;

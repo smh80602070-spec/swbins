@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Saga.Dungeon.Data;
 using Saga.Dungeon.Player;
+using Saga.Dungeon.UI;
 
 namespace Saga.Dungeon.World
 {
@@ -72,7 +73,8 @@ namespace Saga.Dungeon.World
             _hooked = true;
             PlayerCombat.Struck += () => OnHit(Time.time);
             HeroState.Hurt += OnHurt;
-            DungeonEnemy.AnyDied += _ => OnKill();
+            DungeonEnemy.AnyDied += e => { OnKill(); OnBountyKill(e != null && e.IsElite); };
+            DungeonBreakable.AnyBroken += OnBountyProp; // tasks U-0221 현상금 — 통 깨기
         }
 
         private static bool Busy => TrialRunner.Busy || (HordeRunner.Instance != null && HordeRunner.Instance.IsActive);
@@ -86,6 +88,7 @@ namespace Saga.Dungeon.World
                 _on = true; _t0 = now; _hits = 0; _combo = 0; _comboMax = 0; _kills = 0;
                 _floor = DungeonFloorRunner.Instance != null ? DungeonFloorRunner.Instance.CurrentFloor : 1;
                 _gold0 = HeroState.GoldEarned;
+                Notify(DungeonBounty.Begin(_floor)); // tasks U-0221 판이 열릴 때 현상금 셋을 건다(층 씨앗)
             }
             _combo++;
             if (_combo > _comboMax) _comboMax = _combo;
@@ -104,8 +107,35 @@ namespace Saga.Dungeon.World
             _kills++;
         }
 
+        /// <summary>tasks U-0221 현상금 — 판 도중 처치(정예면 정예 셈도). 채우면 알림.</summary>
+        public static void OnBountyKill(bool elite)
+        {
+            if (!_on || Busy) return;
+            foreach (var n in DungeonBounty.Kill(elite)) Notify(DungeonBounty.FilledText(n));
+        }
+
+        /// <summary>tasks U-0221 현상금 — 판 도중 통·항아리 깸.</summary>
+        public static void OnBountyProp()
+        {
+            if (!_on || Busy) return;
+            string n = DungeonBounty.Prop();
+            if (n.Length > 0) Notify(DungeonBounty.FilledText(n));
+        }
+
+        /// <summary>알림 — 떠 있는 글(처치 글 등) 밑에 한 줄 붙인다.</summary>
+        private static void Notify(string s)
+        {
+            var dl = DialogueLabel.Instance;
+            if (string.IsNullOrEmpty(s) || dl == null) return;
+            string cur = dl.CurrentText;
+            dl.Show(cur.Length > 0 ? cur + "\n" + s : s, 4f);
+        }
+
+        /// <summary>tasks U-0221 판 끝 현상금 글(다음 <see cref="Append"/> 가 붙이고 비운다).</summary>
+        public static string BountyLine { get; private set; } = "";
+
         /// <summary>판을 버린다(층 건너뛰기·은총·불러오기) — 등급 없음.</summary>
-        public static void Cancel() => _on = false;
+        public static void Cancel() { _on = false; DungeonBounty.Cancel(); } // tasks U-0221 현상금도 버림
 
         /// <summary>판을 닫는다 — 계단(dead=false)·쓰러짐(dead=true). 처치 3 미만이면 null.</summary>
         public static Result? Finish(float now, bool dead)
@@ -113,6 +143,14 @@ namespace Saga.Dungeon.World
             if (!_on) return null;
             if (dead && Busy) return null; // 시련·난입에서 쓰러짐은 그쪽 판 — 층 판은 그대로 둔다
             _on = false;
+            var res = FinishRank(now, dead);
+            var bo = DungeonBounty.Finish(dead, _hits, now - _t0); // tasks U-0221 — 등급 덤 뒤에(번 금에 안 섞임)
+            BountyLine = bo.HasValue ? DungeonBounty.Text(bo.Value) : "";
+            return res;
+        }
+
+        private static Result? FinishRank(float now, bool dead)
+        {
             if (_kills < MinKills) return null;
             int tier = TierOf(_floor);
             var b = RankOf(now - _t0, _hits, _comboMax, _kills, tier);
@@ -154,10 +192,12 @@ namespace Saga.Dungeon.World
         /// <summary>내려가는 글·쓰러짐 글에 붙일 두 줄(앞에 줄바꿈) — 등급이 없으면 빈 글.</summary>
         public static string Append(Result? r)
         {
-            if (!r.HasValue) return "";
+            string b = BountyLine; BountyLine = ""; // tasks U-0221 현상금 줄(등급이 없어도)
+            string lb = b.Length > 0 ? "\n" + b : "";
+            if (!r.HasValue) return lb;
             string l2 = Line2(r.Value);
             string l3 = !r.Value.Dead ? DungeonSeason.LastLine : ""; // tasks U-0195 시즌 셋째 줄
-            return "\n" + Line(r.Value) + (l2.Length > 0 ? "\n" + l2 : "") + (l3.Length > 0 ? "\n" + l3 : "");
+            return "\n" + Line(r.Value) + (l2.Length > 0 ? "\n" + l2 : "") + (l3.Length > 0 ? "\n" + l3 : "") + lb;
         }
 
         // ── 세이브(버전 그대로 — 옛 세이브는 null → 빈 기록)
@@ -168,6 +208,7 @@ namespace Saga.Dungeon.World
         {
             _best.Clear();
             _on = false;
+            DungeonBounty.Cancel(); // tasks U-0221 불러오면 새 판
             if (tiers == null || grades == null) return;
             for (int i = 0; i < tiers.Length && i < grades.Length; i++)
             {
@@ -178,6 +219,6 @@ namespace Saga.Dungeon.World
         }
 
         /// <summary>진단 — 판 상태를 비운다(최고 기록은 그대로).</summary>
-        public static void ClearForTest() { _on = false; Last = null; }
+        public static void ClearForTest() { _on = false; Last = null; BountyLine = ""; DungeonBounty.ClearForTest(); }
     }
 }

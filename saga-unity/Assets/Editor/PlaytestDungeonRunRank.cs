@@ -31,6 +31,7 @@ namespace Saga.EditorTools
             string scen0 = DungeonScenario.Snapshot();
             int[] tiers0 = DungeonRunRank.SnapshotTiers();
             string[] grades0 = DungeonRunRank.SnapshotGrades(tiers0);
+            bool bounty0 = DungeonBounty.On;
             string season0 = DungeonSeason.Snapshot(); // tasks U-0195 — 살아 나온 판이 시즌에도 기록된다
             Vector3 pos = playerGo.transform.position;
             string m = "";
@@ -39,10 +40,12 @@ namespace Saga.EditorTools
                 DungeonCutscenes.Instance?.Skip();
                 DungeonRunRank.Hook();
                 DungeonRunRank.Restore(null, null);
+                DungeonBounty.On = false; // tasks U-0221 등급 덤만 본다(현상금은 PlaytestDungeonBounty — 고돗 dungeon_rank 도 SAGA_BOUNTY=0)
                 m += CheckPure() + CheckAlive(runner) + CheckDead(runner) + CheckSave();
             }
             finally
             {
+                DungeonBounty.On = bounty0;
                 DungeonRunRank.Restore(tiers0, grades0);
                 DungeonSeason.Restore(season0);
                 DungeonRunRank.ClearForTest();

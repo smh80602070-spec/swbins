@@ -30,6 +30,8 @@ namespace Saga.Dungeon.UI
 
         public void Rows(List<TodayRow> today, List<TodayRow> week)
         {
+            foreach (var (text, done) in DungeonBounty.Rows(DungeonFloorRunner.Instance != null ? DungeonFloorRunner.Instance.CurrentFloor : 1))
+                today.Add(TodayRow.Line(text, done)); // tasks U-0221 현상금 셋 — 맨 위
             int n = DungeonDailyTaskState.TaskCount;
             for (int i = 0; i < n; i++) today.Add(TodayRow.Line(DungeonDailyTaskState.TaskLine(i), DungeonDailyTaskState.TaskDone(i)));
             today.Add(TodayRow.Line(DungeonDailyTaskState.WeekLineText()));

@@ -29,6 +29,7 @@ namespace Saga.EditorTools
                     CheckResets();
                     CheckGo();
                     CheckHud("2나락", Saga.Dungeon.UI.DungeonTodaySource.Install, Saga.Dungeon.UI.DungeonTodaySource.ButtonAt);
+                    CheckDungeonRows(); // tasks U-0221 현상금 셋이 맨 위
                     CheckHud("3마을", Saga.Forest.UI.ForestTodaySource.Install, Saga.Forest.UI.ForestTodaySource.ButtonAt);
                     CheckHud("4종횡", Saga.Story.UI.StoryTodaySource.Install, Saga.Story.UI.StoryTodaySource.ButtonAt);
                     CheckRealm();
@@ -114,6 +115,18 @@ namespace Saga.EditorTools
                 Saga.Go.Data.DailyTaskState.OffForTest = off;
                 if (p != null) UnityEngine.Object.DestroyImmediate(p.gameObject);
             }
+        }
+
+        /// <summary>tasks U-0221 — 2나락 오늘 줄 = 현상금 셋 + 일과 + 도장(끄면 현상금 없음).</summary>
+        private static void CheckDungeonRows()
+        {
+            var today = new System.Collections.Generic.List<TodayRow>(); var week = new System.Collections.Generic.List<TodayRow>();
+            new Saga.Dungeon.UI.DungeonTodaySource().Rows(today, week);
+            int bounty = Saga.Dungeon.Data.DungeonBounty.On ? Saga.Dungeon.Data.DungeonBounty.PickCount : 0;
+            int want = Saga.Dungeon.Data.DungeonDailyTaskState.TaskCount + 1 + bounty;
+            PlaytestKit.Check(today.Count == want, $"2나락 오늘 줄 {today.Count} ≠ 현상금 {bounty} + 일과 + 도장 {want}");
+            PlaytestKit.Check(bounty == 0 || today[0].Text.Contains("📜"), "2나락 맨 위 줄이 현상금이 아님");
+            Debug.Log($"{Tag} 2나락 rows OK - 오늘 {today.Count}(현상금 {bounty} 맨 위)");
         }
 
         private static void CheckHud(string game, Func<TodayPanel> install, Vector2 at)
