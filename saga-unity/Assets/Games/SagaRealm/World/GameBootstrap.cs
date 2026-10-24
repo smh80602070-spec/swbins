@@ -26,6 +26,7 @@ namespace Saga.Realm.World
             Saga.Realm.UI.RealmRegionUi.Install(); // tasks U-0204 천하도 — 🗺 단추·지역 카드 창(☰ 메뉴 칸, Play 때)
             Saga.Realm.UI.RealmLawUi.Install(); // tasks U-0182 법령 — 📜 법령 단추·창(☰ 메뉴 칸, Play 때)
             Saga.Realm.UI.RealmTechUi.Install(); // tasks U-0129 기술 나무 — 📜 연구 단추·창(Play 때, 씬 재빌드 없이)
+            Saga.Realm.UI.RealmTodaySource.Install(transform); // tasks U-0215 「이번 달」 창 — 명령·방침·천하 진행 읽기만(☰ 메뉴 칸, Play 때)
         }
     }
 }

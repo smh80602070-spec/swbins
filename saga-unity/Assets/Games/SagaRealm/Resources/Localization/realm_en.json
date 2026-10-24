@@ -1201,6 +1201,15 @@
     { "key": "region.tz", "value": "Tianzhu" },
     { "key": "region.xi", "value": "Western Regions" },
     { "key": "region.kr", "value": "Korea" },
-    { "key": "region.jp", "value": "Japan" }
+    { "key": "region.jp", "value": "Japan" },
+    { "key": "today.button", "value": "📅 This month" },
+    { "key": "today.title", "value": "This month · Year {0}, Month {1}" },
+    { "key": "today.world", "value": "The realm" },
+    { "key": "today.orders", "value": "⚔️ Orders this month — officers {0}/{1}" },
+    { "key": "today.focus", "value": "🎯 Focus — {0} · {1} mo left · done {2}/{3}" },
+    { "key": "today.focus_none", "value": "🎯 Focus — none chosen · done {0}/{1}" },
+    { "key": "today.conquest", "value": "🏯 Unification — cities {0}/{1}" },
+    { "key": "today.culture", "value": "📜 Culture — quiz correct {0}/{1}" },
+    { "key": "today.over", "value": "🏆 The realm is decided — {0}" }
   ]
 }

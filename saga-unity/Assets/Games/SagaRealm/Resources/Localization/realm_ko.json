@@ -1201,6 +1201,15 @@
     { "key": "region.tz", "value": "천축" },
     { "key": "region.xi", "value": "서역" },
     { "key": "region.kr", "value": "한국" },
-    { "key": "region.jp", "value": "일본" }
+    { "key": "region.jp", "value": "일본" },
+    { "key": "today.button", "value": "📅 이번 달" },
+    { "key": "today.title", "value": "이번 달 · {0}년 {1}월" },
+    { "key": "today.world", "value": "천하" },
+    { "key": "today.orders", "value": "⚔️ 이번 달 명령 — 장수 {0}/{1}" },
+    { "key": "today.focus", "value": "🎯 방침 — {0} · {1}달 남음 · 끝낸 방침 {2}/{3}" },
+    { "key": "today.focus_none", "value": "🎯 방침 — 고르지 않음 · 끝낸 방침 {0}/{1}" },
+    { "key": "today.conquest", "value": "🏯 천하통일 — 성 {0}/{1}" },
+    { "key": "today.culture", "value": "📜 문화 — 문답 정답 {0}/{1}" },
+    { "key": "today.over", "value": "🏆 천하가 정해졌다 — {0}" }
   ]
 }

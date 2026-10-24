@@ -166,8 +166,9 @@ namespace Saga.Core
             _today.Clear(); _week.Clear();
             _src.Rows(_today, _week);
             var now = DateTime.Now;
-            _title.text = SagaUi.L("📅 오늘", "📅 Today");
-            _todayHead.text = HeadText(SagaUi.L("오늘", "Today"), _src.NextReset(false, now), now);
+            string head = _src.TodayTitle; // tasks U-0215 — 네 판 "오늘", 5천하 "이번 달 · ○년 ○월"(갈림 없음 → 남은 시간 글 없음)
+            _title.text = "📅 " + head;
+            _todayHead.text = HeadText(head, _src.NextReset(false, now), now);
             _weekHead.text = HeadText(_src.WeekTitle, _src.NextReset(true, now), now);
 
             _rowClaim.Clear();

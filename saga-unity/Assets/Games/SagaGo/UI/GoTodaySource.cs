@@ -15,6 +15,8 @@ namespace Saga.Go.UI
     {
         public const int ClaimDaily = 0, ClaimWeekBase = 10, ClaimWeekBonus = 20;
 
+        public string TodayTitle => SagaUi.L("오늘", "Today"); // tasks U-0215 — 창 제목·첫 묶음 머리(옛 글 그대로)
+
         public string WeekTitle => GoLocalization.T("today.week", "이번 주");
 
         public void Rows(List<TodayRow> today, List<TodayRow> week)

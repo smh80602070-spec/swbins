@@ -165,6 +165,13 @@ namespace Saga.EditorTools
                         float t0 = Time.realtimeSinceStartup;
                         int frames = 0;
                         while (frames < 60 || Time.realtimeSinceStartup - t0 < 1.5f) { frames++; yield return null; }
+                        // tasks U-0215 — 사가나락 지역 배너는 들어온 뒤 머묾 시간이 차면 저절로 뜬다(로딩 길이에 따라 패널 재는 도중) →
+                        // 서 있는 지역을 "이미 알림"으로(배너 상태는 따로 잰다). 안 하면 시즌·설정 창과 겹침 1~4 가 판마다 오락가락.
+                        if (hold)
+                        {
+                            var tr = Object.FindFirstObjectByType<Saga.Dungeon.World.DungeonRegionTracker>();
+                            if (tr != null) tr.ResetState(tr.Current >= 0 ? tr.Current : tr.Announced);
+                        }
                         string label = (lang == Langs[0] ? "" : lang + ":") + Path.GetFileNameWithoutExtension(Scenes[i]);
                         if (Quick) { Hidden(label); continue; }
                         foreach (var sc in Screens) Measure(label, sc.name, sc.w, sc.h);

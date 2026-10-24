@@ -54,7 +54,15 @@ namespace Saga.Realm.UI
             Add(() => RealmLawUi.Instance != null ? RealmLawUi.Instance.ToggleButton : null, "ui_scroll"); // tasks U-0182 법령
             Add(() => RealmFocusUi.Instance != null ? RealmFocusUi.Instance.ToggleButton : null, "ui_flag"); // tasks U-0193 방침
             Add(() => RealmRegionUi.Instance != null && RealmRegions.On ? RealmRegionUi.Instance.ToggleButton : null, "ui_map"); // tasks U-0204 천하도
+            Add(() => TodayButton(), "ui_flag"); // tasks U-0215 「이번 달」 창(공용 TodayPanel 의 📅 단추)
             Refresh();
+        }
+
+        /// <summary>tasks U-0215 — 5천하 「이번 달」 창 단추(<see cref="RealmTodaySource.Install"/> 가 단 것, 없으면 null).</summary>
+        private static Button TodayButton()
+        {
+            var p = Saga.Core.TodayPanel.Instance;
+            return p != null && p.Source is RealmTodaySource ? p.HudButton : null;
         }
 
         private static Button ButtonOf(TextMeshProUGUI label) => label != null ? label.GetComponentInParent<Button>(true) : null;

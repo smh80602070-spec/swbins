@@ -24,6 +24,8 @@ namespace Saga.Forest.UI
             return p;
         }
 
+        public string TodayTitle => SagaUi.L("오늘", "Today"); // tasks U-0215 — 창 제목·첫 묶음 머리(옛 글 그대로)
+
         public string WeekTitle => ForestLocalization.T("today.festival", "🎉 축제");
 
         public void Rows(List<TodayRow> today, List<TodayRow> week)

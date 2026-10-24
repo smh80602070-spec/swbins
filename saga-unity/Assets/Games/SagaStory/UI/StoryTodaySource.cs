@@ -24,6 +24,8 @@ namespace Saga.Story.UI
             return p;
         }
 
+        public string TodayTitle => SagaUi.L("오늘", "Today"); // tasks U-0215 — 창 제목·첫 묶음 머리(옛 글 그대로)
+
         public string WeekTitle => StoryLocalization.T("today.week_month", "이번 주 · 이번 달");
 
         public void Rows(List<TodayRow> today, List<TodayRow> week)

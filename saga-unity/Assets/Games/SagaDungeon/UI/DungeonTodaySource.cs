@@ -24,6 +24,8 @@ namespace Saga.Dungeon.UI
             return p;
         }
 
+        public string TodayTitle => SagaUi.L("오늘", "Today"); // tasks U-0215 — 창 제목·첫 묶음 머리(옛 글 그대로)
+
         public string WeekTitle => DungeonLocalization.T("today.season", "🏆 시즌");
 
         public void Rows(List<TodayRow> today, List<TodayRow> week)

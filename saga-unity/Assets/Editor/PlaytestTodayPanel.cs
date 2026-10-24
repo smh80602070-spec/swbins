@@ -10,7 +10,8 @@ namespace Saga.EditorTools
     /// tasks U-0213 「오늘」 창 진단(고돗 G-0351 `probe_goals_panel.gd` 짝) — `-executeMethod Saga.EditorTools.PlaytestTodayPanel.Run`(-quit 없이).
     /// ① 갈림 셈(새벽 4시·월요일·4종횡 UTC 7일 창) ② 네 판 어댑터로 창을 지어 오늘 줄 ≥1·머리에 남은 시간 · HUD 단추 80×80(2나락·3마을·4종횡)
     /// ③ 1만리 받기: 의뢰 넷을 채워 덤 준비 → 창 받기 단추 → <see cref="Saga.Go.Data.DailyTaskState.BonusClaimed"/>·단추 "받음"(상태는 되돌린다)
-    /// ④ Esc(<see cref="TodayPanel.CloseOpen"/>) 로 닫힘 ⑤ 5천하 어댑터 없음(구현 넷뿐). Play 없이 정적 값만 읽는다 — 세이브 안 씀, 씬 저장 안 함.
+    /// ④ Esc(<see cref="TodayPanel.CloseOpen"/>) 로 닫힘 ⑤ 5천하(U-0215 「이번 달」 — 게임 달 기준): 이번 달 ≥2줄·천하 ≥2줄·머리 "이번 달 · ○년 ○월"·갈림 글 없음·받기 단추 없음,
+    /// 어댑터 다섯. 네 판 머리는 "오늘" 그대로. Play 없이 정적 값만 읽는다 — 세이브 안 씀, 씬 저장 안 함.
     /// </summary>
     public static class PlaytestTodayPanel
     {
@@ -30,7 +31,7 @@ namespace Saga.EditorTools
                     CheckHud("2나락", Saga.Dungeon.UI.DungeonTodaySource.Install, Saga.Dungeon.UI.DungeonTodaySource.ButtonAt);
                     CheckHud("3마을", Saga.Forest.UI.ForestTodaySource.Install, Saga.Forest.UI.ForestTodaySource.ButtonAt);
                     CheckHud("4종횡", Saga.Story.UI.StoryTodaySource.Install, Saga.Story.UI.StoryTodaySource.ButtonAt);
-                    CheckNoRealm();
+                    CheckRealm();
                 }
                 catch (Exception e) { PlaytestKit.Fail("예외 " + e); }
                 finally { SagaUi.Lang = lang; }
@@ -128,6 +129,7 @@ namespace Saga.EditorTools
                 PlaytestKit.Check(p.IsOpen, $"{game} 단추로 안 열림");
                 PlaytestKit.Check(p.TodayCount >= 1, $"{game} 오늘 줄 {p.TodayCount}");
                 PlaytestKit.Check(p.TodayHeadText.Contains("새로까지"), $"{game} 오늘 머리에 남은 시간 없음 '{p.TodayHeadText}'");
+                PlaytestKit.Check(p.TodayHeadText.StartsWith("오늘", StringComparison.Ordinal), $"{game} 머리가 '오늘' 이 아님 '{p.TodayHeadText}'"); // U-0215 — 네 판 그대로
                 for (int i = 0; i < p.TodayCount + p.WeekCount; i++)
                     PlaytestKit.Check(!string.IsNullOrEmpty(p.RowText(i)), $"{game} 줄 {i} 빈 글");
                 PlaytestKit.Check(TodayPanel.CloseOpen() && !p.IsOpen, $"{game} Esc 로 안 닫힘");
@@ -139,14 +141,47 @@ namespace Saga.EditorTools
             }
         }
 
-        private static void CheckNoRealm()
+        /// <summary>tasks U-0215 — 5천하 「이번 달」(게임 달 기준, 고돗 G-0364 짝). 정적 값만 읽는다(방침·승리 상태 안 바꿈).</summary>
+        private static void CheckRealm()
         {
-            var impls = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => { try { return a.GetTypes(); } catch { return Type.EmptyTypes; } })
-                .Where(t => typeof(ITodaySource).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
-                .Select(t => t.FullName).OrderBy(s => s).ToList();
-            PlaytestKit.Check(impls.Count == 4 && !impls.Any(s => s.StartsWith("Saga.Realm", StringComparison.Ordinal)), "어댑터 " + string.Join(",", impls));
-            Debug.Log($"{Tag} realm OK - 어댑터 {impls.Count}(5천하 없음)");
+            TodayPanel p = null;
+            try
+            {
+                string focusBefore = Saga.Realm.Data.RealmFocus.Current;
+                int leftBefore = Saga.Realm.Data.RealmFocus.Left, doneBefore = Saga.Realm.Data.RealmFocus.Done.Count;
+                p = Saga.Realm.UI.RealmTodaySource.Install();
+                var b = p.HudButton;
+                PlaytestKit.Check(b != null, "5천하 📅 단추 없음");
+                if (b != null) b.onClick.Invoke();
+                PlaytestKit.Check(p.IsOpen, "5천하 단추로 안 열림");
+                PlaytestKit.Check(p.TodayCount >= 2, $"5천하 이번 달 줄 {p.TodayCount} < 2");
+                PlaytestKit.Check(p.WeekCount >= 2, $"5천하 천하 줄 {p.WeekCount} < 2");
+                bool ko = Saga.Realm.Data.RealmLocalization.CurrentLanguage == "ko";
+                string month = string.Format(Saga.Realm.Data.RealmLocalization.T("today.title", "이번 달 · {0}년 {1}월"), Saga.Realm.Data.RealmCityState.Year, Saga.Realm.Data.RealmCityState.Month);
+                PlaytestKit.Check(p.TodayHeadText == month && (!ko || month.StartsWith("이번 달", StringComparison.Ordinal)), $"5천하 머리 '{p.TodayHeadText}' ≠ '{month}'");
+                PlaytestKit.Check(!p.TodayHeadText.Contains("<size") && !p.WeekHeadText.Contains("<size"), $"5천하 머리에 갈림 글 '{p.TodayHeadText}' / '{p.WeekHeadText}'");
+                PlaytestKit.Check(p.WeekHeadText == Saga.Realm.Data.RealmLocalization.T("today.world", "천하"), $"5천하 둘째 머리 '{p.WeekHeadText}'");
+                for (int i = 0; i < p.TodayCount + p.WeekCount; i++)
+                {
+                    PlaytestKit.Check(!string.IsNullOrEmpty(p.RowText(i)) && !p.RowText(i).StartsWith("today.", StringComparison.Ordinal), $"5천하 줄 {i} '{p.RowText(i)}'");
+                    PlaytestKit.Check(p.ClaimButton(i) == null, $"5천하 줄 {i} 에 받기 단추");
+                }
+                string total = "/" + Saga.Realm.Data.RealmEnemyCity.AllIds.Length;
+                PlaytestKit.Check(p.RowText(p.TodayCount).Contains(Saga.Realm.Data.RealmVictoryState.CapturedCount() + total), $"5천하 천하통일 줄 '{p.RowText(p.TodayCount)}'");
+                PlaytestKit.Check(p.RowText(p.TodayCount + 1).Contains("/" + Saga.Realm.Data.RealmVictoryState.CultureCorrectTarget), $"5천하 문화 줄 '{p.RowText(p.TodayCount + 1)}'");
+                PlaytestKit.Check(Saga.Realm.Data.RealmFocus.Current == focusBefore && Saga.Realm.Data.RealmFocus.Left == leftBefore && Saga.Realm.Data.RealmFocus.Done.Count == doneBefore, "5천하 창이 방침 상태를 바꿈");
+                PlaytestKit.Check(TodayPanel.CloseOpen() && !p.IsOpen, "5천하 Esc 로 안 닫힘");
+                var impls = AppDomain.CurrentDomain.GetAssemblies()
+                    .SelectMany(a => { try { return a.GetTypes(); } catch { return Type.EmptyTypes; } })
+                    .Where(t => typeof(ITodaySource).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
+                    .Select(t => t.FullName).OrderBy(s => s).ToList();
+                PlaytestKit.Check(impls.Count == 5 && impls.Contains(typeof(Saga.Realm.UI.RealmTodaySource).FullName), "어댑터 " + string.Join(",", impls));
+                Debug.Log($"{Tag} realm OK - 이번 달 {p.TodayCount}·천하 {p.WeekCount}·머리 '{p.TodayHeadText}'·'{p.RowText(0)}'·어댑터 {impls.Count}");
+            }
+            finally
+            {
+                if (p != null) UnityEngine.Object.DestroyImmediate(p.gameObject);
+            }
         }
     }
 }

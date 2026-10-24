@@ -19,10 +19,14 @@ namespace Saga.Core
 
     /// <summary>
     /// tasks U-0213 「오늘」 창(고돗 G-0351·웹 W-0380 짝)의 판 어댑터 — <see cref="IGoalSource"/> 와 같은 결로 SagaCore 는 이 인터페이스만 안다(49장 단방향).
-    /// 어댑터는 **판에 이미 있는 값만 읽고**, 받기는 판의 기존 함수를 부른다(새 상태·새 일일 거리 없음). 5천하는 구현하지 않는다(실제 시계 일일이 없음).
+    /// 어댑터는 **판에 이미 있는 값만 읽고**, 받기는 판의 기존 함수를 부른다(새 상태·새 일일 거리 없음). 5천하는 실제 시계 일일이 없어
+    /// 게임 달 기준 「이번 달」(tasks U-0215 — 갈림 없음 = <see cref="DateTime.MinValue"/>)로 구현한다.
     /// </summary>
     public interface ITodaySource
     {
+        /// <summary>첫 묶음 머리·창 제목(tasks U-0215 — 네 판은 "오늘", 5천하는 게임 달 기준 "이번 달 · ○년 ○월").</summary>
+        string TodayTitle { get; }
+
         /// <summary>둘째 묶음 머리(판 말 — "이번 주"·"시즌"·"축제" 등).</summary>
         string WeekTitle { get; }
 
