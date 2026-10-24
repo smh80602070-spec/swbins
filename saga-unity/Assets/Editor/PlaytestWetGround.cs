@@ -11,6 +11,8 @@ namespace Saga.EditorTools
     /// ① 셈: 비 20초 0→1 · 그치면 60초 1→0 · 끔(SAGA_WET=0) 이면 0 ② 재질: 색 ×0.64·거칠기 ×0.45(스무스는 1-(1-s)×0.45) · 0 이면 처음 값 그대로 ·
     /// 0.5초 묶음 갱신 · 끄면 등록 안 함 ③ 공유 에셋(.mat)을 <see cref="WetGround.Own"/> 하면 사본만 바뀌고 에셋은 그대로 ④ SkyWeather: 들어올 때 비면 1·
     /// 빛만 판(5천하)은 0 ⑤ 세 씬(1만리·3마을·4종횡) 땅 재질 등록 ≥1 · 5천하 바닥은 등록 안 함. 씬은 저장 안 함.
+    /// U-0214 ⑥ 웅덩이 층: 땅 셰이더(VertexColorLit·ForestWorldCurve) 컴파일 오류 0 · <c>_Wet</c>·<c>_Rain</c> 기본 0(옛 화면) ·
+    /// 비 1 = <c>_Wet</c> 1·<c>_Rain</c> 1(색 곱은 ×0.64 한 번만) · 비 그치면 <c>_Rain</c> 3초에 0(젖음은 남음) · 마르면 둘 다 0 · 겨울·끔이면 <c>_Wet</c> 0.
     /// </summary>
     public static class PlaytestWetGround
     {
@@ -24,6 +26,7 @@ namespace Saga.EditorTools
                 try
                 {
                     CheckStep();
+                    CheckPuddles();
                     CheckMaterials();
                     CheckAssetUntouched();
                     CheckSkyWeather();
@@ -33,6 +36,7 @@ namespace Saga.EditorTools
                 finally
                 {
                     WetGround.ForcedEnabled = null;
+                    WetGround.ForcedNoPuddles = null;
                     WetGround.ResetAll();
                     SkyWeatherRules.ForcedWeather = null;
                     SkyWeatherRules.ForcedSeason = null;
@@ -66,6 +70,76 @@ namespace Saga.EditorTools
             PlaytestKit.Check(WetGround.Wet == 0f, $"SAGA_WET=0 인데 젖음 {WetGround.Wet}");
             WetGround.ForcedEnabled = null;
             Debug.Log($"{Tag} step OK - 20초 젖음·60초 마름·끔 0");
+        }
+
+        private static void CheckPuddles()
+        {
+            float r = 0f;
+            for (int i = 0; i < 6; i++) r = WetGround.RainStep(r, true, 0.5f);
+            PlaytestKit.Check(Near(r, 1f), $"물결 3초 {r} ≠ 1");
+            for (int i = 0; i < 6; i++) r = WetGround.RainStep(r, false, 0.5f);
+            PlaytestKit.Check(Near(r, 0f), $"그친 뒤 물결 3초 {r} ≠ 0");
+
+            foreach (var name in new[] { "Saga/VertexColorLit", "Saga/ForestWorldCurve" })
+            {
+                var sh = Shader.Find(name);
+                if (sh == null) { PlaytestKit.Fail($"{name} 없음"); continue; }
+                PlaytestKit.Check(!ShaderUtil.ShaderHasError(sh), $"{name} 셰이더 오류");
+                int errs = ShaderUtil.GetShaderMessages(sh).Count(m => m.severity == UnityEditor.Rendering.ShaderCompilerMessageSeverity.Error);
+                PlaytestKit.Check(errs == 0, $"{name} 컴파일 오류 {errs}");
+            }
+
+            WetGround.ResetAll();
+            WetGround.ForcedNoPuddles = false;
+            var go = new Material(Shader.Find("Saga/VertexColorLit"));
+            var forest = new Material(Shader.Find("Saga/ForestWorldCurve"));
+            var lit = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+            try
+            {
+                PlaytestKit.Check(go.HasProperty("_Wet") && go.HasProperty("_Rain") && forest.HasProperty("_Wet") && forest.HasProperty("_Rain"), "땅 셰이더에 _Wet·_Rain 없음");
+                PlaytestKit.Check(go.GetFloat("_Wet") == 0f && go.GetFloat("_Rain") == 0f && forest.GetFloat("_Wet") == 0f && forest.GetFloat("_Rain") == 0f,
+                    "_Wet·_Rain 기본 0 아님(옛 화면이 바뀜)");
+                WetGround.Register(go); WetGround.Register(forest); WetGround.Register(lit);
+
+                WetGround.SetWet(1f);
+                PlaytestKit.Check(go.GetFloat("_Wet") == 1f && go.GetFloat("_Rain") == 1f && forest.GetFloat("_Wet") == 1f && forest.GetFloat("_Rain") == 1f,
+                    $"비 1 인데 _Wet {go.GetFloat("_Wet")}·_Rain {go.GetFloat("_Rain")}");
+                PlaytestKit.Check(Near(go.GetColor("_BaseColor").r, 0.64f), $"웅덩이 층 붙이고 색 곱이 바뀜 {go.GetColor("_BaseColor")}");
+                PlaytestKit.Check(!lit.HasProperty("_Wet"), "URP Lit 에 _Wet 이 있음(검사 전제 틀림)");
+
+                // 비 그침 — 0.5초씩 3초: 물결 0, 젖음은 남음(60초 마름)
+                for (int i = 0; i < 6; i++) WetGround.Tick(false, 0.5f);
+                PlaytestKit.Check(Near(go.GetFloat("_Rain"), 0f) && go.GetFloat("_Wet") > 0.9f && Near(go.GetFloat("_Wet"), WetGround.Wet),
+                    $"비 그친 3초 _Rain {go.GetFloat("_Rain")}·_Wet {go.GetFloat("_Wet")}");
+                // 다시 비 — 0.5초 묶음으로 물결 1 쪽
+                for (int i = 0; i < 6; i++) WetGround.Tick(true, 0.5f);
+                PlaytestKit.Check(Near(go.GetFloat("_Rain"), 1f) && Near(forest.GetFloat("_Rain"), 1f), $"다시 비 3초 _Rain {go.GetFloat("_Rain")}");
+
+                WetGround.SetWet(0f);
+                PlaytestKit.Check(go.GetFloat("_Wet") == 0f && go.GetFloat("_Rain") == 0f && forest.GetFloat("_Wet") == 0f, "마른 뒤 _Wet·_Rain 이 남음");
+
+                WetGround.ForcedNoPuddles = true;
+                WetGround.SetWet(1f);
+                PlaytestKit.Check(go.GetFloat("_Wet") == 0f && go.GetFloat("_Rain") == 0f && Near(go.GetColor("_BaseColor").r, 0.64f), "겨울인데 웅덩이(또는 젖음 곱 빠짐)");
+                WetGround.ForcedNoPuddles = false;
+
+                WetGround.ForcedEnabled = false;
+                WetGround.SetWet(1f);
+                PlaytestKit.Check(go.GetFloat("_Wet") == 0f && go.GetFloat("_Rain") == 0f, "끔인데 _Wet 이 0 아님");
+                WetGround.ForcedEnabled = null;
+
+                WetGround.SetWet(1f);
+                WetGround.ResetAll();
+                PlaytestKit.Check(go.GetFloat("_Wet") == 0f && forest.GetFloat("_Rain") == 0f, "ResetAll 이 _Wet·_Rain 을 안 되돌림");
+                Debug.Log($"{Tag} puddle OK - _Wet 비 1·맑음 0·끄면 0·겨울 0 · _Rain 비 그치면 3초에 0·다시 비 1 · 셰이더 오류 0");
+            }
+            finally
+            {
+                WetGround.ForcedEnabled = null;
+                WetGround.ForcedNoPuddles = null;
+                WetGround.ResetAll();
+                Object.DestroyImmediate(go); Object.DestroyImmediate(forest); Object.DestroyImmediate(lit);
+            }
         }
 
         private static void CheckMaterials()
@@ -199,6 +273,18 @@ namespace Saga.EditorTools
                 tb.Build();
                 var m = tb.GetComponent<MeshRenderer>().sharedMaterial;
                 PlaytestKit.Check(WetGround.IsRegistered(m), "1만리 땅 재질 등록 안 됨");
+                // U-0214 1만리 땅이 웅덩이 층 셰이더면 비 1 에 _Wet 1
+                if (m != null && m.HasProperty("_Wet"))
+                {
+                    WetGround.ForcedNoPuddles = false;
+                    WetGround.SetWet(1f);
+                    PlaytestKit.Check(m.GetFloat("_Wet") == 1f && m.GetFloat("_Rain") == 1f, $"1만리 땅 _Wet {m.GetFloat("_Wet")}");
+                    WetGround.SetWet(0f);
+                    PlaytestKit.Check(m.GetFloat("_Wet") == 0f, "1만리 땅 마른 뒤 _Wet 남음");
+                    WetGround.ForcedNoPuddles = null;
+                    Debug.Log($"{Tag} go ground puddle OK - {m.shader.name}");
+                }
+                else Debug.Log($"{Tag} go ground no puddle layer - {(m != null ? m.shader.name : "null")}");
             }
             int go = WetGround.Count;
 

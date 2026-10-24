@@ -21,6 +21,9 @@ Shader "Saga/VertexColorLit"
         _Roughness ("Roughness (U-0084 PBR)", Range(0,1)) = 0.85
         // U-0212 비 젖음 — WetGround 가 런타임 사본에 곱(기본 흰색 = 옛 화면 그대로)
         _BaseColor ("Base Color (U-0212 wet tint)", Color) = (1, 1, 1, 1)
+        // U-0214 평지 물웅덩이·빗방울 물결 — WetGround 가 채움(기본 0 = 옛 화면 그대로, SagaWetPuddle.hlsl)
+        _Wet ("Puddle Wet (U-0214)", Range(0,1)) = 0
+        _Rain ("Rain Ripples (U-0214)", Range(0,1)) = 0
         // U-0084 2단계 사진 땅 — RegionMaterials.ApplyGroundPhoto 가 채우고 키워드를 켠다(0 풀·1 흙·2 바위·3 자갈).
         [Toggle(_SAGA_GROUND_PHOTO)] _GroundPhoto ("Ground Photo (U-0084)", Float) = 0
         _PhotoStrength ("Photo Strength", Range(0,1)) = 1
@@ -63,6 +66,7 @@ Shader "Saga/VertexColorLit"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Assets/Shaders/SagaGroundPBR.hlsl"
+            #include "Assets/Shaders/SagaWetPuddle.hlsl"
             #if defined(_SAGA_GROUND_PHOTO)
             #include "Assets/Shaders/SagaGroundPhoto.hlsl"
             #endif
@@ -72,6 +76,8 @@ Shader "Saga/VertexColorLit"
             float _DetailStrength;
             float _Roughness;
             half4 _BaseColor;
+            float _Wet;
+            float _Rain;
 
             struct Attributes
             {
@@ -129,6 +135,9 @@ Shader "Saga/VertexColorLit"
                     albedo = pa; normalWS = pn; rough = lerp(rough, pr, (half)_PhotoStrength);
                 }
                 #endif
+                // U-0214 평지 물웅덩이·빗방울 물결 — 젖음 0 이면 건너뜀(옛 화면 그대로)
+                if (_Wet > 0.001)
+                    SagaWetPuddle(IN.positionWS, normalize(IN.normalWS), _Wet, _Rain, albedo, rough, normalWS);
 
                 #if defined(_SAGA_GROUND_TOON)
                 half3 lit = albedo * (shadowed + ambient);

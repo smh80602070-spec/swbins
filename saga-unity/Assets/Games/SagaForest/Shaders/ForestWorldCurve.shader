@@ -39,6 +39,9 @@ Shader "Saga/ForestWorldCurve"
         _DetailTiling ("Detail Tiling (world units per repeat)", Float) = 4
         _DetailStrength ("Detail Strength", Range(0,1)) = 0
         _Roughness ("Roughness (U-0084 PBR)", Range(0,1)) = 0.85
+        // U-0214 평지 물웅덩이·빗방울 물결 — 땅 사본만 WetGround 가 채움(기본 0 = 옛 화면, 나무·NPC 쓰임 그대로)
+        _Wet ("Puddle Wet (U-0214)", Range(0,1)) = 0
+        _Rain ("Rain Ripples (U-0214)", Range(0,1)) = 0
         // U-0084 2단계 사진 땅 — RegionMaterials.ApplyGroundPhoto 가 채우고 키워드를 켠다(0 풀·1 흙·2 바위·3 자갈).
         [Toggle(_SAGA_GROUND_PHOTO)] _GroundPhoto ("Ground Photo (U-0084)", Float) = 0
         _PhotoStrength ("Photo Strength", Range(0,1)) = 1
@@ -81,6 +84,7 @@ Shader "Saga/ForestWorldCurve"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "Assets/Shaders/SagaGroundPBR.hlsl"
+            #include "Assets/Shaders/SagaWetPuddle.hlsl"
             #if defined(_SAGA_GROUND_PHOTO)
             #include "Assets/Shaders/SagaGroundPhoto.hlsl"
             #endif
@@ -92,6 +96,8 @@ Shader "Saga/ForestWorldCurve"
             float _DetailTiling;
             float _DetailStrength;
             float _Roughness;
+            float _Wet;
+            float _Rain;
 
             struct Attributes
             {
@@ -153,6 +159,9 @@ Shader "Saga/ForestWorldCurve"
                     albedo = pa; normalWS = pn; rough = lerp(rough, pr, (half)_PhotoStrength);
                 }
                 #endif
+                // U-0214 평지 물웅덩이·빗방울 물결 — 젖음 0 이면 건너뜀(옛 화면 그대로). 휨은 Y 만이라 XZ 잡음 자리 그대로.
+                if (_Wet > 0.001)
+                    SagaWetPuddle(IN.positionWS, normalize(IN.normalWS), _Wet, _Rain, albedo, rough, normalWS);
                 #if defined(_SAGA_GROUND_TOON)
                 half3 lit = albedo * (shadowed + ambient);
                 #else
