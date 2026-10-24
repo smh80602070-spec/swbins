@@ -15,6 +15,9 @@ namespace Saga.Story.Data
     public static class StoryBond
     {
         public const float KillPts = 1f, BossPts = 10f, SwapPts = 2f, KnotAtkMul = 1.05f;
+        /// <summary>R-5(U-0208 뒤) — 교대 점수는 싸움 중일 때만: 마지막 처치 뒤 이 초 안. 적 없이 교대만 되풀이해 지기에 닿는 길을 막는다.</summary>
+        public const float SwapFightSec = 10f;
+        private static float _lastKillAt = float.NegativeInfinity;
         private static readonly int[] Trait = { 0, 1, 3 };            // 선봉 무 · 유격 지 · 호법 덕
         private static readonly string[] NameKo = { "선봉", "유격", "호법" };
         private const int N = 3;
@@ -81,10 +84,12 @@ namespace Saga.Story.Data
         }
 
         /// <summary>처치(<c>StoryEnemy.Die</c> — 들판·비경·숨은 우두머리) — 나와 있는 동료 +1(두목·숨은 우두머리 +10).</summary>
-        public static string OnKill(bool boss) => Add(StoryPartyState.ActiveIndex, boss ? BossPts : KillPts);
+        public static string OnKill(bool boss) { _lastKillAt = Time.time; return Add(StoryPartyState.ActiveIndex, boss ? BossPts : KillPts); }
 
         /// <summary>교대 성사 뒤(<c>StoryPlayerController.TriggerPartySwap</c>) — 새로 나온 동료 +2.</summary>
-        public static string OnSwap() => Add(StoryPartyState.ActiveIndex, SwapPts);
+        public static string OnSwap() => Time.time - _lastKillAt <= SwapFightSec ? Add(StoryPartyState.ActiveIndex, SwapPts) : "";
+
+        public static void ForgetKillForTest() => _lastKillAt = float.NegativeInfinity;
 
         public static string Snapshot() => JsonUtility.ToJson(_s);
 
@@ -95,6 +100,7 @@ namespace Saga.Story.Data
             if (s == null || s.pts == null || s.pts.Length != N || s.knot == null || s.knot.Length != N) s = new Store();
             for (int i = 0; i < N; i++) s.pts[i] = Mathf.Max(0f, s.pts[i]);
             _s = s;
+            _lastKillAt = float.NegativeInfinity;
         }
 
         public static void ResetForTest() => Restore(null);

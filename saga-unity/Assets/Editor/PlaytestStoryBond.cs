@@ -51,7 +51,10 @@ namespace Saga.EditorTools
                 if (StoryPartyState.CooldownLeft != StoryPartyState.SwapCooldownSec) Fail($"쿨 {StoryPartyState.CooldownLeft}");
                 StoryBond.OnKill(false);
                 if (StoryBond.Pts(1) != 3f) Fail($"유격 처치 {StoryBond.Pts(1)}");
-                End($"swap OK - 교대 +{StoryBond.SwapPts}(새로 나온 유격) · 쿨 {StoryPartyState.SwapCooldownSec:0}초 그대로 · 처치는 나와 있는 쪽");
+                StoryBond.ForgetKillForTest();
+                StoryBond.OnSwap();
+                if (StoryBond.Pts(1) != 3f) Fail($"싸움 밖 교대인데 점수 {StoryBond.Pts(1)}");
+                End($"swap OK - 교대 +{StoryBond.SwapPts}(새로 나온 유격) · 쿨 {StoryPartyState.SwapCooldownSec:0}초 그대로 · 처치는 나와 있는 쪽 · 싸움 밖(처치 {StoryBond.SwapFightSec:0}초 넘음) 교대는 0");
 
                 // ③ 단·기질
                 Begin();

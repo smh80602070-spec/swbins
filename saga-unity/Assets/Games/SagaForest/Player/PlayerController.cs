@@ -106,14 +106,14 @@ namespace Saga.Forest.Player
             Vector2 inputDir = MovementInput();
             Vector3 moveDir = WorldDirection(inputDir);
 
-            bool running = !_testInput && _sprintAction != null && _sprintAction.IsPressed();
+            bool running = !_testInput && _sprintAction != null && _sprintAction.IsPressed() && !ForestBees.StungNow; // tasks U-0206 R-5 쏘인 동안 제자리 달리기(소포 깨짐·달리기 모습) 없음
             float speed = (running ? RunSpeed : WalkSpeed) * ForestMounts.SpeedMul * ForestBees.MoveMul; // PLAN.md 109-15 — 안 탔으면 ×1 · tasks U-0206 쏘인 동안 0
             ForestDeliveryState.NotifyRunning(running || ForestMounts.RidingGround); // 101-2 5.7 "깨지기 쉬움" 소포 — 달리면 파손(말 위에서도).
 
             Vector3 horizontal = moveDir * speed;
             _controller.Move(new Vector3(horizontal.x, _verticalVelocity, horizontal.z) * dt);
 
-            bool moving = moveDir.sqrMagnitude > 0.05f * 0.05f;
+            bool moving = moveDir.sqrMagnitude > 0.05f * 0.05f && !ForestBees.StungNow;
             if (moving && visual != null)
             {
                 float targetYaw = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
@@ -137,7 +137,7 @@ namespace Saga.Forest.Player
                 _verticalVelocity = 0f;
             }
             Vector3 moveDir = WorldDirection(MovementInput());
-            bool running = !_testInput && _sprintAction != null && _sprintAction.IsPressed();
+            bool running = !_testInput && _sprintAction != null && _sprintAction.IsPressed() && !ForestBees.StungNow; // tasks U-0206 R-5 쏘인 동안 제자리 달리기(소포 깨짐·달리기 모습) 없음
             float speed = (running ? RunSpeed : WalkSpeed) * ForestMounts.SpeedMul * ForestBees.MoveMul;
             ForestDeliveryState.NotifyRunning(false);
 
@@ -149,7 +149,7 @@ namespace Saga.Forest.Player
             p.y = Mathf.MoveTowards(p.y, ForestMounts.Hover, ForestMounts.Rise * dt);
             transform.position = p;
 
-            bool moving = moveDir.sqrMagnitude > 0.05f * 0.05f;
+            bool moving = moveDir.sqrMagnitude > 0.05f * 0.05f && !ForestBees.StungNow;
             if (moving && visual != null)
             {
                 float targetYaw = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
