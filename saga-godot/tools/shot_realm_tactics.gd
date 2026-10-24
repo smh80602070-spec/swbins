@@ -30,8 +30,8 @@ static func stage(tree: SceneTree, pick := true, cut := false, cover := false, h
 			me = u
 			break
 	if cover and not me.is_empty():
-		tb.board.cells[int(me.y) * RealmTactics.COLS + int(me.x) + 1] = "forest"
-		tb.board.cells[(int(me.y) + 1) * RealmTactics.COLS + int(me.x) + 1] = "wall"
+		tb.board.cells[int(me.y) * int(tb.board.cols) + int(me.x) + 1] = "forest"
+		tb.board.cells[(int(me.y) + 1) * int(tb.board.cols) + int(me.x) + 1] = "wall"
 	var view: Node = TacticsView.open(btn, "xiaopei", tb, func(_g: Dictionary) -> void: pass)
 	if me.is_empty():
 		return

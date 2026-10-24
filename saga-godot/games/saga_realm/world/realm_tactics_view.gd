@@ -23,12 +23,12 @@ const CAM_SHAKE := 0.05     # 컷 중 맞음 카메라 흔들림(m)
 ## G-0223 — 보드게임 시제품처럼 보이던 판(베이지 단색 칸·회색 상자 성벽·원뿔 나무)을 자체 PBR(K-0093)로: 칸 지형마다 결, 성벽 돌벽 + 여장,
 ## 판 틀 널판, 숲 나무 = 줄기 + 잎 덩이 셋, 강 = 매끈한 물빛. 빛깔은 웹과 같은 COL 그대로(결만 사진). SAGA_REALM_OLD=1 이면 예전 판.
 const RealPbr := preload("res://saga_core/world/real_pbr.gd")
-const REAL_SET := {"plain": "gravel", "forest": "grass", "wall": "stonewall"}
+const REAL_SET := {"plain": "gravel", "forest": "grass", "wall": "stonewall", "gate": "planks"}   # hill 은 결 없이 흙빛(평지 자갈과 같으면 높이만 보여 언덕인 줄 모름 — 촬영 rk_tactics_wide)
 
 const ORIGIN := Vector3(3000.0, 0.0, 0.0)   # 성 화면(원점 둘레)과 겹치지 않는 자리
 const CELL := 2.0
-const TOP := {"plain": 0.2, "forest": 0.2, "river": -0.05, "wall": 1.0}   # 칸 윗면 높이
-const COL := {"plain": Color("c8b47a"), "forest": Color("5f8446"), "river": Color("4f86b3"), "wall": Color("857563")}
+const TOP := {"plain": 0.2, "forest": 0.2, "river": -0.05, "wall": 1.0, "hill": 0.75, "gate": 0.2}   # hill·gate — G-0347 ③ SRPG 판   # 칸 윗면 높이
+const COL := {"plain": Color("c8b47a"), "forest": Color("5f8446"), "river": Color("4f86b3"), "wall": Color("857563"), "hill": Color("a8925c"), "gate": Color("8a5a2b")}
 const HI_MOVE := Color(0.5, 0.82, 1.0, 0.42)
 const HI_ATTACK := Color(1.0, 0.36, 0.3, 0.5)
 const HI_SEL := Color(1.0, 0.88, 0.54, 0.85)
@@ -68,6 +68,8 @@ var _foe_turn := false   # 제목 "적 차례" 표시용(규칙의 board.side �
 ## G-0191 — 엑스컴식 엄폐 방패(웹 W-0168): 장수를 고르면 갈 칸·칠 칸 중 숲(엄폐 30) = 반 방패, 성벽(50) = 온 방패를 칸 위에 띄운다.
 ## 공격 컷: 칠 때 카메라가 공격자 뒤 어깨 위로 CUT_IN 초에 당겼다가 CUT_HOLD 초 뒤 제자리로. 맡기기(자동)·instant·cut_cam=false 면 안 함.
 static var cut_cam := true
+static var cur_cols := RealmTactics.COLS   # G-0347 ④ 지금 판 크기(open 이 판에서 받는다 — 옛 판 8×6)
+static var cur_rows := RealmTactics.ROWS
 const CUT_IN := 0.25
 const CUT_HOLD := 1.1
 const SHIELD_HALF := Color(1.0, 0.78, 0.32, 0.92)
@@ -88,6 +90,8 @@ static func open(host: Node, p_enemy_id: String, tb: Dictionary, done: Callable,
 	var v: Node3D = load("res://games/saga_realm/world/realm_tactics_view.gd").new()
 	v.name = "TacticsView"
 	v.board = tb.board
+	cur_cols = int(tb.board.get("cols", RealmTactics.COLS))   # G-0347 ④ SRPG 판은 10×8~12×10
+	cur_rows = int(tb.board.get("rows", RealmTactics.ROWS))
 	v.enemy_id = p_enemy_id
 	v._done_cb = done
 	v.instant = p_instant
@@ -103,15 +107,15 @@ static func ray_to_cell(ray_origin: Vector3, ray_dir: Vector3, center: Vector3, 
 		return Vector2i(-1, -1)
 	var t := (top_y - ray_origin.y) / ray_dir.y
 	var p := ray_origin + ray_dir * t
-	var x := int(floor((p.x - center.x) / CELL + RealmTactics.COLS * 0.5))
-	var y := int(floor((p.z - center.z) / CELL + RealmTactics.ROWS * 0.5))
-	if x < 0 or y < 0 or x >= RealmTactics.COLS or y >= RealmTactics.ROWS:
+	var x := int(floor((p.x - center.x) / CELL + cur_cols * 0.5))
+	var y := int(floor((p.z - center.z) / CELL + cur_rows * 0.5))
+	if x < 0 or y < 0 or x >= cur_cols or y >= cur_rows:
 		return Vector2i(-1, -1)
 	return Vector2i(x, y)
 
 
 static func cell_center(x: int, y: int) -> Vector3:
-	return ORIGIN + Vector3((float(x) - RealmTactics.COLS * 0.5 + 0.5) * CELL, 0.0, (float(y) - RealmTactics.ROWS * 0.5 + 0.5) * CELL)
+	return ORIGIN + Vector3((float(x) - cur_cols * 0.5 + 0.5) * CELL, 0.0, (float(y) - cur_rows * 0.5 + 0.5) * CELL)
 
 
 func _ready() -> void:
@@ -165,14 +169,14 @@ func _build_ground() -> void:
 		field.material_override = RealPbr.material("grass", 0, Color("5d6b42"))
 	field.position = ORIGIN + Vector3(0, -0.3, 0)
 	add_child(field)
-	_box(Vector3(RealmTactics.COLS * CELL + 0.6, 0.5, RealmTactics.ROWS * CELL + 0.6), ORIGIN + Vector3(0, -0.2, 0), Color("3b3326"), "planks", 1)   # 판 테두리(웹 frame)
+	_box(Vector3(cur_cols * CELL + 0.6, 0.5, cur_rows * CELL + 0.6), ORIGIN + Vector3(0, -0.2, 0), Color("3b3326"), "planks", 1)   # 판 테두리(웹 frame)
 
 
 func _build_cells() -> void:
 	var trunk := _mat(Color("5a4127"))
 	var leaf := _mat(Color("2f5a2c"))
-	for y in RealmTactics.ROWS:
-		for x in RealmTactics.COLS:
+	for y in cur_rows:
+		for x in cur_cols:
 			var t := RealmTactics.cell_at(board, x, y)
 			var top: float = TOP.get(t, 0.2)
 			var c := cell_center(x, y)
@@ -238,7 +242,10 @@ func _build_cells() -> void:
 
 func _unit_name(u: Dictionary) -> String:
 	if String(u.kind) == "troop":
-		return "부대"
+		return "부대" if String(u.get("arm", "")) == "" else "%s병" % String(RealmTactics.ARM_NAME[u.arm])   # G-0347 ③ 병종
+	if bool(u.get("leader", false)):
+		var hl = Characters.find(String(u.id))
+		return "👑 " + (String(hl.name) if hl != null else String(u.id))
 	var h = Characters.find(String(u.id))
 	return String(h.name) if h != null else String(u.id)
 
@@ -497,6 +504,8 @@ func _refresh() -> void:
 	_clear_hi()
 	var turn := mini(int(board.turn), RealmTactics.TURNS)
 	_title.text = "♟ 전술판 — %d/%d턴 · %s" % [turn, RealmTactics.TURNS, "적 차례" if _foe_turn else "내 차례"]
+	if bool(board.get("srpg", false)):   # G-0347 ④ 턴 상한 없음 — 목표가 제목
+		_title.text = "♟ 전장 — 목표: %s · %d턴 · %s" % [RealmTactics.goal_text(board), int(board.turn), "적 차례" if _foe_turn else "내 차례"]
 	if _sel != "":
 		var u := RealmTactics.unit(board, _sel)
 		_show_hi(int(u.x), int(u.y), HI_SEL)
@@ -510,7 +519,10 @@ func _refresh() -> void:
 			_show_hi(int(t.x), int(t.y), HI_ATTACK)
 			var cv := RealmTactics.cover_at(board, int(t.x), int(t.y))
 			_add_shield(int(t.x), int(t.y))
-			tips.append("%s %d%%%s" % [_unit_name(t), RealmTactics.hit_chance(u, t, cv), (" 엄폐 −%d" % cv) if cv > 0 else ""])
+			var mods := ""
+			for m: Array in RealmTactics.hit_mods(board, u, t):   # G-0347 ③ 높이·상성·뒤
+				mods += " %s%+d" % [m[0], m[1]]
+			tips.append("%s %d%%%s%s" % [_unit_name(t), RealmTactics.hit_chance_b(board, u, t), (" 엄폐 −%d" % cv) if cv > 0 else "", mods])
 		_hint.text = "%s — 파란 칸으로 옮기고 붉은 칸을 친다%s" % [_unit_name(u), ("  (명중 " + " · ".join(tips) + ")") if not tips.is_empty() else ""]
 		if _fire_mode:
 			_clear_hi()
@@ -520,6 +532,8 @@ func _refresh() -> void:
 			_hint.text = "%s — 🔥 주황 숲 칸에 불을 놓는다(성공 %d%% · 이웃 숲으로 번짐 · 적·아군 가리지 않고 두 턴 탐)" % [_unit_name(u), RealmTactics.fire_chance(u)]
 	else:
 		_hint.text = "내 장수를 고르세요 · 숲은 명중 −30% · 성벽은 −50% · 3턴 안에 적을 무너뜨리면 대승"
+		if bool(board.get("srpg", false)):
+			_hint.text = "내 장수를 고르세요 · 숲 −30% · 성벽 −50% · 언덕 위 +10% · 창>기>궁>창 ±20% · 뒤 +20% · 👑 대장"
 	var cur := _hi.get("%d,%d" % [_cursor.x, _cursor.y]) as MeshInstance3D
 	if cur != null and not cur.visible:
 		_show_hi(_cursor.x, _cursor.y, HI_CURSOR)
@@ -559,7 +573,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_down"):
 		d = Vector2i(0, 1)
 	if d != Vector2i.ZERO:
-		_cursor = Vector2i(clampi(_cursor.x + d.x, 0, RealmTactics.COLS - 1), clampi(_cursor.y + d.y, 0, RealmTactics.ROWS - 1))
+		_cursor = Vector2i(clampi(_cursor.x + d.x, 0, cur_cols - 1), clampi(_cursor.y + d.y, 0, cur_rows - 1))
 		get_viewport().set_input_as_handled()
 		_refresh()
 	elif event.is_action_pressed("ui_accept"):

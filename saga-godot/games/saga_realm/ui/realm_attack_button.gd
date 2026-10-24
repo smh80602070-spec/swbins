@@ -73,6 +73,9 @@ func _attack(target_id: String, layer_box: Dictionary) -> void:
 		])
 		return
 	var ask_box := {}
+	if OS.get_environment("SAGA_REALM_SRPG") != "0":   # G-0347 ④ 출진 = 늘 전장(일기토·바로 치기는 판 안 명령·🤖 맡기기로)
+		_open_tactics(target_id, ask_box)
+		return
 	var choices: Array = [
 		{"label": "♟️ 전술판을 펼친다(3턴 격자 — 이기면 위력↑, 지면 위력↓ · 쓰러진 장수는 3달 다친다)",
 			"cb": func() -> void: _open_tactics(target_id, ask_box)},

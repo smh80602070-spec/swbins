@@ -844,7 +844,13 @@ func tactics_board(enemy_id: String) -> Dictionary:
 	var stats := {}
 	for id: String in mine + foes:
 		stats[id] = {"might": _effective_stat(id, "might"), "wisdom": _effective_stat(id, "wisdom"), "command": _effective_stat(id, "command")}
-	var b := RealmTactics.make_board("%s|%d|%d" % [enemy_id, year, month], String(enemy_def.get("land", "plain")), true)
+	var seed := "%s|%d|%d" % [enemy_id, year, month]
+	if OS.get_environment("SAGA_REALM_SRPG") != "0":   # G-0347 ④ SRPG 본전투 — 목표(전멸·대장·성문)는 판 씨앗, 양쪽 부대 하나씩(③ 균형: 장수 수 맞춤)
+		var goal: String = ["rout", "leader", "gate"][int(floor(RealmTactics.hash01(seed, "goal") * 3.0))]
+		var sb := RealmTactics.make_board_srpg(seed, String(enemy_def.get("land", "plain")), true, goal)
+		RealmTactics.units_of_srpg(sb, mine, foes, [int(e.get("troops", 0))], stats, [int(cities[from_city].troops)])
+		return {"ok": true, "board": sb, "officer": officer_id, "mine": mine}
+	var b := RealmTactics.make_board(seed, String(enemy_def.get("land", "plain")), true)
 	RealmTactics.units_of(b, mine, foes, foe_troops, stats)
 	return {"ok": true, "board": b, "officer": officer_id, "mine": mine}
 
