@@ -15,9 +15,10 @@ extends SceneTree
 ##   ["static", <스크립트 경로>, <함수>, [인자…]]   정적 함수 — 인자 낱말 "@scene"(지금 씬)·"@near:dx:dz"(플레이어 자리 + 차이) (G-0048)
 ##   ["free_modal"]   떠 있는 선택 창(그룹 ui_modal 의 CanvasLayer)을 닫는다 — 예: 사가천하 시나리오 고르기
 ## near 의 노드 경로를 못 찾으면 그 이름의 첫 노드를 씬 전체에서 찾는다(지형 빌더가 만드는 LadderArea 등).
-## SETTLE 프레임(SHOT_SETTLE 로 늘릴 수 있음 — 비경 시작 대기처럼 몇 초 걸리는 컷, G-0112)에 뷰포트를 <이름>_<가로>x<세로>.png 로. 끝에 "SHOT_SCENE_DONE shots=N".
+## SETTLE 프레임과 MIN_SEC 초(SHOT_MIN_SEC — 둘 다 지나야)(SHOT_SETTLE 로 늘릴 수 있음 — 비경 시작 대기처럼 몇 초 걸리는 컷, G-0112)에 뷰포트를 <이름>_<가로>x<세로>.png 로. 끝에 "SHOT_SCENE_DONE shots=N".
 
 const SETTLE := 120
+const MIN_SEC := 5.0   # 10-25 — 화면 밖 창에선 120 프레임이 씬이 서기 전에 끝나(3마을 검붉음·도형 클로즈업) 실제 시간도 기다린다. SHOT_MIN_SEC 로 바꿈
 const STEP_AT := 30
 const FOREST := "res://games/saga_forest/world/TestVillageForest.tscn"
 const DUNGEON := "res://games/saga_dungeon/world/TestRoom.tscn"
@@ -222,17 +223,21 @@ func _initialize() -> void:
 	var dir := OS.get_environment("SHOT_DIR")
 	var only := OS.get_environment("SHOT_ONLY").split(",", false)
 	var settle := maxi(int(OS.get_environment("SHOT_SETTLE")), SETTLE)
+	var min_sec := float(OS.get_environment("SHOT_MIN_SEC")) if OS.get_environment("SHOT_MIN_SEC") != "" else MIN_SEC
 	var perf := OS.get_environment("SHOT_PERF") != ""   # G-0112 — 화면 밖 창 + 화질 모드의 SDFGI 조각을 피해 성능 모드로(저장 안 함)
 	for cut: Array in CUTS:
 		if not only.is_empty() and not only.has(String(cut[0])):
 			continue
 		change_scene_to_file(String(cut[1]))
-		for f in settle:
+		var t0 := Time.get_ticks_msec()
+		var f := 0
+		while f < settle or Time.get_ticks_msec() - t0 < int(min_sec * 1000.0):
 			await process_frame
 			if f == STEP_AT:
 				if perf:
 					(load(GFX) as GDScript).call("set_mode", "performance", self, false)
 				_steps(cut[2])
+			f += 1
 		var img := root.get_viewport().get_texture().get_image()
 		var path := "%s/%s_%dx%d.png" % [dir, cut[0], img.get_width(), img.get_height()]
 		print("SHOT %s err=%d" % [cut[0], img.save_png(path)])
