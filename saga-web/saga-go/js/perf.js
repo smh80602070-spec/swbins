@@ -254,10 +254,6 @@
   }
 
   global.DG = global.DG || {};
-  /* W-0389 ③-5 — HUD 유리 흐림(backdrop-filter, style.css 34곳)은 그 밑 캔버스가 매 프레임 바뀌면 GPU 가 매 프레임 다시 흐린다. 손잡이 ui.blur(1 = 흐림, 0 = 끔 · 폰 기본 0) · 2초마다 맞춘다 */
-  function syncBlur() { var d = global.document && global.document.documentElement; if (d) { var M = global.DG.deviceMode, ph = M && M.phone ? !!M.phone() : (global.innerWidth || 1000) <= 520; d.classList.toggle('no-blur', !+core.tuned('ui.blur', ph ? 0 : 1));   /* 폰 기본 끔 — A/B LOW 2회: 들판 12.7·20.3 → 28.5·27 · 걷기 11.2·8.5 → 19.4·14.9fps */ } }
-  if (global.setInterval) { global.setInterval(syncBlur, 2000); global.setTimeout(syncBlur, 50); }
-
   global.DG.perf = {
     TIERS: TIERS,
     auto: auto, tier: tier, mul: mul, meshOk: meshOk, shadowOk: shadowOk, postOk: postOk,

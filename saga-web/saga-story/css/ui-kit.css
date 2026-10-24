@@ -272,3 +272,5 @@ body.sheet-open .cam2d-btns { visibility: hidden; }
 
 /* W-0371 인물 일러스트(정사각 반신 512) — 초상 칸이 150×172 처럼 세로로 길어도 늘이지 않고 얼굴 쪽으로 자른다 */
 img[src*="assets/illust/"] { object-fit: cover; object-position: 50% 14%; }
+/* W-0389 ③-5 손잡이 ui.blur 0(폰 기본) — 유리 흐림 끔(device-mode.js syncBlur) */
+.no-blur *, .no-blur *::before, .no-blur *::after { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }

@@ -39,6 +39,10 @@
     return v === '1';
   }
   function mark(key, on) { var s = ss(); if (s) { try { s.setItem(PRE + key, on ? '1' : '0'); } catch (e) { /* 막힘 */ } } }
+  /* W-0389 ③-5 — HUD 유리 흐림(backdrop-filter)은 그 밑 캔버스가 매 프레임 바뀌면 GPU 가 매 프레임 다시 흐린다— 가설. 1만리 폰 LOW A/B 가 쌍마다 뒤집혀(2쌍 끔이 빠름, 3쌍 켬이 빠름) 근거 없음 → 기본 켬.
+     html.no-blur(규칙은 ui-kit.css) · 손잡이 ui.blur(1 = 흐림 기본, 0 = 끔) · 2초마다 맞춘다 — 다섯 판 공용 */
+  function syncBlur() { var d = global.document && global.document.documentElement, C = global.DG && global.DG.core; if (!d) { return; } var v = C && C.tuned ? +C.tuned('ui.blur', 1) : 1; d.classList.toggle('no-blur', !v); }
+  if (global.setInterval && global.document) { global.setInterval(syncBlur, 2000); global.setTimeout(syncBlur, 50); }
   global.DG = global.DG || {};
   global.DG.deviceMode = { phone: phone, want3d: want3d, mark: mark, test: test, _reset: function () { cached = null; } };
 })(window);
