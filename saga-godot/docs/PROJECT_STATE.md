@@ -29,7 +29,8 @@
 1. 큐·장부 빔 → RECURRING(R-3 남은 D1 다섯 — gfx-baseline 은 기준 PNG 사용자 승인, player-face 는 K 모프, shake-spec·rise-in 은 영상 몫) 또는 장부에 새 줄.
 2. 후보: 「오늘」 창 받기 단추를 2나락·4종횡에도(지금은 판이 저절로 줌).
 3. 에셋(K): 3마을 닭·염소 GLB 놓기(INBOX) · cave_hole_01 · 옛 rock_moss_01.glb 키(비교 모드만) · 1만리 괴물 남은 몸.
-4. 모바일 렌더러 3마을 집 안 흰 십자 번짐(G-0358 메모) — 고돗 폰 빌드 전엔 낮음.
+4. 10-25 Forward+ 훑기: 1만리 probe_shots 146장 정상 · 네 판 shot_scene 풍경 컷은 두 렌더러 똑같이 검붉음·가까운 도형(씬 서기 전 찍힘 — 컷 자리 손보기가 후보) · Forward+ 만의 경고 = curved_textured_cutout 이 법선 맵 없어도 NORMAL_MAP 을 써 탄젠트 없는 dex 몸에 경고(그림 영향 없음).
+5. 모바일 렌더러 3마을 집 안 흰 십자 번짐(G-0358 메모) — 고돗 폰 빌드 전엔 낮음.
 
 ## 알려진 오류
 
