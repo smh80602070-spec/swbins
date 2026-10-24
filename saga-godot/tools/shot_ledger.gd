@@ -420,3 +420,14 @@ static func dg_globe(tree: SceneTree) -> void:
 		if pl == null:
 			return
 		preload("res://games/saga_dungeon/world/health_globe.gd").drop(tree.current_scene, pl.global_position + Vector3(-2.4, 0.0, 0.4), true, false))
+
+
+## G-0345 4종횡 콤보 킬 — 내 앞에서 열 번 이어 잡은 셈(글 "콤보 킬 n"·파란 경험치 구슬, 끌림 밖)
+static func st_combo(tree: SceneTree) -> void:
+	_later(tree, 80, func() -> void:
+		var pl := _player(tree)
+		if pl == null:
+			return
+		var C: GDScript = load("res://games/saga_story/world/story_combo_kill.gd")
+		for i in 10:
+			C.call("on_kill", tree.current_scene, pl.global_position + Vector3(4.5, 0.0, 0.0), 5.0, false))

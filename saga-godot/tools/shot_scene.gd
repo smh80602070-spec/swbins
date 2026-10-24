@@ -167,6 +167,7 @@ const CUTS := [
 	["lg_go_weakpart", GO, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "go_weakpart", ["@tree"]]]],   # G-0342 보스 약점 표식(주황 빛 공)
 	["lg_go_standoff", GO, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "go_standoff", ["@tree"]]]],   # G-0343 대치 — 달려드는 놈 예고 빛·대치 알림
 	["lg_dg_globe", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_globe", ["@tree"]]]],   # G-0344 피 구슬 셋(가득이라 남음)
+	["lg_st_combo", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_ledger.gd", "st_combo", ["@tree"]]]],   # G-0345 콤보 킬 글·경험치 구슬
 	["lg_dg_trail", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_legend", ["@tree"]], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0325 ← G-0290 전설 잔광
 	["lg_dg_rise", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rise", ["@tree"]]]],   # G-0325 ← G-0293 난입 솟음(한 컷씩 — time_scale)
 	["lg_dg_break", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_breakables", ["@tree"]]]],   # G-0325 ← G-0307 부서지는 통

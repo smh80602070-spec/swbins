@@ -6048,5 +6048,22 @@
   "ticket": "G-0344",
   "since": "2026-10-24",
   "note": "장부 dungeon.md 피 구슬(디아블로 3) · SAGA_GLOBE=0 · 촬영 shot_scene lg_dg_globe"
+ },
+ {
+  "id": "gd.st.combo_kill",
+  "name": "4종횡 콤보 킬 — 5초 안에 이어 잡으면 수가 오르고 「콤보 킬 n」(3부터, 10·30·50 색), 10마다 파란 경험치 구슬(적 경험치 × 3 + 콤보/10, 최대 8)",
+  "files": [
+   "games/saga_story/world/story_combo_kill.gd",
+   "games/saga_story/world/story_enemy.gd"
+  ],
+  "tests": [
+   "combo_kill"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0345",
+  "since": "2026-10-24",
+  "note": "장부 story.md 콤보 킬(메이플) · SAGA_COMBO_KILL=0 · 촬영 shot_scene lg_st_combo"
  }
 ]
