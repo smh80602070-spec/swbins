@@ -419,7 +419,7 @@
    "tool": "k163_illust.py + gen.py (ComfyUI, Kaggle 원격)",
    "model": "animagine-xl-4.0-opt",
    "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상 보고 적은 묘사)",
-   "count": 316,
+   "count": 500,
    "where": [
     "saga-assets/illust/shared/ac_balgwang",
     "saga-assets/illust/shared/ac_choeumpa",
