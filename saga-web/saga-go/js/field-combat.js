@@ -828,7 +828,7 @@
 
   /** 기본 공격 — 3타 사슬(0.9·1.0·1.5). 사거리 밖이면 6m 안의 적에게 파고든다 */
   function attack(S, px, py) {
-    var m = active(S); if (global.DG.mountCombat && global.DG.mountCombat.blockMelee()) { return { ok: false, mounted: true }; } if (m && !m.down && global.DG.fieldParry && global.DG.fieldParry.tryParry(S, px, py)) { S.atkCd = 0.3; return { ok: true, parry: true }; }   // W-0375 예고 끝 직전 평타 = 쳐내기
+    var m = active(S); if (global.DG.mountCombat && global.DG.mountCombat.blockMelee()) { return { ok: false, mounted: true }; } if (global.DG.fieldStandoff && S.atkCd <= 0) { var soR = global.DG.fieldStandoff.tryStrike(S, px, py); if (soR) { return soR; } } if (m && !m.down && global.DG.fieldParry && global.DG.fieldParry.tryParry(S, px, py)) { S.atkCd = 0.3; return { ok: true, parry: true }; }   // W-0375 예고 끝 직전 평타 = 쳐내기
     if (!m || m.down || S.atkCd > 0) { return { ok: false }; }
     /* ⑲-5 무기 종류마다 모양 — 칼은 옛 3타(사거리 손잡이 그대로), 서책·활은 멀리 하나(파고들지 않는다) */
     var kit = m.kit || SWORD_KIT, reach = kit === SWORD_KIT || m.wtype === 'sword' ? REACH() : kit.reach, tgt;
@@ -1403,7 +1403,7 @@
     S.calmT += dt;
     S.iframe = Math.max(0, S.iframe - dt);
     S.swapCd = Math.max(0, S.swapCd - dt);
-    S.atkCd = Math.max(0, S.atkCd - dt); if (global.DG.fieldEnv) { global.DG.fieldEnv.tick(S, dt); } if (global.DG.fieldGrab) { global.DG.fieldGrab.step(S, dt, px, py); }   // W-0277 잡기·던지기(field-grab.js) — 쿨·든 적 옮기기·착지
+    S.atkCd = Math.max(0, S.atkCd - dt); if (global.DG.fieldEnv) { global.DG.fieldEnv.tick(S, dt); } if (global.DG.fieldGrab) { global.DG.fieldGrab.step(S, dt, px, py); } if (global.DG.fieldStandoff && !inp.blocked) { global.DG.fieldStandoff.step(S, dt, px, py); }   // W-0420 ② 대치 · W-0277 잡기·던지기(field-grab.js) — 쿨·든 적 옮기기·착지
     if (S.aim) {                                                    // ⑲-22 조준 — 활 아닌 인물·쓰러짐·대화면 풀린다
       if (!canAim(S) || inp.blocked) { aimEnd(S); }
       else { if (S.aim.hold) { S.aim.t = Math.min(AIM_FULL() + 1, S.aim.t + dt); } aimLock(S, px, py); }
@@ -1496,7 +1496,7 @@
       var home = Math.hypot(f.x - f.hx, f.y - f.hy);
       if (f.st !== 'return' && f.st !== 'idle' && home > LEASH_R()) { f.st = 'return'; f.mark = null; }
       if (f.st === 'idle') {
-        f.wa += dt * 0.35;
+        if (f.so) { continue; } f.wa += dt * 0.35;   // W-0420 ② 대치 — 멈춰 노려봄(field-standoff 가 달려듦을 옮긴다)
         var tx = f.hx + Math.cos(f.wa) * 2.2 * KDV, ty = f.hy + Math.sin(f.wa * 0.8) * 2.2 * KDV;
         moveToward(f, tx, ty, 1.1 * KDV * dt);
         if ((d < AGGRO_R() || f.siege) && !allDown(S)) { f.st = 'chase'; push(S, { t: 'aggro', uid: f.uid, camp: f.camp }); }
@@ -1800,7 +1800,7 @@
   function handle(ev, pos) {
     var c = core(), H = global.DG.hero, i;
     for (i = 0; i < ev.length; i++) {
-      var e = ev[i]; if (global.DG.goRank) { global.DG.goRank.onEv(e); } if (global.DG.speciesStudy) { global.DG.speciesStudy.onEv(e); }   // W-0379 무리 토벌 등급 · W-0420 종 연구
+      var e = ev[i]; if (global.DG.goRank) { global.DG.goRank.onEv(e); } if (global.DG.speciesStudy) { global.DG.speciesStudy.onEv(e); } if (global.DG.fieldStandoff) { global.DG.fieldStandoff.onEv(e); }   // W-0379 무리 토벌 등급 · W-0420 종 연구
       /* ⑲-3 원소 신호 — 스킬·폭발·장판 자리를 알린다(treasure.js 가 석등을 켠다) */
       if ((e.t === 'skill' || e.t === 'burst' || e.t === 'arrow' || (e.t === 'zone' && (e.kind === 'field' || e.kind === 'shell' || e.kind === 'kitzone' || e.kind === 'vortex' || e.kind === 'feast'))) && e.el) {
         /* 돌진·찌르기는 지나간 선(x0,y0 → x,y) 전체가 닿는다 — 끝점만 알리면 제단을 가로질러도 안 켜졌다(2026-09-28) */
@@ -2386,7 +2386,7 @@
   function init() { bindKeys(); }
 
   global.DG = global.DG || {};
-  if (global.DG.fieldGrab) { global.DG.fieldGrab.bind({ K: K, KDV: function () { return KDV; }, FOES: FOES, KB_T: KB_T, active: active, nearestFoe: nearestFoe, foesWithin: foesWithin, hitFoe: hitFoe, push: push }); } global.DG.fieldCombat = {   // W-0277 잡기(field-grab.js)에 속 함수를 넘긴다
+  if (global.DG.fieldGrab) { global.DG.fieldGrab.bind({ K: K, KDV: function () { return KDV; }, FOES: FOES, KB_T: KB_T, active: active, nearestFoe: nearestFoe, foesWithin: foesWithin, hitFoe: hitFoe, push: push }); } if (global.DG.fieldStandoff) { global.DG.fieldStandoff.bind({ KDV: function () { return KDV; }, FOES: FOES, active: active, hitFoe: hitFoe, push: push, hurt: hurt, wake: wake }); } global.DG.fieldCombat = { floatNum: floatNum,   // W-0277 잡기(field-grab.js)에 속 함수를 넘긴다
     EL: EL, anim2d: anim2d, _handle: handle, FOES: FOES, ROT: ROT, SHADOW_BACK: SHADOW_BACK, RIFT_STEP: RIFT_STEP, RIFT_SLOPE: RIFT_SLOPE, riftOk: riftOk, SIEGE_PULL: SIEGE_PULL, tideMarks: tideMarks, markHit: markHit, foeAtk: foeAtk, KB_T: KB_T, knock: knock, rainFollow: rainFollow, THEMES: THEMES, ELITES: ELITES, ERA_THEMES: ERA_THEMES, ERA_ELITES: ERA_ELITES, eraOfCamp: eraOfCamp, CELL: CELL, ENERGY_MAX: ENERGY_MAX,
     SKILL_CD: SKILL_CD, numPlace: numPlace, foesWithin: foesWithin, push: push, KDVf: function () { return KDV; }, wpnSlot: wpnSlot, wpnMs: wpnMs, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
     /* 판정 층 — 화면 없이 굴린다(자가진단이 쓰는 문) */

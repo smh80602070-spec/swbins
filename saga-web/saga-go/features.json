@@ -1966,5 +1966,23 @@
   "ticket": "W-0420",
   "since": "2026-10-25",
   "note": "D1(오퍼스 10-25): 진단 둘 — 사건 순서 react→kill→hit→weak 를 kill 뒤 잠깐 들고 셈. 덤은 웹 금 단위로 줄임(고돗 냥 800/3000). D2: shot-go-study.mjs → shots/w0420 study-pc·phone Read ○(도감 맨 위 「🔬 들판 짐승 연구」·종마다 연구 n/4·과제 ✔/○)."
+ }, {
+  "id": "go.standoff",
+  "name": "대치(W-0420 ② 웹 역이식 — 고돗 G-0343 · 고스트 오브 쓰시마) — 쉬는 들판 무리에 웅크리지 않고 어그로+2m 들면 「⚔ 대치」, 1.0~2.2초 뒤 하나 달려듦(창 0.45초·이어 ×0.85) → 창 안 평타 한 칼 「일격!」, 이르면 「성급했다!」, 놓치면 한 방·깨짐, 헛몸짓 25%, 6m 벗어나면 깨짐, 깬 무리 60초 · 손잡이 go.standoff",
+  "files": [
+   "js/field-standoff.js",
+   "src/field-combat/01.js",
+   "src/field-combat/02.js",
+   "src/field-combat/03.js"
+  ],
+  "tests": [
+   "W-0420 대치"
+  ],
+  "level": "D1",
+  "verified": "",
+  "fun": {},
+  "ticket": "W-0420",
+  "since": "2026-10-25",
+  "note": "D1(오퍼스 10-25): 진단 둘(한 칼·이어 창·다 벰 / 성급·놓침·60초·웅크림·손잡이 0). plain·elite 무리만(우두머리·수호자·숨은 터·이야기·결투 빼고). field-combat.js 2407 줄 그대로(기존 줄 끝 고리 넷). 촬영은 ③ 뒤 묶어서."
  }
 ]

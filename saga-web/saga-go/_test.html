@@ -203,6 +203,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/rogue-action.js"></script>
 <script src="js/field-foes.js"></script>
 <script src="js/field-grab.js"></script>
+<script src="js/field-standoff.js"></script>
 <script src="js/field-combat.js"></script>
 <script src="js/runrank-core.js"></script>
 <script src="js/go-rank.js"></script>
@@ -17607,6 +17608,39 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ev = fcEv(S, 'parry').length;
       var ok = early === null && autoP === null && hit === f && f.st === 'recover' && f.stun >= 0.5 && !f.mark && m1 === 2 && m2 === 1 && ev === 1 && FP.window({ st: 'wind', stT: 0.2 }) && !FP.window({ st: 'chase', stT: 0.1 });
       return ok || ('실패 ' + JSON.stringify({ early: !!early, hit: !!hit, st: f.st, stun: f.stun, m1: m1, m2: m2, ev: ev }));
+    });
+    t('W-0420 대치 — 쉬는 무리에 어그로+2m 들면 대치(무리 멈춤·어그로 안 함) · 달려듦 창 안 평타 = 한 칼 · 다음 놈 창 ×0.85 · 다 베면 끝', function () {
+      var FS = DG.fieldStandoff, FC = DG.fieldCombat; if (!FS || !FC) { return '실패 DG.fieldStandoff 없음'; }
+      FC._kdForTest(1); FS._reset(); FS._rng(function () { return 0.99; });
+      try {
+        var S = fcState(); FC.spawnCamp(S, { key: 'tso1', x: 13.4, y: 0, tier: 1, kind: 'plain', foes: [{ kind: 'boar', dx: 0, dy: 0 }, { kind: 'boar', dx: 1, dy: 0.5 }] });
+        var a = S.foes[S.uid - 1], b = S.foes[S.uid];
+        FS.step(S, 0.3, 0, 0); var st0 = FS.state(), held = !!(a.so && b.so);
+        FC.step(S, 0.05, { px: 0, py: 0 }); var still = a.st === 'idle' && b.st === 'idle';
+        FS.step(S, 2.5, 0, 0); var ph1 = FS.state() && FS.state().ph, w1 = FS.state() && FS.state().win;
+        S.atkCd = 0; var r1 = FC.attack(S, 0, 0), dead1 = [a, b].filter(function (f) { return f.dead; }).length;
+        FS.step(S, 1.5, 0, 0); var w2 = FS.state() && FS.state().win;
+        S.atkCd = 0; var r2 = FC.attack(S, 0, 0), ev = fcEv(S), kills = ev.filter(function (e) { return e.t === 'kill'; }).length, so = ev.filter(function (e) { return e.t === 'soKill'; }).length;
+        var ok = st0 && held && still && ph1 === 'lunge' && w1 === FS.WIN && r1 && r1.standoff && dead1 === 1 && Math.abs(w2 - FS.WIN * FS.WIN_MUL) < 1e-9 && r2 && r2.standoff && a.dead && b.dead && kills === 2 && so === 2 && !FS.state();
+        return ok || ('실패 ' + JSON.stringify({ st0: !!st0, held: held, still: still, ph1: ph1, w1: w1, r1: r1, dead1: dead1, w2: w2, r2: r2, kills: kills, so: so, end: FS.state() }));
+      } finally { FS._reset(); FC._kdForTest(); }
+    });
+    t('W-0420 대치 — 달려들기 전 평타 = 성급(깨짐·무리 전원 깨어남, 평타는 그대로) · 창 놓치면 한 방 맞고 깨짐 · 깬 무리 60초 다시 안 함 · 웅크림·go.standoff 0 이면 안 섬', function () {
+      var FS = DG.fieldStandoff, FC = DG.fieldCombat, ST = DG.stealth, C = DG.core; if (!FS || !FC) { return '실패 DG.fieldStandoff 없음'; }
+      FC._kdForTest(1); FS._reset(); FS._rng(function () { return 0.99; });
+      try {
+        var S = fcState(); FC.spawnCamp(S, { key: 'tso2', x: 13.4, y: 0, tier: 1, kind: 'plain', foes: [{ kind: 'boar', dx: 0, dy: 0 }, { kind: 'boar', dx: 1, dy: 0.5 }] });
+        var a = S.foes[S.uid - 1], b = S.foes[S.uid];
+        FS.step(S, 0.3, 0, 0); S.atkCd = 0; var r = FC.attack(S, 0, 0), rash = !FS.state() && a.st === 'chase' && b.st === 'chase' && !(r && r.standoff), ev = fcEv(S).filter(function (e) { return e.t === 'soRash'; }).length;
+        a.st = 'idle'; b.st = 'idle'; FS.step(S, 0.3, 0, 0); var cool = !FS.state();
+        var S2 = fcState(); FC.spawnCamp(S2, { key: 'tso3', x: 13.4, y: 0, tier: 1, kind: 'plain', foes: [{ kind: 'boar', dx: 0, dy: 0 }] });
+        var m = S2.party[S2.active], hp0 = m.hp; FS.step(S2, 0.3, 0, 0); FS.step(S2, 2.5, 0, 0); FS.step(S2, 0.5, 0, 0); var miss = !FS.state() && m.hp < hp0;
+        var S3 = fcState(); FC.spawnCamp(S3, { key: 'tso4', x: 13.4, y: 0, tier: 1, kind: 'plain', foes: [{ kind: 'boar', dx: 0, dy: 0 }] });
+        var crouchOk = true; if (ST && ST.setCrouch) { ST.setCrouch(true); FS.step(S3, 0.3, 0, 0); crouchOk = !FS.state(); ST.setCrouch(false); }
+        C.setTune('go.standoff', 0); FS.step(S3, 0.3, 0, 0); var offOk = !FS.state(); C.setTune('go.standoff', null);
+        var ok = rash && ev === 1 && cool && miss && crouchOk && offOk;
+        return ok || ('실패 ' + JSON.stringify({ rash: rash, ev: ev, cool: cool, miss: miss, crouchOk: crouchOk, offOk: offOk, st: [a.st, b.st] }));
+      } finally { FS._reset(); FC._kdForTest(); if (ST && ST.setCrouch) { ST.setCrouch(false); } }
     });
     t('W-0304 말 위 전투 — 달릴수록 평타 피해 · 돌진은 둘레 적을 쳐 넘기고 6초 쿨 · 탄 채 맞으면 낙마(0.8초 평타 막힘) · 날면 평타 막힘', function () {
       var MC = DG.mountCombat, FC = DG.fieldCombat, keepMT = DG.mount, fly = false, downed = 0; if (!MC || !FC) { return '실패 DG.mountCombat 없음'; }

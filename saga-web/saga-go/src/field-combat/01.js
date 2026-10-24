@@ -828,7 +828,7 @@
 
   /** 기본 공격 — 3타 사슬(0.9·1.0·1.5). 사거리 밖이면 6m 안의 적에게 파고든다 */
   function attack(S, px, py) {
-    var m = active(S); if (global.DG.mountCombat && global.DG.mountCombat.blockMelee()) { return { ok: false, mounted: true }; } if (m && !m.down && global.DG.fieldParry && global.DG.fieldParry.tryParry(S, px, py)) { S.atkCd = 0.3; return { ok: true, parry: true }; }   // W-0375 예고 끝 직전 평타 = 쳐내기
+    var m = active(S); if (global.DG.mountCombat && global.DG.mountCombat.blockMelee()) { return { ok: false, mounted: true }; } if (global.DG.fieldStandoff && S.atkCd <= 0) { var soR = global.DG.fieldStandoff.tryStrike(S, px, py); if (soR) { return soR; } } if (m && !m.down && global.DG.fieldParry && global.DG.fieldParry.tryParry(S, px, py)) { S.atkCd = 0.3; return { ok: true, parry: true }; }   // W-0375 예고 끝 직전 평타 = 쳐내기
     if (!m || m.down || S.atkCd > 0) { return { ok: false }; }
     /* ⑲-5 무기 종류마다 모양 — 칼은 옛 3타(사거리 손잡이 그대로), 서책·활은 멀리 하나(파고들지 않는다) */
     var kit = m.kit || SWORD_KIT, reach = kit === SWORD_KIT || m.wtype === 'sword' ? REACH() : kit.reach, tgt;

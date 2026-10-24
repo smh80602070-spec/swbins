@@ -536,7 +536,7 @@
     S.calmT += dt;
     S.iframe = Math.max(0, S.iframe - dt);
     S.swapCd = Math.max(0, S.swapCd - dt);
-    S.atkCd = Math.max(0, S.atkCd - dt); if (global.DG.fieldEnv) { global.DG.fieldEnv.tick(S, dt); } if (global.DG.fieldGrab) { global.DG.fieldGrab.step(S, dt, px, py); }   // W-0277 잡기·던지기(field-grab.js) — 쿨·든 적 옮기기·착지
+    S.atkCd = Math.max(0, S.atkCd - dt); if (global.DG.fieldEnv) { global.DG.fieldEnv.tick(S, dt); } if (global.DG.fieldGrab) { global.DG.fieldGrab.step(S, dt, px, py); } if (global.DG.fieldStandoff && !inp.blocked) { global.DG.fieldStandoff.step(S, dt, px, py); }   // W-0420 ② 대치 · W-0277 잡기·던지기(field-grab.js) — 쿨·든 적 옮기기·착지
     if (S.aim) {                                                    // ⑲-22 조준 — 활 아닌 인물·쓰러짐·대화면 풀린다
       if (!canAim(S) || inp.blocked) { aimEnd(S); }
       else { if (S.aim.hold) { S.aim.t = Math.min(AIM_FULL() + 1, S.aim.t + dt); } aimLock(S, px, py); }
@@ -629,7 +629,7 @@
       var home = Math.hypot(f.x - f.hx, f.y - f.hy);
       if (f.st !== 'return' && f.st !== 'idle' && home > LEASH_R()) { f.st = 'return'; f.mark = null; }
       if (f.st === 'idle') {
-        f.wa += dt * 0.35;
+        if (f.so) { continue; } f.wa += dt * 0.35;   // W-0420 ② 대치 — 멈춰 노려봄(field-standoff 가 달려듦을 옮긴다)
         var tx = f.hx + Math.cos(f.wa) * 2.2 * KDV, ty = f.hy + Math.sin(f.wa * 0.8) * 2.2 * KDV;
         moveToward(f, tx, ty, 1.1 * KDV * dt);
         if ((d < AGGRO_R() || f.siege) && !allDown(S)) { f.st = 'chase'; push(S, { t: 'aggro', uid: f.uid, camp: f.camp }); }
@@ -933,7 +933,7 @@
   function handle(ev, pos) {
     var c = core(), H = global.DG.hero, i;
     for (i = 0; i < ev.length; i++) {
-      var e = ev[i]; if (global.DG.goRank) { global.DG.goRank.onEv(e); } if (global.DG.speciesStudy) { global.DG.speciesStudy.onEv(e); }   // W-0379 무리 토벌 등급 · W-0420 종 연구
+      var e = ev[i]; if (global.DG.goRank) { global.DG.goRank.onEv(e); } if (global.DG.speciesStudy) { global.DG.speciesStudy.onEv(e); } if (global.DG.fieldStandoff) { global.DG.fieldStandoff.onEv(e); }   // W-0379 무리 토벌 등급 · W-0420 종 연구
       /* ⑲-3 원소 신호 — 스킬·폭발·장판 자리를 알린다(treasure.js 가 석등을 켠다) */
       if ((e.t === 'skill' || e.t === 'burst' || e.t === 'arrow' || (e.t === 'zone' && (e.kind === 'field' || e.kind === 'shell' || e.kind === 'kitzone' || e.kind === 'vortex' || e.kind === 'feast'))) && e.el) {
         /* 돌진·찌르기는 지나간 선(x0,y0 → x,y) 전체가 닿는다 — 끝점만 알리면 제단을 가로질러도 안 켜졌다(2026-09-28) */
