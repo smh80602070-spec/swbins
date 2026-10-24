@@ -750,9 +750,11 @@ func _capture_city(enemy_id: String, enemy_def: Dictionary, officer_id: String, 
 		## 경로만 탄다. 사로잡힌 무장은 그 성(이제 우리 성)의 재야가
 		## 된다(`off.rec(id).found=true`와 같은 결) — 매수·이간으로 미리
 		## 빼낸 이는 이미 e.officers에서 빠져 여기 안 걸린다.
+		var cap_force: String = force_of(enemy_id)   # G-0375 포로 — 성이 넘어가기 전 세력
 		for oid: String in (def_officers as Array).duplicate():
 			if not (oid in found) and not (oid in roster):
 				found.append(oid)
+				preload("res://games/saga_realm/data/realm_captives.gd").record(self, oid, cap_force)
 			enemy_officer_loyal.erase(oid)
 		e.officers = []
 		_annex_city(enemy_id, enemy_def, troops_left, train_val)

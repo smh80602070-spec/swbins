@@ -161,6 +161,8 @@ var age := 0
 var marriages: Dictionary = {}
 ## G-0336 국가 방침 {done: [id…], cur: id, left: 달}(저장 키 "focus", 29→30). 규칙 data/realm_focus.gd · 곱은 _sc 에서.
 var focus: Dictionary = {}
+## G-0375 포로 {장수 id: 옛 세력 id}(저장 키 "captives", 30→31). 규칙 data/realm_captives.gd — 재야(found)와 함께 산다.
+var captives: Dictionary = {}
 
 ## **2026-09-17 추가 — PLAN 101-2 REALM ③후보(웹판 §5-1 "인물 특성·야망").**
 ## `officer_growth`와 같은 지연 초기화 패턴 — officer_id -> {k, prog, done,
@@ -443,6 +445,7 @@ func start_scenario(id: String) -> void:
 	age = 0   # G-0329
 	marriages = {}   # G-0332
 	focus = {}   # G-0336
+	captives = {}   # G-0375
 	wonders = {"built": {}, "jobs": {}}   # G-0243 새 판은 아무도 안 지었다(웹 버그 ① — 웹은 옛 판 것이 남았다)
 	preload("res://games/saga_realm/data/realm_wonder.gd").bump()
 	_done_this_month.clear()
