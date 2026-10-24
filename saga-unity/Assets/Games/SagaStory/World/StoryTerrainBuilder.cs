@@ -41,8 +41,18 @@ namespace Saga.Story.World
 
         private void Awake()
         {
-            if (transform.childCount > 0) return;
-            Build();
+            if (transform.childCount == 0) Build();
+            RegisterWetGround();
+        }
+
+        /// <summary>U-0212 비 젖음 — 하늘 있는 판(4종횡 TestField)의 들판 바닥만 등록한다. 씬에 구워 둔 바닥 재질도
+        /// 런타임 사본으로 바꿔 끼워(에셋·씬 안 더럽힘) 등록 · 같은 빌더를 쓰는 5천하(빛만)는 손대지 않는다. 돌려준 값 = 등록한 재질.</summary>
+        public Material RegisterWetGround()
+        {
+            if (SkyPass.ModeFor(gameObject.scene.name) != SkyPass.Mode.SkyAndLight) return null;
+            var g = transform.Find("Ground");
+            var r = g != null ? g.GetComponent<MeshRenderer>() : null;
+            return r != null ? WetGround.Own(r) : null;
         }
 
         public void Build()

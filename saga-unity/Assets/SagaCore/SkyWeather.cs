@@ -143,6 +143,8 @@ namespace Saga.Core
         public float RainRate => _rain != null ? _rain.emission.rateOverTime.constant : -1f;
         public float SnowRate => _snow != null ? _snow.emission.rateOverTime.constant : -1f;
         public float FogRate => _fog != null ? _fog.emission.rateOverTime.constant : -1f;
+        /// <summary>U-0212 — 땅을 적시는 비인가(하늘 있는 판만 · 5천하 빛만 판은 안 젖음).</summary>
+        public bool RainWets => _clouds && Kind == SkyWeatherRules.Kind.Rain;
         public bool HasParticles => _rain != null && _snow != null && _fog != null;
 
         /// <summary>씬에 하나 세운다(이미 있으면 그대로). 끄기 환경변수가 있으면 null.</summary>
@@ -163,6 +165,7 @@ namespace Saga.Core
             Instance = sw; // 편집 모드(배치 진단)는 Awake 가 안 돌아 여기서도 적는다
             sw.Build();
             sw.Refresh();
+            WetGround.SetWet(sw.RainWets ? 1f : 0f); // U-0212 들어올 때 이미 비면 바로 젖음
             return sw;
         }
 
@@ -172,14 +175,14 @@ namespace Saga.Core
         public void Teardown()
         {
             RestoreFog();
-            if (Instance == this) Instance = null;
+            if (Instance == this) { Instance = null; WetGround.SetWet(0f); } // U-0212 날씨 없는 다음 씬에 젖음이 안 넘어가게
             if (Application.isPlaying) Destroy(gameObject); else DestroyImmediate(gameObject);
         }
 
         private void OnDestroy()
         {
             RestoreFog();
-            if (Instance == this) Instance = null;
+            if (Instance == this) { Instance = null; WetGround.SetWet(0f); } // U-0212 날씨 없는 다음 씬에 젖음이 안 넘어가게
         }
 
         // ---- 짓기 ----
@@ -408,6 +411,7 @@ namespace Saga.Core
             if (_cam != null) transform.position = _cam.transform.position;
             PlaceFogPuffs();
             LookDownFogFloor();
+            WetGround.Tick(RainWets, Time.deltaTime); // U-0212 비 오면 땅 젖음(20초 젖음·60초 마름)
             for (int i = 0; i < 3; i++)
                 if (_layers[i] != null) _layers[i].Rotate(0f, SpinDegPerSec[i] * _windMul * Time.deltaTime, 0f, Space.World);
         }

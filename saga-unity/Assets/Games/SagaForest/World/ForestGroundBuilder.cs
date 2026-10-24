@@ -99,6 +99,7 @@ namespace Saga.Forest.World
             if (groundMaterialOverride != null)
             {
                 mr.sharedMaterial = groundMaterialOverride;
+                Saga.Core.WetGround.Own(mr);   // U-0212 비 젖음 — 공유 에셋은 런타임 사본으로 바꿔 끼워 등록(에셋 안 더럽힘)
             }
             else
             {
@@ -111,6 +112,7 @@ namespace Saga.Forest.World
                 }
                 Saga.Core.Region.RegionMaterials.ApplyGroundPhoto(mat, PhotoTiling);
                 mr.sharedMaterial = mat;
+                Saga.Core.WetGround.Register(mat);   // U-0212 비 젖음(런타임 재질)
             }
 
             var col = gameObject.AddComponent<MeshCollider>();

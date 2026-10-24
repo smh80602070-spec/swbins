@@ -19,6 +19,8 @@ Shader "Saga/VertexColorLit"
         _DetailTiling ("Detail Tiling (world units per repeat)", Float) = 2
         _DetailStrength ("Detail Strength", Range(0,1)) = 0.6
         _Roughness ("Roughness (U-0084 PBR)", Range(0,1)) = 0.85
+        // U-0212 비 젖음 — WetGround 가 런타임 사본에 곱(기본 흰색 = 옛 화면 그대로)
+        _BaseColor ("Base Color (U-0212 wet tint)", Color) = (1, 1, 1, 1)
         // U-0084 2단계 사진 땅 — RegionMaterials.ApplyGroundPhoto 가 채우고 키워드를 켠다(0 풀·1 흙·2 바위·3 자갈).
         [Toggle(_SAGA_GROUND_PHOTO)] _GroundPhoto ("Ground Photo (U-0084)", Float) = 0
         _PhotoStrength ("Photo Strength", Range(0,1)) = 1
@@ -69,6 +71,7 @@ Shader "Saga/VertexColorLit"
             float _DetailTiling;
             float _DetailStrength;
             float _Roughness;
+            half4 _BaseColor;
 
             struct Attributes
             {
@@ -116,13 +119,13 @@ Shader "Saga/VertexColorLit"
                 // 값이라 곱해도 전체가 확 어두워지지 않는다. _DetailStrength로
                 // 0(안 씀)~1(그대로 곱함) 사이를 보간해 과해지지 않게 한다.
                 half detail = SAMPLE_TEXTURE2D(_DetailTex, sampler_DetailTex, IN.uv / _DetailTiling).r;
-                half3 albedo = IN.color.rgb * lerp(1.0h, detail, _DetailStrength);
+                half3 albedo = _BaseColor.rgb * IN.color.rgb * lerp(1.0h, detail, _DetailStrength);
                 half rough = (half)_Roughness;
                 #if defined(_SAGA_GROUND_PHOTO)
                 // 사진 땅 — 정점색이 바탕색, 사진은 무늬·법선·거칠기(디테일 곱은 사진이 대신함)
                 {
                     half3 pa, pn; half pr;
-                    SagaGroundPhoto(IN.uv, IN.kinds, IN.color.rgb, IN.positionWS, normalWS, pa, pn, pr);
+                    SagaGroundPhoto(IN.uv, IN.kinds, _BaseColor.rgb * IN.color.rgb, IN.positionWS, normalWS, pa, pn, pr);
                     albedo = pa; normalWS = pn; rough = lerp(rough, pr, (half)_PhotoStrength);
                 }
                 #endif
