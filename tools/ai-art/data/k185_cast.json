@@ -11,10 +11,15 @@
    "sex": "m",
    "stand_pick": "dj_doseo_v03",
    "face": [
-    384,
-    282,
+    385,
+    304,
     203,
     159
+   ],
+   "bust_pick": "dj_doseo_v01",
+   "face_xy": [
+    385,
+    304
    ]
   },
   {
@@ -26,9 +31,14 @@
    "stand_pick": "dj_gapju_v02",
    "face": [
     384,
-    282,
+    333,
     203,
     159
+   ],
+   "bust_pick": "dj_gapju_v01",
+   "face_xy": [
+    384,
+    333
    ]
   },
   {
@@ -39,10 +49,15 @@
    "sex": "m",
    "stand_pick": "dj_gijang_v03",
    "face": [
-    384,
-    283,
+    376,
+    354,
     203,
     159
+   ],
+   "bust_pick": "dj_gijang_v01",
+   "face_xy": [
+    376,
+    354
    ]
   },
   {
@@ -53,10 +68,15 @@
    "sex": "m",
    "stand_pick": "dj_haean_v02",
    "face": [
-    385,
-    282,
+    377,
+    358,
     203,
     159
+   ],
+   "bust_pick": "dj_haean_v01",
+   "face_xy": [
+    377,
+    358
    ]
   },
   {
@@ -67,10 +87,15 @@
    "sex": "f",
    "stand_pick": "dj_hopak_v04",
    "face": [
-    385,
-    282,
+    386,
+    306,
     203,
     159
+   ],
+   "bust_pick": "dj_hopak_v01",
+   "face_xy": [
+    386,
+    306
    ]
   },
   {
@@ -82,9 +107,14 @@
    "stand_pick": "dj_hwanggeum_v02",
    "face": [
     384,
-    282,
+    336,
     203,
     159
+   ],
+   "bust_pick": "dj_hwanggeum_v01",
+   "face_xy": [
+    384,
+    336
    ]
   },
   {
@@ -95,10 +125,15 @@
    "sex": "m",
    "stand_pick": "dj_seohae_v01",
    "face": [
-    383,
-    282,
+    378,
+    314,
     203,
     159
+   ],
+   "bust_pick": "dj_seohae_v01",
+   "face_xy": [
+    378,
+    314
    ]
   },
   {
@@ -109,10 +144,15 @@
    "sex": "f",
    "stand_pick": "dj_seoncheok_v03",
    "face": [
-    383,
-    282,
+    390,
+    351,
     203,
     159
+   ],
+   "bust_pick": "dj_seoncheok_v01",
+   "face_xy": [
+    390,
+    351
    ]
   },
   {
@@ -123,10 +163,15 @@
    "sex": "m",
    "stand_pick": "dj_yuri_v04",
    "face": [
-    384,
-    282,
+    380,
+    302,
     203,
     159
+   ],
+   "bust_pick": "dj_yuri_v01",
+   "face_xy": [
+    380,
+    302
    ]
   },
   {
@@ -138,9 +183,14 @@
    "stand_pick": "fu_gangma_v01",
    "face": [
     384,
-    283,
+    295,
     203,
     159
+   ],
+   "bust_pick": "fu_gangma_v01",
+   "face_xy": [
+    384,
+    295
    ]
   },
   {
@@ -152,9 +202,14 @@
    "stand_pick": "fu_hwanryeong_v02",
    "face": [
     384,
-    282,
+    347,
     203,
     159
+   ],
+   "bust_pick": "fu_hwanryeong_v01",
+   "face_xy": [
+    384,
+    347
    ]
   },
   {
@@ -165,10 +220,15 @@
    "sex": "f",
    "stand_pick": "fu_janhon_v04",
    "face": [
-    383,
-    282,
+    394,
+    373,
     203,
     159
+   ],
+   "bust_pick": "fu_janhon_v01",
+   "face_xy": [
+    394,
+    373
    ]
   },
   {
@@ -179,10 +239,15 @@
    "sex": "m",
    "stand_pick": "fu_myeongje_v01",
    "face": [
-    383,
-    283,
+    388,
+    270,
     203,
     159
+   ],
+   "bust_pick": "fu_myeongje_v01",
+   "face_xy": [
+    388,
+    270
    ]
   },
   {
@@ -193,10 +258,15 @@
    "sex": "m",
    "stand_pick": "fu_noejang_v04",
    "face": [
-    384,
-    283,
+    383,
+    344,
     203,
     159
+   ],
+   "bust_pick": "fu_noejang_v01",
+   "face_xy": [
+    383,
+    344
    ]
   },
   {
@@ -207,10 +277,15 @@
    "sex": "f",
    "stand_pick": "fu_seonghon_v04",
    "face": [
-    384,
-    281,
+    381,
+    333,
     203,
     159
+   ],
+   "bust_pick": "fu_seonghon_v01",
+   "face_xy": [
+    381,
+    333
    ]
   },
   {
@@ -221,10 +296,15 @@
    "sex": "m",
    "stand_pick": "fu_yugwi_v02",
    "face": [
-    384,
-    283,
+    388,
+    284,
     203,
     159
+   ],
+   "bust_pick": "fu_yugwi_v01",
+   "face_xy": [
+    388,
+    284
    ]
   },
   {
@@ -235,10 +315,15 @@
    "sex": "m",
    "stand_pick": "fu_yuseong_v01",
    "face": [
-    384,
-    283,
+    378,
+    325,
     203,
     159
+   ],
+   "bust_pick": "fu_yuseong_v01",
+   "face_xy": [
+    378,
+    325
    ]
   },
   {
@@ -249,10 +334,15 @@
    "sex": "f",
    "stand_pick": "jiao_banrok_v01",
    "face": [
-    384,
-    282,
+    358,
+    392,
     203,
     159
+   ],
+   "bust_pick": "jiao_banrok_v01",
+   "face_xy": [
+    358,
+    392
    ]
   },
   {
@@ -263,10 +353,15 @@
    "sex": "m",
    "stand_pick": "jiao_botran_v03",
    "face": [
-    384,
-    282,
+    372,
+    343,
     203,
     159
+   ],
+   "bust_pick": "jiao_botran_v01",
+   "face_xy": [
+    372,
+    343
    ]
   },
   {
@@ -277,10 +372,15 @@
    "sex": "m",
    "stand_pick": "jiao_dinggo_v01",
    "face": [
-    384,
-    282,
+    381,
+    321,
     203,
     159
+   ],
+   "bust_pick": "jiao_dinggo_v01",
+   "face_xy": [
+    381,
+    321
    ]
   },
   {
@@ -291,10 +391,15 @@
    "sex": "m",
    "stand_pick": "jiao_hoangmi_v01",
    "face": [
-    384,
-    282,
+    385,
+    323,
     203,
     159
+   ],
+   "bust_pick": "jiao_hoangmi_v01",
+   "face_xy": [
+    385,
+    323
    ]
   },
   {
@@ -305,10 +410,15 @@
    "sex": "f",
    "stand_pick": "jiao_jinja_v02",
    "face": [
-    384,
-    283,
+    381,
+    278,
     203,
     159
+   ],
+   "bust_pick": "jiao_jinja_v01",
+   "face_xy": [
+    381,
+    278
    ]
   },
   {
@@ -319,10 +429,15 @@
    "sex": "m",
    "stand_pick": "jiao_luyan_v01",
    "face": [
-    384,
-    282,
+    378,
+    338,
     203,
     159
+   ],
+   "bust_pick": "jiao_luyan_v01",
+   "face_xy": [
+    378,
+    338
    ]
   },
   {
@@ -334,9 +449,14 @@
    "stand_pick": "jiao_madang_v03",
    "face": [
     384,
-    283,
+    331,
     203,
     159
+   ],
+   "bust_pick": "jiao_madang_v01",
+   "face_xy": [
+    384,
+    331
    ]
   },
   {
@@ -347,10 +467,15 @@
    "sex": "f",
    "stand_pick": "jiao_muya_v01",
    "face": [
-    384,
-    283,
+    378,
+    378,
     203,
     159
+   ],
+   "bust_pick": "jiao_muya_v01",
+   "face_xy": [
+    378,
+    378
    ]
   },
   {
@@ -361,10 +486,15 @@
    "sex": "m",
    "stand_pick": "jiao_riquan_v03",
    "face": [
-    384,
-    283,
+    387,
+    337,
     203,
     159
+   ],
+   "bust_pick": "jiao_riquan_v01",
+   "face_xy": [
+    387,
+    337
    ]
   },
   {
@@ -376,9 +506,14 @@
    "stand_pick": "jp_asahime_v02",
    "face": [
     384,
-    283,
+    298,
     203,
     159
+   ],
+   "bust_pick": "jp_asahime_v01",
+   "face_xy": [
+    384,
+    298
    ]
   },
   {
@@ -389,10 +524,15 @@
    "sex": "m",
    "stand_pick": "jp_hikoyama_v03",
    "face": [
-    384,
-    283,
+    381,
+    300,
     203,
     159
+   ],
+   "bust_pick": "jp_hikoyama_v01",
+   "face_xy": [
+    381,
+    300
    ]
   },
   {
@@ -403,10 +543,15 @@
    "sex": "f",
    "stand_pick": "jp_himetsu_v03",
    "face": [
-    384,
-    282,
+    385,
+    237,
     203,
     159
+   ],
+   "bust_pick": "jp_himetsu_v01",
+   "face_xy": [
+    385,
+    237
    ]
   },
   {
@@ -417,10 +562,15 @@
    "sex": "m",
    "stand_pick": "jp_kazenari_v04",
    "face": [
-    384,
-    282,
+    378,
+    285,
     203,
     159
+   ],
+   "bust_pick": "jp_kazenari_v01",
+   "face_xy": [
+    378,
+    285
    ]
   },
   {
@@ -431,10 +581,15 @@
    "sex": "m",
    "stand_pick": "jp_shioji_v02",
    "face": [
-    384,
-    282,
+    391,
+    359,
     203,
     159
+   ],
+   "bust_pick": "jp_shioji_v01",
+   "face_xy": [
+    391,
+    359
    ]
   },
   {
@@ -445,10 +600,15 @@
    "sex": "m",
    "stand_pick": "jp_taketsumi_v02",
    "face": [
-    384,
-    282,
+    337,
+    249,
     203,
     159
+   ],
+   "bust_pick": "jp_taketsumi_v01",
+   "face_xy": [
+    337,
+    249
    ]
   },
   {
@@ -460,9 +620,14 @@
    "stand_pick": "jp_tamakiri_v02",
    "face": [
     383,
-    282,
+    309,
     203,
     159
+   ],
+   "bust_pick": "jp_tamakiri_v01",
+   "face_xy": [
+    383,
+    309
    ]
   },
   {
@@ -473,10 +638,15 @@
    "sex": "m",
    "stand_pick": "jp_umihiko_v03",
    "face": [
-    384,
-    282,
+    381,
+    364,
     203,
     159
+   ],
+   "bust_pick": "jp_umihiko_v01",
+   "face_xy": [
+    381,
+    364
    ]
   },
   {
@@ -487,10 +657,15 @@
    "sex": "f",
    "stand_pick": "jp_wakahiko_v04",
    "face": [
-    385,
-    282,
+    386,
+    373,
     203,
     159
+   ],
+   "bust_pick": "jp_wakahiko_v01",
+   "face_xy": [
+    386,
+    373
    ]
   },
   {
@@ -501,10 +676,15 @@
    "sex": "m",
    "stand_pick": "kr2_ajinsa_v03",
    "face": [
-    383,
-    282,
+    385,
+    432,
     203,
     159
+   ],
+   "bust_pick": "kr2_ajinsa_v01",
+   "face_xy": [
+    385,
+    432
    ]
   },
   {
@@ -516,9 +696,14 @@
    "stand_pick": "kr2_dokgaru_v04",
    "face": [
     384,
-    282,
+    339,
     203,
     159
+   ],
+   "bust_pick": "kr2_dokgaru_v01",
+   "face_xy": [
+    384,
+    339
    ]
   },
   {
@@ -529,10 +714,15 @@
    "sex": "f",
    "stand_pick": "kr2_gokdol_v04",
    "face": [
-    384,
-    283,
+    385,
+    295,
     203,
     159
+   ],
+   "bust_pick": "kr2_gokdol_v01",
+   "face_xy": [
+    385,
+    295
    ]
   },
   {
@@ -544,9 +734,14 @@
    "stand_pick": "kr2_jimasol_v02",
    "face": [
     384,
-    283,
+    284,
     203,
     159
+   ],
+   "bust_pick": "kr2_jimasol_v01",
+   "face_xy": [
+    384,
+    284
    ]
   },
   {
@@ -558,9 +753,14 @@
    "stand_pick": "kr2_mokrihae_v01",
    "face": [
     384,
-    283,
+    243,
     203,
     159
+   ],
+   "bust_pick": "kr2_mokrihae_v01",
+   "face_xy": [
+    384,
+    243
    ]
   },
   {
@@ -571,10 +771,15 @@
    "sex": "m",
    "stand_pick": "kr2_pasodan_v04",
    "face": [
-    385,
-    282,
+    383,
+    352,
     203,
     159
+   ],
+   "bust_pick": "kr2_pasodan_v01",
+   "face_xy": [
+    383,
+    352
    ]
   },
   {
@@ -585,10 +790,15 @@
    "sex": "m",
    "stand_pick": "kr2_seolharan_v01",
    "face": [
-    384,
-    283,
+    385,
+    252,
     203,
     159
+   ],
+   "bust_pick": "kr2_seolharan_v01",
+   "face_xy": [
+    385,
+    252
    ]
   },
   {
@@ -600,9 +810,14 @@
    "stand_pick": "kr2_sogaram_v01",
    "face": [
     384,
-    283,
+    345,
     203,
     159
+   ],
+   "bust_pick": "kr2_sogaram_v01",
+   "face_xy": [
+    384,
+    345
    ]
   },
   {
@@ -613,10 +828,15 @@
    "sex": "m",
    "stand_pick": "kr2_umorin_v02",
    "face": [
-    384,
-    283,
+    381,
+    243,
     203,
     159
+   ],
+   "bust_pick": "kr2_umorin_v01",
+   "face_xy": [
+    381,
+    243
    ]
   },
   {
@@ -628,9 +848,14 @@
    "stand_pick": "kr2_yeonuru_v04",
    "face": [
     384,
-    283,
+    298,
     203,
     159
+   ],
+   "bust_pick": "kr2_yeonuru_v01",
+   "face_xy": [
+    384,
+    298
    ]
   },
   {
@@ -642,9 +867,14 @@
    "stand_pick": "kr2_yeoyul_v02",
    "face": [
     384,
-    282,
+    313,
     203,
     159
+   ],
+   "bust_pick": "kr2_yeoyul_v01",
+   "face_xy": [
+    384,
+    313
    ]
   },
   {
@@ -655,10 +885,15 @@
    "sex": "m",
    "stand_pick": "ly_byeokjeon_v03",
    "face": [
-    384,
-    282,
+    383,
+    364,
     203,
     159
+   ],
+   "bust_pick": "ly_byeokjeon_v01",
+   "face_xy": [
+    383,
+    364
    ]
   },
   {
@@ -669,10 +904,15 @@
    "sex": "m",
    "stand_pick": "ly_heuksang_v04",
    "face": [
-    384,
-    283,
+    388,
+    313,
     203,
     159
+   ],
+   "bust_pick": "ly_heuksang_v01",
+   "face_xy": [
+    388,
+    313
    ]
   },
   {
@@ -683,10 +923,15 @@
    "sex": "m",
    "stand_pick": "ly_jeonchung_v04",
    "face": [
-    385,
-    282,
+    384,
+    302,
     203,
     159
+   ],
+   "bust_pick": "ly_jeonchung_v01",
+   "face_xy": [
+    384,
+    302
    ]
   },
   {
@@ -697,10 +942,15 @@
    "sex": "f",
    "stand_pick": "ly_jinju_v02",
    "face": [
-    383,
-    283,
+    386,
+    243,
     203,
     159
+   ],
+   "bust_pick": "ly_jinju_v01",
+   "face_xy": [
+    386,
+    243
    ]
   },
   {
@@ -711,10 +961,15 @@
    "sex": "m",
    "stand_pick": "ly_juoh_v03",
    "face": [
-    384,
-    282,
+    377,
+    301,
     203,
     159
+   ],
+   "bust_pick": "ly_juoh_v01",
+   "face_xy": [
+    377,
+    301
    ]
   },
   {
@@ -725,10 +980,15 @@
    "sex": "m",
    "stand_pick": "ly_nogyong_v02",
    "face": [
-    384,
-    283,
+    381,
+    342,
     203,
     159
+   ],
+   "bust_pick": "ly_nogyong_v01",
+   "face_xy": [
+    381,
+    342
    ]
   },
   {
@@ -740,9 +1000,14 @@
    "stand_pick": "ly_sanga_v03",
    "face": [
     384,
-    282,
+    272,
     203,
     159
+   ],
+   "bust_pick": "ly_sanga_v01",
+   "face_xy": [
+    384,
+    272
    ]
   },
   {
@@ -753,10 +1018,15 @@
    "sex": "m",
    "stand_pick": "ly_sangnim_v01",
    "face": [
-    384,
-    283,
+    387,
+    299,
     203,
     159
+   ],
+   "bust_pick": "ly_sangnim_v01",
+   "face_xy": [
+    387,
+    299
    ]
   },
   {
@@ -767,10 +1037,15 @@
    "sex": "f",
    "stand_pick": "ly_uhwa_v03",
    "face": [
-    385,
-    283,
+    383,
+    337,
     203,
     159
+   ],
+   "bust_pick": "ly_uhwa_v01",
+   "face_xy": [
+    383,
+    337
    ]
   },
   {
@@ -781,10 +1056,15 @@
    "sex": "m",
    "stand_pick": "mb_baekwoon_v01",
    "face": [
-    384,
-    283,
+    376,
+    305,
     203,
     159
+   ],
+   "bust_pick": "mb_baekwoon_v01",
+   "face_xy": [
+    376,
+    305
    ]
   },
   {
@@ -796,9 +1076,14 @@
    "stand_pick": "mb_cheolgak_v04",
    "face": [
     384,
-    283,
+    342,
     203,
     159
+   ],
+   "bust_pick": "mb_cheolgak_v01",
+   "face_xy": [
+    384,
+    342
    ]
   },
   {
@@ -809,10 +1094,15 @@
    "sex": "m",
    "stand_pick": "mb_gangho_v02",
    "face": [
-    384,
-    283,
+    377,
+    331,
     203,
     159
+   ],
+   "bust_pick": "mb_gangho_v01",
+   "face_xy": [
+    377,
+    331
    ]
   },
   {
@@ -824,9 +1114,14 @@
    "stand_pick": "mb_hanam_v01",
    "face": [
     384,
-    282,
+    313,
     203,
     159
+   ],
+   "bust_pick": "mb_hanam_v01",
+   "face_xy": [
+    384,
+    313
    ]
   },
   {
@@ -837,10 +1132,15 @@
    "sex": "f",
    "stand_pick": "mb_hanpung_v02",
    "face": [
-    384,
-    282,
+    382,
+    418,
     203,
     159
+   ],
+   "bust_pick": "mb_hanpung_v01",
+   "face_xy": [
+    382,
+    418
    ]
   },
   {
@@ -851,10 +1151,15 @@
    "sex": "f",
    "stand_pick": "mb_hoja_v01",
    "face": [
-    384,
-    282,
+    389,
+    392,
     203,
     159
+   ],
+   "bust_pick": "mb_hoja_v01",
+   "face_xy": [
+    389,
+    392
    ]
   },
   {
@@ -865,10 +1170,15 @@
    "sex": "f",
    "stand_pick": "mb_hwangto_v04",
    "face": [
-    384,
-    282,
+    387,
+    376,
     203,
     159
+   ],
+   "bust_pick": "mb_hwangto_v01",
+   "face_xy": [
+    387,
+    376
    ]
   },
   {
@@ -880,9 +1190,14 @@
    "stand_pick": "mb_janggwang_v03",
    "face": [
     384,
-    283,
+    356,
     203,
     159
+   ],
+   "bust_pick": "mb_janggwang_v01",
+   "face_xy": [
+    384,
+    356
    ]
   },
   {
@@ -894,9 +1209,14 @@
    "stand_pick": "mb_seonwoo_v02",
    "face": [
     384,
-    283,
+    336,
     203,
     159
+   ],
+   "bust_pick": "mb_seonwoo_v01",
+   "face_xy": [
+    384,
+    336
    ]
   },
   {
@@ -907,10 +1227,15 @@
    "sex": "f",
    "stand_pick": "nh_bandoja_v02",
    "face": [
-    384,
-    283,
+    389,
+    331,
     203,
     159
+   ],
+   "bust_pick": "nh_bandoja_v01",
+   "face_xy": [
+    389,
+    331
    ]
   },
   {
@@ -921,10 +1246,15 @@
    "sex": "m",
    "stand_pick": "nh_daemo_v04",
    "face": [
-    384,
-    283,
+    373,
+    340,
     203,
     159
+   ],
+   "bust_pick": "nh_daemo_v01",
+   "face_xy": [
+    373,
+    340
    ]
   },
   {
@@ -935,10 +1265,15 @@
    "sex": "f",
    "stand_pick": "nh_jinju_v04",
    "face": [
-    385,
-    283,
+    384,
+    329,
     203,
     159
+   ],
+   "bust_pick": "nh_jinju_v01",
+   "face_xy": [
+    384,
+    329
    ]
   },
   {
@@ -949,10 +1284,15 @@
    "sex": "m",
    "stand_pick": "nh_metong_v03",
    "face": [
-    384,
-    283,
+    385,
+    349,
     203,
     159
+   ],
+   "bust_pick": "nh_metong_v01",
+   "face_xy": [
+    385,
+    349
    ]
   },
   {
@@ -963,10 +1303,15 @@
    "sex": "m",
    "stand_pick": "nh_migyeon_v02",
    "face": [
-    384,
-    283,
+    383,
+    339,
     203,
     159
+   ],
+   "bust_pick": "nh_migyeon_v01",
+   "face_xy": [
+    383,
+    339
    ]
   },
   {
@@ -977,10 +1322,15 @@
    "sex": "f",
    "stand_pick": "nh_sasin_v02",
    "face": [
-    384,
-    283,
+    385,
+    329,
     203,
     159
+   ],
+   "bust_pick": "nh_sasin_v01",
+   "face_xy": [
+    385,
+    329
    ]
   },
   {
@@ -991,10 +1341,15 @@
    "sex": "m",
    "stand_pick": "nh_torak_v02",
    "face": [
-    384,
-    283,
+    381,
+    286,
     203,
     159
+   ],
+   "bust_pick": "nh_torak_v01",
+   "face_xy": [
+    381,
+    286
    ]
   },
   {
@@ -1005,10 +1360,15 @@
    "sex": "m",
    "stand_pick": "nh_wion_v02",
    "face": [
-    384,
-    283,
+    388,
+    412,
     203,
     159
+   ],
+   "bust_pick": "nh_wion_v01",
+   "face_xy": [
+    388,
+    412
    ]
   },
   {
@@ -1019,10 +1379,15 @@
    "sex": "f",
    "stand_pick": "nh_yeombun_v02",
    "face": [
-    384,
-    283,
+    370,
+    338,
     203,
     159
+   ],
+   "bust_pick": "nh_yeombun_v01",
+   "face_xy": [
+    370,
+    338
    ]
   },
   {
@@ -1033,10 +1398,15 @@
    "sex": "m",
    "stand_pick": "nz_ahyang_v03",
    "face": [
-    384,
-    282,
+    377,
+    339,
     203,
     159
+   ],
+   "bust_pick": "nz_ahyang_v01",
+   "face_xy": [
+    377,
+    339
    ]
   },
   {
@@ -1048,9 +1418,14 @@
    "stand_pick": "nz_eunga_v04",
    "face": [
     384,
-    282,
+    336,
     203,
     159
+   ],
+   "bust_pick": "nz_eunga_v01",
+   "face_xy": [
+    384,
+    336
    ]
   },
   {
@@ -1061,10 +1436,15 @@
    "sex": "m",
    "stand_pick": "nz_geumsang_v03",
    "face": [
-    384,
-    282,
+    381,
+    354,
     203,
     159
+   ],
+   "bust_pick": "nz_geumsang_v01",
+   "face_xy": [
+    381,
+    354
    ]
   },
   {
@@ -1076,9 +1456,14 @@
    "stand_pick": "nz_heukwol_v02",
    "face": [
     384,
-    282,
+    316,
     203,
     159
+   ],
+   "bust_pick": "nz_heukwol_v01",
+   "face_xy": [
+    384,
+    316
    ]
   },
   {
@@ -1090,9 +1475,14 @@
    "stand_pick": "nz_hyeoncheon_v01",
    "face": [
     384,
-    282,
+    345,
     203,
     159
+   ],
+   "bust_pick": "nz_hyeoncheon_v01",
+   "face_xy": [
+    384,
+    345
    ]
   },
   {
@@ -1103,10 +1493,15 @@
    "sex": "f",
    "stand_pick": "nz_jeokpyo_v03",
    "face": [
-    384,
-    282,
+    383,
+    378,
     203,
     159
+   ],
+   "bust_pick": "nz_jeokpyo_v01",
+   "face_xy": [
+    383,
+    378
    ]
   },
   {
@@ -1117,10 +1512,15 @@
    "sex": "f",
    "stand_pick": "nz_mokro_v03",
    "face": [
-    384,
-    283,
+    392,
+    365,
     203,
     159
+   ],
+   "bust_pick": "nz_mokro_v01",
+   "face_xy": [
+    392,
+    365
    ]
   },
   {
@@ -1131,10 +1531,15 @@
    "sex": "m",
    "stand_pick": "nz_soman_v04",
    "face": [
-    384,
-    283,
+    386,
+    296,
     203,
     159
+   ],
+   "bust_pick": "nz_soman_v01",
+   "face_xy": [
+    386,
+    296
    ]
   },
   {
@@ -1145,10 +1550,15 @@
    "sex": "m",
    "stand_pick": "nz_unhwa_v02",
    "face": [
-    383,
-    282,
+    384,
+    287,
     203,
     159
+   ],
+   "bust_pick": "nz_unhwa_v01",
+   "face_xy": [
+    384,
+    287
    ]
   },
   {
@@ -1160,9 +1570,14 @@
    "stand_pick": "rf_caimao_v01",
    "face": [
     384,
-    283,
+    310,
     203,
     159
+   ],
+   "bust_pick": "rf_caimao_v01",
+   "face_xy": [
+    384,
+    310
    ]
   },
   {
@@ -1174,9 +1589,14 @@
    "stand_pick": "rf_caohong_v03",
    "face": [
     384,
-    283,
+    300,
     203,
     159
+   ],
+   "bust_pick": "rf_caohong_v01",
+   "face_xy": [
+    384,
+    300
    ]
   },
   {
@@ -1188,9 +1608,14 @@
    "stand_pick": "rf_caoren_v04",
    "face": [
     384,
-    282,
+    302,
     203,
     159
+   ],
+   "bust_pick": "rf_caoren_v01",
+   "face_xy": [
+    384,
+    302
    ]
   },
   {
@@ -1201,10 +1626,15 @@
    "sex": "m",
    "stand_pick": "rf_chengong_v02",
    "face": [
-    385,
-    283,
+    389,
+    371,
     203,
     159
+   ],
+   "bust_pick": "rf_chengong_v01",
+   "face_xy": [
+    389,
+    371
    ]
   },
   {
@@ -1215,10 +1645,15 @@
    "sex": "m",
    "stand_pick": "rf_chengpu_v02",
    "face": [
-    384,
-    283,
+    391,
+    246,
     203,
     159
+   ],
+   "bust_pick": "rf_chengpu_v01",
+   "face_xy": [
+    391,
+    246
    ]
   },
   {
@@ -1229,10 +1664,15 @@
    "sex": "m",
    "stand_pick": "rf_chengyu_v04",
    "face": [
-    384,
-    282,
+    386,
+    295,
     203,
     159
+   ],
+   "bust_pick": "rf_chengyu_v01",
+   "face_xy": [
+    386,
+    295
    ]
   },
   {
@@ -1243,10 +1683,15 @@
    "sex": "m",
    "stand_pick": "rf_dianwei_v01",
    "face": [
-    384,
-    282,
+    380,
+    256,
     203,
     159
+   ],
+   "bust_pick": "rf_dianwei_v01",
+   "face_xy": [
+    380,
+    256
    ]
   },
   {
@@ -1257,10 +1702,15 @@
    "sex": "m",
    "stand_pick": "rf_fazheng_v01",
    "face": [
-    384,
-    281,
+    385,
+    470,
     203,
     159
+   ],
+   "bust_pick": "rf_fazheng_v01",
+   "face_xy": [
+    385,
+    470
    ]
   },
   {
@@ -1271,10 +1721,15 @@
    "sex": "m",
    "stand_pick": "rf_gaolan_v02",
    "face": [
-    384,
-    282,
+    377,
+    265,
     203,
     159
+   ],
+   "bust_pick": "rf_gaolan_v01",
+   "face_xy": [
+    377,
+    265
    ]
   },
   {
@@ -1286,9 +1741,14 @@
    "stand_pick": "rf_gaoshun_v03",
    "face": [
     384,
-    283,
+    268,
     203,
     159
+   ],
+   "bust_pick": "rf_gaoshun_v01",
+   "face_xy": [
+    384,
+    268
    ]
   },
   {
@@ -1299,10 +1759,15 @@
    "sex": "f",
    "stand_pick": "rf_guojia_v01",
    "face": [
-    384,
-    283,
+    378,
+    333,
     203,
     159
+   ],
+   "bust_pick": "rf_guojia_v01",
+   "face_xy": [
+    378,
+    333
    ]
   },
   {
@@ -1313,10 +1778,15 @@
    "sex": "f",
    "stand_pick": "rf_guosi_v01",
    "face": [
-    384,
-    282,
+    371,
+    337,
     203,
     159
+   ],
+   "bust_pick": "rf_guosi_v01",
+   "face_xy": [
+    371,
+    337
    ]
   },
   {
@@ -1327,10 +1797,15 @@
    "sex": "m",
    "stand_pick": "rf_handang_v01",
    "face": [
-    384,
-    283,
+    385,
+    310,
     203,
     159
+   ],
+   "bust_pick": "rf_handang_v01",
+   "face_xy": [
+    385,
+    310
    ]
   },
   {
@@ -1342,9 +1817,14 @@
    "stand_pick": "rf_hansui_v01",
    "face": [
     384,
-    282,
+    278,
     203,
     159
+   ],
+   "bust_pick": "rf_hansui_v01",
+   "face_xy": [
+    384,
+    278
    ]
   },
   {
@@ -1356,9 +1836,14 @@
    "stand_pick": "rf_huanggai_v01",
    "face": [
     384,
-    283,
+    223,
     203,
     159
+   ],
+   "bust_pick": "rf_huanggai_v01",
+   "face_xy": [
+    384,
+    223
    ]
   },
   {
@@ -1369,10 +1854,15 @@
    "sex": "m",
    "stand_pick": "rf_huangzu_v01",
    "face": [
-    384,
-    282,
+    385,
+    250,
     203,
     159
+   ],
+   "bust_pick": "rf_huangzu_v01",
+   "face_xy": [
+    385,
+    250
    ]
   },
   {
@@ -1383,10 +1873,15 @@
    "sex": "m",
    "stand_pick": "rf_jianyong_v01",
    "face": [
-    384,
-    283,
+    383,
+    309,
     203,
     159
+   ],
+   "bust_pick": "rf_jianyong_v01",
+   "face_xy": [
+    383,
+    309
    ]
   },
   {
@@ -1397,10 +1892,15 @@
    "sex": "m",
    "stand_pick": "rf_jiaxu_v01",
    "face": [
-    384,
-    283,
+    391,
+    311,
     203,
     159
+   ],
+   "bust_pick": "rf_jiaxu_v01",
+   "face_xy": [
+    391,
+    311
    ]
   },
   {
@@ -1411,10 +1911,15 @@
    "sex": "m",
    "stand_pick": "rf_jiling_v04",
    "face": [
-    385,
-    282,
+    386,
+    264,
     203,
     159
+   ],
+   "bust_pick": "rf_jiling_v01",
+   "face_xy": [
+    386,
+    264
    ]
   },
   {
@@ -1425,10 +1930,15 @@
    "sex": "f",
    "stand_pick": "rf_jushou_v02",
    "face": [
-    383,
-    283,
+    382,
+    285,
     203,
     159
+   ],
+   "bust_pick": "rf_jushou_v01",
+   "face_xy": [
+    382,
+    285
    ]
   },
   {
@@ -1439,10 +1949,15 @@
    "sex": "m",
    "stand_pick": "rf_kuailiang_v02",
    "face": [
-    384,
-    283,
+    379,
+    237,
     203,
     159
+   ],
+   "bust_pick": "rf_kuailiang_v01",
+   "face_xy": [
+    379,
+    237
    ]
   },
   {
@@ -1453,10 +1968,15 @@
    "sex": "f",
    "stand_pick": "rf_lidian_v01",
    "face": [
-    384,
-    283,
+    389,
+    310,
     203,
     159
+   ],
+   "bust_pick": "rf_lidian_v01",
+   "face_xy": [
+    389,
+    310
    ]
   },
   {
@@ -1467,10 +1987,15 @@
    "sex": "f",
    "stand_pick": "rf_liuzhang_v02",
    "face": [
-    384,
-    283,
+    377,
+    260,
     203,
     159
+   ],
+   "bust_pick": "rf_liuzhang_v01",
+   "face_xy": [
+    377,
+    260
    ]
   },
   {
@@ -1481,10 +2006,15 @@
    "sex": "m",
    "stand_pick": "rf_mateng_v02",
    "face": [
-    384,
-    283,
+    385,
+    304,
     203,
     159
+   ],
+   "bust_pick": "rf_mateng_v01",
+   "face_xy": [
+    385,
+    304
    ]
   },
   {
@@ -1496,9 +2026,14 @@
    "stand_pick": "rf_mizhu_v03",
    "face": [
     384,
-    283,
+    307,
     203,
     159
+   ],
+   "bust_pick": "rf_mizhu_v01",
+   "face_xy": [
+    384,
+    307
    ]
   },
   {
@@ -1509,10 +2044,15 @@
    "sex": "m",
    "stand_pick": "rf_pangde_v01",
    "face": [
-    384,
-    282,
+    388,
+    266,
     203,
     159
+   ],
+   "bust_pick": "rf_pangde_v01",
+   "face_xy": [
+    388,
+    266
    ]
   },
   {
@@ -1524,9 +2064,14 @@
    "stand_pick": "rf_shenpei_v02",
    "face": [
     384,
-    282,
+    249,
     203,
     159
+   ],
+   "bust_pick": "rf_shenpei_v01",
+   "face_xy": [
+    384,
+    249
    ]
   },
   {
@@ -1537,10 +2082,15 @@
    "sex": "m",
    "stand_pick": "rf_tianfeng_v01",
    "face": [
-    384,
-    283,
+    385,
+    321,
     203,
     159
+   ],
+   "bust_pick": "rf_tianfeng_v01",
+   "face_xy": [
+    385,
+    321
    ]
   },
   {
@@ -1551,10 +2101,15 @@
    "sex": "f",
    "stand_pick": "rf_wenchou_v04",
    "face": [
-    383,
-    283,
+    372,
+    324,
     203,
     159
+   ],
+   "bust_pick": "rf_wenchou_v01",
+   "face_xy": [
+    372,
+    324
    ]
   },
   {
@@ -1565,10 +2120,15 @@
    "sex": "m",
    "stand_pick": "rf_wenpin_v01",
    "face": [
-    385,
-    283,
+    390,
+    262,
     203,
     159
+   ],
+   "bust_pick": "rf_wenpin_v01",
+   "face_xy": [
+    390,
+    262
    ]
   },
   {
@@ -1580,9 +2140,14 @@
    "stand_pick": "rf_wuanguo_v01",
    "face": [
     385,
-    282,
+    234,
     203,
     159
+   ],
+   "bust_pick": "rf_wuanguo_v01",
+   "face_xy": [
+    385,
+    234
    ]
   },
   {
@@ -1593,10 +2158,15 @@
    "sex": "f",
    "stand_pick": "rf_wuyi_v02",
    "face": [
-    384,
-    283,
+    381,
+    272,
     203,
     159
+   ],
+   "bust_pick": "rf_wuyi_v01",
+   "face_xy": [
+    381,
+    272
    ]
   },
   {
@@ -1607,10 +2177,15 @@
    "sex": "m",
    "stand_pick": "rf_xiahouyuan_v03",
    "face": [
-    384,
-    283,
+    390,
+    342,
     203,
     159
+   ],
+   "bust_pick": "rf_xiahouyuan_v01",
+   "face_xy": [
+    390,
+    342
    ]
   },
   {
@@ -1621,10 +2196,15 @@
    "sex": "m",
    "stand_pick": "rf_xuchu_v03",
    "face": [
-    384,
-    283,
+    383,
+    236,
     203,
     159
+   ],
+   "bust_pick": "rf_xuchu_v01",
+   "face_xy": [
+    383,
+    236
    ]
   },
   {
@@ -1635,10 +2215,15 @@
    "sex": "m",
    "stand_pick": "rf_yangang_v04",
    "face": [
-    383,
-    283,
+    385,
+    306,
     203,
     159
+   ],
+   "bust_pick": "rf_yangang_v01",
+   "face_xy": [
+    385,
+    306
    ]
   },
   {
@@ -1649,10 +2234,15 @@
    "sex": "m",
    "stand_pick": "rf_yanghong_v01",
    "face": [
-    384,
-    283,
+    377,
+    259,
     203,
     159
+   ],
+   "bust_pick": "rf_yanghong_v01",
+   "face_xy": [
+    377,
+    259
    ]
   },
   {
@@ -1664,9 +2254,14 @@
    "stand_pick": "rf_yangren_v04",
    "face": [
     385,
-    283,
+    310,
     203,
     159
+   ],
+   "bust_pick": "rf_yangren_v01",
+   "face_xy": [
+    385,
+    310
    ]
   },
   {
@@ -1677,10 +2272,15 @@
    "sex": "m",
    "stand_pick": "rf_yangsong_v03",
    "face": [
-    384,
-    282,
+    382,
+    388,
     203,
     159
+   ],
+   "bust_pick": "rf_yangsong_v01",
+   "face_xy": [
+    382,
+    388
    ]
   },
   {
@@ -1691,10 +2291,15 @@
    "sex": "m",
    "stand_pick": "rf_yanliang_v02",
    "face": [
-    384,
-    283,
+    396,
+    245,
     203,
     159
+   ],
+   "bust_pick": "rf_yanliang_v01",
+   "face_xy": [
+    396,
+    245
    ]
   },
   {
@@ -1705,10 +2310,15 @@
    "sex": "f",
    "stand_pick": "rf_yanyan_v03",
    "face": [
-    384,
-    283,
+    373,
+    260,
     203,
     159
+   ],
+   "bust_pick": "rf_yanyan_v01",
+   "face_xy": [
+    373,
+    260
    ]
   },
   {
@@ -1719,10 +2329,15 @@
    "sex": "m",
    "stand_pick": "rf_yuejin_v02",
    "face": [
-    385,
-    283,
+    384,
+    257,
     203,
     159
+   ],
+   "bust_pick": "rf_yuejin_v01",
+   "face_xy": [
+    384,
+    257
    ]
   },
   {
@@ -1733,10 +2348,15 @@
    "sex": "m",
    "stand_pick": "rf_yujin_v04",
    "face": [
-    384,
-    282,
+    386,
+    260,
     203,
     159
+   ],
+   "bust_pick": "rf_yujin_v01",
+   "face_xy": [
+    386,
+    260
    ]
   },
   {
@@ -1747,10 +2367,15 @@
    "sex": "m",
    "stand_pick": "rf_zhanghe_v01",
    "face": [
-    385,
-    283,
+    382,
+    237,
     203,
     159
+   ],
+   "bust_pick": "rf_zhanghe_v01",
+   "face_xy": [
+    382,
+    237
    ]
   },
   {
@@ -1761,10 +2386,15 @@
    "sex": "m",
    "stand_pick": "rf_zhangji_v01",
    "face": [
-    384,
-    283,
+    385,
+    252,
     203,
     159
+   ],
+   "bust_pick": "rf_zhangji_v01",
+   "face_xy": [
+    385,
+    252
    ]
   },
   {
@@ -1775,10 +2405,15 @@
    "sex": "m",
    "stand_pick": "rf_zhanglu_v02",
    "face": [
-    384,
-    283,
+    388,
+    310,
     203,
     159
+   ],
+   "bust_pick": "rf_zhanglu_v01",
+   "face_xy": [
+    388,
+    310
    ]
   },
   {
@@ -1789,10 +2424,15 @@
    "sex": "f",
    "stand_pick": "rf_zhangren_v03",
    "face": [
-    383,
-    282,
+    380,
+    230,
     203,
     159
+   ],
+   "bust_pick": "rf_zhangren_v01",
+   "face_xy": [
+    380,
+    230
    ]
   },
   {
@@ -1803,10 +2443,15 @@
    "sex": "f",
    "stand_pick": "rf_zhoutai_v02",
    "face": [
-    384,
-    283,
+    381,
+    345,
     203,
     159
+   ],
+   "bust_pick": "rf_zhoutai_v01",
+   "face_xy": [
+    381,
+    345
    ]
   },
   {
@@ -1817,10 +2462,15 @@
    "sex": "m",
    "stand_pick": "ru_busaeng_v02",
    "face": [
-    383,
-    283,
+    385,
+    291,
     203,
     159
+   ],
+   "bust_pick": "ru_busaeng_v01",
+   "face_xy": [
+    385,
+    291
    ]
   },
   {
@@ -1832,9 +2482,14 @@
    "stand_pick": "ru_doksi_v02",
    "face": [
     385,
-    282,
+    381,
     203,
     159
+   ],
+   "bust_pick": "ru_doksi_v01",
+   "face_xy": [
+    385,
+    381
    ]
   },
   {
@@ -1845,10 +2500,15 @@
    "sex": "m",
    "stand_pick": "ru_gogol_v01",
    "face": [
-    384,
-    282,
+    378,
+    300,
     203,
     159
+   ],
+   "bust_pick": "ru_gogol_v01",
+   "face_xy": [
+    378,
+    300
    ]
   },
   {
@@ -1860,9 +2520,14 @@
    "stand_pick": "ru_mangdok_v02",
    "face": [
     384,
-    281,
+    295,
     203,
     159
+   ],
+   "bust_pick": "ru_mangdok_v01",
+   "face_xy": [
+    384,
+    295
    ]
   },
   {
@@ -1874,9 +2539,14 @@
    "stand_pick": "ru_sanaek_v02",
    "face": [
     384,
-    283,
+    330,
     203,
     159
+   ],
+   "bust_pick": "ru_sanaek_v01",
+   "face_xy": [
+    384,
+    330
    ]
   },
   {
@@ -1887,10 +2557,15 @@
    "sex": "f",
    "stand_pick": "ru_sayeong_v03",
    "face": [
-    384,
-    282,
+    388,
+    368,
     203,
     159
+   ],
+   "bust_pick": "ru_sayeong_v01",
+   "face_xy": [
+    388,
+    368
    ]
   },
   {
@@ -1901,10 +2576,15 @@
    "sex": "f",
    "stand_pick": "ru_seogun_v04",
    "face": [
-    384,
-    284,
+    380,
+    330,
     203,
     159
+   ],
+   "bust_pick": "ru_seogun_v01",
+   "face_xy": [
+    380,
+    330
    ]
   },
   {
@@ -1915,10 +2595,15 @@
    "sex": "m",
    "stand_pick": "ru_wadok_v01",
    "face": [
-    385,
-    282,
+    384,
+    343,
     203,
     159
+   ],
+   "bust_pick": "ru_wadok_v01",
+   "face_xy": [
+    384,
+    343
    ]
   },
   {
@@ -1929,10 +2614,15 @@
    "sex": "m",
    "stand_pick": "sl_cheonsan_v04",
    "face": [
-    383,
-    282,
+    385,
+    353,
     203,
     159
+   ],
+   "bust_pick": "sl_cheonsan_v01",
+   "face_xy": [
+    385,
+    353
    ]
   },
   {
@@ -1944,9 +2634,14 @@
    "stand_pick": "sl_daetaek_v03",
    "face": [
     384,
-    282,
+    412,
     203,
     159
+   ],
+   "bust_pick": "sl_daetaek_v01",
+   "face_xy": [
+    384,
+    412
    ]
   },
   {
@@ -1957,10 +2652,15 @@
    "sex": "f",
    "stand_pick": "sl_geumhwa_v02",
    "face": [
-    384,
-    283,
+    383,
+    420,
     203,
     159
+   ],
+   "bust_pick": "sl_geumhwa_v01",
+   "face_xy": [
+    383,
+    420
    ]
   },
   {
@@ -1972,9 +2672,14 @@
    "stand_pick": "sl_heupu_v03",
    "face": [
     384,
-    283,
+    278,
     203,
     159
+   ],
+   "bust_pick": "sl_heupu_v01",
+   "face_xy": [
+    384,
+    278
    ]
   },
   {
@@ -1986,9 +2691,14 @@
    "stand_pick": "sl_hosang_v02",
    "face": [
     384,
-    283,
+    211,
     203,
     159
+   ],
+   "bust_pick": "sl_hosang_v01",
+   "face_xy": [
+    384,
+    211
    ]
   },
   {
@@ -1999,10 +2709,15 @@
    "sex": "m",
    "stand_pick": "sl_hwachin_v04",
    "face": [
-    384,
-    282,
+    383,
+    273,
     203,
     159
+   ],
+   "bust_pick": "sl_hwachin_v01",
+   "face_xy": [
+    383,
+    273
    ]
   },
   {
@@ -2013,10 +2728,15 @@
    "sex": "f",
    "stand_pick": "sl_josang_v03",
    "face": [
-    384,
-    283,
+    389,
+    348,
     203,
     159
+   ],
+   "bust_pick": "sl_josang_v01",
+   "face_xy": [
+    389,
+    348
    ]
   },
   {
@@ -2027,10 +2747,15 @@
    "sex": "m",
    "stand_pick": "sl_nakta_v02",
    "face": [
-    384,
-    282,
+    372,
+    227,
     203,
     159
+   ],
+   "bust_pick": "sl_nakta_v01",
+   "face_xy": [
+    372,
+    227
    ]
   },
   {
@@ -2041,10 +2766,15 @@
    "sex": "f",
    "stand_pick": "sl_wangjeong_v02",
    "face": [
-    383,
-    282,
+    385,
+    367,
     203,
     159
+   ],
+   "bust_pick": "sl_wangjeong_v01",
+   "face_xy": [
+    385,
+    367
    ]
   },
   {
@@ -2056,9 +2786,14 @@
    "stand_pick": "tb_amseup_v03",
    "face": [
     384,
-    283,
+    211,
     203,
     159
+   ],
+   "bust_pick": "tb_amseup_v01",
+   "face_xy": [
+    384,
+    211
    ]
   },
   {
@@ -2069,10 +2804,15 @@
    "sex": "m",
    "stand_pick": "tb_ganghae_v03",
    "face": [
-    385,
-    283,
+    381,
+    356,
     203,
     159
+   ],
+   "bust_pick": "tb_ganghae_v01",
+   "face_xy": [
+    381,
+    356
    ]
   },
   {
@@ -2083,10 +2823,15 @@
    "sex": "m",
    "stand_pick": "tb_gojeon_v02",
    "face": [
-    384,
-    282,
+    376,
+    377,
     203,
     159
+   ],
+   "bust_pick": "tb_gojeon_v01",
+   "face_xy": [
+    376,
+    377
    ]
   },
   {
@@ -2097,10 +2842,15 @@
    "sex": "f",
    "stand_pick": "tb_heukju_v03",
    "face": [
-    384,
-    282,
+    382,
+    388,
     203,
     159
+   ],
+   "bust_pick": "tb_heukju_v01",
+   "face_xy": [
+    382,
+    388
    ]
   },
   {
@@ -2112,9 +2862,14 @@
    "stand_pick": "tb_jamhon_v02",
    "face": [
     384,
-    281,
+    273,
     203,
     159
+   ],
+   "bust_pick": "tb_jamhon_v01",
+   "face_xy": [
+    384,
+    273
    ]
   },
   {
@@ -2125,10 +2880,15 @@
    "sex": "m",
    "stand_pick": "tb_japgol_v02",
    "face": [
-    384,
-    282,
+    388,
+    321,
     203,
     159
+   ],
+   "bust_pick": "tb_japgol_v01",
+   "face_xy": [
+    388,
+    321
    ]
   },
   {
@@ -2139,10 +2899,15 @@
    "sex": "f",
    "stand_pick": "tb_jongja_v02",
    "face": [
-    384,
-    283,
+    380,
+    380,
     203,
     159
+   ],
+   "bust_pick": "tb_jongja_v01",
+   "face_xy": [
+    380,
+    380
    ]
   },
   {
@@ -2154,9 +2919,14 @@
    "stand_pick": "tb_saryeong_v02",
    "face": [
     384,
-    283,
+    307,
     203,
     159
+   ],
+   "bust_pick": "tb_saryeong_v01",
+   "face_xy": [
+    384,
+    307
    ]
   },
   {
@@ -2167,10 +2937,15 @@
    "sex": "m",
    "stand_pick": "tz_beonwang_v03",
    "face": [
-    384,
-    283,
+    388,
+    353,
     203,
     159
+   ],
+   "bust_pick": "tz_beonwang_v01",
+   "face_xy": [
+    388,
+    353
    ]
   },
   {
@@ -2181,10 +2956,15 @@
    "sex": "m",
    "stand_pick": "tz_daehacheon_v02",
    "face": [
-    384,
-    282,
+    381,
+    300,
     203,
     159
+   ],
+   "bust_pick": "tz_daehacheon_v01",
+   "face_xy": [
+    381,
+    300
    ]
   },
   {
@@ -2196,9 +2976,14 @@
    "stand_pick": "tz_ganda_v02",
    "face": [
     384,
-    283,
+    381,
     203,
     159
+   ],
+   "bust_pick": "tz_ganda_v01",
+   "face_xy": [
+    384,
+    381
    ]
   },
   {
@@ -2210,9 +2995,14 @@
    "stand_pick": "tz_hangha_v03",
    "face": [
     384,
-    282,
+    321,
     203,
     159
+   ],
+   "bust_pick": "tz_hangha_v01",
+   "face_xy": [
+    384,
+    321
    ]
   },
   {
@@ -2224,9 +3014,14 @@
    "stand_pick": "tz_hyanggae_v02",
    "face": [
     384,
-    282,
+    266,
     203,
     159
+   ],
+   "bust_pick": "tz_hyanggae_v01",
+   "face_xy": [
+    384,
+    266
    ]
   },
   {
@@ -2238,9 +3033,14 @@
    "stand_pick": "tz_sanri_v01",
    "face": [
     384,
-    282,
+    362,
     203,
     159
+   ],
+   "bust_pick": "tz_sanri_v01",
+   "face_xy": [
+    384,
+    362
    ]
   },
   {
@@ -2252,9 +3052,14 @@
    "stand_pick": "tz_sawi_v03",
    "face": [
     384,
-    282,
+    390,
     203,
     159
+   ],
+   "bust_pick": "tz_sawi_v01",
+   "face_xy": [
+    384,
+    390
    ]
   },
   {
@@ -2265,10 +3070,15 @@
    "sex": "f",
    "stand_pick": "tz_seoksang_v04",
    "face": [
-    384,
-    283,
+    385,
+    446,
     203,
     159
+   ],
+   "bust_pick": "tz_seoksang_v01",
+   "face_xy": [
+    385,
+    446
    ]
   },
   {
@@ -2279,10 +3089,15 @@
    "sex": "m",
    "stand_pick": "tz_seolsan_v02",
    "face": [
-    385,
-    283,
+    384,
+    390,
     203,
     159
+   ],
+   "bust_pick": "tz_seolsan_v01",
+   "face_xy": [
+    384,
+    390
    ]
   },
   {
@@ -2294,9 +3109,14 @@
    "stand_pick": "xb_bonghwa_v03",
    "face": [
     383,
-    282,
+    352,
     203,
     159
+   ],
+   "bust_pick": "xb_bonghwa_v01",
+   "face_xy": [
+    383,
+    352
    ]
   },
   {
@@ -2307,10 +3127,15 @@
    "sex": "m",
    "stand_pick": "xb_daein_v03",
    "face": [
-    384,
-    282,
+    393,
+    477,
     203,
     159
+   ],
+   "bust_pick": "xb_daein_v01",
+   "face_xy": [
+    393,
+    477
    ]
   },
   {
@@ -2321,10 +3146,15 @@
    "sex": "m",
    "stand_pick": "xb_eoryang_v04",
    "face": [
-    384,
-    282,
+    392,
+    288,
     203,
     159
+   ],
+   "bust_pick": "xb_eoryang_v01",
+   "face_xy": [
+    392,
+    288
    ]
   },
   {
@@ -2336,9 +3166,14 @@
    "stand_pick": "xb_gaseul_v03",
    "face": [
     384,
-    284,
+    304,
     203,
     159
+   ],
+   "bust_pick": "xb_gaseul_v01",
+   "face_xy": [
+    384,
+    304
    ]
   },
   {
@@ -2349,10 +3184,15 @@
    "sex": "m",
    "stand_pick": "xb_gyeon_v04",
    "face": [
-    384,
-    283,
+    381,
+    278,
     203,
     159
+   ],
+   "bust_pick": "xb_gyeon_v01",
+   "face_xy": [
+    381,
+    278
    ]
   },
   {
@@ -2364,9 +3204,14 @@
    "stand_pick": "xb_hoja_v03",
    "face": [
     384,
-    283,
+    368,
     203,
     159
+   ],
+   "bust_pick": "xb_hoja_v01",
+   "face_xy": [
+    384,
+    368
    ]
   },
   {
@@ -2378,9 +3223,14 @@
    "stand_pick": "xb_hondo_v04",
    "face": [
     384,
-    282,
+    358,
     203,
     159
+   ],
+   "bust_pick": "xb_hondo_v01",
+   "face_xy": [
+    384,
+    358
    ]
   },
   {
@@ -2391,10 +3241,15 @@
    "sex": "m",
    "stand_pick": "xb_honin_v04",
    "face": [
-    384,
-    283,
+    381,
+    333,
     203,
     159
+   ],
+   "bust_pick": "xb_honin_v01",
+   "face_xy": [
+    381,
+    333
    ]
   },
   {
@@ -2405,10 +3260,15 @@
    "sex": "m",
    "stand_pick": "xb_yong_v03",
    "face": [
-    384,
-    283,
+    386,
+    304,
     203,
     159
+   ],
+   "bust_pick": "xb_yong_v01",
+   "face_xy": [
+    386,
+    304
    ]
   },
   {
@@ -2419,10 +3279,15 @@
    "sex": "m",
    "stand_pick": "xiyu_banwol_v01",
    "face": [
-    384,
-    283,
+    420,
+    249,
     203,
     159
+   ],
+   "bust_pick": "xiyu_banwol_v01",
+   "face_xy": [
+    420,
+    249
    ]
   },
   {
@@ -2433,10 +3298,15 @@
    "sex": "m",
    "stand_pick": "xiyu_cheonma_v02",
    "face": [
-    383,
-    282,
+    384,
+    324,
     203,
     159
+   ],
+   "bust_pick": "xiyu_cheonma_v01",
+   "face_xy": [
+    384,
+    324
    ]
   },
   {
@@ -2447,10 +3317,15 @@
    "sex": "m",
    "stand_pick": "xiyu_chongryeong_v03",
    "face": [
-    384,
-    282,
+    366,
+    256,
     203,
     159
+   ],
+   "bust_pick": "xiyu_chongryeong_v01",
+   "face_xy": [
+    366,
+    256
    ]
   },
   {
@@ -2461,10 +3336,15 @@
    "sex": "m",
    "stand_pick": "xiyu_dansu_v02",
    "face": [
-    384,
-    283,
+    376,
+    342,
     203,
     159
+   ],
+   "bust_pick": "xiyu_dansu_v01",
+   "face_xy": [
+    376,
+    342
    ]
   },
   {
@@ -2475,10 +3355,15 @@
    "sex": "f",
    "stand_pick": "xiyu_gumo_v04",
    "face": [
-    384,
-    282,
+    380,
+    415,
     203,
     159
+   ],
+   "bust_pick": "xiyu_gumo_v01",
+   "face_xy": [
+    380,
+    415
    ]
   },
   {
@@ -2489,10 +3374,15 @@
    "sex": "m",
    "stand_pick": "xiyu_gyoha_v02",
    "face": [
-    384,
-    282,
+    381,
+    321,
     203,
     159
+   ],
+   "bust_pick": "xiyu_gyoha_v01",
+   "face_xy": [
+    381,
+    321
    ]
   },
   {
@@ -2503,10 +3393,15 @@
    "sex": "m",
    "stand_pick": "xiyu_jeongcheon_v01",
    "face": [
-    384,
-    282,
+    388,
+    284,
     203,
     159
+   ],
+   "bust_pick": "xiyu_jeongcheon_v01",
+   "face_xy": [
+    388,
+    284
    ]
   },
   {
@@ -2517,10 +3412,15 @@
    "sex": "f",
    "stand_pick": "xiyu_mokjil_v03",
    "face": [
-    384,
-    282,
+    377,
+    393,
     203,
     159
+   ],
+   "bust_pick": "xiyu_mokjil_v01",
+   "face_xy": [
+    377,
+    393
    ]
   },
   {
@@ -2531,10 +3431,15 @@
    "sex": "f",
    "stand_pick": "xiyu_ochi_v02",
    "face": [
-    385,
-    282,
+    380,
+    412,
     203,
     159
+   ],
+   "bust_pick": "xiyu_ochi_v01",
+   "face_xy": [
+    380,
+    412
    ]
   },
   {
@@ -2545,10 +3450,15 @@
    "sex": "m",
    "stand_pick": "xiyu_sarim_v02",
    "face": [
-    384,
-    282,
+    378,
+    231,
     203,
     159
+   ],
+   "bust_pick": "xiyu_sarim_v01",
+   "face_xy": [
+    378,
+    231
    ]
   },
   {
@@ -2559,10 +3469,15 @@
    "sex": "m",
    "stand_pick": "xiyu_talban_v02",
    "face": [
-    384,
-    283,
+    374,
+    225,
     203,
     159
+   ],
+   "bust_pick": "xiyu_talban_v01",
+   "face_xy": [
+    374,
+    225
    ]
   },
   {
@@ -2573,10 +3488,15 @@
    "sex": "m",
    "stand_pick": "xiyu_yeoje_v03",
    "face": [
-    383,
-    282,
+    363,
+    292,
     203,
     159
+   ],
+   "bust_pick": "xiyu_yeoje_v01",
+   "face_xy": [
+    363,
+    292
    ]
   }
  ]
