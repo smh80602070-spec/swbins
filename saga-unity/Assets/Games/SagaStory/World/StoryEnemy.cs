@@ -530,6 +530,8 @@ namespace Saga.Story.World
             // tasks U-0192 문파 공 — 들판·비경 어디서든(두목·숨은 우두머리 +10, 오늘 의뢰 사냥터 ×2), 단계가 오르면 알림
             int guildUp = StoryGuild.OnKill(isLabyrinthEnemy, isBoss || _hidden);
             if (guildUp >= 0) DialogueLabel.Instance?.Show(StoryGuild.RankUpLine(guildUp), 4f);
+            string bondUp = StoryBond.OnKill(isBoss || _hidden); // tasks U-0208 동료 우정 — 나와 있는 동료 +1(두목·숨은 우두머리 +10), 단이 오르면 알림
+            if (bondUp.Length > 0) DialogueLabel.Instance?.Show(bondUp, 4f);
             Destroy(gameObject);
         }
     }

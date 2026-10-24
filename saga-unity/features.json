@@ -2446,6 +2446,26 @@
   "since": "2026-10-24",
   "note": "D2(U-0207): PlaytestStorySlice combo count·break·orb·mul·best·off OK · 슬라이스 OK(종료 0)·FAIL 0 · error CS 0 · 촬영 안 함(작은 공·글 — 진단 줄로)"
  },
+{
+ "id": "un.st.bond",
+ "name": "U-0208 4종횡 동료 우정 — 선봉·유격·호법 자리마다 우정 점수(나와 있을 때 처치 +1 · 두목·숨은 우두머리 +10 · 그 동료로 교대해 서명 +2) → 공용 Friendship Lv 0~10·넷 묶음·기질 대사(선봉 무·유격 지·호법 덕), 오르면 알림 · 지기(Lv 9) 처음 닿으면 그 동료가 나와 있을 때 공격 ×1.05(유지) · HUD 이름 옆 꼬리표(💛6) · 세이브 bondJson · SAGA_STORY_BOND=0 끔",
+ "files": [
+  "saga-unity/Assets/Games/SagaStory/Data/StoryBond.cs",
+  "saga-unity/Assets/SagaCore/Friendship.cs",
+  "saga-unity/Assets/Games/SagaStory/World/StoryEnemy.cs",
+  "saga-unity/Assets/Games/SagaStory/Player/StoryPlayerController.cs",
+  "saga-unity/Assets/Games/SagaStory/UI/StoryHud.cs"
+ ],
+ "tests": [
+  "PlaytestStoryBond"
+ ],
+ "level": "D2",
+ "verified": "2026-10-24 claude",
+ "fun": {},
+ "ticket": "U-0208",
+ "since": "2026-10-24",
+ "note": "D2(U-0208): PlaytestStorySlice sbond kill·swap·tier·knot(off 포함)·hud·save OK · guild·combo 줄 그대로 · 슬라이스 OK(종료 0)·FAIL 0 · error CS 0 · 촬영 안 함(알림·HUD 한 줄)"
+},
  {
   "id": "un.go.friendship",
   "name": "U-0199 1만리 동료 우정 — 편성 동료마다 점수(적 쓰러짐 앞 +2·다른 +1·탐사 돌아옴 +15) → Lv 0~10·낯섦·친근·신뢰·지기, 기질별 단계 대사(지기 = 그 인물 한마디), 지기 처음 인연 매듭 1, 오름 알림·도감 상세 줄(고돗 G-0340)",

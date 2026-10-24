@@ -390,6 +390,8 @@ namespace Saga.Story.Player
             DialogueLabel.Instance?.Show(
                 string.Format(StoryLocalization.T("party.swapped_toast", "{0}(으)로 교대! 서명을 발동했다."), StoryPartyState.Active.DisplayName),
                 2.5f);
+            string bondUp = StoryBond.OnSwap(); // tasks U-0208 동료 우정 — 교대해 서명 발동 +2, 단이 오르면 알림
+            if (bondUp.Length > 0) DialogueLabel.Instance?.Show(bondUp, 4f);
         }
 
         private void TriggerCompanionSignature(StoryPartyState.Signature signature)

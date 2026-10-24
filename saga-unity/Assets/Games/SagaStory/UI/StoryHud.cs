@@ -84,7 +84,7 @@ namespace Saga.Story.UI
             // PLAN.md 101-2 5-8 "동료 교대" — 웹판 "HUD 왼쪽 아래 초상 3(체력
             // 바)"을 이 트랙의 텍스트 HUD 한 줄로 재해석(초상·체력 자체가
             // 없다, StoryPartyState.cs 클래스 주석 참고).
-            string partyName = StoryPartyState.Active.DisplayName;
+            string partyName = StoryPartyState.Active.DisplayName + StoryBond.Tag(StoryPartyState.ActiveIndex); // tasks U-0208 우정 꼬리표(💛6)
             string cooldown = StoryPartyState.CooldownLeft > 0f
                 ? string.Format(StoryLocalization.T("party.cooldown_hud", "(교대까지 {0:0.0}초)"), StoryPartyState.CooldownLeft)
                 : StoryLocalization.T("party.ready_hud", "(교대 가능)");
@@ -95,7 +95,7 @@ namespace Saga.Story.UI
                 var names = new System.Collections.Generic.List<string>();
                 for (int i = 0; i < StoryPartyState.Roster.Length; i++)
                 {
-                    if (i != StoryPartyState.ActiveIndex) names.Add(StoryPartyState.Roster[i].DisplayName);
+                    if (i != StoryPartyState.ActiveIndex) names.Add(StoryPartyState.Roster[i].DisplayName + StoryBond.Tag(i));
                 }
                 beside = " · " + string.Format(StoryLocalization.T("party.beside_hud", "곁: {0}"), string.Join("·", names));
             }

@@ -735,6 +735,24 @@
     { "key": "guild.leave", "value": "Leave (merit 0)" },
     { "key": "guild.close", "value": "Close" },
     { "key": "combo.label", "value": "Combo Kill {0}" },
-    { "key": "combo.exp", "value": "EXP +{0}" }
+    { "key": "combo.exp", "value": "EXP +{0}" },
+    { "key": "sbond.name.vanguard", "value": "Vanguard" },
+    { "key": "sbond.name.skirmisher", "value": "Skirmisher" },
+    { "key": "sbond.name.guardian", "value": "Guardian" },
+    { "key": "sbond.tier0", "value": "Stranger" },
+    { "key": "sbond.tier1", "value": "Friendly" },
+    { "key": "sbond.tier2", "value": "Trusted" },
+    { "key": "sbond.tier3", "value": "Kindred" },
+    { "key": "sbond.line.might0", "value": "Whether I can trust you with my back is still unclear." },
+    { "key": "sbond.line.might1", "value": "Your blade is sharp. I'll lead the charge again." },
+    { "key": "sbond.line.might2", "value": "With you, I'd cut through any enemy line." },
+    { "key": "sbond.line.wisdom0", "value": "Let us watch each other a little longer before we judge." },
+    { "key": "sbond.line.wisdom1", "value": "You have a rare eye for choosing the path." },
+    { "key": "sbond.line.wisdom2", "value": "For your cause, I will spare no stratagem." },
+    { "key": "sbond.line.virtue0", "value": "So we walk together now. I'm glad to have you." },
+    { "key": "sbond.line.virtue1", "value": "I feel at ease by your side." },
+    { "key": "sbond.line.virtue2", "value": "For you, I would share anything." },
+    { "key": "sbond.up", "value": "{0} Bond with {1} Lv.{2} · {3} — \"{4}\"" },
+    { "key": "sbond.knot_atk", "value": " · ATK ×{0:0.00} while out" }
   ]
 }
