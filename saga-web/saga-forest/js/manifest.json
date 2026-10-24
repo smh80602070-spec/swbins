@@ -108,7 +108,9 @@
    "js/goals-panel.js",
    "js/ops-client.js",
    "js/perf.js",
-   "js/game.js"
+   "js/game.js",
+   "js/zone-cut.js",
+   "js/zone-wire.js"
   ]
  ],
  "test": [
@@ -218,7 +220,9 @@
    "js/me-panel.js",
    "js/goals-adapter.js",
    "js/goals-panel.js",
-   "js/game.js"
+   "js/game.js",
+   "js/zone-cut.js",
+   "js/zone-wire.js"
   ]
  ],
  "bundle": "dist/app.js"

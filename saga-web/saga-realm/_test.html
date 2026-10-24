@@ -177,6 +177,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/rts/tactics.js"></script>
 <script src="js/_oldsaves.js"></script>
 <script src="js/game.js"></script>
+<script src="js/zone-cut.js"></script>
+<script src="js/zone-wire.js"></script>
 <script>
 (function () {
   var out = [], errors = [];
@@ -7619,6 +7621,11 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       W.takeDefense(); W.takeDefense();
       var ok = off0 === false && on1 === true && notMine === false && full === false && after && o2.goal === 'hold' && o2.defend && o2.siege && b.gate[0] === b.cols - 1 - g0 && Math.abs(gr.give - 0.75) < 1e-9 && gr.take === 1.3 && Math.abs(gl.give - 1.25) < 1e-9 && ga === null;
       return ok || ('실패 ' + JSON.stringify({ off0: off0, on1: on1, notMine: notMine, full: full, after: after, goal: o2.goal, gate: [g0, b.gate[0], b.cols], gr: gr, gl: gl, ga: ga }));
+    });
+    t('W-0414 구역 넘김 막 — DG.zoneCut 있고 cut() 하면 곧장 덮였다가(shown) 손잡이 zoneCut.on 0 이면 안 덮음', function () {
+      var Z = DG.zoneCut; if (!Z || !Z.cut) { return '실패 DG.zoneCut 없음'; }
+      var a = Z.cut({ min: 0, max: 1 }) && Z.shown(); DG.core.setTune('zoneCut.on', 0); var b = Z.cut(); DG.core.setTune('zoneCut.on', 1);
+      return (a && b === false) || ('실패 덮음 ' + a + ' · 끔 ' + b);
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

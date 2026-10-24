@@ -105,7 +105,9 @@
    "js/cpanel.js",
    "js/hud.js",
    "js/perf.js",
-   "js/game.js"
+   "js/game.js",
+   "js/zone-cut.js",
+   "js/zone-wire.js"
   ]
  ],
  "test": [
@@ -224,7 +226,9 @@
    "js/rts/state.js",
    "js/rts/tactics.js",
    "js/_oldsaves.js",
-   "js/game.js"
+   "js/game.js",
+   "js/zone-cut.js",
+   "js/zone-wire.js"
   ]
  ],
  "bundle": "dist/app.js"

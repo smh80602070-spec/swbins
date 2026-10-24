@@ -184,7 +184,9 @@
    "js/dragdrop.js",
    "js/dd-adapter.js",
    "js/ops-client.js",
-   "js/game.js"
+   "js/game.js",
+   "js/zone-cut.js",
+   "js/zone-wire.js"
   ]
  ],
  "test": [
@@ -367,7 +369,9 @@
    "js/goals-panel.js",
    "js/dragdrop.js",
    "js/dd-adapter.js",
-   "js/game.js"
+   "js/game.js",
+   "js/zone-cut.js",
+   "js/zone-wire.js"
   ]
  ],
  "bundle": "dist/app.js"

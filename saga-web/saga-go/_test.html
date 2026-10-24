@@ -243,6 +243,8 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/dragdrop.js"></script>
 <script src="js/dd-adapter.js"></script>
 <script src="js/game.js"></script>
+<script src="js/zone-cut.js"></script>
+<script src="js/zone-wire.js"></script>
 <script>
 /* 자가진단 — 헤드리스에서 게임 로직이 실제로 도는지 확인한다.
    브라우저로 직접 열어도 되고, 아래 명령으로 자동 확인해도 된다.
@@ -17692,6 +17694,11 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var none = K.drawFor({}, { pool: '__그림없는풀', x: 0, y: 0 }, 60) === false;
       var h1 = K.holdClip('__t', 'attack', 300, 1000), h2 = K.holdClip('__t', 'idle', 0, 1100), h3 = K.holdClip('__t', 'walk', 0, 1300), hold = h1.clip === 'attack' && h2.clip === 'attack' && h2.t > 1e6 && h3.clip === 'walk';   // ③ 공격 끝 0.14초 멈춤
       return (on && seen.length >= 2 && !bad.length && none && hold) ? ((idx ? 'K 그림 ' : '대역(시험 서버) ') + seen.join(', ') + ' · 없는 풀 = 시트 · 공격 끝 멈춤') : ('실패 켬 ' + on + ' · ' + seen.join(', ') + ' · 어긋남 ' + bad.join(',') + ' · 없는 풀 시트 ' + none + ' · 멈춤 ' + hold);
+    });
+    t('W-0414 구역 넘김 막 — DG.zoneCut 있고 cut() 하면 곧장 덮였다가(shown) 손잡이 zoneCut.on 0 이면 안 덮음', function () {
+      var Z = DG.zoneCut; if (!Z || !Z.cut) { return '실패 DG.zoneCut 없음'; }
+      var a = Z.cut({ min: 0, max: 1 }) && Z.shown(); DG.core.setTune('zoneCut.on', 0); var b = Z.cut(); DG.core.setTune('zoneCut.on', 1);
+      return (a && b === false) || ('실패 덮음 ' + a + ' · 끔 ' + b);
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
