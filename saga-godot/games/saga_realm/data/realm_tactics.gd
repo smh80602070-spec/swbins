@@ -226,6 +226,8 @@ static func move(b: Dictionary, uid: String, x: int, y: int) -> bool:
 			break
 	if not ok:
 		return false
+	if bool(b.get("srpg", false)) and (x != int(u.x) or y != int(u.y)):
+		_face_to(u, x + (x - int(u.x)), y + (y - int(u.y)))   # G-0347 ③ 걸어간 쪽을 본다
 	u.x = x
 	u.y = y
 	u.moved = true
@@ -247,7 +249,9 @@ static func attack(b: Dictionary, uid: String, tuid: String) -> Dictionary:
 	var t := unit(b, tuid)
 	if a.is_empty() or t.is_empty() or float(a.hp) <= 0.0 or float(t.hp) <= 0.0 or bool(a.acted) or a.side == t.side or String(a.side) != String(b.side) or String(b.done) != "" or not in_range(a, t):
 		return {"ok": false}
-	var ch := hit_chance(a, t, cover_at(b, int(t.x), int(t.y)))
+	var ch := hit_chance_b(b, a, t)   # G-0347 ③ SRPG 판이면 높이·상성·뒤치기까지(옛 판은 hit_chance 그대로)
+	if bool(b.get("srpg", false)):
+		_face_to(a, int(t.x), int(t.y))
 	var hit := roll(b, "h") * 100.0 < float(ch)
 	var dmg := 0
 	if hit:
@@ -267,7 +271,7 @@ static func _best_target(b: Dictionary, u: Dictionary, foes: Array) -> Dictionar
 	var bc := -1
 	for t: Dictionary in foes:
 		if float(t.hp) > 0.0 and in_range(u, t):
-			var c := hit_chance(u, t, cover_at(b, int(t.x), int(t.y)))
+			var c := hit_chance_b(b, u, t)
 			if c > bc:
 				bc = c
 				best = t
@@ -299,6 +303,8 @@ static func act_auto(b: Dictionary, u: Dictionary) -> void:
 				pd = d
 				pc = cv
 		if not pick.is_empty():
+			if bool(b.get("srpg", false)) and (int(pick.x) != int(u.x) or int(pick.y) != int(u.y)):
+				_face_to(u, int(pick.x) + (int(pick.x) - int(u.x)), int(pick.y) + (int(pick.y) - int(u.y)))
 			u.x = int(pick.x)
 			u.y = int(pick.y)
 		u.moved = true
@@ -354,6 +360,8 @@ static func hp_frac(b: Dictionary, side: String) -> float:
 static func check(b: Dictionary) -> String:
 	if String(b.done) != "":
 		return b.done
+	if bool(b.get("srpg", false)):
+		return check_srpg(b)
 	if alive(b, "foe").is_empty():
 		b.done = "rout"
 	elif alive(b, "me").is_empty():
@@ -378,7 +386,7 @@ static func outcome(b: Dictionary) -> Dictionary:
 		elif String(u.side) == "foe" and float(u.hp) <= 0.0:
 			foe_down.append(String(u.id) if String(u.id) != "" else String(u.uid))
 	var o: Dictionary = OUT[k]
-	return {"kind": k, "name": o.name, "winPct": int(o.winPct), "lossMul": float(o.lossMul), "turn": mini(int(b.turn), TURNS),
+	return {"kind": k, "name": o.name, "winPct": int(o.winPct), "lossMul": float(o.lossMul), "turn": int(b.turn) if bool(b.get("srpg", false)) else mini(int(b.turn), TURNS),
 		"hpMe": js_round(hp_frac(b, "me") * 100.0), "hpFoe": js_round(hp_frac(b, "foe") * 100.0),
 		"fallen": down if permadeath else [], "wounded": [] if permadeath else down, "foeDown": foe_down}
 
@@ -397,7 +405,7 @@ static func apply(out: Dictionary, where: String = "") -> Dictionary:
 ## 진단·균형용 — 양쪽 다 AI 로 끝까지 둔다
 static func auto_play(b: Dictionary) -> Dictionary:
 	var guard := 0
-	while String(b.done) == "" and guard < 20:
+	while String(b.done) == "" and guard < (SRPG_CAP + 5 if bool(b.get("srpg", false)) else 20):
 		guard += 1
 		auto_side(b, "me")
 		check(b)
@@ -423,7 +431,7 @@ const FIRE_SPREAD := 0.5
 static func can_fire(b: Dictionary, uid: String) -> bool:
 	var u := unit(b, uid)
 	return not u.is_empty() and String(u.kind) == "officer" and String(u.side) == "me" and String(b.side) == "me" and String(b.done) == "" \
-		and float(u.hp) > 0.0 and not bool(u.acted) and float(u.get("wis", 0.0)) >= FIRE_WIS
+		and float(u.hp) > 0.0 and not bool(u.acted) and float(u.get("wis", 0.0)) >= FIRE_WIS and int(b.get("plots", PLOTS)) > 0   # ③ 책략은 한 판 두 번
 
 
 static func fire_chance(u: Dictionary) -> int:
@@ -442,8 +450,8 @@ static func fire_cells(b: Dictionary, uid: String) -> Array:
 	if not can_fire(b, uid):
 		return out
 	var u := unit(b, uid)
-	for y in ROWS:
-		for x in COLS:
+	for y in int(b.rows):
+		for x in int(b.cols):
 			if cell_at(b, x, y) == "forest" and absi(x - int(u.x)) + absi(y - int(u.y)) <= FIRE_RANGE and not burning(b).has("%d,%d" % [x, y]):
 				out.append({"x": x, "y": y})
 	return out
@@ -474,10 +482,11 @@ static func fire(b: Dictionary, uid: String, x: int, y: int) -> Dictionary:
 		for d: Vector2i in DIRS:
 			var nx := x + d.x
 			var ny := y + d.y
-			if nx >= 0 and ny >= 0 and nx < COLS and ny < ROWS and cell_at(b, nx, ny) == "forest" and not burning(b).has("%d,%d" % [nx, ny]) and roll(b, "s") < FIRE_SPREAD:
+			if nx >= 0 and ny >= 0 and nx < int(b.cols) and ny < int(b.rows) and cell_at(b, nx, ny) == "forest" and not burning(b).has("%d,%d" % [nx, ny]) and roll(b, "s") < FIRE_SPREAD:
 				burning(b)["%d,%d" % [nx, ny]] = {"left": FIRE_TURNS, "dmg": dmg}
 				cells.append([nx, ny])
 		hits = _burn_units(b, dmg)
+	b.plots = int(b.get("plots", PLOTS)) - 1
 	u.acted = true
 	u.moved = true
 	if not b.has("fire_log"):
@@ -505,3 +514,191 @@ static func burn_tick(b: Dictionary) -> Array:
 	b.burn_last = hits
 	check(b)
 	return hits
+
+
+# ── G-0347 ③ 격자 SRPG 본전투(PLAN §5-17 · 웹 W-0401 수치) ──
+## 옛 판(make_board, 8×6·3턴)은 그대로 두고(웹 맞춤 ⓪) make_board_srpg 로 만든 판(b.srpg)만 아래 규칙을 쓴다.
+##   판      땅 꼴별 크기 SRPG_SIZE(평지 10×8 · 강 11×8 · 구릉 11×9 · 산 12×10) · 언덕 칸(hill — 높이 1, 위에서 치면 명중 +HEIGHT_HIT)
+##           공성이면 성벽 줄 + 가운데 성문 칸(gate — 지나갈 수 있음)
+##   병종    부대마다(내 부대 my_troops 둘까지도) 창·기·궁(씨앗) — 창>기>궁>창 이기면 +COUNTER_HIT, 지면 −COUNTER_HIT · 기 이동 3 · 궁 사거리 2 · 창 방어 +2
+##   방향    유닛은 걸어간 쪽·친 쪽을 본다(fx, fy). 뒤에서 치면(대상이 보는 방향의 반대편) +BACK_HIT
+##   승리    goal 하나: rout 전멸 · leader 적 대장(첫 적 장수) 격파 · gate 성문 칸 점령(내 유닛이 서면) · hold HOLD_TURNS 턴 버팀
+##           내 전멸 = 패 · SRPG_CAP 턴 넘으면 옛 체력 비율 판정. 대장·성문 = 대승(rout) · 버팀 = 승(win)
+##   책략    한 판 PLOTS 번(화계 — 혼란·회복은 ⑤ 나머지)
+
+const SRPG_SIZE := {"plain": Vector2i(10, 8), "river": Vector2i(11, 8), "hill": Vector2i(11, 9), "mount": Vector2i(12, 10)}
+const HILL_MIX := {"plain": 0.08, "river": 0.06, "hill": 0.25, "mount": 0.2}
+const HEIGHT_HIT := 10
+const COUNTER_HIT := 20
+const BACK_HIT := 20
+const ARMS := ["spear", "cav", "bow"]
+const BEATS := {"spear": "cav", "cav": "bow", "bow": "spear"}
+const ARM_NAME := {"spear": "창", "cav": "기", "bow": "궁"}
+const GOALS := ["rout", "leader", "gate", "hold"]
+const GOAL_NAME := {"rout": "적 전멸", "leader": "적 대장 격파", "gate": "성문 점령", "hold": "%d턴 버티기"}
+const HOLD_TURNS := 6
+const SRPG_CAP := 30
+const PLOTS := 2
+
+
+static func make_board_srpg(seed: String, land: String, siege: bool, goal: String) -> Dictionary:
+	var key := land if MIX.has(land) else "plain"
+	var mx: Dictionary = MIX[key]
+	var sz: Vector2i = SRPG_SIZE[key]
+	var cols := sz.x
+	var rows := sz.y
+	var cells: Array = []
+	for y in rows:
+		for x in cols:
+			var t := "plain"
+			var r := hash01(seed, "c%d,%d" % [x, y])
+			var h := hash01(seed, "h%d,%d" % [x, y])
+			if x >= 2 and x <= cols - 3 and r < float(mx.forest):
+				t = "forest"
+			elif float(mx.rocks) > 0.0 and x >= 3 and x <= cols - 4 and r > 1.0 - float(mx.rocks):
+				t = "wall"
+			elif x >= 1 and x <= cols - 2 and h < float(HILL_MIX[key]):
+				t = "hill"
+			cells.append(t)
+	if bool(mx.river):
+		var rx := cols / 2 - 1 + (0 if hash01(seed, "rx") < 0.5 else 1)
+		var f1 := int(floor(hash01(seed, "f1") * rows))
+		var f2 := (f1 + 2 + int(floor(hash01(seed, "f2") * (rows - 3)))) % rows
+		for y in rows:
+			cells[y * cols + rx] = "plain" if (y == f1 or y == f2) else "river"
+	var g := goal if GOALS.has(goal) else "rout"
+	if g == "gate" and not siege:
+		g = "rout"
+	var gate := Vector2i(-1, -1)
+	if siege:
+		for y in rows:
+			if y % 2 == 0:
+				cells[y * cols + (cols - 3)] = "wall"
+		gate = Vector2i(cols - 3, rows / 2)
+		cells[gate.y * cols + gate.x] = "gate"
+	return {"seed": seed, "land": key, "siege": siege, "cols": cols, "rows": rows, "cells": cells, "units": [], "turn": 1, "side": "me", "n": 0, "done": "", "log": [],
+		"srpg": true, "goal": g, "gate": [gate.x, gate.y], "hold": HOLD_TURNS, "plots": PLOTS}
+
+
+## SRPG 판에 두 편 — units_of 그대로 세운 뒤 병종·방향·대장을 붙인다
+static func units_of_srpg(b: Dictionary, mine: Array, foes: Array, foe_troops: Array, stats: Dictionary, my_troops: Array = []) -> Array:
+	var list := units_of(b, mine, foes, foe_troops, stats)
+	for k in mini(my_troops.size(), 2):   # 내 부대(옛 판엔 없음) — 내 장수 뒤 빈 자리
+		var t := troop_unit(k, "me", int(my_troops[k]))
+		for y in int(b.rows):
+			var placed := false
+			for x in [1, 2, 0]:
+				var c := cell_at(b, x, (y * 2 + 1) % int(b.rows))
+				if c != "river" and c != "wall" and not occupied(b, x, (y * 2 + 1) % int(b.rows)):
+					t.x = x
+					t.y = (y * 2 + 1) % int(b.rows)
+					placed = true
+					break
+			if placed:
+				break
+		list.append(t)
+	b.units = list
+	var k := 0
+	for u: Dictionary in list:
+		u.fx = 1 if String(u.side) == "me" else -1
+		u.fy = 0
+		u.arm = ""
+		if String(u.kind) == "troop":
+			var arm: String = ARMS[(int(floor(hash01(String(b.seed), "arm") * 3.0)) + k) % 3]   # 판 씨앗 자리에서 창·기·궁 차례로(셋이면 하나씩)
+			k += 1
+			u.arm = arm
+			match arm:
+				"cav":
+					u.mov = 3
+				"bow":
+					u.rng = 2
+				"spear":
+					u.def = float(u.def) + 2.0
+	for u: Dictionary in list:
+		if String(u.side) == "foe" and String(u.kind) == "officer":
+			u.leader = true
+			break
+	return list
+
+
+static func _face_to(u: Dictionary, x: int, y: int) -> void:
+	var dx := x - int(u.x)
+	var dy := y - int(u.y)
+	if dx == 0 and dy == 0:
+		return
+	if absi(dx) >= absi(dy):
+		u.fx = signi(dx)
+		u.fy = 0
+	else:
+		u.fx = 0
+		u.fy = signi(dy)
+
+
+static func height_at(b: Dictionary, x: int, y: int) -> int:
+	return 1 if cell_at(b, x, y) == "hill" else 0
+
+
+## 뒤치기 — 공격자가 대상이 보는 방향의 반대편(옆은 아님)
+static func is_back(att: Dictionary, tgt: Dictionary) -> bool:
+	return (int(att.x) - int(tgt.x)) * int(tgt.get("fx", 0)) + (int(att.y) - int(tgt.y)) * int(tgt.get("fy", 0)) < 0
+
+
+## 명중 덤 내역 [[이름, %p]…] — 화면 풀이·점검
+static func hit_mods(b: Dictionary, att: Dictionary, tgt: Dictionary) -> Array:
+	var out: Array = []
+	if not bool(b.get("srpg", false)):
+		return out
+	if height_at(b, int(att.x), int(att.y)) > height_at(b, int(tgt.x), int(tgt.y)):
+		out.append(["높이", HEIGHT_HIT])
+	var aa := String(att.get("arm", ""))
+	var ta := String(tgt.get("arm", ""))
+	if aa != "" and ta != "":
+		if String(BEATS[aa]) == ta:
+			out.append(["상성", COUNTER_HIT])
+		elif String(BEATS[ta]) == aa:
+			out.append(["상성", -COUNTER_HIT])
+	if is_back(att, tgt):
+		out.append(["뒤", BACK_HIT])
+	return out
+
+
+static func hit_chance_b(b: Dictionary, att: Dictionary, tgt: Dictionary) -> int:
+	var base := hit_chance(att, tgt, cover_at(b, int(tgt.x), int(tgt.y)))
+	var mods := hit_mods(b, att, tgt)
+	if mods.is_empty():
+		return base
+	var add := 0
+	for m: Array in mods:
+		add += int(m[1])
+	return maxi(HIT_MIN, mini(HIT_MAX, base + add))
+
+
+static func goal_text(b: Dictionary) -> String:
+	var g := String(b.get("goal", "rout"))
+	return (String(GOAL_NAME[g]) % int(b.hold)) if g == "hold" else String(GOAL_NAME[g])
+
+
+static func check_srpg(b: Dictionary) -> String:
+	if alive(b, "foe").is_empty():
+		b.done = "rout"
+	elif alive(b, "me").is_empty():
+		b.done = "lose"
+	else:
+		match String(b.goal):
+			"leader":
+				for u: Dictionary in b.units:
+					if bool(u.get("leader", false)) and float(u.hp) <= 0.0:
+						b.done = "rout"
+			"gate":
+				var g: Array = b.gate
+				for u: Dictionary in alive(b, "me"):
+					if int(u.x) == int(g[0]) and int(u.y) == int(g[1]):
+						b.done = "rout"
+			"hold":
+				if int(b.turn) > int(b.hold):
+					b.done = "win"
+		if String(b.done) == "" and int(b.turn) > SRPG_CAP:
+			var m := hp_frac(b, "me")
+			var f := hp_frac(b, "foe")
+			b.done = "win" if (f <= 0.0 or m / f >= 1.5) else "draw"
+	return b.done
