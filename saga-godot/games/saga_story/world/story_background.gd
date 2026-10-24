@@ -25,6 +25,8 @@ const StoryLook := preload("res://games/saga_story/data/story_look.gd")   # G-01
 const FG_GRASS_GLB := "res://assets/world/grass_tuft_01.glb"
 const FG_ROCK_GLB := "res://assets/world/rock_small_01.glb"
 const FG_GRASS_BACKLIGHT := Color(0.42, 0.5, 0.26)   # G-0353 앞 풀 역광 투과 — 해가 장면 뒤라 해 등진 잎이 거의 검었다
+const FG_GRASS_SWAY := 0.1   # G-0366 앞 풀 흔들림(foliage_sway — 바람 날엔 weather_visual 배율)
+const FOLIAGE_SWAY := preload("res://saga_core/shaders/foliage_sway.gdshader")
 
 const TREE_GLB := "res://assets/world/tree_broadleaf_01.glb"
 const HILL_GLB := "res://assets/world/hill_01.glb"
@@ -113,9 +115,22 @@ func _build_foreground() -> void:
 
 
 ## G-0353 — 풀 GLB 제 재질 사본에 역광 투과(잎을 뒤에서 비추는 해가 앞으로 비쳐 보임). 다른 재질(셰이더)이면 그대로.
+## G-0366 — 그림이 있으면 같은 그림·컷아웃·역광을 내는 foliage_sway 로 바꿔 흔든다(SAGA_STORY_SWAY=0 이면 옛 StandardMaterial 사본).
 static func _grass_backlight(mmi: MultiMeshInstance3D, mesh: Mesh) -> void:
 	var m := mesh.surface_get_material(0) as StandardMaterial3D
 	if m == null:
+		return
+	if m.albedo_texture != null and OS.get_environment("SAGA_STORY_SWAY") != "0":
+		var sm := ShaderMaterial.new()
+		sm.shader = FOLIAGE_SWAY
+		sm.set_shader_parameter("albedo_texture", m.albedo_texture)
+		sm.set_shader_parameter("albedo_color", m.albedo_color)
+		sm.set_shader_parameter("alpha_cutoff", m.alpha_scissor_threshold if m.transparency == BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR else 0.5)
+		sm.set_shader_parameter("backlight_color", Vector3(FG_GRASS_BACKLIGHT.r, FG_GRASS_BACKLIGHT.g, FG_GRASS_BACKLIGHT.b))
+		sm.set_shader_parameter("roughness_value", m.roughness)
+		sm.set_shader_parameter("sway", FG_GRASS_SWAY)
+		sm.set_meta(&"grass_sway", FG_GRASS_SWAY)
+		mmi.material_override = sm
 		return
 	var c := m.duplicate() as StandardMaterial3D
 	c.backlight_enabled = true

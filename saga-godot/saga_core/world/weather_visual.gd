@@ -76,12 +76,15 @@ static func wind_target(k: String) -> float:
 	return float(WIND_MUL.get(k, 1.0))
 
 
-## G-0365 — 메시 표면(MeshInstance·MultiMesh 의 mesh)에 붙은 meta grass_sway 재질
+## G-0365 — 메시 표면(MeshInstance·MultiMesh 의 mesh)에 붙은 meta grass_sway 재질 · G-0366 material_override 도
 static func sway_mats(root: Node) -> Array[ShaderMaterial]:
 	var out: Array[ShaderMaterial] = []
 	if root == null:
 		return out
 	for n in root.find_children("*", "GeometryInstance3D", true, false):
+		var mo := (n as GeometryInstance3D).material_override as ShaderMaterial
+		if mo != null and mo.has_meta(&"grass_sway") and not out.has(mo):
+			out.append(mo)
 		var mesh: Mesh = null
 		if n is MeshInstance3D:
 			mesh = (n as MeshInstance3D).mesh
