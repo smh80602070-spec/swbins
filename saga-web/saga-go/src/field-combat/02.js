@@ -893,7 +893,7 @@
     popAcc += dt; refAcc += dt;
     if (popAcc > 0.5) {
       popAcc = 0;
-      respawnSweep();                          // 다시 설 무리를 먼저 풀고 세운다(⑲-10 수호자가 한 박자 늦던 것)
+      respawnSweep(); if (global.DG.bloodMoon) { global.DG.bloodMoon.tick(S, fieldSave(), 0.5); }   // W-0420 ③ 핏빛 달(되살림) · 다시 설 무리를 먼저 풀고 세운다(⑲-10 수호자가 한 박자 늦던 것)
       var BM = global.DG.biome;
       populate(S, pos.x, pos.y, terrFn(), K('activeR', 200), BM && BM.on() ? BM.biomeAt : null,
         BM && BM.on() && BM.landmarks && K('guards', 1) ? BM.landmarks : null,

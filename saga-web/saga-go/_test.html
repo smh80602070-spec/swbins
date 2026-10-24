@@ -203,6 +203,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/rogue-action.js"></script>
 <script src="js/field-foes.js"></script>
 <script src="js/field-grab.js"></script>
+<script src="js/blood-moon.js"></script>
 <script src="js/field-standoff.js"></script>
 <script src="js/field-combat.js"></script>
 <script src="js/runrank-core.js"></script>
@@ -17641,6 +17642,30 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         var ok = rash && ev === 1 && cool && miss && crouchOk && offOk;
         return ok || ('실패 ' + JSON.stringify({ rash: rash, ev: ev, cool: cool, miss: miss, crouchOk: crouchOk, offOk: offOk, st: [a.st, b.st] }));
       } finally { FS._reset(); FC._kdForTest(); if (ST && ST.setCrouch) { ST.setCrouch(false); } }
+    });
+    t('W-0420 핏빛 달 — 밤 21~4시 · 새벽은 전날 밤 · 다섯 밤에 하나 꼴(365 밤 중 50~100, 같은 밤은 늘 같음)', function () {
+      var B = DG.bloodMoon; if (!B) { return '실패 DG.bloodMoon 없음'; }
+      var n = 0, d; for (d = 20000; d < 20365; d++) { if (B.isBloodNight(d)) { n++; } }
+      var eve = new Date(2026, 9, 25, 22, 0).getTime(), dawn = new Date(2026, 9, 26, 2, 0).getTime(), noon = new Date(2026, 9, 26, 12, 0).getTime();
+      var ok = n >= 50 && n <= 100 && B.isBloodNight(20100) === B.isBloodNight(20100) && B.isNight(eve) && B.isNight(dawn) && !B.isNight(noon) && B.nightDay(eve) === B.nightDay(dawn) && B.nightDay(noon) === B.nightDay(eve) + 1;
+      return ok || ('실패 ' + JSON.stringify({ n: n, e: B.nightDay(eve), d: B.nightDay(dawn), nn: B.nightDay(noon) }));
+    });
+    t('W-0420 핏빛 달 — 붉어지는 순간 토벌된 둘레 무리 되살림(우두머리·수호자 그대로) · 전리품 ×2 · 붉은 막 · 낮이면 짐 · go.bloodMoon 0 끔', function () {
+      var B = DG.bloodMoon, FC = DG.fieldCombat, C = DG.core; if (!B || !FC) { return '실패 DG.bloodMoon 없음'; }
+      B._reset();
+      try {
+        var S = fcState(), fs = { camps: {} };
+        FC.spawnCamp(S, { key: '7_7', x: 50, y: 0, tier: 1, kind: 'plain', foes: [{ kind: 'boar', dx: 0, dy: 0 }] });
+        FC.spawnCamp(S, { key: '8_8', x: 90, y: 0, tier: 1, kind: 'boss', foes: [{ kind: 'rex', dx: 0, dy: 0 }] });
+        S.cleared = { '7_7': true, '8_8': true, 'g:1_1': true }; fs.camps = { '7_7': Date.now(), '8_8': Date.now() };
+        C.setTune('go.bloodMoon', 2); B._setNowForTest(function () { return new Date(2026, 9, 25, 22, 0).getTime(); });
+        B.tick(S, fs, 0.5); var on1 = B.active(), back = !S.cleared['7_7'] && !S.camps['7_7'] && !fs.camps['7_7'], kept = !!S.cleared['8_8'] && !!S.cleared['g:1_1'] && !!S.camps['8_8'], mul = B.lootMul(), r = B.risen();
+        var veil = document.getElementById('blood-moon-veil'), vOn = !!veil && veil.style.display === 'block';
+        B._setNowForTest(function () { return new Date(2026, 9, 26, 12, 0).getTime(); }); B.tick(S, fs, 0.5); var off1 = !B.active() && B.lootMul() === 1 && veil.style.display === 'none';
+        B._setNowForTest(function () { return new Date(2026, 9, 25, 22, 0).getTime(); }); C.setTune('go.bloodMoon', 0); B.tick(S, fs, 0.5); var off0 = !B.active();
+        var ok = on1 && back && kept && mul === 2 && r === 1 && vOn && off1 && off0;
+        return ok || ('실패 ' + JSON.stringify({ on1: on1, back: back, kept: kept, mul: mul, r: r, vOn: vOn, off1: off1, off0: off0 }));
+      } finally { C.setTune('go.bloodMoon', null); B._reset(); }
     });
     t('W-0304 말 위 전투 — 달릴수록 평타 피해 · 돌진은 둘레 적을 쳐 넘기고 6초 쿨 · 탄 채 맞으면 낙마(0.8초 평타 막힘) · 날면 평타 막힘', function () {
       var MC = DG.mountCombat, FC = DG.fieldCombat, keepMT = DG.mount, fly = false, downed = 0; if (!MC || !FC) { return '실패 DG.mountCombat 없음'; }

@@ -316,7 +316,7 @@
   /* §5 ⑲-7 천하 등급(adventure.js) — 거리 등급 배율에 곱한다. 모듈이 없으면 세계 0 */
   function ADV() { return global.DG.adventure || null; }
   function wlNow() { var A = ADV(); return A ? A.worldLevel() : 0; }
-  function lootMul() { var A = ADV(); return A ? A.lootMul(wlNow()) : 1; }
+  function lootMul() { var A = ADV(); return (A ? A.lootMul(wlNow()) : 1) * (global.DG.bloodMoon ? global.DG.bloodMoon.lootMul() : 1); }   // W-0420 ③ 핏빛 달 ×2
   function dustAdd() { var A = ADV(); return A ? A.dustAdd(wlNow()) : 0; }
   function lvAddOf(w) { var A = ADV(); return A && w ? A.lvAdd(w) : 0; }
   /** 전리품 — 쓰러뜨린 적 하나의 금 · 무리/수호자 토벌의 금·단사(천하 등급 배율을 탄다) */
@@ -1760,7 +1760,7 @@
     popAcc += dt; refAcc += dt;
     if (popAcc > 0.5) {
       popAcc = 0;
-      respawnSweep();                          // 다시 설 무리를 먼저 풀고 세운다(⑲-10 수호자가 한 박자 늦던 것)
+      respawnSweep(); if (global.DG.bloodMoon) { global.DG.bloodMoon.tick(S, fieldSave(), 0.5); }   // W-0420 ③ 핏빛 달(되살림) · 다시 설 무리를 먼저 풀고 세운다(⑲-10 수호자가 한 박자 늦던 것)
       var BM = global.DG.biome;
       populate(S, pos.x, pos.y, terrFn(), K('activeR', 200), BM && BM.on() ? BM.biomeAt : null,
         BM && BM.on() && BM.landmarks && K('guards', 1) ? BM.landmarks : null,
