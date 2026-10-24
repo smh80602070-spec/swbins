@@ -185,6 +185,17 @@
   }
   var STUB = {};
   function stubOf(seed) { var k = String(seed || ''); return STUB[k] || (STUB[k] = { ok: true, rig: stubRig(seed), imgs: {} }); }
+  /** W-0402 ③ 공격 끝 멈춤(손맛) — 공격류 클립 뒤 곧바로 서기·걷기·달리기로 바뀌어도 끝 자세를 hold ms(손잡이 cutout2d.hold, 기본 140) 붙든다.
+   *  배우(key)마다 마지막 공격 그린 때만 기억한다. 순수에 가깝다(now 를 받는다) — 진단이 부른다. → { clip, t } */
+  var HOLD_FROM = { attack: 1, attack2: 1, heavy: 1 }, HOLD_TO = { idle: 1, walk: 1, run: 1 }, lastAtk = {};
+  function holdClip(key, clip, t, now) {
+    var k = String(key || 'x'), ms = +tuned('cutout2d.hold', 140) || 0;
+    if (HOLD_FROM[clip]) { lastAtk[k] = { at: now, clip: clip }; return { clip: clip, t: t }; }
+    var a = lastAtk[k];
+    if (a && HOLD_TO[clip] && now - a.at < ms) { return { clip: a.clip, t: 1e9 }; }   // 한 번 클립은 끝에 머문다(phaseOf)
+    if (a && now - a.at >= ms) { delete lastAtk[k]; }
+    return { clip: clip, t: t };
+  }
   /** mode2d.draw 의 갈래 — 손잡이 cutout2d.on 이 0 이면 아무것도 안 한다 */
   function drawFor(ctx, o, bodyPx) {
     var mode = +tuned('cutout2d.on', 1);   // W-0402 기본 켬 — 그림 묶음이 있는 풀만
@@ -193,7 +204,8 @@
     if (mode >= 2) { R = stubOf(o.pool); }
     else { var id = rigIdFor(o.pool); R = id ? rigOf(id) : null; }
     if (!R) { return false; }
-    return drawRig(ctx, R, { x: o.x, y: o.y, h: bodyPx, clip: o.clip, t: o.t, facing: o.facing, key: o.key || o.pool, alpha: o.alpha });
+    var hc = holdClip(o.key || o.pool, o.clip, o.t, global.performance ? global.performance.now() : Date.now());   // W-0402 ③
+    return drawRig(ctx, R, { x: o.x, y: o.y, h: bodyPx, clip: hc.clip, t: hc.t, facing: o.facing, key: o.key || o.pool, alpha: o.alpha });
   }
 
   /** 쉬는 자세(또는 clip·phase)의 몸 위끝·발 — 뼈 단위(발 = 0, 위 −). 무기 부위(img 이름에 weapon)는 뺀다. 순수(진단 「발 y·몸 높이」) */
@@ -228,5 +240,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.cutout2d = { BONES: BONES, PARENT: PARENT, REST: REST, CLIPS: CLIPS, sample: sample, phaseOf: phaseOf, pose: pose, stubRig: stubRig, has: has, drawFor: drawFor, demo: demo, bounds: bounds, base: base, rigIdFor: rigIdFor };
+  global.DG.cutout2d = { BONES: BONES, PARENT: PARENT, REST: REST, CLIPS: CLIPS, sample: sample, phaseOf: phaseOf, pose: pose, stubRig: stubRig, has: has, drawFor: drawFor, demo: demo, bounds: bounds, base: base, rigIdFor: rigIdFor, holdClip: holdClip };
 })(window);

@@ -7993,7 +7993,8 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var rigs = idx && idx.pools ? Object.keys(idx.pools).map(function (p) { return [p, get(K.base() + idx.pools[p] + '/rig.json')]; }) : [['_stub', K.stubRig('a')], ['_stub2', K.stubRig('b')]];
       rigs.forEach(function (pr) { if (!pr[1]) { bad.push(pr[0] + ' 못 받음'); return; } var b = K.bounds(pr[1]); seen.push(pr[0] + ' ' + Math.round(b.top) + '/' + Math.round(b.foot)); if (Math.abs(b.foot) > 2 || Math.abs(b.top + b.h) > 6) { bad.push(pr[0]); } });
       var none = K.drawFor({}, { pool: '__그림없는풀', x: 0, y: 0 }, 60) === false;
-      return (on && seen.length >= 2 && !bad.length && none) ? ((idx ? 'K 그림 ' : '대역(시험 서버) ') + seen.join(', ') + ' · 없는 풀 = 시트') : ('실패 켬 ' + on + ' · ' + seen.join(', ') + ' · 어긋남 ' + bad.join(',') + ' · 없는 풀 시트 ' + none);
+      var h1 = K.holdClip('__t', 'attack', 300, 1000), h2 = K.holdClip('__t', 'idle', 0, 1100), h3 = K.holdClip('__t', 'walk', 0, 1300), hold = h1.clip === 'attack' && h2.clip === 'attack' && h2.t > 1e6 && h3.clip === 'walk';   // ③ 공격 끝 0.14초 멈춤
+      return (on && seen.length >= 2 && !bad.length && none && hold) ? ((idx ? 'K 그림 ' : '대역(시험 서버) ') + seen.join(', ') + ' · 없는 풀 = 시트 · 공격 끝 멈춤') : ('실패 켬 ' + on + ' · ' + seen.join(', ') + ' · 어긋남 ' + bad.join(',') + ' · 없는 풀 시트 ' + none + ' · 멈춤 ' + hold);
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
