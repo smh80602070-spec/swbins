@@ -12,7 +12,7 @@ namespace Saga.Dungeon.UI
     /// <summary>
     /// tasks U-0108 대상 적 카드(웹 사가나락 `dungeon-view.js` renderFoe · `css/diablo.css` #d2-foe) — 화면 위 가운데 한 장에 지금 겨누는 적의 이름·체력 막대.
     /// 원작처럼 적 머리 위엔 아무것도 띄우지 않고, 락온한 적(없으면 가장 가까운 산 적 — 10.8m 안) 하나만 올린다. 정예는 이름 앞 "정예 "·푸른 이름, 두목은 노란 이름.
-    /// 보여 주기만 한다(판정 없음) · 누름을 막지 않게 레이캐스트 없음 · 컷신·일시정지 창 중엔 숨김. `GameBootstrap` 이 Play 때 짓는다(씬 재빌드 없이).
+    /// 보여 주기만 한다(판정 없음) · 누름을 막지 않게 레이캐스트 없음 · 컷신·일시정지 창·시나리오 장면 중엔 숨김. `GameBootstrap` 이 Play 때 짓는다(씬 재빌드 없이).
     /// </summary>
     public class DungeonFoeCard : MonoBehaviour
     {
@@ -119,6 +119,9 @@ namespace Saga.Dungeon.UI
         public void Refresh(Vector3 hero, DungeonEnemy locked)
         {
             if (DungeonCutscenes.Playing || SagaPauseMenu.IsOpen) { Hide(); return; }
+            // U-0209 — 시나리오 장면 상자도 모달(1300×720 가운데) — 적이 10.8m 안이면 카드가 판 제목 자리(위 −104)에 겹쳐 남았다(지역 배너와 같이 숨김)
+            var scene = DungeonScenarioUi.Instance;
+            if (scene != null && scene.IsOpen) { Hide(); return; }
             var e = Pick(hero, locked);
             if (e == null) { Hide(); return; }
             float fill = e.MaxHp > 0f ? Mathf.Clamp01(e.CurrentHp / e.MaxHp) : 0f;

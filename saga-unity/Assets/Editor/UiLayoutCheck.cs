@@ -202,7 +202,7 @@ namespace Saga.EditorTools
                 b.onClick.Invoke();
                 for (int f = 0; f < 20; f++) yield return null;
                 // 루트 캔버스마다 묶어 셋 이상 새로 뜬 캔버스만 — 기다리는 사이 다른 캔버스에 뜬 알림(지역 배너 등)은 패널이 아니다.
-                var fresh = VisibleGraphics().Where(g => !before.Contains(g.GetInstanceID()))
+                var fresh = VisibleGraphics().Where(g => !before.Contains(g.GetInstanceID()) && !ReturningHud(g))
                     .GroupBy(g => g.canvas != null ? g.canvas.rootCanvas : null).Where(grp => grp.Count() >= 3)
                     .SelectMany(grp => grp).ToList();
                 if (fresh.Count < 3) continue; // 버튼 글자만 바뀜·토스트 한 줄은 패널 아님
@@ -238,7 +238,7 @@ namespace Saga.EditorTools
                 string name = b.name + Label(b);
                 b.onClick.Invoke();
                 for (int f = 0; f < 20; f++) yield return null;
-                var fresh = VisibleGraphics().Where(g => !before.Contains(g.GetInstanceID()))
+                var fresh = VisibleGraphics().Where(g => !before.Contains(g.GetInstanceID()) && !ReturningHud(g))
                     .GroupBy(g => g.canvas != null ? g.canvas.rootCanvas : null).Where(grp => grp.Count() >= 3)
                     .SelectMany(grp => grp).ToList();
                 if (fresh.Count < 3) continue;
@@ -279,6 +279,9 @@ namespace Saga.EditorTools
                 foreach (var g in fresh) if (g != null) g.enabled = false; // 다음 단추를 가리지 않게(재기에서만)
             }
         }
+
+        /// <summary>U-0209 모달이 닫히면 다시 뜨는 HUD(2나락 대상 적 카드 — 시나리오 장면 중엔 숨는다) — 단추가 연 패널이 아니다(건너뛰기 → 카드 복귀를 "못 닫음" 으로 셌다).</summary>
+        private static bool ReturningHud(Graphic g) => g.GetComponentInParent<Saga.Dungeon.UI.DungeonFoeCard>() != null;
 
         private static int Alive(List<Graphic> gs) => gs.Count(g => g != null && g.isActiveAndEnabled && g.gameObject.activeInHierarchy && Alpha(g) >= 0.05f);
 
