@@ -10,7 +10,7 @@
     if (raw === undefined || raw === null || raw === '') { raw = ZOOM2_DEFAULT; }
     var z = Number(raw);
     if (!isFinite(z) || z <= 0) { z = ZOOM2_DEFAULT; }
-    return core.clamp(z, ZOOM2_MIN, ZOOM2_MAX) * (global.DG.field2d && global.DG.field2d.on() && core.save.settings && core.save.settings.tilt === 0 ? global.DG.field2d.zoomMul() : 1);   // W-0130 — 2D 들판만 가깝게(2.5D 는 그대로)
+    return core.clamp(z, ZOOM2_MIN, ZOOM2_MAX) * (global.DG.field2d && global.DG.field2d.on() && core.save.settings && core.save.settings.tilt === 0 ? global.DG.field2d.zoomMul() * ((global.innerHeight || 720) < 600 ? 1 : +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('mode2d.vwScale', ((global.DG.cfg && global.DG.cfg.mode2d) || {}).vwScale || 1) : 1) || 1) : 1);   // W-0130 — 2D 들판만 가깝게(2.5D 는 그대로)
   }
   function setCamZoom2d(z) {
     if (!core.save.settings) { return 1; }

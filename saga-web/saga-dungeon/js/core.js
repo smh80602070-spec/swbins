@@ -493,6 +493,7 @@
     /** 층 테마 → 벨트 방 뒷벽 시차 배경(원·중·근, K-0094 `dg_<테마>`, W-0191) — belt2d 가 그림이 서면 벽색·줄눈 대신 이걸 그린다 */
     beltBg: { '고분(古墳)': 'dg_gobun', '폐성(廢城)': 'dg_pyeseong', '산채(山寨)': 'dg_sanchae', '수궁(水宮)': 'dg_sugung', '지옥문(地獄門)': 'dg_jiokmun', '천계(天界)': 'dg_cheongye' },
     targetH: 40,                                 // 던전 2D 의 사람형 몸 높이 기준(px, dungeon-view bodyH 40·s 와 같은 단위 — 호출이 배수를 곱한다)
+    vwScale: 1.4,                              // W-0402 ② 바닐라웨어 큰 몸 — 2D 카메라 배율 곱(손잡이 mode2d.vwScale, 1 = 옛)
     foot: 0.87,
     /** 2D 모드인가 — 3D 가 안 서 있을 때(= 아이소 2D 그림) */
     on: function () { var T = global.DG.dungeon3d; return !(T && T.active && T.active()); },

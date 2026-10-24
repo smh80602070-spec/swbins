@@ -259,7 +259,7 @@ window.DG_NO_TUNE = true;
       return k === 'dawn,noon,sunset,night' && off === null && fix === 'night' && B.TOD.noon === null && B.TOD.night.a > B.TOD.dawn.a ? (k + ' · off null · 고정 night') : ('실패 ' + k);
     });
     t('2D 카메라 가까이(W-0204) — 720 화면 기본 배율 1.9 → 몸(P_H·1.12·배율) 100~140px(옛 1.35 → 81) · 키 600 아래는 1 그대로', function () {
-      var SV = DG.sideView, S = DG.side, z = SV.baseZoom(720), body = S.P_H * 1.12 * z, low = SV.baseZoom(500);
+      var SV = DG.sideView, S = DG.side, vw = (+DG.core.tuned('mode2d.vwScale', (DG.cfg.mode2d || {}).vwScale || 1) || 1), z = SV.baseZoom(720) / vw, body = S.P_H * 1.12 * z, low = SV.baseZoom(500);   /* 키 600 아래(가로 폰)는 큰 몸 배율도 안 곱한다 */   // W-0402 ② 큰 몸 배율(vw)은 따로 곱한다 — 여기선 그 아래 기본 배율
       return Math.abs(z - 1.9) < 1e-9 && body >= 100 && body <= 140 && low === 1 && ('배율 ' + z + ' · 몸 ' + Math.round(body) + 'px') || '실패 ' + z + ' · ' + body + ' · ' + low;
     });
     t('초상 목록(W-0164) — manifest 의 인물 초상이 전부 도감 인물이고, 늦게 들어온 인물(ac_balgwang)도 정사각·카드 둘 다 올라 있다', function () {
@@ -6665,7 +6665,8 @@ window.DG_NO_TUNE = true;
     t('st.side-view: 2D 화면(W-0132) — 큰 화면은 기본 확대(1~2.4, W-0204), 손잡이 1 이면 확대 없음, 풀빛 바닥의 발판 흙은 갈색', function () {
       var V = DG.sideView, C = DG.core, keep = C.tuned('side.baseZoom', ''), z0 = V._zoom(), r;
       C.setTune('side.baseZoom', 1); var z1 = V._zoom(); C.setTune('side.baseZoom', keep === '' ? null : keep);   // W-0204 옛 기본(1.35)을 손잡이에 박아 두고 끝나던 것 — 없던 손잡이는 지운다
-      r = [z0.base >= 1 && z0.base <= 2.4, z1.base === 1, V._dirt({ ground: '#6faf55' }) === '#8a6640', V._dirt({ ground: '#8a6b3a' }) === '#8a6b3a', V._grass({ ground: '#8a6b3a' }) === '#6f9f48'];
+      var vw = (+DG.core.tuned('mode2d.vwScale', (DG.cfg.mode2d || {}).vwScale || 1) || 1);   // W-0402 ② 큰 몸 배율은 기본 확대 위에 곱한다
+      r = [z0.base / vw >= 1 && z0.base / vw <= 2.4, Math.abs(z1.base - vw) < 1e-9, V._dirt({ ground: '#6faf55' }) === '#8a6640', V._dirt({ ground: '#8a6b3a' }) === '#8a6b3a', V._grass({ ground: '#8a6b3a' }) === '#6f9f48'];
       return r.every(Boolean) && ('기본 확대 ' + z0.base.toFixed(2) + ' · 화면 ' + Math.round(z0.W) + '×' + Math.round(z0.H)) || '실패 ' + r.join(',');
     });
 

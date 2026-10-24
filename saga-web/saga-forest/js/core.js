@@ -463,6 +463,7 @@
     /** 이음 타일(K-0091) — '풀|맨땅' → forest_edge_<값>(위 가장자리 기준)·forest_corner_<값>(왼쪽 위 모서리 기준), 맨땅 칸 위에 돌려 얹는다 */
     seam: { 'grass|path': 'grass_dirt', 'grass|floor': 'grass_dirt', 'grass|sand': 'grass_sand', 'grass|water': 'grass_water' },
     targetH: 40,                                 // 스탬프 s=1 일 때 몸 높이(px) — actor2d 가 s 를 배수로 곱한다
+    vwScale: 1.4,                              // W-0402 ② 바닐라웨어 큰 몸 — 2D 카메라 배율 곱(손잡이 mode2d.vwScale, 1 = 옛)
     foot: 0.87,
     /** 2D 모드인가 — 3D 마을이 안 서 있을 때(구면 투영 2D 그림) */
     on: function () { var V3 = global.DG.villageView3d; return !(V3 && V3.active && V3.active()); },

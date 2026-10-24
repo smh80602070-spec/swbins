@@ -162,7 +162,7 @@
     cv.style.height = H + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    var CZ = global.DG.cozy2d ? global.DG.cozy2d.zoomMul() : 1; ZOOM = core.clamp(H / 620, 0.82, 1.7) * CZ * (cam2 ? cam2.get() : 1); R = R0 / CZ;   // W-0133 스타듀식 큰 인물(손잡이 village.cozyZoom)
+    var CZ = global.DG.cozy2d ? global.DG.cozy2d.zoomMul() : 1; ZOOM = core.clamp(H / 620, 0.82, 1.7) * CZ * ((global.innerHeight || 720) < 600 ? 1 : +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('mode2d.vwScale', ((global.DG.cfg && global.DG.cfg.mode2d) || {}).vwScale || 1) : 1) || 1) * (cam2 ? cam2.get() : 1); R = R0 / CZ;   // W-0133 스타듀식 큰 인물(손잡이 village.cozyZoom)
     CX = W * 0.5;
     CY = H * 0.62;
     horizonY = CY - R * ZOOM * TILT;

@@ -547,7 +547,7 @@
    * uMin 은 마름모의 왼쪽 끝 (x=0, y=H 모서리).
    */
   function metrics() {
-    var BTm = global.DG.belt2d; if (BTm && BTm.want(d().raw())) { return BTm.metrics(cv, d(), userZoom(), PAD_BOT); }   var W = d().ROOM_W, H = d().ROOM_H;   // W-0128 — 2D 던전 방은 벨트 스크롤(belt2d.js)
+    var BTm = global.DG.belt2d; if (BTm && BTm.want(d().raw())) { return BTm.metrics(cv, d(), userZoom() * ((global.innerHeight || 720) < 600 ? 1 : +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('mode2d.vwScale', ((global.DG.cfg && global.DG.cfg.mode2d) || {}).vwScale || 1) : 1) || 1), PAD_BOT); }   /* W-0402 ② 벨트 방도 큰 몸 배율 */   var W = d().ROOM_W, H = d().ROOM_H;   // W-0128 — 2D 던전 방은 벨트 스크롤(belt2d.js)
     var cw = cv.clientWidth || 1, ch = cv.clientHeight || 1;
     var uw = (W + H) * IX;                     // 마름모 가로폭
     var vh = (W + H) * IY;                     // 마름모 세로높이
@@ -555,7 +555,7 @@
     var padTop = WALLH + 16;
     var chUse = Math.max(120, ch - PAD_BOT);   // 조작판에 가리지 않는 높이
     var fit = Math.min(cw / (uw + 20), chUse / (vh + padTop + 14));
-    var s = fit * ZOOM * userZoom();
+    var s = fit * ZOOM * ((global.innerHeight || 720) < 600 ? 1 : +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('mode2d.vwScale', ((global.DG.cfg && global.DG.cfg.mode2d) || {}).vwScale || 1) : 1) || 1) * userZoom();   // W-0402 ② 큰 몸 = 카메라 당김(사용자 10-25 「카메라를 당긴다」) — 손잡이 mode2d.vwScale, 판 기본 cfg.mode2d.vwScale
     var uMin = -H * IX, uMax = W * IX, vMax = (W + H) * IY;
 
     /* 카메라 — 원작은 인물을 화면 한가운데 붙들고 방이 그 밖으로 흘러간다.

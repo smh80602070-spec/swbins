@@ -17416,7 +17416,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         var trees = 0, i; for (i = 0; i < 40; i++) { trees += F.propsAt('forest', i, i * 3).filter(function (p) { return /^tree_/.test(p.id); }).length; }
         var edge = /230,245,255/.test(F.edgeColor('water', 'grass')) && F.edgeColor('grass', 'grass') === null;
         st.tilt = 0; var z2 = W.camZoom2d; st.tilt = 1; var z1 = W.camZoom2d;
-        r = [a === b, road === 0 && water === 0, trees > 30, edge, F.color('road') !== F.color('grass'), typeof z2 === 'number' && Math.abs(z2 / z1 - F.zoomMul()) < 1e-9];
+        r = [a === b, road === 0 && water === 0, trees > 30, edge, F.color('road') !== F.color('grass'), typeof z2 === 'number' && Math.abs(z2 / z1 - F.zoomMul() * ((window.innerHeight || 720) < 600 ? 1 : +DG.core.tuned('mode2d.vwScale', (DG.cfg.mode2d || {}).vwScale || 1) || 1)) < 1e-9];   // W-0402 ② 2D 들판엔 큰 몸 배율(vw)도 곱한다
       } finally { st.tilt = keep; }
       return r.every(Boolean) && ('숲 40칸 나무 ' + trees + ' · 2D 배율 ×' + F.zoomMul()) || '실패 ' + r.join(',');
     });

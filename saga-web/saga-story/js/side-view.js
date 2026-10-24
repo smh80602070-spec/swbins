@@ -46,7 +46,7 @@
   function baseZoom(hh) {   // hh = 화면 키(진단 — 없으면 지금 캔버스)
     var H = hh || H0();
     var C = global.DG.core, k = C && C.tuned ? +C.tuned('side.baseZoom', 1.9) : 1.9;   // W-0204 1.35 → 1.9(몸 81 → ≈114px/720 — RPG 처럼 1/6)
-    return H >= 600 ? Math.max(1, Math.min(2.4, k, H / 300)) : 1;   // 키가 낮은 2D 는 resize 가 논리 높이 650 으로 그린다
+    return (H >= 600 ? Math.max(1, Math.min(2.4, k, H / 300)) : 1) * ((W && W < H0()) || H < 600 ? 1 : +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('mode2d.vwScale', ((global.DG.cfg && global.DG.cfg.mode2d) || {}).vwScale || 1) : 1) || 1);   // 세로 폰은 화면이 이미 좁고, 가로 폰(키 600 아래)은 확대 중심이 가운데라 왼쪽 주인공이 HUD 밑으로 밀려 — 둘 다 큰 몸 배율을 안 곱한다 · 키가 낮은 2D 는 resize 가 논리 높이 650 으로 그린다   // W-0402 ② 큰 몸 = 카메라 당김(사용자 10-25 「카메라를 당긴다」) — 손잡이 mode2d.vwScale, 판 기본 cfg.mode2d.vwScale
   }
   /** W-0155 — 폰 가로(키 500 아래·폭 780 넘음)면 시작 자리를 ◀▶ 조작판 오른쪽 끝 + 24px 뒤로(세계 좌표). 화면 x = 세계 x × 배율 ÷ lowK.
       조작판이 보이면 실제 끝을, 안 보이면 가로 CSS 값(14 + 44·2 + 8 = 110). PC·세로는 0(= 옛 80 그대로) */
@@ -201,7 +201,7 @@
    */
   function readZone(e) {
     var r = { left: cv.offsetLeft, top: cv.offsetTop, width: cv.offsetWidth || 1, height: cv.offsetHeight || 1 };   // W-0204 확대 전 상자(캔버스 = 창) — getBoundingClientRect 는 CSS scale(배율)이 걸린 상자라 배율 1.9 에선 화면 위쪽 탭이 ↓ 로 읽혔다
-    /* 창 기준 비율(4.5:5.5 세로, 가운데 22%) — 확대(baseZoom·viewZoom)는 CSS scale 이라 레이아웃 상자(offset*)는 그대로다.
+    /* 창 기준 비율(4.5:5.5 세로, 가운데 22%) — 확대(baseZoom·viewZoom)는 CSS scale 이라 레이아웃 상자(offset*)는 그대로다.
        사람이 누르는 곳은 늘 창이므로 존도 창 비율로 나눈다(W/H 논리 크기가 아니라) */
     var x = e.clientX - r.left, y = e.clientY - r.top;
     if (y < r.height * 0.45) { return 'up'; }
