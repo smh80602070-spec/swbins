@@ -208,7 +208,9 @@ func _physics_process(_delta: float) -> void:
 			if _frame == 60:
 				_p.play_action("skill", 0.4, 0.5)
 			if _frame == 62:
-				_check_pose("pose_skill", "skill", "attack")
+				## G-0284 무예 시전은 모캡 cast 가 있으면 그것(go_player play_action — SAGA_ACTION_MOCAP=0 이면 옛 skill)
+				var mocap: bool = _p._anim != null and _p._anim.has_animation("cast") and OS.get_environment("SAGA_ACTION_MOCAP") != "0"
+				_check_pose("pose_skill", "cast" if mocap else "skill", "attack")
 			if _frame == 120:
 				_p.play_action("burst", 0.6, 0.0)
 			if _frame == 122:

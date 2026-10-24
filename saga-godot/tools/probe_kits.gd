@@ -38,6 +38,7 @@ var _frame := 0
 var _step := 0
 var _fails := 0
 var _v: Variant = null
+var _blink_at := -1   # ⑳ 그림자 걸음을 쓴 프레임(-1 = 아직)
 
 func _ready() -> void:
 	Weather.force("clear")
@@ -333,9 +334,15 @@ func _physics_process(_delta: float) -> void:
 				_use(1)
 				(_fc.get("_marks") as Dictionary).clear()
 				_put(_a.global_position + Vector3(-4.0, 0.3, 5.0))
-			if _frame == 5:
+			## 0.3m 위에 세워 떨어지는 중이면 skill_dash 가 안 돈다(땅에서만) — 땅에 닿은 프레임에 쓰고 25프레임 뒤에 잰다(전엔 5프레임 고정이라 흔들림).
+			if _frame >= 5 and _frame < 60 and _blink_at < 0 and int(_p.get("mode")) == 0:
+				_blink_at = _frame
 				_v = [_a.get("hp"), _fc.call("skill")]
-			if _frame == 30:
+			if _frame == 60 and _blink_at < 0:
+				_check("wanderer_blink", false, "60프레임 안에 땅에 안 닿음 mode=%s" % _p.get("mode"))
+				_next()
+			if _blink_at >= 0 and _frame == _blink_at + 25:
+				_blink_at = -1
 				var d := Vector2(_p.global_position.x - _a.global_position.x, _p.global_position.z - _a.global_position.z).length()
 				_a.call("set_aura", "")
 				_b.call("set_aura", "")
