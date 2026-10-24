@@ -19,6 +19,7 @@ const argv = process.argv.slice(2);
 const bi = argv.indexOf('--base');
 const BASE = (bi >= 0 ? argv[bi + 1] : (process.env.PW_BASE || 'http://127.0.0.1:8871/')).replace(/\/?$/, '/');
 const opt = (k, d) => { const a = argv.find((x) => x.startsWith('--' + k + '=')); return a ? +a.slice(k.length + 3) : d; };
+const UNDER = (argv.find((a) => a.startsWith('--under=')) || '').slice(8);   // --under=함수이름: 그 함수 아래(자손) 포함 시간만 따로
 const SECS = opt('secs', 14), RUNS = opt('runs', 2), PROF = argv.includes('--profile');   // --profile: 걷는 동안 CDP 프로파일 → 포함(inclusive)·자기(self) 시간 상위 표
 let profs = [], cpu = [];
 const TUNES = [['perf.auto', 0], ['perf.startTier', 'LOW']].concat(argv.map((a, i) => (a === '--tune' ? argv[i + 1] : null)).filter(Boolean)
@@ -77,18 +78,20 @@ const runs = [];
 try { for (let k = 0; k < RUNS; k++) { runs.push(await one(browser)); } } finally { await browser.close(); }
 /** 프로파일 → 함수(이름 @파일)별 포함·자기 ms — 포함은 한 표본 스택에서 같은 함수를 한 번만 센다 */
 function tally(P) {
-  const byId = new Map(), parent = new Map(), inc = new Map(), self = new Map(), callers = new Map();
+  const byId = new Map(), parent = new Map(), inc = new Map(), self = new Map(), callers = new Map(), under = new Map();
   P.nodes.forEach((n) => { byId.set(n.id, n); (n.children || []).forEach((c) => parent.set(c, n.id)); });
   const key = (n) => { const f = n.callFrame; return (f.functionName || '(anon)') + ' @' + (f.url || '').split('/').slice(-2).join('/') + ':' + f.lineNumber; };
   const dts = P.timeDeltas || [];
   P.samples.forEach((id, i) => { const dt = (dts[i + 1] != null ? dts[i + 1] : 0) / 1000, seen = new Set(); let n = byId.get(id); const sk = key(n); self.set(sk, (self.get(sk) || 0) + dt);
-    if (/^(restore|getImageData|drawImage|save|fill|putImageData) @/.test(sk)) { const p = byId.get(parent.get(n.id)), pk = sk.split(' ')[0] + ' ← ' + (p ? key(p) : '?'); callers.set(pk, (callers.get(pk) || 0) + dt); }
-    while (n) { const k = key(n); if (!seen.has(k)) { seen.add(k); inc.set(k, (inc.get(k) || 0) + dt); } n = byId.get(parent.get(n.id)); } });
-  return { inc, self, callers, total: (P.endTime - P.startTime) / 1000 };
+    if (/^(restore|getImageData|drawImage|save|fill|putImageData|getBoundingClientRect|getComputedStyle|offsetWidth|set innerHTML|set textContent|querySelector|querySelectorAll) @/.test(sk)) { let p = byId.get(parent.get(n.id)); while (p && /^CP\.|^\(anon\) @:/.test(key(p))) { p = byId.get(parent.get(p.id)); } const pk = sk.split(' ')[0] + ' ← ' + (p ? key(p) : '?'); callers.set(pk, (callers.get(pk) || 0) + dt); }
+    const chain = []; while (n) { const k = key(n); chain.push(k); if (!seen.has(k)) { seen.add(k); inc.set(k, (inc.get(k) || 0) + dt); } n = byId.get(parent.get(n.id)); }
+    if (UNDER) { const j = chain.findIndex((k) => k.startsWith(UNDER + ' @')); if (j >= 0) { new Set(chain.slice(0, j + 1)).forEach((k) => under.set(k, (under.get(k) || 0) + dt)); } } });
+  return { inc, self, callers, under, total: (P.endTime - P.startTime) / 1000 };
 }
 if (PROF) { profs.forEach((P, r) => { const t = tally(P), top = (m, n) => [...m.entries()].sort((a, b) => b[1] - a[1]).slice(0, n);
   console.log('— run ' + (r + 1) + ' 전체 ' + Math.round(t.total) + 'ms · 포함 상위');
   top(t.inc, 45).forEach(([k, v]) => console.log('  inc ' + (v / t.total * 100).toFixed(1) + '% ' + k));
+  if (UNDER) { console.log('  · ' + UNDER + ' 아래'); top(t.under, 25).forEach(([k, v]) => console.log('  under ' + (v / t.total * 100).toFixed(1) + '% ' + k)); }
   console.log('  · 내장 호출자'); top(t.callers, 16).forEach(([k, v]) => console.log('  call ' + (v / t.total * 100).toFixed(1) + '% ' + k)); console.log('  · 자기 상위'); top(t.self, 20).forEach(([k, v]) => console.log('  self ' + (v / t.total * 100).toFixed(1) + '% ' + k)); }); }
 const avg = (i, f) => +(runs.reduce((a, r) => a + (r[i] ? r[i][f] : 0), 0) / runs.length).toFixed(1);
 const mean = runs[0].map((_, i) => ({ s: i + 1, fps: avg(i, 'fps'), worstMs: avg(i, 'worstMs'), bakes: avg(i, 'bakes'), rebakes: avg(i, 'rebakes'), pre: avg(i, 'pre'), bakeMs: avg(i, 'bakeMs') }));

@@ -791,10 +791,13 @@
     var footX = w / 2, footY = h * 0.94;
     var dpr = Math.min(global.devicePixelRatio || 1, 2);
 
+    /* W-0389 ③-4 — 굽기는 CPU 캔버스(willReadFrequently)에서: storyize 의 getImageData 가 GPU 캔버스면 되읽기라 폰 2D 걷기 프로파일 3% —
+       다 구운 뒤 GPU 캔버스로 한 번 옮긴다(매 프레임 붙이는 쪽은 그대로 GPU). 손잡이 sprite.bakeCpu 0 = 옛 길 */
+    var Ct = global.DG && global.DG.core, cpu = !(Ct && Ct.tuned && !+Ct.tuned('sprite.bakeCpu', 1));
     var cv = document.createElement('canvas');
     cv.width = Math.max(1, Math.ceil(w * dpr));
     cv.height = Math.max(1, Math.ceil(h * dpr));
-    var c = cv.getContext('2d');
+    var c = (cpu && cv.getContext('2d', { willReadFrequently: true })) || cv.getContext('2d');
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     var useImg = false;
@@ -822,6 +825,7 @@
     /* 여기서 한 번 훑는다 — 지도 위 스탬프는 어두운 배경에 서므로
        실루엣만 밝은 테를 둘러 형태가 묻히지 않게 한다 */
     storyize(cv, { rim: STORY_RIM_MAP, inner: H >= 40 && !(useImg && kind === 'beast'), thick: 1 });   // W-0347 렌더 짐승 그림은 실루엣 테만 — 안쪽 선이 털 결을 점묘로 만든다
+    if (cpu) { var gv = document.createElement('canvas'); gv.width = cv.width; gv.height = cv.height; gv.getContext('2d').drawImage(cv, 0, 0); cv = gv; }
     return { cv: cv, w: w, h: h, footX: footX, footY: footY, base: base, sc: sc, img: useImg };
   }
 

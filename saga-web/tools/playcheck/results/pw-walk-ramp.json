@@ -1,5 +1,5 @@
 {
- "at": "2026-10-23T23:48:43.515Z",
+ "at": "2026-10-24T00:24:12.388Z",
  "tunes": [
   [
    "perf.auto",
@@ -13,471 +13,471 @@
  "runs": [
   [
    {
-    "fps": 21.2,
-    "worstMs": 90,
-    "bakes": 2,
+    "fps": 4.4,
+    "worstMs": 468,
+    "bakes": 0,
     "rebakes": 0,
-    "pre": 2,
-    "bakeMs": 23,
+    "pre": 0,
+    "bakeMs": 0,
     "resets": 0,
-    "n": 19,
+    "n": 14,
     "px": 405,
     "tint": {
-     "n": 55,
-     "px": 13434880,
+     "n": 32,
+     "px": 8126464,
      "cap": 24000000,
-     "made": 55,
+     "made": 32,
      "evict": 0,
-     "rows": 36,
-     "cells": 348,
-     "ms": 2997
+     "rows": 15,
+     "cells": 172,
+     "ms": 2920
     },
     "stamp": {
-     "hit": 1193,
-     "miss": 123,
-     "size": 123
+     "hit": 294,
+     "miss": 106,
+     "size": 106
     },
-    "tall": 38,
+    "tall": 81,
     "pos": [
-     -5,
-     -126
+     -123,
+     -198
     ],
-    "kind": "road",
+    "kind": "forest",
     "perFrame": {
-     "drawImage": 92,
-     "fill": 128.3,
+     "drawImage": 129.8,
+     "fill": 130.2,
      "getImageData": 2.2,
-     "fillText": 62,
-     "createCanvas": 0.7
+     "fillText": 62.6,
+     "createCanvas": 4
     }
    },
    {
-    "fps": 28.9,
-    "worstMs": 81,
-    "bakes": 1,
+    "fps": 5,
+    "worstMs": 273,
+    "bakes": 0,
     "rebakes": 0,
-    "pre": 1,
-    "bakeMs": 10,
+    "pre": 0,
+    "bakeMs": 0,
     "resets": 0,
-    "n": 20,
+    "n": 14,
     "px": 405,
     "tint": {
-     "n": 55,
-     "px": 13434880,
+     "n": 33,
+     "px": 8421376,
      "cap": 24000000,
-     "made": 55,
+     "made": 33,
      "evict": 0,
-     "rows": 39,
-     "cells": 361,
-     "ms": 3027
+     "rows": 15,
+     "cells": 180,
+     "ms": 2960
     },
     "stamp": {
-     "hit": 1393,
-     "miss": 129,
-     "size": 129
+     "hit": 329,
+     "miss": 109,
+     "size": 109
     },
-    "tall": 76,
+    "tall": 90,
     "pos": [
-     4,
-     -248
+     -123,
+     -249
     ],
     "kind": "mount",
     "perFrame": {
-     "drawImage": 109.3,
-     "fill": 121,
-     "getImageData": 0.7,
-     "fillText": 62.7,
-     "createCanvas": 0.3
+     "drawImage": 137,
+     "fill": 126.8,
+     "getImageData": 0.8,
+     "fillText": 57.6,
+     "createCanvas": 1.4
     }
    },
    {
-    "fps": 20.4,
-    "worstMs": 168,
-    "bakes": 2,
+    "fps": 6.1,
+    "worstMs": 240,
+    "bakes": 0,
     "rebakes": 1,
-    "pre": 2,
-    "bakeMs": 46,
+    "pre": 0,
+    "bakeMs": 35,
     "resets": 0,
-    "n": 22,
+    "n": 14,
     "px": 405,
     "tint": {
-     "n": 57,
-     "px": 13860864,
+     "n": 34,
+     "px": 8716288,
      "cap": 24000000,
-     "made": 57,
+     "made": 34,
      "evict": 0,
-     "rows": 41,
-     "cells": 377,
-     "ms": 3058
+     "rows": 16,
+     "cells": 192,
+     "ms": 3013
     },
     "stamp": {
-     "hit": 1573,
-     "miss": 142,
-     "size": 142
+     "hit": 361,
+     "miss": 119,
+     "size": 119
     },
-    "tall": 85,
+    "tall": 100,
     "pos": [
-     4,
-     -347
+     -125,
+     -320
     ],
     "kind": "mount",
     "perFrame": {
-     "drawImage": 140.3,
-     "fill": 151.4,
-     "getImageData": 1.4,
-     "fillText": 54.8,
-     "createCanvas": 0.8
+     "drawImage": 159.4,
+     "fill": 154.3,
+     "getImageData": 1.6,
+     "fillText": 56.3,
+     "createCanvas": 3
     }
    },
    {
-    "fps": 20,
-    "worstMs": 74,
-    "bakes": 1,
+    "fps": 5.2,
+    "worstMs": 216,
+    "bakes": 2,
     "rebakes": 0,
-    "pre": 1,
-    "bakeMs": 10,
+    "pre": 2,
+    "bakeMs": 113,
     "resets": 0,
-    "n": 23,
+    "n": 16,
     "px": 405,
     "tint": {
-     "n": 58,
-     "px": 14155776,
+     "n": 35,
+     "px": 9011200,
      "cap": 24000000,
-     "made": 58,
+     "made": 35,
      "evict": 0,
-     "rows": 43,
-     "cells": 386,
-     "ms": 3085
+     "rows": 19,
+     "cells": 205,
+     "ms": 3076
     },
     "stamp": {
-     "hit": 1723,
-     "miss": 162,
-     "size": 162
+     "hit": 377,
+     "miss": 128,
+     "size": 128
     },
-    "tall": 107,
+    "tall": 106,
     "pos": [
-     11,
-     -453
+     -125,
+     -381
     ],
     "kind": "mount",
     "perFrame": {
-     "drawImage": 140.3,
-     "fill": 118,
-     "getImageData": 1.4,
-     "fillText": 53.1,
+     "drawImage": 188.8,
+     "fill": 233.2,
+     "getImageData": 1.7,
+     "fillText": 53.8,
+     "createCanvas": 3.5
+    }
+   },
+   {
+    "fps": 4.7,
+    "worstMs": 316,
+    "bakes": 0,
+    "rebakes": 0,
+    "pre": 0,
+    "bakeMs": 0,
+    "resets": 0,
+    "n": 16,
+    "px": 405,
+    "tint": {
+     "n": 36,
+     "px": 9142272,
+     "cap": 24000000,
+     "made": 36,
+     "evict": 0,
+     "rows": 20,
+     "cells": 219,
+     "ms": 3204
+    },
+    "stamp": {
+     "hit": 393,
+     "miss": 130,
+     "size": 130
+    },
+    "tall": 111,
+    "pos": [
+     -125,
+     -432
+    ],
+    "kind": "mount",
+    "perFrame": {
+     "drawImage": 158,
+     "fill": 128.6,
+     "getImageData": 0.6,
+     "fillText": 55.8,
      "createCanvas": 1
     }
    },
    {
-    "fps": 8.3,
-    "worstMs": 341,
+    "fps": 6.7,
+    "worstMs": 194,
     "bakes": 0,
     "rebakes": 0,
     "pre": 0,
     "bakeMs": 0,
     "resets": 0,
-    "n": 23,
+    "n": 16,
     "px": 405,
     "tint": {
-     "n": 60,
-     "px": 14745600,
+     "n": 36,
+     "px": 9142272,
      "cap": 24000000,
-     "made": 60,
+     "made": 36,
      "evict": 0,
-     "rows": 44,
-     "cells": 398,
-     "ms": 3182
+     "rows": 21,
+     "cells": 222,
+     "ms": 3215
     },
     "stamp": {
-     "hit": 1789,
-     "miss": 170,
-     "size": 170
+     "hit": 421,
+     "miss": 132,
+     "size": 132
     },
-    "tall": 114,
+    "tall": 112,
     "pos": [
-     24,
-     -526
+     -125,
+     -504
     ],
-    "kind": "mount",
+    "kind": "water",
     "perFrame": {
-     "drawImage": 162,
-     "fill": 121.4,
-     "getImageData": 2.3,
-     "fillText": 55.3,
-     "createCanvas": 1.2
-    }
-   },
-   {
-    "fps": 15.8,
-    "worstMs": 174,
-    "bakes": 0,
-    "rebakes": 0,
-    "pre": 0,
-    "bakeMs": 0,
-    "resets": 0,
-    "n": 23,
-    "px": 405,
-    "tint": {
-     "n": 62,
-     "px": 15171584,
-     "cap": 24000000,
-     "made": 62,
-     "evict": 0,
-     "rows": 47,
-     "cells": 418,
-     "ms": 3317
-    },
-    "stamp": {
-     "hit": 1909,
-     "miss": 176,
-     "size": 176
-    },
-    "tall": 142,
-    "pos": [
-     30,
-     -614
-    ],
-    "kind": "forest",
-    "perFrame": {
-     "drawImage": 176.6,
-     "fill": 133.2,
-     "getImageData": 1.7,
+     "drawImage": 163.9,
+     "fill": 124.3,
+     "getImageData": 0.3,
      "fillText": 56.4,
      "createCanvas": 0.6
     }
    },
    {
-    "fps": 7.3,
-    "worstMs": 296,
+    "fps": 7.8,
+    "worstMs": 153,
     "bakes": 0,
     "rebakes": 0,
     "pre": 0,
     "bakeMs": 0,
     "resets": 0,
-    "n": 23,
+    "n": 16,
     "px": 405,
     "tint": {
-     "n": 65,
-     "px": 15892480,
+     "n": 36,
+     "px": 9142272,
      "cap": 24000000,
-     "made": 65,
+     "made": 36,
      "evict": 0,
-     "rows": 48,
-     "cells": 434,
-     "ms": 3589
+     "rows": 21,
+     "cells": 222,
+     "ms": 3215
     },
     "stamp": {
-     "hit": 1969,
-     "miss": 187,
-     "size": 187
+     "hit": 458,
+     "miss": 134,
+     "size": 134
     },
-    "tall": 156,
+    "tall": 128,
     "pos": [
-     30,
-     -681
+     -125,
+     -586
     ],
-    "kind": "road",
+    "kind": "forest",
     "perFrame": {
-     "drawImage": 198.6,
-     "fill": 141.1,
-     "getImageData": 3.4,
-     "fillText": 55.6,
-     "createCanvas": 1.8
+     "drawImage": 173.6,
+     "fill": 129.5,
+     "getImageData": 0.3,
+     "fillText": 57.3,
+     "createCanvas": 0.5
     }
    },
    {
-    "fps": 6.3,
-    "worstMs": 208,
-    "bakes": 2,
+    "fps": 10.1,
+    "worstMs": 209,
+    "bakes": 4,
     "rebakes": 0,
-    "pre": 2,
-    "bakeMs": 66,
+    "pre": 4,
+    "bakeMs": 63,
     "resets": 0,
-    "n": 25,
+    "n": 20,
     "px": 405,
     "tint": {
-     "n": 65,
-     "px": 15892480,
+     "n": 38,
+     "px": 9404416,
      "cap": 24000000,
-     "made": 65,
+     "made": 38,
      "evict": 0,
-     "rows": 49,
-     "cells": 440,
-     "ms": 3620
+     "rows": 24,
+     "cells": 239,
+     "ms": 3313
     },
     "stamp": {
-     "hit": 2015,
-     "miss": 198,
-     "size": 198
+     "hit": 510,
+     "miss": 145,
+     "size": 145
     },
-    "tall": 170,
+    "tall": 143,
     "pos": [
-     30,
-     -753
+     -127,
+     -690
     ],
-    "kind": "road",
+    "kind": "forest",
     "perFrame": {
-     "drawImage": 242.3,
-     "fill": 223.3,
-     "getImageData": 2.6,
-     "fillText": 59.3,
-     "createCanvas": 2
-    }
-   },
-   {
-    "fps": 8.3,
-    "worstMs": 164,
-    "bakes": 0,
-    "rebakes": 0,
-    "pre": 0,
-    "bakeMs": 0,
-    "resets": 0,
-    "n": 25,
-    "px": 405,
-    "tint": {
-     "n": 67,
-     "px": 16482304,
-     "cap": 24000000,
-     "made": 67,
-     "evict": 0,
-     "rows": 49,
-     "cells": 451,
-     "ms": 3667
-    },
-    "stamp": {
-     "hit": 2075,
-     "miss": 211,
-     "size": 211
-    },
-    "tall": 181,
-    "pos": [
-     30,
-     -838
-    ],
-    "kind": "grass",
-    "perFrame": {
-     "drawImage": 223.8,
-     "fill": 135.1,
-     "getImageData": 2.7,
-     "fillText": 61.4,
-     "createCanvas": 1.7
-    }
-   },
-   {
-    "fps": 5,
-    "worstMs": 262,
-    "bakes": 0,
-    "rebakes": 0,
-    "pre": 0,
-    "bakeMs": 0,
-    "resets": 0,
-    "n": 25,
-    "px": 405,
-    "tint": {
-     "n": 71,
-     "px": 17334272,
-     "cap": 24000000,
-     "made": 71,
-     "evict": 0,
-     "rows": 50,
-     "cells": 460,
-     "ms": 3970
-    },
-    "stamp": {
-     "hit": 2125,
-     "miss": 222,
-     "size": 222
-    },
-    "tall": 212,
-    "pos": [
-     30,
-     -900
-    ],
-    "kind": "grass",
-    "perFrame": {
-     "drawImage": 252.5,
-     "fill": 126,
-     "getImageData": 3.3,
-     "fillText": 59.8,
+     "drawImage": 233.6,
+     "fill": 206.2,
+     "getImageData": 1.2,
+     "fillText": 59.5,
      "createCanvas": 2.5
     }
    },
    {
-    "fps": 4.9,
-    "worstMs": 247,
+    "fps": 5.8,
+    "worstMs": 265,
+    "bakes": 2,
+    "rebakes": 0,
+    "pre": 2,
+    "bakeMs": 61,
+    "resets": 0,
+    "n": 22,
+    "px": 405,
+    "tint": {
+     "n": 39,
+     "px": 9535488,
+     "cap": 24000000,
+     "made": 39,
+     "evict": 0,
+     "rows": 24,
+     "cells": 240,
+     "ms": 3398
+    },
+    "stamp": {
+     "hit": 542,
+     "miss": 148,
+     "size": 148
+    },
+    "tall": 166,
+    "pos": [
+     -124,
+     -762
+    ],
+    "kind": "town",
+    "perFrame": {
+     "drawImage": 247.7,
+     "fill": 210.2,
+     "getImageData": 0.8,
+     "fillText": 57.5,
+     "createCanvas": 1.7
+    }
+   },
+   {
+    "fps": 4,
+    "worstMs": 461,
     "bakes": 0,
     "rebakes": 0,
     "pre": 0,
     "bakeMs": 0,
     "resets": 0,
-    "n": 25,
+    "n": 22,
     "px": 405,
     "tint": {
-     "n": 72,
-     "px": 17465344,
+     "n": 40,
+     "px": 9830400,
      "cap": 24000000,
-     "made": 72,
+     "made": 40,
      "evict": 0,
-     "rows": 50,
-     "cells": 469,
-     "ms": 4106
+     "rows": 25,
+     "cells": 248,
+     "ms": 3562
     },
     "stamp": {
-     "hit": 2172,
-     "miss": 237,
-     "size": 237
+     "hit": 562,
+     "miss": 150,
+     "size": 150
     },
-    "tall": 233,
+    "tall": 166,
     "pos": [
-     30,
-     -951
+     -124,
+     -782
     ],
-    "kind": "road",
+    "kind": "town",
     "perFrame": {
-     "drawImage": 267.8,
-     "fill": 112,
-     "getImageData": 4.8,
-     "fillText": 58.2,
-     "createCanvas": 3.2
+     "drawImage": 218,
+     "fill": 122,
+     "getImageData": 0.8,
+     "fillText": 61,
+     "createCanvas": 1.3
     }
    },
    {
-    "fps": 4,
-    "worstMs": 417,
+    "fps": 5.3,
+    "worstMs": 345,
     "bakes": 2,
     "rebakes": 0,
     "pre": 2,
-    "bakeMs": 92,
+    "bakeMs": 74,
     "resets": 0,
-    "n": 27,
+    "n": 24,
     "px": 405,
     "tint": {
-     "n": 73,
-     "px": 17596416,
+     "n": 42,
+     "px": 10256384,
      "cap": 24000000,
-     "made": 73,
+     "made": 42,
      "evict": 0,
-     "rows": 51,
-     "cells": 478,
-     "ms": 4247
+     "rows": 27,
+     "cells": 266,
+     "ms": 3637
     },
     "stamp": {
-     "hit": 2218,
-     "miss": 243,
-     "size": 243
+     "hit": 591,
+     "miss": 151,
+     "size": 151
     },
-    "tall": 250,
+    "tall": 169,
     "pos": [
-     12,
-     -1014
+     -82,
+     -803
     ],
-    "kind": "road",
+    "kind": "grass",
     "perFrame": {
-     "drawImage": 330.6,
-     "fill": 216,
-     "getImageData": 3.2,
-     "fillText": 52.8,
-     "createCanvas": 2
+     "drawImage": 247.5,
+     "fill": 175.3,
+     "getImageData": 0.5,
+     "fillText": 60.2,
+     "createCanvas": 1
+    }
+   },
+   {
+    "fps": 5.4,
+    "worstMs": 307,
+    "bakes": 0,
+    "rebakes": 0,
+    "pre": 0,
+    "bakeMs": 0,
+    "resets": 0,
+    "n": 24,
+    "px": 405,
+    "tint": {
+     "n": 43,
+     "px": 10551296,
+     "cap": 24000000,
+     "made": 43,
+     "evict": 0,
+     "rows": 27,
+     "cells": 269,
+     "ms": 3663
+    },
+    "stamp": {
+     "hit": 624,
+     "miss": 171,
+     "size": 171
+    },
+    "tall": 174,
+    "pos": [
+     -106,
+     -836
+    ],
+    "kind": "town",
+    "perFrame": {
+     "drawImage": 228.7,
+     "fill": 119.6,
+     "getImageData": 3,
+     "fillText": 60.3,
+     "createCanvas": 5.9
     }
    }
   ]
@@ -485,44 +485,44 @@
  "mean": [
   {
    "s": 1,
-   "fps": 21.2,
-   "worstMs": 90,
-   "bakes": 2,
+   "fps": 4.4,
+   "worstMs": 468,
+   "bakes": 0,
    "rebakes": 0,
-   "pre": 2,
-   "bakeMs": 23
+   "pre": 0,
+   "bakeMs": 0
   },
   {
    "s": 2,
-   "fps": 28.9,
-   "worstMs": 81,
-   "bakes": 1,
+   "fps": 5,
+   "worstMs": 273,
+   "bakes": 0,
    "rebakes": 0,
-   "pre": 1,
-   "bakeMs": 10
+   "pre": 0,
+   "bakeMs": 0
   },
   {
    "s": 3,
-   "fps": 20.4,
-   "worstMs": 168,
-   "bakes": 2,
+   "fps": 6.1,
+   "worstMs": 240,
+   "bakes": 0,
    "rebakes": 1,
-   "pre": 2,
-   "bakeMs": 46
+   "pre": 0,
+   "bakeMs": 35
   },
   {
    "s": 4,
-   "fps": 20,
-   "worstMs": 74,
-   "bakes": 1,
+   "fps": 5.2,
+   "worstMs": 216,
+   "bakes": 2,
    "rebakes": 0,
-   "pre": 1,
-   "bakeMs": 10
+   "pre": 2,
+   "bakeMs": 113
   },
   {
    "s": 5,
-   "fps": 8.3,
-   "worstMs": 341,
+   "fps": 4.7,
+   "worstMs": 316,
    "bakes": 0,
    "rebakes": 0,
    "pre": 0,
@@ -530,8 +530,8 @@
   },
   {
    "s": 6,
-   "fps": 15.8,
-   "worstMs": 174,
+   "fps": 6.7,
+   "worstMs": 194,
    "bakes": 0,
    "rebakes": 0,
    "pre": 0,
@@ -539,8 +539,8 @@
   },
   {
    "s": 7,
-   "fps": 7.3,
-   "worstMs": 296,
+   "fps": 7.8,
+   "worstMs": 153,
    "bakes": 0,
    "rebakes": 0,
    "pre": 0,
@@ -548,26 +548,26 @@
   },
   {
    "s": 8,
-   "fps": 6.3,
-   "worstMs": 208,
-   "bakes": 2,
+   "fps": 10.1,
+   "worstMs": 209,
+   "bakes": 4,
    "rebakes": 0,
-   "pre": 2,
-   "bakeMs": 66
+   "pre": 4,
+   "bakeMs": 63
   },
   {
    "s": 9,
-   "fps": 8.3,
-   "worstMs": 164,
-   "bakes": 0,
+   "fps": 5.8,
+   "worstMs": 265,
+   "bakes": 2,
    "rebakes": 0,
-   "pre": 0,
-   "bakeMs": 0
+   "pre": 2,
+   "bakeMs": 61
   },
   {
    "s": 10,
-   "fps": 5,
-   "worstMs": 262,
+   "fps": 4,
+   "worstMs": 461,
    "bakes": 0,
    "rebakes": 0,
    "pre": 0,
@@ -575,29 +575,29 @@
   },
   {
    "s": 11,
-   "fps": 4.9,
-   "worstMs": 247,
+   "fps": 5.3,
+   "worstMs": 345,
+   "bakes": 2,
+   "rebakes": 0,
+   "pre": 2,
+   "bakeMs": 74
+  },
+  {
+   "s": 12,
+   "fps": 5.4,
+   "worstMs": 307,
    "bakes": 0,
    "rebakes": 0,
    "pre": 0,
    "bakeMs": 0
-  },
-  {
-   "s": 12,
-   "fps": 4,
-   "worstMs": 417,
-   "bakes": 2,
-   "rebakes": 0,
-   "pre": 2,
-   "bakeMs": 92
   }
  ],
  "cpu": [
   {
-   "threadMs": 2483,
-   "scriptMs": 1533,
-   "frames": 150,
-   "msPerFrame": 16.5
+   "threadMs": 1534,
+   "scriptMs": 1150,
+   "frames": 71,
+   "msPerFrame": 21.8
   }
  ]
 }

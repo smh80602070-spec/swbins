@@ -294,32 +294,43 @@
     c.at = ++sheetN;
     if (!c.done) {
       if (!tintBudget()) { return null; }
-      var t0 = perfNow(), g = c.cv.getContext('2d'), W = c.cv.width, cx = c.x, im, sg = scratchCtx(P);
+      var t0 = perfNow(), g = c.cv.getContext('2d'), W = c.cv.width, cx = c.x, im, sg;
       try {
+        /* W-0389 ③-4 — 칸마다 원본 그림을 CPU 캔버스에 그려 읽으면 그때마다 webp 시트를 다시 풀어(폰 프로파일 getImageData 9.6%) 칸당 6~7ms 였다 →
+           줄(폭 W × 칸 P) 하나를 한 번만 읽어 c.src 에 두고 칸은 거기서 잘라 물들인다(줄이 끝나면 버림) */
+        if (!c.src) { sg = scratchCtx(W, P); if (sg) { sg.clearRect(0, 0, W, P); sg.drawImage(img, 0, row * P, W, P, 0, 0, W, P); c.src = sg.getImageData(0, 0, W, P); } }
         while (cx + P <= W) {
-          if (sg) { sg.clearRect(0, 0, P, P); sg.drawImage(img, cx, row * P, P, P, 0, 0, P, P); im = sg.getImageData(0, 0, P, P); }
+          if (c.src) { im = cellFrom(c.src, cx, P); }
           else { g.clearRect(cx, 0, P, P); g.drawImage(img, cx, row * P, P, P, cx, 0, P, P); im = g.getImageData(cx, 0, P, P); }
           tintData(im.data, slot, k, P, low);
-          if (sg) { sg.putImageData(im, 0, 0); g.clearRect(cx, 0, P, P); g.drawImage(sg.canvas, 0, 0, P, P, cx, 0, P, P); } else { g.putImageData(im, cx, 0); }
+          g.putImageData(im, cx, 0);
           cx += P; sheetSt.cells++;
           if (perfNow() - t0 + tintSpent >= TINT_MS) { break; }
         }
-        c.x = cx; c.done = cx + P > W;
+        c.x = cx; c.done = cx + P > W; if (c.done) { c.src = null; }
       } catch (err) { sheetPx -= c.px; delete sheets[ck]; sheets[sk] = null; return null; }
       tintSpent += perfNow() - t0; sheetSt.ms += perfNow() - t0; if (c.done) { sheetSt.rows++; }
       if (!c.done) { return null; }
     }
     return c.cv;
   }
-  var scratch = null;
-  /** 물들이기 전용 P×P 캔버스 — CPU 쪽(willReadFrequently)이라 getImageData 가 GPU 되읽기를 안 한다. 못 만들면 null(옛 길) */
-  function scratchCtx(P) {
+  var scratch = null, cellIm = {};
+  /** 물들이기 전용 W×H 캔버스 — CPU 쪽(willReadFrequently)이라 getImageData 가 GPU 되읽기를 안 한다. 못 만들면 null(옛 길 · 손잡이 mode2d.tintScratch 0) */
+  function scratchCtx(W, H) {
     if (!tuneOf('mode2d.tintScratch', 1)) { return null; }
     try {
       if (!scratch) { var doc = global.document, cv = doc && doc.createElement('canvas'); if (!cv || !cv.getContext) { return null; } scratch = cv.getContext('2d', { willReadFrequently: true }); if (!scratch) { return null; } }
-      if (scratch.canvas.width !== P || scratch.canvas.height !== P) { scratch.canvas.width = P; scratch.canvas.height = P; }
+      if (scratch.canvas.width < W || scratch.canvas.height < H) { scratch.canvas.width = Math.max(W, scratch.canvas.width); scratch.canvas.height = Math.max(H, scratch.canvas.height); }
       return scratch;
     } catch (err) { return null; }
+  }
+  /** 줄 화소(src, 폭 W × P)에서 x 칸 P×P 를 잘라 낸 ImageData(P 마다 하나를 돌려 씀 — putImageData 뒤엔 다시 써도 된다) */
+  function cellFrom(src, x, P) {
+    var im = cellIm[P], W = src.width, d, s0 = src.data, y;
+    if (!im) { im = cellIm[P] = (global.ImageData ? new global.ImageData(P, P) : { width: P, height: P, data: new Uint8ClampedArray(P * P * 4) }); }
+    d = im.data;
+    for (y = 0; y < P; y++) { d.set(s0.subarray((y * W + x) * 4, (y * W + x + P) * 4), y * P * 4); }
+    return im;
   }
   /** 시트 한 칸(sx, sy, P)을 칸 색으로 칠한 캔버스 — 못 하면(캔버스 없음·읽기 막힘) null → 원본 그대로 */
   function tintCell(e, key, sx, sy, P, slot, k, low) {
