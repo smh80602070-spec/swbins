@@ -4,6 +4,7 @@ extends SceneTree
 ##   godot --headless --path saga-godot --script res://tools/probe_go_weather.gd   → "PROBE go_weather OK" / "FAIL n"
 ## 씬은 안 싣는다. SAGA_WEATHER 를 clear·fog·rain·0·zzz 로 바꿔 가며 Weather 캐시를 비우고 current_key() 를 본다:
 ##   clear·fog·rain → 그 키 · 0·zzz → 실제 시각 키(key_at) · force("snow") 는 env 보다 앞섬 · exp_bonus_mul() clear 1.10.
+##   G-0349 go_weather_fall: force(rain) → Rainfall 내림 · snow → Snowfall(비 멈춤) · clear → 둘 다 멈춤.
 ## 환경변수는 이 과정 안에서만 바꾸고 끝에 되돌린다.
 
 const WeatherGd := preload("res://games/saga_go/data/weather.gd")
@@ -40,6 +41,20 @@ func _init() -> void:
 	WeatherGd.force("snow")
 	if WeatherGd.current_key() != "snow":
 		_fail("force(snow) 가 env 보다 앞서야 — %s" % WeatherGd.current_key())
+	var fall: Node = (load("res://games/saga_go/world/go_weather_fall.gd") as GDScript).new()
+	root.add_child(fall)
+	await process_frame   # _init 안에선 root 에 바로 안 붙는다(뷰포트가 있어야 입자 상자를 세운다)
+	var seen := []
+	for k in ["rain", "snow", "clear"]:
+		WeatherGd.force(k)
+		fall.call("refresh_now")
+		var r: CPUParticles3D = fall.get("_rain")
+		var s: CPUParticles3D = fall.get("_snow")
+		seen.append("%s:%s%s" % [k, "비" if r and r.emitting else "", "눈" if s and s.emitting else ""])
+	print("GO_WEATHER fall ", seen)
+	if seen != ["rain:비", "snow:눈", "clear:"]:
+		_fail("G-0349 입자 %s" % [seen])
+	fall.free()
 	WeatherGd.force("")
 	if absf(WeatherGd.exp_bonus_mul() - 1.10) > 0.0001:
 		_fail("clear exp_bonus_mul %.3f" % WeatherGd.exp_bonus_mul())

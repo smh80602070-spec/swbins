@@ -5015,12 +5015,30 @@
   "tests": [
    "go_weather"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "G-0267",
   "since": "2026-10-21",
-  "note": "env 는 한 번만 읽어 정적 캐시(_env_read) · 촬영·regress 의 맑음 고정이 1만리 안개·구름에도 먹음"
+  "note": "env 는 한 번만 읽어 정적 캐시(_env_read) · 촬영·regress 의 맑음 고정이 1만리 안개·구름에도 먹음 · 촬영 lg_go_wx(SAGA_WEATHER=clear·rain·snow·fog, G-0349)"
+ },
+ {
+  "id": "gd.go.weather-fall",
+  "name": "1만리 비·눈 입자·날씨 안개 — 공용 weather_visual 입자(Rainfall/Snowfall)를 go_weather_fall 이 빌려 Weather.current_key() 로 켬, 안개는 세 판 FOG_ADD 더함(비 0.006·안개 0.016·눈 0.004), 서리봉 고원 눈 내리는 동안은 숨김",
+  "files": [
+   "games/saga_go/world/go_weather_fall.gd",
+   "games/saga_go/world/season_weather_visual.gd",
+   "tools/probe_go_weather.gd"
+  ],
+  "tests": [
+   "go_weather"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0349",
+  "since": "2026-10-25",
+  "note": "SAGA_WEATHER=0 이면 안 담 · 촬영 lg_go_wx 넷 ○ · 전엔 HUD 만 비·눈이고 화면은 맑음과 같았다"
  },
  {
   "id": "gd.core.render-budget",

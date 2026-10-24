@@ -23,6 +23,10 @@ var _base_fog_color: Color
 var _base_volumetric_density: float
 ## 2026-09-28 밤 안개 색 배수 — night_visual.gd 가 넣고 apply() 를 부른다(날씨가 60초마다 안개 색을 다시 써도 밤빛이 남게).
 var night_mul := Color(1, 1, 1)
+## G-0349 — 비·눈 입자(공용 weather_visual 빌림)와 그 키의 최소 안개(바탕 0.004 에 곱만으론 비·안개가 안 보였다 — 세 판과 같은 값).
+const WeatherVisual := preload("res://saga_core/world/weather_visual.gd")
+const GoWeatherFall := preload("res://games/saga_go/world/go_weather_fall.gd")
+var _fall: Node = null
 
 
 func _ready() -> void:
@@ -33,6 +37,10 @@ func _ready() -> void:
 	_base_fog_density = _env.fog_density
 	_base_fog_color = _env.fog_light_color
 	_base_volumetric_density = _env.volumetric_fog_density
+	if WeatherVisual.enabled():
+		_fall = GoWeatherFall.new()
+		_fall.name = "WeatherFall"
+		add_child(_fall)
 	_apply()
 	var t := Timer.new()
 	t.wait_time = check_interval_sec
@@ -51,7 +59,8 @@ func _apply() -> void:
 	var w: Dictionary = Weather.current()
 	var s: Dictionary = Season.current()
 	var fog_mul: float = w.get("fog_density_mul", 1.0)
-	_env.fog_density = _base_fog_density * fog_mul
+	var add := float(WeatherVisual.FOG_ADD.get(Weather.current_key(), 0.0))
+	_env.fog_density = _base_fog_density * fog_mul + add
 	if _env.volumetric_fog_enabled:
 		_env.volumetric_fog_density = _base_volumetric_density * fog_mul
 	var tint: Color = w.get("tint", Color.WHITE)
@@ -61,6 +70,8 @@ func _apply() -> void:
 		_base_fog_color.g * tint.g * ambient_mul.g * night_mul.g,
 		_base_fog_color.b * tint.b * ambient_mul.b * night_mul.b,
 	)
+	if _fall != null and _fall.is_inside_tree():
+		_fall.call("refresh_now")
 
 
 ## 헤드리스 검증·디버그 라벨이 같이 읽는 요약 문자열.
