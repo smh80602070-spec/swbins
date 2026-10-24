@@ -41,6 +41,8 @@ async function closeAll(page) {
     const e = document.getElementById('encounter'); if (e) { e.classList.remove('show'); }
     const m = document.getElementById('menu-grid'); if (m && m.classList.contains('show')) { m.classList.remove('show'); }
     if (DG.passiveWebUI && DG.passiveWebUI.isOpen()) { DG.passiveWebUI.close(); }
+    if (DG.goalsPanel && DG.goalsPanel.isOpen()) { DG.goalsPanel.close(); }
+    document.querySelectorAll('.mg-x').forEach((b) => { if (b.offsetParent) { b.click(); } });   // 「내 정보」 등 같은 틀 창의 ✕   // 「오늘」 창 — 안 닫으면 뒤 메뉴·안내·☰ 사진이 다 오늘 창으로 찍혔다
     if (DG.minimap && DG.minimap.closeBig) { DG.minimap.closeBig(); }   // 2나락 오버월드 단추 = 큰 지도   // 성도·경락도 같은 패시브 그물 창(독 단추가 시트 대신 연다)
   });
   await sleep(350);

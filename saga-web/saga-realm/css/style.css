@@ -1311,6 +1311,7 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
   left: 130px; display: none; flex-direction: column; gap: 6px;
 }
 #rmapctl.show { display: flex; }
+body.sheet-open #rregion-hud { visibility: hidden; pointer-events: none; }   /* 지역 단추(z 35)가 성·무장·진영·외교·학당 시트 위에 떠 글을 가렸다(폰 메뉴 모음 촬영) */
 
 /* ── 실시간 전투 현황판(2026-09-10) ───────────────────────────
  * `.rstat`(성 시트가 쓰는 그 줄)를 그대로 재사용한다 — 새 막대 스타일을

@@ -83,7 +83,7 @@
       var css = document.createElement('style'); css.id = 'aq-style';
       css.textContent = ':where(#' + id + '){position:fixed;right:12px;top:120px;z-index:45;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;color:#1b1405;' +
         'background:linear-gradient(#d9f2ff,#7cc4ea);border:1px solid #eaf8ff;box-shadow:0 2px 10px rgba(0,0,0,.45);padding:0}:where(#' + id + '.on){background:linear-gradient(#ff9a8a,#e0503c);color:#fff}' +
-        ':where(body.sheet-open #' + id + '){visibility:hidden;pointer-events:none}';
+        ':where(body.sheet-open #' + id + '),:where(body:has(#menu-grid.show,#goals-panel.show,#me-panel.show,#encounter.show) #' + id + '){visibility:hidden;pointer-events:none}';   // 메뉴·오늘·내 정보·안내(만남 카드) 막 위로 ▶ 가 튀어나왔다(폰 메뉴 모음)
       document.head.appendChild(css);
     }
     if (!b) { b = document.createElement('button'); b.id = id; b.type = 'button'; b.style.display = 'none'; document.body.appendChild(b); b.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); (titles.click || q.toggle)(); }); }   // titles.click — 판이 시작 손짓을 따로 둘 때(5천하 위임은 시작하자마자 이 달 명령)
