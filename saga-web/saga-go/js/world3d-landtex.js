@@ -227,7 +227,7 @@
     var cv = document.createElement('canvas');
     cv.width = S; cv.height = S;
     var c = cv.getContext('2d');
-    c.fillStyle = '#3a352e'; c.fillRect(0, 0, S, S);
+    c.fillStyle = '#3a352e'; c.fillRect(0, 0, S, S); var TB = global.DG.world && +core.tuned('go.landUnder', 1) === 1 ? terrainTexture(global.DG.world, x0, y0, span) : null; if (TB && TB.image) { c.drawImage(TB.image, 0, 0, S, S); }   // W-0418 그린 땅이 덮지 않은 칸은 원래 지형 그림 — 어두운 흙 바탕이 그대로 드러나 구역 넘은 들판이 검었다
 
     var k = S / span;                    // 미터 → 캔버스 픽셀
     var a0 = PAINT_A();
