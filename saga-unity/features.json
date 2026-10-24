@@ -2412,6 +2412,24 @@
   "note": "D2(U-0205): PlaytestDungeonHeadless globe drop·pull·eat·full·life·off OK(씨앗 20260824 잡졸 1000 에 207) · 다른 OK 줄 그대로·FAIL 0 · error CS 0 · 촬영 안 함(작은 공 — 진단 줄로)"
  },
  {
+  "id": "un.fs.bees",
+  "name": "U-0206 3마을 벌집 — 과일나무 흔들 때 그날·그 나무 한 번 20% 벌집, 벌떼(알갱이 여덟)가 7m/s 로 쫓음(걷기 6 < 7 < 달리기 10), 1.2m 안 0.8초 모임 동안 🕸 잡기 단추·E = 곤충 한 종 도감, 놓치면 1.2초 못 움직임, 8초 못 붙으면 흩어짐, 탈것 위 안 뜸 · SAGA_BEES=0 끔(고돗 G-0346 짝)",
+  "files": [
+   "saga-unity/Assets/Games/SagaForest/World/ForestBees.cs",
+   "saga-unity/Assets/Games/SagaForest/World/ForestFruitTree.cs",
+   "saga-unity/Assets/Games/SagaForest/Player/PlayerController.cs"
+  ],
+  "tests": [
+   "PlaytestForestBees"
+  ],
+  "level": "D2",
+  "verified": "2026-10-24 claude",
+  "fun": {},
+  "ticket": "U-0206",
+  "since": "2026-10-24",
+  "note": "D2(U-0206): PlaytestForestHeadless bees roll·chase·catch·sting·scatter·off OK(자리 1000 에 194) · OK 줄 78·FAIL 0·종료 0 · error CS 0 · 촬영 안 함(작은 알갱이 — 진단 줄로)"
+ },
+ {
   "id": "un.go.friendship",
   "name": "U-0199 1만리 동료 우정 — 편성 동료마다 점수(적 쓰러짐 앞 +2·다른 +1·탐사 돌아옴 +15) → Lv 0~10·낯섦·친근·신뢰·지기, 기질별 단계 대사(지기 = 그 인물 한마디), 지기 처음 인연 매듭 1, 오름 알림·도감 상세 줄(고돗 G-0340)",
   "files": [

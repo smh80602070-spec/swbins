@@ -107,7 +107,7 @@ namespace Saga.Forest.Player
             Vector3 moveDir = WorldDirection(inputDir);
 
             bool running = !_testInput && _sprintAction != null && _sprintAction.IsPressed();
-            float speed = (running ? RunSpeed : WalkSpeed) * ForestMounts.SpeedMul; // PLAN.md 109-15 — 안 탔으면 ×1
+            float speed = (running ? RunSpeed : WalkSpeed) * ForestMounts.SpeedMul * ForestBees.MoveMul; // PLAN.md 109-15 — 안 탔으면 ×1 · tasks U-0206 쏘인 동안 0
             ForestDeliveryState.NotifyRunning(running || ForestMounts.RidingGround); // 101-2 5.7 "깨지기 쉬움" 소포 — 달리면 파손(말 위에서도).
 
             Vector3 horizontal = moveDir * speed;
@@ -138,7 +138,7 @@ namespace Saga.Forest.Player
             }
             Vector3 moveDir = WorldDirection(MovementInput());
             bool running = !_testInput && _sprintAction != null && _sprintAction.IsPressed();
-            float speed = (running ? RunSpeed : WalkSpeed) * ForestMounts.SpeedMul;
+            float speed = (running ? RunSpeed : WalkSpeed) * ForestMounts.SpeedMul * ForestBees.MoveMul;
             ForestDeliveryState.NotifyRunning(false);
 
             Vector3 p = transform.position;

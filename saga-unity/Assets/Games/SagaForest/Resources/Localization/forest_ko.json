@@ -730,6 +730,11 @@
     { "key": "hha.winter", "value": "❄️ 겨울" },
     { "key": "hha.theme", "value": "(주제 {0} +{1})" },
     { "key": "hha.paid", "value": " 🍎 +{0}" },
-    { "key": "hha.line", "value": "{0} 심사 — {1} {2}점{3}{4}" }
+    { "key": "hha.line", "value": "{0} 심사 — {1} {2}점{3}{4}" },
+    { "key": "bees.hive", "value": "🐝 벌집이 떨어졌다! 벌떼가 쫓아온다 — 달리거나, 붙을 때 🕸 잡기(E)" },
+    { "key": "bees.catch_btn", "value": "🕸 잡기" },
+    { "key": "bees.caught", "value": "🕸 벌떼를 잡았다! — {0}" },
+    { "key": "bees.stung", "value": "🐝 벌에 쏘였다! 😵" },
+    { "key": "bees.fled", "value": "🐝 벌떼가 흩어졌다." }
   ]
 }

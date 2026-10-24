@@ -730,6 +730,11 @@
     { "key": "hha.winter", "value": "❄️ Winter" },
     { "key": "hha.theme", "value": "(theme {0} +{1})" },
     { "key": "hha.paid", "value": " 🍎 +{0}" },
-    { "key": "hha.line", "value": "{0} review — {1} {2} pts{3}{4}" }
+    { "key": "hha.line", "value": "{0} review — {1} {2} pts{3}{4}" },
+    { "key": "bees.hive", "value": "🐝 A beehive fell! The swarm is chasing you — run, or 🕸 Catch (E) when they close in" },
+    { "key": "bees.catch_btn", "value": "🕸 Catch" },
+    { "key": "bees.caught", "value": "🕸 Caught the swarm! — {0}" },
+    { "key": "bees.stung", "value": "🐝 Stung by bees! 😵" },
+    { "key": "bees.fled", "value": "🐝 The swarm scattered." }
   ]
 }

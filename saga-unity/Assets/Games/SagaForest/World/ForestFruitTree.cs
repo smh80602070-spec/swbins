@@ -139,6 +139,7 @@ namespace Saga.Forest.World
                 ToastSec);
 
             ForestGatherFeel.Play(transform.position + Vector3.up * 2.6f, _visual, FruitName);
+            ForestBees.OnShake(transform.position); // tasks U-0206 벌집(나무마다 하루 한 번 20%)
         }
     }
 }
