@@ -7494,6 +7494,18 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       DG.core.setTune('realm.regionView', 0); DG.ui.renderMap(); var all = document.querySelectorAll('#realm .rcity').length; DG.core.setTune('realm.regionView', 1); delete st.view; DG.ui.renderMap();
       return (none === 0 && asym === 0 && iso === 0 && cur === home && shown > 0 && shown <= 12 && out === V.neighbors(home).length && moved && all > shown) || ('실패 지역 없음 ' + none + ' · 비대칭 ' + asym + ' · 고립 ' + iso + ' · 첫 ' + cur + '/' + home + ' · 성 ' + shown + ' · 화살표 ' + out + ' · 넘김 ' + moved + ' · 옛 전체 ' + all);
     });
+    t('W-0400 ⑤ 싸움 보고 → 지역 — 다른 지역 내 성 피습은 「그 지역 보기」 단추만(안 넘김) · 누르면 그 지역 · 내 원정 도착은 곧바로 그 지역 · 맞닿은 출진은 안 넘김', function () {
+      var V = DG.regionView; fresh('cao'); var st = DG.rtk.state(); delete st.view; DG.ui.renderMap();
+      var home = V.current(), nb = V.neighbors(home)[0], c1 = V.cities(nb)[0].id, nb2 = V.neighbors(nb).filter(function (r) { return r !== home; })[0] || home, c2 = V.cities(nb2)[0].id;
+      DG.core.emit('rtk:battle', { to: c1, force: 'zz', defForce: st.me, log: [] });
+      var stay = V.current() === home, al = document.querySelector('#rregion-hud .rregion-alert');
+      if (al) { al.click(); } var go = V.current() === nb, gone = !document.querySelector('#rregion-hud .rregion-alert');
+      DG.core.emit('rtk:battle', { to: c2, force: st.me, defForce: 'zz', won: true, log: ['시험'], frames: [] });
+      var keep = V.current() === nb; var cl = document.querySelector('[data-act="close-enc"]'); if (cl) { cl.click(); }
+      DG.core.emit('rtk:journey', { kind: 'arrive', id: 'x', force: st.me, to: c2, won: true }); var auto = V.current() === nb2;
+      delete st.view; DG.ui.renderMap();
+      return (stay && !!al && go && gone && keep && auto) || ('실패 머묾 ' + stay + ' · 단추 ' + !!al + ' · 누름 ' + go + '/' + gone + ' · 출진 머묾 ' + keep + ' · 원정 넘김 ' + auto);
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

@@ -219,7 +219,14 @@
     return out;
   }
   /** W-0400 ③ 「🗺 천하도」 — 지도 왼쪽 위 단추(지금 지역 이름) · 누르면 지역 카드 목록(이름·성·내 성·⚔ 맞닿음). 지형 그림 없음, 카드를 누르면 그 지역 */
-  var regionListOpen = false, regionHudEl = null;
+  var regionListOpen = false, regionHudEl = null, regionAlert = null;   // W-0400 ⑤ 다른 지역 내 성 피습 — { rid, city } · 「그 지역 보기」 한 번 누르거나 그 지역으로 가면 지움
+  /** W-0400 ⑤ 다른 지역 소식 — 내 원정(rtk:journey 도착)은 그 지역으로 곧바로 넘기고, 다른 지역 내 성이 맞으면(rtk:battle) 알림 단추만. 맞닿은 성 출진은 안 넘김(자동 넘김은 내 원정만) */
+  function regionOnNews(kind, ev) {
+    var V = RVw(), rid = V && ev && ev.to ? V.regionOf(ev.to) : '';
+    if (!rid || rid === regionShown) { return; }
+    if (kind === 'journey' && ev.kind === 'arrive' && ev.force === R().me()) { regionAlert = null; if (V.set(rid)) { renderMap(); } }
+    else if (kind === 'battle' && ev.defForce === R().me() && ev.force !== R().me()) { regionAlert = { rid: rid, city: ev.to }; renderMap(); }
+  }
   /** 화면 고정 층(#rregion-hud) — 2D 지도 상자(#realm)는 3D 모드에서 숨어 있어 그 안에 두면 PC 에서 안 보였다. 3D 면 왼쪽 위 행동 줄 아래, 2D 면 지도 왼쪽 아래 */
   function regionPanel(st) {
     var V = RVw(), doc = global.document, s2 = '', i, r, L, mine, foe, j, c, d3 = !!(global.DG.realm3d && global.DG.realm3d.active && global.DG.realm3d.active());
@@ -227,7 +234,7 @@
       regionHudEl = doc.createElement('div'); regionHudEl.id = 'rregion-hud'; doc.body.appendChild(regionHudEl);
       regionHudEl.addEventListener('click', function (e) {
         var t = e.target.closest('[data-act="region-list"],[data-region]'); if (!t || !RVw()) { return; }
-        if (t.getAttribute('data-act') === 'region-list') { regionListOpen = !regionListOpen; } else { regionListOpen = false; RVw().set(t.getAttribute('data-region')); }
+        if (t.getAttribute('data-act') === 'region-list') { regionListOpen = !regionListOpen; } else { regionListOpen = false; regionAlert = null; RVw().set(t.getAttribute('data-region')); }
         renderMap();
       });
     }
@@ -235,6 +242,8 @@
     if (!V || !st.started) { regionHudEl.innerHTML = ''; return ''; }
     regionHudEl.style.cssText = 'position:fixed;left:12px;' + (d3 ? 'top:205px' : 'bottom:114px') + ';z-index:40;max-width:calc(100vw - 24px)';
     s2 += '<div class="rregion-btn" data-act="region-list" style="display:inline-block;padding:6px 10px;border-radius:10px;background:rgba(30,22,10,0.82);border:1px solid #f3d27a;color:#fff4d6;font-weight:700;font-size:14px;cursor:pointer">🗺 ' + esc(V.name(regionShown || V.current())) + ' ▾</div>';
+    if (regionAlert && regionAlert.rid === regionShown) { regionAlert = null; }
+    if (regionAlert) { s2 += ' <div class="rregion-alert" data-region="' + regionAlert.rid + '" style="display:inline-block;padding:6px 10px;border-radius:10px;background:rgba(120,20,14,0.88);border:1px solid #ff8a6a;color:#fff4d6;font-weight:700;font-size:14px;cursor:pointer">⚠ ' + esc(V.name(regionAlert.rid)) + ' ' + esc((CD.find(regionAlert.city) || {}).name || '') + ' 피습 — 그 지역 보기</div>'; }
     if (regionListOpen) {
       s2 += '<div class="rregion-list" style="position:absolute;left:0;' + (d3 ? 'top:40px' : 'bottom:42px') + ';width:min(520px,calc(100vw - 24px));max-height:55vh;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;padding:8px;border-radius:12px;background:rgba(20,15,8,0.94);border:1px solid #f3d27a">';
       for (i = 0; i < V.REGIONS.length; i++) {
@@ -246,6 +255,7 @@
       s2 += '</div>';
     }
     regionHudEl.innerHTML = s2;
+    if (!d3) { global.setTimeout(function () { var lg = doc.querySelector('#realm .rlegend'), t = lg ? lg.getBoundingClientRect().top : 0; if (t > 0 && regionHudEl) { regionHudEl.style.bottom = Math.max(114, Math.round(global.innerHeight - t + 6)) + 'px'; } }, 0); }   // 폰 세로는 세력 범례가 높이 올라와 단추가 첫 줄을 가렸다 — 범례 위로
     return '';
   }
   function regionAt(e) { var els2 = global.document.elementsFromPoint ? global.document.elementsFromPoint(e.clientX, e.clientY) : [], i, g; for (i = 0; i < els2.length; i++) { g = els2[i].closest && els2[i].closest('[data-region]'); if (g) { return g; } } return null; }
@@ -575,12 +585,13 @@
     core.on('changed', function () { renderTop(); mapSeq++; if (!mapRaf && global.requestAnimationFrame) { mapRaf = global.requestAnimationFrame(function () { mapRaf = 0; if (mapSeq > mapDone) { renderMap(); } }); } else if (!global.requestAnimationFrame) { renderMap(); } renderSheet(); syncDock(); });   /* W-0367 'changed' 의 지도 다시 그리기는 다음 프레임 한 번으로 — 그 사이 손잡이가 직접 그렸으면(mapDone) 건너뜀(다음 달 한 번에 두 번 그리던 것) */
     core.on('rtk:battle', function (rep) {
       /* 내 세력이 친 싸움만 띄운다. 진영에서 벌어진 것(달을 넘긴 원정)도 여기로 온다 */
+      regionOnNews('battle', rep);   // W-0400 ⑤
       if (rep.force === R().me()) {
         lastBattle = rep;
         if (liveOn && $('liveresult')) { showLiveResult(rep); } else { showBattle(rep); }
       }
     });
-    core.on('rtk:camp', function () { syncDock(); });
+    core.on('rtk:camp', function () { syncDock(); }); core.on('rtk:journey', function (e) { regionOnNews('journey', e); });
     core.on('rtk:end', function (kind) { showEnd(kind); });
     core.on('rtk:milestone', function (list) { showMilestone(list); });
     core.on('rtk:victory', function (card) { showVictory(card); }); core.on('rtk:comeback', function (e) { showComeback(e); });
