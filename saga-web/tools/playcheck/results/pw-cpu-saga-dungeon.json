@@ -1,192 +1,192 @@
 {
  "game": "saga-dungeon",
- "at": "2026-10-18T07:07:51.471Z",
+ "at": "2026-10-22T08:23:38.770Z",
  "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "throttle": 4,
  "sec": 3,
  "scene": 0,
  "runs": 3,
- "totalMs": 5827,
+ "totalMs": 4179,
  "rows": [
   {
    "key": "(program) @",
    "fn": "(program) @ [:-1:-1]",
-   "ms": 2939,
-   "pct": 50.4
-  },
-  {
-   "key": "multiplyMatrices @js/vendor/three.iife.js",
-   "fn": "multiplyMatrices @js/vendor/three.iife.js [app.js:158:66021]",
-   "ms": 224,
-   "pct": 3.9
+   "ms": 3823,
+   "pct": 91.5
   },
   {
    "key": "X @js/town.js",
-   "fn": "X @js/town.js [app.js:146:9841]",
-   "ms": 155,
-   "pct": 2.7
-  },
-  {
-   "key": "updateMatrixWorld @js/vendor/three.iife.js",
-   "fn": "updateMatrixWorld @js/vendor/three.iife.js [app.js:158:79966]",
-   "ms": 123,
-   "pct": 2.1
-  },
-  {
-   "key": "texSubImage2D @",
-   "fn": "texSubImage2D @ [:-1:-1]",
-   "ms": 125,
-   "pct": 2.1
-  },
-  {
-   "key": "s @js/vendor/three.iife.js",
-   "fn": "s @js/vendor/three.iife.js [app.js:3890:6494]",
-   "ms": 103,
-   "pct": 1.8
-  },
-  {
-   "key": "Am @js/vendor/three.iife.js",
-   "fn": "Am @js/vendor/three.iife.js [app.js:3992:35301]",
-   "ms": 104,
-   "pct": 1.8
-  },
-  {
-   "key": "rl @js/vendor/three.iife.js",
-   "fn": "rl @js/vendor/three.iife.js [app.js:3992:29332]",
-   "ms": 96,
-   "pct": 1.6
-  },
-  {
-   "key": "Mh.renderBufferDirect @js/vendor/three.iife.js",
-   "fn": "Mh.renderBufferDirect @js/vendor/three.iife.js [app.js:3992:24499]",
-   "ms": 86,
-   "pct": 1.5
+   "fn": "X @js/town.js [app.js:170:9841]",
+   "ms": 44,
+   "pct": 1.1
   },
   {
    "key": "V @js/world-map.js",
-   "fn": "V @js/world-map.js [app.js:128:11788]",
-   "ms": 82,
-   "pct": 1.4
+   "fn": "V @js/world-map.js [app.js:152:11788]",
+   "ms": 25,
+   "pct": 0.6
+  },
+  {
+   "key": "drawImage @",
+   "fn": "drawImage @ [:-1:-1]",
+   "ms": 20,
+   "pct": 0.5
   },
   {
    "key": "X @js/field3d.js",
-   "fn": "X @js/field3d.js [app.js:4030:2460]",
-   "ms": 71,
-   "pct": 1.2
+   "fn": "X @js/field3d.js [app.js:4057:2460]",
+   "ms": 22,
+   "pct": 0.5
   },
   {
    "key": "getBoundingClientRect @",
    "fn": "getBoundingClientRect @ [:-1:-1]",
-   "ms": 68,
-   "pct": 1.2
+   "ms": 18,
+   "pct": 0.4
   },
   {
-   "key": "update @js/vendor/three.iife.js",
-   "fn": "update @js/vendor/three.iife.js [app.js:3992:64552]",
-   "ms": 51,
-   "pct": 0.9
-  },
-  {
-   "key": "fa @js/vendor/three.iife.js",
-   "fn": "fa @js/vendor/three.iife.js [app.js:3992:32785]",
-   "ms": 51,
-   "pct": 0.9
-  },
-  {
-   "key": "setValue @js/vendor/three.iife.js",
-   "fn": "setValue @js/vendor/three.iife.js [app.js:3890:15400]",
-   "ms": 48,
-   "pct": 0.8
-  },
-  {
-   "key": "bindVertexArray @",
-   "fn": "bindVertexArray @ [:-1:-1]",
-   "ms": 49,
-   "pct": 0.8
+   "key": "G @js/game.js",
+   "fn": "G @js/game.js [app.js:4308:7506]",
+   "ms": 10,
+   "pct": 0.3
   },
   {
    "key": "get clientWidth @",
    "fn": "get clientWidth @ [:-1:-1]",
-   "ms": 42,
-   "pct": 0.7
+   "ms": 12,
+   "pct": 0.3
   },
   {
-   "key": "wt @js/vendor/three.iife.js",
-   "fn": "wt @js/vendor/three.iife.js [app.js:3890:8058]",
-   "ms": 42,
-   "pct": 0.7
+   "key": "set innerHTML @",
+   "fn": "set innerHTML @ [:-1:-1]",
+   "ms": 11,
+   "pct": 0.3
   },
   {
-   "key": "f @js/vendor/three.iife.js",
-   "fn": "f @js/vendor/three.iife.js [app.js:3740:14490]",
-   "ms": 42,
-   "pct": 0.7
+   "key": "ge @js/dungeon-view-hud.js",
+   "fn": "ge @js/dungeon-view-hud.js [app.js:4198:6142]",
+   "ms": 9,
+   "pct": 0.2
   },
   {
-   "key": "upload @js/vendor/three.iife.js",
-   "fn": "upload @js/vendor/three.iife.js [app.js:3890:15534]",
-   "ms": 36,
-   "pct": 0.6
+   "key": "sa @js/dungeon-view.js",
+   "fn": "sa @js/dungeon-view.js [app.js:4201:14752]",
+   "ms": 8,
+   "pct": 0.2
   },
   {
-   "key": "bindTexture @",
-   "fn": "bindTexture @ [:-1:-1]",
-   "ms": 37,
-   "pct": 0.6
+   "key": "ua @js/dungeon-view.js",
+   "fn": "ua @js/dungeon-view.js [app.js:4201:27352]",
+   "ms": 7,
+   "pct": 0.2
   },
   {
-   "key": "da @js/vendor/three.iife.js",
-   "fn": "da @js/vendor/three.iife.js [app.js:3992:32096]",
-   "ms": 32,
-   "pct": 0.6
+   "key": "fill @",
+   "fn": "fill @ [:-1:-1]",
+   "ms": 8,
+   "pct": 0.2
   },
   {
-   "key": "Zx @js/vendor/three.iife.js",
-   "fn": "Zx @js/vendor/three.iife.js [app.js:3890:8623]",
-   "ms": 37,
-   "pct": 0.6
+   "key": "yr @js/mode2d.js",
+   "fn": "yr @js/mode2d.js [app.js:73:5615]",
+   "ms": 8,
+   "pct": 0.2
   },
   {
-   "key": "o @js/vendor/three.iife.js",
-   "fn": "o @js/vendor/three.iife.js [app.js:3740:13749]",
-   "ms": 35,
-   "pct": 0.6
+   "key": "(garbage collector) @",
+   "fn": "(garbage collector) @ [:-1:-1]",
+   "ms": 7,
+   "pct": 0.2
   },
   {
-   "key": "x @js/vendor/three.iife.js",
-   "fn": "x @js/vendor/three.iife.js [app.js:3940:8257]",
-   "ms": 32,
-   "pct": 0.6
+   "key": "be @js/mode2d.js",
+   "fn": "be @js/mode2d.js [app.js:73:2633]",
+   "ms": 3,
+   "pct": 0.1
   },
   {
-   "key": "de @js/dungeon-view-hud.js",
-   "fn": "de @js/dungeon-view-hud.js [app.js:4159:6140]",
-   "ms": 28,
-   "pct": 0.5
+   "key": "f @js/actor2d.js",
+   "fn": "f @js/actor2d.js [app.js:82:59]",
+   "ms": 3,
+   "pct": 0.1
   },
   {
-   "key": "z @js/vendor/three.iife.js",
-   "fn": "z @js/vendor/three.iife.js [app.js:3968:22614]",
-   "ms": 32,
-   "pct": 0.5
+   "key": "Yr @js/mode2d.js",
+   "fn": "Yr @js/mode2d.js [app.js:73:15538]",
+   "ms": 3,
+   "pct": 0.1
   },
   {
-   "key": "M @js/vendor/three.iife.js",
-   "fn": "M @js/vendor/three.iife.js [app.js:3968:11088]",
-   "ms": 30,
-   "pct": 0.5
+   "key": "Rr @js/mode2d.js",
+   "fn": "Rr @js/mode2d.js [app.js:73:9605]",
+   "ms": 3,
+   "pct": 0.1
   },
   {
-   "key": "uniformMatrix4fv @",
-   "fn": "uniformMatrix4fv @ [:-1:-1]",
-   "ms": 32,
-   "pct": 0.5
+   "key": "fa @js/dungeon-view.js",
+   "fn": "fa @js/dungeon-view.js [app.js:4201:26525]",
+   "ms": 3,
+   "pct": 0.1
   },
   {
-   "key": "Tt @js/vendor/three.iife.js",
-   "fn": "Tt @js/vendor/three.iife.js [app.js:3890:8171]",
-   "ms": 29,
-   "pct": 0.5
+   "key": "ellipse @",
+   "fn": "ellipse @ [:-1:-1]",
+   "ms": 3,
+   "pct": 0.1
+  },
+  {
+   "key": "restore @",
+   "fn": "restore @ [:-1:-1]",
+   "ms": 3,
+   "pct": 0.1
+  },
+  {
+   "key": "save @",
+   "fn": "save @ [:-1:-1]",
+   "ms": 4,
+   "pct": 0.1
+  },
+  {
+   "key": "fillText @",
+   "fn": "fillText @ [:-1:-1]",
+   "ms": 5,
+   "pct": 0.1
+  },
+  {
+   "key": "Z @js/minimap.js",
+   "fn": "Z @js/minimap.js [app.js:4210:3092]",
+   "ms": 3,
+   "pct": 0.1
+  },
+  {
+   "key": "F @js/world-map.js",
+   "fn": "F @js/world-map.js [app.js:152:13444]",
+   "ms": 5,
+   "pct": 0.1
+  },
+  {
+   "key": "Yt @js/dungeon3d.js",
+   "fn": "Yt @js/dungeon3d.js [app.js:4186:3136]",
+   "ms": 6,
+   "pct": 0.1
+  },
+  {
+   "key": "ha @js/dungeon-view.js",
+   "fn": "ha @js/dungeon-view.js [app.js:4201:30425]",
+   "ms": 4,
+   "pct": 0.1
+  },
+  {
+   "key": "clearRect @",
+   "fn": "clearRect @ [:-1:-1]",
+   "ms": 2,
+   "pct": 0.1
+  },
+  {
+   "key": "addColorStop @",
+   "fn": "addColorStop @ [:-1:-1]",
+   "ms": 2,
+   "pct": 0.1
   }
  ]
 }

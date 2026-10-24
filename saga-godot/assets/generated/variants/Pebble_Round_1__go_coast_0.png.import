@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://frewbbbuubbe"
+uid="uid://c0eimxfebwv5k"
 path.s3tc="res://.godot/imported/Pebble_Round_1__go_coast_0.png-b2aa96f87fa0a657fdeb570a427fe33c.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "c3028b9d364a2cf374d3f72617ab62d3"
 }
 
 [deps]

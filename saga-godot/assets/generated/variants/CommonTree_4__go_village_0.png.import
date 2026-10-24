@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b267whi7wtw4f"
+uid="uid://bal07fvenj0w2"
 path.s3tc="res://.godot/imported/CommonTree_4__go_village_0.png-dd515cdfd03f25c01412eb0473c4cd4f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "52008dccbdaed33a6e38420f975c0dfc"
 }
 
 [deps]

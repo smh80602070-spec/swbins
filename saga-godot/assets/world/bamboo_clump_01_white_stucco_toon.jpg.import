@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ce6pg5m46admp"
+uid="uid://bsiun4vvgliym"
 path.s3tc="res://.godot/imported/bamboo_clump_01_white_stucco_toon.jpg-ba2edc3ab6a59895d1546cb1aa18aa39.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "5a3a4f40e0a75e9be265e49920f8fb0a"
 }
 
 [deps]

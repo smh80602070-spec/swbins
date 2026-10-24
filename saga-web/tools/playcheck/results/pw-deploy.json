@@ -1,6 +1,6 @@
 {
  "base": "https://smh80602070-spec.github.io/swbins/saga-web/",
- "at": "2026-10-18T11:50:13.929Z",
+ "at": "2026-10-24T16:08:46.483Z",
  "games": [
   {
    "game": "saga-go",
@@ -9,39 +9,39 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 8019,
+     "ms": 8184,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 4130,
+     "ms": 5820,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 4628,
+     "ms": 7903,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 2801,
+     "ms": 19339,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 23441,
+     "ms": 25013,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "go-v6.72.192",
-   "local": "go-v6.72.192",
-   "sameVersion": true,
+   "deployed": "go-v6.72.284",
+   "local": "go-v6.72.286",
+   "sameVersion": false,
    "covered": []
   },
   {
@@ -51,38 +51,38 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 9337,
+     "ms": 7588,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3642,
+     "ms": 3623,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 9199,
+     "ms": 8632,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 2683,
+     "ms": 2922,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 14673,
+     "ms": 14330,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "dungeon-v0.199.175",
-   "local": "dungeon-v0.199.175",
+   "deployed": "dungeon-v0.199.269",
+   "local": "dungeon-v0.199.269",
    "sameVersion": true,
    "covered": []
   },
@@ -93,39 +93,39 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 7928,
+     "ms": 7812,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3813,
+     "ms": 3687,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 10853,
+     "ms": 3963,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 2157,
+     "ms": 3213,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 20215,
+     "ms": 19486,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "village-v0.136.148",
-   "local": "village-v0.136.148",
-   "sameVersion": true,
+   "deployed": "village-v0.136.224",
+   "local": "village-v0.136.225",
+   "sameVersion": false,
    "covered": []
   },
   {
@@ -135,80 +135,82 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 7839,
+     "ms": 7660,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 4030,
+     "ms": 3785,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 7332,
+     "ms": 6422,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 2789,
+     "ms": 6821,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 14768,
+     "ms": 31119,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "side-v0.118.152",
-   "local": "side-v0.118.152",
-   "sameVersion": true,
+   "deployed": "side-v0.118.232",
+   "local": "side-v0.118.233",
+   "sameVersion": false,
    "covered": []
   },
   {
    "game": "saga-realm",
-   "ok": true,
+   "ok": false,
    "steps": [
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 8110,
+     "ms": 7643,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3740,
+     "ms": 5799,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 7074,
+     "ms": 52250,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 1217,
+     "ms": 2196,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 11261,
+     "ms": 20575,
      "why": ""
     }
    ],
-   "errors": [],
+   "errors": [
+    "ERR page.screenshot: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n"
+   ],
    "bad": [],
-   "deployed": "realm-v1.94.163",
-   "local": "realm-v1.94.163",
+   "deployed": "realm-v1.94.246",
+   "local": "realm-v1.94.246",
    "sameVersion": true,
    "covered": []
   }

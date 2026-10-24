@@ -1,0 +1,417 @@
+{
+ "at": "2026-10-20T00:47:54.526Z",
+ "base": "http://127.0.0.1:8871/",
+ "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "medY": 0.1098,
+ "medK": 4475,
+ "yDiff": 0.071,
+ "kDiff": 542,
+ "pass": true,
+ "runs": [
+  {
+   "game": "saga-go",
+   "err": "",
+   "canvas": "map3d",
+   "look": {
+    "on": true,
+    "game": "saga-go",
+    "cal": {
+     "exposure": 0.512,
+     "wb": [
+      0.832,
+      1.051,
+      0.989
+     ]
+    }
+   },
+   "post": {
+    "on": true,
+    "tier": "HIGH",
+    "tone": "quad",
+    "exposure": 0.512,
+    "bloom": {
+     "on": true,
+     "threshold": 0.9,
+     "knee": 0.45,
+     "strength": 0.234,
+     "mips": [
+      {
+       "w": 640,
+       "h": 360
+      },
+      {
+       "w": 320,
+       "h": 180
+      },
+      {
+       "w": 160,
+       "h": 90
+      },
+      {
+       "w": 80,
+       "h": 45
+      }
+     ]
+    },
+    "grade": {
+     "amount": 1,
+     "sat": 1,
+     "temp": 0,
+     "lift": 0
+    },
+    "toon": 0,
+    "wb": [
+     0.832,
+     1.051,
+     0.989
+    ],
+    "msaa": 4,
+    "ao": {
+     "on": true,
+     "tier": "HIGH",
+     "samples": 12,
+     "scale": 0.5,
+     "w": 640,
+     "h": 360,
+     "radius": 2.4,
+     "intensity": 0.85,
+     "bias": 0.045
+    },
+    "scale": 1,
+    "w": 1280,
+    "h": 720
+   },
+   "stats": {
+    "r": 0.1283,
+    "g": 0.1117,
+    "b": 0.044,
+    "Y": 0.1103,
+    "K": 4339
+   }
+  },
+  {
+   "game": "saga-dungeon",
+   "err": "",
+   "canvas": "dg3d",
+   "look": {
+    "on": true,
+    "game": "saga-dungeon",
+    "cal": {
+     "exposure": 2.089,
+     "wb": [
+      0.914,
+      1.054,
+      0.722
+     ]
+    }
+   },
+   "post": {
+    "on": true,
+    "tier": "HIGH",
+    "tone": "quad",
+    "exposure": 2.1064083333333334,
+    "bloom": {
+     "on": true,
+     "threshold": 0.9,
+     "knee": 0.45,
+     "strength": 0.27048387096774196,
+     "mips": [
+      {
+       "w": 598,
+       "h": 360
+      },
+      {
+       "w": 299,
+       "h": 180
+      },
+      {
+       "w": 149,
+       "h": 90
+      },
+      {
+       "w": 74,
+       "h": 45
+      }
+     ]
+    },
+    "grade": {
+     "amount": 1,
+     "sat": 1.005215053763441,
+     "temp": 0.031935483870967715,
+     "lift": 0.0010322580645161282
+    },
+    "toon": 0,
+    "wb": [
+     0.914,
+     1.054,
+     0.722
+    ],
+    "msaa": 4,
+    "ao": {
+     "on": true,
+     "tier": "HIGH",
+     "samples": 12,
+     "scale": 0.5,
+     "w": 598,
+     "h": 360,
+     "radius": 2.4,
+     "intensity": 0.85,
+     "bias": 0.045
+    },
+    "scale": 1,
+    "w": 1196,
+    "h": 720
+   },
+   "stats": {
+    "r": 0.1254,
+    "g": 0.1121,
+    "b": 0.0485,
+    "Y": 0.1103,
+    "K": 4475
+   }
+  },
+  {
+   "game": "saga-forest",
+   "err": "",
+   "canvas": "map3d",
+   "look": {
+    "on": true,
+    "game": "saga-forest",
+    "cal": {
+     "exposure": 3.747,
+     "wb": [
+      0.847,
+      0.986,
+      1.591
+     ]
+    }
+   },
+   "post": {
+    "on": true,
+    "tier": "HIGH",
+    "tone": "quad",
+    "exposure": 3.747,
+    "bloom": {
+     "on": true,
+     "threshold": 0.9,
+     "knee": 0.45,
+     "strength": 0.234,
+     "mips": [
+      {
+       "w": 640,
+       "h": 360
+      },
+      {
+       "w": 320,
+       "h": 180
+      },
+      {
+       "w": 160,
+       "h": 90
+      },
+      {
+       "w": 80,
+       "h": 45
+      }
+     ]
+    },
+    "grade": {
+     "amount": 1,
+     "sat": 1,
+     "temp": 0,
+     "lift": 0
+    },
+    "toon": 0,
+    "wb": [
+     0.847,
+     0.986,
+     1.591
+    ],
+    "msaa": 4,
+    "ao": {
+     "on": true,
+     "tier": "HIGH",
+     "samples": 12,
+     "scale": 0.5,
+     "w": 640,
+     "h": 360,
+     "radius": 2.4,
+     "intensity": 0.85,
+     "bias": 0.045
+    },
+    "scale": 1,
+    "w": 1280,
+    "h": 720
+   },
+   "stats": {
+    "r": 0.1055,
+    "g": 0.1102,
+    "b": 0.0177,
+    "Y": 0.1025,
+    "K": 4244
+   }
+  },
+  {
+   "game": "saga-story",
+   "err": "",
+   "canvas": "stage3d",
+   "look": {
+    "on": true,
+    "game": "saga-story",
+    "cal": {
+     "exposure": 2.16,
+     "wb": [
+      1.315,
+      0.909,
+      0.971
+     ]
+    }
+   },
+   "post": {
+    "on": true,
+    "tier": "HIGH",
+    "tone": "quad",
+    "exposure": 2.16,
+    "bloom": {
+     "on": true,
+     "threshold": 0.9,
+     "knee": 0.45,
+     "strength": 0.234,
+     "mips": [
+      {
+       "w": 1280,
+       "h": 720
+      },
+      {
+       "w": 640,
+       "h": 360
+      },
+      {
+       "w": 320,
+       "h": 180
+      },
+      {
+       "w": 160,
+       "h": 90
+      }
+     ]
+    },
+    "grade": {
+     "amount": 1,
+     "sat": 1,
+     "temp": 0,
+     "lift": 0
+    },
+    "toon": 0,
+    "wb": [
+     1.315,
+     0.909,
+     0.971
+    ],
+    "msaa": 4,
+    "ao": {
+     "on": true,
+     "tier": "HIGH",
+     "samples": 12,
+     "scale": 0.5,
+     "w": 1280,
+     "h": 720,
+     "radius": 2.4,
+     "intensity": 0.85,
+     "bias": 0.045
+    },
+    "scale": 1,
+    "w": 2560,
+    "h": 1440
+   },
+   "stats": {
+    "r": 0.1103,
+    "g": 0.1164,
+    "b": 0.043,
+    "Y": 0.1098,
+    "K": 4683
+   }
+  },
+  {
+   "game": "saga-realm",
+   "err": "",
+   "canvas": "realm3d",
+   "look": {
+    "on": true,
+    "game": "saga-realm",
+    "cal": {
+     "exposure": 1.653,
+     "wb": [
+      1.128,
+      0.977,
+      0.849
+     ]
+    }
+   },
+   "post": {
+    "on": true,
+    "tier": "HIGH",
+    "tone": "quad",
+    "exposure": 1.653,
+    "bloom": {
+     "on": true,
+     "threshold": 0.9,
+     "knee": 0.45,
+     "strength": 0.234,
+     "mips": [
+      {
+       "w": 640,
+       "h": 360
+      },
+      {
+       "w": 320,
+       "h": 180
+      },
+      {
+       "w": 160,
+       "h": 90
+      },
+      {
+       "w": 80,
+       "h": 45
+      }
+     ]
+    },
+    "grade": {
+     "amount": 1,
+     "sat": 1,
+     "temp": 0,
+     "lift": 0
+    },
+    "toon": 0,
+    "wb": [
+     1.128,
+     0.977,
+     0.849
+    ],
+    "msaa": 4,
+    "ao": {
+     "on": true,
+     "tier": "HIGH",
+     "samples": 12,
+     "scale": 0.5,
+     "w": 640,
+     "h": 360,
+     "radius": 2.4,
+     "intensity": 0.85,
+     "bias": 0.045
+    },
+    "scale": 1,
+    "w": 1280,
+    "h": 720
+   },
+   "stats": {
+    "r": 0.1144,
+    "g": 0.1137,
+    "b": 0.0532,
+    "Y": 0.1095,
+    "K": 4786
+   }
+  }
+ ]
+}

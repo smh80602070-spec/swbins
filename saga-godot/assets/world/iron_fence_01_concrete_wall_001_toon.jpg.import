@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://24iw84fblfnv"
+uid="uid://gn3njllxgxwh"
 path.s3tc="res://.godot/imported/iron_fence_01_concrete_wall_001_toon.jpg-f79a6ac286b78a95bad0b8c5d716cdfc.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "beec77a6bb5a16ebdde1eb1051ae1ec9"
 }
 
 [deps]

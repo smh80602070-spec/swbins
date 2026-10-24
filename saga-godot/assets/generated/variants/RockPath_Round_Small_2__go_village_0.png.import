@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckilmgigktcv0"
+uid="uid://dkk1vaih13fpg"
 path.s3tc="res://.godot/imported/RockPath_Round_Small_2__go_village_0.png-bf2cb99ae2144cbef50b8bef25224aa4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "d320b2b1ee519c966dfbb6b7ec45bada"
 }
 
 [deps]

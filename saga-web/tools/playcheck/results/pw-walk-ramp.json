@@ -1,5 +1,5 @@
 {
- "at": "2026-10-24T01:23:27.348Z",
+ "at": "2026-10-24T15:37:50.677Z",
  "tunes": [
   [
    "perf.auto",
@@ -8,927 +8,408 @@
   [
    "perf.startTier",
    "LOW"
-  ],
-  [
-   "world.labelCache",
-   1
   ]
  ],
  "runs": [
   [
    {
-    "fps": 8,
-    "worstMs": 359,
-    "bakes": 1,
-    "rebakes": 0,
-    "pre": 1,
-    "bakeMs": 12,
-    "resets": 0,
-    "n": 19,
-    "px": 607,
-    "tint": {
-     "n": 37,
-     "px": 9273344,
-     "cap": 24000000,
-     "made": 37,
-     "evict": 0,
-     "rows": 31,
-     "cells": 272,
-     "ms": 1632
-    },
-    "stamp": {
-     "hit": 601,
-     "miss": 49,
-     "size": 49,
-     "recent": [
-      "beast|pt_white_horse|1.36|1.24 (그림 늦게)",
-      "beast|pt_velociraptor|1.44 (그림 늦게)",
-      "human|kr_gyeonggi_1_630138|1.12|p0 (그림 늦게)",
-      "beast|an_magpie|0.56 (그림 늦게)",
-      "human|wq_postmaster|1.04|p0 (그림 늦게)",
-      "human|rf_yangsong|1.12|p0 (그림 늦게)",
-      "human|story_elder|1.04|p0 (그림 늦게)",
-      "beast|pt_cow_farm|1.36|1.19 (그림 늦게)",
-      "beast|pt_stag|1.36|1.05 (그림 늦게)",
-      "beast|pt_toad|1.36|0.40 (그림 늦게)",
-      "human|kr_gyeonggi_2_360848|1.12|p0 (그림 늦게)",
-      "human|kr_gyeonggi_1_150726|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_582922|1.36 (그림 늦게)",
-      "beast|pt_crane|1.36|0.76 (그림 늦게)",
-      "human|jp_taira|1.12|p0 (그림 늦게)",
-      "beast|pt_stegosaurus|1.36|1.81 (그림 늦게)",
-      "beast|pt_bear|1.68",
-      "beast|pt_boar|1.20",
-      "beast|pt_bear|1.68 (그림 늦게)",
-      "beast|pt_boar|1.20 (그림 늦게)"
-     ]
-    },
-    "tall": 43,
-    "pos": [
-     48,
-     -111
-    ],
-    "kind": "road",
-    "perFrame": {
-     "drawImage": 125.9,
-     "fill": 147.4,
-     "getImageData": 0.6,
-     "fillText": 1.3,
-     "createCanvas": 1.3
-    }
-   },
-   {
-    "fps": 22.5,
-    "worstMs": 191,
+    "fps": 60.7,
+    "worstMs": 20,
     "bakes": 0,
     "rebakes": 0,
     "pre": 0,
     "bakeMs": 0,
     "resets": 0,
-    "n": 19,
-    "px": 607,
+    "n": 0,
+    "px": 0,
     "tint": {
-     "n": 39,
-     "px": 9699328,
+     "n": 0,
+     "px": 0,
      "cap": 24000000,
-     "made": 39,
+     "made": 0,
      "evict": 0,
-     "rows": 32,
-     "cells": 286,
-     "ms": 1696
+     "rows": 0,
+     "cells": 0,
+     "ms": 0
     },
     "stamp": {
-     "hit": 648,
-     "miss": 50,
-     "size": 50,
-     "recent": [
-      "beast|pt_velociraptor|1.44 (그림 늦게)",
-      "human|kr_gyeonggi_1_630138|1.12|p0 (그림 늦게)",
-      "beast|an_magpie|0.56 (그림 늦게)",
-      "human|wq_postmaster|1.04|p0 (그림 늦게)",
-      "human|rf_yangsong|1.12|p0 (그림 늦게)",
-      "human|story_elder|1.04|p0 (그림 늦게)",
-      "beast|pt_cow_farm|1.36|1.19 (그림 늦게)",
-      "beast|pt_stag|1.36|1.05 (그림 늦게)",
-      "beast|pt_toad|1.36|0.40 (그림 늦게)",
-      "human|kr_gyeonggi_2_360848|1.12|p0 (그림 늦게)",
-      "human|kr_gyeonggi_1_150726|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_582922|1.36 (그림 늦게)",
-      "beast|pt_crane|1.36|0.76 (그림 늦게)",
-      "human|jp_taira|1.12|p0 (그림 늦게)",
-      "beast|pt_stegosaurus|1.36|1.81 (그림 늦게)",
-      "beast|pt_bear|1.68",
-      "beast|pt_boar|1.20",
-      "beast|pt_bear|1.68 (그림 늦게)",
-      "beast|pt_boar|1.20 (그림 늦게)",
-      "human|npc_herb|1.04|p0"
-     ]
+     "hit": 0,
+     "miss": 0,
+     "size": 0,
+     "recent": []
     },
-    "tall": 73,
+    "tall": 0,
     "pos": [
-     48,
-     -207
+     0,
+     -8
     ],
-    "kind": "grass",
+    "kind": "town",
     "perFrame": {
-     "drawImage": 135.8,
-     "fill": 112.9,
-     "getImageData": 0.1,
-     "fillText": 1.5,
-     "createCanvas": 0.3
-    }
-   },
-   {
-    "fps": 7.9,
-    "worstMs": 456,
-    "bakes": 0,
-    "rebakes": 0,
-    "pre": 0,
-    "bakeMs": 0,
-    "resets": 0,
-    "n": 19,
-    "px": 607,
-    "tint": {
-     "n": 41,
-     "px": 10125312,
-     "cap": 24000000,
-     "made": 41,
-     "evict": 0,
-     "rows": 34,
-     "cells": 305,
-     "ms": 1766
-    },
-    "stamp": {
-     "hit": 681,
-     "miss": 57,
-     "size": 57,
-     "recent": [
-      "beast|pt_stag|1.36|1.05 (그림 늦게)",
-      "beast|pt_toad|1.36|0.40 (그림 늦게)",
-      "human|kr_gyeonggi_2_360848|1.12|p0 (그림 늦게)",
-      "human|kr_gyeonggi_1_150726|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_582922|1.36 (그림 늦게)",
-      "beast|pt_crane|1.36|0.76 (그림 늦게)",
-      "human|jp_taira|1.12|p0 (그림 늦게)",
-      "beast|pt_stegosaurus|1.36|1.81 (그림 늦게)",
-      "beast|pt_bear|1.68",
-      "beast|pt_boar|1.20",
-      "beast|pt_bear|1.68 (그림 늦게)",
-      "beast|pt_boar|1.20 (그림 늦게)",
-      "human|npc_herb|1.04|p0",
-      "beast|pt_bull|1.36|1.24",
-      "beast|an_wolf|1.04",
-      "beast|pt_bull|1.36|1.24 (그림 늦게)",
-      "beast|an_wolf|1.04 (그림 늦게)",
-      "beast|pt_cat|1.36|0.43",
-      "beast|pt_cat|1.36|0.43 (그림 늦게)",
-      "human|npc_soldier|1.04|p0"
-     ]
-    },
-    "tall": 84,
-    "pos": [
-     48,
-     -261
-    ],
-    "kind": "mount",
-    "perFrame": {
-     "drawImage": 153.2,
-     "fill": 111.3,
-     "getImageData": 0.7,
-     "fillText": 2.2,
-     "createCanvas": 2.2
-    }
-   },
-   {
-    "fps": 12.6,
-    "worstMs": 418,
-    "bakes": 3,
-    "rebakes": 0,
-    "pre": 3,
-    "bakeMs": 30,
-    "resets": 0,
-    "n": 22,
-    "px": 607,
-    "tint": {
-     "n": 43,
-     "px": 10551296,
-     "cap": 24000000,
-     "made": 43,
-     "evict": 0,
-     "rows": 38,
-     "cells": 325,
-     "ms": 1864
-    },
-    "stamp": {
-     "hit": 741,
-     "miss": 65,
-     "size": 65,
-     "recent": [
-      "beast|pt_bear|1.68",
-      "beast|pt_boar|1.20",
-      "beast|pt_bear|1.68 (그림 늦게)",
-      "beast|pt_boar|1.20 (그림 늦게)",
-      "human|npc_herb|1.04|p0",
-      "beast|pt_bull|1.36|1.24",
-      "beast|an_wolf|1.04",
-      "beast|pt_bull|1.36|1.24 (그림 늦게)",
-      "beast|an_wolf|1.04 (그림 늦게)",
-      "beast|pt_cat|1.36|0.43",
-      "beast|pt_cat|1.36|0.43 (그림 늦게)",
-      "human|npc_soldier|1.04|p0",
-      "human|jp_kazenari|1.12|p0",
-      "human|jp_kazenari|1.12|p0 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62",
-      "human|kr_gyeonggi_2_434076|1.12|p0",
-      "beast|pt_horse_farm|1.36|1.24",
-      "human|kr_gyeonggi_2_434076|1.12|p0 (그림 늦게)",
-      "beast|pt_horse_farm|1.36|1.24 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62 (그림 늦게)"
-     ]
-    },
-    "tall": 103,
-    "pos": [
-     37,
-     -329
-    ],
-    "kind": "mount",
-    "perFrame": {
-     "drawImage": 184.6,
-     "fill": 162.2,
-     "getImageData": 0.4,
-     "fillText": 1.9,
-     "createCanvas": 1.7
-    }
-   },
-   {
-    "fps": 4.7,
-    "worstMs": 1096,
-    "bakes": 1,
-    "rebakes": 0,
-    "pre": 1,
-    "bakeMs": 12,
-    "resets": 0,
-    "n": 23,
-    "px": 607,
-    "tint": {
-     "n": 44,
-     "px": 10846208,
-     "cap": 24000000,
-     "made": 44,
-     "evict": 0,
-     "rows": 40,
-     "cells": 340,
-     "ms": 1878
-    },
-    "stamp": {
-     "hit": 760,
-     "miss": 69,
-     "size": 69,
-     "recent": [
-      "human|npc_herb|1.04|p0",
-      "beast|pt_bull|1.36|1.24",
-      "beast|an_wolf|1.04",
-      "beast|pt_bull|1.36|1.24 (그림 늦게)",
-      "beast|an_wolf|1.04 (그림 늦게)",
-      "beast|pt_cat|1.36|0.43",
-      "beast|pt_cat|1.36|0.43 (그림 늦게)",
-      "human|npc_soldier|1.04|p0",
-      "human|jp_kazenari|1.12|p0",
-      "human|jp_kazenari|1.12|p0 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62",
-      "human|kr_gyeonggi_2_434076|1.12|p0",
-      "beast|pt_horse_farm|1.36|1.24",
-      "human|kr_gyeonggi_2_434076|1.12|p0 (그림 늦게)",
-      "beast|pt_horse_farm|1.36|1.24 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62 (그림 늦게)",
-      "human|mb_cheolgak|1.12|p0",
-      "human|mb_cheolgak|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19 (그림 늦게)"
-     ]
-    },
-    "tall": 103,
-    "pos": [
-     30,
-     -359
-    ],
-    "kind": "mount",
-    "perFrame": {
-     "drawImage": 200.2,
-     "fill": 164.5,
-     "getImageData": 0.5,
-     "fillText": 3,
-     "createCanvas": 2.5
-    }
-   },
-   {
-    "fps": 8.8,
-    "worstMs": 288,
-    "bakes": 2,
-    "rebakes": 0,
-    "pre": 2,
-    "bakeMs": 4,
-    "resets": 0,
-    "n": 25,
-    "px": 607,
-    "tint": {
-     "n": 45,
-     "px": 11141120,
-     "cap": 24000000,
-     "made": 45,
-     "evict": 0,
-     "rows": 41,
-     "cells": 348,
-     "ms": 1900
-    },
-    "stamp": {
-     "hit": 812,
-     "miss": 74,
-     "size": 74,
-     "recent": [
-      "beast|pt_cat|1.36|0.43",
-      "beast|pt_cat|1.36|0.43 (그림 늦게)",
-      "human|npc_soldier|1.04|p0",
-      "human|jp_kazenari|1.12|p0",
-      "human|jp_kazenari|1.12|p0 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62",
-      "human|kr_gyeonggi_2_434076|1.12|p0",
-      "beast|pt_horse_farm|1.36|1.24",
-      "human|kr_gyeonggi_2_434076|1.12|p0 (그림 늦게)",
-      "beast|pt_horse_farm|1.36|1.24 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62 (그림 늦게)",
-      "human|mb_cheolgak|1.12|p0",
-      "human|mb_cheolgak|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19 (그림 늦게)",
-      "beast|pk_gyarados|1.28",
-      "beast|pt_owl|1.36",
-      "beast|pk_gyarados|1.28 (그림 늦게)",
-      "beast|pt_owl|1.36 (그림 늦게)",
-      "human|jp_ryoma|1.12|p0"
-     ]
-    },
-    "tall": 105,
-    "pos": [
-     26,
-     -404
-    ],
-    "kind": "mount",
-    "perFrame": {
-     "drawImage": 184.8,
-     "fill": 130.9,
-     "getImageData": 0.4,
-     "fillText": 1.4,
-     "createCanvas": 1.6
-    }
-   },
-   {
-    "fps": 3.4,
-    "worstMs": 803,
-    "bakes": 0,
-    "rebakes": 0,
-    "pre": 0,
-    "bakeMs": 0,
-    "resets": 0,
-    "n": 25,
-    "px": 607,
-    "tint": {
-     "n": 45,
-     "px": 11141120,
-     "cap": 24000000,
-     "made": 45,
-     "evict": 0,
-     "rows": 41,
-     "cells": 348,
-     "ms": 1900
-    },
-    "stamp": {
-     "hit": 834,
-     "miss": 74,
-     "size": 74,
-     "recent": [
-      "beast|pt_cat|1.36|0.43",
-      "beast|pt_cat|1.36|0.43 (그림 늦게)",
-      "human|npc_soldier|1.04|p0",
-      "human|jp_kazenari|1.12|p0",
-      "human|jp_kazenari|1.12|p0 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62",
-      "human|kr_gyeonggi_2_434076|1.12|p0",
-      "beast|pt_horse_farm|1.36|1.24",
-      "human|kr_gyeonggi_2_434076|1.12|p0 (그림 늦게)",
-      "beast|pt_horse_farm|1.36|1.24 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62 (그림 늦게)",
-      "human|mb_cheolgak|1.12|p0",
-      "human|mb_cheolgak|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19 (그림 늦게)",
-      "beast|pk_gyarados|1.28",
-      "beast|pt_owl|1.36",
-      "beast|pk_gyarados|1.28 (그림 늦게)",
-      "beast|pt_owl|1.36 (그림 늦게)",
-      "human|jp_ryoma|1.12|p0"
-     ]
-    },
-    "tall": 109,
-    "pos": [
-     26,
-     -465
-    ],
-    "kind": "mount",
-    "perFrame": {
-     "drawImage": 182.8,
-     "fill": 118.7,
+     "drawImage": 0,
+     "fill": 4.5,
      "getImageData": 0,
-     "fillText": 2.8,
-     "createCanvas": 0.3
-    }
-   },
-   {
-    "fps": 5.7,
-    "worstMs": 536,
-    "bakes": 2,
-    "rebakes": 0,
-    "pre": 2,
-    "bakeMs": 16,
-    "resets": 0,
-    "n": 27,
-    "px": 607,
-    "tint": {
-     "n": 47,
-     "px": 11403264,
-     "cap": 24000000,
-     "made": 47,
-     "evict": 0,
-     "rows": 43,
-     "cells": 364,
-     "ms": 1972
-    },
-    "stamp": {
-     "hit": 855,
-     "miss": 74,
-     "size": 74,
-     "recent": [
-      "beast|pt_cat|1.36|0.43",
-      "beast|pt_cat|1.36|0.43 (그림 늦게)",
-      "human|npc_soldier|1.04|p0",
-      "human|jp_kazenari|1.12|p0",
-      "human|jp_kazenari|1.12|p0 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62",
-      "human|kr_gyeonggi_2_434076|1.12|p0",
-      "beast|pt_horse_farm|1.36|1.24",
-      "human|kr_gyeonggi_2_434076|1.12|p0 (그림 늦게)",
-      "beast|pt_horse_farm|1.36|1.24 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62 (그림 늦게)",
-      "human|mb_cheolgak|1.12|p0",
-      "human|mb_cheolgak|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19 (그림 늦게)",
-      "beast|pk_gyarados|1.28",
-      "beast|pt_owl|1.36",
-      "beast|pk_gyarados|1.28 (그림 늦게)",
-      "beast|pt_owl|1.36 (그림 늦게)",
-      "human|jp_ryoma|1.12|p0"
-     ]
-    },
-    "tall": 109,
-    "pos": [
-     12,
-     -491
-    ],
-    "kind": "mount",
-    "perFrame": {
-     "drawImage": 203,
-     "fill": 154.1,
-     "getImageData": 0.3,
-     "fillText": 2.3,
-     "createCanvas": 0.6
-    }
-   },
-   {
-    "fps": 7.6,
-    "worstMs": 560,
-    "bakes": 0,
-    "rebakes": 0,
-    "pre": 0,
-    "bakeMs": 0,
-    "resets": 0,
-    "n": 27,
-    "px": 607,
-    "tint": {
-     "n": 50,
-     "px": 12124160,
-     "cap": 24000000,
-     "made": 50,
-     "evict": 0,
-     "rows": 45,
-     "cells": 381,
-     "ms": 1991
-    },
-    "stamp": {
-     "hit": 905,
-     "miss": 80,
-     "size": 80,
-     "recent": [
-      "human|kr_gyeonggi_2_434076|1.12|p0",
-      "beast|pt_horse_farm|1.36|1.24",
-      "human|kr_gyeonggi_2_434076|1.12|p0 (그림 늦게)",
-      "beast|pt_horse_farm|1.36|1.24 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62 (그림 늦게)",
-      "human|mb_cheolgak|1.12|p0",
-      "human|mb_cheolgak|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19 (그림 늦게)",
-      "beast|pk_gyarados|1.28",
-      "beast|pt_owl|1.36",
-      "beast|pk_gyarados|1.28 (그림 늦게)",
-      "beast|pt_owl|1.36 (그림 늦게)",
-      "human|jp_ryoma|1.12|p0",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40",
-      "beast|pt_magpie|1.36|0.40",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40 (그림 늦게)",
-      "beast|pt_magpie|1.36|0.40 (그림 늦게)"
-     ]
-    },
-    "tall": 114,
-    "pos": [
-     38,
-     -555
-    ],
-    "kind": "forest",
-    "perFrame": {
-     "drawImage": 190.6,
-     "fill": 117.9,
-     "getImageData": 0.5,
-     "fillText": 3.3,
-     "createCanvas": 1.8
-    }
-   },
-   {
-    "fps": 6.7,
-    "worstMs": 451,
-    "bakes": 0,
-    "rebakes": 0,
-    "pre": 0,
-    "bakeMs": 0,
-    "resets": 0,
-    "n": 27,
-    "px": 607,
-    "tint": {
-     "n": 50,
-     "px": 12124160,
-     "cap": 24000000,
-     "made": 50,
-     "evict": 0,
-     "rows": 46,
-     "cells": 387,
-     "ms": 1993
-    },
-    "stamp": {
-     "hit": 941,
-     "miss": 80,
-     "size": 80,
-     "recent": [
-      "human|kr_gyeonggi_2_434076|1.12|p0",
-      "beast|pt_horse_farm|1.36|1.24",
-      "human|kr_gyeonggi_2_434076|1.12|p0 (그림 늦게)",
-      "beast|pt_horse_farm|1.36|1.24 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62 (그림 늦게)",
-      "human|mb_cheolgak|1.12|p0",
-      "human|mb_cheolgak|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19 (그림 늦게)",
-      "beast|pk_gyarados|1.28",
-      "beast|pt_owl|1.36",
-      "beast|pk_gyarados|1.28 (그림 늦게)",
-      "beast|pt_owl|1.36 (그림 늦게)",
-      "human|jp_ryoma|1.12|p0",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40",
-      "beast|pt_magpie|1.36|0.40",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40 (그림 늦게)",
-      "beast|pt_magpie|1.36|0.40 (그림 늦게)"
-     ]
-    },
-    "tall": 126,
-    "pos": [
-     38,
-     -560
-    ],
-    "kind": "forest",
-    "perFrame": {
-     "drawImage": 166.3,
-     "fill": 106.3,
-     "getImageData": 0,
-     "fillText": 2.3,
-     "createCanvas": 0.1
-    }
-   },
-   {
-    "fps": 6.4,
-    "worstMs": 408,
-    "bakes": 0,
-    "rebakes": 0,
-    "pre": 0,
-    "bakeMs": 0,
-    "resets": 0,
-    "n": 27,
-    "px": 607,
-    "tint": {
-     "n": 50,
-     "px": 12124160,
-     "cap": 24000000,
-     "made": 50,
-     "evict": 0,
-     "rows": 46,
-     "cells": 387,
-     "ms": 1993
-    },
-    "stamp": {
-     "hit": 983,
-     "miss": 80,
-     "size": 80,
-     "recent": [
-      "human|kr_gyeonggi_2_434076|1.12|p0",
-      "beast|pt_horse_farm|1.36|1.24",
-      "human|kr_gyeonggi_2_434076|1.12|p0 (그림 늦게)",
-      "beast|pt_horse_farm|1.36|1.24 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62 (그림 늦게)",
-      "human|mb_cheolgak|1.12|p0",
-      "human|mb_cheolgak|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19 (그림 늦게)",
-      "beast|pk_gyarados|1.28",
-      "beast|pt_owl|1.36",
-      "beast|pk_gyarados|1.28 (그림 늦게)",
-      "beast|pt_owl|1.36 (그림 늦게)",
-      "human|jp_ryoma|1.12|p0",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40",
-      "beast|pt_magpie|1.36|0.40",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40 (그림 늦게)",
-      "beast|pt_magpie|1.36|0.40 (그림 늦게)"
-     ]
-    },
-    "tall": 142,
-    "pos": [
-     38,
-     -621
-    ],
-    "kind": "forest",
-    "perFrame": {
-     "drawImage": 209.9,
-     "fill": 138.4,
-     "getImageData": 0,
-     "fillText": 2.4,
+     "fillText": 0.1,
      "createCanvas": 0
     }
    },
    {
-    "fps": 1.6,
-    "worstMs": 735,
+    "fps": 60.1,
+    "worstMs": 19,
     "bakes": 0,
     "rebakes": 0,
     "pre": 0,
     "bakeMs": 0,
     "resets": 0,
-    "n": 27,
-    "px": 607,
+    "n": 0,
+    "px": 0,
     "tint": {
-     "n": 50,
-     "px": 12124160,
+     "n": 0,
+     "px": 0,
      "cap": 24000000,
-     "made": 50,
+     "made": 0,
      "evict": 0,
-     "rows": 46,
-     "cells": 387,
-     "ms": 1993
+     "rows": 0,
+     "cells": 0,
+     "ms": 0
     },
     "stamp": {
-     "hit": 995,
-     "miss": 81,
-     "size": 81,
-     "recent": [
-      "beast|pt_horse_farm|1.36|1.24",
-      "human|kr_gyeonggi_2_434076|1.12|p0 (그림 늦게)",
-      "beast|pt_horse_farm|1.36|1.24 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62 (그림 늦게)",
-      "human|mb_cheolgak|1.12|p0",
-      "human|mb_cheolgak|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19 (그림 늦게)",
-      "beast|pk_gyarados|1.28",
-      "beast|pt_owl|1.36",
-      "beast|pk_gyarados|1.28 (그림 늦게)",
-      "beast|pt_owl|1.36 (그림 늦게)",
-      "human|jp_ryoma|1.12|p0",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40",
-      "beast|pt_magpie|1.36|0.40",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40 (그림 늦게)",
-      "beast|pt_magpie|1.36|0.40 (그림 늦게)",
-      "human|kr_gyeonggi_1_526890|1.12|p0"
-     ]
+     "hit": 0,
+     "miss": 0,
+     "size": 0,
+     "recent": []
     },
-    "tall": 140,
+    "tall": 0,
     "pos": [
-     38,
-     -642
+     0,
+     -16
     ],
-    "kind": "road",
+    "kind": "town",
     "perFrame": {
-     "drawImage": 218,
-     "fill": 147,
-     "getImageData": 0.5,
-     "fillText": 2.5,
-     "createCanvas": 1
+     "drawImage": 0,
+     "fill": 4.3,
+     "getImageData": 0,
+     "fillText": 0.1,
+     "createCanvas": 0
     }
    },
    {
-    "fps": 4.9,
-    "worstMs": 519,
+    "fps": 60,
+    "worstMs": 32,
     "bakes": 0,
     "rebakes": 0,
     "pre": 0,
     "bakeMs": 0,
     "resets": 0,
-    "n": 27,
-    "px": 607,
+    "n": 0,
+    "px": 0,
     "tint": {
-     "n": 52,
-     "px": 12713984,
+     "n": 0,
+     "px": 0,
      "cap": 24000000,
-     "made": 52,
+     "made": 0,
      "evict": 0,
-     "rows": 47,
-     "cells": 396,
-     "ms": 2085
+     "rows": 0,
+     "cells": 0,
+     "ms": 0
     },
     "stamp": {
-     "hit": 1027,
-     "miss": 82,
-     "size": 82,
-     "recent": [
-      "human|kr_gyeonggi_2_434076|1.12|p0 (그림 늦게)",
-      "beast|pt_horse_farm|1.36|1.24 (그림 늦게)",
-      "beast|pt_pig|1.36|0.62 (그림 늦게)",
-      "human|mb_cheolgak|1.12|p0",
-      "human|mb_cheolgak|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19 (그림 늦게)",
-      "beast|pk_gyarados|1.28",
-      "beast|pt_owl|1.36",
-      "beast|pk_gyarados|1.28 (그림 늦게)",
-      "beast|pt_owl|1.36 (그림 늦게)",
-      "human|jp_ryoma|1.12|p0",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40",
-      "beast|pt_magpie|1.36|0.40",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40 (그림 늦게)",
-      "beast|pt_magpie|1.36|0.40 (그림 늦게)",
-      "human|kr_gyeonggi_1_526890|1.12|p0",
-      "human|kr_gyeonggi_2_527455|1.12|p0"
-     ]
+     "hit": 0,
+     "miss": 0,
+     "size": 0,
+     "recent": []
     },
-    "tall": 156,
+    "tall": 0,
     "pos": [
-     38,
-     -684
+     0,
+     -24
     ],
-    "kind": "road",
+    "kind": "town",
     "perFrame": {
-     "drawImage": 222.5,
-     "fill": 134.3,
-     "getImageData": 0.5,
-     "fillText": 2,
-     "createCanvas": 1
+     "drawImage": 0,
+     "fill": 4.5,
+     "getImageData": 0,
+     "fillText": 0.1,
+     "createCanvas": 0
     }
    },
    {
-    "fps": 8.7,
-    "worstMs": 408,
-    "bakes": 2,
-    "rebakes": 0,
-    "pre": 2,
-    "bakeMs": 35,
-    "resets": 0,
-    "n": 28,
-    "px": 607,
-    "tint": {
-     "n": 52,
-     "px": 12713984,
-     "cap": 24000000,
-     "made": 52,
-     "evict": 0,
-     "rows": 48,
-     "cells": 403,
-     "ms": 2092
-    },
-    "stamp": {
-     "hit": 1069,
-     "miss": 84,
-     "size": 84,
-     "recent": [
-      "beast|pt_pig|1.36|0.62 (그림 늦게)",
-      "human|mb_cheolgak|1.12|p0",
-      "human|mb_cheolgak|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19 (그림 늦게)",
-      "beast|pk_gyarados|1.28",
-      "beast|pt_owl|1.36",
-      "beast|pk_gyarados|1.28 (그림 늦게)",
-      "beast|pt_owl|1.36 (그림 늦게)",
-      "human|jp_ryoma|1.12|p0",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40",
-      "beast|pt_magpie|1.36|0.40",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40 (그림 늦게)",
-      "beast|pt_magpie|1.36|0.40 (그림 늦게)",
-      "human|kr_gyeonggi_1_526890|1.12|p0",
-      "human|kr_gyeonggi_2_527455|1.12|p0",
-      "human|kr_gyeonggi_1_118222|1.12|p0",
-      "human|jiao_banrok|1.12|p0"
-     ]
-    },
-    "tall": 170,
-    "pos": [
-     38,
-     -753
-    ],
-    "kind": "road",
-    "perFrame": {
-     "drawImage": 253.6,
-     "fill": 185,
-     "getImageData": 0.3,
-     "fillText": 2.3,
-     "createCanvas": 1.1
-    }
-   },
-   {
-    "fps": 7.8,
-    "worstMs": 417,
+    "fps": 59.9,
+    "worstMs": 20,
     "bakes": 0,
     "rebakes": 0,
     "pre": 0,
     "bakeMs": 0,
     "resets": 0,
-    "n": 28,
-    "px": 607,
+    "n": 0,
+    "px": 0,
     "tint": {
-     "n": 54,
-     "px": 13139968,
+     "n": 0,
+     "px": 0,
      "cap": 24000000,
-     "made": 54,
+     "made": 0,
      "evict": 0,
-     "rows": 50,
-     "cells": 419,
-     "ms": 2152
+     "rows": 0,
+     "cells": 0,
+     "ms": 0
     },
     "stamp": {
-     "hit": 1097,
-     "miss": 85,
-     "size": 85,
-     "recent": [
-      "human|mb_cheolgak|1.12|p0",
-      "human|mb_cheolgak|1.12|p0 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19",
-      "beast|ptgen_gyeonggi_1_108406|1.36|1.19 (그림 늦게)",
-      "beast|pk_gyarados|1.28",
-      "beast|pt_owl|1.36",
-      "beast|pk_gyarados|1.28 (그림 늦게)",
-      "beast|pt_owl|1.36 (그림 늦게)",
-      "human|jp_ryoma|1.12|p0",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52",
-      "beast|ptgen_gyeonggi_1_238138|1.36|0.52 (그림 늦게)",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40",
-      "beast|pt_magpie|1.36|0.40",
-      "beast|ptgen_gyeonggi_1_169942|1.36|0.40 (그림 늦게)",
-      "beast|pt_magpie|1.36|0.40 (그림 늦게)",
-      "human|kr_gyeonggi_1_526890|1.12|p0",
-      "human|kr_gyeonggi_2_527455|1.12|p0",
-      "human|kr_gyeonggi_1_118222|1.12|p0",
-      "human|jiao_banrok|1.12|p0",
-      "beast|pt_horse|1.36|1.24"
-     ]
+     "hit": 0,
+     "miss": 0,
+     "size": 0,
+     "recent": []
     },
-    "tall": 182,
+    "tall": 0,
     "pos": [
-     38,
-     -801
+     0,
+     -32
+    ],
+    "kind": "town",
+    "perFrame": {
+     "drawImage": 0,
+     "fill": 4.4,
+     "getImageData": 0,
+     "fillText": 0.1,
+     "createCanvas": 0
+    }
+   },
+   {
+    "fps": 51.2,
+    "worstMs": 117,
+    "bakes": 0,
+    "rebakes": 0,
+    "pre": 0,
+    "bakeMs": 0,
+    "resets": 0,
+    "n": 0,
+    "px": 0,
+    "tint": {
+     "n": 0,
+     "px": 0,
+     "cap": 24000000,
+     "made": 0,
+     "evict": 0,
+     "rows": 0,
+     "cells": 0,
+     "ms": 0
+    },
+    "stamp": {
+     "hit": 0,
+     "miss": 0,
+     "size": 0,
+     "recent": []
+    },
+    "tall": 0,
+    "pos": [
+     0,
+     -40
+    ],
+    "kind": "town",
+    "perFrame": {
+     "drawImage": 0,
+     "fill": 4.8,
+     "getImageData": 0,
+     "fillText": 0.1,
+     "createCanvas": 0
+    }
+   },
+   {
+    "fps": 60,
+    "worstMs": 20,
+    "bakes": 0,
+    "rebakes": 0,
+    "pre": 0,
+    "bakeMs": 0,
+    "resets": 0,
+    "n": 0,
+    "px": 0,
+    "tint": {
+     "n": 0,
+     "px": 0,
+     "cap": 24000000,
+     "made": 0,
+     "evict": 0,
+     "rows": 0,
+     "cells": 0,
+     "ms": 0
+    },
+    "stamp": {
+     "hit": 0,
+     "miss": 0,
+     "size": 0,
+     "recent": []
+    },
+    "tall": 0,
+    "pos": [
+     0,
+     -48
     ],
     "kind": "road",
     "perFrame": {
-     "drawImage": 247.3,
-     "fill": 134.7,
-     "getImageData": 0.3,
-     "fillText": 1.9,
-     "createCanvas": 0.9
+     "drawImage": 0,
+     "fill": 4,
+     "getImageData": 0,
+     "fillText": 0.1,
+     "createCanvas": 0
+    }
+   },
+   {
+    "fps": 60,
+    "worstMs": 20,
+    "bakes": 0,
+    "rebakes": 0,
+    "pre": 0,
+    "bakeMs": 0,
+    "resets": 0,
+    "n": 0,
+    "px": 0,
+    "tint": {
+     "n": 0,
+     "px": 0,
+     "cap": 24000000,
+     "made": 0,
+     "evict": 0,
+     "rows": 0,
+     "cells": 0,
+     "ms": 0
+    },
+    "stamp": {
+     "hit": 0,
+     "miss": 0,
+     "size": 0,
+     "recent": []
+    },
+    "tall": 0,
+    "pos": [
+     0,
+     -56
+    ],
+    "kind": "road",
+    "perFrame": {
+     "drawImage": 0,
+     "fill": 4,
+     "getImageData": 0,
+     "fillText": 0.1,
+     "createCanvas": 0
+    }
+   },
+   {
+    "fps": 60,
+    "worstMs": 19,
+    "bakes": 0,
+    "rebakes": 0,
+    "pre": 0,
+    "bakeMs": 0,
+    "resets": 0,
+    "n": 0,
+    "px": 0,
+    "tint": {
+     "n": 0,
+     "px": 0,
+     "cap": 24000000,
+     "made": 0,
+     "evict": 0,
+     "rows": 0,
+     "cells": 0,
+     "ms": 0
+    },
+    "stamp": {
+     "hit": 0,
+     "miss": 0,
+     "size": 0,
+     "recent": []
+    },
+    "tall": 0,
+    "pos": [
+     0,
+     -65
+    ],
+    "kind": "road",
+    "perFrame": {
+     "drawImage": 0,
+     "fill": 4,
+     "getImageData": 0,
+     "fillText": 0.1,
+     "createCanvas": 0
+    }
+   },
+   {
+    "fps": 60,
+    "worstMs": 19,
+    "bakes": 0,
+    "rebakes": 0,
+    "pre": 0,
+    "bakeMs": 0,
+    "resets": 0,
+    "n": 0,
+    "px": 0,
+    "tint": {
+     "n": 0,
+     "px": 0,
+     "cap": 24000000,
+     "made": 0,
+     "evict": 0,
+     "rows": 0,
+     "cells": 0,
+     "ms": 0
+    },
+    "stamp": {
+     "hit": 0,
+     "miss": 0,
+     "size": 0,
+     "recent": []
+    },
+    "tall": 0,
+    "pos": [
+     0,
+     -73
+    ],
+    "kind": "road",
+    "perFrame": {
+     "drawImage": 0,
+     "fill": 4.1,
+     "getImageData": 0,
+     "fillText": 0.1,
+     "createCanvas": 0
+    }
+   },
+   {
+    "fps": 60,
+    "worstMs": 20,
+    "bakes": 0,
+    "rebakes": 0,
+    "pre": 0,
+    "bakeMs": 0,
+    "resets": 0,
+    "n": 0,
+    "px": 0,
+    "tint": {
+     "n": 0,
+     "px": 0,
+     "cap": 24000000,
+     "made": 0,
+     "evict": 0,
+     "rows": 0,
+     "cells": 0,
+     "ms": 0
+    },
+    "stamp": {
+     "hit": 0,
+     "miss": 0,
+     "size": 0,
+     "recent": []
+    },
+    "tall": 0,
+    "pos": [
+     0,
+     -81
+    ],
+    "kind": "road",
+    "perFrame": {
+     "drawImage": 0,
+     "fill": 4,
+     "getImageData": 0,
+     "fillText": 0.1,
+     "createCanvas": 0
     }
    }
   ]
@@ -936,17 +417,17 @@
  "mean": [
   {
    "s": 1,
-   "fps": 8,
-   "worstMs": 359,
-   "bakes": 1,
+   "fps": 60.7,
+   "worstMs": 20,
+   "bakes": 0,
    "rebakes": 0,
-   "pre": 1,
-   "bakeMs": 12
+   "pre": 0,
+   "bakeMs": 0
   },
   {
    "s": 2,
-   "fps": 22.5,
-   "worstMs": 191,
+   "fps": 60.1,
+   "worstMs": 19,
    "bakes": 0,
    "rebakes": 0,
    "pre": 0,
@@ -954,8 +435,8 @@
   },
   {
    "s": 3,
-   "fps": 7.9,
-   "worstMs": 456,
+   "fps": 60,
+   "worstMs": 32,
    "bakes": 0,
    "rebakes": 0,
    "pre": 0,
@@ -963,35 +444,35 @@
   },
   {
    "s": 4,
-   "fps": 12.6,
-   "worstMs": 418,
-   "bakes": 3,
+   "fps": 59.9,
+   "worstMs": 20,
+   "bakes": 0,
    "rebakes": 0,
-   "pre": 3,
-   "bakeMs": 30
+   "pre": 0,
+   "bakeMs": 0
   },
   {
    "s": 5,
-   "fps": 4.7,
-   "worstMs": 1096,
-   "bakes": 1,
+   "fps": 51.2,
+   "worstMs": 117,
+   "bakes": 0,
    "rebakes": 0,
-   "pre": 1,
-   "bakeMs": 12
+   "pre": 0,
+   "bakeMs": 0
   },
   {
    "s": 6,
-   "fps": 8.8,
-   "worstMs": 288,
-   "bakes": 2,
+   "fps": 60,
+   "worstMs": 20,
+   "bakes": 0,
    "rebakes": 0,
-   "pre": 2,
-   "bakeMs": 4
+   "pre": 0,
+   "bakeMs": 0
   },
   {
    "s": 7,
-   "fps": 3.4,
-   "worstMs": 803,
+   "fps": 60,
+   "worstMs": 20,
    "bakes": 0,
    "rebakes": 0,
    "pre": 0,
@@ -999,17 +480,17 @@
   },
   {
    "s": 8,
-   "fps": 5.7,
-   "worstMs": 536,
-   "bakes": 2,
+   "fps": 60,
+   "worstMs": 19,
+   "bakes": 0,
    "rebakes": 0,
-   "pre": 2,
-   "bakeMs": 16
+   "pre": 0,
+   "bakeMs": 0
   },
   {
    "s": 9,
-   "fps": 7.6,
-   "worstMs": 560,
+   "fps": 60,
+   "worstMs": 19,
    "bakes": 0,
    "rebakes": 0,
    "pre": 0,
@@ -1017,53 +498,8 @@
   },
   {
    "s": 10,
-   "fps": 6.7,
-   "worstMs": 451,
-   "bakes": 0,
-   "rebakes": 0,
-   "pre": 0,
-   "bakeMs": 0
-  },
-  {
-   "s": 11,
-   "fps": 6.4,
-   "worstMs": 408,
-   "bakes": 0,
-   "rebakes": 0,
-   "pre": 0,
-   "bakeMs": 0
-  },
-  {
-   "s": 12,
-   "fps": 1.6,
-   "worstMs": 735,
-   "bakes": 0,
-   "rebakes": 0,
-   "pre": 0,
-   "bakeMs": 0
-  },
-  {
-   "s": 13,
-   "fps": 4.9,
-   "worstMs": 519,
-   "bakes": 0,
-   "rebakes": 0,
-   "pre": 0,
-   "bakeMs": 0
-  },
-  {
-   "s": 14,
-   "fps": 8.7,
-   "worstMs": 408,
-   "bakes": 2,
-   "rebakes": 0,
-   "pre": 2,
-   "bakeMs": 35
-  },
-  {
-   "s": 15,
-   "fps": 7.8,
-   "worstMs": 417,
+   "fps": 60,
+   "worstMs": 20,
    "bakes": 0,
    "rebakes": 0,
    "pre": 0,
@@ -1072,10 +508,10 @@
  ],
  "cpu": [
   {
-   "threadMs": 1889,
-   "scriptMs": 1305,
-   "frames": 117,
-   "msPerFrame": 16.1
+   "threadMs": 2325,
+   "scriptMs": 1803,
+   "frames": 592,
+   "msPerFrame": 3.9
   }
  ]
 }

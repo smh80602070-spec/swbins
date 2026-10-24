@@ -1800,7 +1800,7 @@
   function handle(ev, pos) {
     var c = core(), H = global.DG.hero, i;
     for (i = 0; i < ev.length; i++) {
-      var e = ev[i]; if (global.DG.goRank) { global.DG.goRank.onEv(e); }   // W-0379 무리 토벌 등급
+      var e = ev[i]; if (global.DG.goRank) { global.DG.goRank.onEv(e); } if (global.DG.speciesStudy) { global.DG.speciesStudy.onEv(e); }   // W-0379 무리 토벌 등급 · W-0420 종 연구
       /* ⑲-3 원소 신호 — 스킬·폭발·장판 자리를 알린다(treasure.js 가 석등을 켠다) */
       if ((e.t === 'skill' || e.t === 'burst' || e.t === 'arrow' || (e.t === 'zone' && (e.kind === 'field' || e.kind === 'shell' || e.kind === 'kitzone' || e.kind === 'vortex' || e.kind === 'feast'))) && e.el) {
         /* 돌진·찌르기는 지나간 선(x0,y0 → x,y) 전체가 닿는다 — 끝점만 알리면 제단을 가로질러도 안 켜졌다(2026-09-28) */

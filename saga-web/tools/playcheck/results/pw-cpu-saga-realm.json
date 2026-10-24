@@ -1,28 +1,34 @@
 {
  "game": "saga-realm",
- "at": "2026-10-18T07:16:39.021Z",
+ "at": "2026-10-22T08:31:20.861Z",
  "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "throttle": 4,
  "sec": 3,
  "scene": 0,
  "runs": 3,
- "totalMs": 4213,
+ "totalMs": 4333,
  "rows": [
   {
    "key": "(idle) @",
    "fn": "(idle) @ [:-1:-1]",
-   "ms": 2999,
-   "pct": 71.3
+   "ms": 2987,
+   "pct": 69.5
   },
   {
    "key": "(program) @",
    "fn": "(program) @ [:-1:-1]",
-   "ms": 1212,
-   "pct": 28.7
+   "ms": 1331,
+   "pct": 30
   },
   {
-   "key": "desired @js/core.js",
-   "fn": "desired @js/core.js [app.js:28:5346]",
+   "key": "(garbage collector) @",
+   "fn": "(garbage collector) @ [:-1:-1]",
+   "ms": 14,
+   "pct": 0.4
+  },
+  {
+   "key": "C @js/hud.js",
+   "fn": "C @js/hud.js [app.js:4180:2533]",
    "ms": 0,
    "pct": 0
   },
@@ -33,14 +39,20 @@
    "pct": 0
   },
   {
-   "key": "C @js/hud.js",
-   "fn": "C @js/hud.js [app.js:4126:2533]",
+   "key": "getElementById @",
+   "fn": "getElementById @ [:-1:-1]",
+   "ms": 0,
+   "pct": 0
+  },
+  {
+   "key": "desired @js/core.js",
+   "fn": "desired @js/core.js [app.js:46:5352]",
    "ms": 0,
    "pct": 0
   },
   {
    "key": "A @js/hud.js",
-   "fn": "A @js/hud.js [app.js:4126:1513]",
+   "fn": "A @js/hud.js [app.js:4180:1513]",
    "ms": 0,
    "pct": 0
   }

@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://buefn16vuupgm"
+uid="uid://cegdqsu7liexs"
 path.s3tc="res://.godot/imported/modern_block_01_bitumen_toon.jpg-3aa3f027930bf46e17243f67cc871e78.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "b5d6bd1b930fae61375a6d3caa2d2408"
 }
 
 [deps]

@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://uubr32g5lyuk"
+uid="uid://cr1iviw6nlkef"
 path.s3tc="res://.godot/imported/sail_boat_01_black_painted_planks_toon.jpg-7ce3ea5cb4b478fd83d7dea9746312ce.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "2eefb842471d9be28a9ff871b6732c4c"
 }
 
 [deps]

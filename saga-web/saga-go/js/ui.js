@@ -818,7 +818,7 @@
     var pC = Object.keys(core.save.dex.pets).length;
     var ST = global.DG.story, mem = ST && ST.MEMBERS ? Object.keys(ST.MEMBERS).map(function (k) { return ST.MEMBERS[k]; })
       .filter(function (e) { return core.save.dex.heroes[e.id]; }) : [];
-    return darkStrip() + buddyStrip() + rosterStrip() + (global.DG.codex && global.DG.codex.mountView ? global.DG.codex.mountView(esc, pt, dexBar) : '') +   // W-0117 탈것 칸(다섯 칸 — 인물 500 칸 아래 두면 안 보인다)
+    return darkStrip() + buddyStrip() + rosterStrip() + (global.DG.speciesStudy ? global.DG.speciesStudy.view(esc) : '') + (global.DG.codex && global.DG.codex.mountView ? global.DG.codex.mountView(esc, pt, dexBar) : '') +   // W-0117 탈것 칸(다섯 칸 — 인물 500 칸 아래 두면 안 보인다)
            '<div class="sec"><h4>인물</h4>' + dexBar(hC, data.heroes.length) +
              dexGrid(data.heroes, core.save.dex.heroes) + '</div>' +
            (mem.length ? '<div class="sec"><h4>📖 이야기 동료</h4>' + dexGrid(mem, core.save.dex.heroes) + '</div>' : '') +

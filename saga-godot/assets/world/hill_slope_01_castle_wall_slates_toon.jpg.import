@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cq08on81mvf2f"
+uid="uid://c8urpk16wtw54"
 path.s3tc="res://.godot/imported/hill_slope_01_castle_wall_slates_toon.jpg-95c6d4a5aabeedbdd6d3f267dddfd31b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "032f7739b64a65d9ef2f3a2744fdd65c"
 }
 
 [deps]

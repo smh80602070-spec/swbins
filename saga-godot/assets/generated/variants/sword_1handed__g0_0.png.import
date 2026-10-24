@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5kv5mt0xxex"
+uid="uid://cigseljlw2put"
 path.s3tc="res://.godot/imported/sword_1handed__g0_0.png-c455e42e67f47a32c0885fdede076c79.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "517436c3c892f9615920d9a4b86a68a4"
 }
 
 [deps]
