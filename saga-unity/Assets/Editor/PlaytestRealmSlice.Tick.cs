@@ -1230,6 +1230,7 @@ namespace Saga.EditorTools
                     // PLAN.md 109-13-2 지도 위 인물 — 전 성이 우리 것일 때 상한·태수 자리·재야·월드맵 배우 층.
                     if (!PlaytestRealmActors.Run()) { Fail(); return; }
                     // tasks U-0102 지도 가까이 보기 — 지금 성·지도 보기·카메라 거리를 되돌린다.
+                    if (!PlaytestRealmRegions.Run()) { Fail(); return; } // tasks U-0204 지역 단위 전략 지도 — 세이브 JSON·지금 성·지도로 되돌린다.
                     if (!PlaytestRealmMapView.Run()) { Fail(); return; }
                     // tasks U-0094 영내 소식 — 금·성 값·사건 상태를 되돌린다.
                     if (!PlaytestRealmNews.Run()) { Fail(); return; }

@@ -34,6 +34,7 @@ namespace Saga.Realm.World
                 var a = plan[i];
                 var def = RealmCityData.Get(a.CityId);
                 if (def == null) continue;
+                if (RealmRegions.On && RealmRegions.RegionOf(a.CityId) != RealmRegions.View) continue; // tasks U-0204 보는 지역 성만
                 var at = RealmWorldMap.WorldPos(def, centerX, centerY);
                 if (a.Kind == RealmActorPlan.Kind.Governor)
                 {

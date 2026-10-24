@@ -23,6 +23,7 @@ namespace Saga.Realm.World
             Saga.Realm.UI.RealmTradeUi.Install(); // tasks U-0172 교역로 창(기술 창 아래 오른쪽 단추가 연다)
             Saga.Realm.UI.RealmWonderUi.Install(); // tasks U-0136 불가사의 창(기술 창 아래 왼쪽 단추가 연다)
             Saga.Realm.UI.RealmFocusUi.Install(); // tasks U-0193 방침 — 🎯 방침 단추·창(☰ 메뉴 칸, Play 때)
+            Saga.Realm.UI.RealmRegionUi.Install(); // tasks U-0204 천하도 — 🗺 단추·지역 카드 창(☰ 메뉴 칸, Play 때)
             Saga.Realm.UI.RealmLawUi.Install(); // tasks U-0182 법령 — 📜 법령 단추·창(☰ 메뉴 칸, Play 때)
             Saga.Realm.UI.RealmTechUi.Install(); // tasks U-0129 기술 나무 — 📜 연구 단추·창(Play 때, 씬 재빌드 없이)
         }

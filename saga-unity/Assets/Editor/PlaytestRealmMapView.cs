@@ -27,6 +27,7 @@ namespace Saga.EditorTools
             float r0 = 0f, p0 = 0f;
             try
             {
+                RealmRegions.On = false; // tasks U-0204 — 이 진단은 옛 흐름(내 성 전부 한 판)을 잰다 · 지역 화면은 PlaytestRealmRegions
                 if (!RealmMapState.ViewingMap) RealmMapState.Toggle();
                 cam = Object.FindFirstObjectByType<RealmWorldMapCamera>();
                 RealmWorldMap map = null;
@@ -104,6 +105,7 @@ namespace Saga.EditorTools
             }
             finally
             {
+                RealmRegions.On = true;
                 if (RealmCityState.CurrentCity != city0) RealmCityState.SetCurrentCity(city0);
                 if (cam != null) { cam.SetView(r0, p0); cam.Tick(10f); }
                 if (RealmMapState.ViewingMap != viewing0) RealmMapState.Toggle();

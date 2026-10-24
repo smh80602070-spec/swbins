@@ -47,7 +47,9 @@ namespace Saga.EditorTools
             CheckClipTable();
             CheckPurePlan();
             string state = CheckState();
-            string map = CheckMap();
+            RealmRegions.On = false; // tasks U-0204 — 전 성 배우를 센다(지역 화면은 PlaytestRealmRegions)
+            string map;
+            try { map = CheckMap(); } finally { RealmRegions.On = true; }
             CheckGeneralSchedule();
             string bodies = CheckBodies();
             if (_ok) Debug.Log($"[PlaytestRealmSlice] actors OK - 표 {RealmOrderData.AllKeys.Length} 명령 · 상한 {RealmActorPlan.Cap} · 끄면 빈 목록 · {state} · {map} · 두 장수 순서표 · {bodies}");

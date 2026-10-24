@@ -206,8 +206,12 @@ namespace Saga.Realm.Player
             var ray = cam.ScreenPointToRay(screenPos);
             if (Physics.Raycast(ray, out var hit, 2000f))
             {
+                // 둘 다 먼저 읽는다 — 성을 고르면 지도가 곧장 다시 지어져 맞은 충돌체가 지워진다(tasks U-0204)
                 var marker = hit.collider.GetComponent<RealmCityMarkerId>();
-                if (marker != null) RealmCityState.SetCurrentCity(marker.CityId);
+                var arrow = hit.collider.GetComponent<RealmRegionArrow>(); // tasks U-0204 이웃 지역 화살표
+                string city = marker != null ? marker.CityId : null, region = arrow != null ? arrow.RegionId : null;
+                if (city != null) RealmCityState.SetCurrentCity(city);
+                if (region != null) RealmRegions.SetView(region);
             }
         }
 

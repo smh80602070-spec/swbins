@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using Saga.Realm.Data;
@@ -45,6 +46,7 @@ namespace Saga.Realm.World
         {
             Instance = this;
             RealmCityState.Changed += Rebuild;
+            RealmRegions.Changed += Rebuild; // tasks U-0204 지역 바꾸면 다시
         }
 
         /// <summary>tasks U-0102 — 지도를 켤 때마다 다시 짓는다. 꺼진 채 판을 불러오면 Awake 전이라 `Changed` 를 못 들어
@@ -58,6 +60,7 @@ namespace Saga.Realm.World
         {
             if (Instance == this) Instance = null;
             RealmCityState.Changed -= Rebuild;
+            RealmRegions.Changed -= Rebuild;
         }
 
         /// <summary>tasks U-0102 — 성의 월드 자리(표지와 같은 중심 `MapCenter(우리 성)` 기준, 지도 Transform 반영). 지도·성이 없으면 null. 지도 카메라 중심이 쓴다.
@@ -66,7 +69,8 @@ namespace Saga.Realm.World
         {
             var def = cityId != null ? RealmCityData.Get(cityId) : null;
             if (Instance == null || def == null || !RealmCityState.OwnsCity(cityId)) return null;
-            var (cx, cy) = MapCenter(RealmCityState.ActiveCityIds);
+            if (RealmRegions.On && RealmRegions.RegionOf(cityId) != RealmRegions.View) return null; // tasks U-0204 보는 지역 밖
+            var (cx, cy) = ViewCenter();
             return Instance.transform.TransformPoint(WorldPos(def, cx, cy));
         }
 
@@ -106,19 +110,23 @@ namespace Saga.Realm.World
                 DestroyImmediate(transform.GetChild(i).gameObject);
             }
             _labels.Clear();
+            ArrowRegions.Clear();
             if (Application.isPlaying) Instance = this; // 꺼진 채 시작하면 Awake 가 아직 안 돌았다(U-0091) — 직접 부른 Rebuild 에서도 잡는다
 
-            var cityIds = RealmCityState.ActiveCityIds;
-            if (cityIds.Count == 0) return; // 씬 첫 로드 등 아직 상태가 없을 때.
-
-            var (centerX, centerY) = MapCenter(cityIds);
+            if (RealmCityState.ActiveCityIds.Count == 0) return; // 씬 첫 로드 등 아직 상태가 없을 때.
+            RealmRegions.FollowCurrent(); // tasks U-0204 — 지금 성이 바뀌어 다른 지역이면 그 지역으로
+            // tasks U-0204 — 한 화면 = 한 지역: 그 지역 내 성 + 회색 적 성 + 이웃 지역 화살표(끄면 옛 흐름 — 내 성 전부)
+            var cityIds = RealmRegions.VisibleOwned();
+            var enemies = RealmRegions.VisibleEnemies();
+            var (centerX, centerY) = ViewCenter();
             // tasks U-0102 — 땅 원판이 성을 다 덮게(끝판 55성은 중심에서 800m 넘게 퍼져 260m 원판 밖 표지가 하늘에 떠 있었다).
             float span = GroundSpan;
-            foreach (var cityId in cityIds)
+            foreach (var cityId in cityIds.Concat(enemies))
             {
                 var d = RealmCityData.Get(cityId);
                 if (d != null) span = Mathf.Max(span, WorldPos(d, centerX, centerY).magnitude * 2f + 60f);
             }
+            GroundRadius = span * 0.5f;
             Spawn("Ground", transform, PrimitiveType.Cylinder, new Vector3(0f, -0.1f, 0f),
                 new Vector3(span, 0.2f, span), GroundColor, addCollider: false);
 
@@ -128,6 +136,12 @@ namespace Saga.Realm.World
                 if (def == null) continue;
                 BuildMarker(def, WorldPos(def, centerX, centerY), cityId == RealmCityState.CurrentCity);
             }
+            foreach (var cityId in enemies)
+            {
+                var def = RealmCityData.Get(cityId);
+                if (def != null) BuildEnemyMarker(def, WorldPos(def, centerX, centerY));
+            }
+            if (RealmRegions.On) BuildArrows(span * 0.5f);
 
             // tasks U-0134 진 — 출진한 성 곁 천막(보급 이어짐 갈색 · 끊김 붉은색). 적 성은 지도에 없어 우리 성 옆에 세운다.
             foreach (var camp in RealmCamp.Camps)
@@ -163,6 +177,77 @@ namespace Saga.Realm.World
         public static Vector3 WorldPos(RealmCityDef def, float centerX, float centerY)
         {
             return new Vector3((def.MapX - centerX) * WorldScale, 0f, (centerY - def.MapY) * WorldScale);
+        }
+
+        /// <summary>tasks U-0204 — 지도 중심: 보는 지역의 내 성 평균(없으면 그 지역 적 성 평균). 끄면 옛 흐름(내 성 전부).</summary>
+        public static (float x, float y) ViewCenter()
+        {
+            var own = RealmRegions.VisibleOwned();
+            if (own.Count > 0) return MapCenter(own);
+            var en = RealmRegions.VisibleEnemies();
+            return en.Count > 0 ? MapCenter(en) : MapCenter(RealmCityState.ActiveCityIds);
+        }
+
+        /// <summary>진단 — 땅 원판 반지름·지은 화살표.</summary>
+        public float GroundRadius { get; private set; }
+        public readonly List<string> ArrowRegions = new List<string>();
+
+        private static readonly Color EnemyPoleColor = new Color(0.42f, 0.42f, 0.44f), ArrowColor = new Color(0.95f, 0.8f, 0.35f);
+
+        /// <summary>적 성 — 회색 기둥·회색 이름(누르지 않음).</summary>
+        private void BuildEnemyMarker(RealmCityDef def, Vector3 pos)
+        {
+            Spawn($"Enemy_{def.Id}", transform, PrimitiveType.Cylinder, pos + new Vector3(0f, PoleHeight / 2f, 0f),
+                new Vector3(PoleRadius * 2f, PoleHeight / 2f, PoleRadius * 2f), EnemyPoleColor, addCollider: false);
+            if (!Application.isPlaying) return;
+            var t = NewLabel($"Label_{def.Id}", pos + new Vector3(0f, LabelHeight, 0f), def.Name, new Color(0.75f, 0.75f, 0.78f));
+            _labels.Add((def.Id, t));
+        }
+
+        /// <summary>이웃 지역 화살표 — 이 지역 가운데에서 그 지역 가운데 쪽 땅 가장자리. 누르면 그 지역(`RealmRegionArrow`).</summary>
+        private void BuildArrows(float radius)
+        {
+            ArrowRegions.Clear();
+            var (hx, hy) = RegionMapCenter(RealmRegions.View);
+            foreach (var nb in RealmRegions.Neighbors(RealmRegions.View))
+            {
+                var (nx, ny) = RegionMapCenter(nb);
+                var dir = new Vector3(nx - hx, 0f, hy - ny);
+                if (dir.sqrMagnitude < 1e-4f) dir = Vector3.forward;
+                dir.Normalize();
+                var at = dir * (radius * 0.88f);
+                var arrow = Spawn($"Arrow_{nb}", transform, PrimitiveType.Cube, at + new Vector3(0f, 1.5f, 0f), new Vector3(6f, 3f, 6f), ArrowColor, addCollider: false);
+                arrow.transform.rotation = Quaternion.LookRotation(dir) * Quaternion.Euler(0f, 45f, 0f);
+                var tap = new GameObject($"ArrowTap_{nb}");
+                tap.transform.SetParent(transform, false);
+                tap.transform.localPosition = at + new Vector3(0f, 1.5f, 0f);
+                tap.AddComponent<SphereCollider>().radius = 8f;
+                tap.AddComponent<RealmRegionArrow>().RegionId = nb;
+                ArrowRegions.Add(nb);
+                if (!Application.isPlaying) continue;
+                var r = RealmRegions.Get(nb);
+                var t = NewLabel($"ArrowLabel_{nb}", at + new Vector3(0f, LabelHeight + 2f, 0f), "→ " + (r != null ? r.Name : nb), new Color(1f, 0.9f, 0.55f));
+                _labels.Add((RealmCityState.CurrentCity, t)); // 늘 보이게(지금 성 이름표와 같은 대접)
+            }
+        }
+
+        /// <summary>지역의 모든 성(내 것·적) 지도 좌표 평균.</summary>
+        public static (float x, float y) RegionMapCenter(string regionId) =>
+            MapCenter(RealmRegions.CitiesIn(regionId, RealmRegions.AllCities()));
+
+        private TextMeshPro NewLabel(string name, Vector3 localPos, string text, Color color)
+        {
+            var lgo = new GameObject(name);
+            lgo.transform.SetParent(transform, false);
+            lgo.transform.localPosition = localPos;
+            var t = lgo.AddComponent<TextMeshPro>();
+            t.text = text;
+            t.alignment = TextAlignmentOptions.Center;
+            t.textWrappingMode = TextWrappingModes.NoWrap;
+            t.rectTransform.sizeDelta = new Vector2(30f, 6f);
+            t.color = color;
+            t.fontSize = 24f;
+            return t;
         }
 
         public static (float x, float y) MapCenter(System.Collections.Generic.IReadOnlyList<string> cityIds)

@@ -53,6 +53,7 @@ namespace Saga.Realm.UI
             Add(() => RealmTechUi.Instance != null ? RealmTechUi.Instance.ToggleButton : null, "ui_scroll");
             Add(() => RealmLawUi.Instance != null ? RealmLawUi.Instance.ToggleButton : null, "ui_scroll"); // tasks U-0182 법령
             Add(() => RealmFocusUi.Instance != null ? RealmFocusUi.Instance.ToggleButton : null, "ui_flag"); // tasks U-0193 방침
+            Add(() => RealmRegionUi.Instance != null && RealmRegions.On ? RealmRegionUi.Instance.ToggleButton : null, "ui_map"); // tasks U-0204 천하도
             Refresh();
         }
 
