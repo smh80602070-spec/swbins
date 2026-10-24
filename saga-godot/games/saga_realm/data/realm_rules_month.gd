@@ -108,6 +108,7 @@ func next_month() -> void:
 	wonder_msgs.append_array(trade_msgs)
 	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_focus.gd").monthly(self))   # G-0336 국가 방침 한 달
 	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_marriage.gd").monthly(self))   # G-0332 혼인 — 정전 잇기·깨짐
+	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_recommend.gd").monthly(self))   # G-0383 인재 천거
 	wonder_msgs.append_array(preload("res://games/saga_realm/data/realm_relation.gd").monthly(self))   # G-0316 원수 충성 -2·스승 잃은 제자 +3
 	if not wonder_msgs.is_empty():
 		Toast.show(self, "\n".join(wonder_msgs), 3.0)
