@@ -486,7 +486,7 @@
     tile: { sky: 'story_grass', forest: 'story_dirt', cave: 'story_stone', fire: 'story_stone' },
     parallaxOn: 1,                               // W-0353 겹 배경(K-0150 bg2d story_field_meadow·story_forest) 기본 켬 — 그림 없는 장소는 엔진이 옛 배경 그대로
     targetH: 62,                                 // 화면에 보일 보통 적 몸 높이(px) — 코드 스탬프 s 0.8 과 비슷하게
-    vwScale: 1.6,                              // W-0402 ② 바닐라웨어 큰 몸 — 2D 카메라 배율 곱(손잡이 mode2d.vwScale, 1 = 옛)
+    vwScale: 1,                                // W-0402 ② 큰 몸 카메라 배율 — 4종횡은 1(사용자 10-25 「화면이 넘 가까워」로 1.6 되돌림)
     foot: 0.87,                                  // 시트에서 발 위치(프레임 높이 비율)
     poolH: { pool_e_goblin_126: 50, pool_g_orc_141: 102, pool_basef_undead_111: 85, pool_f_demon_136: 97 },   // 프레임 안 몸 높이(px, 옆모습 알파 범위로 잼)
     /** 2D 모드인가 — 3D 바탕이 안 서 있을 때(= 2D 그림) */
