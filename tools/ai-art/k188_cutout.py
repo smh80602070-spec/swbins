@@ -178,6 +178,13 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             arm_ids = [names.index(x + s_) for x in ('armU', 'armL', 'hand') if x + s_ in names]
             sub = np.argmin(score[arm_ids], 0)
             lab = np.where(pm, np.array(arm_ids)[sub], lab)
+    for key, bone in (('chest_poly', 'chest'), ('hip_poly', 'hip')):   # 망토·앞자락처럼 몸통·허리에 묶을 영역(팔·다리 거리로 가면 떠다닌다)
+        for poly in j.get(key, []):
+            pm = Image.new('L', (W, H), 0); ImageDraw.Draw(pm).polygon([tuple(q) for q in poly], fill=255)
+            lab = np.where(np.asarray(pm) > 0, names.index(bone), lab)
+    if 'weapon' in B:                                      # 무기 선은 몸 위를 가로질러도 무기로(창이 다리·몸통 조각으로 갈라지지 않게)
+        a_, b_, r_, _, _ = B['weapon']
+        lab = np.where(seg_dist(xs, ys, a_, b_) < r_, names.index('weapon'), lab)
     lab[~alpha] = -1
     foot_y = j.get('foot', int(np.nonzero(alpha.any(1))[0].max()))
     top_y = j['top'][1]
