@@ -172,6 +172,7 @@ const CUTS := [
 	["lg_rk_region", REALM, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "rk_region", ["@tree"]]]],   # G-0347 ② 지역 단위 지도(성 이름·이웃 화살표·천하도 단추)
 	["lg_rk_region_cards", REALM, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "rk_region_cards", ["@tree"]]]],   # G-0347 ② 천하도 지역 카드 창
 	["lg_rk_plot", REALM, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "rk_plot", ["@tree"]]]],   # G-0347 ⑤ 📜 책략(화계 칸·남은 횟수)
+	["lg_rk_duel", REALM, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "rk_duel", ["@tree"]]]],   # G-0347 ⑤-c 전장 일기토 첫 합 고르기
 	["lg_dg_trail", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_legend", ["@tree"]], ["static", "res://tools/shot_action.gd", "at", ["@tree", "dg_attack"]]]],   # G-0325 ← G-0290 전설 잔광
 	["lg_dg_rise", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_rise", ["@tree"]]]],   # G-0325 ← G-0293 난입 솟음(한 컷씩 — time_scale)
 	["lg_dg_break", DUNGEON, [["free_modal"], ["static", "res://tools/shot_ledger.gd", "dg_breakables", ["@tree"]]]],   # G-0325 ← G-0307 부서지는 통

@@ -767,3 +767,90 @@ static func plot(b: Dictionary, uid: String, plot_key: String, tuid: String) -> 
 	(b.fire_log as Array).append({"t": b.turn, "a": uid, "plot": plot_key, "to": tuid, "hit": r.hit, "amount": r.amount})
 	check(b)
 	return r
+
+
+# ── G-0347 ⑤-c 전장 안 일기토·설전(이웃 적 장수에게 거는 명령 — 미니게임은 옛 것 그대로, 여기는 결과만) ──
+##   일기토  붙은(1칸) 적 장수 — 3합(베기·찌르기·막기) 이긴 합 − 진 합 > 0 이면 그 장수 −DUEL_HIT(최대 체력 비율)·기가 꺾여 한 차례 쉼,
+##           < 0 이면 내 장수가 −DUEL_HIT, 같으면 둘 다 −DUEL_TIE. 적 수는 판 굴림(duel_foe_moves).
+##   설전    PLOT_RANGE 칸 안 적 장수 — 문답 3문 정답 2 이상이면 그 장수 기세 꺾임(공격 ×COWED_ATK, 한 번만)·한 차례 쉼, 1 이하면 헛말(차례만 씀).
+## 둘 다 장수 차례를 쓴다(책략 횟수와 따로). 기록은 b.fire_log.
+
+const DUEL_HIT := 0.4
+const DUEL_TIE := 0.1
+const COWED_ATK := 0.8
+
+
+static func duel_targets(b: Dictionary, uid: String) -> Array:
+	var u := unit(b, uid)
+	var out: Array = []
+	if u.is_empty() or String(u.kind) != "officer" or String(u.side) != String(b.side) or bool(u.acted) or float(u.hp) <= 0.0 or String(b.done) != "":
+		return out
+	for t: Dictionary in alive(b, "foe" if String(u.side) == "me" else "me"):
+		if String(t.kind) == "officer" and dist(u, t) == 1:
+			out.append(String(t.uid))
+	return out
+
+
+static func debate_targets(b: Dictionary, uid: String) -> Array:
+	var u := unit(b, uid)
+	var out: Array = []
+	if u.is_empty() or String(u.kind) != "officer" or String(u.side) != String(b.side) or bool(u.acted) or float(u.hp) <= 0.0 or String(b.done) != "":
+		return out
+	for t: Dictionary in alive(b, "foe" if String(u.side) == "me" else "me"):
+		if String(t.kind) == "officer" and dist(u, t) <= PLOT_RANGE and not bool(t.get("cowed", false)):
+			out.append(String(t.uid))
+	return out
+
+
+## 적 장수의 세 수(베기·찌르기·막기) — 판 굴림
+static func duel_foe_moves(b: Dictionary) -> Array:
+	var moves := ["slash", "stab", "guard"]
+	var out: Array = []
+	for i in 3:
+		out.append(moves[mini(2, int(floor(roll(b, "dm") * 3.0)))])
+	return out
+
+
+## 일기토 결과 — net = 이긴 합 − 진 합
+static func duel(b: Dictionary, uid: String, tuid: String, net: int) -> Dictionary:
+	if not duel_targets(b, uid).has(tuid):
+		return {"ok": false}
+	var u := unit(b, uid)
+	var t := unit(b, tuid)
+	var r := {"ok": true, "net": net, "dmg_foe": 0, "dmg_me": 0}
+	if net > 0:
+		r.dmg_foe = js_round(float(t.max) * DUEL_HIT)
+		t.confused = true
+	elif net < 0:
+		r.dmg_me = js_round(float(u.max) * DUEL_HIT)
+	else:
+		r.dmg_foe = js_round(float(t.max) * DUEL_TIE)
+		r.dmg_me = js_round(float(u.max) * DUEL_TIE)
+	t.hp = maxf(0.0, float(t.hp) - float(r.dmg_foe))
+	u.hp = maxf(0.0, float(u.hp) - float(r.dmg_me))
+	u.acted = true
+	u.moved = true
+	if not b.has("fire_log"):
+		b.fire_log = []
+	(b.fire_log as Array).append({"t": b.turn, "a": uid, "plot": "duel", "to": tuid, "net": net})
+	check(b)
+	return r
+
+
+## 설전 결과 — correct = 정답 수(0~3)
+static func debate(b: Dictionary, uid: String, tuid: String, correct: int) -> Dictionary:
+	if not debate_targets(b, uid).has(tuid):
+		return {"ok": false}
+	var u := unit(b, uid)
+	var t := unit(b, tuid)
+	var won := correct >= 2
+	if won:
+		t.cowed = true
+		t.atk = float(t.atk) * COWED_ATK
+		t.confused = true
+	u.acted = true
+	u.moved = true
+	if not b.has("fire_log"):
+		b.fire_log = []
+	(b.fire_log as Array).append({"t": b.turn, "a": uid, "plot": "debate", "to": tuid, "correct": correct})
+	return {"ok": true, "won": won, "correct": correct}

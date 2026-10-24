@@ -14,6 +14,8 @@ const RealmTactics := preload("res://games/saga_realm/data/realm_tactics.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")   # G-0347 ⑤-c 일기토·설전(옛 고르기 창 그대로)
+const RealmWar := preload("res://games/saga_realm/data/realm_war.gd")
 ## G-0253 — 타격 VFX: 1만리·2나락·4종횡과 같은 공용 그림(베기 궤적·불꽃·바닥 충격파). 새 그림 없음, instant 면 하나도 안 만든다.
 const CombatFx := preload("res://saga_core/combat_fx.gd")
 const SLASH_AT := 0.15      # 휘두름 안 궤적 시점(SWING_SEC×0.6 안)
@@ -47,6 +49,7 @@ const SWING_SEC := 0.4
 const END_SEC := 1.4
 
 var board: Dictionary = {}
+var _cam_dist := CAM_DIST   # G-0347 ⑥ 판 너비·화면 비율에 맞춘 거리(세로 폰에서 10×8~12×10 판이 잘리던 것 — 촬영 rk_tactics_wide 720×1280)
 var enemy_id := ""
 var instant := false   # 점검용 — 연출 기다림을 건너뛴다
 var _done_cb: Callable
@@ -84,6 +87,10 @@ var _plot := ""   # "fire" | "confuse" | "heal" — 📜 단추를 누를 때마
 const PLOT_ICON := {"fire": "🔥", "confuse": "🌀", "heal": "💚"}
 const HI_HEAL := Color(0.4, 1.0, 0.55, 0.55)
 var _fire_btn: Button = null
+var _cmd := ""   # G-0347 ⑤-c "duel" | "debate" — 상대 장수를 고르는 중
+var _duel_btn: Button = null
+var _debate_btn: Button = null
+const HI_DUEL := Color(1.0, 0.85, 0.2, 0.6)
 var _flames := {}   # "x,y" → 불 표식 노드
 var _swing_n := 0          # G-0253 — 뷰 안 연타 셈(궤적 기울기 차례)
 
@@ -311,8 +318,19 @@ func _build_camera() -> void:
 	_cam = Camera3D.new()
 	_cam.fov = 50.0
 	add_child(_cam)
-	_aim_camera(ORIGIN, CAM_DIST)
+	_cam_dist = fit_dist(cur_cols, cur_rows, get_viewport().get_visible_rect().size)
+	_aim_camera(ORIGIN, _cam_dist)
 	_cam.current = true
+
+
+## 판 전체가 들어오는 거리 — 가로 시야(fov 50 세로 기준)로 판 너비(+여유), 세로로 깊이. 옛 8×6 가로 화면은 CAM_DIST 그대로(그보다 가깝게 안 함)
+static func fit_dist(cols: int, rows: int, view: Vector2) -> float:
+	var aspect := view.x / maxf(view.y, 1.0)
+	var vh := deg_to_rad(50.0) * 0.5
+	var hh := atan(tan(vh) * aspect)
+	var w := float(cols) * CELL * 0.5 + 1.2
+	var d := float(rows) * CELL * 0.5 + 1.2
+	return maxf(CAM_DIST, maxf(w / tan(hh), d / tan(vh) * 1.15))
 
 
 func _aim_camera(focus: Vector3, dist: float) -> void:
@@ -370,6 +388,18 @@ func _build_ui() -> void:
 	_fire_btn.visible = false
 	_fire_btn.pressed.connect(_on_fire_toggle)
 	row.add_child(_fire_btn)
+	for spec: Array in [["duel", "⚔️ 일기토"], ["debate", "🗣️ 설전"]]:   # G-0347 ⑤-c 이웃 적 장수에게 거는 명령 — 걸 수 있을 때만 보인다
+		var cb := Button.new()
+		cb.text = spec[1]
+		cb.custom_minimum_size = Vector2(170, 64)
+		cb.add_theme_font_size_override("font_size", 24)
+		cb.visible = false
+		cb.pressed.connect(_on_cmd_toggle.bind(String(spec[0])))
+		row.add_child(cb)
+		if spec[0] == "duel":
+			_duel_btn = cb
+		else:
+			_debate_btn = cb
 
 
 func _hide_hud(hide: bool) -> void:
@@ -557,6 +587,21 @@ func _refresh() -> void:
 		_show_hi(_cursor.x, _cursor.y, HI_CURSOR)
 	for b: Button in _buttons:
 		b.disabled = _busy
+	if _duel_btn != null:
+		_duel_btn.visible = _sel != "" and not RealmTactics.duel_targets(board, _sel).is_empty()
+		_debate_btn.visible = _sel != "" and not RealmTactics.debate_targets(board, _sel).is_empty()
+		_duel_btn.disabled = _busy
+		_debate_btn.disabled = _busy
+		_duel_btn.text = "✋ 일기토 그만" if _cmd == "duel" else "⚔️ 일기토"
+		_debate_btn.text = "✋ 설전 그만" if _cmd == "debate" else "🗣️ 설전"
+		if _sel != "" and _cmd != "":
+			_clear_hi()
+			var su := RealmTactics.unit(board, _sel)
+			_show_hi(int(su.x), int(su.y), HI_SEL)
+			for tid: String in (RealmTactics.duel_targets(board, _sel) if _cmd == "duel" else RealmTactics.debate_targets(board, _sel)):
+				var tt := RealmTactics.unit(board, tid)
+				_show_hi(int(tt.x), int(tt.y), HI_DUEL)
+			_hint.text = "%s — 노란 칸 적 장수에게 %s" % [_unit_name(su), "⚔️ 일기토 3합(베기>막기>찌르기>베기 — 이기면 그 장수 −40%·한 차례 쉼, 지면 내가 −40%)" if _cmd == "duel" else "🗣️ 설전 3문(정답 2 이상이면 그 장수 기세 꺾임 — 공격 ×0.8·한 차례 쉼)"]
 	if _fire_btn != null:
 		_fire_btn.visible = _sel != "" and RealmTactics.can_fire(board, _sel)
 		_fire_btn.disabled = _busy
@@ -623,6 +668,19 @@ func pick_cell(x: int, y: int) -> void:
 			_select(String(there.uid))
 		return
 	var u := RealmTactics.unit(board, _sel)
+	if _cmd != "":   # G-0347 ⑤-c 일기토·설전 — 노란 칸 적 장수면 건다, 아니면 그만
+		var cmd := _cmd
+		_cmd = ""
+		var list: Array = RealmTactics.duel_targets(board, _sel) if cmd == "duel" else RealmTactics.debate_targets(board, _sel)
+		if not there.is_empty() and list.has(String(there.uid)):
+			if cmd == "duel":
+				_duel_round(_sel, String(there.uid), RealmTactics.duel_foe_moves(board), [])
+			else:
+				var h = Characters.find(String(u.id))
+				_debate_round(_sel, String(there.uid), RealmSaveState.debate_draw(String(u.id)) if h != null else [], [])
+			return
+		_refresh()
+		return
 	if _fire_mode:   # G-0347 책략 — 그 책략 칸이면 건다, 아니면 책략만 그만
 		_fire_mode = false
 		if _plot == "fire" and RealmTactics.fire_cells(board, _sel).has({"x": x, "y": y}):
@@ -663,7 +721,7 @@ func _select(uid: String) -> void:
 	var n: Node3D = _units[uid].node
 	if not instant:
 		var tw := create_tween()
-		tw.tween_method(func(k: float) -> void: _aim_camera(ORIGIN.lerp(n.position, 0.35 * k), lerpf(CAM_DIST, CAM_NEAR, k)), 0.0, 1.0, 0.3)
+		tw.tween_method(func(k: float) -> void: _aim_camera(ORIGIN.lerp(n.position, 0.35 * k), lerpf(_cam_dist, minf(CAM_NEAR, _cam_dist), k)), 0.0, 1.0, 0.3)
 	_refresh()
 
 
@@ -1024,6 +1082,99 @@ func _sync_flames() -> void:
 			root.position = cell_center(int(xy[0]), int(xy[1])) + Vector3(0, float(TOP.forest), 0)
 			_flames[k] = root
 		((_flames[k] as Node).get_node("Left") as Label3D).text = "🔥%d" % int(fire[k].left)
+
+
+
+## G-0347 ⑤-c 일기토·설전 ─────────────────────────────
+
+func _on_cmd_toggle(cmd: String) -> void:
+	if _busy or _sel == "":
+		return
+	_fire_mode = false
+	_cmd = "" if _cmd == cmd else cmd
+	_refresh()
+
+
+func _prompt(title: String, choices: Array) -> CanvasLayer:
+	var layer := ChoicePrompt.build(self, title, choices)
+	layer.layer = 25   # 전술판 글·단추(20) 위
+	return layer
+
+
+## 일기토 한 합 — 적 수는 판 굴림으로 미리(foe_moves), 내 수는 고르기
+func _duel_round(uid: String, tuid: String, foe_moves: Array, mine: Array) -> void:
+	_busy = true
+	var box := {}
+	var choices: Array = []
+	for mv: String in RealmWar.DUEL_MOVES:
+		choices.append({"label": String(RealmWar.DUEL_MOVE_NAME[mv]), "cb": func() -> void:
+			(box["layer"] as CanvasLayer).queue_free()
+			var next: Array = mine.duplicate()
+			next.append(mv)
+			if next.size() < RealmWar.DUEL_ROUNDS:
+				_duel_round(uid, tuid, foe_moves, next)
+			else:
+				_duel_done(uid, tuid, foe_moves, next)})
+	box["layer"] = _prompt("⚔️ 일기토 — %s 대 %s · %d합째" % [_unit_name(RealmTactics.unit(board, uid)), _unit_name(RealmTactics.unit(board, tuid)), mine.size() + 1], choices)
+
+
+func _duel_done(uid: String, tuid: String, foe_moves: Array, mine: Array) -> void:
+	var net := 0
+	var log_txt: Array = []
+	for i in mine.size():
+		var res := RealmWar.duel_round_result(String(mine[i]), String(foe_moves[i]))
+		net += 1 if res == "win" else (-1 if res == "lose" else 0)
+		log_txt.append("%s/%s %s" % [RealmWar.DUEL_MOVE_NAME[mine[i]], RealmWar.DUEL_MOVE_NAME[foe_moves[i]], "○" if res == "win" else ("×" if res == "lose" else "△")])
+	var r: Dictionary = RealmTactics.duel(board, uid, tuid, net)
+	Toast.show(self, "⚔️ 일기토 %s — %s" % [" · ".join(log_txt), "이겼다!" if net > 0 else ("졌다…" if net < 0 else "비겼다")], 3.0)
+	var hits: Array = []
+	if int(r.get("dmg_foe", 0)) > 0:
+		hits.append({"uid": tuid, "dmg": int(r.dmg_foe), "killed": float(RealmTactics.unit(board, tuid).hp) <= 0.0})
+	if int(r.get("dmg_me", 0)) > 0:
+		hits.append({"uid": uid, "dmg": int(r.dmg_me), "killed": float(RealmTactics.unit(board, uid).hp) <= 0.0})
+	_play(uid, "attack")
+	await _apply_burn(hits)
+	_set_label(tuid)
+	_play(uid, "idle")
+	_busy = false
+	_sel = ""
+	_refresh()
+	_after_action()
+
+
+## 설전 한 문
+func _debate_round(uid: String, tuid: String, questions: Array, answers: Array) -> void:
+	_busy = true
+	if questions.is_empty():
+		_debate_done(uid, tuid, 0)
+		return
+	var box := {}
+	var q: Dictionary = questions[answers.size()]
+	var choices: Array = []
+	var opts: Array = q.choices
+	for i in opts.size():
+		choices.append({"label": String(opts[i]), "cb": func() -> void:
+			(box["layer"] as CanvasLayer).queue_free()
+			var next: Array = answers.duplicate()
+			next.append(i)
+			if next.size() < questions.size():
+				_debate_round(uid, tuid, questions, next)
+			else:
+				_debate_done(uid, tuid, int(RealmSaveState.debate_result(questions, next).correct))})
+	box["layer"] = _prompt("🗣️ 설전(%d/%d) — %s" % [answers.size() + 1, questions.size(), String(q.q)], choices)
+
+
+func _debate_done(uid: String, tuid: String, correct: int) -> void:
+	var r: Dictionary = RealmTactics.debate(board, uid, tuid, correct)
+	var tn: Node3D = _units[tuid].node
+	_float_text(tn.position, "기세 꺾임!" if bool(r.get("won", false)) else "헛말…", Color(1.0, 0.85, 0.3) if bool(r.get("won", false)) else Color(0.8, 0.85, 0.9))
+	Toast.show(self, "🗣️ 설전 %d/3 정답 — %s" % [correct, "적 장수의 기세가 꺾였다(공격 ×0.8·한 차례 쉼)" if bool(r.get("won", false)) else "말이 먹히지 않았다"], 3.0)
+	_set_label(tuid)
+	await _wait(0.5)
+	_busy = false
+	_sel = ""
+	_refresh()
+	_after_action()
 
 
 func _on_cancel() -> void:

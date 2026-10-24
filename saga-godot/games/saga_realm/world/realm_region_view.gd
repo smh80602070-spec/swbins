@@ -5,7 +5,7 @@ extends Node3D
 ##   지역     RealmSaveState.view_region(저장) — "" 이거나 모르는 값이면 지금 성(current_city) 지역. 성표를 눌러 성을 바꿔도 지역은 그대로.
 ##   화살표   지역 가장자리에 길로 이어진 이웃 지역마다 "▶ 중원" — 누르면 그 지역(view_region).
 ##   천하도   지도를 보는 동안 왼쪽 위 「🗺 천하도」 — 지역 카드(이름·성 수·우리 성·⚔ 적 성) 창, 누르면 그 지역.
-##   카메라   realm_worldmap_camera 가 focus() 를 본다 — 지금 성이 이 지역이면 그 성, 아니면 지역 가운데.
+##   카메라   realm_worldmap_camera 가 focus()(지역 가운데)·fit_radius()(지역+화살표가 들어오는 거리, 세로면 더 멀리)를 본다.
 ## SAGA_REALM_SRPG=0 이면 안 붙는다(옛 길 — 성 107 한 판).
 
 const Regions := preload("res://games/saga_realm/data/realm_regions.gd")
@@ -61,10 +61,7 @@ func set_region(r: String) -> void:
 
 
 ## 카메라 초점
-func focus() -> Vector3:
-	var cur := String(RealmSaveState.current_city)
-	if Regions.region_of(cur) == region():
-		return RealmCities.world_pos(cur)
+func focus() -> Vector3:   # 늘 지역 가운데(지금 성은 ★ 글로 — 지금 성에 맞추면 세로 폰에서 반대쪽 성이 잘렸다, 촬영 lg_rk_region 720×1280)
 	return center(region())
 
 
@@ -76,6 +73,13 @@ static func center(r: String) -> Vector3:
 	for cid: String in ids:
 		c += RealmCities.world_pos(cid)
 	return c / float(ids.size())
+
+
+## 지역 성·화살표가 다 들어오는 지도 카메라 반지름(세로 화면이면 더 멀리) — 카메라 시야 70° 근사
+func fit_radius(view: Vector2) -> float:
+	var aspect := view.x / maxf(view.y, 1.0)
+	var need := span(region()) + ARROW_PAD + 20.0
+	return need * 1.6 / minf(aspect, 1.0)
 
 
 static func span(r: String) -> float:

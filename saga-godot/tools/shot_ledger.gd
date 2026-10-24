@@ -473,3 +473,34 @@ static func rk_plot(tree: SceneTree) -> void:
 		var v := tree.current_scene.find_child("TacticsView", true, false)
 		if v != null:
 			v.call("_on_fire_toggle"))
+
+
+## G-0347 ⑤-c 5천하 전장 일기토 — 고른 내 장수를 적 장수 곁에 세워 ⚔️ 일기토 → 그 장수를 고른 첫 합 고르기 창
+static func rk_duel(tree: SceneTree) -> void:
+	load("res://tools/shot_realm_tactics.gd").call("stage", tree, true, false, false)
+	_later(tree, 30, func() -> void:
+		var v := tree.current_scene.find_child("TacticsView", true, false)
+		if v == null:
+			return
+		var b: Dictionary = v.get("board")
+		var sel := String(v.get("_sel"))
+		var me: Dictionary = {}
+		var foe: Dictionary = {}
+		for u: Dictionary in b.units:
+			if String(u.uid) == sel:
+				me = u
+			elif String(u.side) == "foe" and String(u.kind) == "officer" and foe.is_empty():
+				foe = u
+		if me.is_empty() or foe.is_empty():
+			return
+		var x := int(foe.x) - 1
+		var y := int(foe.y)
+		for u: Dictionary in b.units:
+			if u != me and int(u.x) == x and int(u.y) == y:
+				u.x = 0
+				u.y = 0
+		me.x = x
+		me.y = y
+		v.call("_place", sel, x, y)
+		v.call("_on_cmd_toggle", "duel")
+		v.call("pick_cell", int(foe.x), int(foe.y)))

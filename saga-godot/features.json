@@ -6082,5 +6082,46 @@
   "ticket": "G-0346",
   "since": "2026-10-24",
   "note": "장부 forest.md 벌집(동물의숲·웹 bug.js) · SAGA_BEES=0 · 촬영 shot_scene lg_fs_bees"
+ },
+ {
+  "id": "gd.rk.region_map",
+  "name": "5천하 지역 단위 전략 지도 — 한 화면 = 한 지역(15), 성 이름 글·이웃 지역 ▶ 화살표·🗺 천하도 카드 창, 세이브 view_region",
+  "files": [
+   "games/saga_realm/data/realm_regions.gd",
+   "games/saga_realm/world/realm_region_view.gd",
+   "games/saga_realm/world/realm_worldmap.gd",
+   "games/saga_realm/world/realm_worldmap_camera.gd"
+  ],
+  "tests": [
+   "realm_regions"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0347",
+  "since": "2026-10-24",
+  "note": "장부 realm.md 지역 단위 전략 지도 · SAGA_REALM_SRPG=0 · 촬영 lg_rk_region·lg_rk_region_cards(가로·세로)"
+ },
+ {
+  "id": "gd.rk.srpg",
+  "name": "5천하 격자 SRPG 본전투 — 출진 = 곧바로 전장(10×8~12×10·언덕·성문), 승리 조건 넷, 창>기>궁 ±20·높이 +10·뒤 +20, 책략(화계·혼란·회복 한 판 두 번)·일기토·설전 명령",
+  "files": [
+   "games/saga_realm/data/realm_tactics.gd",
+   "games/saga_realm/world/realm_tactics_view.gd",
+   "games/saga_realm/data/realm_rules_war.gd",
+   "games/saga_realm/ui/realm_attack_button.gd"
+  ],
+  "tests": [
+   "realm_srpg",
+   "realm_fire",
+   "realm_duel",
+   "realm_tactics"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0347",
+  "since": "2026-10-24",
+  "note": "장부 realm.md 격자 SRPG 본전투 · 자동 대국 60판 57%·5.5턴 · SAGA_REALM_SRPG=0 · 촬영 rk_tactics_wide(가로·세로)·lg_rk_plot·lg_rk_duel"
  }
 ]

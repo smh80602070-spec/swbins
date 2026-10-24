@@ -52,6 +52,7 @@ const PITCH_MAX := 1.3        # realm3d.js PITCH_MAX() 그대로
 var _yaw := 0.6
 var _pitch := 0.9
 var _radius := 260.0
+var _fit_region := ""
 var _look_at := Vector3.ZERO
 var _dragging := false
 var _drag_start := Vector2.ZERO
@@ -65,6 +66,9 @@ func _process(_delta: float) -> void:
 	if current:
 		var rv := get_tree().get_first_node_in_group("realm_region_view")   # G-0347 지역 단위 — 지금 성이 다른 지역이면 그 지역 가운데
 		_look_at = rv.call("focus") if rv != null else RealmCities.world_pos(RealmSaveState.current_city)
+		if rv != null and String(rv.call("region")) != _fit_region:   # G-0347 ⑥ 지역이 바뀌면 그 지역(+화살표)이 화면에 들어오게 — 세로 폰에서 가장자리 성·화살표가 잘리던 것
+			_fit_region = String(rv.call("region"))
+			_radius = clampf(float(rv.call("fit_radius", get_viewport().get_visible_rect().size)), RADIUS_MIN, RADIUS_MAX)
 		_apply_transform()
 
 
