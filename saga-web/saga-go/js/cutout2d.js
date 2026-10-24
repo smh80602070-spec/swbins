@@ -19,7 +19,8 @@
  *
  * ── 쓰는 법 ─────────────────────────────────────────────────────────────────
  *   mode2d.draw 가 맨 앞에서 DG.cutout2d.drawFor(ctx, o, 몸높이px) 를 부른다 — 손잡이 `cutout2d.on`:
- *     0(기본) 끔 · 1 index.json 에 있는 풀만 컷아웃(그림 오면) · 2 모든 사람을 대역(_stub, 코드로 그린 부위)으로 — 보기용
+ *     0 끔(옛 시트만) · 1(기본, W-0402) index.json 에 있는 풀만 컷아웃(그림 오면 — 없는 풀·받는 중은 옛 시트) · 2 모든 사람을 대역(_stub, 코드로 그린 부위)으로 — 보기용
+ *   섞여도 크기·발이 같다: 시트도 컷아웃도 발 = o.y · 몸 = 몸높이px(rig.h 100 = 머리 끝). bounds(rig) 로 잰다(무기 부위는 빼고)
  *   그렸으면 true, 아니면 false(그 자리는 옛 시트 그대로). 판정에는 한 줄도 안 닿는다.
  *   DG.cutout2d.sample(rig, clip, phase) 순수 — 뼈별 {rot, dx, dy}(진단) · stubRig(seed) · demo() `_demo.html#cutout`
  * 정본은 saga-web/shared/js/cutout2d.js — 판별 사본은 tools/sync-shared.mjs.
@@ -186,13 +187,23 @@
   function stubOf(seed) { var k = String(seed || ''); return STUB[k] || (STUB[k] = { ok: true, rig: stubRig(seed), imgs: {} }); }
   /** mode2d.draw 의 갈래 — 손잡이 cutout2d.on 이 0 이면 아무것도 안 한다 */
   function drawFor(ctx, o, bodyPx) {
-    var mode = +tuned('cutout2d.on', 0);
+    var mode = +tuned('cutout2d.on', 1);   // W-0402 기본 켬 — 그림 묶음이 있는 풀만
     if (!mode || !ctx || !o) { return false; }
     var R = null;
     if (mode >= 2) { R = stubOf(o.pool); }
     else { var id = rigIdFor(o.pool); R = id ? rigOf(id) : null; }
     if (!R) { return false; }
     return drawRig(ctx, R, { x: o.x, y: o.y, h: bodyPx, clip: o.clip, t: o.t, facing: o.facing, key: o.key || o.pool, alpha: o.alpha });
+  }
+
+  /** 쉬는 자세(또는 clip·phase)의 몸 위끝·발 — 뼈 단위(발 = 0, 위 −). 무기 부위(img 이름에 weapon)는 뺀다. 순수(진단 「발 y·몸 높이」) */
+  function bounds(rig, clip, phase) {
+    var M = pose(rig, clip || 'idle', phase || 0, 0), top = Infinity, foot = -Infinity;
+    (rig.parts || []).forEach(function (p) {
+      var m = M[p.bone]; if (!m || /weapon/.test(p.img || '')) { return; }
+      [[p.x, p.y], [p.x + p.w, p.y], [p.x, p.y + p.h], [p.x + p.w, p.y + p.h]].forEach(function (c) { var y = m[1] * c[0] + m[3] * c[1] + m[5]; if (y < top) { top = y; } if (y > foot) { foot = y; } });
+    });
+    return { top: top, foot: foot, h: rig.h || 100 };
   }
 
   /* ── 보기(_demo.html#cutout) — 겹 배경 대역 위에 대역 셋이 클립을 돈다 ── */
@@ -217,5 +228,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.cutout2d = { BONES: BONES, PARENT: PARENT, REST: REST, CLIPS: CLIPS, sample: sample, phaseOf: phaseOf, pose: pose, stubRig: stubRig, has: has, drawFor: drawFor, demo: demo };
+  global.DG.cutout2d = { BONES: BONES, PARENT: PARENT, REST: REST, CLIPS: CLIPS, sample: sample, phaseOf: phaseOf, pose: pose, stubRig: stubRig, has: has, drawFor: drawFor, demo: demo, bounds: bounds, base: base, rigIdFor: rigIdFor };
 })(window);

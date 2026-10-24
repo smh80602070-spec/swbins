@@ -7596,6 +7596,16 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return (dumb && cf.ok && hl.ok && !third && hpOk && !!lit && burnt && out && conf && b.plots === 0) ||
         ('실패 문턱 ' + dumb + ' · 혼란 ' + JSON.stringify(cf) + ' 쉼 ' + conf + ' · 회복 ' + JSON.stringify(hl) + ' ' + hpOk + ' · 셋째 막힘 ' + !third + ' · 화계 ' + !!lit + ' 탐 ' + burnt + ' 꺼짐 ' + out + ' · 남은 ' + b.plots);
     });
+    t('W-0402 컷아웃 — 기본 켬 · 그림 묶음 있는 풀만 컷아웃(없는 풀은 옛 시트) · 그림 발 y = 0·머리 끝 = 몸 높이(시트와 같은 척도, 무기 뺌)', function () {
+      var K = DG.cutout2d; if (!K || !K.bounds) { return '실패 cutout2d.bounds 없음'; }
+      var on = +DG.core.tuned('cutout2d.on', 1) === 1, idx = null, bad = [], seen = [];
+      function get(u) { try { var x = new XMLHttpRequest(); x.open('GET', u, false); x.send(); return x.status === 200 ? JSON.parse(x.responseText) : null; } catch (e) { return null; } }
+      idx = get(K.base() + 'index.json');   // 시험 서버(gameserve)는 공용 그림 폴더를 안 준다 — 못 받으면 대역 그림으로 같은 규칙을 잰다
+      var rigs = idx && idx.pools ? Object.keys(idx.pools).map(function (p) { return [p, get(K.base() + idx.pools[p] + '/rig.json')]; }) : [['_stub', K.stubRig('a')], ['_stub2', K.stubRig('b')]];
+      rigs.forEach(function (pr) { if (!pr[1]) { bad.push(pr[0] + ' 못 받음'); return; } var b = K.bounds(pr[1]); seen.push(pr[0] + ' ' + Math.round(b.top) + '/' + Math.round(b.foot)); if (Math.abs(b.foot) > 2 || Math.abs(b.top + b.h) > 6) { bad.push(pr[0]); } });
+      var none = K.drawFor({}, { pool: '__그림없는풀', x: 0, y: 0 }, 60) === false;
+      return (on && seen.length >= 2 && !bad.length && none) ? ((idx ? 'K 그림 ' : '대역(시험 서버) ') + seen.join(', ') + ' · 없는 풀 = 시트') : ('실패 켬 ' + on + ' · ' + seen.join(', ') + ' · 어긋남 ' + bad.join(',') + ' · 없는 풀 시트 ' + none);
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
