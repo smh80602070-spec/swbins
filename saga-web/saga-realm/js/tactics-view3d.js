@@ -19,8 +19,8 @@
 (function (global) {
   'use strict';
 
-  var HGT = { plain: 0, forest: 0.2, river: -0.3, wall: 0.8 };
-  var COL = { plain: 0xc8b47a, forest: 0x5f8446, river: 0x4f86b3, wall: 0x857563 };
+  var HGT = { plain: 0, forest: 0.2, river: -0.3, wall: 0.8, hill: 0.4, gate: 0.1 };   // W-0401 언덕·성문(SRPG 판)
+  var COL = { plain: 0xc8b47a, forest: 0x5f8446, river: 0x4f86b3, wall: 0x857563, hill: 0xa98f5c, gate: 0x6e4b2c };
   var SIDE = { me: 0x3d8bd9, foe: 0xd24b3c };
   var STEP_S = 0.25, SWING_S = 0.4, PITCH = 50 * Math.PI / 180, FOV = 40;
 
@@ -179,8 +179,17 @@
     var t = three(), b = v.b;
     clear(hiGrp);
     if (!hiMat) { hiMat = new t.MeshBasicMaterial({ color: 0x7fd0ff, transparent: true, opacity: 0.38, depthWrite: false }); selMat = new t.MeshBasicMaterial({ color: 0xffe08a, transparent: true, opacity: 0.85, depthWrite: false }); }
+    if (b.srpg && b.goal === 'gate' && b.gate && b.gate[0] >= 0) {   // W-0401 성문 목표 — 금빛 고리 둘(늘)
+      var gp = cellCenter(b.gate[0], b.gate[1], b.cols, b.rows), gh = HGT.gate;
+      [0.3, 0.44].forEach(function (r0) { var gr = new t.Mesh(new t.RingGeometry(r0, r0 + 0.06, 28), selMat); gr.rotation.x = -Math.PI / 2; gr.position.set(gp.x, gh + 0.04, gp.z); hiGrp.add(gr); });
+    }
     var u = v.sel ? T().unit(b, v.sel) : null;
     if (!u || u.hp <= 0 || b.done) { return; }
+    if (v.plot && T().canPlot && T().canPlot(b, u.uid)) {   // W-0401 책략 고르는 중 — 대상 칸만 주황
+      var pm = new t.MeshBasicMaterial({ color: 0xff9d3a, transparent: true, opacity: 0.45, depthWrite: false }), cells = v.plot === 'fire' ? T().fireCells(b, u.uid) : T().plotTargets(b, u.uid, v.plot).map(function (id) { return T().unit(b, id); });
+      cells.forEach(function (m) { var p = cellCenter(m.x, m.y, b.cols, b.rows), h = HGT[T().cellAt(b, m.x, m.y)] || 0, q = new t.Mesh(new t.PlaneGeometry(0.86, 0.86), pm); q.rotation.x = -Math.PI / 2; q.position.set(p.x, h + 0.02, p.z); hiGrp.add(q); });
+      return;
+    }
     if (!u.moved) {
       T().moves(b, u.uid).forEach(function (m) {
         var p = cellCenter(m.x, m.y, b.cols, b.rows), h = HGT[T().cellAt(b, m.x, m.y)] || 0;
@@ -285,7 +294,7 @@
     var b = v.b, u = v.sel ? T().unit(b, v.sel) : null, out = {};
     if (!u || u.hp <= 0 || b.done || u.acted) { return out; }
     T().alive(b, 'foe').forEach(function (t) {
-      if (Math.abs(u.x - t.x) + Math.abs(u.y - t.y) <= u.rng) { out[t.uid] = T().hitChance(u, t, T().coverAt(b, t.x, t.y)); }
+      if (Math.abs(u.x - t.x) + Math.abs(u.y - t.y) <= u.rng) { out[t.uid] = T().hitChanceB ? T().hitChanceB(b, u, t) : T().hitChance(u, t, T().coverAt(b, t.x, t.y)); }
     });
     return out;
   }

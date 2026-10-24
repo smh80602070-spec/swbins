@@ -1668,5 +1668,32 @@
   "ticket": "W-0400",
   "since": "2026-10-25",
   "note": "D2(claude 2026-10-25): QC 2D 촬영 강남 성 10·화살표 셋 ○ · 폰 촬영 한 지역·천하도 단추 범례 위 ○"
+ },
+ {
+  "id": "rk.srpg",
+  "name": "격자 SRPG 본전투(W-0401, js/tactics.js·tactics-view.js) — 출진하면(일기토 뒤) 곧장 큰 격자판(땅별 10×8~12×10·언덕·성문) · 승리 조건 넷(전멸·적 대장·성문 점령·6턴 버팀) · 내 부대·창기궁 상성 ±20·높이 +10·뒤치기 +20·방향 · 책략 화계·혼란·회복(지력 70+, 한 판 2번) · 🤖 자동 전투 · 판 뒤 남은 합은 묻지 않고 자동(판정은 stepRound 한 곳) · RTS 단추 숨김 · 손잡이 rtk.srpg(1 기본, 0 = 옛 개입형)",
+  "files": [
+   "js/tactics.js",
+   "js/tactics-view.js",
+   "js/tactics-view3d.js",
+   "src/war/01.js",
+   "index.html"
+  ],
+  "tests": [
+   "test-web W-0401 SRPG 규칙",
+   "test-web W-0401 자동 대국 60판",
+   "test-web W-0401 책략",
+   "test-web W-0401 SRPG 진입",
+   "pw-tac-check TAC_SRPG=1"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {
+   "B": "싸움을 손으로 둔다",
+   "D": "판마다 다른 목표"
+  },
+  "ticket": "W-0401",
+  "since": "2026-10-25",
+  "note": "D2(claude 2026-10-25): pw-tac-check srpg PC·폰 세로·가로 촬영 ○(12×10 산·공성·성문 고리·자동 전투) · 60판 57%·5.5턴"
  }
 ]

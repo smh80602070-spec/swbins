@@ -1969,7 +1969,9 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       }
     });
 
-    t('일기토 카드 — 출진 카드에서 친다 하면 수 카드(세 수+맡김)가 먼저 뜨고, 수를 골라 승부가 나면 ▶ 전황으로 → 전황 카드에 일기토 줄이 남는다', function () {
+    /** W-0401 — 출진이 곧장 SRPG 판으로 가는 게 기본(rtk.srpg 1). 옛 개입형(돌격·수비 줄·♟️ 한 번)을 시험하는 진단은 손잡이 0 으로 감싼다 */
+    function oldFlow(fn) { return function () { DG.core.setTune('rtk.srpg', 0); try { return fn.apply(this, arguments); } finally { DG.core.setTune('rtk.srpg', 1); } }; }
+    t('일기토 카드 — 출진 카드에서 친다 하면 수 카드(세 수+맡김)가 먼저 뜨고, 수를 골라 승부가 나면 ▶ 전황으로 → 전황 카드에 일기토 줄이 남는다', oldFlow(function () {   // W-0401 옛 개입형 길(rtk.srpg 0)을 지킨다
       fresh('cao');
       var fm = findDuelMarch(true);
       if (!fm) { return '(이 씨앗에는 일기토가 설 국경이 없다 — 생략)'; }
@@ -1992,9 +1994,9 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       DG.ui._act('bat-cmd', uiBtn({ 'data-cmd': 'retreat' }));
       DG.ui.closeEnc();
       return cardUp && doneCard && live && ('수 ' + picks + '번 만에 승부 → 전황 카드(일기토 줄·명령 단추)');
-    });
+    }));
 
-    t('실시간 전장(Q9) — 전체 화면·시계, 명령 단추는 합을 넘기지 않고(다음 합부터·불 켜짐), ⏭ 은 한 합, 도중에 닫으면 남은 합을 끝까지 굴려 결과가 뜬다', function () {
+    t('실시간 전장(Q9) — 전체 화면·시계, 명령 단추는 합을 넘기지 않고(다음 합부터·불 켜짐), ⏭ 은 한 합, 도중에 닫으면 남은 합을 끝까지 굴려 결과가 뜬다', oldFlow(function () {   // W-0401 옛 개입형 길(rtk.srpg 0)을 지킨다
       fresh('cao');
       var fm = findDuelMarch(true);
       if (!fm) { return '(이 씨앗에는 일기토가 설 국경이 없다 — 생략)'; }
@@ -2020,7 +2022,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       DG.ui.closeEnc();
       return o.full && o.same && o.lit && o.r1 === '1합째' && ended &&
         ('전체 화면 · ' + o.r0 + ' → 돌격 눌러도 그대로 → ⏭ ' + o.r1 + ' · 닫으니 끝까지 굴려 결과 카드' + (o.pressLog ? ' · 돌격 줄 있음' : ''));
-    });
+    }));
 
     /* ── 나이 (2026-09-10, README "다음에 채울 것" 마지막 항목) ────── */
 
@@ -6861,7 +6863,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return null;
     }
 
-    t('rk.tactics: 화면 ① 개입형 출진 프롬프트엔 「전술판」 이 서고(한 번 쓰면 닫힘), AI 출진(march)은 판을 안 연다', function () {
+    t('rk.tactics: 화면 ① 개입형 출진 프롬프트엔 「전술판」 이 서고(한 번 쓰면 닫힘), AI 출진(march)은 판을 안 연다', oldFlow(function () {   // W-0401 옛 개입형 길(rtk.srpg 0)을 지킨다
       fresh('cao');
       var fm = tvMarch();
       if (!fm) { return '(이 씨앗에는 붙을 국경이 없다 — 생략)'; }
@@ -6885,7 +6887,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         ctxs[0].mine.length >= 1 && ctxs[0].foeTroops.length >= 1 && made === 0 && noHook === false;
       if (!ok) { throw new Error(JSON.stringify({ prompts: prompts, n: ctxs.length, made: made, noHook: noHook })); }
       return '프롬프트 ' + prompts.map(function (p) { return p.r + (p.grid ? '♟️' : '·'); }).join(' ') + ' · 판 1번(두 번째 「전술판」 은 무시) · march 판 0 · 훅 없음 grid=false';
-    });
+    }));
 
     t('rk.tactics: 화면 ② 전술판에서 쓰러진 장수 → 전사(dead)·열전 annals 기록·사연 카드 1장(가명)', function () {
       fresh('cao');
@@ -6913,7 +6915,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return nm + ' 전사 · 열전 ' + CD.find(an.where).name + ' · ' + an.by + ' · 카드 "' + v.text.slice(0, 24) + '…" → 고르면 ' + (r.ok ? '닫힘' : r.why);
     });
 
-    t('rk.tactics: 화면 ③ 「물러나기」 = 무승부 — 보정 0(공 +0%·피해 ×1), 판 화면이 닫히고 같은 합으로 돌아간다', function () {
+    t('rk.tactics: 화면 ③ 「물러나기」 = 무승부 — 보정 0(공 +0%·피해 ×1), 판 화면이 닫히고 같은 합으로 돌아간다', oldFlow(function () {   // W-0401 옛 개입형 길(rtk.srpg 0)을 지킨다
       fresh('cao');
       var fm = tvMarch();
       if (!fm) { return '(이 씨앗에는 붙을 국경이 없다 — 생략)'; }
@@ -6938,8 +6940,40 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         prompts.length === 2 && prompts[1] === 0 && lines.some(function (l) { return /전술판 무승부 — 남은 합 공 위력 \+0%$/.test(l); });
       if (!ok) { throw new Error(JSON.stringify({ svg: svg, out: out && out.kind, prompts: prompts, lines: lines.slice(-3) })); }
       return '칸 ' + svg + ' · ' + out.name + ' · 보정 +' + A.winPct + '% ×' + A.lossMul + ' · 같은 합(' + prompts[1] + ')으로 복귀';
-    });
+    }));
 
+    t('W-0401 SRPG 진입 — 출진 카드에서 친다 하면(일기토 뒤) 곧장 큰 격자판(🎯 목표·🤖 자동 전투·내 부대) · 자동 전투 → ▶ 전황으로 → 남은 합은 묻지 않고 끝까지 · 손잡이 0 이면 옛 「전술판」 단추', function () {
+      fresh('cao');
+      var fm = tvMarch();
+      if (!fm) { return '(이 씨앗에는 붙을 국경이 없다 — 생략)'; }
+      R.city(fm.from).troops = 20000; R.city(fm.from).food = 999999;
+      var o = {};
+      withRand(0.5, function () {
+        DG.ui._act('march', uiBtn({ 'data-from': fm.from, 'data-to': fm.to }));
+        DG.ui._act('ask-ok', uiBtn({}));
+        for (var g = 0; document.querySelector('#encounter [data-act="duel-pick"]') && g < 8; g++) { DG.ui._act('duel-pick', uiBtn({ 'data-pick': 'auto' })); }
+        if (document.querySelector('#encounter [data-act="duel-go"]')) { DG.ui._act('duel-go', uiBtn({})); }
+        var cur = DG.tacticsView.cur(), b = cur && cur.b;
+        o.open = !!b && b.srpg === true && b.cols * b.rows >= 80 && document.querySelectorAll('#tacview .tv-cell').length === b.cols * b.rows;
+        o.goal = !!document.querySelector('#tacview .tv-goal') && b && TC.GOALS.indexOf(b.goal) >= 0;
+        o.autoBtn = /자동 전투/.test((document.querySelector('#tacview [data-tv="auto"]') || {}).textContent || '');
+        o.myTroop = !!b && b.units.some(function (u) { return u.side === 'me' && u.kind === 'troop'; });
+        o.size = b ? b.cols + '×' + b.rows + ' ' + b.goal : '';
+        DG.tacticsView.auto(); DG.tacticsView.go();
+        for (var k = 0; k < 12 && document.querySelector('#encounter [data-act="bat-now"]'); k++) { DG.ui._act('bat-now', uiBtn({})); }
+        o.mid = encHtml(); if (document.querySelector('#encounter.battle')) { DG.ui.closeEnc(); }   // 아직 실시간 전장이면 닫아 끝까지 굴린다(Q9)
+        o.after = encHtml();
+      });
+      var endTxt = String(o.mid) + String(o.after); o.ended = /잃은 병력/.test(endTxt) && /전술판/.test(endTxt);   // 남은 합을 한 번에 굴려 결과가 실시간 전장 카드(#liveresult) 안에 선다
+      DG.ui.closeEnc();
+      /* 손잡이 0 — 프롬프트에 grid 가 서고 판은 안 열린다(옛 길) */
+      fresh('cao'); var fm2 = tvMarch(), grid0 = null, opened = 0;
+      DG.core.setTune('rtk.srpg', 0);
+      try { withRand(0.5, function () { W.marchInteractive(fm2.from, fm2.to, fm2.lead, 1000, { onTactics: function (c, d) { opened++; d(null); }, onPrompt: function (st2, step) { if (grid0 === null) { grid0 = st2.grid; } step('retreat'); } }); }); }
+      finally { DG.core.setTune('rtk.srpg', 1); }
+      var ok = o.open && o.goal && o.autoBtn && o.myTroop && o.ended && grid0 === true && opened === 0;
+      return ok ? ('판 ' + o.size + ' · 자동 전투 → 전황 끝까지 · 손잡이 0 = 옛 프롬프트') : ('실패 ' + JSON.stringify({ open: o.open, goal: o.goal, autoBtn: o.autoBtn, myTroop: o.myTroop, size: o.size, ended: o.ended, after: String(o.after).replace(/<[^>]+>/g, ' ').slice(0, 160), mid: String(o.mid).replace(/<[^>]+>/g, ' ').slice(0, 200), grid0: grid0, opened: opened }));
+    });
     t('오류 기록 저장 키는 이 판 것 그대로다 (saga-realm/errlog) · core 없을 땐 메모리에 담았다 합친다', function () {
       var E = DG.errlog, key = E && E.storageKey ? E.storageKey() : null;
       if (key !== 'saga-realm/errlog') { return false; }

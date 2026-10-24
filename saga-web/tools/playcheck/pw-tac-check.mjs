@@ -15,15 +15,15 @@ for (const V of [{ k: 'pc', w: 1280, h: 720 }, { k: 'phone', w: 390, h: 844, mob
     await ev(() => { const b = document.getElementById('title-continue'); if (b) b.click(); }); await sleep(2500);
     await r.page.locator('[data-act="pick-scen"]').first().click(); await sleep(800);
     await r.page.locator('[data-act="pick-force"]').first().click(); await sleep(3000);
-    const info = await ev(() => {
+    const info = await ev((SR) => {   // SR — TAC_SRPG=1 이면 W-0401 SRPG 판(산 12×10·성문 목표·내 부대)
       const R = DG.rtk, me = R.me(), mine = DG.off.ofForce(me).map((o) => o.id || o).slice(0, 3);
       const fs0 = R.state().forces || {}, other = (Array.isArray(fs0) ? fs0.map((f) => f.id || f) : Object.keys(fs0)).find((f) => f !== me && DG.off.ofForce(f).length >= 2) || null;
       const foes = other ? DG.off.ofForce(other).map((o) => o.id || o).slice(0, 2) : [];
       const face = (id) => { const h = DG.off.find(id), P = DG.portrait3d; const u = h && P && P.of ? P.of('hero', h, 64, 64) : null; return typeof u === 'string' ? u : ''; };
       let host = document.getElementById('tacview'); if (!host) { host = document.createElement('div'); host.className = 'tacview'; host.id = 'tacview'; host.style.position = 'fixed'; host.style.zIndex = 60; document.body.appendChild(host); }   // 전투 카드 밖에서 열 때 자리
-      DG.tacticsView.open(host, { seed: 7, land: 'forest', siege: true, mine, foes, foeTroops: [4000, 4000], where: R.citiesOf(me)[0], name: (id) => (DG.off.find(id) || {}).name || id, face }, () => {});
+      DG.tacticsView.open(host, Object.assign({ seed: 7, land: 'forest', siege: true, mine, foes, foeTroops: [4000, 4000], where: R.citiesOf(me)[0], name: (id) => (DG.off.find(id) || {}).name || id, face }, SR ? { srpg: true, land: 'mount', goal: 'gate', foeTroops: [6000], myTroops: [6000] } : {}), () => {});
       return { mine: mine.length, foes: foes.length, art: !!document.querySelector('#tacview .tv-body, #tacview svg svg') };
-    });
+    }, !!process.env.TAC_SRPG);
     await sleep(2500);
     await r.page.screenshot({ path: path.join(OUT, `${tag}-${V.k}-board.png`) });
     await ev(() => { const v = DG.tacticsView.cur(), T = DG.tactics, m = T.alive(v.b, 'me'); const u = m[1] || m[0]; DG.tacticsView.tap(u.x, u.y); }); await sleep(1500);   // W-0168 — 고른 상태(갈 칸·엄폐 방패)

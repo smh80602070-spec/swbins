@@ -717,6 +717,7 @@
       prompt();
     }
     function prompt() {   // 다음 합 전 명령 묻기 — 전술판 뒤에는 같은 합으로 돌아와 다시 묻는다
+      var TS = global.DG.tactics; if (TS && TS.srpgOn && TS.srpgOn() && hooks.onTactics && !water && (atk.grid || atk.officers.length)) { step(atk.grid ? null : 'grid'); return; }   // W-0401 SRPG 본전투 — 첫 합에 바로 격자판, 판 뒤 남은 합은 묻지 않고 그대로 굴린다(판정은 stepRound 한 곳)
       if (!hooks.onPrompt) { step(null); return; }
       hooks.onPrompt({ r: r, atk: atk.troops, def: def.troops, wall: wallRef.wall, tactic: tacticFor(land.key, atk.officers, atk.tacticUsed), grid: !!(hooks.onTactics && !atk.grid && !water && atk.officers.length && global.DG.tactics) }, step);
     }

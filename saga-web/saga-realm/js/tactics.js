@@ -35,6 +35,8 @@
   };
   var WOUND_MONTHS = 3;
   function DMG() { return core.tuned('rtk.tacticsDmg', 2); }
+  /** W-0401 손잡이 rtk.srpg — 1(기본) = 출진하면 곧장 SRPG 판(큰 판·승리 조건·내 부대), 0 = 옛 개입형(♟️ 한 번·8×6·3턴) */
+  function srpgOn() { return core.tuned('rtk.srpg', 1) ? true : false; }
 
   function OFF() { return global.DG.off; }
   function permadeath() { return core.tuned('rtk.permadeath', 1) ? true : false; }
@@ -279,11 +281,13 @@
   function marchGrid(m, back) {
     var atk = m.atk, def = m.def, CD = global.DG.cityData, st = global.DG.rtk.state();
     if (!m.hooks.onTactics || atk.grid || m.water || !atk.officers.length) { return false; }
-    var foes = def.officers.slice(0, 3), n = Math.max(1, Math.min(2, 5 - foes.length)), ft = [], k;
+    var foes = def.officers.slice(0, 3), n = Math.max(1, Math.min(2, 5 - foes.length)), ft = [], k, seed = m.toId + '|' + (st.turn || 0) + '|' + m.r, sg = srpgOn();
     for (k = 0; k < n; k++) { ft.push(Math.round(def.troops / n)); }
     atk.grid = { give: 1, take: 1, kind: null };   // 판이 열린 동안 두 번 못 연다
-    m.hooks.onTactics({ seed: m.toId + '|' + (st.turn || 0) + '|' + m.r, land: m.land.key, siege: !m.sortie, mine: atk.officers.slice(0, 3),
-      foes: foes, foeTroops: ft, to: m.toId, where: CD.find(m.toId).name }, function (out) {
+    /* W-0401 SRPG — 목표는 판 씨앗(공성 = 전멸·대장·성문, 들판 = 전멸·대장) · 양쪽 부대 하나씩(고돗 G-0347 ④ 균형: 장수 수 맞춤) */
+    var goal = sg ? (!m.sortie ? GOALS.slice(0, 3) : GOALS.slice(0, 2))[Math.floor(hash(seed, 'goal') * (!m.sortie ? 3 : 2))] : '';
+    m.hooks.onTactics({ seed: seed, land: m.land.key, siege: !m.sortie, mine: atk.officers.slice(0, 3),
+      foes: foes, foeTroops: sg ? [def.troops] : ft, to: m.toId, where: CD.find(m.toId).name, srpg: sg, goal: goal, myTroops: sg ? [atk.troops] : [] }, function (out) {
       if (out) { marchApply(m, out); }
       back();
     });
@@ -514,7 +518,7 @@
     hash: hash, makeBoard: makeBoard, cellAt: cellAt, coverAt: coverAt, officerUnit: officerUnit, troopUnit: troopUnit, unitsOf: unitsOf,
     unit: unit, alive: alive, moves: moves, move: move, hitChance: hitChance, attack: attack,
     aiTurn: aiTurn, endTurn: endTurn, outcome: outcome, apply: apply, annalize: annalize, autoPlay: autoPlay, permadeath: permadeath,
-    marchGrid: marchGrid, marchApply: marchApply,
+    marchGrid: marchGrid, marchApply: marchApply, srpgOn: srpgOn,
     SRPG_SIZE: SRPG_SIZE, HEIGHT_HIT: HEIGHT_HIT, COUNTER_HIT: COUNTER_HIT, BACK_HIT: BACK_HIT, ARMS: ARMS, BEATS: BEATS, ARM_NAME: ARM_NAME, GOALS: GOALS, GOAL_NAME: GOAL_NAME,
     HOLD_TURNS: HOLD_TURNS, SRPG_CAP: SRPG_CAP, PLOTS: PLOTS, FIRE_WIS: FIRE_WIS, PLOT_NAME: PLOT_NAME,
     makeBoardSrpg: makeBoardSrpg, unitsOfSrpg: unitsOfSrpg, heightAt: heightAt, isBack: isBack, hitMods: hitMods, hitChanceB: hitChanceB, goalText: goalText,
