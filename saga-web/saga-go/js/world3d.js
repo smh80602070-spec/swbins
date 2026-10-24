@@ -251,7 +251,7 @@
     loadEnvironment();
 
     groundGroup = new T.Group(); scene.add(groundGroup);
-    propGroup = new T.Group(); scene.add(propGroup);
+    propGroup = new T.Group(); propGroup.name = 'props'; scene.add(propGroup);
     actorGroup = new T.Group(); scene.add(actorGroup);
     fxGroup = new T.Group(); scene.add(fxGroup);
 
@@ -1186,7 +1186,7 @@
 
   function syncProps(W) {
     var pos = core.save.player.pos;
-    var R = PROP_R();
+    var R = PROP_R(), ZM = +core.tuned('go.zoneM', 576), ZB = ZM > 0 && +core.tuned('go.zoneBuild', 1) === 1 && !!global.DG.zoneCut, zx = ZB ? Math.floor(pos.x / ZM) : 0, zy = ZB ? Math.floor(pos.y / ZM) : 0, ZP = ZB ? 96 : 0;   /* W-0414 ② 구역(ZM m 정사각) 통째로 — 들 때 한 번 세우고(넘김 막 아래) 구역 안에선 다시 안 훑는다 · ZP 가장자리 여유 */
     /* 지도가 깔렸는지 — 깔린 자리와 안 깔린 자리(오프라인·타일 실패)에서
        세우는 것이 다르다. 캐시 키에도 넣어야 상태가 바뀔 때 다시 세운다 */
     var mapped = !!(W.tilesUsable && W.tilesUsable());
@@ -1196,15 +1196,15 @@
     var seasonKey = global.DG.season ? global.DG.season.now().key : '-';
     /* **훑을 까닭이 있을 때만 훑는다.** 격자를 넘었거나 · 지도가 붙거나 떨어졌거나 ·
        비가 오거나 그쳤거나 · 품질이 바뀌었을 때. 그 밖에는 답이 지난 프레임과 같다 */
-    var cell = Math.floor(pos.x / GRID) + ':' + Math.floor(pos.y / GRID) +
+    var cell = (ZB ? 'Z' + zx + ':' + zy : Math.floor(pos.x / GRID) + ':' + Math.floor(pos.y / GRID)) +
       ':' + Math.round(R) + ':' + (MESH_ON() ? 1 : 0) + ':' + Math.round(DENSITY() * 100) +
       ':' + (mapped ? 'm' : 'n') + ':' + (wetNow ? 'w' : 'd') +
       ':' + (RG3 && RG3.on() ? 'L' : '-') +
       ':' + seasonKey;
     if (propScan === cell) { return; }
     propScan = cell;
-    var g0x = Math.floor((pos.x - R) / GRID), g1x = Math.floor((pos.x + R) / GRID);
-    var g0y = Math.floor((pos.y - R) / GRID), g1y = Math.floor((pos.y + R) / GRID);
+    var g0x = ZB ? Math.floor((zx * ZM - ZP) / GRID) : Math.floor((pos.x - R) / GRID), g1x = ZB ? Math.floor(((zx + 1) * ZM + ZP) / GRID) : Math.floor((pos.x + R) / GRID);
+    var g0y = ZB ? Math.floor((zy * ZM - ZP) / GRID) : Math.floor((pos.y - R) / GRID), g1y = ZB ? Math.floor(((zy + 1) * ZM + ZP) / GRID) : Math.floor((pos.y + R) / GRID);
     var live = {};
     for (var gy = g0y; gy <= g1y; gy++) {
       for (var gx = g0x; gx <= g1x; gx++) {
@@ -1216,7 +1216,7 @@
         var tileDist = Math.hypot((gx + 0.5) * GRID - pos.x, (gy + 0.5) * GRID - pos.y);
         /* 풀·길의 잔 사물은 가까울 때만 세운다 — 반경 전체에 깔면 격자 백 개가
            한꺼번에 늘어나고, 멀리서는 어차피 한 픽셀이다 */
-        var far = tileDist > R * 0.5;
+        var far = !ZB && tileDist > R * 0.5;   // 구역 통째면 잔 사물도 다 — 걸으며 솟지 않게
         if (far && !mk && (kind === 'grass' || kind === 'road') &&
             !(RG3 && RG3.hasDeco && RG3.hasDeco(gx, gy))) { continue; }
         /* LOD(36절) 대(帶) — 이 칸이 나무·바위·풀을 세우는 종류(town 은 집·탑뿐이라
@@ -1224,7 +1224,7 @@
            다시 지어지고, 그 안에서 `instProp` 이 진짜 모델과 도형을 맞바꾼다.
            안 넣으면 가까이 가도 이미 지은 칸은 도형인 채로 남는다(칸이 안
            다시 지어지므로) */
-        var lodBand = kind !== 'town' ? (tileDist <= LOD_NEAR() ? 'n' : 'f') : '-';
+        var lodBand = kind !== 'town' ? (ZB || tileDist <= LOD_NEAR() ? 'n' : 'f') : '-';
         /* 이 땅을 켜고 끄면 같은 격자가 다른 땅이 된다 — 캐시 키에 넣어야 다시 세운다 */
         /* 젖음도 키에 넣는다 — 안 넣으면 비가 그쳐도 강이 분 채로 남는다.
            **계절도 마찬가지다** — 안 넣으면 가을이 됐는데 나무 몇 그루가 초록으로
@@ -1258,7 +1258,7 @@
       if (!(kgx >= g0x && kgx <= g1x && kgy >= g0y && kgy <= g1y)) {
         var leftNode = propMeshes[k];
         var d = Math.hypot(leftNode.position.x - pos.x, leftNode.position.z - pos.y);
-        if (d <= UR) { continue; }      // 아직 부수는 반경 안 — 그대로 둔다
+        if (d <= UR && !ZB) { continue; }      // 아직 부수는 반경 안 — 그대로 둔다(구역 통째면 옛 구역은 막 아래서 곧장 뺀다)
       }
       /* 도형·재질은 **모두가 나눠 쓰는 것**이라 여기서 dispose 하지 않는다.
          하나를 버리면 남아 있는 다른 건물의 도형까지 같이 사라진다 */

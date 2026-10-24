@@ -10,7 +10,9 @@
     if (!C || !C.on || !Z) { return; }
     Z.threeBusy();   // 기본 로딩 관리자를 일찍 감싼다
     function wait() { var W3 = global.DG.world3d; return !!(W3 && W3.active && W3.active()) && Z.threeBusy(); }
-    C.on('zone:enter', function () { Z.cut({ wait: wait }); });
+    /* W-0414 ② 구역 = go.zoneM(576m) 정사각 — 3D 소품은 구역째 세우므로(world3d syncProps) 경계를 넘는 순간 덮는다. 0 이면 옛 이름 붙은 땅(zone:enter) */
+    Z.hookKey(function () { var zm = +C.tuned('go.zoneM', 576), p = C.save && C.save.player && C.save.player.pos; if (!(zm > 0)) { return 'off'; } return p ? Math.floor(p.x / zm) + ',' + Math.floor(p.y / zm) : null; }, { wait: wait });
+    C.on('zone:enter', function () { if (!(+C.tuned('go.zoneM', 576) > 0)) { Z.cut({ wait: wait }); } });
     C.on('region:teleport', function () { Z.cut({ wait: wait }); });
   }
   if (global.document && global.document.readyState === 'loading') { global.document.addEventListener('DOMContentLoaded', init); } else { global.setTimeout(init, 0); }

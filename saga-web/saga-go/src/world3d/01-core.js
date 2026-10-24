@@ -251,7 +251,7 @@
     loadEnvironment();
 
     groundGroup = new T.Group(); scene.add(groundGroup);
-    propGroup = new T.Group(); scene.add(propGroup);
+    propGroup = new T.Group(); propGroup.name = 'props'; scene.add(propGroup);
     actorGroup = new T.Group(); scene.add(actorGroup);
     fxGroup = new T.Group(); scene.add(fxGroup);
 
