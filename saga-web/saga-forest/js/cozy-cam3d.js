@@ -39,7 +39,7 @@
   /** 한 프레임 — village-view3d step() 이 부른다 */
   function syncGrid(t, scene, V, s) {
     if (!t || !scene || !V || !V.raw || !V.tileAt) { return; }
-    var show = on() && !!tuned('village3d.cozyGrid', 1);
+    var show = on() && !!tuned('village3d.cozyGrid', 0);   // W-0406 기본 끔(사용자 10-25 「네모 칸으로 선이 그어진 맵은 뭐임?」) — 놓기 칸 안내가 늘 깔려 바둑판처럼 보였다
     if (!show) { if (grid) { grid.visible = false; } return; }
     var raw = V.raw(), TILE = V.TILE || 40, px = raw.player.x, py = raw.player.y;
     var key = Math.floor(px / TILE) + ',' + Math.floor(py / TILE) + ':' + (raw.mapKey || raw.village || '');

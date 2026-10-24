@@ -408,7 +408,7 @@
     var ty0 = Math.floor((cam.y - R * A_MAX) / T) - 1;
     var ty1 = Math.floor((cam.y + R * 0.95) / T) + 1;
     var tufts = [], glints = [];
-    var ty, tx;
+    var ty, tx, gTex = !!core.tuned('village.groundTex2d', 1);   // W-0406 사용자 10-25 「2d 는 기존 화면이 아닌 에셋 맵이어야」
 
     for (ty = ty0; ty <= ty1; ty++) {
       var midA = (ty * T + T * 0.5 - cam.y) / R;
@@ -424,7 +424,7 @@
       for (tx = tx0; tx <= tx1; tx += step) {
         var kind = V.tileAt(tx, ty);
         var t = VD.TILES[kind] || VD.TILES.grass;
-        var alt = ((tx + ty) % 2 + 2) % 2 === 0;
+        var alt = gTex || ((tx + ty) % 2 + 2) % 2 === 0;   // W-0406 바둑판 두 색은 손잡이 0 일 때만(이제 밑색 한 색 + 전 칸 그림)
         var col = kind === 'grass' ? (alt ? se.grass : se.grass2)
                                    : (alt ? t.color : t.color2);
         var a0 = project(tx * T, ty * T);
@@ -439,7 +439,7 @@
         batch[key].push(a0, a1, a2, a3);
         /* 그림은 가까운 칸에만 얹는다(step===1) — 먼 줄은 색만으로 충분하고
            칸이 작아 그림을 얹어도 안 보인다. 아핀 근사도 먼 칸일수록 어긋난다 */
-        if (step === 1) { texList.push({ img: tileImg(kind, se), a0: a0, a1: a1, a3: a3, kind: kind, tx: tx, ty: ty }); }
+        if (step === 1 || gTex) { texList.push({ img: tileImg(kind, se), a0: a0, a1: a1, a3: a3, kind: kind, tx: tx, ty: ty, step: step }); }   // W-0406 먼 줄(두 칸 건너뜀)도 그림
 
         /* 잔디 술 · 물빛 — 가까운 칸에만 (멀면 지저분해진다) */
         if (midA > -0.75 && step === 1) {
@@ -472,7 +472,7 @@
        안 실려도(첫 프레임) 빈 칸이 되지 않는다 */
     var useAT = autotileOn(se), A2 = useAT ? AT() : null;   // W-0390 이중 격자(가까운 칸)
     for (var ti = 0; ti < texList.length; ti++) {
-      if (useAT) {
+      if (useAT && texList[ti].step === 1) {
         var e2 = texList[ti], pk = A2.pick(V.tileAt(e2.tx, e2.ty), V.tileAt(e2.tx + 1, e2.ty), V.tileAt(e2.tx, e2.ty + 1), V.tileAt(e2.tx + 1, e2.ty + 1));
         if (pk && drawTileRect(pk.img, pk.sx, pk.sy, pk.sw, pk.sh, project((e2.tx + 0.5) * T, (e2.ty + 0.5) * T), project((e2.tx + 1.5) * T, (e2.ty + 0.5) * T), project((e2.tx + 0.5) * T, (e2.ty + 1.5) * T))) { continue; }
       }
