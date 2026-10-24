@@ -20,7 +20,9 @@
   function ratio() { var A = global.DG && global.DG.asset3d; return A && A.readyRatio ? A.readyRatio() : 1; }
   /** 걷을 때인가 — 'done'(다 옴)·'ratio'(시야 안 80%)·'max'(상한)·'' */
   function shouldHide(p, r, ms) { if (ms <= MIN_MS) { return ''; } if (p === 0) { return 'done'; } if (r >= tuned('loadVeil.ratio', 0.8)) { return 'ratio'; } if (ms > tuned('loadVeil.maxMs', 8000)) { return 'max'; } return ''; }
-  function pending() { var A = global.DG && global.DG.asset3d; return A && A.hiPending ? A.hiPending() : 0; }
+  function is3d() { var D3 = global.DG && global.DG.dungeon3d; return !!(D3 && ((D3.active && D3.active()) || (D3.wanted && D3.wanted()))); }
+  /** W-0405 3D 몸 받기 줄 — 2D 면 0(2D 는 3D 몸을 안 그리는데 뒤에서 받는 GLB 를 기다려 마을·층 넘김이 최대 8초 막에 덮였다) */
+  function pending() { var A = global.DG && global.DG.asset3d; return is3d() && A && A.hiPending ? A.hiPending() : 0; }
   function scen() { var S = global.DG && global.DG.scenario; return !!(S && S.isOpen && S.isOpen()); }
   function area() {
     var D = global.DG || {}, T = D.town, G = D.dungeon;

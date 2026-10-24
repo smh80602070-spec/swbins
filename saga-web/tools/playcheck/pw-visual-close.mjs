@@ -144,7 +144,7 @@ async function runDungeon() {
     await shoot(r, 'saga-dungeon', '2-room', '던전 첫 방 3D(장비 없음)', ['dg.dungeon3d', 'dg.dungeon3d-2'], before);
     /* 문 통로 — 방을 비우고 문으로 넘어간 직후(위장 전환)와 다 넘어간 뒤 */
     const door = await ev(() => { var R = DG.dungeon.raw(); R.room.enemies.forEach((e) => { e.hp = 0; e.dead = true; }); R.room.cleared = true; var d = (R.room.doors || [])[0]; var k = d ? d.kind : 'fight'; var idx = R.roomIdx; DG.dungeon.goRoom(k); return { kind: k, doors: (R.room.doors || []).length, from: idx, to: DG.dungeon.raw().roomIdx }; });
-    await sleep(250);
+    await sleep(250); for (let i = 0; i < 20 && await ev(() => !!(DG.loadVeil && DG.loadVeil.cutShown && DG.loadVeil.cutShown())); i++) { await sleep(100); } await sleep(150);   // W-0405 넘김 막(문 넘자 어둡게 → 다 지으면 걷음)이 걷힌 첫 그림
     await shoot(r, 'saga-dungeon', '3-door', '문 통로 넘어가는 중(' + door.kind + ')', ['dg.dungeon-2'], Object.assign(await st(), { door }));
     await settle();
     await shoot(r, 'saga-dungeon', '4-next', '다음 방 도착', ['dg.dungeon-2', 'dg.dungeon3d'], await st());
