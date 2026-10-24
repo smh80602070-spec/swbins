@@ -102,7 +102,15 @@ namespace Saga.Story.Player
             if (Application.isPlaying) LifePose.Attach(gameObject, false, () => _onRope || FlyActive || StoryMounts.Riding != null || _attackCooldownLeft > 0f || StoryPlayerHp.Invuln > 0f);
         }
 
-        private void Update() => Step(Time.deltaTime);
+        private void Update()
+        {
+            Step(Time.deltaTime);
+            Steps.Tick(transform.position, _controller.isGrounded, _onRope || StoryMounts.Riding != null, StepSurface(transform.position), Time.deltaTime); // tasks U-0218 발소리
+        }
+
+        /// <summary>tasks U-0218 발소리(공용 <see cref="StepSounds"/>) — 4종횡은 풀 · 미궁 돌.</summary>
+        public StepSounds Steps { get; } = new StepSounds((n, v) => Saga.Story.Audio.StoryAudio.PlaySfx(n, v));
+        public static string StepSurface(Vector3 pos) => StoryLabyrinthState.InRun ? StepSounds.Stone : StepSounds.Grass;
 
         // 진단용(PLAN.md 109-15) — 가로 입력을 곧장 주고(−1~1), 시간을 건너뛰며 한 프레임씩 굴린다.
         private bool _testInput;

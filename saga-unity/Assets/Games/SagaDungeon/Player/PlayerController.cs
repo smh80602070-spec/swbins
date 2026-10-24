@@ -287,7 +287,15 @@ namespace Saga.Dungeon.Player
             if (_hurtRig != null) _hurtRig.Shake(HurtShakeMag, HurtShakeSec);
         }
 
-        private void Update() => Step(Time.deltaTime);
+        private void Update()
+        {
+            Step(Time.deltaTime);
+            Steps.Tick(transform.position, Mode == MoveMode.Ground && _controller.isGrounded, DungeonMounts.Riding != null, StepSurface(transform.position), Time.deltaTime); // tasks U-0218 발소리
+        }
+
+        /// <summary>tasks U-0218 발소리(공용 <see cref="StepSounds"/>) — 2나락은 돌바닥.</summary>
+        public StepSounds Steps { get; } = new StepSounds((n, v) => Saga.Dungeon.Audio.SfxPlayer.Play(n, v));
+        public static string StepSurface(Vector3 pos) => StepSounds.Stone;
 
         /// <summary>한 프레임 — 진단이 시간을 건너뛰려고 직접 부른다.</summary>
         public void Step(float dt)

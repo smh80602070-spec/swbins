@@ -85,7 +85,15 @@ namespace Saga.Forest.Player
             }
         }
 
-        private void Update() => Step(Time.deltaTime);
+        private void Update()
+        {
+            Step(Time.deltaTime);
+            Steps.Tick(transform.position, _controller.enabled && _controller.isGrounded, ForestMounts.Riding != null, StepSurface(transform.position), Time.deltaTime); // tasks U-0218 발소리
+        }
+
+        /// <summary>tasks U-0218 발소리(공용 <see cref="StepSounds"/>) — 3마을은 풀 · 집 안 나무 · 굴 돌.</summary>
+        public StepSounds Steps { get; } = new StepSounds((n, v) => Saga.Forest.Audio.ForestAudio.PlaySfx(n, v));
+        public static string StepSurface(Vector3 pos) => ForestMounts.Indoors(pos) ? StepSounds.Wood : ForestCave.Inside ? StepSounds.Stone : StepSounds.Grass;
 
         /// <summary>한 프레임 — 진단이 시간을 건너뛰려고 직접 부른다.</summary>
         public void Step(float dt)

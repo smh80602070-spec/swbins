@@ -24,6 +24,8 @@ namespace Saga.Go.Player
 
         public int StepCount { get; private set; }
         public string LastSurface { get; private set; }
+        /// <summary>tasks U-0218 젖은 땅 물 튐 수(진단).</summary>
+        public int SplashCount { get; private set; }
 
         public void Reset() { _hasLast = false; _stride = 0f; _airSec = 0f; _fallSpeed = 0f; }
 
@@ -64,6 +66,7 @@ namespace Saga.Go.Player
             LastSurface = GoSurface.At(pos);
             StepCount++;
             GoSfx.Play(GoSurface.StepName(LastSurface), StepVolume);
+            if (Saga.Core.StepSounds.Splash((n, v) => GoSfx.Play(n, v), LastSurface, StepVolume)) SplashCount++; // tasks U-0218 젖은 땅 물 튐(고돗 G-0368)
         }
     }
 }
