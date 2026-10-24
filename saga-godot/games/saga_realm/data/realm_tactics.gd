@@ -281,6 +281,11 @@ static func _best_target(b: Dictionary, u: Dictionary, foes: Array) -> Dictionar
 static func act_auto(b: Dictionary, u: Dictionary) -> void:
 	if float(u.hp) <= 0.0 or String(b.done) != "":
 		return
+	if bool(u.get("confused", false)):   # G-0347 ⑤ 혼란 — 이번 차례를 쉬고 풀린다
+		u.confused = false
+		u.moved = true
+		u.acted = true
+		return
 	var foes := alive(b, "foe" if String(u.side) == "me" else "me")
 	if foes.is_empty():
 		return
@@ -702,3 +707,63 @@ static func check_srpg(b: Dictionary) -> String:
 			var f := hp_frac(b, "foe")
 			b.done = "win" if (f <= 0.0 or m / f >= 1.5) else "draw"
 	return b.done
+
+
+# ── G-0347 ⑤ 책략 나머지 — 혼란·회복(화계와 같은 문턱·같은 횟수 PLOTS) ──
+##   혼란   PLOT_RANGE 칸 안 적 하나 — 성공 clamp(50 + (내 지력 − 그 지력)×2, 20, 90)%(부대 지력 40) · 붙으면 그 적은 다음 차례를 쉰다(confused)
+##   회복   HEAL_RANGE 칸 안 아군 하나(자기 포함) — 늘 성공, HEAL_BASE + 지력/5 만큼(최대 넘지 않음)
+## 기록은 b.fire_log 에 같이({"a", "plot", "to", "ok"…}) — 공격 log 와 따로.
+
+const PLOT_RANGE := 3
+const HEAL_RANGE := 2
+const HEAL_BASE := 15.0
+const PLOT_NAME := {"fire": "화계", "confuse": "혼란", "heal": "회복"}
+
+
+static func confuse_chance(u: Dictionary, t: Dictionary) -> int:
+	return clampi(50 + int((float(u.get("wis", 0.0)) - float(t.get("wis", 40.0))) * 2.0), 20, 90)
+
+
+static func heal_amount(u: Dictionary) -> int:
+	return js_round(HEAL_BASE + float(u.get("wis", 0.0)) / 5.0)
+
+
+## 책략을 걸 수 있는 대상 [uid…] — plot = confuse | heal
+static func plot_targets(b: Dictionary, uid: String, plot: String) -> Array:
+	var out: Array = []
+	if not can_fire(b, uid):
+		return out
+	var u := unit(b, uid)
+	for t: Dictionary in alive(b):
+		var d := dist(u, t)
+		if plot == "confuse" and String(t.side) != String(u.side) and d <= PLOT_RANGE and not bool(t.get("confused", false)):
+			out.append(String(t.uid))
+		elif plot == "heal" and String(t.side) == String(u.side) and d <= HEAL_RANGE and float(t.hp) < float(t.max):
+			out.append(String(t.uid))
+	return out
+
+
+## 혼란·회복을 건다 — {ok, plot, hit, chance, amount}
+static func plot(b: Dictionary, uid: String, plot_key: String, tuid: String) -> Dictionary:
+	if not plot_targets(b, uid, plot_key).has(tuid):
+		return {"ok": false}
+	var u := unit(b, uid)
+	var t := unit(b, tuid)
+	var r := {"ok": true, "plot": plot_key, "to": tuid, "hit": true, "chance": 100, "amount": 0}
+	if plot_key == "confuse":
+		r.chance = confuse_chance(u, t)
+		r.hit = roll(b, "cf") * 100.0 < float(r.chance)
+		if r.hit:
+			t.confused = true
+	else:
+		var before := float(t.hp)
+		t.hp = minf(float(t.max), before + float(heal_amount(u)))
+		r.amount = js_round(float(t.hp) - before)
+	b.plots = int(b.get("plots", PLOTS)) - 1
+	u.acted = true
+	u.moved = true
+	if not b.has("fire_log"):
+		b.fire_log = []
+	(b.fire_log as Array).append({"t": b.turn, "a": uid, "plot": plot_key, "to": tuid, "hit": r.hit, "amount": r.amount})
+	check(b)
+	return r

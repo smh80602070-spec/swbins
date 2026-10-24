@@ -464,3 +464,12 @@ static func rk_region_cards(tree: SceneTree) -> void:
 		if rv != null:
 			rv.call("_fill_cards")
 			(rv.get("_cards") as Control).visible = true)
+
+
+## G-0347 ⑤ 5천하 전장 책략 — 장수를 고른 판에서 📜 를 한 번 눌러 첫 책략(화계) 칸을 띄운다
+static func rk_plot(tree: SceneTree) -> void:
+	load("res://tools/shot_realm_tactics.gd").call("stage", tree, true, false, false)
+	_later(tree, 30, func() -> void:
+		var v := tree.current_scene.find_child("TacticsView", true, false)
+		if v != null:
+			v.call("_on_fire_toggle"))

@@ -79,7 +79,10 @@ var _auto_mode := false
 var cut_count := 0         # 점검용 — 컷을 몇 번 했나
 var _idle_t := 0.0          # G-0266 대기 몸짓 타이머(하나)
 var _idle_rng := RandomNumberGenerator.new()   # 규칙 난수와 따로(전술 결과 그대로)
-var _fire_mode := false   # G-0347 화계 — 🔥 단추로 켜고, 주황 숲 칸을 고르면 불
+var _fire_mode := false   # G-0347 책략 고르는 중(_plot 이 어떤 책략인지)
+var _plot := ""   # "fire" | "confuse" | "heal" — 📜 단추를 누를 때마다 쓸 수 있는 것 사이를 돈다
+const PLOT_ICON := {"fire": "🔥", "confuse": "🌀", "heal": "💚"}
+const HI_HEAL := Color(0.4, 1.0, 0.55, 0.55)
 var _fire_btn: Button = null
 var _flames := {}   # "x,y" → 불 표식 노드
 var _swing_n := 0          # G-0253 — 뷰 안 연타 셈(궤적 기울기 차례)
@@ -361,7 +364,7 @@ func _build_ui() -> void:
 		row.add_child(b)
 		_buttons.append(b)
 	_fire_btn = Button.new()   # G-0347 지력 높은 장수를 골랐을 때만 보인다
-	_fire_btn.text = "🔥 화계"
+	_fire_btn.text = "📜 책략"
 	_fire_btn.custom_minimum_size = Vector2(190, 64)
 	_fire_btn.add_theme_font_size_override("font_size", 24)
 	_fire_btn.visible = false
@@ -400,8 +403,8 @@ func _face(uid: String, dir: Vector3) -> void:
 func _set_label(uid: String) -> void:
 	var u := RealmTactics.unit(board, uid)
 	var shown: float = _units[uid].hp
-	(_units[uid].label as Label3D).text = "%s
-%d/%d" % [_unit_name(u), int(ceil(shown)), int(u.max)]
+	(_units[uid].label as Label3D).text = "%s%s
+%d/%d" % ["🌀" if bool(u.get("confused", false)) else "", _unit_name(u), int(ceil(shown)), int(u.max)]   # 🌀 혼란(G-0347 ⑤)
 	(_units[uid].label as Label3D).visible = shown > 0.0
 
 
@@ -527,9 +530,24 @@ func _refresh() -> void:
 		if _fire_mode:
 			_clear_hi()
 			_show_hi(int(u.x), int(u.y), HI_SEL)
-			for c: Dictionary in RealmTactics.fire_cells(board, _sel):
-				_show_hi(int(c.x), int(c.y), HI_FIRE)
-			_hint.text = "%s — 🔥 주황 숲 칸에 불을 놓는다(성공 %d%% · 이웃 숲으로 번짐 · 적·아군 가리지 않고 두 턴 탐)" % [_unit_name(u), RealmTactics.fire_chance(u)]
+			var left := int(board.get("plots", RealmTactics.PLOTS))
+			match _plot:
+				"fire":
+					for c: Dictionary in RealmTactics.fire_cells(board, _sel):
+						_show_hi(int(c.x), int(c.y), HI_FIRE)
+					_hint.text = "%s — 🔥 화계: 주황 숲 칸에 불(성공 %d%% · 이웃 숲으로 번짐 · 적·아군 가리지 않고 두 턴 탐) · 책략 %d번 남음" % [_unit_name(u), RealmTactics.fire_chance(u), left]
+				"confuse":
+					var tips2: Array = []
+					for tid: String in RealmTactics.plot_targets(board, _sel, "confuse"):
+						var t2 := RealmTactics.unit(board, tid)
+						_show_hi(int(t2.x), int(t2.y), HI_FIRE)
+						tips2.append("%s %d%%" % [_unit_name(t2), RealmTactics.confuse_chance(u, t2)])
+					_hint.text = "%s — 🌀 혼란: 걸린 적은 다음 차례를 쉰다(%s) · 책략 %d번 남음" % [_unit_name(u), " · ".join(tips2), left]
+				"heal":
+					for tid: String in RealmTactics.plot_targets(board, _sel, "heal"):
+						var t3 := RealmTactics.unit(board, tid)
+						_show_hi(int(t3.x), int(t3.y), HI_HEAL)
+					_hint.text = "%s — 💚 회복: 초록 칸 아군 체력 +%d · 책략 %d번 남음" % [_unit_name(u), RealmTactics.heal_amount(u), left]
 	else:
 		_hint.text = "내 장수를 고르세요 · 숲은 명중 −30% · 성벽은 −50% · 3턴 안에 적을 무너뜨리면 대승"
 		if bool(board.get("srpg", false)):
@@ -542,7 +560,7 @@ func _refresh() -> void:
 	if _fire_btn != null:
 		_fire_btn.visible = _sel != "" and RealmTactics.can_fire(board, _sel)
 		_fire_btn.disabled = _busy
-		_fire_btn.text = "✋ 화계 그만" if _fire_mode else "🔥 화계"
+		_fire_btn.text = ("%s %s ▸" % [PLOT_ICON[_plot], RealmTactics.PLOT_NAME[_plot]]) if _fire_mode else "📜 책략"
 	_sync_flames()
 
 
@@ -605,10 +623,13 @@ func pick_cell(x: int, y: int) -> void:
 			_select(String(there.uid))
 		return
 	var u := RealmTactics.unit(board, _sel)
-	if _fire_mode:   # G-0347 화계 — 주황 칸이면 불, 아니면 화계만 그만
+	if _fire_mode:   # G-0347 책략 — 그 책략 칸이면 건다, 아니면 책략만 그만
 		_fire_mode = false
-		if RealmTactics.fire_cells(board, _sel).has({"x": x, "y": y}):
+		if _plot == "fire" and RealmTactics.fire_cells(board, _sel).has({"x": x, "y": y}):
 			await _do_fire(_sel, x, y)
+			_sel = ""
+		elif _plot != "fire" and not there.is_empty() and RealmTactics.plot_targets(board, _sel, _plot).has(String(there.uid)):
+			await _do_plot(_sel, _plot, String(there.uid))
 			_sel = ""
 		_refresh()
 		_after_action()
@@ -886,11 +907,46 @@ func _on_auto() -> void:
 
 ## G-0347 화계 ────────────────────────────────────────
 
+## 📜 — 누를 때마다 쓸 수 있는 책략(화계 → 혼란 → 회복) 다음 것, 끝이면 그만
 func _on_fire_toggle() -> void:
 	if _busy or _sel == "" or not RealmTactics.can_fire(board, _sel):
 		return
-	_fire_mode = not _fire_mode
+	var avail: Array = []
+	if not RealmTactics.fire_cells(board, _sel).is_empty():
+		avail.append("fire")
+	for p in ["confuse", "heal"]:
+		if not RealmTactics.plot_targets(board, _sel, p).is_empty():
+			avail.append(p)
+	var i := avail.find(_plot) if _fire_mode else -1
+	if i + 1 >= avail.size():
+		_fire_mode = false
+		_plot = ""
+	else:
+		_fire_mode = true
+		_plot = avail[i + 1]
 	_refresh()
+
+
+func _do_plot(uid: String, plot_key: String, tuid: String) -> void:
+	_busy = true
+	_refresh()
+	var r: Dictionary = RealmTactics.plot(board, uid, plot_key, tuid)
+	if bool(r.get("ok", false)):
+		_play(uid, "attack")
+		var tn: Node3D = _units[tuid].node
+		if plot_key == "heal":
+			_units[tuid].hp = float(RealmTactics.unit(board, tuid).hp)
+			_float_text(tn.position, "💚 +%d" % int(r.amount), Color(0.45, 1.0, 0.55))
+			_set_label(tuid)
+			if not instant:
+				CombatFx.element_burst(self, tn.global_position + Vector3(0, 0.8, 0), 0.9, Color(0.4, 1.0, 0.55), 0.4, "", false)
+		else:
+			_float_text(tn.position, "🌀 혼란!" if bool(r.hit) else "혼란 실패", Color(0.75, 0.6, 1.0) if bool(r.hit) else Color(0.8, 0.85, 0.9))
+			if bool(r.hit):
+				_set_label(tuid)
+		await _wait(0.6)
+		_play(uid, "idle")
+	_busy = false
 
 
 func _do_fire(uid: String, x: int, y: int) -> void:

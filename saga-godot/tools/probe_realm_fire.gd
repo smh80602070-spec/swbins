@@ -4,6 +4,7 @@ extends SceneTree
 ## ① 지력 70 이상 내 장수만(무력 장수·적 안 됨) ② 놓을 칸 = 3칸 안 숲, 불 붙은 칸 빠짐 ③ 성공률 clamp(40 + (지력−60)×2, 30, 90)
 ## ④ 붙으면 그 칸 위 유닛(적·아군)이 곧바로 탐(6 + 지력/10) · 장수 차례 끝 ⑤ 적 턴 끝마다 다시 탐 · 두 번 타고 꺼짐
 ## ⑥ 실패도 차례는 끝 ⑦ 불 안 쓰면 판에 fire 칸이 생기지 않음(웹 맞춤은 probe_realm_tactics ⓪)
+## ⑧ 혼란 — 성공률 식·걸린 적은 다음 차례를 쉬고 풀림 ⑨ 회복 — 2칸 안 다친 아군 +15+지력/5(최대 넘지 않음) ⑩ 책략 셋이 한 판 두 번을 같이 씀
 
 const STATS := {"m1": {"might": 80, "wisdom": 90, "command": 70}, "m2": {"might": 95, "wisdom": 40, "command": 85},
 	"f1": {"might": 90, "wisdom": 50, "command": 80}, "f2": {"might": 70, "wisdom": 75, "command": 60}}
@@ -118,6 +119,48 @@ func _run() -> void:
 	var clean := _board("clean")
 	T.call("auto_play", clean)
 	check(not clean.has("fire") or (clean.fire as Dictionary).is_empty(), "⑦ 불 안 쓰면 fire 칸 없음")
+
+	# ⑧
+	var cb: Dictionary = T.call("make_board_srpg", "plots", "plain", false, "rout")
+	T.call("units_of_srpg", cb, ["m1", "m2"], ["f1", "f2"], [800], STATS)
+	var m1: Dictionary = T.call("unit", cb, "me:m1")
+	var f1: Dictionary = T.call("unit", cb, "foe:f1")
+	f1.x = int(m1.x) + 2
+	f1.y = int(m1.y)
+	var ch := int(T.call("confuse_chance", m1, f1))
+	var hit := false
+	var tries := 0
+	while not hit and tries < 30:
+		tries += 1
+		var bb: Dictionary = cb.duplicate(true)
+		bb.seed = "plots-%d" % tries
+		var rc: Dictionary = T.call("plot", bb, "me:m1", "confuse", "foe:f1")
+		if bool(rc.get("hit", false)):
+			hit = true
+			var ff: Dictionary = T.call("unit", bb, "foe:f1")
+			var fx0 := int(ff.x)
+			var hp_me := 0.0
+			for u: Dictionary in bb.units:
+				if String(u.side) == "me":
+					hp_me += float(u.hp)
+			bb.side = "foe"
+			T.call("act_auto", bb, ff)
+			check(int(ff.x) == fx0 and not bool(ff.confused) and bool(ff.acted), "⑧ 혼란 %d%%(지력 90 대 50) · 걸린 적 한 차례 쉼 → 풀림" % ch)
+	if not hit:
+		check(false, "⑧ 30번에 한 번도 혼란 안 걸림")
+
+	# ⑨
+	var hb: Dictionary = cb.duplicate(true)
+	var m2: Dictionary = T.call("unit", hb, "me:m2")
+	m2.hp = float(m2.max) - 40.0
+	m2.x = int((T.call("unit", hb, "me:m1") as Dictionary).x)
+	m2.y = int((T.call("unit", hb, "me:m1") as Dictionary).y) + 1
+	var hr: Dictionary = T.call("plot", hb, "me:m1", "heal", "me:m2")
+	var want := int(T.call("js_round", 15.0 + 90.0 / 5.0))
+	check(bool(hr.ok) and int(hr.amount) == want and float(m2.hp) == float(m2.max) - 40.0 + float(want), "⑨ 회복 +%d" % int(hr.amount))
+
+	# ⑩
+	check(int(hb.plots) == 1 and int(T.call("unit", hb, "me:m1").acted) == 1, "⑩ 책략 한 번 쓰면 %d번 남음 · 장수 차례 끝" % int(hb.plots))
 	_finish()
 
 
