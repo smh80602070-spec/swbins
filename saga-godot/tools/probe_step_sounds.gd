@@ -3,7 +3,8 @@ extends SceneTree
 ## G-0369 발소리(2나락·3마을·4종횡) 자동 점검 —
 ##   godot --headless --path saga-godot --script res://tools/probe_step_sounds.gd   → "PROBE step_sounds OK" / "FAIL n"
 ## ① surface_of: 2나락 돌 · 3마을 풀 · 4종횡 풀 · 4종횡 굴 돌
-## ② 세 판 씬: 주인공 밑에 StepSounds 하나(MoveSounds 없음) · 소리 9개 불러옴(땅 넷 × 둘 + 물 튐)
+## ② 세 판 씬: 주인공 밑에 StepSounds 하나(MoveSounds 없음) · 소리 11개 불러옴(땅 넷 × 둘 + 물 튐 · G-0370 점프·착지)
+## ④ G-0370 위 속도가 확 오르면 점프 1 · 공중(직전 낙하 −10) → 바닥이면 착지 1(바닥에 섰을 때만)
 ## ③ 바닥에 선 주인공에게 걷는 속도를 주고 한 걸음 셈 → 발소리 1 · 속도 0 이면 안 셈. 헤드리스라 소리는 안 들리고 counts 만.
 
 const StepSounds := preload("res://saga_core/audio/step_sounds.gd")
@@ -36,8 +37,8 @@ func _init() -> void:
 			_fail("② %s StepSounds %s" % [g, st != null])
 		else:
 			var n := (st.get("_streams") as Dictionary).size()
-			if n != 9:
-				_fail("② %s 소리 %d != 9" % [g, n])
+			if n != 11:
+				_fail("② %s 소리 %d != 11" % [g, n])
 			var c0 := int((st.get("counts") as Dictionary).step)
 			st.set("_t", 0.0)
 			p.velocity = Vector3.ZERO
@@ -48,7 +49,22 @@ func _init() -> void:
 			st.set("_t", 0.0)
 			st.call("_physics_process", 0.016)
 			var c2 := int((st.get("counts") as Dictionary).step)
-			print("STEPSND %s surface=%s floor=%s 섬 %d→%d→%d" % [g, st.get("surface"), floor_ok, c0, c1, c2])
+			var cnt := st.get("counts") as Dictionary
+			var j0 := int(cnt.jump)
+			st.set("_last_vy", 0.0)
+			p.velocity = Vector3(0.0, 15.0, 0.0)
+			st.call("_physics_process", 0.016)
+			var j1 := int((st.get("counts") as Dictionary).jump)
+			var l0 := int((st.get("counts") as Dictionary).land)
+			st.set("_was_floor", false)
+			st.set("_last_vy", -10.0)
+			p.velocity = Vector3.ZERO
+			st.call("_physics_process", 0.016)
+			var l1 := int((st.get("counts") as Dictionary).land)
+			p.velocity = Vector3.ZERO
+			print("STEPSND %s surface=%s floor=%s 섬 %d→%d→%d 점프 %d→%d 착지 %d→%d" % [g, st.get("surface"), floor_ok, c0, c1, c2, j0, j1, l0, l1])
+			if j1 != j0 + 1 or (floor_ok and l1 != l0 + 1):
+				_fail("④ %s 점프 %d→%d 착지 %d→%d" % [g, j0, j1, l0, l1])
 			if c1 != c0 or (floor_ok and c2 != c1 + 1):
 				_fail("③ %s 걸음 셈 %d→%d→%d" % [g, c0, c1, c2])
 		paused = false
