@@ -36,7 +36,19 @@ static func attach(parent: Node) -> Node:
 
 
 ## 지역 id → 쉼터 자리(월드). 풀 칸이 없는 지역은 빠진다.
+## G-0393 — 열 지역 모든 칸을 훑어 한 번에 15~19ms. 지도는 고정이라 처음 한 번만 세고 그 뒤엔 같은 표(읽기만 — 고치지 말 것).
+## 미니맵(world_map)이 그릴 때마다 불러 1만리 프레임마다 15ms 를 먹었다.
+static var _sites_cache: Dictionary = {}
+
+
 static func sites() -> Dictionary:
+	if not _sites_cache.is_empty():
+		return _sites_cache
+	_sites_cache = _scan_sites()
+	return _sites_cache
+
+
+static func _scan_sites() -> Dictionary:
 	var out := {}
 	for rid: String in TestMap.REGIONS:
 		var s := TestMap.size(rid)
