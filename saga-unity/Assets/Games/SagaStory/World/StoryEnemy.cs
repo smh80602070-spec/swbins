@@ -285,6 +285,24 @@ namespace Saga.Story.World
         /// <summary>PLAN.md 109-11-1 — 체력 구간(단계) 판정의 기준. 비경 배율·관문 대장 배율을 곱한 뒤 값.</summary>
         public float MaxHp => _maxHp;
         public bool IsLabyrinthEnemy => isLabyrinthEnemy;
+
+        // ── tasks U-0230 들판 되살기·사냥터 엘리트 ──
+        /// <summary>들판 몇 번째 자리(되살기용, 없으면 -1 — 두목·비경·엘리트 두목).</summary>
+        public int FieldIndex { get; set; } = -1;
+        public bool IsElite { get; private set; }
+        public bool IsEliteBoss { get; private set; }
+        /// <summary>들판(비경 아님·숨은 우두머리 아님) 적이 쓰러짐 — 생성기가 되살기·엘리트 셈에 쓴다.</summary>
+        public static event System.Action<StoryEnemy> FieldDied;
+
+        /// <summary>엘리트로 키운다 — 크기 ×1.6·체력 ×15(두목이면 크기 ×1.3 더·체력 ×40).</summary>
+        public void MakeElite(bool boss)
+        {
+            if (IsElite || _dead) return;
+            IsElite = true; IsEliteBoss = boss;
+            float hm = boss ? StoryElite.BossHpMul : StoryElite.HpMul;
+            _hp *= hm; _maxHp *= hm;
+            transform.localScale *= boss ? StoryElite.Scale * StoryElite.BossScaleMul : StoryElite.Scale;
+        }
         private float _maxHp;
         private StoryBossPatternRunner _patternRunner;
 
@@ -518,9 +536,11 @@ namespace Saga.Story.World
                 StoryQuestState.AddKill();
                 if (isBoss) StoryQuestState.AddBossKill();
                 float expMul = _isChampion ? ChampionExpMul : 1f;
-                float gain = (isBoss ? StoryCombat.BossExp : StoryCombat.GruntExp) * expMul * StoryRound.GainMul();
+                float gain = (isBoss ? StoryCombat.BossExp : StoryCombat.GruntExp) * expMul * StoryRound.GainMul()
+                    * StoryRune.ExpMul * (IsElite ? StoryElite.ExpMul : 1f); // tasks U-0230 룬 10분 ×2 · 엘리트 ×10
                 StoryJobState.GainExp(gain);
                 StoryRunRank.OnKill(isBoss, Time.time, gain);   // tasks U-0093 — 두목이면 판 끝 · U-0128 판 경험치(덤의 밑)
+                FieldDied?.Invoke(this); // tasks U-0230 되살기·엘리트 셈
                 if (_isChampion)
                 {
                     StorySaveState.ClaimChampion();

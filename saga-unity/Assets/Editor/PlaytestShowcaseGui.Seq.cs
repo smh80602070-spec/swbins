@@ -326,6 +326,18 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] track 흔적 {traces.Count}곳 · 둘레 {tf.ShownCount} · 첫 흔적 {traces[0].Key} {traces[0].Kind} @ {traces[0].Pos} · 줄 {Saga.Go.Data.GoTrack.Line(traces[0].Pos)}");
                         break;
                     }
+                    case "rune":   // U-0230 사가종횡 — 앞 7m 에 룬을 세우고 닿게 해 화살 입력 창을 띄운다 + 가장 가까운 잡졸을 엘리트로
+                    {
+                        var rs = Saga.Story.World.StoryRuneSpot.Instance;
+                        var who = GameObject.FindWithTag("Player");
+                        if (rs == null || who == null) { Skip(act); return; }
+                        rs.Place(who.transform.position + new Vector3(7f, 0f, 0f));
+                        rs.Tick(0.1f, rs.RunePos, 1f, false);
+                        var esp = Saga.Story.World.StoryEnemySpawner.Instance;
+                        var elite = esp != null ? esp.PromoteElite() : null;
+                        Debug.Log($"[ShowcaseGui] rune {rs.State} · 창 {rs.PanelShown} · 엘리트 {(elite != null ? elite.name : "없음")}");
+                        break;
+                    }
                     case "stars":   // U-0229 사가마을 — 밤 22시로 붙들고 별똥별 하나 + 소원 단추
                     {
                         var sky = Saga.Forest.World.ForestStarSky.Instance;

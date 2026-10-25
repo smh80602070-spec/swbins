@@ -761,6 +761,10 @@
     { "key": "today.guild_none", "value": "🏯 Join a guild for a daily request ground (kill merit ×2)" },
     { "key": "today.guild_hunt", "value": "🏯 Today's request ground — {0} (kill merit ×2)" },
     { "key": "today.champion", "value": "👑 Gate champion — not yet this week (a boss appears as champion)" },
-    { "key": "today.champion_done", "value": "✓ 👑 Gate champion — beaten this week" }
+    { "key": "today.champion_done", "value": "✓ 👑 Gate champion — beaten this week" },
+    { "key": "rune.ok", "value": "✨ Rune unleashed — EXP ×2 for 10 minutes" },
+    { "key": "rune.fail", "value": "The rune scattered" },
+    { "key": "elite.spawn", "value": "⚠ An elite appeared — EXP ×10 on defeat" },
+    { "key": "elite.boss", "value": "☠ An elite boss appeared — within 60 seconds!" }
   ]
 }

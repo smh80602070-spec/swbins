@@ -49,6 +49,7 @@ namespace Saga.Story.Player
         private CharacterController _controller;
         private float _verticalVelocity;
         private float _facing = 1f; // +1 오른쪽, -1 왼쪽
+        public float Facing => _facing; // tasks U-0230 룬이 앞 7m 에 선다
         private float _attackCooldownLeft;
         private float _sweepCooldownLeft;
         private float _boltCooldownLeft;

@@ -826,6 +826,7 @@ namespace Saga.EditorTools
                     // 대기 중이던 로프 트리거 상태가 꼬인다(실제로 겪음).
                     if (Time.realtimeSinceStartup < _waitUntilRealTime) return;
                     if (!CheckLabyrinth()) { Fail(); return; }
+                    if (!PlaytestStoryRune.Run()) { Fail(); return; } // tasks U-0230 들판 되살기·룬·사냥터 엘리트 — 처치 단계 뒤에(잡졸을 쓰러뜨리고 키움)
                     _phase = Phase.SaveLoad;
                     break;
                 }
