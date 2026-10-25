@@ -40,8 +40,12 @@ namespace Saga.Core
         private static void Add(string key, int renderers, int tris) => Table[key] = new Limit { Key = key, Renderers = renderers, Tris = tris };
 
         /// <summary>그 카메라 절두체 안 켜진 렌더러 수·삼각형.</summary>
+        /// <summary>마지막 Measure 의 무리별 렌더러 수(맨 위 조상 이름) — 넘었을 때 무엇이 늘었는지.</summary>
+        public static readonly Dictionary<string, int> LastGroups = new Dictionary<string, int>();
+
         public static (int renderers, long tris) Measure(Camera cam)
         {
+            LastGroups.Clear();
             if (cam == null) return (0, 0);
             var planes = GeometryUtility.CalculateFrustumPlanes(cam);
             var lodSkip = new HashSet<Renderer>();
@@ -64,6 +68,8 @@ namespace Saga.Core
                 Mesh m = r is SkinnedMeshRenderer s ? s.sharedMesh : (r.TryGetComponent<MeshFilter>(out var mf) ? mf.sharedMesh : null);
                 if (m == null) continue;
                 n++;
+                var root = r.transform.root.name;
+                LastGroups[root] = (LastGroups.TryGetValue(root, out int c) ? c : 0) + 1;
                 for (int k = 0; k < m.subMeshCount; k++) tris += (long)m.GetIndexCount(k) / 3;
             }
             return (n, tris);

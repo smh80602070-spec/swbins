@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using Saga.Core;
 
@@ -39,7 +40,7 @@ namespace Saga.EditorTools
         {
             bool ok = PerfBudget.Judge(key, r, t, out var line);
             lines.Add(line);
-            if (!ok) Debug.LogError($"[{tag}] perf-budget FAIL - {line}(×{PerfBudget.Scale:0.##})");
+            if (!ok) Debug.LogError($"[{tag}] perf-budget FAIL - {line}(×{PerfBudget.Scale:0.##}) · 무리 {string.Join(", ", System.Linq.Enumerable.Take(System.Linq.Enumerable.OrderByDescending(PerfBudget.LastGroups, kv => kv.Value), 10).Select(kv => kv.Key + " " + kv.Value))}");
             return ok;
         }
     }

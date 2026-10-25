@@ -290,9 +290,10 @@ namespace Saga.EditorTools
             if (!mf.Toggle() || GoMounts.Riding?.Id != "mt_white") Fail("Toggle 로 흰 말을 못 탐");
             late.Invoke(mf, null);
             refresh.Invoke(mf, null);
-            if (!mf.BodyShown || mf.BodyId != "mt_white" || Mathf.Abs(mf.RiderLiftNow - MountField.LiftOf(GoMounts.Riding)) > 0.001f) Fail("흰 말 몸·리더 높이");
+            if (!mf.BodyShown || mf.BodyId != "mt_white" || (mf.RiderLiftNow <= 0.05f && !mf.GetComponent<Saga.Core.MountRig>().LastPose.Posed)) Fail("흰 말 몸·리더 높이"); // U-0236 실측이면 내릴 수도(1만리 큰 사람)
+            RidePoseCheck.Check(mf.GetComponent<Saga.Core.MountRig>(), pc.transform, pc.Visual, Fail); // tasks U-0236 등 실측·다리 감싸기
             if (!mf.RideLabel.Contains(GoMounts.Riding.Name) || !mf.RideLabel.Contains("H")) Fail($"단추 글 '{mf.RideLabel}'");
-            float baseY = pc.Visual != null ? pc.Visual.localPosition.y - MountField.LiftOf(GoMounts.Riding) : 0f;
+            float baseY = pc.Visual != null ? pc.Visual.localPosition.y - mf.RiderLiftNow : 0f;
             mf.Toggle();
             late.Invoke(mf, null);
             if (mf.BodyShown || GoMounts.Riding != null || (pc.Visual != null && Mathf.Abs(pc.Visual.localPosition.y - baseY) > 0.001f)) Fail("내렸는데 몸이 남거나 리더 높이가 안 돌아옴");

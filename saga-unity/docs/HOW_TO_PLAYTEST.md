@@ -769,3 +769,5 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 **얼굴 깜박임·놀람·웃음(tasks U-0233, 고돗 G-0287 짝)**: 다섯 판 중 걷는 주인공이 있는 네 판(1만리·2나락·3마을·4종횡)의 VRoid 주인공이 2.5~6초마다 눈을 깜박이고, 맞으면(화면 가장자리 붉은 번쩍) 0.45초 놀라고, 1만리·4종횡은 레벨업하면 2초 웃는다. 군중·말하는 NPC 도 깜박인다(카메라 20m 안만). 공방 동료 몸은 얼굴 모프가 없어 그대로. 손잡이 `SAGA_FACE=0`. 진단 네 판 헤드리스의 `face` 줄 · 촬영 `SAGA_SHOT_ACT=faceblink|facesurprised|facejoy SAGA_SHOT_TARGETS=name:HeroVroid SAGA_SHOT_HEAD=1 SAGA_SHOT_MAX=1 SAGA_SHOT_SEQ=1,10`(머리 가까이).
 
 **판별 폰 예산(tasks U-0234)**: 다섯 판 헤드리스 진단 끝 무렵에 `perf-budget` 줄 — 게임 카메라 앞(`front`)·같은 자리 뒤로 돈 카메라(`back`)에 잡히는 켜진 렌더러 수·삼각형(LOD 는 그 거리 단계만)을 `SagaCore/PerfBudget.cs` 상한(10-25 잰 값 ×1.15)과 견줘 넘으면 FAIL. 새 기능이 그리는 양을 늘리면 여기서 걸린다 — 고칠 땐 화질을 깎지 말고 안 보이는 낭비부터. 상한 배율 손잡이 `SAGA_PERF_BUDGET_SCALE`(0.5 로 틀 시험).
+
+**탈것 탄 자세(tasks U-0236, 고돗 G-0395 짝)**: 1만리·2나락·3마을·4종횡에서 말·사슴·학·용에 타면 기수가 탈것 등(몸통 위끝을 실제로 잼)에 앉고 다리로 옆구리를 감싼다 — 몸통이 넓어 허벅지로 못 감싸면 다리를 앞으로 뻗어 등 위에 얹는다. 예전처럼 선 채 손 수치로 올리기만 하려면 `SAGA_RIDE_POSE=0`. 진단 네 판 탈것 진단의 `ride-pose` 줄 · 촬영 `SAGA_SHOT_ACT=ridewhite|ridedragon SAGA_SHOT_TARGETS=name:HeroVroid SAGA_SHOT_SEQ=2,30 SAGA_SHOT_DIST=0.8`(1만리).

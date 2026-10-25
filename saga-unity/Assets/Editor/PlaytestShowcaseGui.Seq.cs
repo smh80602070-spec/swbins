@@ -415,6 +415,18 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] {act} 모프 {f.MorphCount} · 꽉 찬 무게 {f.EyeFullWeight} · 눈 {f.EyeMorphWeight:0} · 놀람 {f.WeightOf(Saga.Core.TalkFace.Mood.Surprised):0} · 웃음 {f.WeightOf(Saga.Core.TalkFace.Mood.Joy):0}");
                         break;
                     }
+                    case "ridewhite":    // U-0236 사가만리 — 흰 말에 태운다(등 실측·다리 감싸기)
+                    case "ridedragon":   // U-0236 — 용(넓은 몸통 — 무릎을 등 위에)
+                    {
+                        var mfR = Object.FindFirstObjectByType<Saga.Go.World.MountField>();
+                        if (mfR == null) { Skip(act); return; }
+                        Saga.Go.Data.PlayerStats.Restore(60, 0);
+                        Saga.Go.Data.GoMounts.Restore(act == "ridewhite" ? "mt_white" : "mt_dragon");
+                        Saga.Go.Data.GoMounts.LastCombatAt = -999f;
+                        bool on = Saga.Go.Data.GoMounts.TryRide(Time.time, out var whyR); // 땅 판정(시작 프레임엔 공중일 수 있음) 건너뜀
+                        Debug.Log($"[ShowcaseGui] {act} 탐 {on} {whyR} · {Saga.Go.Data.GoMounts.Riding?.Id}");
+                        break;
+                    }
                     case "gozone":   // U-0226 사가만리 — 구역 4 동쪽 경계 8m 안에서 동쪽(구역 5)을 본다(이웃 띠 24m 너머가 비는지)
                     {
                         var who = GameObject.FindWithTag("Player");

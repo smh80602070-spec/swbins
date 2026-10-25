@@ -20,6 +20,8 @@ namespace Saga.Core
         public bool BodyShown => _body != null && _body.activeSelf;
         public string BodyId => _body != null ? _bodyId : "";
         public float RiderLiftNow { get; private set; }
+        /// <summary>tasks U-0236 — 마지막 기수 자세(진단).</summary>
+        public RidePose.Result LastPose { get; private set; }
 
         /// <summary>나를 등 높이로 올리는 값(m) — 말은 낮게, 학·용은 높게.</summary>
         public static float LiftOf(string mountId, bool isFly) => string.IsNullOrEmpty(mountId) ? 0f : mountId == "mt_dragon" ? 1.45f : isFly ? 1.25f : 0.85f;
@@ -41,14 +43,18 @@ namespace Saga.Core
             if (_body == null || _bodyId != mountId) RebuildBody(mountId);
             if (!_body.activeSelf) _body.SetActive(true);
             float lift = LiftOf(mountId, isFly);
-            RiderLiftNow = lift;
+            _body.transform.position = player.position;
             if (_visual != null)
             {
                 if (!_lifted) { _visualBase = _visual.localPosition; _lifted = true; }
-                _visual.localPosition = _visualBase + Vector3.up * lift;
                 _body.transform.rotation = Quaternion.Euler(0f, _visual.eulerAngles.y, 0f);
+                _visual.localPosition = _visualBase;
+                // tasks U-0236 — 휴머노이드면 등 높이 실측·다리로 몸통 감싸기(고돗 G-0395), 아니면 예전 손 수치로 올리기만
+                LastPose = RidePose.On ? RidePose.Apply(_visual, _body) : default;
+                if (!LastPose.Posed) _visual.localPosition = _visualBase + Vector3.up * lift;
+                else lift = _visual.localPosition.y - _visualBase.y;
             }
-            _body.transform.position = player.position;
+            RiderLiftNow = lift;
             if (isFly && _wingL != null)
             {
                 _wingT += Time.deltaTime * (airborne ? 6f : 1.2f);
@@ -66,7 +72,7 @@ namespace Saga.Core
 
         private void RebuildBody(string id)
         {
-            if (_body != null) Destroy(_body);
+            if (_body != null) { _body.SetActive(false); Destroy(_body); } // tasks U-0236 — 한 프레임 안에서 바꾸는 진단·경로에서 지울 몸이 프레임 끝까지 보이고 부딪히지 않게
             _bodyId = id;
             _body = new GameObject("Mount_" + id);
             var t = _body.transform;
@@ -92,7 +98,7 @@ namespace Saga.Core
             var g = GameObject.CreatePrimitive(t);
             g.name = name;
             var col = g.GetComponent<Collider>();
-            if (col != null) Object.Destroy(col); // 나(CharacterController)와 부딪히지 않게 — 모양만
+            if (col != null) Object.DestroyImmediate(col); // 나(CharacterController)와 부딪히지 않게 — 모양만(U-0236 곧바로 — 같은 프레임 진단이 부딪힘)
             g.transform.SetParent(parent, false);
             g.transform.localPosition = local;
             g.transform.localRotation = Quaternion.Euler(euler);
