@@ -171,7 +171,7 @@
     if (b.srpg) { faceTo(a, t.x, t.y); }
     var hit = roll(b, 'h') * 100 < ch, dmg = 0;
     if (hit) { dmg = Math.max(1, Math.round(a.atk * DMG() * (0.8 + roll(b, 'd') * 0.4))); t.hp = Math.max(0, t.hp - dmg); }
-    a.acted = true; a.moved = true;
+    a.acted = true; a.moved = true; if (global.DG.support) { global.DG.support.onAct(b, a); }   // W-0425 지원 — 이웃 쌍 적기
     b.log.push({ t: b.turn, a: uid, to: tuid, hit: hit, dmg: dmg, ch: ch });
     check(b);
     return { ok: true, hit: hit, dmg: dmg, killed: t.hp <= 0, chance: ch };
@@ -248,7 +248,7 @@
   function outcome(b) {
     var k = check(b);
     if (!k) { return null; }
-    var down = b.units.filter(function (u) { return u.side === 'me' && u.kind === 'officer' && u.hp <= 0; }).map(function (u) { return u.id; });
+    if (global.DG.support && !b.supDone) { b.supDone = true; global.DG.support.onEnd(b); } var down = b.units.filter(function (u) { return u.side === 'me' && u.kind === 'officer' && u.hp <= 0; }).map(function (u) { return u.id; });
     var pd = permadeath(), o = OUT[k];
     return { kind: k, name: o.name, winPct: o.winPct, lossMul: o.lossMul, turn: b.srpg ? b.turn : Math.min(b.turn, TURNS),
       hpMe: Math.round(hpFrac(b, 'me') * 100), hpFoe: Math.round(hpFrac(b, 'foe') * 100),
@@ -411,7 +411,7 @@
     if (!b.srpg) { return out; }
     if (heightAt(b, att.x, att.y) > heightAt(b, tgt.x, tgt.y)) { out.push(['높이', HEIGHT_HIT]); }
     if (att.arm && tgt.arm) { if (BEATS[att.arm] === tgt.arm) { out.push(['상성', COUNTER_HIT]); } else if (BEATS[tgt.arm] === att.arm) { out.push(['상성', -COUNTER_HIT]); } }
-    if (isBack(att, tgt)) { out.push(['뒤', BACK_HIT]); }
+    if (isBack(att, tgt)) { out.push(['뒤', BACK_HIT]); } if (global.DG.support) { global.DG.support.mods(b, att, tgt, out); }   // W-0425 지원 명중·막음
     return out;
   }
   /** 판을 보는 명중률 — SRPG 판이면 높이·상성·뒤까지(옛 판은 hitChance 그대로) */

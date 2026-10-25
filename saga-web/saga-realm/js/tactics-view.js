@@ -82,7 +82,7 @@
     var me = u.side === 'me', ring = me ? '#3d8bd9' : '#d24b3c', s = '';
     var spent = me && u.moved && u.acted;
     s += '<g class="tv-unit' + (spent ? ' spent' : '') + (v.sel === u.uid ? ' sel' : '') + '" data-uid="' + u.uid + '">';
-    if (art()) { return s + bodySvg(v, u, p, cx, me, ring) + rankSvg(u, p, cx) + hpSvg(u, p, cx) + srpgMarks(u, p, cx) + hitSvg(hit, p, cx) + '</g>'; }   // W-0134 몸 그림 · W-0234 관직 별 · W-0401 병종·대장
+    if (art()) { return s + bodySvg(v, u, p, cx, me, ring) + rankSvg(u, p, cx) + hpSvg(u, p, cx) + srpgMarks(u, p, cx) + (global.DG.support ? global.DG.support.svgMark(v.b, u, p.c * CELL, p.r * CELL, CELL) : '') + hitSvg(hit, p, cx) + '</g>'; }   // W-0134 몸 그림 · W-0234 관직 별 · W-0401 병종·대장
     var face = u.kind === 'officer' && v.opts.face ? v.opts.face(u.id) : '';
     if (face) {
       var cid = 'tvc-' + u.uid.replace(/[^a-z0-9]/gi, '_');
@@ -94,7 +94,7 @@
       s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + rr + '" fill="' + (me ? '#26445f' : '#5a2a24') + '"/>' +
         '<text x="' + cx + '" y="' + (cy + 6) + '" text-anchor="middle" font-size="18">' + (u.kind === 'troop' ? '🪖' : (u.rng > 1 ? '🏹' : '⚔️')) + '</text>';
     }
-    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + rr + '" fill="none" stroke="' + ring + '" stroke-width="' + (v.sel === u.uid ? 4 : 2.5) + '"/>' + rankSvg(u, p, cx) + srpgMarks(u, p, cx);
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + rr + '" fill="none" stroke="' + ring + '" stroke-width="' + (v.sel === u.uid ? 4 : 2.5) + '"/>' + rankSvg(u, p, cx) + srpgMarks(u, p, cx) + (global.DG.support ? global.DG.support.svgMark(v.b, u, p.c * CELL, p.r * CELL, CELL) : '');
     /* hp 띠 */
     var w = CELL * 0.8, fx = cx - w / 2, fy = p.r * CELL + CELL - 7, f = Math.max(0, u.hp / u.max);
     s += '<rect x="' + fx + '" y="' + fy + '" width="' + w + '" height="5" rx="2" fill="#0009"/>' +

@@ -132,6 +132,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/data-news.js"></script>
 <script src="js/event.js"></script>
 <script src="js/relation.js"></script>
+<script src="js/support.js"></script>
 <script src="js/tactics.js"></script>
 <script src="js/tactics-view.js"></script>
 <script src="js/tactics-view3d.js"></script>
@@ -7570,6 +7571,26 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var oldB = T.makeBoard('old', 'plain', false), old = oldB.cols + 'x' + oldB.rows + (oldB.srpg ? ' srpg' : '');
       return (ok1 && ok2 && lead === 1 && ok3 && faced && k1 === 'rout' && k2 === 'rout' && k3 === 'win' && k4 === 'rout' && old === '8x6') ||
         ('실패 판 ' + JSON.stringify(sz) + ' 언덕 ' + hills + ' · 병종 ' + ok2 + '/' + Object.keys(arms) + ' 대장 ' + lead + ' · 덤 ' + nm(m1) + ' | ' + nm(m2) + ' · 방향 ' + faced + ' · 대장 ' + k1 + ' 성문 ' + k2 + ' 버팀 ' + k3 + ' 전멸 ' + k4 + ' · 옛 판 ' + old);
+    });
+    t('W-0425 지원 — 이웃에서 친 쌍이 판 끝마다 +1(한 판 한 번) · 3·7·12 = C·B·A · 칠 때 명중 +5·+10·+15 · 맞을 때 막음 · 의형제는 B 부터 · 원수는 안 오름', function () {
+      var SP = DG.support, T = DG.tactics, R = DG.rtk, st = R && R.state ? R.state() : null; if (!SP || !T) { return '실패 DG.support 없음'; } if (!st) { return '실패 rtk 상태 없음'; }
+      var keep = st.support; st.support = {};
+      try {
+        var mk = function () { var b = T.makeBoardSrpg('sup', 'plain', false, 'rout'); b.units = [
+          { uid: 'me:a', id: 'zz_a', side: 'me', kind: 'officer', hp: 10, max: 10, atk: 20, def: 2, rng: 1, x: 2, y: 2, fx: 1, fy: 0 },
+          { uid: 'me:b', id: 'zz_b', side: 'me', kind: 'officer', hp: 10, max: 10, atk: 20, def: 2, rng: 1, x: 2, y: 3, fx: 1, fy: 0 },
+          { uid: 'foe:c', id: 'zz_c', side: 'foe', kind: 'officer', hp: 10, max: 10, atk: 20, def: 2, rng: 1, x: 3, y: 2, fx: -1, fy: 0 }]; return b; };
+        var b0 = mk(), a0 = b0.units[0], f0 = b0.units[2], none = SP.level('zz_a', 'zz_b') === 0 && !T.hitMods(b0, a0, f0).some(function (m) { return /지원/.test(m[0]); });
+        var i, ups = [];
+        for (i = 0; i < 3; i++) { var b = mk(); SP.onAct(b, b.units[0]); b.units[2].hp = 0; T.outcome(b); T.outcome(b); ups = ups.concat(b.supUp || []); }
+        var p3 = SP.points('zz_a', 'zz_b'), lvC = SP.level('zz_a', 'zz_b'), b1 = mk(), mC = T.hitMods(b1, b1.units[0], b1.units[2]).filter(function (m) { return /^지원 C/.test(m[0]); })[0];
+        st.support[SP.key('zz_a', 'zz_b')] = 12; var b2 = mk(), mA = T.hitMods(b2, b2.units[0], b2.units[2]).filter(function (m) { return /^지원 A/.test(m[0]); })[0], mD = T.hitMods(b2, b2.units[2], b2.units[0]).filter(function (m) { return /^지원 막음 A/.test(m[0]); })[0];
+        var RD = DG.relData, sw = RD.all().filter(function (q) { return q.kind === 'sworn'; })[0], fo = RD.all().filter(function (q) { return q.kind === 'foe'; })[0];
+        var swLv = sw ? SP.level(sw.a, sw.b) : 2, foLv = 0; if (fo) { st.support[SP.key(fo.a, fo.b)] = 12; foLv = SP.level(fo.a, fo.b); }
+        var row = SP.rowHtml('zz_a');
+        var ok = none && p3 === 3 && lvC === 1 && ups.length === 1 && mC && mC[1] === 5 && mA && mA[1] === 15 && mD && mD[1] === -15 && swLv === 2 && foLv === 0 && /지원/.test(row) && /<b>A<\/b>/.test(row);
+        return ok || ('실패 ' + JSON.stringify({ none: none, p3: p3, lvC: lvC, ups: ups.length, mC: mC, mA: mA, mD: mD, swLv: swLv, foLv: foLv, row: row }));
+      } finally { st.support = keep; }
     });
     t('W-0401 SRPG 자동 대국 60판 — 승률 45~65% · 평균 턴 ≤ 12 · 목표 넷 다 나옴(고돗 G-0347 과 같은 57%·5.5턴)', function () {
       var wins = 0, turns = 0, by = {}, i;
