@@ -46,7 +46,8 @@ def build(rs, force):
             continue
         mix = os.path.join(OUT, r['id'] + '_mix.glb')
         ratio = ','.join('%s=%s' % kv for kv in r['ratio'].items())
-        code, out = blender(['-P', os.path.join(HERE, 'vrm_mix.py'), '--', src_of(r['id']), SAMPLE % r['hair'].lower(), mix, ratio])
+        donor = src_of(r['id']) if r['hair'] == 'self' else SAMPLE % r['hair'].lower()   # self = 제 머리 그대로(K-0187 — 비율만 고칠 때)
+        code, out = blender(['-P', os.path.join(HERE, 'vrm_mix.py'), '--', src_of(r['id']), donor, mix, ratio])
         line = [l for l in out.splitlines() if l.startswith('MIX_OK')]
         if not line:
             print(r['id'], 'MIX_FAIL', out[-600:])
