@@ -665,9 +665,9 @@
     var B = global.DG.bag;
     var list = B.list();
     var html = '<div class="sec"><h4>행낭 <small class="muted">' +
-      B.total() + ' / ' + B.CAP + '</small></h4><div class="card">' +
+      B.total() + ' / ' + (B.capNow ? B.capNow() : B.CAP) + '</small></h4><div class="card">' +
       '<div class="bar blue"><i style="width:' +
-        Math.round(B.total() / B.CAP * 100) + '%"></i></div>' +
+        Math.round(B.total() / (B.capNow ? B.capNow() : B.CAP) * 100) + '%"></i></div>' +
       '<small class="muted">가득 차면 역참이 더 주지 않습니다 — 쓰거나 비워야 합니다.</small>' +
       '</div></div>';
 

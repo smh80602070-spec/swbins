@@ -76,7 +76,8 @@
     return n;
   }
 
-  function room() { return Math.max(0, CAP - total()); }
+  function capNow() { return CAP + (global.DG.fieldRiddle ? global.DG.fieldRiddle.bagAdd() : 0); }   // W-0426 들판 씨앗 — 상한 +10씩
+  function room() { return Math.max(0, capNow() - total()); }
   function full() { return room() <= 0; }
 
   /**
@@ -177,7 +178,7 @@
 
   global.DG = global.DG || {};
   global.DG.bag = {
-    ITEMS: ITEMS, CAP: CAP,
+    ITEMS: ITEMS, CAP: CAP, capNow: capNow,
     def: def, count: count, total: total, room: room, full: full,
     add: add, take: take, use: use,
     boostOf: boostOf, activeBoosts: activeBoosts, bonus: bonus, lured: lured,

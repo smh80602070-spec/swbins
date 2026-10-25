@@ -94,6 +94,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/perf.js"></script>
 <script src="js/account.js"></script>
 <script src="js/bag.js"></script>
+<script src="js/field-riddle.js"></script>
 <script src="js/season.js"></script>
 <script src="js/weather.js"></script>
 <script src="js/quest.js"></script>
@@ -17704,6 +17705,34 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         var ok = !w0 && stay && n === 2 && left === 'g:boss' && at === a.id && lit && healed && w1 && back;
         return ok || ('실패 ' + JSON.stringify({ w0: w0, stay: stay, n: n, left: left, at: at, lit: lit, healed: healed, w1: w1, back: back }));
       } finally { S.cleared = keepC; C.save.rest = keepR; pos.x = px; pos.y = py; keepP.forEach(function (k, i) { S.party[i].hp = k.hp; S.party[i].down = k.down; }); if (RS._reset) { RS._reset(); } if (!S0) { FC._setStateForTest(null); } }
+    });
+    t('W-0426 들판 수수께끼 — 구역마다 셋(돌·꽃 고리·바람개비, 결정적·구역 안) · 돌 곁 = 씨앗 · 꽃 다섯 차례로 = 씨앗(틀리면 처음부터) · 바람개비 2초 가만히 = 씨앗 · 푼 자리 다시 안 섬', function () {
+      var FR = DG.fieldRiddle, C = DG.core; if (!FR) { return '실패 DG.fieldRiddle 없음'; }
+      var sv = C.save, keep = sv.goRiddle, pos = sv.player.pos, px = pos.x, py = pos.y;
+      try {
+        sv.goRiddle = { done: {}, seeds: 0 }; FR._reset();
+        var z = FR.inZone(3, -2), z2 = FR.inZone(3, -2), zm = +C.tuned('go.zoneM', 576) || 576;
+        var same = JSON.stringify(z) === JSON.stringify(z2) && z.length === 3 && z.map(function (r) { return r.kind; }).join() === 'stone,ring,pin' && z.every(function (r) { return Math.abs(r.x - 3 * zm) <= zm * 0.4 && Math.abs(r.y + 2 * zm) <= zm * 0.4; });
+        var st = z[0], rg = z[1], pn = z[2];
+        pos.x = st.x + 1; pos.y = st.y; FR.tick(0.1); var s1 = FR.seeds(); FR.tick(0.1); var s1b = FR.seeds();
+        var fl = FR.flowers(rg); pos.x = fl[0].x; pos.y = fl[0].y; FR.tick(0.1); pos.x = fl[2].x; pos.y = fl[2].y; FR.tick(0.1); var wrong = FR.seeds();
+        for (var i = 0; i < 5; i++) { pos.x = fl[i].x; pos.y = fl[i].y; FR.tick(0.1); }
+        var s2 = FR.seeds();
+        pos.x = pn.x + 1; pos.y = pn.y; FR.tick(1.0); var s3a = FR.seeds(); FR.tick(1.1); var s3 = FR.seeds();
+        var gone = FR.near(st.x, st.y).filter(function (r) { return r.id === st.id || r.id === rg.id || r.id === pn.id; }).length;
+        var ok = same && s1 === 1 && s1b === 1 && wrong === 1 && s2 === 2 && s3a === 2 && s3 === 3 && gone === 0;
+        return ok || ('실패 ' + JSON.stringify({ same: same, s1: s1, s1b: s1b, wrong: wrong, s2: s2, s3a: s3a, s3: s3, gone: gone }));
+      } finally { sv.goRiddle = keep; pos.x = px; pos.y = py; FR._reset(); }
+    });
+    t('W-0426 들판 수수께끼 — 씨앗 5·15·30·60 에서 행낭 상한 +10(250 → 290) · go.riddle 0 이면 안 셈', function () {
+      var FR = DG.fieldRiddle, B = DG.bag, C = DG.core; if (!FR || !B || !B.capNow) { return '실패 없음'; }
+      var sv = C.save, keep = sv.goRiddle;
+      try {
+        var caps = [0, 4, 5, 14, 15, 30, 60, 99].map(function (n) { sv.goRiddle = { done: {}, seeds: n }; return B.capNow(); }).join(',');
+        sv.goRiddle = { done: {}, seeds: 0 }; C.setTune('go.riddle', 0); var r = FR.inZone(0, 0)[0], pos = sv.player.pos, px = pos.x, py = pos.y; pos.x = r.x; pos.y = r.y; FR.tick(0.1); var off = FR.seeds(); pos.x = px; pos.y = py; C.setTune('go.riddle', null);
+        var ok = caps === '250,250,260,260,270,280,290,290' && off === 0;
+        return ok || ('실패 ' + JSON.stringify({ caps: caps, off: off }));
+      } finally { sv.goRiddle = keep; C.setTune('go.riddle', null); }
     });
     t('W-0420 종 연구 — 쳐낸 적·반응 막타·급소 막타를 종마다 세고 셋째에 덤(금 80) · 우두머리는 던지기 빼고 셋·목표 1 · 도감 칸', function () {
       var R = DG.speciesStudy, C = DG.core; if (!R) { return '실패 DG.speciesStudy 없음'; }
