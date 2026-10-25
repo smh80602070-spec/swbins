@@ -86,3 +86,18 @@ static func news(tree: SceneTree) -> void:
 				break
 	if btn != null:
 		btn.call("_open_news", 0, {"layer": CanvasLayer.new()})
+
+
+## G-0410 — 새 판 194 의 첫 성 치안을 5 로 두고(메모리만) 민란이 나는 달로 맞춘 뒤 달을 넘긴다 — 달 끝 토스트에 「🔥 민란」 줄.
+static func revolt(tree: SceneTree) -> void:
+	var S: Node = tree.root.get_node("RealmSaveState")
+	S.start_scenario("194")
+	var R: GDScript = load("res://games/saga_realm/data/realm_revolt.gd")
+	var cid: String = (S.cities as Dictionary).keys()[0]
+	S.cities[cid].sec = 5
+	for k in 120:
+		if R.rolls(String(S.scenario_id), 194 + k / 12, k % 12 + 1, cid, 5):
+			S.year = 194 + k / 12
+			S.month = k % 12 + 1
+			break
+	S.next_month()

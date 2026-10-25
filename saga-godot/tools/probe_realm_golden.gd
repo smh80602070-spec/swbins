@@ -30,6 +30,7 @@ func _targets(S: Node) -> Array:
 
 func _initialize() -> void:
 	await process_frame  # autoload 의 _ready(성·적·문답 초기화)가 돈 뒤에
+	OS.set_environment("SAGA_REVOLT", "0")   # G-0410 민란은 기준값 뒤에 생김(점검은 probe_realm_revolt) — 치안 낮은 성을 일부러 만드는 점검이라 끔
 	var S: Node = root.get_node("RealmSaveState")
 	var fails := 0
 	S._rng.seed = 20260824

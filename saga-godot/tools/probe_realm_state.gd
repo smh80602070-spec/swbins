@@ -69,6 +69,7 @@ func _fund() -> void:
 func _initialize() -> void:
 	await process_frame
 	S = root.get_node("RealmSaveState")
+	OS.set_environment("SAGA_REVOLT", "0")   # G-0410 민란은 기준값 뒤에 생김(점검은 probe_realm_revolt) — 치안 낮은 성을 일부러 만드는 점검이라 끔
 	Cities = load("res://games/saga_realm/data/realm_cities.gd")
 	Orders = load("res://games/saga_realm/data/realm_orders.gd")
 	Traits = load("res://games/saga_realm/data/realm_traits.gd")

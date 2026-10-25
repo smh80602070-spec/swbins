@@ -134,6 +134,7 @@ const CUTS := [
 	["go_monsters", GO, [["static", "res://tools/shot_monsters.gd", "line_up", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0059 들판 여덟 종(G-0082 기본 GLB 몸, SAGA_CODE_CREATURES=1 이면 코드 짐승)
 	["rk_tactics", REALM, [["free_modal"], ["static", "res://tools/shot_realm_tactics.gd", "stage", ["@tree", true, false, true]]]],   # G-0183 전술판 3D — 앞장 장수를 골라 이동 칸·명중률(메모리에서만)
 	["rk_tactics_cut", REALM, [["free_modal"], ["static", "res://tools/shot_realm_tactics.gd", "stage", ["@tree", false, true, false, 0.12]]]],   # G-0191 공격 컷 구도(어깨 너머) · G-0253 바로 쳐서 궤적 뒤 0.12초에 멈춤(궤적·불꽃)
+	["rk_revolt", REALM, [["free_modal"], ["static", "res://tools/shot_realm_tactics.gd", "revolt", ["@tree"]]]],   # G-0410 민란 달 끝 토스트
 	["rk_news", REALM, [["free_modal"], ["static", "res://tools/shot_realm_tactics.gd", "news", ["@tree"]]]],   # G-0194 영내 소식 카드(태수 한 줄·세 갈래)
 	["rk_tactics_wide", REALM, [["free_modal"], ["static", "res://tools/shot_realm_tactics.gd", "stage", ["@tree", false]]]],   # G-0183 판 전체(고르기 전)
 	["rk_story", REALM, [["free_modal"], ["call", "/root/RealmSaveState", "start_scenario", ["194"]], ["set", "/root/RealmSaveState", "scenario_ready", true]]],   # G-0088 사가천하 이야기 첫 카드(새 판 194)
