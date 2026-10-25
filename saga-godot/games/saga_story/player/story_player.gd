@@ -97,6 +97,7 @@ func _ready() -> void:
 		var steps := StepSounds.new()
 		steps.name = "StepSounds"
 		add_child(steps)
+	preload("res://games/saga_story/world/story_pet.gd").attach(self)   # G-0407 금 줍는 펫
 	for sk in visual.find_children("*", "Skeleton3D", true, false):   # G-0264 디딘 발 잠금(나만)
 		if FootLock.attach(sk as Skeleton3D) != null:
 			break

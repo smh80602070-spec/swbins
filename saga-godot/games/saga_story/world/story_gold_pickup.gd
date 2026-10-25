@@ -18,6 +18,7 @@ static func spawn_at(parent: Node, pos: Vector3, amount: int) -> void:
 
 	var area := Area3D.new()
 	area.name = "GoldPickup"
+	area.add_to_group("story_gold")   # G-0407 펫이 찾는 무리
 	area.position = pos
 
 	var mi := MeshInstance3D.new()
