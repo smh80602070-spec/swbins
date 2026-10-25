@@ -1,0 +1,78 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k188/mob_side",
+ "kit": {
+  "spec": "character_tall",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 1152,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes",
+  "variants": 6
+ },
+ "note": "K-0188 ④ 괴물 컷아웃 8(2나락·4종횡 mode2d 단계 풀 t1~t4 — 사람꼴이라 뼈 16 그대로) · 오른쪽 보기로 그림(뒤집기 없이) · 사슬(cut86) 끝난 뒤 gen.py --variants 6",
+ "items": [
+  {
+   "id": "dg_goblin_side",
+   "pool": "pool_d_goblin_118",
+   "seed": 2026105500,
+   "prompt": "monster, no humans, goblin, green-skinned small fierce humanoid monster, long pointed ears, crooked nose, ragged leather vest and loincloth, rusty short dagger, hunched, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, arms slightly away from body, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot"
+  },
+  {
+   "id": "dg_orc_side",
+   "pool": "pool_e_orc_125",
+   "seed": 2026105507,
+   "prompt": "monster, no humans, orc warrior, tall muscular gray-green humanoid monster, tusks, heavy iron shoulder plate, fur kilt, big notched axe, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, arms slightly away from body, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot"
+  },
+  {
+   "id": "dg_undead_side",
+   "pool": "pool_g_undead_143",
+   "seed": 2026105514,
+   "prompt": "monster, no humans, undead skeleton soldier, bony humanoid, glowing blue eye sockets, cracked rusty breastplate, torn cloth, old sword, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, arms slightly away from body, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot"
+  },
+  {
+   "id": "dg_demon_side",
+   "pool": "pool_basem_demon_104",
+   "seed": 2026105521,
+   "prompt": "monster, no humans, horned demon, red-skinned muscular humanoid monster, curved black horns, small bat wings folded, spiked dark armor, clawed hands, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, arms slightly away from body, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot"
+  },
+  {
+   "id": "st_goblin_side",
+   "pool": "pool_e_goblin_126",
+   "seed": 2026105528,
+   "prompt": "monster, no humans, goblin scavenger, small green humanoid monster, goggles on head, patched modern jacket, scrap-metal wrench, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, arms slightly away from body, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot"
+  },
+  {
+   "id": "st_orc_side",
+   "pool": "pool_g_orc_141",
+   "seed": 2026105535,
+   "prompt": "monster, no humans, orc brute, big green humanoid monster with tusks, mixed armor of ancient leather and modern riot gear, iron club, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, arms slightly away from body, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot"
+  },
+  {
+   "id": "st_undead_side",
+   "pool": "pool_basef_undead_111",
+   "seed": 2026105542,
+   "prompt": "monster, no humans, undead knight, skeletal humanoid in dented samurai-style armor with glowing teal cracks, broken katana, tattered banner on back, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, arms slightly away from body, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot"
+  },
+  {
+   "id": "st_demon_side",
+   "pool": "pool_f_demon_136",
+   "seed": 2026105549,
+   "prompt": "monster, no humans, cyber demon, horned humanoid monster, dark purple skin, glowing circuit lines on horns, sleek black futuristic armor, energy claws, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, arms slightly away from body, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot"
+  }
+ ]
+}
