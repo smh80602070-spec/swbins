@@ -90,10 +90,13 @@ namespace Saga.Forest.Player
             if (ZoneCut.Busy) return; // tasks U-0225 구역 넘김 막이 덮인 동안 선다(진단은 Step 을 직접 부른다)
             Step(Time.deltaTime);
             Steps.Tick(transform.position, _controller.enabled && _controller.isGrounded, ForestMounts.Riding != null, StepSurface(transform.position), Time.deltaTime); // tasks U-0218 발소리
+            Hooves.Tick(transform.position, ForestMounts.Riding != null, ForestMounts.Riding != null && ForestMounts.Riding.IsFly, _flying, ForestMounts.Riding?.Id == "mt_dragon", _controller.enabled && _controller.isGrounded, StepSurface(transform.position), Time.deltaTime); // tasks U-0237 탈것 발굽·날갯짓
         }
 
         /// <summary>tasks U-0218 발소리(공용 <see cref="StepSounds"/>) — 3마을은 풀 · 집 안 나무 · 굴 돌.</summary>
         public StepSounds Steps { get; } = new StepSounds((n, v) => Saga.Forest.Audio.ForestAudio.PlaySfx(n, v));
+        /// <summary>tasks U-0237 탈것 발굽·날갯짓(공용 <see cref="MountSounds"/>).</summary>
+        public MountSounds Hooves { get; } = new MountSounds((n, v) => Saga.Forest.Audio.ForestAudio.PlaySfx(n, v));
         public static string StepSurface(Vector3 pos) => ForestMounts.Indoors(pos) ? StepSounds.Wood : ForestCave.Inside ? StepSounds.Stone : StepSounds.Grass;
 
         /// <summary>한 프레임 — 진단이 시간을 건너뛰려고 직접 부른다.</summary>

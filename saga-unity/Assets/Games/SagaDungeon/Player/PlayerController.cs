@@ -292,10 +292,13 @@ namespace Saga.Dungeon.Player
             if (ZoneCut.Busy) return; // tasks U-0225 구역 넘김 막이 덮인 동안 선다(진단은 Step 을 직접 부른다)
             Step(Time.deltaTime);
             Steps.Tick(transform.position, Mode == MoveMode.Ground && _controller.isGrounded, DungeonMounts.Riding != null || Mode == MoveMode.Climb || Mode == MoveMode.Mantle || Mode == MoveMode.Fly, StepSurface(transform.position), Time.deltaTime); // tasks U-0218 발소리 · U-0219 착지(기어오름·넘기·날기 중엔 공중 셈 안 함)
+            Hooves.Tick(transform.position, DungeonMounts.Riding != null, DungeonMounts.RidingFly, Mode == MoveMode.Fly, DungeonMounts.Riding?.Id == "mt_dragon", Mode == MoveMode.Ground && _controller.isGrounded, StepSurface(transform.position), Time.deltaTime); // tasks U-0237 탈것 발굽·날갯짓
         }
 
         /// <summary>tasks U-0218 발소리(공용 <see cref="StepSounds"/>) — 2나락은 돌바닥.</summary>
         public StepSounds Steps { get; } = new StepSounds((n, v) => Saga.Dungeon.Audio.SfxPlayer.Play(n, v));
+        /// <summary>tasks U-0237 탈것 발굽·날갯짓(공용 <see cref="MountSounds"/>).</summary>
+        public MountSounds Hooves { get; } = new MountSounds((n, v) => Saga.Dungeon.Audio.SfxPlayer.Play(n, v));
         public static string StepSurface(Vector3 pos) => StepSounds.Stone;
 
         /// <summary>한 프레임 — 진단이 시간을 건너뛰려고 직접 부른다.</summary>

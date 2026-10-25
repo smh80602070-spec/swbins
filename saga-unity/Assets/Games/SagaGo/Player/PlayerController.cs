@@ -138,6 +138,8 @@ namespace Saga.Go.Player
         public MoveMode Mode { get; private set; } = MoveMode.Ground;
         /// <summary>U-0051 걸음·착지·입수 소리 상태(진단이 읽는다).</summary>
         public FootstepSfx Footsteps { get; } = new FootstepSfx();
+        /// <summary>tasks U-0237 탈것 발굽·날갯짓(공용 MountSounds).</summary>
+        public Saga.Core.MountSounds Hooves { get; } = new Saga.Core.MountSounds((n, v) => Saga.Go.Audio.GoSfx.Play(n, v));
         // PLAN.md 109-14-2 낙하 공격 — 활공 중 공격을 누르면 날개를 접고 곧게 내리꽂는다, 땅에 닿으면 떨어진 높이(m)를 알린다
         public bool Plunging => _plunging;
         public event System.Action<float> PlungeLanded;
@@ -376,6 +378,7 @@ namespace Saga.Go.Player
             SetWings(Mode == MoveMode.Glide);
             SetModeParams();
             Footsteps.Tick(transform.position, Mode, _controller.isGrounded, GoMounts.RidingGround || GoMounts.RidingFly, dt); // U-0051
+            Hooves.Tick(transform.position, GoMounts.RidingGround || GoMounts.RidingFly, GoMounts.RidingFly, Mode == MoveMode.Fly, GoMounts.Riding?.Id == "mt_dragon", Mode == MoveMode.Ground && _controller.isGrounded, GoSurface.At(transform.position), dt); // tasks U-0237 탈것 발굽·날갯짓
         }
 
         // ---- 지상·공중 -----------------------------------------------------------

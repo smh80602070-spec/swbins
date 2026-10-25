@@ -108,10 +108,13 @@ namespace Saga.Story.Player
             if (ZoneCut.Busy) return; // tasks U-0225 구역 넘김 막이 덮인 동안 선다(진단은 Step 을 직접 부른다)
             Step(Time.deltaTime);
             Steps.Tick(transform.position, _controller.isGrounded, _onRope || StoryMounts.Riding != null, StepSurface(transform.position), Time.deltaTime); // tasks U-0218 발소리
+            Hooves.Tick(transform.position, StoryMounts.Riding != null, StoryMounts.Riding != null && StoryMounts.Riding.IsFly, FlyActive, StoryMounts.Riding?.Id == "mt_dragon", _controller.isGrounded, StepSurface(transform.position), Time.deltaTime); // tasks U-0237 탈것 발굽·날갯짓
         }
 
         /// <summary>tasks U-0218 발소리(공용 <see cref="StepSounds"/>) — 4종횡은 풀 · 미궁 돌.</summary>
         public StepSounds Steps { get; } = new StepSounds((n, v) => Saga.Story.Audio.StoryAudio.PlaySfx(n, v));
+        /// <summary>tasks U-0237 탈것 발굽·날갯짓(공용 <see cref="MountSounds"/>).</summary>
+        public MountSounds Hooves { get; } = new MountSounds((n, v) => Saga.Story.Audio.StoryAudio.PlaySfx(n, v));
         public static string StepSurface(Vector3 pos) => StoryLabyrinthState.InRun ? StepSounds.Stone : StepSounds.Grass;
 
         // 진단용(PLAN.md 109-15) — 가로 입력을 곧장 주고(−1~1), 시간을 건너뛰며 한 프레임씩 굴린다.

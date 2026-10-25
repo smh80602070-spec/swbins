@@ -125,6 +125,7 @@ namespace Saga.EditorTools
                 if (!PlaytestForestAutoQuest.Run()) _hadError = true; // tasks U-0166 자동 퀘스트 — 소포 하나 우체통까지 걸어가 배달·멈춤·▶(택배·과일·이야기·자리 되돌림)
                 if (!PlaytestForestStars.Run()) _hadError = true; // tasks U-0229 별똥별 소원·주민 생일(시각·날짜·열매·소원·하트 되돌림)
                 if (!PlaytestTalkFace.Check("PlaytestForestHeadless", false)) _hadError = true; // tasks U-0233 얼굴
+                if (!PlaytestMountSounds.Run("PlaytestForestHeadless")) _hadError = true; // tasks U-0237 탈것 발굽·날갯짓
                 if (!PlaytestPerfBudget.Check("PlaytestForestHeadless", "forest")) _hadError = true; // tasks U-0234 판별 폰 예산(막 진단 앞 — 장면 그대로)
                 if (!PlaytestZoneCut.Run("PlaytestForestHeadless", "forest")) _hadError = true; // tasks U-0225 구역 넘김 막
                 if (!PlaytestNpcModels.Forest()) _hadError = true; // PLAN.md 106-4 FOREST 몫 — 숲지기 사실 모델
