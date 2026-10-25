@@ -1371,5 +1371,22 @@
   "ticket": "W-0423",
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 hunt-pc/phone 룬 창·돌 Read ○ · 룬 그림은 코드 도형(K 몫 없음)."
+ }, {
+  "id": "st.field-elite",
+  "name": "사냥터 엘리트(W-0429 · 메이플 엘리트 몬스터) — 같은 사냥터 잡몹 300(손잡이 st.fieldElite.every)마다 엘리트(몸 ×1.6·체력 ×15·피해 ×2·이름 「엘리트」·어두운 막·띠) · 잡으면 전리품 셋·경험 ×10 · 셋째 → 엘리트 보스(그 터 대장 몸 2.5·체력 ×40·60초 지나면 사라짐·경험 ×25) · 셈은 이번 접속만 · 비경·관문 대장 무대 없음 · 손잡이 st.fieldElite",
+  "files": [
+   "js/field-elite.js",
+   "js/side-view.js",
+   "src/side/02.js"
+  ],
+  "tests": [
+   "W-0429 엘리트"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 qc+claude",
+  "fun": {},
+  "ticket": "W-0429",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나(엘리트·보스 둘 다) · 촬영 shot-st-w0429.mjs elite·boss PC·폰 Read ○ · 함정 캔버스에 칠한 어두운 막은 뒤 층에 덮여 안 보였다 → DOM #elite-dim(#stage 바로 위, 누름 통과)."
  }
 ]

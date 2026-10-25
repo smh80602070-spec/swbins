@@ -110,6 +110,7 @@ window.DG_NO_TUNE = true;
 <script src="js/mob-cards.js"></script>
 <script src="js/combo-kill.js"></script>
 <script src="js/rune.js"></script>
+<script src="js/field-elite.js"></script>
 <script src="js/hidden-boss.js"></script>
 <script src="js/side-just.js"></script>
 <script src="js/side-launch.js"></script>
@@ -6488,6 +6489,24 @@ window.DG_NO_TUNE = true;
         var ok = sec >= 90 && sec <= 181 && at === 224 && idle && inp && won && bad && timeout && noRift && off === 1;
         return ok ? (sec + '초에 섬 · 앞 ' + at + 'px · 넷 맞힘 → ×' + R.MUL + ' ' + R.BUFF + '초 · 틀림·시간 다함 흩어짐 · 비경 없음') : ('실패 ' + JSON.stringify({ sec: sec, at: at, idle: idle, inp: inp, won: won, bad: bad, timeout: timeout, noRift: noRift, off: off }));
       } finally { R._reset(); }
+    });
+    t('W-0429 엘리트 — 같은 사냥터 잡몹 300(손잡이)마다 엘리트(몸 1.6·체력 ×15·이름 「엘리트」·경험 ×10·전리품 셋) · 셋째 엘리트 → 엘리트 보스(몸 2.5·60초 지나면 사라짐) · 비경 안 셈 · 끔', function () {
+      var FE = DG.fieldElite, S = DG.side, C = DG.core; if (!FE || !S) { return '실패 DG.fieldElite 없음'; }
+      FE._reset(); C.setTune('st.fieldElite.every', 5); if (S.active()) { S.leave(); } S.enter('field');
+      var run = S.raw(), fx = [], base = run.enemies.filter(function (e) { return !e.boss; })[0].hpMax, i, el = null, d0 = run.drops.length;
+      try {
+        for (i = 0; i < 5; i++) { el = FE.onKill(run, fx, { ref: { name: '잡몹' } }) || el; }
+        var eOk = el && el.elite && el.sz === 1.6 && el.w === 54 && el.hpMax >= base * 8 && /^엘리트 /.test(el.ref.name) && FE.expMul(el) === 10 && !el.mini && fx.some(function (f) { return f.t === 'bossintro' && /엘리트/.test(f.head); });
+        var none = FE.onKill(run, fx, { ref: { name: '잡몹' } }); for (i = 0; i < 4; i++) { FE.onKill(run, fx, { ref: { name: '잡몹' } }); }   // 엘리트가 살아 있으면 다음 300 째도 안 띄움
+        var blocked = run.enemies.filter(function (e) { return e.elite; }).length === 1;
+        var boss = null, k; for (k = 0; k < 3; k++) { var cur = run.enemies.filter(function (e) { return e.elite && e.hp > 0; })[0] || el; cur.hp = 0; boss = FE.onKill(run, fx, cur) || boss; if (k < 2) { for (i = 0; i < 5; i++) { FE.onKill(run, fx, { ref: { name: '잡몹' } }); } } }
+        var bOk = boss && boss.eliteBoss && boss.sz === 2.5 && boss.eliteT === 60 && /^엘리트 보스 /.test(boss.ref.name) && FE.expMul(boss) === 25 && FE.state('field').elites === 3, loot = run.drops.length - d0;
+        FE.tick(run, 30); var still = run.enemies.indexOf(boss) >= 0; FE.tick(run, 31); var gone = run.enemies.indexOf(boss) < 0;
+        var rs = { stage: Object.assign({}, run.stage, { rift: true, key: '__rift' }), enemies: [], player: run.player }; for (i = 0; i < 10; i++) { FE.onKill(rs, fx, { ref: { name: '잡몹' } }); } var noRift = FE.state('__rift').kills === 0;
+        C.setTune('st.fieldElite', 0); var off = FE.expMul(el) === 1; C.setTune('st.fieldElite', 1);
+        var ok = eOk && none === null && blocked && bOk && loot >= 3 && still && gone && noRift && off;
+        return ok ? ('엘리트 체력 ' + el.hpMax + '(잡몹 ' + base + ') · 셋째 → ' + boss.ref.name + ' · 전리품 ' + loot + ' · 60초 뒤 사라짐') : ('실패 ' + JSON.stringify({ eOk: eOk, none: none && none.ref.name, blocked: blocked, bOk: bOk, loot: loot, still: still, gone: gone, noRift: noRift, off: off, el: el && [el.sz, el.w, el.hpMax, el.ref.name, el.mini] }));
+      } finally { C.setTune('st.fieldElite.every', 300); FE._reset(); if (S.active()) { S.leave(); } }
     });
     /* ── W-0398 4종횡 웹 역이식(정본 고돗 G-0333·G-0319) — 문파 · 숨은 우두머리 ── */
     t('문파(W-0398 ①) — 셋 중 하나 들기 · 처치 +1·보스 +10·오늘 의뢰 사냥터 두 배 · 공 100 제자 +2%(그 갈래만)·3000 문주 +10% · 나가면 공 0', function () {

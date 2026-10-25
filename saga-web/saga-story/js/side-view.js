@@ -523,7 +523,7 @@
   function drawBossIntro() {
     var list = S.fx(), best = null, i;
     for (i = 0; i < list.length; i++) {
-      if (list[i].t === 'bossintro' && (!best || list[i].life > best.life)) { best = list[i]; }
+      if (list[i].t === 'bossintro' && (!best || list[i].life >= best.life)) { best = list[i]; }   // W-0429 같은 목숨이면 나중 것
     }
     if (!best) { return; }
     var dur = 1.8, edge = 0.3;
@@ -540,7 +540,7 @@
     ctx.textAlign = 'center';
     ctx.font = W <= 520 ? '700 12px system-ui, sans-serif' : '700 15px system-ui, sans-serif';   // W-0364 폰은 띠가 얇아 글도 한 단 작게
     ctx.fillStyle = 'rgba(240,226,200,0.95)';
-    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, '👺 보스 등장', W / 2, y - (W <= 520 ? 6 : 8));
+    (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, best.head || '👺 보스 등장', W / 2, y - (W <= 520 ? 6 : 8));
     ctx.font = W <= 520 ? '800 16px system-ui, sans-serif' : '800 22px system-ui, sans-serif';
     ctx.fillStyle = '#f0e2c8';
     ctx.fillText(best.name, W / 2, y + (W <= 520 ? 13 : 18));
@@ -1072,7 +1072,7 @@
     if (!pool) { return false; }
     var clip = e.hurt > 0 ? 'hit' : (e.atkAnim > 0 ? 'attack' : 'walk');
     var ms = clip === 'attack' ? (0.28 - e.atkAnim) * 1000 : (clip === 'hit' ? Math.max(0, 0.3 - e.hurt) * 1000 : Date.now() + (e.phase || 0) * 160);
-    var sz = e.boss ? 1.9 : (e.mini || e.rare ? 1.25 : 1); if (M.shadow) { M.shadow(ctx, x, y, 30 * sz * (bz && !crea ? bz.k : 1), { a: 0.3 }); }   /* W-0368 발 닿는 그림자 */
+    var sz = e.sz || (e.boss ? 1.9 : (e.mini || e.rare ? 1.25 : 1)); if (M.shadow) { M.shadow(ctx, x, y, 30 * sz * (bz && !crea ? bz.k : 1), { a: 0.3 }); }   /* W-0368 발 닿는 그림자 */
     var ck = crea ? (+(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.creaK', 1.5) : 1.5) || 1) : 1;   /* W-0407 몬스터 시트는 사람 몸 칸 배율이라 짐승(들개 등)이 주인공 발목만 했다 — 2D 판은 키워 보이게 */
     return M.draw(ctx, { pool: pool, clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: (bz && !crea ? bz.k : 1) * sz * ck }) ||
       (crea && (bz || e.ref.kind === 'human') ? M.draw(ctx, { pool: bz ? bz.pool : M.pick('t' + (e.ref.tier || 1), e.ref.name), clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: (bz ? bz.k : 1) * sz }) : false);   // 시트 manifest 받기 전엔 옛 길
@@ -1099,7 +1099,7 @@
     var human = e.ref.kind === 'human';
     if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && !drawSheetEnemy(e, x, y)) {
       global.DG.sprite.stamp(ctx, {
-        kind: human ? 'human' : 'beast', ref: e.ref, x: x, y: y, s: e.boss ? 1.9 : 0.8,
+        kind: human ? 'human' : 'beast', ref: e.ref, x: x, y: y, s: e.sz ? e.sz * 0.8 : (e.boss ? 1.9 : 0.8),
         facing: e.dir, phase: e.phase, walking: true,
         color: e.ref.color, look: e.ref.look || {},
         form: e.ref.form, rarity: e.boss ? 5 : 2, t: Date.now()
