@@ -38,6 +38,11 @@ const RECIPES := [
 	{"key": "up_net_3", "kind": "tool", "tool": "net", "lv": 3, "need": {"곤충": 4, "약초": 3}},
 	{"key": "up_spade_2", "kind": "tool", "tool": "spade", "lv": 2, "need": {"광석": 3, "화석": 1}},
 	{"key": "up_spade_3", "kind": "tool", "tool": "spade", "lv": 3, "need": {"광석": 5, "화석": 2, "조개": 2}},
+	## G-0401 도구 등급 Lv4 영웅·Lv5 전설(잠자리채·삽만 — forest_tool_grade.gd · 웹 W-0439 net5·spade5 자리, 재료는 이 판 채집 품목)
+	{"key": "up_net_4", "kind": "tool", "tool": "net", "lv": 4, "need": {"곤충": 6, "약초": 4, "꽃": 3}},
+	{"key": "up_net_5", "kind": "tool", "tool": "net", "lv": 5, "need": {"곤충": 8, "화석": 2, "조개": 4}},
+	{"key": "up_spade_4", "kind": "tool", "tool": "spade", "lv": 4, "need": {"광석": 7, "화석": 3, "솔방울": 4}},
+	{"key": "up_spade_5", "kind": "tool", "tool": "spade", "lv": 5, "need": {"광석": 9, "화석": 4, "조개": 4}},
 	{"key": "make_bangseok", "kind": "furn", "furn": "bangseok", "need": {"꽃": 3, "솔방울": 1}},
 	{"key": "make_hwabun", "kind": "furn", "furn": "hwabun", "need": {"꽃": 2, "광석": 2}},
 	{"key": "make_soban", "kind": "furn", "furn": "soban", "need": {"솔방울": 4, "과일": 2}},
@@ -149,14 +154,16 @@ static func decline(F: Node) -> void:
 
 ## 채집 한 번의 덤 — {extra, again}. seed = "날|자리"(같은 날 같은 자리는 같은 결과)
 ## G-0218 — bounty_add = 솜씨도 rarePct 몫(풍성 갈래가 없어도 산다, 기본 0 = 옛 그대로)
-static func gather_roll(p: Array, seed: String, bounty_add := 0.0) -> Dictionary:
+## G-0401 harvest_add·bounty_mul = 채집꾼 한 벌(forest_tool_grade.fx — 기본 0·1 = 옛 그대로)
+static func gather_roll(p: Array, seed: String, bounty_add := 0.0, harvest_add := 0.0, bounty_mul := 1.0) -> Dictionary:
 	var h := p.count("harvest")
 	var b := p.count("bounty")
 	var k := p.count("knack")
 	var extra := 0
-	if h > 0 and hash01(seed, "harvest") < minf(HARVEST_P * h, HARVEST_MAX):
+	var hp_ := (minf(HARVEST_P * h, HARVEST_MAX) if h > 0 else 0.0) + harvest_add
+	if hp_ > 0.0 and hash01(seed, "harvest") < hp_:
 		extra += 1
-	var bp := minf(BOUNTY_P * b, BOUNTY_MAX) + bounty_add
+	var bp := (minf(BOUNTY_P * b, BOUNTY_MAX) + bounty_add) * bounty_mul
 	if bp > 0.0 and hash01(seed, "bounty") < bp:
 		extra += 3
 	var again := k > 0 and hash01(seed, "knack") < minf(KNACK_P * k, KNACK_MAX)

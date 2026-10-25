@@ -167,7 +167,8 @@ func _gather(d: Dictionary) -> void:
 	## G-0196 — 제작대에서 고른 도구 갈래(수확·풍성·손재주)의 덤. 갈래가 없으면 늘 +1 그대로.
 	var tool_key := String(ForestCraft.GATHER_TOOL.get(d.id, ""))
 	var today := ForestDay.today_key()
-	var roll := ForestCraft.gather_roll(ForestCraft.perks(ForestSaveState, tool_key), "%d|%s" % [today, d.id], Workshop.bounty_add())
+	var tfx: Dictionary = preload("res://games/saga_forest/data/forest_tool_grade.gd").fx(ForestSaveState, tool_key)   # G-0401 채집꾼 한 벌
+	var roll := ForestCraft.gather_roll(ForestCraft.perks(ForestSaveState, tool_key), "%d|%s" % [today, d.id], Workshop.bounty_add(), float(tfx.harvest_add), float(tfx.bounty_mul))
 	var n := Workshop.gather_n(String(d.id), 1 + int(roll.extra)) + preload("res://games/saga_forest/data/forest_brew.gd").gather_add(ForestSaveState, today)   # G-0218 솜씨도(덤 굴림 뒤에 따로) · G-0320 기운 물약
 	ForestSaveState.add_item(d.item_label, n)
 	var tail := ""

@@ -51,7 +51,7 @@ func _initialize() -> void:
 		else:
 			n_furn += 1
 			furn_ok = furn_ok and not Home.furn(String(r.furn)).is_empty()
-	check(Craft.RECIPES.size() == 14 and n_tool == 6 and n_furn == 6 and n_lot == 1 and n_pen == 1 and mats_ok and furn_ok, "레시피 14(도구 6·가구 6·빈 집 1, G-0237·우리 1, G-0311) · 재료 전부 채집 품목 · 가구 키 있음")
+	check(Craft.RECIPES.size() == 18 and n_tool == 10 and n_furn == 6 and n_lot == 1 and n_pen == 1 and mats_ok and furn_ok, "레시피 18(도구 10 — G-0401 잠자리채·삽 Lv4·5 · 가구 6·빈 집 1, G-0237·우리 1, G-0311) · 재료 전부 채집 품목 · 가구 키 있음")
 	# ②
 	var dup := 0
 	for i in 100:

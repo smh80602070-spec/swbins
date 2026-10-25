@@ -12,6 +12,7 @@ const ForestHome := preload("res://games/saga_forest/data/forest_home.gd")
 const Lots := preload("res://games/saga_forest/data/forest_lots.gd")   # G-0237 입주 조건
 const Livestock := preload("res://games/saga_forest/data/forest_livestock.gd")   # G-0311 가축
 const Crops := preload("res://games/saga_forest/data/forest_crops.gd")   # G-0391 밭
+const ToolGrade := preload("res://games/saga_forest/data/forest_tool_grade.gd")   # G-0401 도구 등급
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
@@ -91,7 +92,7 @@ static func need_text(r: Dictionary) -> String:
 
 static func recipe_name(r: Dictionary) -> String:
 	if String(r.kind) == "tool":
-		return "%s Lv%d" % [ForestCraft.TOOLS[r.tool], int(r.lv)]
+		return "%s Lv%d(%s)" % [ForestCraft.TOOLS[r.tool], int(r.lv), ToolGrade.label(int(r.lv))]   # G-0401 등급 이름
 	if String(r.kind) == "lot":
 		return "작은 빈 집 (%d/%d)" % [Lots.count(ForestSaveState), Lots.MAX]
 	if String(r.kind) == "pen":
@@ -131,7 +132,8 @@ func open_menu() -> void:
 			(box["layer"] as CanvasLayer).queue_free()
 			open_brew()})
 	choices.append({"label": "닫기", "cb": func() -> void: (box["layer"] as CanvasLayer).queue_free()})
-	var lv_line := "바구니 Lv%d · 잠자리채 Lv%d · 삽 Lv%d" % [ForestCraft.tool_lv(ForestSaveState, "basket"), ForestCraft.tool_lv(ForestSaveState, "net"), ForestCraft.tool_lv(ForestSaveState, "spade")]
+	var lv_line := "바구니 Lv%d · 잠자리채 Lv%d(%s) · 삽 Lv%d(%s)" % [ForestCraft.tool_lv(ForestSaveState, "basket"), ForestCraft.tool_lv(ForestSaveState, "net"), ToolGrade.label(ForestCraft.tool_lv(ForestSaveState, "net")),
+		ForestCraft.tool_lv(ForestSaveState, "spade"), ToolGrade.label(ForestCraft.tool_lv(ForestSaveState, "spade"))] + ToolGrade.set_text(ForestSaveState)   # G-0401 등급·한 벌
 	box["layer"] = ChoicePrompt.build(self, "🔨 제작대 — %s" % lv_line, choices)
 
 

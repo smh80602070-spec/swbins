@@ -50,3 +50,17 @@ static func show_pen(tree: SceneTree) -> void:
 	print("FS_PEN 짐승 %d" % int(view.call("sync")))
 	if p != null:
 		p.global_position = (view as Node3D).global_position + Vector3(0, 0.3, 4.0)
+
+
+## G-0401 — 잠자리채·삽 전설(메모리만)로 「채집꾼 한 벌」이 선 제작대 화면(머리줄 등급·한 벌 · 레시피 Lv4·5 등급 이름).
+static func open_bench_tools(tree: SceneTree) -> void:
+	var F: Node = tree.root.get_node("ForestSaveState")
+	F.tool_lv = {"basket": 3, "net": 5, "spade": 5}
+	F.items = {"곤충": 9, "광석": 9, "화석": 4, "조개": 4}
+	var bench := tree.current_scene.find_child("CraftBench", true, false)
+	var p := tree.get_first_node_in_group("player") as Node3D
+	if bench == null:
+		return
+	if p != null:
+		p.global_position = (bench as Node3D).global_position + Vector3(0, 0.3, 2.2)
+	bench.call("open_menu")

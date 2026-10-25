@@ -65,6 +65,7 @@ const CUTS := [
 	["go_hero_duel", GO, [["static", "res://tools/shot_hero_duel.gd", "open", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 7.0]]],   # G-0397 등용 「무로 겨루자」 결투 판
 	["fs_pen", FOREST, [["free_modal"], ["static", "res://tools/shot_forest.gd", "show_pen", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 4.5]]],   # G-0396 작은 우리 닭·염소 GLB 몸
 	["fs_crops", FOREST, [["free_modal"], ["static", "res://tools/shot_forest.gd", "show_crops", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0]]],   # G-0391 집 앞 밭 네 칸(씨·싹·자람·다 자람)
+	["fs_bench_tools", FOREST, [["free_modal"], ["static", "res://tools/shot_forest.gd", "open_bench_tools", ["@tree"]]]],   # G-0401 도구 등급·채집꾼 한 벌
 	["fs_bench", FOREST, [["static", "res://tools/shot_forest.gd", "open_bench", ["@tree"]]]],   # G-0196 제작대 화면(레시피 12 — 만들 수 있는 것 ✓)
 	["fs_plant_grid", FOREST, [["static", "res://tools/shot_forest_grid.gd", "stage", ["@tree"]]]],   # G-0186 꽃 든 채 발밑 심을 칸·심은 꽃 셋 둘레 격자(메모리에서만)
 	["fs_fishing", FOREST, [["near", "Fishing", 0.0, 5.0]]],
