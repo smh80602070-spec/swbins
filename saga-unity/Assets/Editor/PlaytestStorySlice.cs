@@ -130,6 +130,47 @@ namespace Saga.EditorTools
             }
         }
 
+        /// <summary>tasks U-0247 몰이 파도 — 들판 처치 49 는 조용, 50 째에 몰이 · 파도마다 3+i 마리(마지막은 대장 +1) · 다 잡으면 다음 · 다섯을 다 잡으면 끝 ·
+        /// 몰이 몹 처치는 셈 밖 · 둘째 몰이는 시간을 다 보내면 흩어짐(몹 사라짐).</summary>
+        private static bool CheckHuntWave()
+        {
+            var sp = Object.FindFirstObjectByType<StoryEnemySpawner>();
+            if (sp == null) { Debug.LogError("[PlaytestStorySlice] huntwave 스포너 없음"); return false; }
+            StoryHuntWave.ResetForTest();
+            for (int i = 1; i < StoryHuntWave.Every; i++)
+                if (StoryHuntWave.OnFieldKill(false, false)) { Debug.LogError($"[PlaytestStorySlice] huntwave {i} 째에 시작"); return false; }
+            if (StoryHuntWave.OnFieldKill(false, true)) { Debug.LogError("[PlaytestStorySlice] huntwave 엘리트를 셈"); return false; }
+            if (!StoryHuntWave.OnFieldKill(false, false)) { Debug.LogError("[PlaytestStorySlice] huntwave 50 째에 안 시작"); return false; }
+            var counts = new System.Collections.Generic.List<int>();
+            counts.Add(sp.SpawnWave());
+            int guard = 0;
+            while (StoryHuntWave.Active && guard++ < 20)
+            {
+                if (sp.WaveAlive() != counts[counts.Count - 1]) { Debug.LogError($"[PlaytestStorySlice] huntwave 파도 {StoryHuntWave.Wave} 살아 있음 {sp.WaveAlive()} ≠ {counts[counts.Count - 1]}"); return false; }
+                int killsBefore = StoryHuntWave.Kills;
+                foreach (var e in sp.GetComponentsInChildren<StoryEnemy>())
+                    if (e.WaveId == StoryHuntWave.Id && !e.IsDead) e.TakeDamage(1e7f, false);
+                if (StoryHuntWave.Kills != killsBefore) { Debug.LogError("[PlaytestStorySlice] huntwave 몰이 몹 처치가 셈에 듦"); return false; }
+                int aliveBefore = sp.WaveAlive();
+                var t = sp.TickWave(0.1f);
+                if (t == StoryHuntWave.Turn.NextWave) counts.Add(sp.WaveAlive());
+                else if (t != StoryHuntWave.Turn.Done) { Debug.LogError($"[PlaytestStorySlice] huntwave 다 잡았는데 {t}(남음 {aliveBefore})"); return false; }
+            }
+            var want = new[] { 3, 4, 5, 6, 8 };
+            if (counts.Count != want.Length) { Debug.LogError($"[PlaytestStorySlice] huntwave 파도 수 {counts.Count}"); return false; }
+            for (int i = 0; i < want.Length; i++)
+                if (counts[i] != want[i]) { Debug.LogError($"[PlaytestStorySlice] huntwave 파도 {i + 1} 마리 {counts[i]} ≠ {want[i]}"); return false; }
+            // 둘째 몰이 — 시간 다 보내면 흩어짐
+            for (int i = 0; i < StoryHuntWave.Every; i++) StoryHuntWave.OnFieldKill(false, false);
+            sp.SpawnWave();
+            var t2 = sp.TickWave(StoryHuntWave.Limit + 1f);
+            int left = sp.WaveAlive();
+            StoryHuntWave.ResetForTest();
+            if (t2 != StoryHuntWave.Turn.Scattered || left != 0) { Debug.LogError($"[PlaytestStorySlice] huntwave 흩어짐 {t2}·남음 {left}"); return false; }
+            Debug.Log($"[PlaytestStorySlice] huntwave OK — 50 째에 몰이 · 파도 {string.Join("/", counts)}(마지막 대장 포함) · 끝 · 시간 다하면 흩어짐");
+            return true;
+        }
+
         /// <summary>tasks U-0246 세트 무예 — 세트 없으면 안 나감 · 첫 세트를 다 끼면(Lv 20) 나가고 쿨이 걸림. 장비·레벨은 아래 Init 이 되돌린다.</summary>
         private static bool CheckSetSkill()
         {
@@ -1168,6 +1209,7 @@ namespace Saga.EditorTools
                     }
 
                     Debug.Log("[PlaytestStorySlice] save/load round-trip OK");
+                    if (!CheckHuntWave()) { Fail(); return; } // tasks U-0247 — 퀘스트 셈이 다 끝난 뒤(몰이 몹 처치가 셈을 안 흔들게)
                     EditorApplication.update -= Tick;
                     EditorApplication.isPlaying = false;
                     _phase = Phase.Done;

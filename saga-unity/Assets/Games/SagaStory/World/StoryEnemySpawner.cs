@@ -58,6 +58,8 @@ namespace Saga.Story.World
 
         private void OnFieldDied(StoryEnemy e)
         {
+            if (e.WaveId > 0) return; // tasks U-0247 몰이 몹 — 되살기·엘리트·몰이 셈 밖(다음 파도는 TickWave)
+            if (StoryHuntWave.OnFieldKill(false, e.IsElite || e.IsEliteBoss)) SpawnWave(); // tasks U-0247 — 들판 처치 50 마다 몰이
             if (e.FieldIndex >= 0 && !e.IsEliteBoss && StoryElite.RespawnOn) _respawn.Add((e.FieldIndex, Time.time));
             switch (StoryElite.OnFieldKill(e.IsElite, e.IsEliteBoss))
             {
@@ -71,6 +73,80 @@ namespace Saga.Story.World
             if (!Application.isPlaying) return;
             if (_player == null) { var g = GameObject.FindWithTag("Player"); if (g != null) _player = g.transform; }
             TickRespawn(Time.time, _player != null ? _player.position.x : float.MaxValue);
+            TickWave(Time.deltaTime);
+        }
+
+        // ── tasks U-0247 사냥터 몰이 파도(웹 hunt-wave.js) ──
+        /// <summary>지금 몰이의 살아 있는 몹 수.</summary>
+        public int WaveAlive()
+        {
+            int n = 0;
+            foreach (var e in GetComponentsInChildren<StoryEnemy>())
+                if (e.WaveId == StoryHuntWave.Id && e.WaveId > 0 && !e.IsDead) n++;
+            return n;
+        }
+
+        /// <summary>매 프레임(진단도 부른다) — 파도를 다 잡으면 다음 파도, 다섯을 다 잡으면 장비 굴림, 시간이 다하면 흩어짐.</summary>
+        public StoryHuntWave.Turn TickWave(float dt)
+        {
+            var t = StoryHuntWave.Tick(dt, WaveAlive());
+            switch (t)
+            {
+                case StoryHuntWave.Turn.NextWave: SpawnWave(); break;
+                case StoryHuntWave.Turn.Scattered:
+                    foreach (var e in GetComponentsInChildren<StoryEnemy>())
+                        if (e.WaveId == StoryHuntWave.Id) { e.gameObject.SetActive(false); Destroy(e.gameObject); }
+                    StoryRuneSpot.Flash(StoryLocalization.T("huntwave.scatter", "💨 몰이가 흩어졌다"));
+                    break;
+                case StoryHuntWave.Turn.Done:
+                {
+                    string got = "";
+                    for (int i = 0; i < StoryHuntWave.Loot; i++)
+                    {
+                        string key = StoryGear.RollDrop(true);
+                        if (key != null) got += "\n" + StoryGear.LootLine(key, StoryGear.EquipIfBetter(key));
+                    }
+                    StoryRuneSpot.Flash(StoryLocalization.T("huntwave.done", "🏁 몰이 끝") + got);
+                    break;
+                }
+            }
+            return t;
+        }
+
+        /// <summary>지금 파도 몹을 주인공 양옆에 번갈아(6m 밖, 둘마다 0.8m 더) · 마지막 파도엔 대장(엘리트 몸) 하나 더. 세운 수.</summary>
+        public int SpawnWave()
+        {
+            int w = StoryHuntWave.Wave, n = StoryHuntWave.CountOf(w), made = 0;
+            float px = _player != null ? _player.position.x : FieldMapData.WidthM * 0.5f;
+            var xs = FieldMapData.EnemyPositionsM();
+            for (int k = 0; k < n; k++)
+            {
+                float side = k % 2 == 1 ? 1f : -1f;
+                var e = SpawnWaveFoe(k % xs.Length, px + side * (StoryHuntWave.SideM + (k >> 1) * StoryHuntWave.GapM));
+                if (e != null) made++;
+            }
+            if (StoryHuntWave.IsLast(w))
+            {
+                var boss = SpawnWaveFoe(xs.Length / 2, px + StoryHuntWave.SideM + 1.2f);
+                if (boss != null) { boss.MakeElite(false); made++; }
+            }
+            string line = StoryHuntWave.IsLast(w)
+                ? string.Format(StoryLocalization.T("huntwave.boss", "📯 몰이 {0}/{1} — 대장이 나왔다"), w + 1, StoryHuntWave.Waves)
+                : string.Format(StoryLocalization.T("huntwave.wave", "📯 몰이 {0}/{1} — {2}마리가 몰려온다"), w + 1, StoryHuntWave.Waves, n);
+            StoryRuneSpot.Flash(line);
+            return made;
+        }
+
+        private StoryEnemy SpawnWaveFoe(int slot, float worldX)
+        {
+            var e = SpawnAt(slot);
+            if (e == null) return null;
+            e.FieldIndex = -1; // 되살기 자리 아님
+            e.WaveId = StoryHuntWave.Id;
+            var lp = e.transform.localPosition;
+            float x = transform.InverseTransformPoint(new Vector3(worldX, 0f, 0f)).x;
+            e.transform.localPosition = new Vector3(Mathf.Clamp(x, 1f, FieldMapData.WidthM - 1f), lp.y, lp.z);
+            return e;
         }
 
         /// <summary>되살기 차례 — 30초 지났고 플레이어가 그 자리에서 15m 넘게 떨어진 것만(진단도 부른다). 되살린 수.</summary>

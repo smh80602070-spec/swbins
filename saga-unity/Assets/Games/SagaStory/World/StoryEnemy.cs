@@ -289,6 +289,8 @@ namespace Saga.Story.World
         // ── tasks U-0230 들판 되살기·사냥터 엘리트 ──
         /// <summary>들판 몇 번째 자리(되살기용, 없으면 -1 — 두목·비경·엘리트 두목).</summary>
         public int FieldIndex { get; set; } = -1;
+        /// <summary>tasks U-0247 몰이 파도 몹이면 그 몰이 번호(1 부터), 아니면 0 — 되살기·엘리트·몰이 셈에 안 든다.</summary>
+        public int WaveId { get; set; }
         public bool IsElite { get; private set; }
         public bool IsEliteBoss { get; private set; }
         /// <summary>들판(비경 아님·숨은 우두머리 아님) 적이 쓰러짐 — 생성기가 되살기·엘리트 셈에 쓴다.</summary>
