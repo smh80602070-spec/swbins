@@ -53,7 +53,25 @@ namespace Saga.EditorTools
                 if (ForestLivestock.Buy("chick") != "stock.why_max" || ForestLivestock.Count != 4) Fail("다섯째가 들어옴");
                 if (runner.Bodies.Count != 4) Fail($"몸 {runner.Bodies.Count} ≠ 4");
                 if (ForestLivestock.List[2].name == ForestLivestock.List[0].name) Fail("같은 종 둘째 이름이 같음");
-                End($"buy OK - 꼬꼬 10·매매 22 · 넷까지 · 몸 넷 · 둘째 이름「{ForestLivestock.List[2].name}」");
+                // tasks U-0238 — 굽힌 GLB 몸(있으면): 애니메이터·키(닭 0.5·염소 0.95m 언저리)
+                string bodyNote = "도형 대역";
+                if (Resources.Load<GameObject>("Farm/Farm_Hen") != null && Resources.Load<GameObject>("Farm/Farm_Goat") != null)
+                {
+                    for (int bi = 0; bi < runner.Bodies.Count; bi++)
+                    {
+                        var bg = runner.Bodies[bi];
+                        var an = bg.GetComponentInChildren<Animator>();
+                        bool goatB = ForestLivestock.List[bi].kind == "goat";
+                        float h = 0f; bool anyR = false; Bounds bb = default;
+                        foreach (var r in bg.GetComponentsInChildren<Renderer>()) { if (!anyR) { bb = r.bounds; anyR = true; } else bb.Encapsulate(r.bounds); }
+                        h = anyR ? bb.size.y : 0f;
+                        float want = goatB ? ForestLivestockRunner.GoatHeight : ForestLivestockRunner.HenHeight;
+                        if (an == null || an.runtimeAnimatorController == null) Fail($"몸 {bi} 애니메이터 없음(굽힌 몸이 있는데 대역)");
+                        if (Mathf.Abs(h - want) > want * 0.25f) Fail($"몸 {bi} 키 {h:F2} ≠ {want}");
+                    }
+                    bodyNote = "굽힌 GLB 몸(닭·염소, 애니메이터·키)";
+                }
+                End($"buy OK - 꼬꼬 10·매매 22 · 넷까지 · 몸 넷({bodyNote}) · 둘째 이름「{ForestLivestock.List[2].name}」");
 
                 // ③ 먹이·쓰다듬기
                 Begin();

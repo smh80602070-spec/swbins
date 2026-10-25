@@ -773,3 +773,5 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 **탈것 탄 자세(tasks U-0236, 고돗 G-0395 짝)**: 1만리·2나락·3마을·4종횡에서 말·사슴·학·용에 타면 기수가 탈것 등(몸통 위끝을 실제로 잼)에 앉고 다리로 옆구리를 감싼다 — 몸통이 넓어 허벅지로 못 감싸면 다리를 앞으로 뻗어 등 위에 얹는다. 예전처럼 선 채 손 수치로 올리기만 하려면 `SAGA_RIDE_POSE=0`. 진단 네 판 탈것 진단의 `ride-pose` 줄 · 촬영 `SAGA_SHOT_ACT=ridewhite|ridedragon SAGA_SHOT_TARGETS=name:HeroVroid SAGA_SHOT_SEQ=2,30 SAGA_SHOT_DIST=0.8`(1만리).
 
 **탈것 발굽·날갯짓(tasks U-0237, 자체툴 K-0189)**: 1만리·2나락·3마을·4종횡에서 말·사슴을 타고 움직이면 발소리 대신 발굽 소리(풀·흙·모래·눈 = 무른 · 돌·나무 = 단단한, 걸음 보폭 ×1.4 마다), 학·용이 떠 있으면 날갯짓(학 0.5초·용 0.85초마다 무거운 소리). 학·용이 땅을 걸으면 소리 없음. 발소리 손잡이 `SAGA_STEP_SOUND=0` 이 같이 끈다. 진단 네 판 헤드리스의 `mount-sounds` 줄.
+
+**3마을 가축 몸(tasks U-0238, 자체툴 K-0186)**: 우리 안 꼬꼬·매매가 이제 자체 GLB 닭·염소(대기·걷기 동작)다 — 굽기 `-executeMethod Saga.EditorTools.SetupBeastAnimals.SetupFarm`(→ `Art/Creatures/Resources/Farm/`), 굽힌 몸이 없으면 예전 도형. 끄기 `SAGA_FARM_BODY=0`. 진단 `PlaytestForestHeadless` 의 livestock buy 줄.

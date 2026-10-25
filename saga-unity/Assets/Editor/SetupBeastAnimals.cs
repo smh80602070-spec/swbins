@@ -45,12 +45,45 @@ namespace Saga.EditorTools
             Debug.Log($"[SetupBeastAnimals] {string.Join(" ", built)}");
         }
 
+        /// <summary>tasks U-0238 3마을 가축(자체툴 K-0186 `Art/CreaturesSelf/farm_hen·farm_goat.glb`, 동작 7) — 런타임이 부르게 Resources 에 굽는다.</summary>
+        private static readonly Spec[] FarmSpecs =
+        {
+            new Spec { Name = "Farm_Hen", Idle = "Idle", Walk = "Walk", Run = "Run", Attack = "Attack", Hit = "Hit", Death = "Death" },
+            new Spec { Name = "Farm_Goat", Idle = "Idle", Walk = "Walk", Run = "Run", Attack = "Attack", Hit = "Hit", Death = "Death" },
+        };
+        public const string FarmResDir = "Assets/Art/Creatures/Resources/Farm";
+        public static string FarmPrefabPath(string name) => $"{FarmResDir}/{name}.prefab";
+
+        /// <summary>배치: `-executeMethod Saga.EditorTools.SetupBeastAnimals.SetupFarm`(스스로 끝냄).</summary>
+        public static void SetupFarm()
+        {
+            bool jobDebugger = Unity.Jobs.LowLevel.Unsafe.JobsUtility.JobDebuggerEnabled;
+            Unity.Jobs.LowLevel.Unsafe.JobsUtility.JobDebuggerEnabled = false;
+            var built = new System.Collections.Generic.List<string>();
+            try
+            {
+                if (!AssetDatabase.IsValidFolder("Assets/Art/Creatures/Resources")) AssetDatabase.CreateFolder("Assets/Art/Creatures", "Resources");
+                if (!AssetDatabase.IsValidFolder(FarmResDir)) AssetDatabase.CreateFolder("Assets/Art/Creatures/Resources", "Farm");
+                foreach (var spec in FarmSpecs)
+                {
+                    if (!AssetDatabase.IsValidFolder($"Assets/Art/Creatures/{spec.Name}")) AssetDatabase.CreateFolder("Assets/Art/Creatures", spec.Name);
+                    built.Add($"{spec.Name}={Setup(spec, FarmPrefabPath(spec.Name))}");
+                }
+            }
+            finally { Unity.Jobs.LowLevel.Unsafe.JobsUtility.JobDebuggerEnabled = jobDebugger; }
+            AssetDatabase.SaveAssets();
+            Debug.Log($"[SetupBeastAnimals] farm {string.Join(" ", built)}");
+            if (Application.isBatchMode) EditorApplication.Exit(0);
+        }
+
         private static void SetupEach(System.Collections.Generic.List<string> built)
         {
             foreach (var spec in Specs) built.Add($"{spec.Name}={Setup(spec)}");
         }
 
-        private static bool Setup(Spec spec)
+        private static bool Setup(Spec spec) => Setup(spec, PrefabPath(spec.Name));
+
+        private static bool Setup(Spec spec, string prefabPath)
         {
             string glb = GlbPath(spec.Name);
             if (!File.Exists(glb)) { Debug.LogWarning($"[SetupBeastAnimals] {glb} 없음"); return false; }
@@ -112,9 +145,9 @@ namespace Saga.EditorTools
             animator.runtimeAnimatorController = controller;
             animator.applyRootMotion = false;
             animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
-            PrefabUtility.SaveAsPrefabAsset(instance, PrefabPath(spec.Name));
+            PrefabUtility.SaveAsPrefabAsset(instance, prefabPath);
             Object.DestroyImmediate(instance);
-            Debug.Log($"[SetupBeastAnimals] saved {PrefabPath(spec.Name)}");
+            Debug.Log($"[SetupBeastAnimals] saved {prefabPath}");
             return true;
         }
 

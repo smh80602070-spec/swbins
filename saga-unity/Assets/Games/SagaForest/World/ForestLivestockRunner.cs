@@ -156,12 +156,31 @@ namespace Saga.Forest.World
             return b;
         }
 
-        /// <summary>짐승 대역 몸 — 몸 GLB 는 K-0186 이 놓으면 여기만 바꾼다.</summary>
+        /// <summary>tasks U-0238 — 굽힌 몸(`Art/Creatures/Resources/Farm/Farm_Hen·Farm_Goat`, 자체툴 K-0186 GLB → `SetupBeastAnimals.SetupFarm`) 키. 끄기 `SAGA_FARM_BODY=0`.</summary>
+        public const float HenHeight = 0.5f, GoatHeight = 0.95f;
+        public static bool RealBodies = System.Environment.GetEnvironmentVariable("SAGA_FARM_BODY") != "0";
+
+        /// <summary>짐승 몸 — 굽힌 GLB 몸이 있으면 그것(대기·걷기 동작), 없으면 예전 도형 대역.</summary>
         private GameObject Body(string kind, int i)
         {
             bool goat = kind == "goat";
             var root = new GameObject($"Animal_{i}_{kind}");
             root.transform.SetParent(_pen.transform, false);
+            var prefab = RealBodies ? Resources.Load<GameObject>("Farm/" + (goat ? "Farm_Goat" : "Farm_Hen")) : null;
+            if (prefab != null)
+            {
+                var inst = Instantiate(prefab, root.transform, false);
+                inst.name = "Body";
+                Colliders.Strip(inst);
+                var bb = Bounds(inst);
+                float want = goat ? GoatHeight : HenHeight;
+                if (bb.size.y > 0.01f) inst.transform.localScale *= want / bb.size.y;
+                bb = Bounds(inst);
+                inst.transform.position += Vector3.up * (root.transform.position.y - bb.min.y);
+                var an = inst.GetComponent<Animator>();
+                if (an != null) an.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+                return root;
+            }
             Color fur = goat ? new Color(0.91f, 0.89f, 0.84f) : new Color(0.98f, 0.97f, 0.93f);
             var body = Prim(PrimitiveType.Sphere, root.transform, goat ? new Vector3(0f, 0.45f, 0f) : new Vector3(0f, 0.25f, 0f), goat ? new Vector3(0.45f, 0.38f, 0.75f) : new Vector3(0.3f, 0.28f, 0.36f), fur);
             Prim(PrimitiveType.Sphere, root.transform, goat ? new Vector3(0f, 0.68f, 0.42f) : new Vector3(0f, 0.42f, 0.17f), goat ? Vector3.one * 0.24f : Vector3.one * 0.17f, fur);
@@ -217,7 +236,10 @@ namespace Saga.Forest.World
                 float t = now + i * 1.7f;
                 float x = Mathf.Sin(t * 0.37f + i) * inner, z = Mathf.Cos(t * 0.29f + i * 2f) * inner;
                 float dx = Mathf.Cos(t * 0.37f + i) * 0.37f, dz = -Mathf.Sin(t * 0.29f + i * 2f) * 0.29f;
-                b.transform.localPosition = new Vector3(x, Mathf.Abs(Mathf.Sin(t * 3f)) * 0.04f, z);
+                var an = b.GetComponentInChildren<Animator>();
+                // 굽힌 몸은 걷기 동작이 있으니 통통 튀지 않고 빠르기(m/초)를 넘긴다 — 도형 대역만 튄다
+                b.transform.localPosition = new Vector3(x, an != null ? 0f : Mathf.Abs(Mathf.Sin(t * 3f)) * 0.04f, z);
+                if (an != null) an.SetFloat("Speed", new Vector2(dx * inner, dz * inner).magnitude);
                 if (dx * dx + dz * dz > 1e-5f) b.transform.localRotation = Quaternion.LookRotation(new Vector3(dx, 0f, dz));
             }
         }
