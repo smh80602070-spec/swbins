@@ -1,6 +1,6 @@
 #!/bin/bash
 # K-0188 ③ ② 86 몰아서 자르기: 관절 정본 → 가린 몸통 로컬 SD 인페인트 → cut → preview (멱등 — rig/rig.json 있으면 건너뜀)
-cd /c/swbins; L=tools/ai-art/_out/k188/cut86.log
+cd /c/swbins; L=tools/ai-art/_out/k188/cut86.log; export GEN_TIMEOUT=${GEN_TIMEOUT:-1500}   # K-0187 Blender 와 GPU 를 나누면 한 장 8분 넘음
 while read id v f; do
   [ -f tools/ai-art/_out/k188/p/$id/rig/rig.json ] && continue
   cp tools/ai-art/k188/$id.joints.json tools/ai-art/_out/k188/p/$id/joints.json
