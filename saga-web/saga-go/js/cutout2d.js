@@ -16,6 +16,11 @@
  *   뼈 16 고정(이름 그대로): hip(뿌리) · chest · head · hair · armUL·armLL·handL · armUR·armLR·handR · legUL·legLL·footL · legUR·legLR·footR
  *     (L = 화면 안쪽 팔·다리 — 몸 뒤에 그린다, R = 바깥쪽). 옷자락·머리카락 덧뼈는 "extra": { "cape": { "parent": "chest", "x":…, "y":… } } 로 더한다.
  *   클립 일곱: idle(숨쉬기) · walk · run · attack · hit · death · jump — 오른쪽을 본다(왼쪽은 좌우 뒤집기).
+ *   W-0445 공용 동작 팩 `_clips/side.json`(K-0199, 3D 모캡·동작 98 + 도포용 `<이름>~robe`) — 같은 키 꼴. 찾는 순서 = 팩 → rig.clips → 기본 CLIPS
+ *     (손잡이 cutout2d.pack: 1 기본 · 2 rig.clips 먼저 · 0 팩 끔). 기본은 시트 눈 판정 ○ 인 것만(PACK_OK — 걷기·달리기·서기·맞기·무기 공격 열),
+ *     attack 에 o.weapon(sword·spear·axe·dagger·bow·fist·gun …)이 오면 무기별 공격. rig.skirt 또는 rig.robe 면 ~robe 판.
+ *     ✗(10-25 시트): 전투 몸짓 묶음 k.*·knockdown·guard·dodge·victory 는 골반 이동이 커 몸이 뜨거나 날아감 · 모캡 death 는 발 아래로 꺼짐 · jump 는 제자리 웅크림 · staff_heavy 끝에 가라앉음
+ *     → 손잡이 cutout2d.packAll 1 이면 팩 이름 아무거나(자체툴 고친 뒤 보기용). 시트 tools/playcheck/cutout-pack-sheet.mjs
  *
  * ── 쓰는 법 ─────────────────────────────────────────────────────────────────
  *   mode2d.draw 가 맨 앞에서 DG.cutout2d.drawFor(ctx, o, 몸높이px) 를 부른다 — 손잡이 `cutout2d.on`:
@@ -72,7 +77,34 @@
     }
     return keys[keys.length - 1];
   }
-  function clipOf(rig, name) { var n = CLIP_OF[name] || 'idle'; return (rig && rig.clips && rig.clips[n]) || CLIPS[n]; }
+  /* W-0445 공용 동작 팩(K-0199) — 한 번만 받는다. 받기 전·실패면 null(옛 그대로) */
+  var pack = null, packState = 'none';
+  function packClips() {
+    var m = +tuned('cutout2d.pack', 1);
+    if (!m) { return null; }
+    if (packState === 'none') { packState = 'loading'; loadJson(base() + '_clips/side.json', function (j) { pack = j || {}; packState = 'ok'; }, function () { packState = 'fail'; }); }
+    return pack;
+  }
+  /* 팩 이름 갈래 — attack2·heavy 는 팩의 연속·강공, 무기별 공격 */
+  var PACK_OF = { attack: 'sword_2', attack2: 'sword_3', heavy: 'sword_heavy' };
+  var WPN_ATK = { sword: 'sword_2', spear: 'spear_1', halberd: 'spear_1', guandao: 'spear_1', axe: 'axe_1', club: 'axe_1', dagger: 'dagger_1', bow: 'bow_1', fist: 'fist_1', gun: 'gun_1' };
+  var PACK_OK = { walk: 1, run: 1, idle: 1, hit: 1, sword_2: 1, sword_3: 1, sword_heavy: 1, spear_1: 1, axe_1: 1, dagger_1: 1, bow_1: 1, fist_1: 1, gun_1: 1 };
+  function fromPack(rig, name) {
+    var P = packClips(); if (!P) { return null; }
+    var n = PACK_OF[name] || name, robe = rig && (rig.skirt || rig.robe);
+    if (!PACK_OK[n] && !+tuned('cutout2d.packAll', 0)) { return null; }
+    return (robe && P[n + '~robe']) || P[n] || null;
+  }
+  function clipOf(rig, name) {
+    var n = CLIP_OF[name] || 'idle', own = CLIP_OF[name] && rig && rig.clips && rig.clips[n], pk = fromPack(rig, name);
+    if (+tuned('cutout2d.pack', 1) === 2) { return own || pk || CLIPS[n]; }
+    return pk || own || CLIPS[n];
+  }
+  /** o.clip(+무기) → 그릴 이름. 팩·기본 어디에도 없으면 idle — 순수(진단) */
+  function nameOf(rig, clip, weapon) {
+    var c = clip === 'attack' && weapon && WPN_ATK[weapon] && fromPack(rig, WPN_ATK[weapon]) ? WPN_ATK[weapon] : clip;
+    return CLIP_OF[c] || fromPack(rig, c) ? c : 'idle';
+  }
   /** → { 뼈: { rot(도), dx, dy } } — phase 0~1 */
   function sample(rig, name, phase) {
     var c = clipOf(rig, name), out = {}, i, b, k;
@@ -161,8 +193,8 @@
   /** o = { x, y(발), h(몸 px), clip, t, facing(±1·'left'·'right'), key(배우 — 관성), alpha } */
   function drawRig(ctx, R, o) {
     var rig = R.rig, k = (o.h || 62) / (rig.h || 100), left = o.facing === 'left' || (typeof o.facing === 'number' && o.facing < 0);
-    var clip = CLIP_OF[o.clip] ? o.clip : 'idle', ph = phaseOf(rig, CLIP_OF[clip], o.t), now = global.performance ? global.performance.now() : Date.now();
-    var M = pose(rig, CLIP_OF[clip], ph, swayAng(o.key || 'x', o.x, now, 1));
+    var clip = nameOf(rig, o.clip, o.weapon), ph = phaseOf(rig, clip, o.t), now = global.performance ? global.performance.now() : Date.now();   // W-0445 팩 이름 그대로(옛 = CLIP_OF 일곱으로 접기)
+    var M = pose(rig, clip, ph, swayAng(o.key || 'x', o.x, now, 1));
     var parts = (rig.parts || []).slice().sort(function (a, b) { return (a.z || 0) - (b.z || 0); }), i, p, m;
     ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
@@ -205,7 +237,7 @@
     else { var id = rigIdFor(o.pool); R = id ? rigOf(id) : null; }
     if (!R) { return false; }
     var hc = o.key ? holdClip(o.key, o.clip, o.t, global.performance ? global.performance.now() : Date.now()) : { clip: o.clip, t: o.t };   // W-0402 ③ — 배우 열쇠가 있을 때만(같은 풀 둘이 멈춤을 나눠 쓰지 않게)
-    return drawRig(ctx, R, { x: o.x, y: o.y, h: bodyPx, clip: hc.clip, t: hc.t, facing: o.facing, key: o.key || o.pool, alpha: o.alpha });
+    return drawRig(ctx, R, { x: o.x, y: o.y, h: bodyPx, clip: hc.clip, t: hc.t, facing: o.facing, key: o.key || o.pool, alpha: o.alpha, weapon: o.weapon });
   }
 
   /** 쉬는 자세(또는 clip·phase)의 몸 위끝·발 — 뼈 단위(발 = 0, 위 −). 무기 부위(img 이름에 weapon)는 뺀다. 순수(진단 「발 y·몸 높이」) */
@@ -240,5 +272,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.cutout2d = { BONES: BONES, PARENT: PARENT, REST: REST, CLIPS: CLIPS, sample: sample, phaseOf: phaseOf, pose: pose, stubRig: stubRig, has: has, drawFor: drawFor, demo: demo, bounds: bounds, base: base, rigIdFor: rigIdFor, holdClip: holdClip };
+  global.DG.cutout2d = { BONES: BONES, PARENT: PARENT, REST: REST, CLIPS: CLIPS, sample: sample, phaseOf: phaseOf, pose: pose, stubRig: stubRig, has: has, drawFor: drawFor, nameOf: nameOf, packClips: packClips, WPN_ATK: WPN_ATK, PACK_OK: PACK_OK, demo: demo, bounds: bounds, base: base, rigIdFor: rigIdFor, holdClip: holdClip };
 })(window);

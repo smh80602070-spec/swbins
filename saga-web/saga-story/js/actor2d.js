@@ -23,9 +23,9 @@
     if (!pool) { return false; }
     o = o || {};
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 62;
-    var ht = M.actT ? M.actT('me:hit', o.hurt) : null, at = M.actT ? M.actT('me:atk', o.atk) : null;   // W-0073 단계 4 — 맞음 > 공격 > 공중 > 걷기 > 서기
+    var ht = M.actT ? M.actT('me:hit', o.hurt) : null, at = M.actT ? M.actT('me:atk', o.atk) : null;   // W-0073 단계 4 — 맞음 > 공격 > 공중 > 걷기 > 서기 · W-0445 무기 종류(look.weapon)를 넘겨 컷아웃이 무기별 공격(팩)
     var now = o.now || Date.now(), ac = airClip(o.air, o.vy, now), clip = ht !== null ? 'hit' : (at !== null ? 'attack' : (ac ? ac.clip : (o.walking ? 'walk' : 'idle')));
-    return M.draw(ctx, { pool: pool, clip: clip, t: ht !== null ? ht : (at !== null ? at : (ac ? ac.t : null)), facing: o.facing, ms: o.now || Date.now(), x: x, y: y, scale: h / tH, stride: (o.wx != null && M.pace) ? M.pace('me', o.wx, o.wy, o.ppu, h, o.now || Date.now()) : null });
+    return M.draw(ctx, { pool: pool, clip: clip, t: ht !== null ? ht : (at !== null ? at : (ac ? ac.t : null)), facing: o.facing, weapon: ref && ref.look ? ref.look.weapon : null, ms: o.now || Date.now(), x: x, y: y, scale: h / tH, stride: (o.wx != null && M.pace) ? M.pace('me', o.wx, o.wy, o.ppu, h, o.now || Date.now()) : null });
   }
 
   global.DG = global.DG || {};
