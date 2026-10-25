@@ -44,6 +44,7 @@ namespace Saga.Go.World
             Object.FindFirstObjectByType<BeaconTower>()?.RefreshVisualFromState();
 
             CombineStaticBatches();
+            GoZones.Install(); // tasks U-0226 본 지도 12구역 — 정적 묶음 뒤(묶인 렌더러도 enabled 로 끄고 켠다)
             GoHouseInterior.Install(); // U-0039 — 마을집 House_2 에 들어갈 수 있는 방(포켓 공간, 방 GLB 없으면 안 세운다)
             GoSettingsState.ApplyToAllScalers();
             GoSettingsState.ApplyGraphicsQuality();

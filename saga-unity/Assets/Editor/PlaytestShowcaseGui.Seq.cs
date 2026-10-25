@@ -326,6 +326,18 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] track 흔적 {traces.Count}곳 · 둘레 {tf.ShownCount} · 첫 흔적 {traces[0].Key} {traces[0].Kind} @ {traces[0].Pos} · 줄 {Saga.Go.Data.GoTrack.Line(traces[0].Pos)}");
                         break;
                     }
+                    case "gozone":   // U-0226 사가만리 — 구역 4 동쪽 경계 8m 안에서 동쪽(구역 5)을 본다(이웃 띠 24m 너머가 비는지)
+                    {
+                        var who = GameObject.FindWithTag("Player");
+                        var zs = Saga.Go.World.GoZones.Instance;
+                        if (who == null || zs == null) { Skip(act); return; }
+                        var rc = Saga.Go.World.GoZones.RectOf(4);
+                        Teleport(who.transform, Saga.Core.AnonymousCrowd.Grounded(new Vector3(rc.xMax - 8f, 5f, rc.center.y)) + Vector3.up * 0.2f);
+                        who.transform.rotation = Quaternion.LookRotation(Vector3.right);
+                        zs.Tick(who.transform.position);
+                        Debug.Log($"[ShowcaseGui] gozone 구역 {zs.Current} · 보임 {zs.VisibleCount}/{zs.ManagedCount} · 자리 {who.transform.position}");
+                        break;
+                    }
                     case "frosttrack":   // U-0103 사가만리 — 서리봉 고원 첫 흔적 곁(3m 남쪽)으로, 고원 흔적 하나를 읽어 목표판 줄이 "흔적 1/3"
                     {
                         var tf = Saga.Go.World.TrackField.Instance;
