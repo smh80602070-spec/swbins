@@ -267,7 +267,12 @@ namespace Saga.Core
             float ankleY = Mathf.Min(feetRest[0].y, feetRest[1].y);
             // 몸 크기 비례 — 수치(웹·고돗)는 엉덩이~발목 0.85m 사람 기준. 1만리 사람은 키 3.4m 라 그만큼 키운다.
             float scale = Mathf.Max(0.3f, (_bones[BHips].position.y - ankleY) / 0.85f);
-            float drop = (ankleY + SitHipUp * scale) - _bones[BHips].position.y;
+            // tasks U-0235(고돗 G-0394) — 예전엔 엉덩이 뼈를 발목 높이 + 0.08 에 둬 발목 높이·골반 두께만큼 떴다.
+            // 허벅지 뼈 = 땅 + 허벅지 반지름(0.08 × 허벅지 쉬는 높이/0.9), 엉덩이 뼈는 그 위 쉬는 높이 차만큼.
+            float thighRest = Mathf.Max(0.05f, Mathf.Min(_bones[BThigh].position.y, _bones[BThigh + 1].position.y) - groundY);
+            float thighR = SitHipUp * thighRest / 0.9f;
+            float hipOverThigh = _bones[BHips].position.y - Mathf.Min(_bones[BThigh].position.y, _bones[BThigh + 1].position.y);
+            float drop = (groundY + thighR + hipOverThigh) - _bones[BHips].position.y;
             if (drop < 0f) MoveHips(Vector3.up * (drop * w));
             Vector3 hip = _bones[BHips].position;
             for (int s = 0; s < 2; s++)
@@ -284,21 +289,44 @@ namespace Saga.Core
                 _touched[BFoot + s] = true;
             }
             Turn(BSpine, SitLean * w, r);
-            // 팔 — 대기 자세에 각도를 더하면 리그마다 팔이 허공으로 뜬다(1만리 촬영 10-21) → 방향으로 맞춘다:
-            // 윗팔은 제 무릎 쪽, 아래팔은 무릎 앞 아래로(손이 무릎에 얹히게).
+            // 팔 — tasks U-0235(고돗 G-0394): 두 뼈 IK 로 손을 같은 쪽 무릎 위 0.05·엉덩이 쪽 0.04 에, 팔꿈치는 바깥·아래.
+            float wk = 0f;
             for (int s = 0; s < 2; s++)
             {
                 var ua = _bones[BUArm + s]; var la = _bones[BLArm + s];
                 if (ua == null || la == null) continue;
+                if (_hands[s] == null && _animator != null) _hands[s] = _animator.GetBoneTransform(s == 0 ? HumanBodyBones.LeftHand : HumanBodyBones.RightHand);
+                var hand = _hands[s];
                 Vector3 knee = _bones[BCalf + s].position;
-                Vector3 upDir = (knee + f * (0.05f * scale) - ua.position).normalized;
-                Vector3 cur = la.position - ua.position;
-                RotateTo(ua, cur, Vector3.Slerp(cur.normalized, upDir, w));
-                Vector3 hand = HandPos(s, la) - la.position;
-                Vector3 foreDir = (f - Vector3.up * 0.35f).normalized;
-                if (hand.sqrMagnitude > 1e-6f) RotateTo(la, hand, Vector3.Slerp(hand.normalized, foreDir, w));
+                Vector3 toHip = _bones[BHips].position - knee; toHip.y = 0f;
+                Vector3 goal = knee + Vector3.up * (0.05f * scale) + (toHip.sqrMagnitude > 1e-6f ? toHip.normalized * (0.04f * scale) : Vector3.zero);
+                if (hand != null)
+                {
+                    Vector3 cur = hand.position;
+                    Vector3 pole = (s == 0 ? -r : r) - Vector3.up * 0.6f;
+                    TwoBone(ua, la, hand, Vector3.Lerp(cur, goal, w), pole);
+                    wk = Mathf.Max(wk, (hand.position - goal).magnitude / scale);
+                }
+                else
+                {
+                    Vector3 cur = la.position - ua.position;
+                    RotateTo(ua, cur, Vector3.Slerp(cur.normalized, (goal - ua.position).normalized, w));
+                }
             }
+            SitWristKnee = wk;
+            if (w > 0.99f && !_sitLogged && Environment.GetEnvironmentVariable("SAGA_SIT_LOG") == "1")
+            {
+                _sitLogged = true;
+                float ray = Physics.Raycast(_bones[BHips].position + Vector3.up * 0.2f, Vector3.down, out var hit, 10f, ~0, QueryTriggerInteraction.Ignore) ? hit.point.y : float.NaN;
+                Debug.Log($"[LifePose] sit 땅 {groundY:F3}·광선 땅 {ray:F3}({(ray.Equals(float.NaN) ? "-" : hit.collider.name)})·발목 {ankleY:F3}·엉덩이 {_bones[BHips].position.y:F3}·허벅지 반지름 {thighR:F3}·scale {scale:F2}·손목–무릎 {wk:F3}·손 {(_hands[0] != null ? _hands[0].position.ToString("F2") : "-")}/{(_hands[1] != null ? _hands[1].position.ToString("F2") : "-")}·무릎 {_bones[BCalf].position:F2}/{_bones[BCalf + 1].position:F2}");
+            }
+            SitHipGap = (Mathf.Min(_bones[BThigh].position.y, _bones[BThigh + 1].position.y) - thighR - groundY) / scale;
         }
+
+        /// <summary>진단 U-0235 — 앉은 뒤 엉덩이 살 아래와 땅 사이(몸 크기로 나눈 m) · 손목과 무릎 목표 사이 가장 큰 것.</summary>
+        public float SitHipGap { get; private set; }
+        public float SitWristKnee { get; private set; }
+        private bool _sitLogged;
 
         private readonly Transform[] _hands = new Transform[2];
         /// <summary>손 뼈 자리(없으면 아래팔 첫 자식).</summary>

@@ -87,11 +87,13 @@ namespace Saga.EditorTools
                         {
                             mine.Apply();
                             float dy = y0 - hips.position.y;
+                            float gap = mine.SitHipGap, wk = mine.SitWristKnee; // tasks U-0235 엉덩이 땅에·손 무릎 위
+                            if (Mathf.Abs(gap) > 0.03f || wk > 0.08f) Fail($"앉기 엉덩이 살–땅 {gap:F3}m·손목–무릎 {wk:F3}m(몸 크기 나눔)");
                             mine.ResetForTest();
                             mine.Apply();
                             float back = Mathf.Abs(hips.position.y - y0);
                             if (dy < 0.2f || back > 0.01f) Fail($"앉기 엉덩이 내림 {dy:F2}m·되돌림 {back:F3}");
-                            body = $"엉덩이 {dy:F2}m 내림·되돌림";
+                            body = $"엉덩이 {dy:F2}m 내림·살–땅 {gap:F3}·손목–무릎 {wk:F3}·되돌림";
                         }
                         else body = "판 hold 로 안 앉음(그대로)";
                         mine.ResetForTest();
