@@ -14,5 +14,8 @@
  "concrete": "concrete_v02.png",
  "brick": "brick_v02.png",
  "thatch": "thatch_v02.png",
- "corrugated": "corrugated_v02.png"
+ "corrugated": "corrugated_v02.png",
+ "mud_gravel": "mud_gravel_v01.png",
+ "path_grass": "path_grass_v01.png",
+ "field_mix": "field_mix_v01.png"
 }

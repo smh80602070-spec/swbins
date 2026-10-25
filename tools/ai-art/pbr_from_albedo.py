@@ -56,6 +56,10 @@ SETS = {
     'brick':     dict(seam='cut',   strength=3.5, invert=False, rough=(0.80, 0.12)),
     'thatch':    dict(seam='blend', strength=3.0, invert=False, rough=(0.90, 0.08)),
     'corrugated': dict(seam='blend', strength=3.0, invert=False, rough=(0.55, 0.20)),
+    # K-0193 — ground_mix.py 코드 섞음(이미 감싼 이음 — blend 는 다시 해도 무해)
+    'mud_gravel': dict(seam='blend', strength=3.0, invert=False, rough=(0.85, 0.12)),
+    'path_grass': dict(seam='blend', strength=2.5, invert=False, rough=(0.88, 0.10)),
+    'field_mix':  dict(seam='blend', strength=2.0, invert=False, rough=(0.87, 0.10), flat=1.0),
 }
 FLATTEN = 0.7
 HI = 1024          # 1024² 견본(2048 은 480초·1152 는 장당 4분+ 10-13) — 이보다 크면 줄이기만
