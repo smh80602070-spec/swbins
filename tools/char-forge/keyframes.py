@@ -151,6 +151,36 @@ def _kneel():
     return True, [(0, k(0, 0)), (30, k(0.010, 0.03)), (60, k(0, 0)), (90, k(0.010, -0.03)), (120, k(0, 0))]
 
 
+def _crouch_pose(breath=0.0, look=0.0, fl=(0.15, 0.10, 0.104), fr=(-0.15, -0.06, 0.104), arm=0.0):
+    """웅크린 자세(K-0197) — 골반을 32cm 낮춰 무릎을 앞으로 굽히고(발은 어깨너비·왼발 조금 앞), 등을 앞으로 숙여 머리를 낮춘다.
+    두 손은 무릎 위 앞에 가볍게 든다(바로 움직일 수 있게). look = 고개 좌우(두리번) · fl/fr = 발목 자리(걸음) · arm = 손 앞뒤 흔들(왼손 +)."""
+    return P(base=('Idle_Loop', 0), pelvis=(0, -0.06, -0.32 - breath),
+             dirs={'pelvis': (0, 0.10, 1), 'spine_01': (0, 0.30, 1), 'spine_02': (0, 0.42, 1), 'spine_03': (0, 0.40, 1),
+                   'neck_01': (look, 0.10, 1),
+                   'foot_l': (0.06, 1, -0.55), 'foot_r': (-0.06, 1, -0.55),
+                   'clavicle_l': (1, -0.2, 0), 'clavicle_r': (-1, -0.2, 0)},
+             pole={'foot_l': (0.15, 1, 0.2), 'foot_r': (-0.15, 1, 0.2), 'hand_l': (1, -0.6, 0), 'hand_r': (-1, -0.6, 0)},
+             ik={'foot_l': fl, 'foot_r': fr,
+                 'hand_l': (0.20, 0.34 + arm, 0.66 - breath), 'hand_r': (-0.18, 0.38 - arm, 0.70 - breath)})
+
+
+def _crouch_idle():
+    """웅크려 서기(반복 4초) — 숨 쉬며 몸이 조금 오르내리고 고개를 좌우로 살핀다(몰래 다가가기 U-0232)."""
+    return True, [(0, _crouch_pose()), (30, _crouch_pose(0.012, 0.12)), (60, _crouch_pose()), (90, _crouch_pose(0.012, -0.12)), (120, _crouch_pose())]
+
+
+def _crouch_walk():
+    """웅크려 걷기(제자리 반복 1.2초 = 두 걸음, 보폭 0.36m) — 웅크린 자세 그대로 발만 번갈아 내딛는다. 내디딘 때 골반이 조금 더 내려가고
+    지나가는 발은 낮게(발목 0.18m) 든다. 손은 반대 발과 짝으로 조금 흔든다. 몸은 게임이 옮긴다(U-0232 걸음 0.5배)."""
+    F, B, M, Z, L = 0.20, -0.16, 0.02, 0.104, 0.18
+    k = lambda fl, fr, br, arm: _crouch_pose(br, 0.0, (0.15,) + fl, (-0.15,) + fr, arm)
+    k0 = k((F, Z), (B, Z), 0.02, -0.06)     # 왼발 앞 딛음
+    k1 = k((M, Z), (M, L), 0.0, 0.0)        # 오른발 지나감
+    k2 = k((B, Z), (F, Z), 0.02, 0.06)      # 오른발 앞 딛음
+    k3 = k((M, L), (M, Z), 0.0, 0.0)        # 왼발 지나감
+    return True, [(0, k0), (9, k1), (18, k2), (27, k3), (36, k0)]
+
+
 def _heal():
     """치유·되살림 시전 — 두 손을 가슴 앞에 모았다가 머리 위로 들어 올려 기운을 모으고(몸이 조금 젖혀진다),
     무릎을 굽히며 앞 아래로 두 손바닥을 펼쳐 내린다. 발은 그 자리."""
@@ -729,6 +759,8 @@ CLIPS = {
     'CF_Bow_Idle_Loop': _bow_idle,
     'CF_Bow_Shoot': _bow_shoot,
     'CF_Kneel_Loop': _kneel,
+    'CF_Crouch_Idle_Loop': _crouch_idle,
+    'CF_Crouch_Walk_Loop': _crouch_walk,
     'CF_Heal': _heal,
     'CF_Strafe_L_Loop': _strafe_l,
     'CF_Strafe_R_Loop': _strafe_r,

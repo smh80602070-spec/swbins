@@ -34,7 +34,9 @@
   "hang": "CF:CF_Hang_Loop",
   "flag_wave": "CF:CF_Flag_Wave_Loop",
   "ride_idle": "CF:CF_Ride_Idle_Loop",
-  "ride_charge": "CF:CF_Ride_Charge_Loop"
+  "ride_charge": "CF:CF_Ride_Charge_Loop",
+  "crouch_walk": "CF:CF_Crouch_Walk_Loop",
+  "crouch_idle": "CF:CF_Crouch_Idle_Loop"
  },
  "report": {
   "gather": {
@@ -437,6 +439,20 @@
    "frames": 17,
    "sec": 0.57,
    "ground_err_m": null,
+   "drift_m": 0.0
+  },
+  "crouch_walk": {
+   "cf": "CF_Crouch_Walk_Loop",
+   "frames": 37,
+   "sec": 1.23,
+   "ground_err_m": 0.0,
+   "drift_m": 0.0
+  },
+  "crouch_idle": {
+   "cf": "CF_Crouch_Idle_Loop",
+   "frames": 121,
+   "sec": 4.03,
+   "ground_err_m": 0.0,
    "drift_m": 0.0
   }
  }

@@ -184,6 +184,7 @@ def check_pack():
         prevq, jump, jump_b, wrist, low = None, 0.0, '', 0.0, 9.0
         contact = {k: [] for k in BONES2.values()}
         hips_xy = []
+        hips_up = []                                                       # K-0197 — 골반 높이(쉬는 머리 높이 비) 최저·최고를 보고에 싣는다(웅크림 판정)
         hit = {i: None for i in range(len(c.get('expect', [])))}
         for f in range(f0, f1 + 1):
             sc.frame_set(f)
@@ -205,6 +206,7 @@ def check_pack():
                 contact[b].append(P[b].copy())
             hips_xy.append(P[BONES['hips']].copy())
             r = measure(arm, rest)
+            hips_up.append(r['hips']['up'])
             for k in ('lfoot', 'rfoot'):
                 v = three(arm, BONES2[k])
                 hp = three(arm, BONES['hips'])
@@ -241,7 +243,7 @@ def check_pack():
             if hit[i] is None:
                 bad.append('expect ' + ''.join(map(str, e)))
         info = {'frames': f1 - f0 + 1, 'slip_m': round(slip, 3), 'slip_at': slip_at, 'wrist_deg': round(wrist, 1), 'low_m': round(low, 3), 'jump_deg': round(jump, 1), 'jump_at': jump_b,
-                'expect_frames': [hit[i] for i in hit], 'drift_m': round((hips_xy[-1].xy - hips_xy[0].xy).length, 3)}
+                'expect_frames': [hit[i] for i in hit], 'drift_m': round((hips_xy[-1].xy - hips_xy[0].xy).length, 3), 'hips_up': [min(hips_up), max(hips_up)]}
         ok = not bad
         ok_n += ok
         res.append(dict(info, game=g, ok=ok, bad=bad))
