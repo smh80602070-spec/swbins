@@ -905,7 +905,7 @@
     /* 걷는 쪽을 바라본다 — 적이 없을 때 스킬·돌진이 나가는 쪽. 전엔 마지막으로 회피한 쪽(없으면 남쪽)으로만 나갔다(2026-09-28) */
     var Wm = global.DG.world, mv = Wm && Wm.motion;
     if (mv && mv.speed > 1.5 && (mv.vx || mv.vy)) { S.lastDx = mv.vx; S.lastDy = mv.vy; }
-    step(S, dt, { px: pos.x, py: pos.y, blocked: bl });
+    step(S, dt, { px: pos.x, py: pos.y, blocked: bl }); if (global.DG.artifactSkill) { global.DG.artifactSkill.tick(S, dt, pos.x, pos.y); }   /* W-0438 보패 4 세트 기술 */
     if (S.autoWalk && !(autoOn() && engaged(S))) { S.autoWalk = false; var Ww = global.DG.world; if (Ww && Ww.walkingTo && Ww.walkingTo() && Ww.walkTo && !(core().save.auto && core().save.auto.on)) { Ww.walkTo(pos.x, pos.y, false); } } if (!bl && autoOn() && engaged(S)) {   // R-5 — 싸움이 끝나거나 자동을 끄면 자동 사냥이 건 걸음을 거둔다(자동 순행 걸음은 그대로)
       lastAuto += dt;
       /* 2026-09-28 실기 Q6 "너무 오래 걸림" — 0.3초마다만 눌러 칼 3타(0.34초 박자)의 절반을 놓쳤다(초당 46 피해,

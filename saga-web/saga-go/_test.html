@@ -108,6 +108,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/kits.js"></script>
 <script src="js/weapon.js"></script>
 <script src="js/artifact.js"></script>
+<script src="js/artifact-skill.js"></script>
 <script src="js/cooking.js"></script>
 <script src="js/fishing.js"></script>
 <script src="js/achieve.js"></script>
@@ -17739,6 +17740,20 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         var ok = !!b1 && closed && c1 && c2 && hist && c3;
         return ok || ('실패 ' + JSON.stringify({ b1: !!b1, closed: closed, calls: calls, hist: hist, c3: c3 }));
       } finally { FC.challenge = keepCh; C.save.items.scroll = sc; C.save.player.fame = fame; try { EN.close && EN.close(); } catch (e) {} W.removeSpawn && W.removeSpawn(99931); }
+    });
+    t('W-0438 ① 보패 세트 기술 — 네 점 맞춘 세트마다 기술 하나 · 싸움 중(둘레에 적) 쿨마다 둘레 적 전부 공격력×배율 · 셋 점이면 없음 · 끔', function () {
+      var AS = DG.artifactSkill, A = DG.artifact, FC = DG.fieldCombat, C = DG.core; if (!AS || !A || !FC) { return '실패 DG.artifactSkill 없음'; }
+      var keep = { eq: A.equippedOf, get: A.get, fw: FC.foesWithin, hf: FC.hitFoe, push: FC.push }, pieces = 4, hits = [];
+      A.equippedOf = function () { var o = {}; for (var i = 0; i < pieces; i++) { o['s' + i] = 'a' + i; } return o; }; A.get = function (uid) { return { set: 'crimson', uid: uid }; };
+      FC.foesWithin = function () { return [{ uid: 1 }, { uid: 2 }]; }; FC.hitFoe = function (S, f, m, raw, el) { hits.push([f.uid, Math.round(raw), el]); }; FC.push = function () {};
+      try {
+        AS._reset(); var S = { party: [{ id: 'me', atk: 100, el: 'wind', hp: 10 }], active: 0 };
+        var sk = AS.skillsOf('me'), n1 = AS.tick(S, 0.1, 0, 0), n2 = AS.tick(S, 1, 0, 0), n3 = AS.tick(S, 10, 0, 0);
+        pieces = 3; var three = AS.skillsOf('me').length; pieces = 4;
+        C.setTune('go.artSkill', 0); var off = AS.skillsOf('me').length; C.setTune('go.artSkill', 1);
+        var ok = sk.length === 1 && sk[0].set === 'crimson' && n1 === 1 && n2 === 0 && n3 === 1 && hits.length === 4 && hits[0][1] === 180 && hits[0][2] === 'fire' && three === 0 && off === 0;
+        return ok ? (sk[0].name + ' · 쿨 ' + sk[0].cd + '초 · 적 둘 ×' + sk[0].mul + ' = ' + hits[0][1] + ' · 셋 점 없음') : ('실패 ' + JSON.stringify({ sk: sk.length, n1: n1, n2: n2, n3: n3, hits: hits, three: three, off: off }));
+      } finally { A.equippedOf = keep.eq; A.get = keep.get; FC.foesWithin = keep.fw; FC.hitFoe = keep.hf; FC.push = keep.push; AS._reset(); }
     });
     t('W-0426 들판 수수께끼 — 구역마다 셋(돌·꽃 고리·바람개비, 결정적·구역 안) · 돌 곁 = 씨앗 · 꽃 다섯 차례로 = 씨앗(틀리면 처음부터) · 바람개비 2초 가만히 = 씨앗 · 푼 자리 다시 안 섬', function () {
       var FR = DG.fieldRiddle, C = DG.core; if (!FR) { return '실패 DG.fieldRiddle 없음'; }
