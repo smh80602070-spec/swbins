@@ -3382,6 +3382,12 @@
     { "key": "today.button", "value": "오늘" },
     { "key": "today.week", "value": "이번 주" },
     { "key": "today.daily_bonus", "value": "넷 다 하면 마무리 — 금 {0} · 강화석 {1} · 인연 매듭 {2}" },
-    { "key": "today.week_bonus", "value": "다섯 다 받으면 완주 — {0}" }
+    { "key": "today.week_bonus", "value": "다섯 다 받으면 완주 — {0}" },
+    { "key": "bloodmoon.rise", "value": "🌕 핏빛 달이 떴다 — 쓰러진 것들이 다시 일어선다 (오늘 밤 전리품 ×2)" },
+    { "key": "riddle.seed", "value": "🌰 씨앗을 찾았다 ({0})" },
+    { "key": "riddle.reward5", "value": "숲 정령의 선물 — 금 300" },
+    { "key": "riddle.reward15", "value": "숲 정령의 선물 — 정예 재료 3" },
+    { "key": "riddle.reward30", "value": "숲 정령의 선물 — 강화석 3" },
+    { "key": "riddle.reward60", "value": "숲 정령의 선물 — 금 1500 · 정예 재료 5" }
   ]
 }

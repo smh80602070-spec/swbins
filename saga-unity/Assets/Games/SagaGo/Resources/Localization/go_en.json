@@ -3382,6 +3382,12 @@
     { "key": "today.button", "value": "Today" },
     { "key": "today.week", "value": "This week" },
     { "key": "today.daily_bonus", "value": "Finish all four — Gold {0} · Ore {1} · Bond knot {2}" },
-    { "key": "today.week_bonus", "value": "Claim all five for the full-week reward — {0}" }
+    { "key": "today.week_bonus", "value": "Claim all five for the full-week reward — {0}" },
+    { "key": "bloodmoon.rise", "value": "🌕 A blood moon rises — the fallen stand again (loot ×2 tonight)" },
+    { "key": "riddle.seed", "value": "🌰 Found a seed ({0})" },
+    { "key": "riddle.reward5", "value": "Forest spirit gift — gold 300" },
+    { "key": "riddle.reward15", "value": "Forest spirit gift — elite materials 3" },
+    { "key": "riddle.reward30", "value": "Forest spirit gift — enhancement ore 3" },
+    { "key": "riddle.reward60", "value": "Forest spirit gift — gold 1500 · elite materials 5" }
   ]
 }

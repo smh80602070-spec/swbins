@@ -775,6 +775,13 @@
     { "key": "crop.why_none", "value": "할 수 없다" },
     { "key": "today.crop_ripe", "value": "🌾 밭 거둘 칸 {0}" },
     { "key": "today.crop_water", "value": "💧 밭 물 주기 {0}/{1}" },
-    { "key": "today.crop_sow", "value": "🌱 밭에 씨를 뿌리자" }
+    { "key": "today.crop_sow", "value": "🌱 밭에 씨를 뿌리자" },
+    { "key": "keeper.name", "value": "숲지기" },
+    { "key": "today.birthday", "value": "🎂 오늘은 {0} 생일 — 말 걸면 하트 +3" },
+    { "key": "today.stars", "value": "🌠 지난밤 소원 {0} — 마을에 들면 열매" },
+    { "key": "birthday.toast", "value": "🎂 오늘은 {0} 생일 — 말을 걸어 축하해 주자" },
+    { "key": "stars.wish", "value": "🌠 소원 빌기" },
+    { "key": "stars.claim", "value": "🌠 지난밤 소원이 이루어졌다 — 열매 +{0}" },
+    { "key": "stars.wished", "value": "🌠 소원을 빌었다 ({0}/{1}) — 내일 마을에서" }
   ]
 }

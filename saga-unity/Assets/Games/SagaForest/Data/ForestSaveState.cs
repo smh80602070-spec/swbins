@@ -84,6 +84,7 @@ namespace Saga.Forest.Data
             public string relicsJson; // tasks U-0177 유적 조각·복원 — 버전 그대로: 옛 세이브는 null → 빈 것.
             public string lotsJson; // tasks U-0127 작은 빈 집 — 버전 그대로: 옛 세이브는 null → 빈 집 없음.
             public string caveJson; // tasks U-0132 땅 아래 층 — 버전 그대로: 옛 세이브는 null → 가장 깊이 0·유물 그대로.
+            public string starsJson; // tasks U-0229 별똥별 소원 — 버전 그대로: 옛 세이브는 null → 빈 소원 0.
             public string heartsJson; // tasks U-0143 관계 하트 — 버전 그대로: 옛 세이브는 null → 전원 0.
             public string partnerJson; // tasks U-0144 동반자 — 버전 그대로: 옛 세이브는 null → 없음.
             // tasks U-0023 첫걸음 — 버전 그대로. JsonUtility 는 없는 List 를 빈 목록으로 읽으므로 `tutV`(0=없는 세이브=옛 세이브)로 가른다.
@@ -180,6 +181,7 @@ namespace Saga.Forest.Data
             data.hhaJson = ForestHha.Snapshot(); // tasks U-0189
             data.caveJson = ForestCave.Snapshot();
             data.heartsJson = ForestHearts.Snapshot();
+            data.starsJson = ForestStars.Snapshot(); // tasks U-0229
             data.partnerJson = ForestPartner.Snapshot();
             data.tutV = 1;
             data.tutDone = ForestTutorial.Ids();
@@ -259,6 +261,7 @@ namespace Saga.Forest.Data
             ForestHandState.Restore(data.handLv, data.handPerks, data.handPending);   // tasks U-0095
             ForestCave.Restore(data.caveJson); // tasks U-0132
             ForestHearts.Restore(data.heartsJson); // tasks U-0143
+            ForestStars.Restore(data.starsJson); // tasks U-0229
             ForestPartner.Restore(data.partnerJson); // tasks U-0144 — 손님 명단(visitSettled) 뒤
             ForestLivestock.Restore(data.livestockJson); // tasks U-0173
             ForestRelics.Restore(data.relicsJson); // tasks U-0177

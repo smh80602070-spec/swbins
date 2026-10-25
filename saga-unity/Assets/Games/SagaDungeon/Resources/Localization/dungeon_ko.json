@@ -936,6 +936,14 @@
     { "key": "friend.up", "value": "{0} {1}의 우정 Lv.{2} · {3} — \"{4}\"" },
     { "key": "today.season", "value": "🏆 시즌" },
     { "key": "today.season_next", "value": "다음 단계 {0}까지 {1}점" },
-    { "key": "today.season_top", "value": "맨 위 단계 — 시즌 끝까지 지키기" }
+    { "key": "today.season_top", "value": "맨 위 단계 — 시즌 끝까지 지키기" },
+    { "key": "bounty.rooms", "value": "방 {0}개 연달아 안 맞고 지나기" },
+    { "key": "bounty.trove", "value": "보물 방 {0}번 들르기" },
+    { "key": "bounty.chest_auto", "value": " · 📦 현상금 상자 금 +{0}" },
+    { "key": "bounty.chest_ready", "value": "📦 현상금 셋 다 채움 — 계단 곁에 현상금 상자" },
+    { "key": "bounty.chest_open", "value": "📦 현상금 상자 — 금 +{0}" },
+    { "key": "cursed.open", "value": "☠ 저주받은 상자가 열렸다 — 붉은 고리 안에서 24초 버텨라" },
+    { "key": "cursed.win", "value": "☠ 저주를 풀었다 — 금 +{0}" },
+    { "key": "cursed.lose", "value": "☠ 고리를 벗어났다 — 저주받은 상자가 사라졌다" }
   ]
 }

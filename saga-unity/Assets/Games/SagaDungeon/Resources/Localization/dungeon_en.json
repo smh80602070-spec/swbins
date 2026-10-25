@@ -936,6 +936,14 @@
     { "key": "friend.up", "value": "{0} Bond with {1} Lv.{2} · {3} — \"{4}\"" },
     { "key": "today.season", "value": "🏆 Season" },
     { "key": "today.season_next", "value": "{1} pts to next tier {0}" },
-    { "key": "today.season_top", "value": "Top tier — hold it until the season ends" }
+    { "key": "today.season_top", "value": "Top tier — hold it until the season ends" },
+    { "key": "bounty.rooms", "value": "Pass {0} rooms in a row unhit" },
+    { "key": "bounty.trove", "value": "Visit a treasure room {0} time(s)" },
+    { "key": "bounty.chest_auto", "value": " · 📦 Bounty chest gold +{0}" },
+    { "key": "bounty.chest_ready", "value": "📦 All three bounties done — a bounty chest waits by the stairs" },
+    { "key": "bounty.chest_open", "value": "📦 Bounty chest — gold +{0}" },
+    { "key": "cursed.open", "value": "☠ The cursed chest opened — hold out 24s inside the red ring" },
+    { "key": "cursed.win", "value": "☠ Curse lifted — gold +{0}" },
+    { "key": "cursed.lose", "value": "☠ You left the ring — the cursed chest vanished" }
   ]
 }

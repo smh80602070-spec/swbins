@@ -775,6 +775,13 @@
     { "key": "crop.why_none", "value": "Can't do that" },
     { "key": "today.crop_ripe", "value": "🌾 Field plots to harvest {0}" },
     { "key": "today.crop_water", "value": "💧 Water the field {0}/{1}" },
-    { "key": "today.crop_sow", "value": "🌱 Sow seeds in the field" }
+    { "key": "today.crop_sow", "value": "🌱 Sow seeds in the field" },
+    { "key": "keeper.name", "value": "Forest Keeper" },
+    { "key": "today.birthday", "value": "🎂 Today is {0}'s birthday — talk for +3 hearts" },
+    { "key": "today.stars", "value": "🌠 {0} wish(es) from last night — enter the village for fruit" },
+    { "key": "birthday.toast", "value": "🎂 Today is {0}'s birthday — go say happy birthday" },
+    { "key": "stars.wish", "value": "🌠 Make a wish" },
+    { "key": "stars.claim", "value": "🌠 Last night's wishes came true — fruit +{0}" },
+    { "key": "stars.wished", "value": "🌠 Wished ({0}/{1}) — collect in the village tomorrow" }
   ]
 }

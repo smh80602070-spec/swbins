@@ -49,6 +49,11 @@ namespace Saga.Forest.UI
                 ? ForestLocalization.T("today.visitor_done", "✓ {0} 오늘 손님 {1} — 부탁 마침")
                 : ForestLocalization.T("today.visitor", "{0} 오늘 손님 {1} — 부탁 들어주기"), v.Emoji, ForestVisitors.Name(v)), done));
 
+            // tasks U-0229 생일 — 오늘 생일인 주민이 있을 때만(말 걸면 하트 +3)
+            foreach (var bid in ForestBirthdays.Today(ForestVisitors.Today))
+                today.Add(TodayRow.Line(string.Format(ForestLocalization.T("today.birthday", "🎂 오늘은 {0} 생일 — 말 걸면 하트 +3"), ForestBirthdays.Name(bid)), ForestHearts.GainedToday(bid) > 0));
+            // tasks U-0229 별똥별 — 받을 소원이 있으면
+            if (ForestStars.Pending > 0) today.Add(TodayRow.Line(string.Format(ForestLocalization.T("today.stars", "🌠 지난밤 소원 {0} — 마을에 들면 열매"), ForestStars.Pending)));
             // tasks U-0223 밭 — 지었을 때만: 다 자란 칸이 있으면 거두기, 아니면 물 주기 n/m(자라는 칸이 없으면 씨 뿌리기 권함)
             if (ForestCrops.HasField)
             {

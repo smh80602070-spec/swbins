@@ -326,6 +326,15 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] track 흔적 {traces.Count}곳 · 둘레 {tf.ShownCount} · 첫 흔적 {traces[0].Key} {traces[0].Kind} @ {traces[0].Pos} · 줄 {Saga.Go.Data.GoTrack.Line(traces[0].Pos)}");
                         break;
                     }
+                    case "stars":   // U-0229 사가마을 — 밤 22시로 붙들고 별똥별 하나 + 소원 단추
+                    {
+                        var sky = Saga.Forest.World.ForestStarSky.Instance;
+                        if (sky == null) { Skip(act); return; }
+                        Saga.Forest.Data.ForestStars.NowFn = () => new System.DateTime(2026, 10, 25, 22, 0, 0);
+                        sky.Shoot();
+                        Debug.Log($"[ShowcaseGui] stars 별똥별 {sky.Streaks} · 단추 {sky.ButtonShown}");
+                        break;
+                    }
                     case "cursed":   // U-0228 사가나락 — 싸움 방에 저주받은 상자를 세우고 열어 첫 파도·붉은 고리를 보인다
                     {
                         var fr = Object.FindFirstObjectByType<Saga.Dungeon.World.DungeonFloorRunner>();

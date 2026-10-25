@@ -105,6 +105,15 @@ namespace Saga.Forest.Data
             int day = ForestVisitors.Today;
             if (r.lastTalk == day) return 0;
             r.lastTalk = day;
+            // tasks U-0229 생일 — 그날 첫 말 걸기는 +3, 하루 상한을 넘어도 그날 한 번은 들어간다
+            if (ForestBirthdays.IsBirthday(id, day))
+            {
+                int before = r.h;
+                if (r.gainDay != day) { r.gainDay = day; r.gained = 0; }
+                r.h = Mathf.Clamp(r.h + ForestBirthdays.Gain, 0, Max);
+                r.gained += r.h - before;
+                return r.h - before;
+            }
             return Bump(id, TalkGain);
         }
 
@@ -130,6 +139,7 @@ namespace Saga.Forest.Data
             var n = Next(id);
             string s = string.Format(ForestLocalization.T("heart.tail", " ♥ {0}/{1}"), Of(id), Max);
             if (n.HasValue) s += string.Format(ForestLocalization.T("heart.tail_next", " · 다음 {0}♥ {1}"), n.Value.At, UnlockName(n.Value));
+            if (ForestBirthdays.IsBirthday(id, ForestVisitors.Today)) s += " 🎂"; // tasks U-0229 생일
             return s;
         }
 
