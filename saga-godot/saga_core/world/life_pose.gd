@@ -2,8 +2,8 @@ extends SkeletonModifier3D
 
 ## G-0265 생활 몸짓(다섯 판 공용) — 웹 W-0303 pose3d.js 의 앉기·인사·둘러보기·체중과 life()(가만히 8초 → 앉기)·idleVariant(3~5초)를
 ## 뼈 회전 코드로(모캡·새 클립 없음). 애니메이션이 놓은 자세 위에 얹는 SkeletonModifier3D(본보기 seat_pose.gd·talk_face.gd).
-##   sit   땅에 무릎 세워 앉기 — 엉덩이 뼈를 발목 쉬는 높이 + SIT_HIP_UP 로 내리고, 발목을 엉덩이 앞 0.36m(오른쪽 0.34m)·발목 쉬는 높이에
-##         두는 두 뼈 IK(웹 SIT legIK(0.36, −0.02))로 허벅지·정강이를 풀고 발바닥은 쉬는 자세로 평평. 몸은 조금 뒤로, 두 팔은 무릎 쪽으로.
+##   sit   땅에 무릎 세워 앉기 — 허벅지 뼈를 땅 위 허벅지 반지름(SIT_THIGH_R, 몸 비례)에 두게 엉덩이를 내리고(G-0394), 발목을 엉덩이 앞 0.36m(오른쪽 0.34m)·발목 쉬는 높이에
+##         두는 두 뼈 IK(웹 SIT legIK(0.36, −0.02))로 허벅지·정강이를 풀고 발바닥은 쉬는 자세로 평평. 몸은 조금 뒤로, 두 손은 두 뼈 IK 로 무릎 위(_sit_arm).
 ##   wave  오른팔 인사 1.6초 — 팔꿈치를 어깨 옆 조금 위, 아래팔을 세워 좌우로 흔든다(앞으로 안 뻗음).
 ##   look  둘러보기 2.6초 — 머리·목·가슴을 위 축으로 +34° → −28° → 0.
 ##   shift 체중 옮기기 3.0초 — 엉덩이 옆 2cm·기울기 −4°, 허리 3°·가슴 2°.
@@ -18,11 +18,15 @@ extends SkeletonModifier3D
 const SIT_AFTER := 8.0
 const BLEND_T := 0.25
 const DUR := {"wave": 1.6, "look": 2.6, "shift": 3.0}
-const SIT_HIP_UP := 0.08
+## G-0394 — 옛 SIT_HIP_UP(발목 쉬는 높이 +0.08m)은 발목 뼈가 땅 위 10~13cm 라 엉덩이 살이 6~8cm 떴다(probe_life_sit).
+## 이제 허벅지 뼈(다리 시작)를 땅(몸 원점 y 0) 위 허벅지 반지름에 둔다 — 반지름은 몸 크기 비례(허벅지 쉬는 높이 0.9m 에 0.08m).
+const SIT_THIGH_R := 0.08
+const SIT_THIGH_REF := 0.9
 const SIT_FOOT_FWD := [0.36, 0.34]   # 왼·오른 발목을 엉덩이 앞 몇 m
 const SIT_LEAN := -8.0               # 몸 뒤로(°)
-const SIT_ARM := -42.0               # 윗팔을 앞으로(°, 무릎 쪽)
-const SIT_FORE := -28.0
+## G-0394 — 옛 팔(윗팔 앞으로 −42°·아래팔 −28° 만)은 쉬는 A자 팔을 그대로 든 꼴 → 두 뼈 IK 로 손목을 같은 쪽 무릎 위에.
+const SIT_HAND_UP := 0.05            # 손목 = 무릎 뼈 위 몇 m
+const SIT_HAND_BACK := 0.04          # 무릎에서 엉덩이 쪽으로 몇 m(무릎 앞으로 넘어가지 않게)
 const WAVE_ELBOW_UP := 30.0          # 팔꿈치 = 어깨 옆에서 이만큼 위로(°)
 const WAVE_SWING := 22.0             # 아래팔 좌우 흔들기(°)
 const LOOK_L := 34.0
@@ -373,7 +377,10 @@ func _rest_len(skel: Skeleton3D, a: int, b: int) -> float:
 func _sit(skel: Skeleton3D, w: float) -> void:
 	var ankle_y := skel.get_bone_global_rest(_b.foot0).origin.y
 	var hp := skel.get_bone_global_pose(_b.hips)
-	hp.origin.y = lerpf(hp.origin.y, ankle_y + SIT_HIP_UP, w)
+	var hips_rest_y := skel.get_bone_global_rest(_b.hips).origin.y
+	var thigh_rest_y := skel.get_bone_global_rest(_b.thigh0).origin.y if _b.thigh0 >= 0 else hips_rest_y
+	var thigh_r := SIT_THIGH_R * thigh_rest_y / SIT_THIGH_REF
+	hp.origin.y = lerpf(hp.origin.y, thigh_r + (hips_rest_y - thigh_rest_y), w)
 	skel.set_bone_global_pose(_b.hips, hp)
 	_rot(skel, _b.spine, _pitch_axis(), SIT_LEAN * w)
 	_rot(skel, _b.chest, _pitch_axis(), 4.0 * w)
@@ -398,8 +405,32 @@ func _sit(skel: Skeleton3D, w: float) -> void:
 		fg.basis = fg.basis.orthonormalized().slerp(skel.get_bone_global_rest(fo).basis.orthonormalized(), w).scaled(fg.basis.get_scale())
 		skel.set_bone_global_pose(fo, fg)
 	for s in 2:
-		_rot(skel, _b["uarm%d" % s], ax, SIT_ARM * w)
-		_rot(skel, _b["larm%d" % s], ax, SIT_FORE * w)
+		_sit_arm(skel, s, w)
+
+
+## G-0394 앉은 팔 — 어깨(윗팔 뼈)에서 손목을 같은 쪽 무릎 위로 두 뼈 IK. 팔꿈치는 몸 바깥·아래로 굽힌다.
+func _sit_arm(skel: Skeleton3D, s: int, w: float) -> void:
+	var ua: int = _b["uarm%d" % s]
+	var la: int = _b["larm%d" % s]
+	var ha: int = _b["hand%d" % s]
+	var kn: int = _b["calf%d" % s]
+	if ua < 0 or la < 0 or ha < 0 or kn < 0:
+		return
+	var o := skel.get_bone_global_pose(ua).origin
+	var knee := skel.get_bone_global_pose(kn).origin
+	var t := knee + Vector3.UP * SIT_HAND_UP - _fwd * SIT_HAND_BACK
+	var a := _rest_len(skel, ua, la)
+	var b := _rest_len(skel, la, ha)
+	var dv := t - o
+	var d := clampf(dv.length(), absf(a - b) + 0.001, a + b - 0.001)
+	var dir := dv.normalized()
+	var side := -1.0 if s == 0 else 1.0   # 0 = 왼쪽
+	var pole := (_right * side - Vector3.UP * 0.5).normalized()
+	pole = (pole - dir * pole.dot(dir)).normalized()   # 어깨–손목 선에 수직인 바깥·아래
+	var cos_a := clampf((a * a + d * d - b * b) / (2.0 * a * d), -1.0, 1.0)
+	var elbow := o + dir * (a * cos_a) + pole * (a * sqrt(maxf(0.0, 1.0 - cos_a * cos_a)))
+	_aim(skel, ua, la, elbow, w)
+	_aim(skel, la, ha, o + dir * d, w)
 
 func _wave(skel: Skeleton3D, w: float, u: float) -> void:
 	var ua: int = _b.uarm1
