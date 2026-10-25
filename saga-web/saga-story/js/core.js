@@ -515,7 +515,9 @@
     reg: { 'house': ['hanok_01', 'jp_minka_01', 'modern_block_01'],
       /* W-0263 — 남은 빌린 Quaternius 지형지물·마을 소품도 자체로(감사 tasks/sheets/web-asset-audit-20261016.md §A·C). 횃불은 도형만 있던 자리에 처음 */
       'tree:near': ['tree_broadleaf_01', 'tree_broadleaf_02', 'tree_broadleaf_03'], 'tree:far': ['tree_pine_01', 'tree_pine_02', 'tree_pine_03'], 'rock': ['rock_large_01', 'rock_large_02', 'rock_small_01'], 'hill': ['hill_01', 'mountain_01'],
-      'bush': ['bush_01', 'bush_02'], 'flower': ['flower_patch_01'], 'grass': ['grass_tuft_01', 'grass_tuft_02'], 'moss_rock': ['rock_moss_01'], 'well': ['well_01'], 'fence': ['wood_fence_01'], 'chest': ['chest_01'], 'torch': ['torch_stand_01'] },
+      'bush': ['bush_01', 'bush_02'], 'flower': ['flower_patch_01'], 'grass': ['grass_tuft_01', 'grass_tuft_02'], 'moss_rock': ['rock_moss_01'], 'well': ['well_01'], 'fence': ['wood_fence_01'], 'chest': ['chest_01'], 'torch': ['torch_stand_01'],
+      /* W-0415 — K-0193 옆보기 발판 키트(가운데 1.0m·끝 0.5m)·사다리 1.0m 마디 */
+      'plat:wood_mid': ['plat_wood_mid_01'], 'plat:wood_end': ['plat_wood_end_01'], 'plat:stone_mid': ['plat_stone_mid_01'], 'plat:stone_end': ['plat_stone_end_01'], 'ladder': ['ladder_01'] },
     /* 빌린 몸(W-0074, shared/js/assets3d.js borrowRecipe) — 제 몸이 없는 사람(사람 적·마을 사람·내 몸 스타일·이름 없는 적)은 시대 구분 없이
        옛 몸(VRoid 샘플·OGA·Quaternius·poly.pizza·KayKit) 대신 도감과 안 겹치는 VRoid 통일 몸을 입는다(사용자 10-06 "인물은 모두 교체").
        named 는 서로 다른 몸(손으로 짝지었던 고정 몸 표 순서 그대로) */

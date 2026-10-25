@@ -356,7 +356,7 @@
       }
     }
 
-    drawRopes(stg, use3d ? null : rg);
+    var S3l = global.DG.sideView3d; drawRopes(stg, use3d ? null : rg, use3d && S3l && S3l.laddersUp && S3l.laddersUp());   // W-0415 3D 사다리가 섰으면 2D 사다리는 안 그린다(밧줄은 그대로)
     drawPortals(stg); if (global.DG.rune) { global.DG.rune.draw(ctx, camX, run); }   // W-0423 룬
 
     /* 떨어진 것 */
@@ -913,12 +913,13 @@
     ctx.fillStyle = 'rgba(255,255,255,0.22)'; ctx.fillRect(0, fl - 2, W, 2);
   }
 
-  function drawRopes(stg, rg) {
+  function drawRopes(stg, rg, noLad) {
     var list = stg.ropes || [], T2 = global.DG.sideTiles2d;
     for (var i = 0; i < list.length; i++) {
       var r = list[i], x = r[0] - camX;
       if (x < -30 || x > W + 30) { continue; }
       var top = r[1], bot = r[2], ladder = r[3] === 'ladder';
+      if (ladder && noLad) { continue; }
       if (rg && T2 && T2.drawRope(ctx, rg, x, top, bot, ladder)) { continue; }   // W-0296 세로 이음 타일(K-0135)
       if (ladder) {
         ctx.strokeStyle = 'rgba(190,160,110,0.85)';
