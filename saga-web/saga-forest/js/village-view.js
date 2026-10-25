@@ -378,7 +378,7 @@
      겨울(눈)은 옛 길. 손잡이 village.autotile(1 · 0 = 옛 overlay 그림) */
   var at2 = null;
   function AT() { if (!at2 && global.DG.autotile2d) { at2 = global.DG.autotile2d.make('assets/web2d/tile/'); } return at2; }
-  function autotileOn(se) { var C = global.DG.core, A = AT(); return !!(A && !(C && C.tuned && !+C.tuned('village.autotile', 1)) && !(se && se.key === 'winter') && A.ready()); }
+  function autotileOn(se) { var C = global.DG.core, A = AT(); return !!(A && !(C && C.tuned && !+C.tuned('village.autotile', 1)) && !(se && se.key === 'winter') && !(global.DG.cozy2d && global.DG.cozy2d.real && global.DG.cozy2d.real()) && A.ready()); }   // 10-26 실사 땅이면 꽃 무늬 아틀라스 안 씀
   /** 아틀라스 조각(sx, sy, sw, sh)을 칸 세 꼭짓점에 맞춰(아핀) 그린다 — 바탕 그대로(덧씌우기 아님) */
   function drawTileRect(img, sx, sy, sw, sh, a0, a1, a3) {
     if (!img || !img.complete || !img.naturalWidth) { return false; }
@@ -393,13 +393,14 @@
     if (!img.complete || !img.naturalWidth) { return; }
     var iw = img.naturalWidth, ih = img.naturalHeight;
     ctx.save();
-    ctx.globalCompositeOperation = 'overlay';
-    ctx.globalAlpha = 0.6;
-    ctx.imageSmoothingEnabled = false;
+    var Z2r = global.DG.cozy2d && global.DG.cozy2d.real && global.DG.cozy2d.real();   // 10-26 실사 땅 — 덧씌움(overlay 0.6)이면 결이 씻겨 단색이 된다 → 그림 그대로
+    ctx.globalCompositeOperation = Z2r ? 'source-over' : 'overlay';
+    ctx.globalAlpha = Z2r ? 1 : 0.6;
+    ctx.imageSmoothingEnabled = !!Z2r;
     ctx.transform((a1.x - a0.x) / iw, (a1.y - a0.y) / iw,
                   (a3.x - a0.x) / ih, (a3.y - a0.y) / ih,
                   a0.x, a0.y);
-    ctx.drawImage(img, 0, 0, iw, ih);
+    var ov = Z2r ? iw * 0.03 : 0; ctx.drawImage(img, -ov, -ov, iw + ov * 2, ih + ov * 2);   // 실사 땅은 이웃 칸과 3% 겹쳐 틈(밑색 줄)을 막는다
     ctx.restore();
   }
 

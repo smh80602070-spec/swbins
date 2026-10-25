@@ -23,6 +23,8 @@
   function M() { return (global.DG && global.DG.cfg && global.DG.cfg.mode2d) || {}; }
   function m2on() { var m = global.DG && global.DG.mode2d; return !!(m && m.isOn && m.isOn()); }
   function on() { var c = C(); return !!(c && c.tuned ? c.tuned('village.cozy2d', 1) : 1); }
+  /** 10-26 사용자 「3번 2d는 배경이 1번,2번 처럼」 — 실사 땅(계절 풀·흙·돌 타일 + 이음 조각)만: 꽃 무늬 이음 아틀라스(village-view autotile)·풀 결·꽃 점·자갈·톱니 가장자리 덧칠을 끈다. 손잡이 village.realGround(1, 0 = 옛 만화 땅) */
+  function real() { var c = C(); return !!(c && c.tuned ? +c.tuned('village.realGround', 1) : 1); }
   function wantZoom() {
     if (!on()) { return 1; }
     var c = C(), z = c && c.tuned ? c.tuned('village.cozyZoom', 2.1) : 2.1;   // W-0204 1.35 → 2.1(몸 75 → ≈117px/720 — RPG 처럼 1/6)
@@ -115,11 +117,11 @@
     };
     var DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0];
     var bladeD = {}, bladeL = {}, flowers = [], pebbles = [], snows = [], specksD = [], fringes = {}, foams = [], seams = [];
-    var i, j, it, sp, q, p, bk, sm, done;
+    var i, j, it, sp, q, p, bk, sm, done, rl = real();
     for (i = 0; i < list.length; i++) {
       it = list[i];
       if (!it.a0 || it.a0.a < -0.8) { continue; }   // 먼 줄은 몇 픽셀 — 덧칠하면 지저분하다
-      sp = specksOf(it.kind, it.tx, it.ty, key);
+      sp = rl ? [] : specksOf(it.kind, it.tx, it.ty, key);
       for (j = 0; j < sp.length; j++) {
         q = sp[j]; p = P((it.tx + q.u) * T, (it.ty + q.v) * T);
         if (q.t === 'blade') { bk = grassCol(it.kind, it.tx, it.ty); ((q.c ? bladeL : bladeD)[bk] = (q.c ? bladeL : bladeD)[bk] || []).push(p); }
@@ -139,7 +141,7 @@
         }
         for (j = 0; j < rr.length; j++) {
           if (done[rr[j].side]) { continue; }
-          if (rr[j].t === 'grass') { bk = grassCol(rr[j].g, it.tx + DX[rr[j].side], it.ty + DY[rr[j].side]); (fringes[bk] = fringes[bk] || []).push({ tx: it.tx, ty: it.ty, side: rr[j].side }); }
+          if (rr[j].t === 'grass') { if (rl) { continue; } bk = grassCol(rr[j].g, it.tx + DX[rr[j].side], it.ty + DY[rr[j].side]); (fringes[bk] = fringes[bk] || []).push({ tx: it.tx, ty: it.ty, side: rr[j].side }); }
           else { foams.push({ tx: it.tx, ty: it.ty, side: rr[j].side }); }
         }
       }
@@ -326,14 +328,14 @@
      깊이 d — 변은 세로만, 모서리는 가로세로 다 d 배로 줄인 알파 */
   var seamCv = {}, seamCvN = 0;
   function seamTint(id, col, gsrc, corner) {
-    var d = seamDepth(), k = id + '|' + col + '|' + gsrc + '|' + d, c = seamCv[k], img = seamImg(id), gimg = imgAt(gsrc), g, w, h;
+    var d = seamDepth(), rl = real(), k = id + '|' + col + '|' + gsrc + '|' + d + '|' + rl, c = seamCv[k], img = seamImg(id), gimg = imgAt(gsrc), g, w, h;
     if (c || !img || typeof document === 'undefined') { return c || null; }
     if (gsrc && !gimg) { return null; }   // 풀 무늬를 기다린다(그동안 옛 톱니가 아니라 그냥 빈 변 — 한두 프레임)
     if (seamCvN > 96) { seamCv = {}; seamCvN = 0; }
     w = img.naturalWidth; h = img.naturalHeight;
     c = document.createElement('canvas'); c.width = Math.max(1, Math.round(corner ? w * d : w)); c.height = Math.max(1, Math.round(h * d)); g = c.getContext('2d');
-    g.fillStyle = col; g.fillRect(0, 0, c.width, c.height);
-    if (gimg) { g.globalCompositeOperation = 'overlay'; g.globalAlpha = 0.6; g.drawImage(gimg, 0, 0, w, h); }
+    if (!(rl && gimg)) { g.fillStyle = col; g.fillRect(0, 0, c.width, c.height); }   // 10-26 실사 땅 — 단색 + 덧씌움 대신 계절 풀 그림을 그대로 이음 모양으로 자른다
+    if (gimg) { g.globalCompositeOperation = rl ? 'source-over' : 'overlay'; g.globalAlpha = rl ? 1 : 0.6; g.drawImage(gimg, 0, 0, w, h); }
     g.globalCompositeOperation = 'destination-in'; g.globalAlpha = 1; g.drawImage(img, 0, 0, c.width, c.height);
     c.u = c.width / w; c.v = d;   // 칸에서 차지하는 비율
     seamCv[k] = c; seamCvN++;
@@ -430,6 +432,6 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.cozy2d = { on: on, zoomMul: zoomMul, wantZoom: wantZoom, sync: sync, specks: specks, rims: rims, ground: ground, lightSpec: lightSpec, light: light, _hash: hh,
+  global.DG.cozy2d = { on: on, real: real, zoomMul: zoomMul, wantZoom: wantZoom, sync: sync, specks: specks, rims: rims, ground: ground, lightSpec: lightSpec, light: light, _hash: hh,
     tileSrc: tileSrc, seamPick: seamPick, seamDepth: seamDepth, nb8: nb8, propId: propId, lit: lit, litPoints: litPoints, ROT: ROT, _glows: function () { return glowQ.length; } };
 })(window);
