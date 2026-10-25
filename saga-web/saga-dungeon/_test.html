@@ -142,6 +142,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/dungeon.js"></script>
 <script src="js/blood-orb.js"></script>
 <script src="js/cursed-chest.js"></script>
+<script src="js/bounty.js"></script>
 <script src="js/dungeon-room.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/town-gen.js"></script>
@@ -4827,6 +4828,27 @@ window.requestAnimationFrame = function () { return 0; };
       var f1 = U.fmtSkillValue({ shape: 'passive' }, 12.34), f2 = U.fmtSkillValue({ shape: 'strike', arc: true }, 1.5);
       var ok = f1 === '+12.3%' && f2 === '위력 150% · 앞 부채꼴' && (!DG.core.save.party.length || (v.indexOf('손에 든 넷') >= 0 && v.indexOf('갈래 1') >= 0));
       return ok ? ('수치 ' + f1 + ' · ' + f2 + ' · 시트 ' + v.length + '자') : ('실패 ' + JSON.stringify({ f1: f1, f2: f2, v: v.length }));
+    });
+    t('W-0428 층 현상금 — 층마다 여덟 중 셋(씨앗 고정이면 같음) · 사건으로 셈(처치·피격·방·비움·무예) · 하나마다 금 20×층 · 셋 다 = 상자 전리품 둘 · 층 바뀌면 새로', function () {
+      var BN = DG.bounty, DN = DG.dungeon, C = DG.core; if (!BN || !DN) { return '실패 DG.bounty 없음'; }
+      var keepRaw = DN.raw, keepDi = DN._dropItem, items = 0;
+      var run = { floor: 4, bountySeed: 777, room: { kind: 'fight', drops: [], enemies: [] }, player: { x: 100, y: 100 } };
+      DN.raw = function () { return run; }; DN._dropItem = function (room) { items++; room.drops.push({ kind: 'item' }); };
+      try {
+        var a = BN.pick(4, 777).join(), b = BN.pick(4, 777).join(), c = BN.pick(5, 777).join(), three = BN.pick(4, 777).length === 3 && a === b;
+        var b0 = BN.state(run); b0.list = [{ id: 'kills', n: 0, done: false }, { id: 'nohit', n: 0, done: false }, { id: 'elite', n: 0, done: false }];
+        for (var i = 0; i < 14; i++) { C.emit('dungeon:kill', { e: { x: 1, y: 1 }, floor: 4 }); }
+        var k14 = b0.list[0].n, gold0 = run.room.drops.filter(function (d) { return d.kind === 'gold'; }).length;
+        C.emit('dungeon:kill', { e: { x: 1, y: 1, elite: true }, floor: 4 });
+        var killsDone = b0.list[0].done && b0.list[2].done, gold1 = run.room.drops.filter(function (d) { return d.kind === 'gold' && d.gold === 80; }).length;
+        C.emit('dungeon:room', { kind: 'fight' }); C.emit('dungeon:hurt'); C.emit('dungeon:clear', { kind: 'fight' }); var hurtNo = b0.list[1].n;
+        C.emit('dungeon:room', { kind: 'fight' }); C.emit('dungeon:clear', { kind: 'fight' }); C.emit('dungeon:room', { kind: 'fight' }); C.emit('dungeon:clear', { kind: 'fight' });
+        var all = b0.all && items === 2;
+        C.emit('dungeon:skill', 'set:x'); var skipSet = true;
+        run.floor = 5; var b1 = BN.state(run), renew = b1 !== b0 && b1.floor === 5 && !b1.all;
+        var ok = three && a !== c && k14 === 14 && gold0 === 0 && killsDone && gold1 === 2 && hurtNo === 0 && all && renew;
+        return ok || ('실패 ' + JSON.stringify({ a: a, c: c, k14: k14, gold0: gold0, killsDone: killsDone, gold1: gold1, hurtNo: hurtNo, all: b0.all, items: items, renew: renew }));
+      } finally { DN.raw = keepRaw; DN._dropItem = keepDi; }
     });
     t('W-0421 피 구슬 — 잡졸 22%·정예 1·우두머리 3 · 60 안이면 끌려와 닿으면 최대 체력 12% · 가득이면 안 끌림 · 25초 뒤 사라짐', function () {
       var BO = DG.bloodOrb, DN = DG.dungeon; if (!BO || !DN) { return '실패 DG.bloodOrb 없음'; }
