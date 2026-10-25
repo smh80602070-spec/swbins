@@ -17706,6 +17706,22 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         return ok || ('실패 ' + JSON.stringify({ w0: w0, stay: stay, n: n, left: left, at: at, lit: lit, healed: healed, w1: w1, back: back }));
       } finally { S.cleared = keepC; C.save.rest = keepR; pos.x = px; pos.y = py; keepP.forEach(function (k, i) { S.party[i].hp = k.hp; S.party[i].down = k.down; }); if (RS._reset) { RS._reset(); } if (!S0) { FC._setStateForTest(null); } }
     });
+    t('W-0430 무로 겨루자 — 등용 카드 ⚔️ 를 누르면 실시간 결투(challenge(spawn, 2D 도)) 가 열리고 카드가 닫힌다 · 못 열면 옛 굴림 · 지·덕은 옛 굴림', function () {
+      var FC = DG.fieldCombat, EN = DG.encounter, C = DG.core, D = DG.data, W = DG.world; if (!FC || !EN) { return '실패 없음'; }
+      var keepCh = FC.challenge, calls = [], ret = true, sc = C.save.items.scroll, fame = C.save.player.fame;
+      FC.challenge = function (sp, any) { calls.push({ uid: sp && sp.uid, any: any }); return ret; };
+      try {
+        C.save.items.scroll = 9; C.save.player.fame = 999;
+        var hero = D.heroes[3], sp = { uid: 99931, kind: 'hero', ref: hero, x: 0, y: 0, bornAt: Date.now() }; W.spawns.push(sp);
+        EN.open(sp); var b1 = document.querySelector('[data-appeal="might"]'); if (b1) { b1.click(); }
+        var el = document.getElementById('encounter'), closed = !el || !el.classList.contains('show'), c1 = calls.length === 1 && calls[0].uid === 99931 && calls[0].any === true;
+        ret = false; EN.open(sp); var b2 = document.querySelector('[data-appeal="might"]'); if (b2) { b2.click(); }
+        var hist = !!document.querySelector('#encounter .good, #encounter .meh'), c2 = calls.length === 2;
+        var b3 = document.querySelector('[data-appeal="wisdom"]'); if (b3) { b3.click(); } var c3 = calls.length === 2;
+        var ok = !!b1 && closed && c1 && c2 && hist && c3;
+        return ok || ('실패 ' + JSON.stringify({ b1: !!b1, closed: closed, calls: calls, hist: hist, c3: c3 }));
+      } finally { FC.challenge = keepCh; C.save.items.scroll = sc; C.save.player.fame = fame; try { EN.close && EN.close(); } catch (e) {} W.removeSpawn && W.removeSpawn(99931); }
+    });
     t('W-0426 들판 수수께끼 — 구역마다 셋(돌·꽃 고리·바람개비, 결정적·구역 안) · 돌 곁 = 씨앗 · 꽃 다섯 차례로 = 씨앗(틀리면 처음부터) · 바람개비 2초 가만히 = 씨앗 · 푼 자리 다시 안 섬', function () {
       var FR = DG.fieldRiddle, C = DG.core; if (!FR) { return '실패 DG.fieldRiddle 없음'; }
       var sv = C.save, keep = sv.goRiddle, pos = sv.player.pos, px = pos.x, py = pos.y;

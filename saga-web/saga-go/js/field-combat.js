@@ -2362,9 +2362,9 @@
    * ⑯ 싸워서 등용 — 들판 인물을 눌렀을 때(encounter.js startHero). 3D 들판 전투가 도는 자리에서만 true
    * (2D·진단(DG_NO_DRAW)은 옛 설득 카드). 판은 인물이 서 있던 자리에 선다 — 끝나면 'duelEnd'(win·lose·flee)
    */
-  function canChallenge() { return !!(on() && core() && core().save && W3() && !(S && S.duel)); }
-  function challenge(spawn) {
-    if (!canChallenge() || !spawn || !spawn.ref) { return false; }
+  function canChallenge(any) { return !!(on() && core() && core().save && (W3() || any) && !(S && S.duel)); }   // any — W-0430 등용 카드 「무로 겨루자」는 2D 에서도
+  function challenge(spawn, any) {
+    if (!canChallenge(any) || !spawn || !spawn.ref) { return false; }
     ensureState();
     var c = duelCamp(spawn.ref, spawn.x, spawn.y, spawn.uid);
     if (S.camps[c.key]) { return false; }

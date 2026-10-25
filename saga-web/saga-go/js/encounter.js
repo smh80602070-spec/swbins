@@ -151,6 +151,8 @@
   function doAppeal(key) {
     if (cur.done) { return; }
     var h = cur.hero;
+    var FCm = global.DG.fieldCombat;   // W-0430 ⚔️ 무(武)로 겨루자 = 실시간 결투(⑯ challenge — 2D·3D). 열리면 카드를 닫고 결과는 duelResult 가 받는다. 못 열면(결투 중) 옛 굴림
+    if (key === 'might' && FCm && FCm.challenge && cur.spawn && FCm.challenge(cur.spawn, true)) { cur.done = true; close(); if (global.DG.ui && global.DG.ui.toast) { global.DG.ui.toast('⚔️ ' + h.name + ' — "좋소, 겨뤄 봅시다!"'); } return; }
     var hit = (key === h.trait);
     // 성향을 3번 다 맞히면 반드시 성공하도록(34*3=102) 하한을 잡는다
     var base = hit ? 34 + Math.random() * 14 : 8 + Math.random() * 10;

@@ -1410,7 +1410,7 @@
 
   /** 설득 어필 방향 (인물 trait 과 맞으면 호감도 크게 상승) */
   var APPEALS = [
-    { key: 'might',  label: '무(武)로 겨루자', desc: '힘과 담대함으로 마음을 얻는다', emoji: '⚔️' },
+    { key: 'might',  label: '무(武)로 겨루자', desc: '실시간 결투로 이겨 마음을 얻는다', emoji: '⚔️' },
     { key: 'wisdom', label: '지(智)를 논하자', desc: '식견과 계책으로 마음을 얻는다', emoji: '📜' },
     { key: 'virtue', label: '덕(德)으로 청하자', desc: '진심과 예로써 마음을 얻는다', emoji: '🙏' }
   ];
