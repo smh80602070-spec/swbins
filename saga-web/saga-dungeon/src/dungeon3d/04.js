@@ -263,12 +263,12 @@
       mtA.node.position.set(plx, meGroundY + MT3.mountLift() + bob, ply);
       if (p.walking || MT3.flying()) { mtA.ang = me.ang; }
       mtA.node.rotation.y = mtA.ang;
-      me.node.position.y = meGroundY + MT3.lift() + bob;
+      me.node.position.y = meGroundY + MT3.lift() + bob; var sy2 = global.DG.pose3d && global.DG.pose3d.seatY ? global.DG.pose3d.seatY(mtA.node, me.node) : null; if (sy2 !== null) { me.node.position.y = sy2; }   /* W-0434 등 높이는 탈것 몸에서 */
       if (AS3) { AS3.step(mtA.node.userData.mixerNode, { t: nowT, walking: !!p.walking || MT3.flying(), anim: 'idle' }); }
     }
     if (AS3) {
       AS3.step(me.node.userData.mixerNode, { t: nowT, walking: !!p.walking && !mtRef,
-        anim: p.dodge ? 'dodge' : (p.heavyPose && p.atkAnim > 0 && !p.castAnim) ? 'Pose_heavy' : ((OAw && OAw.attackSlot ? OAw.attackSlot(p._wpn || (p._wpn = {}), p.castAnim ? 0 : Math.max(0, p.atkAnim || 0), nowT, function () { var IT = global.DG.item, w = IT ? IT.equipped(core.save.party[0]).weapon : null; return w && !IT.isBroken(w) ? (IT.baseOf(w) || {}).look : 'sword'; }, function () { var R = global.DG.dungeon && global.DG.dungeon.raw ? global.DG.dungeon.raw() : null; return ((R && R.combo) || 1) - 1; }) : null) || (p.atkAnim > 0 ? (p.castAnim ? 'Pose_cast' : 'attack') : (p.walking && !mtRef ? 'walk' : ((run.town && global.DG.pose3d ? global.DG.pose3d.life(me.node.userData, nowT, !p.walking && !mtRef) : null) || 'idle')))) });   // W-0303 마을에선 가만히 8초 → 앉아 쉬기   // W-0171 무기·연속 단 몸짓
+        anim: mtRef ? 'Pose_ride' : p.dodge ? 'dodge' : (p.heavyPose && p.atkAnim > 0 && !p.castAnim) ? 'Pose_heavy' : ((OAw && OAw.attackSlot ? OAw.attackSlot(p._wpn || (p._wpn = {}), p.castAnim ? 0 : Math.max(0, p.atkAnim || 0), nowT, function () { var IT = global.DG.item, w = IT ? IT.equipped(core.save.party[0]).weapon : null; return w && !IT.isBroken(w) ? (IT.baseOf(w) || {}).look : 'sword'; }, function () { var R = global.DG.dungeon && global.DG.dungeon.raw ? global.DG.dungeon.raw() : null; return ((R && R.combo) || 1) - 1; }) : null) || (p.atkAnim > 0 ? (p.castAnim ? 'Pose_cast' : 'attack') : (p.walking && !mtRef ? 'walk' : ((run.town && global.DG.pose3d ? global.DG.pose3d.life(me.node.userData, nowT, !p.walking && !mtRef) : null) || 'idle')))) });   // W-0303 마을에선 가만히 8초 → 앉아 쉬기   // W-0171 무기·연속 단 몸짓
       AS3.flashAllMat(ensureFlash(me.node), p.hurt, 0.28);
     }
 

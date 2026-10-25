@@ -233,7 +233,7 @@
     player.group.position.y = PLAYER_H() * MT.RIDER_LIFT + hover;
     if (mount3.group) {
       mount3.group.position.set(0, hover, 0);
-      mount3.group.rotation.y = facingYaw;
+      mount3.group.rotation.y = facingYaw; var sy3 = global.DG.pose3d && global.DG.pose3d.seatY ? global.DG.pose3d.seatY(mount3.group, player.group) : null; if (sy3 !== null) { player.group.position.y = sy3; }   /* W-0434 등 높이는 탈것 몸에서 */
       if (mount3.actions && mount3.clipMap) {
         var slot = (moving || fly) ? 'walk' : 'idle', name = mount3.clipMap[slot] || mount3.clipMap.walk, act = name ? mount3.actions[name] : null;
         if (act && mount3.action !== act) { if (mount3.action) { mount3.action.fadeOut(0.15); } act.reset().fadeIn(0.15).play(); mount3.action = act; }
@@ -259,12 +259,12 @@
     if (!haveLast) { lastPX = px; lastPY = py; haveLast = true; }
     var dx = px - lastPX, dy = py - lastPY;
     var moved = Math.hypot(dx, dy);
-    var targetYaw = facingYaw;
+    var targetYaw = facingYaw, riding3 = !!(global.DG.mount && global.DG.mount.active && global.DG.mount.active());   /* W-0434 탄 동안은 Pose_ride */
     if (moved > MOVE_EPS() * (1 / 60)) {
       targetYaw = Math.atan2(dx, dy); if (global.DG.pose3d) { global.DG.pose3d.life(player, Date.now() / 1000, false); }   // W-0303 걸으면 변주·앉기 끊김
-      if (actionTimer <= 0) { var OAg = global.DG.ownAnim, gg = OAg && OAg.gaitOf && player.clipMap ? OAg.gaitOf(player, dt > 0 ? moved / dt * WORLD_SCALE() / PLAYER_H() : 0) : { slot: 'walk', rate: 1 }; playAction(player, gg.slot); if (player.mixer) { player.mixer.timeScale = gg.rate; } }   // W-0197 키/초로 걷기·달리기·빠르기
+      if (actionTimer <= 0) { var OAg = global.DG.ownAnim, gg = OAg && OAg.gaitOf && player.clipMap ? OAg.gaitOf(player, dt > 0 ? moved / dt * WORLD_SCALE() / PLAYER_H() : 0) : { slot: 'walk', rate: 1 }; playAction(player, riding3 ? 'Pose_ride' : gg.slot); if (player.mixer) { player.mixer.timeScale = gg.rate; } }   // W-0197 키/초로 걷기·달리기·빠르기
     } else if (actionTimer <= 0) {
-      var P3s = global.DG.pose3d, fishing = !!(V.fishState && V.fishState()); playAction(player, fishing ? 'Pose_fish' : (P3s ? P3s.life(player, Date.now() / 1000, true, nearFire(raw) ? 'Pose_warm' : null) : null) || 'idle'); if (player.mixer) { player.mixer.timeScale = 1; }
+      var P3s = global.DG.pose3d, fishing = !!(V.fishState && V.fishState()); playAction(player, riding3 ? 'Pose_ride' : fishing ? 'Pose_fish' : (P3s ? P3s.life(player, Date.now() / 1000, true, nearFire(raw) ? 'Pose_warm' : null) : null) || 'idle'); if (player.mixer) { player.mixer.timeScale = 1; }
     }
     if (actionTimer > 0) { actionTimer = Math.max(0, actionTimer - dt); if (player.mixer) { player.mixer.timeScale = 1; } }
     lastPX = px; lastPY = py;

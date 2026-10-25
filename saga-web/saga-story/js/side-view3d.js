@@ -987,7 +987,7 @@
       }
       var mbob = fly ? Math.sin(Date.now() / 220) * 3 : 0;
       place(mountMesh, p.x + S.P_W / 2, stg.floor - (p.y + S.P_H) + mbob, p.facing);
-      playerMesh.position.y += (fly ? 24 : 30) + mbob;
+      playerMesh.position.y += (fly ? 24 : 30) + mbob; var sy4 = global.DG.pose3d && global.DG.pose3d.seatY ? global.DG.pose3d.seatY(mountMesh, playerMesh) : null; if (sy4 !== null) { playerMesh.position.y = sy4; }   /* W-0434 등 높이는 탈것 몸에서 */
       if (mountMesh.userData.mixer) { stepActor(mountMesh, (!!p.vx && (p.onGround || fly)) ? 'walk' : 'idle'); }
     }
     tintHurt(playerMesh, p.hurt || 0);
@@ -1004,7 +1004,7 @@
       ((p.dodgeAnim || 0) > 0 ? 'dodge' :
       ((p.atkCd || 0) > 0 ? (p.castPose ? 'Pose_cast' : (wpnAtk(p) || 'attack')) :
       ((p.drinkAnim || 0) > 0 ? 'interaction' : (run.talk ? (talkWave(p, !!run.talk) || 'idle') :
-      (running ? 'run' : (walking ? 'walk' : (sideLife(playerMesh.userData, true) || 'idle'))))))));
+      (mtDef ? 'Pose_ride' : running ? 'run' : (walking ? 'walk' : (sideLife(playerMesh.userData, true) || 'idle'))))))));   // W-0434 탄 동안 Pose_ride
     var bob = (!playerMesh.userData.mixer && walking) ? Math.abs(Math.sin(Date.now() / 90)) * 3 : 0;
     playerMesh.position.y += bob;
 

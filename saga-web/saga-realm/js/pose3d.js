@@ -117,6 +117,12 @@
     return keyed([[0, BASE], [0.25, s], [0.75, s], [1, BASE]]);
   })();
 
+  /** 탈 자세(W-0434 · 고돗 G-0395 짝) — 말·학·용 등에 다리를 벌려 앉는다: 허벅지 벌려 앞으로·무릎 굽혀 발은 무릎 아래 조금 뒤, 손은 앞 배꼽께(고삐).
+   *  접지 끔(ground:false) — 엉덩이 높이는 부르는 판이 탈것 몸 상자의 등 높이로 정한다. 각은 기준 뼈대에서 찾음(RIDE_*) */
+  var RIDE_S = 34, RIDE_A = 22, RIDE_K = 46, RIDE_F = 20, RIDE_UR = -57, RIDE_UP = -10, RIDE_UY = -16, RIDE_LY = -90, RIDE_LR = -27;   // 무릎 옆 0.255·앞 0.10, 발 무릎 아래·뒤 0.15·안, 손 앞 0.30·엉덩이 위 0.15(탈것 반폭 0.22 기준)
+  var RIDE = M(BASE, legs(RIDE_A, RIDE_K, RIDE_F, RIDE_A, RIDE_K, RIDE_F), S('ul', RIDE_S), S('ll', RIDE_LR || null), S('ua', RIDE_UR, RIDE_UP, RIDE_UY || null), S('la', null, null, RIDE_LY), { 'spine.p': 8, 'chest.p': 2, 'head.p': -4 });
+  function ridePose(t) { return M(RIDE, { 'chest.p': 2 + 0.8 * sw(t), 'head.p': -4 + 0.5 * sw(t, 0.7) }); }
+
   /** 클립 표 — dur 초 · loop 반복(붙드는 자세) · 나머지는 anim-own register 기본(fps 30 · ground) */
   var DEFS = [
     { name: 'Pose_sit', dur: 4.0, loop: true, fn: sitPose, kind: 'situ' },
@@ -130,7 +136,8 @@
     { name: 'Pose_fish', dur: 3.0, loop: true, fn: fishPose, kind: 'life' },
     { name: 'Pose_idle_look', dur: 2.6, loop: false, fn: lookPose, kind: 'idle' },
     { name: 'Pose_idle_scratch', dur: 2.4, loop: false, fn: scratchPose, kind: 'idle' },
-    { name: 'Pose_idle_shift', dur: 3.0, loop: false, fn: shiftPose, kind: 'idle' }
+    { name: 'Pose_idle_shift', dur: 3.0, loop: false, fn: shiftPose, kind: 'idle' },
+    { name: 'Pose_ride', dur: 2.0, loop: true, fn: ridePose, kind: 'situ', ground: false }   // W-0434
   ];
   OA.register(DEFS);
   var IDLE = ['Pose_idle_look', 'Pose_idle_shift', 'Pose_idle_scratch'];
@@ -163,8 +170,41 @@
   function defOf(name) { var i; for (i = 0; i < DEFS.length; i++) { if (DEFS[i].name === name) { return DEFS[i]; } } return null; }
   function tn(k, d) { var C = global.DG.core, v = C && C.tuned ? +C.tuned(k, d) : d; return isFinite(v) ? v : d; }
 
+  /* W-0434 안장 높이 — 탈것 몸(GLB) 정점을 몸 기준으로 한 번 훑어 가운데 띠(앞뒤 ±12%·옆 ±35%)에서 가장 높은 점 = 등(캐시).
+     기수 노드 y = 등 + 허벅지 반지름·관절 차(0.111 표준 m = 엉덩이 뼈 쉬는 높이 0.896 의 12.4%) − 엉덩이 뼈 높이(기수 노드 기준, 지금 몸에서 잼) */
+  var SEAT_K = 0.111 / 0.896, seatCache = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
+  function seatOf(node) {
+    var T = global.THREE; if (!T || !node) { return null; }
+    var ck = node.children.length + ':' + (node.children[0] ? node.children[0].uuid : ''), c = seatCache && seatCache.get(node); if (c && c.k === ck) { return c; }   // 자식이 바뀌면(임시 몸 → GLB) 다시 잼
+    node.updateMatrixWorld(true);
+    var inv = new T.Matrix4().copy(node.matrixWorld).invert(), m = new T.Matrix4(), v = new T.Vector3(), pts = [], bx = new T.Box3();
+    node.traverse(function (o) {
+      var p = o.isMesh && o.geometry && o.geometry.attributes && o.geometry.attributes.position; if (!p) { return; }
+      m.multiplyMatrices(inv, o.matrixWorld); var step = Math.max(1, Math.floor(p.count / 4000)), i;
+      for (i = 0; i < p.count; i += step) { v.fromBufferAttribute(p, i).applyMatrix4(m); pts.push(v.x, v.y, v.z); bx.expandByPoint(v); }
+    });
+    if (!pts.length) { return null; }
+    var cx = (bx.min.x + bx.max.x) / 2, cz = (bx.min.z + bx.max.z) / 2, hx = (bx.max.x - bx.min.x) * 0.35, hz = (bx.max.z - bx.min.z) * 0.12, top = -1e9, j;
+    for (j = 0; j < pts.length; j += 3) { if (Math.abs(pts[j] - cx) <= hx && Math.abs(pts[j + 2] - cz) <= hz && pts[j + 1] > top) { top = pts[j + 1]; } }
+    if (top < -1e8) { return null; }
+    c = { x: cx, y: top, z: cz, k: ck }; if (seatCache) { seatCache.set(node, c); }
+    return c;
+  }
+  /** 기수 노드 월드 y(탈 때) — 못 재면 null(부른 쪽이 옛 RIDER_LIFT). mountNode 는 자리·배율이 이미 놓인 탈것 노드 */
+  function seatY(mountNode, riderNode) {
+    var T = global.THREE, s = seatOf(mountNode); if (!s || !riderNode) { return null; }
+    var hips = riderNode.userData.__hipsBone || (riderNode.userData.__hipsBone = riderNode.getObjectByName(OA.BONES.hips)); if (!hips) { return null; }
+    mountNode.updateMatrixWorld(true); riderNode.updateMatrixWorld(true);
+    var back = mountNode.localToWorld(new T.Vector3(s.x, s.y, s.z)).y, off = hips.getWorldPosition(new T.Vector3()).y - riderNode.getWorldPosition(new T.Vector3()).y;
+    if (!(off > 0)) { return null; }
+    var ry = back - off * (1 - SEAT_K), par = riderNode.parent;   // 월드 y → 부모 기준
+    if (par) { var w = riderNode.getWorldPosition(new T.Vector3()); w.y = ry; par.worldToLocal(w); return w.y; }
+    return ry;
+  }
+
   global.DG.pose3d = {
     NAMES: DEFS.map(function (d) { return d.name; }), DEFS: DEFS, IDLE: IDLE, BLEND: 0.25, FRAME2D: FRAME2D,
+    seatOf: seatOf, seatY: seatY, SEAT_K: SEAT_K,
     durOf: function (name) { var d = defOf(name); return d ? d.dur : 0; },
     EXPECT: EXPECT,
     /** W-0316 — r = { hips, head, rhand, lhand: {up, fwd, side}, dRH } (선 머리 높이 1 비율) → { ok, bad: [못 맞춘 칸], at } · 기대 없는 이름은 null */

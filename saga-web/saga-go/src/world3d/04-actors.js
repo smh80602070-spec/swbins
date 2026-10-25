@@ -315,8 +315,8 @@
       mtA.sky = meSky();
       var mtAlt = MTr.altitude ? MTr.altitude() : 0, fl = mtAlt >= MTr.AIR_MIN;
       placeActor(mtA, mx, my, h * farBoost(mx, my) * MTr.SCALE, 0, (walking || fl) && !air, mot.phase, now);
-      if (fl && mtA.mesh) { mtA.node.position.y += mtAlt + Math.sin(now / 260) * 0.25; }   // ⑲-62 뜬 높이 — 날갯짓에 맞춰 살짝 출렁
-      if (meA.mesh) { meA.node.position.y += h * farBoost(mx, my) * MTr.RIDER_LIFT + (fl ? mtAlt + Math.sin(now / 260) * 0.25 : 0); }
+      if (fl && mtA.mesh) { mtA.node.position.y += mtAlt + Math.sin(now / 260) * 0.25; } var seatY = meA.mesh && mtA.mesh && global.DG.pose3d && global.DG.pose3d.seatY ? global.DG.pose3d.seatY(mtA.node, meA.node) : null;   // ⑲-62 뜬 높이(날갯짓 출렁) · W-0434 등 높이는 탈것 몸에서(Pose_ride 엉덩이 = 등 + 허벅지 반지름)
+      if (meA.mesh) { if (seatY !== null) { meA.node.position.y = seatY; } else { meA.node.position.y += h * farBoost(mx, my) * MTr.RIDER_LIFT + (fl ? mtAlt + Math.sin(now / 260) * 0.25 : 0); } }
     }
     /* ⑰ 여울 다리 — 상판 위면 몸을 상판 높이에 세운다(땅은 물 바닥이라 안 올리면 다리 밑을 걷는다) */
     var deck = LFa && LFa.deckAt ? LFa.deckAt(mx, my) : null;
@@ -647,7 +647,7 @@
 
   /** 나 또는 상대에게 몸짓을 하나 재생한다(공격·피격·회피) — `who` 는 'me'·'foe'.
    *  클립이 없는 몸(도형 배우, 아직 안 받은 GLB)이면 조용히 아무 일도 안 한다. */
-  function meLifeSlot(a, walk, nowS) { var P3 = global.DG.pose3d; if (!P3) { return null; } var FS = global.DG.fishing, fs = FS && FS.state ? FS.state().state : null, TS = talkShot(), wave = P3.once(a, 'talk', !!TS, nowS, 'Pose_wave'); if (walk) { P3.life(a, nowS, false); return null; } if (fs === 'wait' || fs === 'nibble') { return 'Pose_fish'; } return wave || (TS ? null : P3.life(a, nowS, true)); }   /* W-0303 내 생활 몸짓: 낚시 기다릴 땐 Pose_fish, 대화가 열리면 처음 한 번 Pose_wave, 서 있으면 3~5초마다 idle 변주(걸으면 끊김) */ function playAnim(who, name, ms) {
+  function meLifeSlot(a, walk, nowS) { var P3 = global.DG.pose3d; if (!P3) { return null; } var MTl = global.DG.mount; if (MTl && MTl.petRef && MTl.petRef()) { return 'Pose_ride'; }   /* W-0434 탄 동안은 탈 자세 */ var FS = global.DG.fishing, fs = FS && FS.state ? FS.state().state : null, TS = talkShot(), wave = P3.once(a, 'talk', !!TS, nowS, 'Pose_wave'); if (walk) { P3.life(a, nowS, false); return null; } if (fs === 'wait' || fs === 'nibble') { return 'Pose_fish'; } return wave || (TS ? null : P3.life(a, nowS, true)); }   /* W-0303 내 생활 몸짓: 낚시 기다릴 땐 Pose_fish, 대화가 열리면 처음 한 번 Pose_wave, 서 있으면 3~5초마다 idle 변주(걸으면 끊김) */ function playAnim(who, name, ms) {
     var key = who === 'foe' ? 'duelfoe' : (who === 'ally' ? 'ally' : (actors[who] ? who : 'me'));
     var a = actors[key];
     if (!a) { return false; }

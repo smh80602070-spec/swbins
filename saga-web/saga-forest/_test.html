@@ -851,6 +851,24 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         ('AnimationClip 9 · mapClips 아홉 자리 전부 제 이름(대타 0) · 왼발 위치 오차 ' + (err * 1000).toFixed(2) + 'mm');
     });
 
+    t('W-0434 Pose_ride — 반복·접지 끔 · 무릎 양옆 벌림(>0.2m)·발은 무릎 한참 아래(>0.25m)·무릎보다 뒤 · 두 손 앞(>0.2m) — 기준 뼈대', function () {
+      var OA = DG.ownAnim, P3 = DG.pose3d; if (!OA || !P3 || P3.NAMES.indexOf('Pose_ride') < 0) { return '실패 Pose_ride 없음'; }
+      var rig = OA.refRig(), B = OA.BONES, m = OA.math, fr = rig.frame, c = OA.clipData(rig, ['Pose_ride'])[0], W = OA.fkAt(rig, c, c.duration * 0.25);
+      var rel = function (b) { var d = m.vsub(W[b].p, W[B.hips].p); return { u: m.vdot(d, fr.u), f: m.vdot(d, fr.f), s: m.vdot(d, fr.l) }; };
+      var kl = rel(B.lll), kr = rel(B.rll), fl = rel(B.lfoot), hl = rel(B.lhand), hr = rel(B.rhand), ex = (OA.EXTRA || []).filter(function (e) { return e.name === 'Pose_ride'; })[0];
+      var ok = ex && ex.loop && ex.ground === false && kl.s > 0.2 && kr.s < -0.2 && fl.u < kl.u - 0.25 && fl.f < kl.f && hl.f > 0.2 && hr.f > 0.2;
+      return ok ? ('무릎 옆 ' + kl.s.toFixed(2) + '/' + kr.s.toFixed(2) + ' · 발 무릎 아래 ' + (kl.u - fl.u).toFixed(2) + ' · 손 앞 ' + hl.f.toFixed(2)) : ('실패 ' + JSON.stringify({ ex: !!ex, kl: kl, kr: kr, fl: fl, hl: hl }));
+    });
+    t('W-0434 안장 높이 — 탈것 몸 가운데 띠의 가장 높은 점(목·머리 빼고) + 엉덩이 뼈 12.4% − 엉덩이 높이 · 몸을 갈아 끼우면 다시 잼 · 뼈 없으면 null', function () {
+      var T = window.THREE, P3 = DG.pose3d; if (!T || !P3 || !P3.seatY) { return '실패 THREE·seatY 없음'; }
+      var root = new T.Group(), mt = new T.Group(), body = new T.Mesh(new T.BoxGeometry(2, 1, 3, 4, 2, 6)), neck = new T.Mesh(new T.BoxGeometry(0.4, 1.5, 0.4)); body.position.y = 1; neck.position.set(0, 1.75, 1.4); mt.add(body); mt.add(neck);
+      var rider = new T.Group(), hips = new T.Bone(); hips.name = DG.ownAnim.BONES.hips; hips.position.y = 0.9; rider.add(hips); root.add(mt); root.add(rider);
+      var y1 = P3.seatY(mt, rider), want1 = 1.5 - 0.9 * (1 - P3.SEAT_K);
+      mt.remove(body); mt.remove(neck); var big = new T.Mesh(new T.BoxGeometry(2, 2, 3, 4, 2, 6)); big.position.y = 1; mt.add(big); var y2 = P3.seatY(mt, rider), want2 = 2 - 0.9 * (1 - P3.SEAT_K);
+      var none = P3.seatY(mt, new T.Group()) === null;
+      var ok = Math.abs(y1 - want1) < 0.01 && Math.abs(y2 - want2) < 0.01 && none;
+      return ok ? ('등 1.5 → 기수 ' + y1.toFixed(3) + ' · 갈아 끼움 등 2 → ' + y2.toFixed(3) + ' · 뼈 없으면 null') : ('실패 ' + [y1, want1, y2, want2, none].join(','));
+    });
     /* ── 상황·전투·생활 몸짓 (shared/js/pose3d.js, W-0303 모션 묶음 1) — 렌더 없이 FK 로 잰다 ───────────── */
     t('pose3d — Pose_ 클립 열둘(상황 넷·전투 셋·생활 셋+idle 변주)이 등록되고 그 몸에 굽히며, 같은 뼈 전부·유한, 한 번 도는 클립은 BASE 에서 ≥0.3초 들어가 ≥0.3초에 BASE 로 나오고, 반복 클립은 이음새가 없다 (W-0303)', function () {
       var OA = DG.ownAnim, P3 = DG.pose3d, rig = OA.refRig(), m = OA.math, i, j, bad = [];
