@@ -112,6 +112,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/hero.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/village-animals.js"></script>
+<script src="js/crops.js"></script>
 <script src="js/village.js"></script>
 <script src="js/village-folk.js"></script>
 <script src="js/partner.js"></script>
@@ -5158,6 +5159,28 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 
     /* ── 마을 이름과 깃발 ───────────────────────────────── */
 
+    t('W-0431 밭 — 열매 8 로 네 칸 일굼 · 열매 하나 = 씨 · 물 하루 한 번 · 물 받은 칸만 아침에 한 단계, 셋째 아침 다 자람 · 거둠 열매 +4 · 빠진 날 몰아도 한 단계 · 집 곁 네 칸 사물', function () {
+      var CR = DG.crops, V = DG.village, VD = DG.villageData; if (!CR || !V) { return '실패 DG.crops 없음'; }
+      var s = V.state(), keep = s.crops, keepBag = JSON.stringify(s.bag), keepDay = s.day;
+      var fk = VD.ITEMS && VD.ITEMS.fruit && VD.ITEMS.fruit[0] ? VD.ITEMS.fruit[0].key : null;
+      if (!fk) { return '실패 열매 key 없음'; }
+      var keepRain = DG.town && DG.town.raining; if (DG.town) { DG.town.raining = function () { return false; }; }
+      try {
+        s.crops = null; s.bag = {}; s.bag[fk] = 5;
+        var pr = { kind: 'plot', cell: 0 }, r0 = CR.act(pr), noTill = r0.kind === 'no' && !CR.state().tilled;
+        s.bag[fk] = 10; var r1 = CR.act(pr), tilled = CR.state().tilled && s.bag[fk] === 2;
+        var r2 = CR.act(pr), seeded = CR.state().cells[0].from === fk && s.bag[fk] === 1;
+        var w1 = CR.act(pr), w2 = CR.act(pr), water = w1.kind === 'water' && w2.kind === 'no';
+        var d0 = s.day; CR.onDay(s, d0 + 1, d0); s.day = d0 + 1; var st1 = CR.state().cells[0].stage;
+        CR.onDay(s, d0 + 2, d0 + 1); s.day = d0 + 2; var st1b = CR.state().cells[0].stage;
+        CR.act(pr); CR.onDay(s, d0 + 5, d0 + 2); s.day = d0 + 5; var st2 = CR.state().cells[0].stage;
+        CR.act(pr); CR.onDay(s, d0 + 6, d0 + 5); s.day = d0 + 6; var st3 = CR.state().cells[0].stage;
+        var bag0 = s.bag[fk] || 0, h = CR.act(pr), got = (s.bag[fk] || 0) - bag0, empty = !CR.state().cells[0].from;
+        var props = []; CR.place(props, 10, 10, 40); var four = props.length === 4 && props.every(function (q) { return q.kind === 'plot'; }) && !!VD.PROPS.plot;
+        var ok = noTill && tilled && seeded && water && st1 === 1 && st1b === 1 && st2 === 2 && st3 === 3 && h.kind === 'gather' && got === 4 && empty && four;
+        return ok || ('실패 ' + JSON.stringify({ noTill: noTill, tilled: tilled, seeded: seeded, water: water, st: [st1, st1b, st2, st3], h: h && h.kind, got: got, empty: empty, four: four }));
+      } finally { s.crops = keep; s.bag = JSON.parse(keepBag); s.day = keepDay; if (DG.town) { DG.town.raining = keepRain; } }
+    });
     t('W-0422 낚시 대회 — 일요일만 · 곧바로 당길수록 큼(15~55+운 15) · 그날 큰 셋 합 90·120·150 에 동·은·금 금 300·800·2000 한 번씩 · 「오늘」 창 줄 · 다른 날은 없음', function () {
       var FD = DG.fishDerby, V = DG.village, C = DG.core; if (!FD || !V) { return '실패 DG.fishDerby 없음'; }
       var s = V.state(), keep = s.derby, g0 = C.save.player.gold || 0;

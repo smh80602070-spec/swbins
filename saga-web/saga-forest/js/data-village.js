@@ -44,6 +44,7 @@
     shop:   { name: '전방',   emoji: '🏪', gather: null,     reset: 0, hint: '판다' },
     home:   { name: '내 집',  emoji: '🏠', gather: null,     reset: 0, hint: '들어간다' },
     mail:   { name: '우편함', emoji: '📮', gather: null,     reset: 0, hint: '열어 본다' },
+    plot:   { name: '밭',     emoji: '🌾', gather: null,     reset: 0, hint: '돌본다' },   // W-0431 crops.js
     dig:    { name: '갈라진 자리', emoji: '🕳️', gather: 'fossil', reset: 1,
               hint: '판다', tool: 'spade' },
     shell:  { name: '조개',   emoji: '🐚', gather: 'shell',  reset: 1, hint: '줍는다' },

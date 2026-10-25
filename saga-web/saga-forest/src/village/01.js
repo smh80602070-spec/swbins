@@ -658,7 +658,7 @@
     props.push({ id: 'board', kind: 'board', x: cx * TILE + 20, y: (cy + 1) * TILE + 20 });
     /* 내 집과 우편함은 나란히 둔다 — 원작에서도 우편함은 집 앞에 있다 */
     props.push({ id: 'home', kind: 'home', x: (cx + 3) * TILE + 20, y: (cy - 1) * TILE + 20 });
-    props.push({ id: 'mail', kind: 'mail', x: (cx + 3) * TILE + 20, y: (cy + 1) * TILE + 6 });
+    props.push({ id: 'mail', kind: 'mail', x: (cx + 3) * TILE + 20, y: (cy + 1) * TILE + 6 }); if (global.DG.crops) { global.DG.crops.place(props, cx, cy, TILE); }   // W-0431 집 곁 밭 네 칸
     props.push({ id: 'tailor', kind: 'tailor',
                  x: (cx - 3) * TILE + 20, y: (cy + 2) * TILE + 20 });
     props.push({ id: 'pole', kind: 'pole', x: (cx + 1) * TILE + 20, y: (cy + 1) * TILE + 14 }); var bx = (cx + 2) * TILE + 20, by = (cy + 1) * TILE + 14; props = props.filter(function (q) { return Math.hypot(q.x - bx, q.y - by) > TILE * 0.8; }); props.push({ id: 'bench', kind: 'bench', x: bx, y: by }); var fixedB = props.filter(function (q) { return /^(shop|board|home|mail|tailor|pole)$/.test(q.id); }); props = props.filter(function (q) { return !/^p-?\d+_-?\d+$/.test(q.id) || fixedB.every(function (b) { return Math.hypot(q.x - b.x, q.y - b.y) > TILE * 0.8; }); });   // 제작대(W-0103) — 집 앞 우편함 곁, 둘레 잔 소품은 비운다 · W-0388 고정 건물 칸 위엔 흩뿌림 소품(나무·파기 자리 등)이 안 선다 — 날마다 바뀌는 dig 가 침선방 칸에 떨어지면 건물 대신 땅을 팠다

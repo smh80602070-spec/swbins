@@ -1553,5 +1553,25 @@
   "ticket": "W-0422",
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shot-fo-derby.mjs 폰 「오늘」 창 Read ○(처음 줄이 잘려 글자 줄임) · 요일은 turnip.dow(순무 장과 같은 일요일)."
+ }, {
+  "id": "fo.crops",
+  "name": "밭 작물(W-0431 웹 역이식 — 유니티 U-0223 · 스타듀 밸리) — 집 곁 밭 네 칸, 처음 열매 8 로 일굼 · 열매 하나 = 씨 · 물 하루 한 번 · 물 받은 칸만 아침에 한 단계(새싹·자람·익음) · 거둠 열매 +4 · 비 오면 저절로 물 · 「오늘」 창 한 줄 · K-0195 그림(wheat_* · forest_plot/_wet) · 손잡이 fo.crops",
+  "files": [
+   "js/crops.js",
+   "js/data-village.js",
+   "src/village/01.js",
+   "src/village/02.js",
+   "src/village-view/01.js",
+   "js/goals-adapter.js"
+  ],
+  "tests": [
+   "W-0431 밭"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 qc+claude",
+  "fun": {},
+  "ticket": "W-0431",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shot-fo-crops.mjs 폰 2D 네 칸 Read ○ · 3D 는 village3d-kinds 표에 없어 안 섬(배선만 — GLB 짝은 K-0195 고돗·유니티 줄) · 함정 id 가 pl* 이면 syncPlanted 가 걷어냄 → crop*."
  }
 ]

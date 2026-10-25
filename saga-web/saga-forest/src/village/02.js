@@ -250,7 +250,7 @@
     /* 어젯밤에 빈 소원 — **날짜를 갈기 전에** 세어 둔다 */
     var wishes = global.DG.town ? global.DG.town.wishesOn(s.day) : 0;
 
-    s.day = d;
+    var cropPrev = s.day; s.day = d; if (global.DG.crops) { global.DG.crops.onDay(s, d, cropPrev); }   // W-0431 밭 — 어제 물 받은 칸 한 단계
     s.used = {};
     s.requests = {};
     rollTasks(d);                  // 오늘의 일과 3 + 이번 주 과제(§5.1)
@@ -645,7 +645,7 @@
     if (f.type === 'resident') { return talk(f.obj); }
     if (f.type === 'npc') { return f.obj.visitor ? global.DG.visitor.talk(f.obj) : talkNpc(f.obj); }
 
-    var prop = f.obj, def = VD.PROPS[prop.kind];
+    var prop = f.obj, def = VD.PROPS[prop.kind]; if (prop.kind === 'plot' && global.DG.crops) { return global.DG.crops.act(prop); }   // W-0431 밭
     if (!def) { return null; }
     if (def.gather === 'fish') {
       /* 던져 놓은 줄이 있으면 당기고, 없으면 던진다 */
