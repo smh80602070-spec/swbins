@@ -1436,7 +1436,7 @@
         ctx.lineWidth = 3;
         ctx.strokeStyle = 'rgba(20,16,14,' + pa + ')';
         ctx.strokeText(f.text, x, f.y - 12 - prise);
-        ctx.fillStyle = 'rgba(255,235,200,' + pa + ')';
+        ctx.fillStyle = f.color || 'rgba(255,235,200,' + pa + ')';   // W-0423 콤보 킬 색
         ctx.fillText(f.text, x, f.y - 12 - prise);
         ctx.globalAlpha = 1;
       }

@@ -108,6 +108,7 @@ window.DG_NO_TUNE = true;
 <script src="js/side.js"></script>
 <script src="js/sect.js"></script>
 <script src="js/mob-cards.js"></script>
+<script src="js/combo-kill.js"></script>
 <script src="js/hidden-boss.js"></script>
 <script src="js/side-just.js"></script>
 <script src="js/side-launch.js"></script>
@@ -6457,6 +6458,19 @@ window.DG_NO_TUNE = true;
         var ok = L.length === 40 && rare && rare.n === 1 && none && mini > 70 && mini < 130 && norm > 60 && norm < 140 && full === 5 && Math.abs(mul - 1.002) < 1e-9 && off === null && offMul === 1 && M.cardHtml().indexOf('괴물 카드') > 0;
         return ok ? ('종 ' + L.length + ' · 미니 ' + mini + '/200 · 보통 ' + norm + '/2000 · 다 모음 ' + full + ' → ×' + mul) : ('실패 ' + JSON.stringify({ L: L.length, rare: rare, none: none, mini: mini, norm: norm, full: full, mul: mul, off: off, offMul: offMul }));
       } finally { C.save.mobCards = keep; }
+    });
+    t('W-0423 ② 콤보 킬 — 5초 안 이어 잡으면 수 오름 · 3부터 글(10·30·50 색) · 10마다 구슬(경험치 ×(3+n/10), 최대 8) · 3.5m 안이면 끌림 · 주우면 경험 · 끊기면 1 · 최고만 · 손잡이 끔', function () {
+      var K = DG.comboKill, C = DG.core; if (!K) { return '실패 DG.comboKill 없음'; }
+      var run = { player: { x: 0, y: 0 }, drops: [], expGained: 0 }, fx = [], e = { x: 500, y: 300, w: 34 }, r = null, i;
+      for (i = 0; i < 10; i++) { K.tick(run, 1); r = K.onKill(run, fx, e, 20); }
+      var orb = run.drops.filter(function (d) { return d.kind === 'exporb'; })[0], pops = fx.filter(function (f) { return /콤보 킬/.test(f.text); }).length;
+      K.tick(run, 6); var cut = K.onKill(run, fx, e, 20);
+      var far = { kind: 'exporb', x: 400, y: 40, vy: 0, n: 5 }, near = { kind: 'exporb', x: 90, y: 40, vy: 0, n: 5 }; run.drops = [far, near]; K.tick(run, 0.05);
+      var pulled = far.x === 400 && near.x < 90, got = K.pick(run, fx, { x: 0, y: 0, n: 7 });
+      var cols = [K.colorOf(2), K.colorOf(3), K.colorOf(10), K.colorOf(30), K.colorOf(50)].map(function (c) { return c || '-'; }).join(',');
+      C.setTune('story.comboKill', 0); var off = K.onKill(run, fx, e, 20); C.setTune('story.comboKill', 1);
+      var ok = r.n === 10 && orb && orb.n === 80 && r.orb === 80 && pops === 8 && cut.n === 1 && K.best(run) === 10 && pulled && got === 7 && run.expGained === 7 && cols.split(',')[0] === '-' && new Set(cols.split(',')).size === 5 && K.orbMul(200) === 8 && off === null;
+      return ok ? ('10 콤보 → 구슬 ' + orb.n + '(×' + K.orbMul(10) + ') · 글 ' + pops + ' · 6초 끊김 → ' + cut.n + ' · 최고 ' + K.best(run) + ' · 끌림 ' + Math.round(near.x)) : ('실패 ' + JSON.stringify({ r: r, orb: orb, pops: pops, cut: cut, pulled: pulled, got: got, cols: cols, off: off }));
     });
     /* ── W-0398 4종횡 웹 역이식(정본 고돗 G-0333·G-0319) — 문파 · 숨은 우두머리 ── */
     t('문파(W-0398 ①) — 셋 중 하나 들기 · 처치 +1·보스 +10·오늘 의뢰 사냥터 두 배 · 공 100 제자 +2%(그 갈래만)·3000 문주 +10% · 나가면 공 0', function () {

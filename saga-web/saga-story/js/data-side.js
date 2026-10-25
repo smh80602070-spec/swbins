@@ -270,7 +270,8 @@
     gold:   { name: '금',     emoji: '🪙', color: '#e8c15a' },
     potion: { name: '탕약',   emoji: '🧪', color: '#d0596b' },
     gear:   { name: '장비',   emoji: '📦', color: '#8ab4e8' },
-    scroll: { name: '주문서', emoji: '📜', color: '#d8cba0' }
+    scroll: { name: '주문서', emoji: '📜', color: '#d8cba0' },
+    exporb: { name: '경험치 구슬', emoji: '🔵', color: '#5aa8f0' }   // W-0423 콤보 킬
   };
 
   /**
