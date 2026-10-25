@@ -1319,5 +1319,57 @@
   "ticket": "W-0407",
   "since": "2026-10-25",
   "note": "D2(claude 2026-10-25): 촬영 ○"
+ }, {
+  "id": "st.mob-cards",
+  "name": "괴물 카드 도감(W-0423 ① 웹 역이식 — 고돗 G-0374 · 메이플 몬스터 컬렉션) — 40종(잡졸 32+세 시대 8) · 보통 5%·미니 50%·희귀 확정(제 난수) · 다섯 장 = 다 모음, 종마다 공격 +0.2% · 사냥터 시트 카드 줄 · 손잡이 story.mobCards",
+  "files": [
+   "js/mob-cards.js",
+   "src/side/02.js",
+   "src/ui/01.js"
+  ],
+  "tests": [
+   "W-0423 ① 괴물 카드"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 qc+claude",
+  "fun": {},
+  "ticket": "W-0423",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shot-st-w0423.mjs cards-pc/phone Read ○ · 세이브 save.mobCards 순수 추가."
+ }, {
+  "id": "st.combo-kill",
+  "name": "콤보 킬(W-0423 ② 웹 역이식 — 고돗 G-0345 · 메이플) — 5초 안 이어 잡기 · 3부터 「n 콤보 킬」(10·30·50 색) · 10마다 경험치 구슬(×(3+n/10), 최대 8)·3.5m 끌림 · 이번 사냥 최고만 · 손잡이 story.comboKill",
+  "files": [
+   "js/combo-kill.js",
+   "js/data-side.js",
+   "js/side-view.js",
+   "src/side/02.js"
+  ],
+  "tests": [
+   "W-0423 ② 콤보 킬"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 qc+claude",
+  "fun": {},
+  "ticket": "W-0423",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 hunt-pc/phone 「12 콤보 킬」·구슬 Read ○ · 구슬은 떨어진 것 kind exporb."
+ }, {
+  "id": "st.rune",
+  "name": "룬(W-0423 ③ 웹 역이식 — 고돗 G-0382 · 메이플) — 사냥터 90~180초마다 앞 7m 에 룬 · 닿으면 화살표 넷 6초(방향키·WASD·화면 단추) · 맞히면 10분 경험치 ×2(메모리) · 틀리면 흩어짐 · 비경·관문 대장 무대 없음 · 손잡이 story.rune",
+  "files": [
+   "js/rune.js",
+   "js/side-view.js",
+   "src/side/02.js"
+  ],
+  "tests": [
+   "W-0423 ③ 룬"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 qc+claude",
+  "fun": {},
+  "ticket": "W-0423",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 hunt-pc/phone 룬 창·돌 Read ○ · 룬 그림은 코드 도형(K 몫 없음)."
  }
 ]

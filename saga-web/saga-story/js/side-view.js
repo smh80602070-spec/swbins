@@ -357,7 +357,7 @@
     }
 
     drawRopes(stg, use3d ? null : rg);
-    drawPortals(stg);
+    drawPortals(stg); if (global.DG.rune) { global.DG.rune.draw(ctx, camX, run); }   // W-0423 룬
 
     /* 떨어진 것 */
     for (i = 0; i < run.drops.length; i++) {

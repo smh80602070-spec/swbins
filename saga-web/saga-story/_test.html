@@ -109,6 +109,7 @@ window.DG_NO_TUNE = true;
 <script src="js/sect.js"></script>
 <script src="js/mob-cards.js"></script>
 <script src="js/combo-kill.js"></script>
+<script src="js/rune.js"></script>
 <script src="js/hidden-boss.js"></script>
 <script src="js/side-just.js"></script>
 <script src="js/side-launch.js"></script>
@@ -6471,6 +6472,22 @@ window.DG_NO_TUNE = true;
       C.setTune('story.comboKill', 0); var off = K.onKill(run, fx, e, 20); C.setTune('story.comboKill', 1);
       var ok = r.n === 10 && orb && orb.n === 80 && r.orb === 80 && pops === 8 && cut.n === 1 && K.best(run) === 10 && pulled && got === 7 && run.expGained === 7 && cols.split(',')[0] === '-' && new Set(cols.split(',')).size === 5 && K.orbMul(200) === 8 && off === null;
       return ok ? ('10 콤보 → 구슬 ' + orb.n + '(×' + K.orbMul(10) + ') · 글 ' + pops + ' · 6초 끊김 → ' + cut.n + ' · 최고 ' + K.best(run) + ' · 끌림 ' + Math.round(near.x)) : ('실패 ' + JSON.stringify({ r: r, orb: orb, pops: pops, cut: cut, pulled: pulled, got: got, cols: cols, off: off }));
+    });
+    t('W-0423 ③ 룬 — 90~180초에 앞 7m 바닥 · 닿으면 화살표 넷 6초 · 다 맞히면 10분 경험치 ×2 · 틀리거나 시간 다하면 흩어짐 · 비경엔 없음 · 손잡이 끔', function () {
+      var R = DG.rune, C = DG.core; if (!R) { return '실패 DG.rune 없음'; } R._reset();
+      function mk(rift) { return { stage: { width: 3000, floor: 400 }, rift: rift, player: { x: 100, y: 346, facing: 1 }, drops: [] }; }
+      try {
+        var run = mk(false), sec = 0; while (!run.rune && sec < 400) { R.tick(run, 1); sec++; }
+        var r = run.rune, at = r ? Math.round(r.x - 113) : null; R.tick(run, 1); var idle = r && r.state === 'idle';
+        run.player.x = r.x - 13; R.tick(run, 0.1); var inp = r.state === 'input' && r.seq.length === 4 && R.expMul() === 1;
+        var res = null; r.seq.slice().forEach(function (d) { res = R.press(d, run); }); var won = res === true && !run.rune && R.expMul() === 2 && Math.round(R.left()) === 600;
+        var r2 = R.spawn(run); run.player.x = r2.x - 13; R.tick(run, 0.1); var wrong = ['left', 'right', 'up', 'down'].filter(function (d) { return d !== r2.seq[0]; })[0], bad = R.press(wrong, run) === false && !run.rune;
+        var r3 = R.spawn(run); run.player.x = r3.x - 13; R.tick(run, 0.1); R.tick(run, 3); R.tick(run, 3.1); var timeout = !run.rune;
+        var rr = mk(true), k; for (k = 0; k < 400; k++) { R.tick(rr, 1); } var noRift = !rr.rune;
+        C.setTune('story.rune', 0); var off = R.expMul(); C.setTune('story.rune', 1);
+        var ok = sec >= 90 && sec <= 181 && at === 224 && idle && inp && won && bad && timeout && noRift && off === 1;
+        return ok ? (sec + '초에 섬 · 앞 ' + at + 'px · 넷 맞힘 → ×' + R.MUL + ' ' + R.BUFF + '초 · 틀림·시간 다함 흩어짐 · 비경 없음') : ('실패 ' + JSON.stringify({ sec: sec, at: at, idle: idle, inp: inp, won: won, bad: bad, timeout: timeout, noRift: noRift, off: off }));
+      } finally { R._reset(); }
     });
     /* ── W-0398 4종횡 웹 역이식(정본 고돗 G-0333·G-0319) — 문파 · 숨은 우두머리 ── */
     t('문파(W-0398 ①) — 셋 중 하나 들기 · 처치 +1·보스 +10·오늘 의뢰 사냥터 두 배 · 공 100 제자 +2%(그 갈래만)·3000 문주 +10% · 나가면 공 0', function () {

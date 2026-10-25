@@ -130,7 +130,7 @@
     }
     var expAmt = Math.round((6 + lv * 4) * (e.boss ? 15 : (e.rare ? RARE_GAIN_MUL : (e.mini ? MINI_GAIN_MUL : 1))) * GAIN_EXP * RG() *
       (rmk ? rmk.reward : 1));
-    expAmt = Math.round(expAmt * (global.DG.sect ? global.DG.sect.mul('exp') : 1)); core.gainExp(expAmt);   // W-0398 ① 서원
+    expAmt = Math.round(expAmt * (global.DG.sect ? global.DG.sect.mul('exp') : 1) * (global.DG.rune ? global.DG.rune.expMul() : 1)); core.gainExp(expAmt);   // W-0398 ① 서원
     if (global.DG.comboKill) { global.DG.comboKill.onKill(run, fx, e, expAmt); } run.expGained += expAmt;   // 세션 카드(§5-6) — 이 판에서 잡아 얻은 경험치만 잰다(사명 보상 등은 안 잡는다)
     /* 사명(quest.js)이 이 소식을 듣는다 — 규칙이 서로를 부르지 않게 알림으로만 잇는다 */
     core.emit('side:kill', { ref: e.ref, boss: !!e.boss, lv: lv, stage: run.stage.key, mini: !!e.mini, rare: !!e.rare, hidden: !!e.hidden, rift: !!run.rift });   // W-0423 카드가 미니·희귀·비경을 가른다
@@ -469,7 +469,7 @@
   function update(dt) {
     if (!run) { return; }
     dt = Math.min(dt, 0.05);
-    if (global.DG.comboKill) { global.DG.comboKill.tick(run, dt); } var MTs = global.DG.mount; if (MTs && MTs.step) { MTs.step(dt); } if (global.DG.life) { global.DG.life.tick(run, dt); }   // W-0283 연주 회복         // 탈것 — 날갯짓 쉼·내림 판정(mount.js)
+    if (global.DG.comboKill) { global.DG.comboKill.tick(run, dt); } if (global.DG.rune) { global.DG.rune.tick(run, dt); } var MTs = global.DG.mount; if (MTs && MTs.step) { MTs.step(dt); } if (global.DG.life) { global.DG.life.tick(run, dt); }   // W-0283 연주 회복         // 탈것 — 날갯짓 쉼·내림 판정(mount.js)
     /* 손맛 표준(§5-7) — 타격 정지(hitstop). 한 대 맞은 순간 몇 프레임만 확
        늦춘다(멈추지는 않는다 — dt=0 이면 몇몇 카운트다운이 얼어붙은 티가
        난다). 실제 경과 시간(줄지 않은 dt)으로 hitstopT 를 줄이고, 이
