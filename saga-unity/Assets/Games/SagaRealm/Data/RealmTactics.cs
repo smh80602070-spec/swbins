@@ -388,6 +388,7 @@ namespace Saga.Realm.Data
             int sx = att.X, sy = att.Y; att.X = ax; att.Y = ay;
             if (IsBack(att, tgt)) extra += BackEdge;
             att.X = sx; att.Y = sy;
+            extra += RealmSupport.BonusFor(b, att) - RealmSupport.BonusFor(b, tgt); // tasks U-0231 지원 — 내 짝 곁이면 명중 +, 맞는 쪽 짝 곁이면 회피 +
             return Math.Max(HitMin, Math.Min(HitMax, JsRound(HitBase + (att.Atk - tgt.Def) * 2 - cover + extra)));
         }
 

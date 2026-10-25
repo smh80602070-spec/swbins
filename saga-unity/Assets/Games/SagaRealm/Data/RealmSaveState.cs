@@ -111,6 +111,7 @@ namespace Saga.Realm.Data
             public int techPts;
             public string[] techDone;
             public string viewRegion; // tasks U-0204 보는 지역 — 버전 그대로: 옛 세이브는 null → 수도 지역.
+            public string supportJson; // tasks U-0231 지원 단계 — 버전 그대로: 옛 세이브는 null → 빈 것.
             public string focusJson; // tasks U-0193 국가 방침 — 버전 그대로: 옛 세이브는 null → 끝낸 방침 없음.
             public string ageJson; // tasks U-0187 국세 — 버전 그대로: 옛 세이브는 null → 난세.
             public string lawsJson; // tasks U-0182 법령 — 버전 그대로: 옛 세이브는 null → 빈 법전.
@@ -216,6 +217,7 @@ namespace Saga.Realm.Data
             data.lawsJson = RealmLaws.Snapshot(); // tasks U-0182
             data.ageJson = RealmAges.Snapshot(); // tasks U-0187
             data.focusJson = RealmFocus.Snapshot(); // tasks U-0193
+            data.supportJson = RealmSupport.Snapshot(); // tasks U-0231
             data.viewRegion = RealmRegions.Snapshot(); // tasks U-0204
             return JsonUtility.ToJson(data);
         }
@@ -308,6 +310,7 @@ namespace Saga.Realm.Data
             RealmLaws.Restore(data.lawsJson); // tasks U-0182
             RealmAges.Restore(data.ageJson); // tasks U-0187
             RealmFocus.Restore(data.focusJson); // tasks U-0193
+            RealmSupport.Restore(data.supportJson); // tasks U-0231
             RealmRegions.Restore(data.viewRegion); // tasks U-0204
             return true;
         }

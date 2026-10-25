@@ -1210,6 +1210,10 @@
     { "key": "today.focus_none", "value": "🎯 방침 — 고르지 않음 · 끝낸 방침 {0}/{1}" },
     { "key": "today.conquest", "value": "🏯 천하통일 — 성 {0}/{1}" },
     { "key": "today.culture", "value": "📜 문화 — 문답 정답 {0}/{1}" },
-    { "key": "today.over", "value": "🏆 천하가 정해졌다 — {0}" }
+    { "key": "today.over", "value": "🏆 천하가 정해졌다 — {0}" },
+    { "key": "recommend.line", "value": "📜 {0}이(가) 숨은 인재 {1}을(를) 천거했다 — 등용해 보자" },
+    { "key": "support.up", "value": "🤝 {0} · {1} 지원 {2}" },
+    { "key": "support.line", "value": "🤝 지원 {0}" },
+    { "key": "support.now", "value": " · 지금 곁 명중·회피 +{0}" }
   ]
 }

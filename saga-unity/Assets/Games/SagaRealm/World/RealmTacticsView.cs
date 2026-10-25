@@ -610,6 +610,7 @@ namespace Saga.Realm.World
             var g = T.Apply(o, Board.EnemyId);
             _info.text = string.Format(RealmLocalization.T("tactics.result", "♟️ 전술판 {0} — 공 위력 {1}{2}%{3}"), RealmLocalization.T("tactics." + o.Kind, o.Name), o.WinPct >= 0 ? "+" : "", o.WinPct,
                 o.LossMul != 1f ? string.Format(RealmLocalization.T("tactics.note_take", " · 받는 피해 ×{0}"), o.LossMul) : "");
+            foreach (var up in RealmSupport.OnBattleEnd(Board)) _info.text += System.Environment.NewLine + up; // tasks U-0231 지원 — 이웃으로 끝난 우리 쌍 +1
             ClearMarks();
             if (_instant || !isActiveAndEnabled) { Complete(g); return; }
             _closing = true;
@@ -646,6 +647,14 @@ namespace Saga.Realm.World
                 : _cmd != null ? RealmLocalization.T("tactics.hint_cmd", "붉은 판 = 명령 대상 · 같은 단추 = 평타로")
                 : RealmLocalization.T("tactics.hint_act", "하늘빛 칸 = 갈 곳 · 붉은 판 = 칠 적(명중 %)");
             _info.text = head + "\n" + hint;
+            // tasks U-0231 지원 — 고른 우리 장수의 지원 짝(C 이상)과 지금 이웃 보정
+            var selU = Selected != null ? T.UnitOf(Board, Selected) : null;
+            if (Board.IsSrpg && selU != null && selU.Side == "me")
+            {
+                string sup = RealmSupport.LineFor(selU.Id);
+                int bonus = RealmSupport.BonusFor(Board, selU);
+                if (sup.Length > 0) _info.text += "\n" + sup + (bonus > 0 ? string.Format(RealmLocalization.T("support.now", " · 지금 곁 명중·회피 +{0}"), bonus) : "");
+            }
             ClearMarks();
             if (Selected != null)
             {

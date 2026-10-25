@@ -159,6 +159,10 @@ namespace Saga.Realm.Data
         /// <summary>PLAN.md 109-13-2 — 이 달 그 성에서 마지막 명령을 낸 무장(없으면 null).</summary>
         public static string OrderOfficerThisMonth(string cityId) => _orderThisMonth.TryGetValue(cityId, out var o) ? o.officerId : null;
 
+        /// <summary>진단 — 장수를 그 성에 둔다(세이브 JSON 으로 되돌릴 것).</summary>
+        public static void SetOfficerCityForTest(string officerId, string cityId) => _officerCity[officerId] = cityId;
+        /// <summary>진단 — 찾아 둔 사람 목록에서 뺀다(다시 숨은 인재로).</summary>
+        public static void ForgetFoundForTest(string officerId) => _foundIds.Remove(officerId);
         public static string OfficerCityId(string officerId) => _officerCity.TryGetValue(officerId, out var c) ? c : null;
 
         /// <summary>101-2 5-8 "허창 자리 계승"(`RealmSuccessionState.cs`) 전용 —
@@ -401,6 +405,31 @@ namespace Saga.Realm.Data
             return new OrderResult(true, msg);
         }
 
+        /// <summary>tasks U-0231 인재 천거 — 이 달이 천거 달이면 지금 성 지혜 최고 장수가 그 성 숨은 인재(가장 귀한 이)를 드러낸다. 그 줄(없으면 null).</summary>
+        public static string Recommend(int year, int month, string cityId = null)
+        {
+            if (!RealmRecommend.On || !RealmRecommend.Rolls(year, month)) return null;
+            string city = cityId ?? CurrentCity;
+            RealmOfficer best = null;
+            foreach (var id in _roster)
+            {
+                if (IsDead(id) || OfficerCityId(id) != city) continue;
+                var o = RealmOfficerPool.Get(id);
+                if (o != null && (best == null || o.Wisdom > best.Wisdom)) best = o;
+            }
+            if (best == null) return null;
+            RealmOfficer found = null;
+            foreach (var id in RealmOfficerPool.HiddenAt(city))
+            {
+                if (_foundIds.Contains(id) || _roster.Contains(id) || IsDead(id)) continue;
+                var o = RealmOfficerPool.Get(id);
+                if (o != null && (found == null || o.Rarity > found.Rarity)) found = o;
+            }
+            if (found == null) return null;
+            _foundIds.Add(found.Id);
+            return string.Format(RealmLocalization.T("recommend.line", "📜 {0}이(가) 숨은 인재 {1}을(를) 천거했다 — 등용해 보자"), best.Name, found.Name);
+        }
+
         /// <summary>수색 — rtk.js doSearch(). 성마다 다른 재야 후보 목록
         /// (RealmOfficerPool.HiddenAt)에서, 지력이 높을수록 귀한 사람을
         /// 알아본다.</summary>
@@ -540,7 +569,9 @@ namespace Saga.Realm.Data
             campLines.AddRange(RealmFocus.Monthly(out int focusGold)); // tasks U-0193 방침 — 한 달 · 끝나면 알림(근본·대계 금 덤)
             if (focusGold > 0) Gold += focusGold;
             campLines.AddRange(RealmTrade.Monthly()); // tasks U-0172 교역로 — 이어진 상단 금·끊긴 상단 잃음·돌아옴
-            campLines.AddRange(RealmWonder.Monthly()); // tasks U-0136 불가사의 — 적 착공·남은 달·완공·환급 // tasks U-0134 진·보급선 — 달 바뀐 뒤(군량 먹고·보급 보고·다시 친다)
+            campLines.AddRange(RealmWonder.Monthly());
+            string rec = Recommend(Year, Month); // tasks U-0231 인재 천거(해시 굴림 — 전역 난수 안 건드림)
+            if (rec != null) campLines.Add(rec); // tasks U-0136 불가사의 — 적 착공·남은 달·완공·환급 // tasks U-0134 진·보급선 — 달 바뀐 뒤(군량 먹고·보급 보고·다시 친다)
             Changed?.Invoke();
             string summary = string.Format(RealmLocalization.T("month.summary", "{0}년 {1}월 — 금 +{2}-{3}(봉록){4}"),
                 Year, Month, income, upkeep, harvest ? RealmLocalization.T("month.harvest_suffix", ", 수확") : "");

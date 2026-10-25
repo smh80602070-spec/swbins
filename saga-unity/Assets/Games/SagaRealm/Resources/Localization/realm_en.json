@@ -1210,6 +1210,10 @@
     { "key": "today.focus_none", "value": "🎯 Focus — none chosen · done {0}/{1}" },
     { "key": "today.conquest", "value": "🏯 Unification — cities {0}/{1}" },
     { "key": "today.culture", "value": "📜 Culture — quiz correct {0}/{1}" },
-    { "key": "today.over", "value": "🏆 The realm is decided — {0}" }
+    { "key": "today.over", "value": "🏆 The realm is decided — {0}" },
+    { "key": "recommend.line", "value": "📜 {0} recommends the hidden talent {1} — try recruiting" },
+    { "key": "support.up", "value": "🤝 {0} · {1} support {2}" },
+    { "key": "support.line", "value": "🤝 Support {0}" },
+    { "key": "support.now", "value": " · adjacent now: hit/evade +{0}" }
   ]
 }
