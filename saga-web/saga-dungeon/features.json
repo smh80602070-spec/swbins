@@ -1869,5 +1869,20 @@
   "ticket": "W-0428",
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shot-dg-bounty.mjs 폰·PC 작은 칸 Read ○(가운데 안 가림) · 처음 body 에 붙여 #dungeon 층 밑에 깔림 → #dungeon 안으로 · 저장 안 함(판 안) · 군단·시련·마을은 없음."
+ }, {
+  "id": "dg.steps-sfx",
+  "name": "발소리·탈것 소리(W-0442 · 유니티 U-0237 짝) — 디딤마다 땅 갈래 걸음 소리 · 탄 동안 말발굽(돌·나무 hard) · 날면 날갯짓(용 heavy) · 공용 steps-sfx.js · 손잡이 audio.steps·audio.stepsVol",
+  "files": [
+   "js/steps-sfx.js"
+  ],
+  "tests": [
+   "W-0442"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "W-0442",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · probe-steps.mjs 로 실제 걷기 → sfx 받음 200(1만리 돌길·3마을 풀)."
  }
 ]

@@ -411,7 +411,7 @@
     global.DG.milestone.tick();         // 이번 주 누적 거리 사다리(축1 다음 후보)
     global.DG.codex.tick();             // 지나가며 본 것에 도장을 찍는다
     if (global.DG.beacon) { global.DG.beacon.tick(dt); }   // 봉수대 3초 홀드(§5①)
-    if (global.DG.restSite) { global.DG.restSite.tick(dt); } if (global.DG.fieldRiddle) { global.DG.fieldRiddle.tick(dt); } if (global.DG.mountCombat) { global.DG.mountCombat.tick(dt); }   // W-0304 말 위 전투 쿨·빠르기   // W-0297 쉼터 — 불 지피기·쉬기(회복·부활 자리·잡몹 다시 섬)
+    if (global.DG.restSite) { global.DG.restSite.tick(dt); } if (global.DG.fieldRiddle) { global.DG.fieldRiddle.tick(dt); } if (global.DG.mountCombat) { global.DG.mountCombat.tick(dt); } if (global.DG.stepsSfx && global.DG.world) { var Wm0 = global.DG.world, mv0 = Wm0.motion, MT0 = global.DG.mount, cu0 = MT0 && MT0.active && MT0.active() ? MT0.current() : null, p0 = core.save.player.pos; global.DG.stepsSfx.tick('me', dt, { moving: !!(mv0 && mv0.speed > 1.5), sps: mv0 ? Math.max(1.6, Math.min(3.6, mv0.speed / 1.4)) : 2, surface: Wm0.terrainAt ? Wm0.terrainAt(Math.floor(p0.x / 48), Math.floor(p0.y / 48)) : 'grass', mount: cu0 ? (cu0.kind === 'fly' ? (cu0.id === 'mt_dragon' ? 'flyHeavy' : 'fly') : 'ground') : null, flying: !!(MT0 && MT0.flying && MT0.flying()) }); }   /* W-0442 발소리·탈것 소리 */   // W-0304 말 위 전투 쿨·빠르기   // W-0297 쉼터 — 불 지피기·쉬기(회복·부활 자리·잡몹 다시 섬)
     if (global.DG.stela) { global.DG.stela.tick(dt); }     // 15m 안 비석을 저절로 발견(§5⑤)
     if (global.DG.drop) { global.DG.drop.tick(dt); }       // 흩어진 짐을 걷는다(§5⑧)
     if (global.DG.bond) { global.DG.bond.tick(); }         // 함께 걸은 거리로 인연이 쌓인다(§5⑥)

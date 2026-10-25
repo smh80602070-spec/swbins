@@ -2085,5 +2085,20 @@
   "ticket": "W-0438",
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shots/w0438/raid.png(pw-look2d LOOK_EVAL) ○."
+ }, {
+  "id": "go.steps-sfx",
+  "name": "발소리·탈것 소리(W-0442 · 유니티 U-0237 짝) — 디딤마다 땅 갈래 걸음 소리 · 탄 동안 말발굽(돌·나무 hard) · 날면 날갯짓(용 heavy) · 공용 steps-sfx.js · 손잡이 audio.steps·audio.stepsVol",
+  "files": [
+   "js/steps-sfx.js"
+  ],
+  "tests": [
+   "W-0442"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "W-0442",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · probe-steps.mjs 로 실제 걷기 → sfx 받음 200(1만리 돌길·3마을 풀)."
  }
 ]

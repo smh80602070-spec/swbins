@@ -97,6 +97,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/itemicon.js"></script>
 <script src="js/assets3d.js"></script>
 <script src="js/sfx.js"></script>
+<script src="js/steps-sfx.js"></script>
 <script src="js/bgm.js"></script>
 <script src="js/voice.js"></script>
 <script src="js/toon3d-core.js"></script>
@@ -8097,6 +8098,16 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         var ok = names === '일반,고급,희귀,영웅,전설' && r5 && r5s && r5.lv === 5 && nm.indexOf('전설') > 0 && VD.TOOLS.net.lvMax === 5 && p0 === 0 && Math.abs(p1 - 0.1) < 1e-9 && Math.abs(sp1 - 0.1) < 1e-9 && rm1 === 1 && Math.abs(rm2 - 1.25) < 1e-9 && off === 0;
         return ok ? (names + ' · ' + nm + ' · 한 벌 수확 +' + p1 + ' · 전설 한 벌 희귀 ×' + rm2) : ('실패 ' + JSON.stringify({ names: names, nm: nm, p0: p0, p1: p1, sp1: sp1, rm1: rm1, rm2: rm2, off: off }));
       } finally { s.tools = JSON.parse(keep); }
+    });
+    t('W-0442 발소리·탈것 소리 — 디딤 사이(1/sps)가 차면 한 번 · 땅 갈래(grass_meadow → 풀) · 탄 동안 말발굽(돌·나무 = hard) · 날면 날갯짓(용 = heavy) · 멈추면 없음 · 끔', function () {
+      var SS = DG.stepsSfx, C = DG.core; if (!SS) { return '실패 DG.stepsSfx 없음'; }
+      SS._reset();
+      var a = SS.tick('t', 0.3, { moving: true, sps: 2, surface: 'grass_meadow' }), b = SS.tick('t', 0.3, { moving: true, sps: 2, surface: 'grass_meadow' });
+      var hoof = SS.tick('h', 1, { moving: true, sps: 2, surface: 'road', mount: 'ground' }), soft = SS.tick('h2', 1, { moving: true, sps: 2, surface: 'sand', mount: 'ground' });
+      var wing = SS.tick('w', 1, { moving: false, flying: true, mount: 'fly' }), heavy = SS.tick('w2', 1, { flying: true, mount: 'flyHeavy' }), still = SS.tick('s', 5, { moving: false });
+      C.setTune('audio.steps', 0); var off = SS.tick('o', 5, { moving: true, sps: 2 }); C.setTune('audio.steps', null);
+      var ok = a === null && /^sfx_step_grass_[12]$/.test(b) && /^sfx_hoof_hard_[123]$/.test(hoof) && /^sfx_hoof_soft_[123]$/.test(soft) && /^sfx_wing_flap_[123]$/.test(wing) && /^sfx_wing_heavy_[12]$/.test(heavy) && still === null && off === null && SS.count() === 5;
+      SS._reset(); return ok ? [b, hoof, soft, wing, heavy].join(' · ') : ('실패 ' + JSON.stringify([a, b, hoof, soft, wing, heavy, still, off, SS.count()]));
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

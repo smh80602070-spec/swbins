@@ -469,7 +469,7 @@
   function update(dt) {
     if (!run) { return; }
     dt = Math.min(dt, 0.05);
-    if (global.DG.comboKill) { global.DG.comboKill.tick(run, dt); } if (global.DG.rune) { global.DG.rune.tick(run, dt); } if (global.DG.fieldElite) { global.DG.fieldElite.tick(run, dt); } if (global.DG.huntWave) { global.DG.huntWave.tick(run, dt, fx); } var MTs = global.DG.mount; if (MTs && MTs.step) { MTs.step(dt); } if (global.DG.life) { global.DG.life.tick(run, dt); }   // W-0283 연주 회복         // 탈것 — 날갯짓 쉼·내림 판정(mount.js)
+    if (global.DG.comboKill) { global.DG.comboKill.tick(run, dt); } if (global.DG.rune) { global.DG.rune.tick(run, dt); } if (global.DG.fieldElite) { global.DG.fieldElite.tick(run, dt); } if (global.DG.huntWave) { global.DG.huntWave.tick(run, dt, fx); } if (global.DG.stepsSfx) { var pS = run.player, MT4 = global.DG.mount, cu4 = MT4 && MT4.active && MT4.active() ? MT4.current() : null, fl4 = !!(cu4 && MT4.flying && MT4.flying()); global.DG.stepsSfx.tick('me', dt, { moving: !!pS.vx && pS.onGround, sps: Math.abs(pS.vx) > 200 ? 3 : 2.2, surface: run.stage.town ? 'dirt' : (({ cave: 'stone', fire: 'stone', forest: 'dirt' })[run.stage.mood] || 'grass'), mount: cu4 ? (fl4 ? (/dragon/.test(cu4.id) ? 'flyHeavy' : 'fly') : 'ground') : null, flying: fl4 }); }   /* W-0442 발소리 */ var MTs = global.DG.mount; if (MTs && MTs.step) { MTs.step(dt); } if (global.DG.life) { global.DG.life.tick(run, dt); }   // W-0283 연주 회복         // 탈것 — 날갯짓 쉼·내림 판정(mount.js)
     /* 손맛 표준(§5-7) — 타격 정지(hitstop). 한 대 맞은 순간 몇 프레임만 확
        늦춘다(멈추지는 않는다 — dt=0 이면 몇몇 카운트다운이 얼어붙은 티가
        난다). 실제 경과 시간(줄지 않은 dt)으로 hitstopT 를 줄이고, 이

@@ -199,6 +199,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/portrait3d.js"></script>
 <script src="js/icon.js"></script>
 <script src="js/audio.js"></script>
+<script src="js/steps-sfx.js"></script>
 <script src="js/bgm.js"></script>
 <script src="js/voice.js"></script>
 <script src="js/talk.js"></script>
@@ -17899,6 +17900,16 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var Z = DG.zoneCut; if (!Z || !Z.cut) { return '실패 DG.zoneCut 없음'; }
       var a = Z.cut({ min: 0, max: 1 }) && Z.shown(); DG.core.setTune('zoneCut.on', 0); var b = Z.cut(); DG.core.setTune('zoneCut.on', 1);
       return (a && b === false) || ('실패 덮음 ' + a + ' · 끔 ' + b);
+    });
+    t('W-0442 발소리·탈것 소리 — 디딤 사이(1/sps)가 차면 한 번 · 땅 갈래(grass_meadow → 풀) · 탄 동안 말발굽(돌·나무 = hard) · 날면 날갯짓(용 = heavy) · 멈추면 없음 · 끔', function () {
+      var SS = DG.stepsSfx, C = DG.core; if (!SS) { return '실패 DG.stepsSfx 없음'; }
+      SS._reset();
+      var a = SS.tick('t', 0.3, { moving: true, sps: 2, surface: 'grass_meadow' }), b = SS.tick('t', 0.3, { moving: true, sps: 2, surface: 'grass_meadow' });
+      var hoof = SS.tick('h', 1, { moving: true, sps: 2, surface: 'road', mount: 'ground' }), soft = SS.tick('h2', 1, { moving: true, sps: 2, surface: 'sand', mount: 'ground' });
+      var wing = SS.tick('w', 1, { moving: false, flying: true, mount: 'fly' }), heavy = SS.tick('w2', 1, { flying: true, mount: 'flyHeavy' }), still = SS.tick('s', 5, { moving: false });
+      C.setTune('audio.steps', 0); var off = SS.tick('o', 5, { moving: true, sps: 2 }); C.setTune('audio.steps', null);
+      var ok = a === null && /^sfx_step_grass_[12]$/.test(b) && /^sfx_hoof_hard_[123]$/.test(hoof) && /^sfx_hoof_soft_[123]$/.test(soft) && /^sfx_wing_flap_[123]$/.test(wing) && /^sfx_wing_heavy_[12]$/.test(heavy) && still === null && off === null && SS.count() === 5;
+      SS._reset(); return ok ? [b, hoof, soft, wing, heavy].join(' · ') : ('실패 ' + JSON.stringify([a, b, hoof, soft, wing, heavy, still, off, SS.count()]));
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

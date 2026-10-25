@@ -21,7 +21,8 @@ const FILES = [
   ['js/net.js', 'js/net.js'],
   ['js/anim-own.js', 'js/anim-own.js'],
   ['js/clock.js', 'js/clock.js'],   // W-0316 — 진단·촬영용 가짜 시계(pose3d 앞에 싣는다, 게임 중 앞당김 0)
-  ['js/pose3d.js', 'js/pose3d.js'],   // W-0303 — 상황·전투·생활 몸짓(anim-own 뒤에 싣는다)
+  ['js/steps-sfx.js', 'js/steps-sfx.js'],   // W-0442 — 발소리·탈것 소리(판 소리 모듈 뒤에 싣는다)
+  ['js/pose3d.js', 'js/pose3d.js'],      // W-0303 — 상황·전투·생활 몸짓(anim-own 뒤에 싣는다)
   ['js/vroid-variant.js', 'js/vroid-variant.js'],
   ['js/account.js', 'js/account.js'],
   ['build/build-single.mjs', 'build/build-single.mjs'],

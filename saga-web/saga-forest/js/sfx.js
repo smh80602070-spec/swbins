@@ -321,9 +321,24 @@
   bindUnlock();
 
   global.DG = global.DG || {};
+  /* W-0442 자체 효과음 샘플(shared/audio/sfx/<id>.ogg) — 2나락 sx 와 같은 꼴: 같은 master 로(소리 끔·볼륨 따름), 처음 부를 때 받아 두고 받기 전엔 false */
+  var sxBuf = {};
+  function sxUrl(id) { var A = global.DG.assets3d, r = A && A.root ? A.root() : null; return r ? r.slice(0, r.length - 'assets/'.length) + 'audio/sfx/' + id + '.ogg' : null; }
+  function sxLoad(id) {
+    if (sxBuf[id] !== undefined || !ctx || !global.fetch) { return; }
+    var u = sxUrl(id); if (!u) { return; }
+    sxBuf[id] = null;
+    global.fetch(u).then(function (r) { return r.ok ? r.arrayBuffer() : Promise.reject(r.status); }).then(function (ab) { return ctx.decodeAudioData(ab); }).then(function (b) { sxBuf[id] = b; }, function () { sxBuf[id] = false; });
+  }
+  function sx(id, vol) {
+    if (!core.tuned('audio.own', 1) || !enabled() || !unlocked || !ctx || !master) { return false; }
+    var b = sxBuf[id]; if (!b) { sxLoad(id); return false; }
+    try { var src = ctx.createBufferSource(), g = ctx.createGain(); src.buffer = b; g.gain.value = typeof vol === 'number' ? vol : 0.9; src.connect(g); g.connect(master); src.start(); return true; } catch (e) { return false; }
+  }
+
   global.DG.sfx = {
     CUES: CUES,
-    play: play,
+    play: play, sx: sx,
     unlock: unlock, ready: function () { return unlocked; },
     enabled: enabled, setEnabled: setEnabled,
     volume: volume, setVolume: setVolume,

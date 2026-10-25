@@ -1438,7 +1438,7 @@
   function setJoy(dx, dy) { joy.x = dx; joy.y = dy; }
 
   function update(dt) {
-    stepForest(dt);
+    stepForest(dt); if (global.DG.stepsSfx) { var spx = player._sx, spy = player._sy; player._sx = player.x; player._sy = player.y; var mvd = spx == null ? 0 : Math.hypot(player.x - spx, player.y - spy), MT3 = global.DG.mount, cu3 = MT3 && MT3.active && MT3.active() ? MT3.current() : null; global.DG.stepsSfx.tick('me', dt, { moving: dt > 0 && mvd / dt > TILE * 0.5, sps: sneaking() ? 1.4 : 2.2, surface: tileAt(Math.floor(player.x / TILE), Math.floor(player.y / TILE)), mount: cu3 ? (MT3.flying && MT3.flying() ? (/dragon/.test(cu3.id) ? 'flyHeavy' : 'fly') : 'ground') : null, flying: !!(cu3 && MT3.flying && MT3.flying()) }); }   /* W-0442 발소리 */
     var km = keymap();
     var dx = 0, dy = 0;
     if (keys.w || keys.arrowup || keys[km.up]) { dy -= 1; }
