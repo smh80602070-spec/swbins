@@ -1210,6 +1210,7 @@ func _after_action() -> void:
 		lines.append("⚰ %s 쓰러짐" % _unit_name({"kind": "officer", "id": id}))
 	for id: String in out.wounded:
 		lines.append("🩹 %s 중상" % _unit_name({"kind": "officer", "id": id}))
+	lines.append_array(preload("res://games/saga_realm/data/realm_support.gd").preview(RealmSaveState, out.get("supPairs", [])))   # G-0390 함께 싸운 쌍
 	_hint.text = " · ".join(lines)
 	_refresh_buttons_off()
 	await _wait(END_SEC)

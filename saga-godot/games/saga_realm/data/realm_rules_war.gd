@@ -614,6 +614,7 @@ func attack(enemy_id: String, duel_moves: Array = [], grid: Dictionary = {}) -> 
 		atk["take"] = float(grid.get("lossMul", 1.0))
 		for id: Variant in grid.get("mine", []):   # G-0183 — 판에 함께 선 장수도 이 달은 끝
 			_done_this_month[String(id)] = true
+		preload("res://games/saga_realm/data/realm_support.gd").on_end(self, grid.get("sup", []))   # G-0390 함께 싸운 쌍 +1(판마다 한 번)
 		for id: Variant in grid.get("fallen", []):
 			if String(id) == current_lord_id:
 				grid_hurt.append({"id": String(id), "months": RealmTactics.WOUND_MONTHS})
@@ -851,10 +852,19 @@ func tactics_board(enemy_id: String) -> Dictionary:
 		var goal: String = ["rout", "leader", "gate"][int(floor(RealmTactics.hash01(seed, "goal") * 3.0))]
 		var sb := RealmTactics.make_board_srpg(seed, String(enemy_def.get("land", "plain")), true, goal)
 		RealmTactics.units_of_srpg(sb, mine, foes, [int(e.get("troops", 0))], stats, [int(cities[from_city].troops)])
+		_put_support(sb, mine)
 		return {"ok": true, "board": sb, "officer": officer_id, "mine": mine}
 	var b := RealmTactics.make_board(seed, String(enemy_def.get("land", "plain")), true)
 	RealmTactics.units_of(b, mine, foes, foe_troops, stats)
+	_put_support(b, mine)
 	return {"ok": true, "board": b, "officer": officer_id, "mine": mine}
+
+
+## G-0390 지원 단계 — 내 장수가 둘 이상 설 때만 쌍 단계 표를 판에 싣는다(하나뿐이면 옛 판과 같다)
+func _put_support(b: Dictionary, mine: Array) -> void:
+	var t: Dictionary = preload("res://games/saga_realm/data/realm_support.gd").board_table(self, mine)
+	if not t.is_empty():
+		b["sup"] = t
 
 
 ## G-0182 — 양쪽 다 AI 로 끝까지 둔 결과의 보정값(attack() 셋째 인자로 바로 넘긴다). 못 열면 {}.

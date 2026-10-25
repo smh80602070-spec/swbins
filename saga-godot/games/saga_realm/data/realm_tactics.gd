@@ -26,6 +26,8 @@ const COVER := {"plain": 0, "forest": 30, "river": 0, "wall": 50}
 const HIT_MIN := 10
 const HIT_MAX := 95
 const HIT_BASE := 65
+const SUP_NAMES := ["C", "B", "A"]   # G-0390 realm_support.gd 와 같은 값
+const SUP_BONUS := [5, 10, 15]
 const OUT := {
 	"rout": {"kind": "rout", "name": "대승", "winPct": 25, "lossMul": 0.7},
 	"win": {"kind": "win", "name": "승", "winPct": 10, "lossMul": 1.0},
@@ -261,6 +263,7 @@ static func attack(b: Dictionary, uid: String, tuid: String) -> Dictionary:
 		t.hp = maxf(0.0, float(t.hp) - float(dmg))
 	a.acted = true
 	a.moved = true
+	_sup_note(b, a)   # G-0390 지원 — 이웃 쌍을 이 판에 적는다(b.sup 없으면 아무것도 안 함)
 	(b.log as Array).append({"t": b.turn, "a": uid, "to": tuid, "hit": hit, "dmg": dmg, "ch": ch})
 	check(b)
 	return {"ok": true, "hit": hit, "dmg": dmg, "killed": float(t.hp) <= 0.0, "chance": ch}
@@ -395,9 +398,12 @@ static func outcome(b: Dictionary) -> Dictionary:
 		elif String(u.side) == "foe" and float(u.hp) <= 0.0:
 			foe_down.append(String(u.id) if String(u.id) != "" else String(u.uid))
 	var o: Dictionary = OUT[k]
-	return {"kind": k, "name": o.name, "winPct": int(o.winPct), "lossMul": float(o.lossMul), "turn": int(b.turn) if bool(b.get("srpg", false)) else mini(int(b.turn), TURNS),
+	var res := {"kind": k, "name": o.name, "winPct": int(o.winPct), "lossMul": float(o.lossMul), "turn": int(b.turn) if bool(b.get("srpg", false)) else mini(int(b.turn), TURNS),
 		"hpMe": js_round(hp_frac(b, "me") * 100.0), "hpFoe": js_round(hp_frac(b, "foe") * 100.0),
 		"fallen": down if permadeath else [], "wounded": [] if permadeath else down, "foeDown": foe_down}
+	if not (b.get("sup_pairs", {}) as Dictionary).is_empty():
+		res["supPairs"] = (b.sup_pairs as Dictionary).keys()   # G-0390 함께 싸운 쌍(있을 때만 — 없으면 옛 결과와 같다)
+	return res
 
 
 ## 공략 판정이 받을 보정값 — 판정을 하지 않는다(realm_rules_war.gd attack() 셋째 인자로 넘긴다)
@@ -407,8 +413,11 @@ static func apply(out: Dictionary, where: String = "") -> Dictionary:
 	var wounded: Array = []
 	for id: String in out.wounded:
 		wounded.append({"id": id, "months": WOUND_MONTHS})
-	return {"winPct": int(out.winPct), "lossMul": float(out.lossMul), "kind": String(out.kind),
+	var grid := {"winPct": int(out.winPct), "lossMul": float(out.lossMul), "kind": String(out.kind),
 		"fallen": (out.fallen as Array).duplicate(), "wounded": wounded, "where": where}
+	if out.has("supPairs"):
+		grid["sup"] = (out.supPairs as Array).duplicate()   # G-0390 attack() 이 RealmSupport.on_end 로 센다
+	return grid
 
 
 ## 진단·균형용 — 양쪽 다 AI 로 끝까지 둔다
@@ -655,6 +664,7 @@ static func is_back(att: Dictionary, tgt: Dictionary) -> bool:
 ## 명중 덤 내역 [[이름, %p]…] — 화면 풀이·점검
 static func hit_mods(b: Dictionary, att: Dictionary, tgt: Dictionary) -> Array:
 	var out: Array = []
+	_sup_mods(b, att, tgt, out)   # G-0390 지원 — 옛 판·SRPG 판 둘 다(b.sup 없으면 아무것도 안 붙는다)
 	if not bool(b.get("srpg", false)):
 		return out
 	if height_at(b, int(att.x), int(att.y)) > height_at(b, int(tgt.x), int(tgt.y)):
@@ -669,6 +679,51 @@ static func hit_mods(b: Dictionary, att: Dictionary, tgt: Dictionary) -> Array:
 	if is_back(att, tgt):
 		out.append(["뒤", BACK_HIT])
 	return out
+
+
+# ── G-0390 지원 단계(웹 support.js 짝 — 단계 표는 판을 세울 때 b.sup = {'a|b': 0~3}, realm_support.gd board_table) ──
+
+static func _sup_key(a: String, c: String) -> String:
+	return a + "|" + c if a < c else c + "|" + a
+
+
+## u 와 상하좌우로 붙은 살아 있는 내 장수들 중 b.sup 에 있는 쌍의 key
+static func _sup_mates(b: Dictionary, u: Dictionary) -> Array:
+	var out: Array = []
+	if not b.has("sup") or String(u.get("side", "")) != "me" or String(u.get("kind", "")) != "officer" or String(u.get("id", "")) == "":
+		return out
+	for o: Dictionary in b.units:
+		if String(o.uid) != String(u.uid) and float(o.hp) > 0.0 and String(o.side) == "me" and String(o.kind) == "officer" and dist(o, u) == 1:
+			var k := _sup_key(String(u.id), String(o.id))
+			if (b.sup as Dictionary).has(k):
+				out.append(k)
+	return out
+
+
+## u 이웃 중 가장 높은 지원 단계(0~3)
+static func sup_best(b: Dictionary, u: Dictionary) -> int:
+	var best := 0
+	for k: String in _sup_mates(b, u):
+		best = maxi(best, int(b.sup[k]))
+	return best
+
+
+static func _sup_mods(b: Dictionary, att: Dictionary, tgt: Dictionary, out: Array) -> void:
+	if not b.has("sup"):
+		return
+	var la := sup_best(b, att)
+	var lt := sup_best(b, tgt)
+	if la > 0:
+		out.append(["지원 " + String(SUP_NAMES[la - 1]), int(SUP_BONUS[la - 1])])
+	if lt > 0:
+		out.append(["지원 막음 " + String(SUP_NAMES[lt - 1]), -int(SUP_BONUS[lt - 1])])
+
+
+static func _sup_note(b: Dictionary, a: Dictionary) -> void:
+	for k: String in _sup_mates(b, a):
+		if not b.has("sup_pairs"):
+			b["sup_pairs"] = {}
+		b.sup_pairs[k] = 1
 
 
 static func hit_chance_b(b: Dictionary, att: Dictionary, tgt: Dictionary) -> int:

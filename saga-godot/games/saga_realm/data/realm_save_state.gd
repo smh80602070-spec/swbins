@@ -36,6 +36,7 @@ func save() -> bool:
 		"wonders": wonders,   # G-0243
 		"trade": trade,   # G-0310
 		"rel_master": rel_master,   # G-0316
+		"support": support,   # G-0390 덧붙임만(버전 그대로)
 		"laws": laws,   # G-0321
 		"age": age,   # G-0329
 		"marriages": marriages,   # G-0332
@@ -112,6 +113,11 @@ func try_load() -> bool:
 	trade = (loaded_trade as Array).duplicate(true) if typeof(loaded_trade) == TYPE_ARRAY else []
 	var loaded_rm: Variant = data.get("rel_master", {})   # G-0316 — 옛 세이브(25)는 빈 것
 	rel_master = (loaded_rm as Dictionary).duplicate(true) if typeof(loaded_rm) == TYPE_DICTIONARY else {}
+	var loaded_sup: Variant = data.get("support", {})   # G-0390 — 키 없는 세이브는 빈 것 · JSON 실수 → 정수
+	support = {}
+	if typeof(loaded_sup) == TYPE_DICTIONARY:
+		for k: Variant in loaded_sup:
+			support[String(k)] = int(loaded_sup[k])
 	age = int(data.get("age", 0))   # G-0329 — 옛 세이브(27)는 난세
 	captives = preload("res://games/saga_realm/data/realm_captives.gd").restore(data.get("captives", {}))   # G-0375 — 옛 세이브(30)는 포로 없음
 	focus = preload("res://games/saga_realm/data/realm_focus.gd").restore(data.get("focus", {}))   # G-0336 — 옛 세이브(29)는 방침 없음 · JSON 실수 → 정수
