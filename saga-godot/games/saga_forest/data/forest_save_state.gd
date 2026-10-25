@@ -280,7 +280,7 @@ func gain_affinity(npc_id: String, amount: int) -> int:
 	if int(affinity_day.get(npc_id, -1)) != today:
 		affinity_day[npc_id] = today
 		affinity_gained_today[npc_id] = 0
-	var room: int = maxi(0, 4 - int(affinity_gained_today.get(npc_id, 0)))
+	var room: int = maxi(0, 4 + preload("res://games/saga_forest/data/forest_birthday.gd").cap_bonus(npc_id, today) - int(affinity_gained_today.get(npc_id, 0)))   # G-0388 생일엔 하루 상한 +5
 	var applied: int = mini(amount, room)
 	if applied > 0:
 		affinity[npc_id] = clampi(heart(npc_id) + applied, 0, 10)

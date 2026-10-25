@@ -35,4 +35,13 @@ static func model(_hud: Node) -> Dictionary:
 	return {"title": "오늘", "reset_in": midnight_left(),
 		"today": today,
 		"week": [], "claim": {},
-		"note": "주민 부탁(한 번씩) %d/%d · 하트는 하루 +4 까지" % [quests, n]}
+		"note": "주민 부탁(한 번씩) %d/%d · 하트는 하루 +4 까지" % [quests, n] + _bday_note()}
+
+
+## G-0388 — 오늘 생일인 주민(아랫줄 — 날마다 줄 수가 바뀌지 않게 note 에).
+static func _bday_note() -> String:
+	var Bd: GDScript = preload("res://games/saga_forest/data/forest_birthday.gd")
+	var names: PackedStringArray = []
+	for id: String in Bd.today_ids(ForestDay.today_key()):
+		names.append(Bd.name_of(id))
+	return " · 🎂 오늘 생일: %s(선물 ×3)" % ", ".join(names) if not names.is_empty() else ""

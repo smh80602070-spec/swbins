@@ -392,7 +392,7 @@ func _open_interact_menu(v: Dictionary) -> void:
 	## test_room.gd의 은사 선택지·npc_builder.gd의 사명 제안과 같은
 	## layer_box 우회(ChoicePrompt.build() 호출 전에 만든 콜백이 그 결과를
 	## 미리 참조할 수 없어서다).
-	var layer: CanvasLayer = ChoicePrompt.build(self, v.name, choices)
+	var layer: CanvasLayer = ChoicePrompt.build(self, "%s · %s" % [v.name, preload("res://games/saga_forest/data/forest_birthday.gd").label(String(v.id))], choices)   # G-0388 생일 날짜
 	layer_box["layer"] = layer
 	_add_heart_row(layer, ForestSaveState.heart(v.id))
 
@@ -525,8 +525,10 @@ func _give_gift(v: Dictionary, cat: String, layer_box: Dictionary) -> void:
 	ForestSaveState.mark_gifted(v.id)
 	var loved: bool = cat == v.gift_like
 	var up: int = 3 if loved else 1
+	var bday: int = preload("res://games/saga_forest/data/forest_birthday.gd").gift_mul(String(v.id), ForestDay.today_key())   # G-0388 생일이면 ×3
+	up *= bday
 	var applied := ForestSaveState.gain_affinity(v.id, up)
 	_check_heart_reward(v)
 	Toast.show(self, "%s%s 에게 %s 을(를) 건넸다 — 친밀도 +%d%s" %
-		["아주 반긴다! " if loved else "", v.name, cat, applied,
+		[("🎂 생일 선물! " if bday > 1 else "") + ("아주 반긴다! " if loved else ""), v.name, cat, applied,
 			" (오늘 상한)" if applied < up else ""], LINE_SHOW_SEC)
