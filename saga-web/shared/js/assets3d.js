@@ -124,7 +124,7 @@
   /** W-0163 — 빌린 동물·탈것 GLB(Poly CC-BY·Quaternius·"Charlie" 슬라임) 경로 → 자체판 `creatures3d/<id>.glb`. 짝이 없거나 공용 주소를 못 잡으면 null(부르는 쪽이 옛 경로).
    *  짝 표는 tools/ai-art/remote3d/k96_targets.json `borrowed` 와 같다. 손잡이 `assets3d.creature` 0 = 옛 빌린 모델 */
   var CREATURE_OF = { Tiger: 'tiger', Bear: 'bear', Panda: 'panda', Monkey: 'monkey', Boar: 'boar', Owl: 'owl', Crane: 'crane', Elephant: 'elephant',
-    Rabbit: 'rabbit', Squirrel: 'squirrel', Duck: 'duck', Bird: 'sparrow', SlimeEnemy: 'slime',
+    Rabbit: 'rabbit', Squirrel: 'squirrel', Duck: 'duck', Bird: 'sparrow', SlimeEnemy: 'slime', Wizard: 'hat_wizard',   /* W-0441 standin/Wizard(Quaternius CC-BY, 고깔도사 대역) → 자체판 — 2나락 crea:hat_wizard 와 같은 몸 */
     Horse: 'horse', White_Horse: 'horse_white', Horse_White: 'horse_white', Horse_Farm: 'horse_farm', Donkey: 'donkey', Zebra: 'zebra',
     /* W-0178 — K-0096 ③ 들·집 짐승·공룡 26 · ④ 괴물(Ultimate Monsters·2nd pack·로봇·우주) 24(cat_monster ✗ 는 K 산출에 없음) */
     Fox: 'fox', Wolf: 'wolf', Deer: 'deer', Stag: 'stag', Cow: 'cow', Cow_Farm: 'cow_farm', Bull: 'bull', Sheep: 'sheep', Pig: 'pig', Llama: 'llama',

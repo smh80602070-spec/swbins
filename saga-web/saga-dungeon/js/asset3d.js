@@ -192,7 +192,7 @@
     /* 세 시대 적(PLAN §5.20, 2026-09-25) — 사람 셋은 이미 받아 둔 poly.pizza 묶음(영웅 창고 hero_light 에도 있다),
        로봇 셋은 사가만리 `assets/models/foes/`(Quaternius CC0 cyberpunk pack)에서 복사. 전부 제 클립 내장 */
     'monster:era_punk': 'assets/models/people/polypizza_men/Punk.glb',
-    'monster:era_hazmat': 'assets/models/people/polypizza_hazmat/HazmatMan.glb',
+    'monster:era_hazmat': 'assets/models/people/polypizza_men/SWAT.glb',   // W-0441 HazmatMan(CC-BY) → 같은 현대 시대 사람 몸(색은 적 표)
     'monster:era_swat': 'assets/models/people/polypizza_men/SWAT.glb',
     'monster:era_drone': 'crea:robot_drone',
     'monster:era_walker': 'crea:robot_walker',
