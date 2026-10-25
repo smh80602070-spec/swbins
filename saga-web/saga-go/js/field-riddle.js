@@ -85,16 +85,33 @@
   }
 
   /** world 2D 그리기 — 안 푼 것만, 코드 도형 */
+  /** K-0195 그림(shared/assets/world2d) — 못 받았으면 false, 부른 쪽이 코드 도형 */
+  var sprOk = {};   // 고리 id → 지난 그림이 깔렸나(near() 는 매번 새 객체라 거기 달면 안 남는다)
+  function sprite(ctx, id, x, y, h, alpha) { var M = global.DG.mode2d; return !!(M && M.drawSprite && M.drawSprite(ctx, { id: id, x: x, y: y, h: h, alpha: alpha })); }
   function draw2d(ctx, pos, sc, project, now, items, bk) {
     if (!on() || !ctx) { return; }
     near(pos.x, pos.y).forEach(function (r) {
       if (Math.hypot(r.x - pos.x, r.y - pos.y) > 140 * KD()) { return; }
+      if (r.kind === 'ring') {   // 꽃 고리 한 장(다섯 송이) — 고리 가운데에 깔고, 밟은 꽃은 빛
+        var ru = (r.x - pos.x) * sc, rv = (r.y - pos.y) * sc;
+        items.push({ v: rv - 1, draw: function () {
+          var pc = project(ru, rv), pe = project(ru + RING_R * KD() * sc, rv); if (pc.s < 0.2) { return; }
+          var half = Math.abs(pe.x - pc.x) * 1.25, wilt = ring && ring.id === r.id && ring.t < 2;
+          sprOk[r.id] = sprite(ctx, wilt ? 'flower_ring_01_wilt' : 'flower_ring_01', pc.x, pc.y + half * 0.45, half * 1.5);
+        } });
+      }
       var pts = r.kind === 'ring' ? flowers(r) : [r];
       pts.forEach(function (q, qi) {
         var u = (q.x - pos.x) * sc, v = (q.y - pos.y) * sc;
         items.push({ v: v, draw: function () {
           var pr = project(u, v); if (pr.s < 0.2) { return; }
           var z = Math.max(0.5, Math.min(1.8, pr.s)) * (bk || 1);
+          if (r.kind === 'stone' && sprite(ctx, 'puzzle_stone_01', pr.x, pr.y, 40 * z)) { return; }
+          if (r.kind === 'pin' && sprite(ctx, 'pinwheel_01_full', pr.x + (pin.id === r.id ? Math.sin(now / 40) * 1.5 * z : 0), pr.y, 74 * z)) { return; }
+          if (r.kind === 'ring' && sprOk[r.id]) {   // 그림이 깔렸으면 밟은 꽃만 빛
+            if (ring && ring.id === r.id && qi < ring.n) { ctx.save(); ctx.globalAlpha = 0.75; ctx.fillStyle = '#ffe27a'; ctx.beginPath(); ctx.arc(pr.x, pr.y - 6 * z, 9 * z, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
+            return;
+          }
           ctx.save();
           if (r.kind === 'stone') {
             ctx.fillStyle = '#7d7568'; ctx.strokeStyle = '#3b352d'; ctx.lineWidth = 2;

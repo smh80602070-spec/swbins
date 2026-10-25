@@ -73,10 +73,13 @@
     }
     ctx.beginPath(); isoEllipse(ctx, m, c.x, c.y, 16); ctx.fillStyle = 'rgba(0,0,0,0.35)'; ctx.fill();
     var w = 26 * s, h = 18 * s, x = p.x - w / 2, y = p.y - h - 4 * s;
-    ctx.fillStyle = '#3d2052'; ctx.fillRect(x, y, w, h);
-    ctx.fillStyle = '#6a3a8e'; ctx.fillRect(x, y, w, h * 0.38);
-    ctx.strokeStyle = '#c9a0ff'; ctx.lineWidth = 1.5; ctx.strokeRect(x, y, w, h);
-    ctx.fillStyle = c.st === 'open' ? '#ffe27a' : '#c9a0ff'; ctx.fillRect(p.x - 2.5 * s, y + h * 0.3, 5 * s, 6 * s);
+    var M = global.DG.mode2d, SH = 40 * s;   // K-0195 그림 — 못 받았으면 코드 도형
+    if (M && M.drawSprite && M.drawSprite(ctx, { id: 'chest_cursed_01', x: p.x, y: p.y + 2 * s, h: SH })) { y = p.y - SH + 2 * s; } else {
+      ctx.fillStyle = '#3d2052'; ctx.fillRect(x, y, w, h);
+      ctx.fillStyle = '#6a3a8e'; ctx.fillRect(x, y, w, h * 0.38);
+      ctx.strokeStyle = '#c9a0ff'; ctx.lineWidth = 1.5; ctx.strokeRect(x, y, w, h);
+      ctx.fillStyle = c.st === 'open' ? '#ffe27a' : '#c9a0ff'; ctx.fillRect(p.x - 2.5 * s, y + h * 0.3, 5 * s, 6 * s);
+    }
     if (c.st === 'open') { ctx.font = 'bold ' + Math.round(13 * s) + 'px sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = '#e8d2ff'; ctx.strokeStyle = '#000a'; ctx.lineWidth = 3; var tx = Math.ceil(c.t) + '초'; ctx.strokeText(tx, p.x, y - 6 * s); ctx.fillText(tx, p.x, y - 6 * s); }
     ctx.restore();
   }
