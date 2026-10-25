@@ -144,6 +144,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/fish-derby.js"></script>
 <script src="js/wear.js"></script>
 <script src="js/terrain.js"></script>
+<script src="js/tool-grade.js"></script>
 <script src="js/craft.js"></script>
 <script src="js/passive-web.js"></script>
 <script src="js/passive-web-ui.js"></script>
@@ -7524,14 +7525,14 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
     function crKeep() { var s = V.state(); return JSON.stringify({ tools: s.tools || {}, craft: s.craft || null, bag: s.bag || {}, gold: C.save.player.gold }); }
     function crBack(k) { var o = JSON.parse(k), s = V.state(); s.tools = o.tools; if (o.craft) { s.craft = o.craft; } else { delete s.craft; } s.bag = o.bag; C.save.player.gold = o.gold; }
 
-    t('fs.craft: 제작대 ① 레시피 14 — 재료는 전부 채집 품목(무게 > 0, 계절 안 탐), 도구 6·가구 4·공사 자재 2·빈 집 1(W-0284)·작은 우리 1(W-0299)', function () {
+    t('fs.craft: 제작대 ① 레시피 16 — 재료는 전부 채집 품목(무게 > 0, 계절 안 탐), 도구 8(W-0439 전설 둘)·가구 4·공사 자재 2·빈 집 1(W-0284)·작은 우리 1(W-0299)', function () {
       var R = VD.RECIPES, bad = [], kinds = {};
       R.forEach(function (r) {
         kinds[r.kind] = (kinds[r.kind] || 0) + 1;
         Object.keys(r.need).forEach(function (k) { var it = VD.item(k); if (!it || !(it.w > 0) || it.season) { bad.push(r.key + ':' + k); } });
         if (r.kind === 'furn' && !VD.furn(r.furn)) { bad.push(r.key + ':furn'); }
       });
-      return R.length === 14 && kinds.tool === 6 && kinds.furn === 4 && kinds.pave === 2 && kinds.lot === 1 && kinds.pen === 1 && bad.length === 0 &&
+      return R.length === 16 && kinds.tool === 8 && kinds.furn === 4 && kinds.pave === 2 && kinds.lot === 1 && kinds.pen === 1 && bad.length === 0 &&
         ('레시피 ' + R.length + ' · 도구 ' + kinds.tool + ' · 가구 ' + kinds.furn + ' · 자재 ' + kinds.pave + ' · 빈 집 ' + kinds.lot + ' · 재료 이상 0');
     });
 
@@ -8083,6 +8084,19 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         var ok = bl[0] === W(5) && bp[0] === W(3) && nl[0] === Math.min(W(3), 4) && np[0] === W(1) && bl[1] === 3 * 2 + br && bp[1] === 1 * 2 + br && nl[1] === 3 + br && off[0] === nl[0];
         return ok ? ('생일 좋아함 ♥' + bl[0] + '·정 ' + bl[1] + ' · 생일 보통 ♥' + bp[0] + ' · 보통 날 ♥' + nl[0] + '/' + np[0] + ' · 끔 ♥' + off[0]) : ('실패 ' + JSON.stringify({ bl: bl, bp: bp, nl: nl, np: np, off: off, br: br }));
       } finally { var k = JSON.parse(keep); s.gifted = k.g; s.friend = k.f; s.hearts = k.h; s.bag = k.b; s.day = keepDay; raw.player.x = px; raw.player.y = py; }
+    });
+    t('W-0439 도구 등급·채집꾼 한 벌 — Lv1~5 일반·고급·희귀·영웅·전설 · Lv5 전설 레시피 둘 · 잠자리채·삽 다 희귀 이상 = 수확 +10% · 다 전설 = 희귀 무게 ×1.25 · 한쪽 미달·끔이면 없음', function () {
+      var TG = DG.toolGrade, CR = DG.craft, VD = DG.villageData, s = DG.village.state(), C = DG.core; if (!TG || !CR) { return '실패 DG.toolGrade 없음'; }
+      var keep = JSON.stringify(s.tools || {});
+      try {
+        var names = [1, 2, 3, 4, 5].map(TG.label).join(','), r5 = CR.recipe('net5'), r5s = CR.recipe('spade5'), nm = r5 ? CR.nameOf(r5) : '';
+        s.tools = { net: { lv: 2, perks: [] }, spade: { lv: 3, perks: [] } }; var p0 = CR.perk('net').extraP;
+        s.tools.net.lv = 3; var p1 = CR.perk('net').extraP, sp1 = CR.perk('spade').extraP, rm1 = CR.perk('net').rareMul;
+        s.tools.net.lv = 5; s.tools.spade.lv = 5; var rm2 = CR.perk('spade').rareMul;
+        C.setTune('fo.toolSet', 0); var off = CR.perk('net').extraP; C.setTune('fo.toolSet', 1);
+        var ok = names === '일반,고급,희귀,영웅,전설' && r5 && r5s && r5.lv === 5 && nm.indexOf('전설') > 0 && VD.TOOLS.net.lvMax === 5 && p0 === 0 && Math.abs(p1 - 0.1) < 1e-9 && Math.abs(sp1 - 0.1) < 1e-9 && rm1 === 1 && Math.abs(rm2 - 1.25) < 1e-9 && off === 0;
+        return ok ? (names + ' · ' + nm + ' · 한 벌 수확 +' + p1 + ' · 전설 한 벌 희귀 ×' + rm2) : ('실패 ' + JSON.stringify({ names: names, nm: nm, p0: p0, p1: p1, sp1: sp1, rm1: rm1, rm2: rm2, off: off }));
+      } finally { s.tools = JSON.parse(keep); }
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';

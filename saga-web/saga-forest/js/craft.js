@@ -58,8 +58,8 @@
   function perk(key) {
     var t = on() ? rec(key) : null, n = { speed: 0, yield: 0, rare: 0 };
     (t ? t.perks : []).forEach(function (a) { if (n.hasOwnProperty(a)) { n[a]++; } });
-    return { lv: t ? t.lv : 0, n: n, timeMul: Math.pow(AXES.speed.mul, n.speed), extraP: Math.min(0.9, AXES.yield.p * n.yield),
-             rareMul: Math.pow(AXES.rare.mul, n.rare) };
+    var out = { lv: t ? t.lv : 0, n: n, timeMul: Math.pow(AXES.speed.mul, n.speed), extraP: Math.min(0.9, AXES.yield.p * n.yield),
+             rareMul: Math.pow(AXES.rare.mul, n.rare) }; return global.DG.toolGrade ? global.DG.toolGrade.applyPerk(key, out) : out;   // W-0439 채집꾼 한 벌
   }
   /** 수확 축 — 하나 더 얹을지(0 또는 1) */
   function bonusN(key) { var p = perk(key).extraP; return p > 0 && Math.random() < p ? 1 : 0; }
@@ -75,7 +75,7 @@
   function needOf(r, k) { return global.DG.workshop ? global.DG.workshop.need(r.need[k]) : r.need[k]; }
   function recipe(key) { return VD().RECIPES.filter(function (r) { return r.key === key; })[0] || null; }
   function nameOf(r) {
-    if (r.kind === 'tool') { var T = VD().TOOLS[r.tool]; return T.emoji + ' ' + T.name + ' Lv' + r.lv; }
+    if (r.kind === 'tool') { var T = VD().TOOLS[r.tool]; return T.emoji + ' ' + T.name + ' Lv' + r.lv + (global.DG.toolGrade ? ' · ' + global.DG.toolGrade.label(r.lv) : ''); }   // W-0439 등급
     if (r.kind === 'furn') { var F = VD().furn(r.furn); return '🪑 ' + (F ? F.name : r.furn); }
     if (r.kind === 'lot') { return '🏠 작은 빈 집'; }   // W-0284
     if (r.kind === 'pen') { return '🐔 작은 우리'; }   // W-0299

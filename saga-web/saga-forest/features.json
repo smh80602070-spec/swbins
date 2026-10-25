@@ -1592,5 +1592,22 @@
   "ticket": "W-0427",
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 둘 · 촬영 shot-fo-birthday.mjs PC·폰 주민 창 🎂·「오늘」 줄·토스트 Read ○ · 함정 하트 하루 상한 4 가 생일 +5 를 깎아 folk bumpHeart 에서 생일엔 상한 +5."
+ }, {
+  "id": "fo.tool-grade",
+  "name": "도구 등급·채집꾼 한 벌(W-0439 · W-0435 ④) — 잠자리채·삽 Lv1~5 일반·고급·희귀·영웅·전설(Lv5 전설 레시피 둘 새로) · 두 도구 다 희귀 이상 = 수확 +10%, 다 전설 = 희귀 무게 ×1.25 · 손잡이 fo.toolSet",
+  "files": [
+   "js/tool-grade.js",
+   "js/craft.js",
+   "js/data-village.js"
+  ],
+  "tests": [
+   "W-0439"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "W-0439",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shots/w0439/bench.png ○ · 판 결상 도구가 둘뿐이라 W-0435 의 「도구 세트 30」은 두 도구 한 벌로 줄임."
  }
 ]

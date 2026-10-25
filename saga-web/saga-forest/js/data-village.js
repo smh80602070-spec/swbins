@@ -573,9 +573,9 @@
    * 원작이 잠자리채 없이는 벌레를 못 잡게 해 둔 그 자리다.
    */
   var TOOLS = {
-    net:   { key: 'net', name: '잠자리채', emoji: '🥅', price: 800, lvMax: 4,      // lvMax — 제작대 승급(W-0103, craft.js)
+    net:   { key: 'net', name: '잠자리채', emoji: '🥅', price: 800, lvMax: 5,   /* W-0439 Lv5 전설 */      // lvMax — 제작대 승급(W-0103, craft.js)
              desc: '곤충을 잡을 수 있게 됩니다' },
-    spade: { key: 'spade', name: '삽', emoji: '🪏', price: 700, lvMax: 4,
+    spade: { key: 'spade', name: '삽', emoji: '🪏', price: 700, lvMax: 5,
              desc: '갈라진 자리를 파낼 수 있게 됩니다' },
     /* 개토패(開土牌) — 원작의 공사 면허. 이걸 사야 독에 🪧 공사 단추가 선다.
        값이 셋 중 가장 비싼 것은 일부러다 — 땅을 고치는 일은 마을을 어지간히
@@ -595,6 +595,8 @@
     { key: 'spade2', kind: 'tool', tool: 'spade', lv: 2, need: { iron: 4, shard: 3 } },
     { key: 'spade3', kind: 'tool', tool: 'spade', lv: 3, need: { copper: 4, oldcoin: 3 } },
     { key: 'spade4', kind: 'tool', tool: 'spade', lv: 4, need: { silver: 3, fishf: 2, pine: 6 } },
+    { key: 'net5',   kind: 'tool', tool: 'net',   lv: 5, need: { silver: 4, orchid: 4, oldcoin: 2 } },   // W-0439 전설
+    { key: 'spade5', kind: 'tool', tool: 'spade', lv: 5, need: { silver: 4, copper: 6, shard: 6 } },
     { key: 'f_soban',    kind: 'furn', furn: 'soban',    need: { pine: 6, iron: 1 } },
     { key: 'f_hwabun',   kind: 'furn', furn: 'hwabun',   need: { orchid: 1, bellroot: 2, shard: 1 } },
     { key: 'f_deungjan', kind: 'furn', furn: 'deungjan', need: { iron: 2, apple: 4 } },
