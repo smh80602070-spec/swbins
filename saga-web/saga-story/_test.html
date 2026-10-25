@@ -111,6 +111,7 @@ window.DG_NO_TUNE = true;
 <script src="js/combo-kill.js"></script>
 <script src="js/rune.js"></script>
 <script src="js/field-elite.js"></script>
+<script src="js/hunt-wave.js"></script>
 <script src="js/hidden-boss.js"></script>
 <script src="js/side-just.js"></script>
 <script src="js/side-launch.js"></script>
@@ -134,6 +135,7 @@ window.DG_NO_TUNE = true;
 <script src="js/illust.js"></script>
 <script src="js/gear.js"></script>
 <script src="js/gear-set.js"></script>
+<script src="js/unique-fx.js"></script>
 <script src="js/job.js"></script>
 <script src="js/passive-web.js"></script>
 <script src="js/passive-web-ui.js"></script>
@@ -6535,6 +6537,34 @@ window.DG_NO_TUNE = true;
       var keep = GS.skills; GS.skills = function () { return [{ key: '__t' }]; }; var bar = S.barSkills(); GS.skills = keep; var ok2 = bar.length > 0 && bar[bar.length - 1].key === '__t';
       C.setTune('story.gearSet', 0); var off = sum(GS.bonus(all)) === 0 && GS.skills(all).length === 0; C.setTune('story.gearSet', 1);
       return (ok1 && ok2 && off) ? (s0.name + ' 2짝 ' + JSON.stringify(b2) + ' → 4짝 ' + JSON.stringify(b4) + ' + ' + k4[0].name + ' · 막대 끝') : ('실패 ' + JSON.stringify({ c2: c2, b2: b2, b4: b4, k2: k2, k4: k4.length, ok2: ok2, off: off }));
+    });
+    t('W-0437 ② 고유 효과 — 낀 고유만 · 처치 = 체력·기력 · 보스 처치 = 체력 15% · 무예 = 기력 되돌림 · 요구 수준 미달·끔이면 안 걸림', function () {
+      var U = DG.uniqueFx, G = DG.gear, C = DG.core; if (!U) { return '실패 DG.uniqueFx 없음'; }
+      var keepEq = G.equipped, keepDef = G.defOf, lv0 = C.save.player.level, worn = [{ key: 'u_sword' }, { key: 'u_ring' }, { key: 'u_glove' }, { key: 'u_cape' }];
+      G.equipped = function () { return { weapon: worn[0], ring: worn[1], glove: worn[2], cape: worn[3] }; }; G.defOf = function () { return { need: 20 }; };
+      try {
+        C.save.player.level = 30; var run = { hp: 500, hpMax: 1000, mp: 10, mpMax: 100 };
+        var nk = U.fire('kill', run), afterKill = [run.hp, run.mp]; U.fire('boss', run); var afterBoss = run.hp; U.fire('cast', run, { cost: 40 }); var afterCast = run.mp;
+        C.save.player.level = 10; var low = U.fire('kill', run); C.save.player.level = 30;
+        C.setTune('story.uniqueFx', 0); var off = U.fire('kill', run); C.setTune('story.uniqueFx', 1);
+        var ok = nk === 2 && afterKill[0] === 520 && afterKill[1] === 13 && afterBoss === 670 && afterCast === 23 && low === 0 && off === 0 && U.cardHtml().indexOf('고유 효과') > 0;
+        return ok ? ('처치 체력 500→520·기력 10→13 · 보스 →670 · 무예 40 → 기력 +10 · 수준 미달·끔 0') : ('실패 ' + JSON.stringify({ nk: nk, afterKill: afterKill, afterBoss: afterBoss, afterCast: afterCast, low: low, off: off }));
+      } finally { G.equipped = keepEq; G.defOf = keepDef; C.save.player.level = lv0; }
+    });
+    t('W-0437 ③ 몰이 파도 — 같은 사냥터 잡몹 150(손잡이)마다 · 파도 다섯(4·6·8·10·12)·다 잡으면 다음 · 마지막에 대장 · 끝나면 전리품 둘 · 120초 지나면 흩어짐 · 비경 안 셈', function () {
+      var HW = DG.huntWave, S = DG.side, C = DG.core; if (!HW || !S) { return '실패 DG.huntWave 없음'; }
+      HW._reset(); C.setTune('st.huntWave.every', 3); if (S.active()) { S.leave(); } S.enter('field');
+      var run = S.raw(), fx = [], sizes = [], i, k, boss = 0, d0;
+      try {
+        var st = null; for (i = 0; i < 3; i++) { st = HW.onKill(run, fx, { ref: { name: '잡몹' } }) || st; }
+        if (!st || !st.active) { return '실패 몰이 시작 안 함'; }
+        for (k = 0; k < 5; k++) { var mine = run.enemies.filter(function (e) { return e.wave === st.id && e.hp > 0; }); sizes.push(mine.length); boss += mine.filter(function (e) { return e.waveBoss; }).length; if (k === 4) { d0 = run.drops.length; } mine.forEach(function (e) { e.hp = 0; }); HW.tick(run, 0.1, fx); }
+        var done = !st.active && run.drops.length - d0 >= 2;
+        var st2 = HW.start(run, fx); HW.tick(run, 121, fx); var gone = !st2.active && HW.alive(run) === 0;
+        var rs = { stage: Object.assign({}, run.stage, { rift: true, key: '__r' }), enemies: [], player: run.player }; for (i = 0; i < 6; i++) { HW.onKill(rs, fx, { ref: { name: 'x' } }); } var noRift = HW.state('__r') === 0;
+        var ok = sizes.join(',') === '4,6,8,10,13' && boss === 1 && done && gone && noRift;
+        return ok ? ('파도 ' + sizes.join('·') + '(마지막 대장 포함) · 끝 전리품 · 120초 흩어짐 · 비경 안 셈') : ('실패 ' + JSON.stringify({ sizes: sizes, boss: boss, done: done, gone: gone, noRift: noRift }));
+      } finally { C.setTune('st.huntWave.every', 150); HW._reset(); if (S.active()) { S.leave(); } }
     });
     /* ── W-0398 4종횡 웹 역이식(정본 고돗 G-0333·G-0319) — 문파 · 숨은 우두머리 ── */
     t('문파(W-0398 ①) — 셋 중 하나 들기 · 처치 +1·보스 +10·오늘 의뢰 사냥터 두 배 · 공 100 제자 +2%(그 갈래만)·3000 문주 +10% · 나가면 공 0', function () {

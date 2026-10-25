@@ -1388,5 +1388,55 @@
   "ticket": "W-0429",
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 하나(엘리트·보스 둘 다) · 촬영 shot-st-w0429.mjs elite·boss PC·폰 Read ○ · 함정 캔버스에 칠한 어두운 막은 뒤 층에 덮여 안 보였다 → DOM #elite-dim(#stage 바로 위, 누름 통과)."
+ }, {
+  "id": "st.gear-set",
+  "name": "장비 세트(W-0437 ① · 메이플 세트 효과·디아블로 세트 스킬) — GEAR 네 점 세트 · 짝 2·3·4 효과 누적 · 네 짝 = 세트 무예가 스킬 막대 끝(기력 0) · 손잡이 story.gearSet (지금 대역 둘, K 표 세트 20 대기)",
+  "files": [
+   "js/gear-set.js",
+   "js/gear.js",
+   "src/side/02.js",
+   "src/ui/01.js"
+  ],
+  "tests": [
+   "W-0437 ① 장비 세트"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "W-0437",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shot-st-w0437.mjs sheet ○."
+ }, {
+  "id": "st.unique-fx",
+  "name": "고유 효과(W-0437 ② · 디아블로 고유) — 처치·보스 처치·무예 시전에 걸리는 효과(체력·기력·되돌림) · 낀 고유만 · 손잡이 story.uniqueFx (지금 다섯, K 표 고유 60 대기)",
+  "files": [
+   "js/unique-fx.js",
+   "src/ui/01.js"
+  ],
+  "tests": [
+   "W-0437 ② 고유 효과"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "W-0437",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 sheet ○ · 맞음 알림이 사냥터에 없어 「맞음」 대신 보스 처치."
+ }, {
+  "id": "st.hunt-wave",
+  "name": "몰이 파도(W-0437 ③ · 디아블로·PoE 군단) — 같은 사냥터 잡몹 150 마다 파도 다섯(4·6·8·10·12 + 대장) · 끝 전리품 둘 · 120초 지나면 흩어짐 · 손잡이 st.huntWave",
+  "files": [
+   "js/hunt-wave.js",
+   "src/side/02.js"
+  ],
+  "tests": [
+   "W-0437 ③ 몰이 파도"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "W-0437",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 wave PC·폰 ○."
  }
 ]
