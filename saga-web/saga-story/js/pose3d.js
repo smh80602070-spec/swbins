@@ -23,10 +23,11 @@
   function sw(t01, k) { return Math.sin(t01 * 2 * Math.PI + (k || 0)); }   // 반복 클립 한 바퀴에 이어지는 흔들림
 
   /* ── 상황 넷 ─────────────────────────────────────────── */
-  /** 앉기 — 땅에 무릎 세워 앉기(판에 의자가 없다). 발목을 엉덩이 앞 0.36m·같은 높이에 두는 두 뼈 IK 로 다리 각을 풀고 발바닥은 평평(ft = a − k),
-   *  접지 풀이가 발을 땅에 대면 엉덩이도 땅 가까이 온다. 두 손은 무릎 위, 몸은 조금 뒤로 */
-  var SIT_L = L.legIK(0.36, -0.02), SIT_R = L.legIK(0.34, -0.02);
-  var SIT = M(BASE, legs(SIT_L.a, SIT_L.k, SIT_L.a - SIT_L.k, SIT_R.a, SIT_R.k, SIT_R.a - SIT_R.k), S('ul', 8), S('ua', -64, -44), S('la', null, null, -36), S('hand', null, 6),
+  /** 앉기 — 땅에 무릎 세워 앉기(판에 의자가 없다). 발목을 엉덩이 앞 0.48m·0.046m 위에 두는 두 뼈 IK 로 다리 각을 풀고 발바닥은 평평(ft = a − k),
+   *  접지 풀이가 발을 땅에 대면 허벅지 관절이 허벅지 반지름(0.08×키 비) 높이 = 엉덩이 살이 땅에 닿는다(W-0433 — 옛 0.36·−0.02 는 5.6cm 떴다).
+   *  두 손목은 무릎 위(기준 뼈대 0.043m — 고돗 G-0394 정본 0.06), 팔꿈치는 바깥·손보다 조금 위. 몸은 조금 뒤로. 값은 기준 뼈대에서 찾음(무작위 출발 좌표 하강) */
+  var SIT_L = L.legIK(0.48, 0.046), SIT_R = L.legIK(0.46, 0.046);
+  var SIT = M(BASE, legs(SIT_L.a, SIT_L.k, SIT_L.a - SIT_L.k, SIT_R.a, SIT_R.k, SIT_R.a - SIT_R.k), S('ul', 8), S('ua', 13, 19, -22), S('la', null, null, -118), S('hand', null, 6),
     { 'spine.p': -8, 'chest.p': 4, 'neck.p': 4, 'head.p': 4 });
   function sitPose(t) { return M(SIT, { 'chest.p': 2 + 1.2 * sw(t), 'head.p': 3 + 0.6 * sw(t, 0.8), 'hips.r': 0.6 * sw(t, 1.3) }); }
 
@@ -145,7 +146,7 @@
      side 는 몸 왼쪽이 +). at = 판정·촬영 시점(클립 길이 비). 기준 뼈대(진단)와 실제 VRoid 몸(pose-shot 촬영) 둘 다 같은 check 를 탄다 — 빈틈 ⑥:
      예전 진단은 손 "높이" 만 봐서 인사 팔이 앞으로 뻗어도 통과했다. 기준 뼈대 측정값(10-18)에 여유를 두고 잡았다 */
   var EXPECT = {
-    Pose_sit: { at: 0.5, t: [['엉덩이 낮음(<0.35)', function (r) { return r.hips.up < 0.35; }]] },
+    Pose_sit: { at: 0.5, t: [['엉덩이 낮음(<0.35)', function (r) { return r.hips.up < 0.35; }], ['엉덩이 살 땅(허벅지 관절<0.12)', function (r) { return !r.lul || (r.lul.up < 0.12 && r.rul.up < 0.12); }], ['손목 무릎 위(<0.09)', function (r) { return !r.lll || (r.dLK < 0.09 && r.dRK < 0.09); }]] },   // W-0433 실제 VRoid(pose-shot) 0.105·0.07 / 옛 자세는 엉덩이 비가 0.04 높고 손목–무릎 0.17 안팎 — 실제 몸 잼은 몸 원점 기준이라 기준 뼈대(발바닥 기준)보다 0.04~0.05 높게 나온다
     Pose_warm: { at: 0.5, t: [['쪼그림(엉덩이<0.45)', function (r) { return r.hips.up < 0.45; }], ['두 손 앞(>0.18)', function (r) { return r.rhand.fwd > 0.18 && r.lhand.fwd > 0.18; }]] },
     Pose_pick: { at: 0.45, t: [['오른손 낮음(<0.5)', function (r) { return r.rhand.up < 0.5; }], ['오른손 앞(>0.12)', function (r) { return r.rhand.fwd > 0.12; }]] },
     Pose_lean: { at: 0.5, t: [['두 손 앞(>0.08)', function (r) { return r.rhand.fwd > 0.08 && r.lhand.fwd > 0.08; }]] },
@@ -158,7 +159,7 @@
     Pose_idle_look: { at: 0.5, t: [['손 내림(<0.75)', function (r) { return r.rhand.up < 0.75 && r.lhand.up < 0.75; }]] },
     Pose_idle_shift: { at: 0.5, t: [['손 내림(<0.75)', function (r) { return r.rhand.up < 0.75 && r.lhand.up < 0.75; }]] }
   };
-  var MEASURE_BONES = ['hips', 'head', 'rhand', 'lhand'];
+  var MEASURE_BONES = ['hips', 'head', 'rhand', 'lhand', 'lul', 'rul', 'lll', 'rll'];   // W-0433 허벅지 관절·무릎(앉기)
   function defOf(name) { var i; for (i = 0; i < DEFS.length; i++) { if (DEFS[i].name === name) { return DEFS[i]; } } return null; }
   function tn(k, d) { var C = global.DG.core, v = C && C.tuned ? +C.tuned(k, d) : d; return isFinite(v) ? v : d; }
 
@@ -171,7 +172,7 @@
     /** 실제 몸(three 마디) — 선 자세에서 한 번: 머리 높이 H·앞 방향 부호(발가락이 발목 앞인 쪽) */
     restOf: function (node) { var T = global.THREE, B = OA.BONES, v = {}; if (!T || !node) { return null; } node.updateMatrixWorld(true); ['head', 'lfoot', 'ltoe'].forEach(function (k) { var b = node.getObjectByName(B[k]); v[k] = b ? node.worldToLocal(b.getWorldPosition(new T.Vector3())) : null; }); if (!v.head || !v.lfoot || !v.ltoe) { return null; } return { H: v.head.y, fs: v.ltoe.z >= v.lfoot.z ? 1 : -1 }; },
     /** 지금 자세를 재 r 을 낸다(check 에 넣을 꼴). rest = restOf(node) */
-    measure: function (node, rest) { var T = global.THREE, B = OA.BONES, p = {}, out = {}, k; if (!T || !node || !rest || !(rest.H > 0)) { return null; } node.updateMatrixWorld(true); for (k = 0; k < MEASURE_BONES.length; k++) { var b = node.getObjectByName(B[MEASURE_BONES[k]]); if (!b) { return null; } p[MEASURE_BONES[k]] = node.worldToLocal(b.getWorldPosition(new T.Vector3())); } for (k in p) { out[k] = { up: +(p[k].y / rest.H).toFixed(3), fwd: +((p[k].z - p.hips.z) * rest.fs / rest.H).toFixed(3), side: +((p[k].x - p.hips.x) * rest.fs / rest.H).toFixed(3) }; } out.dRH = +(p.rhand.distanceTo(p.head) / rest.H).toFixed(3); return out; },
+    measure: function (node, rest) { var T = global.THREE, B = OA.BONES, p = {}, out = {}, k; if (!T || !node || !rest || !(rest.H > 0)) { return null; } node.updateMatrixWorld(true); for (k = 0; k < MEASURE_BONES.length; k++) { var b = node.getObjectByName(B[MEASURE_BONES[k]]); if (!b) { return null; } p[MEASURE_BONES[k]] = node.worldToLocal(b.getWorldPosition(new T.Vector3())); } for (k in p) { out[k] = { up: +(p[k].y / rest.H).toFixed(3), fwd: +((p[k].z - p.hips.z) * rest.fs / rest.H).toFixed(3), side: +((p[k].x - p.hips.x) * rest.fs / rest.H).toFixed(3) }; } out.dRH = +(p.rhand.distanceTo(p.head) / rest.H).toFixed(3); out.dLK = +(p.lhand.distanceTo(p.lll) / rest.H).toFixed(3); out.dRK = +(p.rhand.distanceTo(p.rll) / rest.H).toFixed(3); return out; },
     isLoop: function (name) { var d = defOf(name); return !!(d && d.loop); },
     /** 2D 대역 틀 — 모르는 이름이면 null */
     frame2d: function (name) { var f = FRAME2D[name]; return f ? { rot: f.rot || 0, sx: f.sx || 1, sy: f.sy || 1 } : null; },
