@@ -30,6 +30,7 @@ const KEYS_DEFAULT := [KEY_BRACKETLEFT, KEY_BRACKETRIGHT]
 var current := ""            # 타고 있는 탈것 id("" = 안 탐)
 var last_id := ""            # 마지막에 쓴 탈것
 var _player: CharacterBody3D
+var _fit := {}   # G-0395 back_of 결과 + ride(탈 때 잼)
 var _body: Node3D = null
 var _anim: AnimationPlayer = null # 신수 몸이 지닌 idle(느린 날갯짓·숨쉬기)/walk(다리 걸음·빠른 날갯짓)
 var _def: Dictionary = {}
@@ -186,6 +187,8 @@ func mount(id: String) -> void:
 	_body.name = "MountBody"
 	add_child(_body)
 	_anim = _body.get_node_or_null("AnimationPlayer") as AnimationPlayer
+	_body.position = Vector3(0.0, 0.0, -float(_def.get("seat_z", 0.0)) * _k())
+	_fit = _measure_fit()   # G-0395 안장 자리 등 높이·몸통 반폭 실측
 	_apply_to_player(true)
 	Toast.show(self, "%s 에 올랐다%s" % [String(pet.name) if pet != null else id, " — 점프로 오르고 Shift 로 내려간다" if is_flying_mount() else ""], 3.0)
 	mounted_changed.emit(id)
@@ -194,6 +197,7 @@ func dismount(reason: String, silent := false) -> void:
 	if not is_riding():
 		return
 	current = ""
+	_fit = {}
 	if _body != null:
 		_body.queue_free()
 		_body = null
@@ -209,6 +213,7 @@ func _seat(on: bool) -> bool:
 	for s in vis.find_children("*", "Skeleton3D", true, false):
 		var sp := SeatPose.attach(s as Skeleton3D)
 		if sp != null:
+			sp.call("set_ik", float(_fit.half) / maxf(vis.scale.y, 0.01) if on and _fit.has("half") else -1.0)
 			sp.call("set_seated", on)
 			return true
 	return false
@@ -219,6 +224,8 @@ func _k() -> float:
 	return float(_player.get_meta("body_scale", 1.0)) if _player != null else 1.0
 
 func _ride_height(seated: bool) -> float:
+	if seated and _fit.has("ride"):
+		return float(_fit.ride)
 	if seated and _def.has("seat_y"):
 		return float(_def.seat_y) * _k() + SEAT_CLEAR - _rider_hips_h()
 	return float(_def.get("ride", 0.0)) * _k() - (SEAT_DROP if seated else 0.0)
@@ -236,10 +243,72 @@ func _rider_hips_h() -> float:
 				return sk.get_bone_global_rest(i).origin.y * vis.scale.y
 	return 0.92
 
+## G-0395 — 안장 자리 실측. 옛 seat_y(손 수치)는 몸이 바뀐 뒤 등과 어긋났다(주작 13cm 낮음).
+## 몸 루트엔 키 맞춤 배율이 걸려 있어 — 부모 틀 × 몸 위치만 걷어 낸 틀(미터)로 잰다. 안장 자리(x 0·z seat_z) ±BACK_R 최고 y = 등,
+## 등 아래 0.1~0.35m 띠의 |x| 최대 = 몸통 반폭(무릎이 걸칠 옆구리).
+const BACK_R := 0.15
+const SEAT_THIGH_R := 0.08      # 허벅지 뼈 → 엉덩이 살 아래(허벅지 쉬는 높이 0.9m 몸 기준, 몸 비례 — life_pose 앉기와 같은 값)
+static var _back_cache := {}
+
+
+static func back_of(body: Node3D, seat_z_local: float, key: String = "") -> Dictionary:
+	if key != "" and _back_cache.has(key):
+		return _back_cache[key]
+	var par := body.get_parent() as Node3D
+	var frame := (par.global_transform if par != null else Transform3D.IDENTITY) * Transform3D(Basis(), body.position)
+	var inv := frame.affine_inverse()
+	var pts := PackedVector3Array()
+	for mi in body.find_children("*", "MeshInstance3D", true, false):
+		var m := mi as MeshInstance3D
+		if m.mesh == null or not m.is_visible_in_tree():
+			continue
+		var xf := inv * m.global_transform
+		for v in m.mesh.get_faces():
+			pts.append(xf * v)
+	var back := -INF
+	for q in pts:
+		if absf(q.x) <= BACK_R and absf(q.z - seat_z_local) <= BACK_R:
+			back = maxf(back, q.y)
+	if back == -INF:
+		return {}
+	var half := 0.0
+	for q in pts:
+		if absf(q.z - seat_z_local) <= 0.2 and q.y <= back - 0.1 and q.y >= back - 0.35:
+			half = maxf(half, absf(q.x))
+	var out := {"back": back, "half": half}
+	if key != "":
+		_back_cache[key] = out
+	return out
+
+
+## 기수 뼈(skel, 그림 배율 sc)와 탈것 몸 → {ride(기수 발 높이 — 엉덩이 살 아래가 등에), back, half}. 못 재면 {}.
+static func rider_fit(skel: Skeleton3D, sc: float, body: Node3D, seat_z_local: float, key: String = "") -> Dictionary:
+	var th := SeatPose._find(skel, SeatPose.THIGH_L)
+	if th < 0 or body == null:
+		return {}
+	var bk := back_of(body, seat_z_local, key)
+	if bk.is_empty():
+		return {}
+	var ty := skel.get_bone_global_rest(th).origin.y * sc
+	return {"ride": float(bk.back) + SEAT_THIGH_R * ty / 0.9 - ty, "back": bk.back, "half": bk.half}
+
+
+func _measure_fit() -> Dictionary:
+	var vis := _player.get("visual") as Node3D if _player != null else null
+	if vis == null or _body == null:
+		return {}
+	for s in vis.find_children("*", "Skeleton3D", true, false):
+		var r := rider_fit(s as Skeleton3D, vis.scale.y, _body, float(_def.get("seat_z", 0.0)) * _k(), "%s@%.2f" % [current, _k()])
+		if not r.is_empty():
+			return r
+	return {}
+
+
 ## 탄 채로 기수 몸이 바뀌었을 때 — 다시 앉히고 높이를 다시 잰다.
 func reseat() -> void:
 	if not is_riding() or _player == null:
 		return
+	_fit = _measure_fit()
 	var seated := _seat(true)
 	_player.set("ride_height", _ride_height(seated))
 
