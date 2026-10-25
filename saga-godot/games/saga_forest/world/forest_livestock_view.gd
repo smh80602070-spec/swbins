@@ -9,6 +9,7 @@ const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
+const MonsterBody := preload("res://saga_core/world/monster_body.gd")   # G-0396 닭·염소 GLB(동작 일곱 — 들판 괴물과 같은 이름)
 
 const GRID := Vector2i(11, 14)
 const HALF := 2.4   # 우리 반 변(m)
@@ -16,6 +17,9 @@ const FENCE_GLB := "res://assets/world/pen_fence_01.glb"
 const GATE_GLB := "res://assets/world/pen_gate_01.glb"
 const CURVE_AMOUNT := 0.004
 const WALK_SPEED := 0.35
+## G-0396 K-0194 자체 몸(앞 +Z·발 0·Idle·Walk… 일곱). 임포트 안 된 PC 면 아래 코드 대역 그대로. SAGA_FARM_GLB=0 이면 대역.
+const BODY_GLB := {"chick": "res://assets/creatures/farm_hen.glb", "goat": "res://assets/creatures/farm_goat.glb"}
+const BODY_H := {"chick": 0.5, "goat": 0.95}   # 대역과 같은 키
 
 var _shown := ""
 var _pen: Node3D = null
@@ -106,9 +110,18 @@ func _build_pen() -> Node3D:
 	return root
 
 
-## 대역 몸 — 꼬꼬: 흰 공 몸·작은 머리·빨간 볏·노란 부리 · 매매: 흰 상자 몸·다리 넷·머리·뿔 둘
+## 몸 — GLB 가 있으면 그것(걷기 되풀이), 없으면 대역: 꼬꼬 흰 공 몸·작은 머리·빨간 볏·노란 부리 · 매매 흰 상자 몸·다리 넷·머리·뿔 둘
 func _body(kind: String) -> Node3D:
 	var root := Node3D.new()
+	var glb := String(BODY_GLB.get(kind, ""))
+	if glb != "" and OS.get_environment("SAGA_FARM_GLB") != "0" and ResourceLoader.exists(glb):
+		var v := MonsterBody.build(glb, float(BODY_H[kind]))
+		if v != null:
+			var ap := v.get_node_or_null("AnimationPlayer") as AnimationPlayer
+			if ap != null and ap.has_animation("Walk"):
+				ap.play("Walk")
+			root.add_child(v)
+			return root
 	if kind == "goat":
 		root.add_child(_part(_box(Vector3(0.36, 0.34, 0.7)), Vector3(0, 0.55, 0), Color(0.93, 0.92, 0.88)))
 		for x in [-0.12, 0.12]:

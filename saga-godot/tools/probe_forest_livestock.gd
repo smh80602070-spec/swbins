@@ -119,6 +119,15 @@ func _initialize() -> void:
 	var pen: Node = view.get_node_or_null("Pen")
 	var n_fence := pen.get_child_count() if pen != null else 0
 	check(int(view.call("sync")) == 1 and n_fence >= 4 and pen.get_node_or_null("Gate") != null and view.get_node_or_null("Beast0") != null, "⑦ 우리 보기: 울타리 조각 %d·문·짐승 1" % n_fence)
+	var has_glb := ResourceLoader.exists("res://assets/creatures/farm_hen.glb")
+	var mb: Node = view.get_node("Beast0").get_node_or_null("MonsterBody")
+	var ap: AnimationPlayer = mb.get_node_or_null("AnimationPlayer") as AnimationPlayer if mb != null else null
+	OS.set_environment("SAGA_FARM_GLB", "0")
+	var stand_in: Node3D = view.call("_body", "chick")
+	OS.set_environment("SAGA_FARM_GLB", "")
+	check((mb != null and ap != null and ap.current_animation == "Walk") if has_glb else mb == null, "⑦ G-0396 몸: %s" % ("GLB farm_hen 걷기" if has_glb else "임포트 안 됨 — 대역"))
+	check(stand_in.get_node_or_null("MonsterBody") == null and stand_in.get_child_count() >= 4, "⑦ G-0396 SAGA_FARM_GLB=0 → 대역")
+	stand_in.free()
 	var vg := FileAccess.get_file_as_string("res://games/saga_forest/world/forest_village.gd")
 	check(vg.contains("forest_livestock.gd\").on_new_day(ForestSaveState)") and vg.contains("forest_livestock_view.gd\").new()"), "⑦ 마을 아침 굴림·보기 배선")
 	stage.queue_free()

@@ -35,3 +35,18 @@ static func show_crops(tree: SceneTree) -> void:
 	if p != null:
 		p.global_position = (view as Node3D).global_position + Vector3(0, 0.3, 3.2)
 	print("FS_CROPS 작물 %d" % int(view.call("sync")))
+
+
+## G-0396 — 작은 우리에 꼬꼬·매매(메모리만 — 저장 안 함)를 넣고 그 앞에 선다(닭·염소 GLB 몸 확인).
+static func show_pen(tree: SceneTree) -> void:
+	var F: Node = tree.root.get_node("ForestSaveState")
+	F.livestock = {"pen": true, "roll": ForestDay.epoch_day_index(), "list": [{"kind": "chick", "name": "꼬꼬", "fed": false, "petted": false, "heart": 3, "hungry": 0},
+		{"kind": "goat", "name": "매매", "fed": false, "petted": false, "heart": 2, "hungry": 0}, {"kind": "chick", "name": "꼬꼬2", "fed": false, "petted": false, "heart": 0, "hungry": 0}]}
+	var view := tree.current_scene.find_child("LivestockView", true, false)
+	var p := tree.get_first_node_in_group("player") as Node3D
+	if view == null:
+		print("FS_PEN 우리 없음")
+		return
+	print("FS_PEN 짐승 %d" % int(view.call("sync")))
+	if p != null:
+		p.global_position = (view as Node3D).global_position + Vector3(0, 0.3, 4.0)
