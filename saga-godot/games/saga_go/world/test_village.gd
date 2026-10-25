@@ -70,6 +70,7 @@ func _ready() -> void:
 	var fork := preload("res://games/saga_go/world/region10_fork.gd").new()
 	fork.name = "Region10Fork"
 	add_child(fork)
+	add_child(preload("res://games/saga_go/world/go_zone_gate.gd").new())   # G-0385 — 선 지역 + 이웃만 켬(폰 발열)
 	## G-0184 — 열 지역 높은 실루엣·거리 이름표(야숨 "저기 보이는 곳으로", 지역들이 다 선 뒤 — 이미 있는 성루·다층탑을 이름으로 찾는다)
 	add_child(preload("res://games/saga_go/world/landmark_reads.gd").new())
 	if OS.get_environment("SAGA_LANDMARK_PROBE") != "":

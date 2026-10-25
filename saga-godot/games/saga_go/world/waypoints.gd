@@ -305,6 +305,9 @@ func teleport(id: String) -> bool:
 	var n: Dictionary = _nodes[id]
 	## 신상은 받침(반지름 STATUE_BASE_R) 앞에 내린다 — 받침 안에 서지 않게.
 	var target: Vector3 = n.pos + Vector3(0.0, 0.4, STATUE_BASE_R + 0.9 if n.statue else 2.2)
+	var gate := get_tree().get_first_node_in_group("go_zone_gate")   # G-0385 — 도착 지역부터 켠다
+	if gate:
+		gate.sync_to(target)
 	_player.global_position = target
 	_player.set("velocity", Vector3.ZERO)
 	if _player.has_method("respawn_safe"):
