@@ -1345,7 +1345,7 @@
     /* 어젯밤에 빈 소원 — **날짜를 갈기 전에** 세어 둔다 */
     var wishes = global.DG.town ? global.DG.town.wishesOn(s.day) : 0;
 
-    var cropPrev = s.day; s.day = d; if (global.DG.crops) { global.DG.crops.onDay(s, d, cropPrev); }   // W-0431 밭 — 어제 물 받은 칸 한 단계
+    var cropPrev = s.day; s.day = d; if (global.DG.crops) { global.DG.crops.onDay(s, d, cropPrev); } if (global.DG.birthday) { global.DG.birthday.onDay(d); }   // W-0431 밭 — 어제 물 받은 칸 한 단계
     s.used = {};
     s.requests = {};
     rollTasks(d);                  // 오늘의 일과 3 + 이번 주 과제(§5.1)
@@ -2015,7 +2015,7 @@
     var loved = it.cat === like;
     var up = (loved ? 3 : 1) + (it.price >= 200 ? 1 : 0);
     /* 하트(PLAN §5.4) — friend 의 이분법(loved/아님)과 달리 싫어함(-1)도 있다 */
-    var hUp = loved ? 3 : (it.cat === giftDislike(heroId) ? -1 : 1);
+    var hUp = loved ? 3 : (it.cat === giftDislike(heroId) ? -1 : 1); if (global.DG.birthday) { hUp = global.DG.birthday.heart(heroId, hUp, loved); up *= global.DG.birthday.friendMul(heroId); }   // W-0427 생일 선물
     bumpHeart(heroId, hUp);
 
     s.bag[key] -= 1;

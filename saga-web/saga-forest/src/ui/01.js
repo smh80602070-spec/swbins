@@ -1069,7 +1069,7 @@
           '<small class="muted">' + (req.done ? '✔️ 오늘 부탁 완료'
             : it.emoji + ' ' + it.name + ' ' + have + '/' + req.n) +
           ' · 💗 ' + heart + '/10' + (nextU ? ' (다음 ' + nextU.at + '♥ — ' + esc(nextU.name) + ')' : ' (다 열었다)') +
-          ' · 친밀도 ' + V.friendOf(res.id) +
+          ' · 친밀도 ' + V.friendOf(res.id) + (global.DG.birthday ? global.DG.birthday.label(res.id) : '') +
           ' · 🎁 ' + esc(CAT_NAME[V.giftLike(res.id)] || V.giftLike(res.id)) + ' 를 반긴다' +
           (lv ? ' · 💭 떠날 뜻 (' + lv.left + '일)' : '') +
           (following ? ' · 🚶 함께 걷는 중 (' + Math.ceil(fs.left) + '초)' : '') + '</small></span>' +
