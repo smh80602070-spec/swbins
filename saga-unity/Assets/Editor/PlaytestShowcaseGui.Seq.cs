@@ -446,6 +446,18 @@ namespace Saga.EditorTools
                     case "realmtactics":   // U-0099 사가천하 — 격자 전술판을 열고 첫 장수를 고른 채(갈 칸·칠 적 표시)
                         if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null || PlaytestRealmTactics.OpenForShot() == null) { Skip(act); return; }
                         break;
+                    case "realmsupport":   // U-0231 사가천하 — 전술판 고른 장수에 지원 짝 B 를 심고 장수 줄(🤝 지원)을 다시 그림
+                    {
+                        if (Object.FindFirstObjectByType<Saga.Realm.World.RealmMapViewSwitcher>() == null) { Skip(act); return; }
+                        var tv = PlaytestRealmTactics.OpenForShot();
+                        var meU = tv?.Board.Units.FirstOrDefault(u => u.Uid == tv.Selected);
+                        var mate = meU == null ? null : Saga.Realm.Data.RealmCityState.RosterIds.FirstOrDefault(id => id != meU.Id);
+                        if (mate == null) { Skip(act); return; }
+                        Saga.Realm.Data.RealmSupport.SetForTest(meU.Id, mate, 7);
+                        typeof(Saga.Realm.World.RealmTacticsView).GetMethod("Refresh", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(tv, null);
+                        Debug.Log($"[ShowcaseGui] realmsupport {meU.Id}↔{mate} B · {Saga.Realm.Data.RealmSupport.LineFor(meU.Id)}");
+                        break;
+                    }
                     case "dgranged":   // U-0106 2나락 — 명단 첫 활 잡졸을 주인공 앞 7m 에 세워 겨눔 → 쏨, 탄이 날아오는 중부터 찍는다(촬영 프로세스 안에서만)
                     {
                         var pc = Object.FindFirstObjectByType<Saga.Dungeon.Player.PlayerController>();

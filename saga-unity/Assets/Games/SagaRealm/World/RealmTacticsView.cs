@@ -192,6 +192,7 @@ namespace Saga.Realm.World
             var bar = RealmUiKit.NewPanel(_canvas.transform, new Vector2(0.5f, 1f), new Vector2(1180f, 96f), new Color(0f, 0f, 0f, 0.55f));
             ((RectTransform)bar.transform).anchoredPosition = new Vector2(0f, -16f);
             _info = RealmUiKit.NewText(bar.transform, "", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(1150f, 90f), 26);
+            _info.enableAutoSizing = true; _info.fontSizeMin = 18f; _info.fontSizeMax = 26f; // tasks U-0231 — 지원 줄·지원 오름 줄이 붙으면 셋째 줄이 띠 끝에 닿아 줄여 맞춤
             RealmUiKit.NewButton(_canvas.transform, RealmLocalization.T("tactics.end_turn", "턴 끝"), new Vector2(1f, 0f), new Vector2(-24f, 24f), new Vector2(200f, 96f), PressEndTurn);
             RealmUiKit.NewButton(_canvas.transform, Board.IsSrpg ? RealmLocalization.T("tactics.auto", "자동 전투") : RealmLocalization.T("tactics.delegate", "맡기기"), new Vector2(1f, 0f), new Vector2(-240f, 24f), new Vector2(200f, 96f), PressDelegate);
             // tasks U-0204 ⑤ 장수 명령 — 고른 장수가 아직 안 움직였을 때 왼쪽 아래 줄(누르면 그 명령의 대상만 붉게, 대상을 누르면 실행)
