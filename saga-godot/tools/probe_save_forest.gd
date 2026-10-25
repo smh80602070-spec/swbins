@@ -10,6 +10,6 @@ const Base := preload("res://tools/probe_save_base.gd")
 func _initialize() -> void:  # autoload 이름은 _init 뒤에야 등록된다
 	await process_frame
 	var rt := {"tree": self, "autoload": "ForestSaveState", "fields": {
-		"gold": [777, 1], "quests_done": [{"npc_a": true}, {}], "affinity": [{"npc_a": 7}, {}], "turnip": [{"n": 5, "buy": 90, "week": 3}, {}]}}
+		"gold": [777, 1], "quests_done": [{"npc_a": true}, {}], "affinity": [{"npc_a": 7}, {}], "turnip": [{"n": 5, "buy": 90, "week": 3}, {}], "miles": [{"pts": 300, "day": 7, "got": ["주민과 이야기"]}, {}]}}   # G-0409 마일
 	var fails: int = Base.run("forest", "res://games/saga_forest/data/forest_save_state.gd", {"fruit_count": 3}, func(d: Dictionary) -> bool: return int(d.get("items", {}).get("과일", -1)) == 3 and not d.has("fruit_count"), rt)
 	quit(1 if fails > 0 else 0)

@@ -76,6 +76,7 @@ var relics: Dictionary = {}
 ## G-0320 물약 양조 — {found: [재료…], drunk: 재료, day: 날}. 순수 추가 칸. data/forest_brew.gd.
 var brew: Dictionary = {}
 var stars: Dictionary = {}   # G-0381 별똥별 소원 {day, wishes} — 규칙은 world/forest_stars.gd
+var miles: Dictionary = {}   # G-0409 마을 마일 {pts, day, got} — 규칙은 forest_miles.gd
 var contest: Dictionary = {}   # G-0373 낚시 대회 {day, sizes, tier} — 규칙은 forest_contest.gd
 ## G-0330 집 계절 심사 — {season: "YYYY-n", best: 별}. 순수 추가 칸. data/forest_hha.gd.
 var hha: Dictionary = {}
@@ -484,6 +485,7 @@ func save() -> bool:
 		"relics": relics,   # G-0315
 		"brew": brew,   # G-0320
 		"contest": contest,   # G-0373
+		"miles": miles,   # G-0409
 		"stars": stars,   # G-0381
 		"hha": hha,   # G-0330
 		"tools": tools,
@@ -558,6 +560,8 @@ func try_load() -> bool:
 	brew = (loaded_brew as Dictionary).duplicate(true) if typeof(loaded_brew) == TYPE_DICTIONARY else {}
 	var loaded_stars: Variant = data.get("stars", {})   # G-0381 — 옛 세이브는 빈 것
 	stars = (loaded_stars as Dictionary).duplicate(true) if typeof(loaded_stars) == TYPE_DICTIONARY else {}
+	var loaded_miles: Variant = data.get("miles", {})   # G-0409 — 옛 세이브는 빈 것
+	miles = (loaded_miles as Dictionary).duplicate(true) if typeof(loaded_miles) == TYPE_DICTIONARY else {}
 	var loaded_contest: Variant = data.get("contest", {})   # G-0373 — 옛 세이브는 빈 것
 	contest = (loaded_contest as Dictionary).duplicate(true) if typeof(loaded_contest) == TYPE_DICTIONARY else {}
 	var loaded_hha: Variant = data.get("hha", {})   # G-0330 — 옛 세이브는 심사 없음

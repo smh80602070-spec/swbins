@@ -2,7 +2,7 @@ extends RefCounted
 
 ## G-0351 3마을 「오늘」 어댑터(웹 W-0380 짝) — 고돗 3마을엔 일과·주간 과제가 없고 하루 한 번씩 되는 일만 있어 그것을 센다:
 ##   오늘 = 주민과 이야기(talked_today) · 선물(gifted_today) — 주민 수만큼, 갈림 = 이 기기 자정(ForestDay)
-## 주간 없음 · 받기 없음(하트·덤은 대화·선물 그 자리에서). 아래 한 줄 = 주민 부탁(한 번씩) 진척.
+## 주간 없음 · 받기 = G-0409 마을 마일(다 된 줄마다 +100, forest_miles.gd) — 하트·덤은 대화·선물 그 자리에서. 아래 한 줄 = 주민 부탁(한 번씩) 진척.
 ## G-0373 오늘 셋째 줄 = 낚시 대회(일요일이면 큰 셋 합/다음 상 문턱, 아니면 며칠 뒤).
 
 const VillagerBuilder := preload("res://games/saga_forest/world/villager_builder.gd")
@@ -37,7 +37,7 @@ static func model(_hud: Node) -> Dictionary:
 		today.append(crop)
 	return {"title": "오늘", "reset_in": midnight_left(),
 		"today": today,
-		"week": [], "claim": {},
+		"week": [], "claim": preload("res://games/saga_forest/data/forest_miles.gd").claim_row(S, today, ForestDay.today_key()),   # G-0409 마을 마일
 		"note": "주민 부탁(한 번씩) %d/%d · 하트는 하루 +4 까지" % [quests, n] + _bday_note()}
 
 

@@ -32,6 +32,7 @@ const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Partner := preload("res://games/saga_forest/data/forest_partner.gd")   # G-0232 동반자
+const ForestMiles := preload("res://games/saga_forest/data/forest_miles.gd")   # G-0409 마을 마일
 const Voice := preload("res://saga_core/audio/voice.gd")   # G-0111 대사 음성
 const LifePose := preload("res://saga_core/world/life_pose.gd")   # G-0265 둘러보기·체중·인사
 const TalkFace := preload("res://saga_core/world/talk_face.gd")   # G-0265 말할 때 손짓·입
@@ -365,6 +366,8 @@ func _open_interact_menu(v: Dictionary) -> void:
 		## 제외 목록 6번(옷·침선방) — 새 건물 없이 상인에게 얹었다(도구·
 		## 순무와 같은 이유). 넷 중 하나를 고르는 메뉴로 한 번 더 들어간다
 		## (겉옷·머리·옷 빛·덧옷 스물한 종을 한 메뉴에 다 늘어놓으면 너무 길다).
+		if ForestMiles.enabled():   # G-0409 마을 마일 교환
+			choices.append({"label": "🎟️ 마일 교환 (%d 마일)" % ForestMiles.pts(ForestSaveState), "cb": func() -> void: _open_miles_menu(layer_box)})
 		choices.append({
 			"label": "🧵 옷(침선방)",
 			"cb": func() -> void: _open_wear_menu(v, layer_box),
@@ -395,6 +398,23 @@ func _open_interact_menu(v: Dictionary) -> void:
 	var layer: CanvasLayer = ChoicePrompt.build(self, "%s · %s" % [v.name, preload("res://games/saga_forest/data/forest_birthday.gd").label(String(v.id))], choices)   # G-0388 생일 날짜
 	layer_box["layer"] = layer
 	_add_heart_row(layer, ForestSaveState.heart(v.id))
+
+
+## G-0409 — 마일 교환 창(넷 중 하나, 바꾸면 알림 뒤 창 닫음).
+func _open_miles_menu(outer_layer_box: Dictionary) -> void:
+	(outer_layer_box["layer"] as CanvasLayer).queue_free()
+	var layer_box := {}
+	var choices: Array = []
+	for i in ForestMiles.SHOP.size():
+		var it: Dictionary = ForestMiles.SHOP[i]
+		choices.append({"label": "%s ×%d (🎟️ %d)" % [it.item, int(it.n), int(it.cost)], "cb": _buy_miles.bind(i, layer_box)})
+	layer_box["layer"] = ChoicePrompt.build(self, "🎟️ 마일 교환 — 모은 마일 %d" % ForestMiles.pts(ForestSaveState), choices)
+
+
+func _buy_miles(i: int, layer_box: Dictionary) -> void:
+	if layer_box.has("layer"):
+		(layer_box["layer"] as CanvasLayer).queue_free()
+	Toast.show(self, String(ForestMiles.buy(ForestSaveState, i).text), LINE_SHOW_SEC)
 
 
 ## G-0232 — 청하기·헤어지기. 결과 대사는 토스트, 창은 닫는다.
