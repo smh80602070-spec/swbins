@@ -42,6 +42,7 @@ namespace Saga.Story.World
         private void Awake()
         {
             if (transform.childCount == 0) Build();
+            DressPlatforms();
             RegisterWetGround();
         }
 
@@ -53,6 +54,99 @@ namespace Saga.Story.World
             var g = transform.Find("Ground");
             var r = g != null ? g.GetComponent<MeshRenderer>() : null;
             return r != null ? WetGround.Own(r) : null;
+        }
+
+        /// <summary>tasks U-0243(자체툴 K-0193) — 끄기 `SAGA_PLAT_KIT=0`(옛 큐브 그대로).</summary>
+        public static bool PlatKit = System.Environment.GetEnvironmentVariable("SAGA_PLAT_KIT") != "0";
+        private const float KitEndW = 0.5f; // 끝 조각 폭(+x 끝) — 가운데 마디는 1.0m
+        private const string KitWood = "plat_wood_"; // 들판 = 나무(굴·불 무대가 생기면 "plat_stone_")
+
+        /// <summary>tasks U-0243 — 구워 둔 "Platform" 큐브마다 K-0193 발판 키트(왼끝 + 가운데 n 마디 + 오른끝)를 윗면에 맞춰 세우고,
+        /// 한 발판의 조각을 재질별로 한 메시로 합친 뒤 큐브 렌더러만 끈다(충돌체·판정 그대로). 모델이 하나라도 없으면 그 발판은 옛 큐브.
+        /// 돌려준 값 = 옷 입힌 발판 수.</summary>
+        public int DressPlatforms()
+        {
+            if (!PlatKit) return 0;
+            var cubes = new System.Collections.Generic.List<Transform>();
+            foreach (Transform c in transform)
+                if (c.name == "Platform" && c.TryGetComponent<MeshRenderer>(out var cr) && cr.enabled) cubes.Add(c);
+            int dressed = 0;
+            foreach (var cube in cubes)
+            {
+                float w = cube.localScale.x, top = cube.localPosition.y + cube.localScale.y * 0.5f;
+                var holder = new GameObject("PlatKit");
+                holder.transform.SetParent(transform, false);
+                holder.transform.localPosition = new Vector3(cube.localPosition.x - w * 0.5f, top, 0f);
+                float midW = Mathf.Max(0f, w - KitEndW * 2f);
+                int n = midW > 0.01f ? Mathf.Max(1, Mathf.RoundToInt(midW)) : 0;
+                float sMid = n > 0 ? midW / n : 1f, sEnd = n > 0 ? 1f : w / (KitEndW * 2f);
+                // 왼끝은 거울 대신 y 180° — 합칠 때 감김이 뒤집히지 않게(깊이 쪽 앞뒤만 바뀜)
+                bool ok = KitPiece(holder.transform, KitWood + "end_01", KitEndW * sEnd * 0.5f, sEnd, true);
+                for (int i = 0; i < n && ok; i++) ok = KitPiece(holder.transform, KitWood + "mid_01", KitEndW * sEnd + (i + 0.5f) * sMid, sMid, false);
+                ok = ok && KitPiece(holder.transform, KitWood + "end_01", w - KitEndW * sEnd * 0.5f, sEnd, false);
+                if (!ok) { Object.DestroyImmediate(holder); continue; }
+                MergeByMaterial(holder.transform);
+                cube.GetComponent<MeshRenderer>().enabled = false;
+                dressed++;
+            }
+            return dressed;
+        }
+
+        private static bool KitPiece(Transform holder, string id, float x, float sx, bool flip)
+        {
+            var slot = new GameObject(id).transform;
+            slot.SetParent(holder, false);
+            slot.localPosition = new Vector3(x, 0f, 0f);
+            var m = WorldModels.Spawn(id, slot);
+            if (m == null) return false;
+            // Spawn 은 바닥을 슬롯 원점에 둔다 — 키트 원점은 윗면이라 높이만큼 내린다
+            float h = 0f; bool any = false; Bounds b = default;
+            foreach (var r in m.GetComponentsInChildren<Renderer>(true)) { if (!any) { b = r.bounds; any = true; } else b.Encapsulate(r.bounds); }
+            if (any) h = b.size.y;
+            m.transform.localPosition += new Vector3(0f, -h, 0f);
+            slot.localRotation = flip ? Quaternion.Euler(0f, 180f, 0f) : Quaternion.identity;
+            slot.localScale = new Vector3(sx, 1f, 1f);
+            return true;
+        }
+
+        /// <summary>조각들을 재질 이름별 한 메시로(렌더러 수 = 재질 수, 폰 예산 story.front). 읽을 수 없는 메시가 섞이면 그대로 둔다.</summary>
+        private static void MergeByMaterial(Transform holder)
+        {
+            var filters = holder.GetComponentsInChildren<MeshFilter>(true);
+            if (holder.GetComponentsInChildren<Renderer>(true).Length != filters.Length) return;
+            var groups = new System.Collections.Generic.Dictionary<string, (Material mat, System.Collections.Generic.List<CombineInstance> parts)>();
+            var toLocal = holder.worldToLocalMatrix;
+            int verts = 0;
+            foreach (var mf in filters)
+            {
+                var mesh = mf.sharedMesh;
+                var mr = mf.GetComponent<MeshRenderer>();
+                if (mesh == null || mr == null || !mesh.isReadable) return;
+                var mats = mr.sharedMaterials;
+                for (int i = 0; i < mesh.subMeshCount && i < mats.Length; i++)
+                {
+                    string key = mats[i] != null ? mats[i].name : "";
+                    if (!groups.TryGetValue(key, out var g)) { g = (mats[i], new System.Collections.Generic.List<CombineInstance>()); groups[key] = g; }
+                    g.parts.Add(new CombineInstance { mesh = mesh, subMeshIndex = i, transform = toLocal * mf.transform.localToWorldMatrix });
+                }
+                verts += mesh.vertexCount;
+            }
+            var made = new System.Collections.Generic.List<GameObject>();
+            foreach (var kv in groups)
+            {
+                var mesh = new Mesh { name = "PlatKit " + kv.Key, indexFormat = verts > 65000 ? UnityEngine.Rendering.IndexFormat.UInt32 : UnityEngine.Rendering.IndexFormat.UInt16 };
+                mesh.CombineMeshes(kv.Value.parts.ToArray(), true, true);
+                var go = new GameObject("PlatKit " + kv.Key);
+                go.transform.SetParent(holder, false);
+                go.AddComponent<MeshFilter>().sharedMesh = mesh;
+                go.AddComponent<MeshRenderer>().sharedMaterial = kv.Value.mat;
+                made.Add(go);
+            }
+            for (int i = holder.childCount - 1; i >= 0; i--)
+            {
+                var c = holder.GetChild(i).gameObject;
+                if (!made.Contains(c)) Object.DestroyImmediate(c);
+            }
         }
 
         public void Build()

@@ -126,6 +126,39 @@ namespace Saga.EditorTools
             }
         }
 
+        /// <summary>tasks U-0243 — K-0193 발판 키트: 구운 "Platform" 큐브마다 PlatKit 하나, 큐브 렌더러 꺼짐·충돌체 남음, 키트 윗면 ≈ 큐브 윗면(±0.05), 렌더러 = 재질 수(합침).</summary>
+        private static bool CheckPlatKit()
+        {
+            var tb = Object.FindFirstObjectByType<Saga.Story.World.StoryTerrainBuilder>();
+            if (tb == null) { Debug.LogError("[PlaytestStorySlice] plat-kit 빌더 없음"); return false; }
+            var cubes = new System.Collections.Generic.List<Transform>();
+            var kits = new System.Collections.Generic.List<Transform>();
+            foreach (Transform c in tb.transform) { if (c.name == "Platform") cubes.Add(c); else if (c.name == "PlatKit") kits.Add(c); }
+            if (!Saga.Story.World.StoryTerrainBuilder.PlatKit || Resources.Load<GameObject>("World/plat_wood_mid_01") == null)
+            {
+                Debug.Log($"[PlaytestStorySlice] plat-kit 꺼짐/모델 없음 — 큐브 {cubes.Count} 그대로");
+                return kits.Count == 0;
+            }
+            if (cubes.Count == 0 || kits.Count != cubes.Count) { Debug.LogError($"[PlaytestStorySlice] plat-kit 수 {kits.Count} ≠ 큐브 {cubes.Count}"); return false; }
+            int renderers = 0;
+            for (int i = 0; i < cubes.Count; i++)
+            {
+                var cube = cubes[i];
+                if (cube.GetComponent<MeshRenderer>().enabled || cube.GetComponent<Collider>() == null) { Debug.LogError($"[PlaytestStorySlice] plat-kit 큐브 {i} 렌더러 켜짐/충돌체 없음"); return false; }
+                float top = cube.position.y + cube.lossyScale.y * 0.5f, left = cube.position.x - cube.lossyScale.x * 0.5f, right = cube.position.x + cube.lossyScale.x * 0.5f;
+                Transform kit = null;
+                foreach (var k in kits) if (Mathf.Abs(k.position.x - left) < 0.01f) kit = k;
+                if (kit == null) { Debug.LogError($"[PlaytestStorySlice] plat-kit 큐브 {i}(x {left:F2}) 짝 없음"); return false; }
+                var rs = kit.GetComponentsInChildren<Renderer>();
+                renderers += rs.Length;
+                Bounds b = rs[0].bounds; foreach (var r in rs) b.Encapsulate(r.bounds);
+                if (Mathf.Abs(b.max.y - top) > 0.05f || Mathf.Abs(b.min.x - left) > 0.15f || Mathf.Abs(b.max.x - right) > 0.15f)
+                { Debug.LogError($"[PlaytestStorySlice] plat-kit 큐브 {i} 어긋남 — 윗면 {b.max.y:F2}/{top:F2} 좌 {b.min.x:F2}/{left:F2} 우 {b.max.x:F2}/{right:F2}"); return false; }
+            }
+            Debug.Log($"[PlaytestStorySlice] plat-kit OK — 발판 {cubes.Count}·렌더러 {renderers}");
+            return true;
+        }
+
         private static void Tick()
         {
             _framesSeen++;
@@ -151,6 +184,7 @@ namespace Saga.EditorTools
                     // tasks U-0093 — 세이브 없이 뜬 새 판은 무예 3택이 켜진다(레벨업마다 창·피해 막기). 옛 단계 진단은 SP 판 그대로 돌게 끈다(3택은 PlaytestStoryPick3 몫).
                     StorySkillState.RestorePicks(0, 0, 0, 0);
                     _rope = _ropeGo != null ? _ropeGo.GetComponent<StoryRope>() : null;
+                    if (!CheckPlatKit()) { Fail(); return; }
 
                     if (_player == null || _storyController == null || _rope == null || StoryEnemy.All.Count != ExpectedEnemyCount + 1)
                     {
