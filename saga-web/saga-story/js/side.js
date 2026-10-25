@@ -1127,7 +1127,7 @@
     if (e.gate && e.gateVulnT > 0) { dmg *= GATE_VULN_MUL; }
     /* 사냥터 보스 그로기(§5-10) — 패턴 셋을 잇달아 피하면 5초 동안 ×1.5 */
     if (e.bp && e.bp.groggy > 0 && global.DG.bossPattern) { dmg *= global.DG.bossPattern.dmgTakenMul(e); }
-    dmg = Math.max(1, Math.round(dmg * (global.DG.sect ? global.DG.sect.mul('atk') : 1)));   // W-0398 ① 검각
+    dmg = Math.max(1, Math.round(dmg * (global.DG.sect ? global.DG.sect.mul('atk') : 1) * (global.DG.mobCards ? global.DG.mobCards.atkMul() : 1)));   // W-0398 ① 검각 · W-0423 카드
     e.hp -= dmg;
     if (rm && rm.leech) { run.hp = Math.min(run.hpMax, run.hp + dmg * rm.leech); } if (global.DG.constellation) { run.mp = Math.min(run.mpMax, run.mp + global.DG.constellation.mpHit(run.mpMax)); }   // 마력 흡수(성좌도)
     e.hurt = HURT_FLASH;
@@ -1205,7 +1205,7 @@
     expAmt = Math.round(expAmt * (global.DG.sect ? global.DG.sect.mul('exp') : 1)); core.gainExp(expAmt);   // W-0398 ① 서원
     run.expGained += expAmt;   // 세션 카드(§5-6) — 이 판에서 잡아 얻은 경험치만 잰다(사명 보상 등은 안 잡는다)
     /* 사명(quest.js)이 이 소식을 듣는다 — 규칙이 서로를 부르지 않게 알림으로만 잇는다 */
-    core.emit('side:kill', { ref: e.ref, boss: !!e.boss, lv: lv, stage: run.stage.key });
+    core.emit('side:kill', { ref: e.ref, boss: !!e.boss, lv: lv, stage: run.stage.key, mini: !!e.mini, rare: !!e.rare, hidden: !!e.hidden, rift: !!run.rift });   // W-0423 카드가 미니·희귀·비경을 가른다
     if (global.DG.hero.awardParty) { global.DG.hero.awardParty((2 + lv) * (e.boss ? 8 : 1)); }
     fx.push({ t: 'pop', x: e.x + e.w / 2, y: e.y, life: e.boss ? 0.9 : 0.5 });
     /* 뒤로 넘어가며 사라진다 — 원작에서 몹이 죽던 그 모습이다(화면 층이 그린다) */

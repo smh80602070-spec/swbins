@@ -107,6 +107,7 @@ window.DG_NO_TUNE = true;
 <script src="js/mount.js"></script>
 <script src="js/side.js"></script>
 <script src="js/sect.js"></script>
+<script src="js/mob-cards.js"></script>
 <script src="js/hidden-boss.js"></script>
 <script src="js/side-just.js"></script>
 <script src="js/side-launch.js"></script>
@@ -6444,6 +6445,19 @@ window.DG_NO_TUNE = true;
     });
 
 
+    t('W-0423 ① 괴물 카드 — 40종(잡졸+세 시대) · 희귀 확정·미니 반쯤·보통 5% 안팎 · 보스·숨은·비경은 없음 · 다섯 장 다 모으면 공격 +0.2% · 손잡이 끔', function () {
+      var M = DG.mobCards, C = DG.core; if (!M) { return '실패 DG.mobCards 없음'; }
+      var keep = C.save.mobCards, L = M.species(); C.save.mobCards = { n: 0, c: {} };
+      try {
+        var a = L[0], b = L[1], z = L[L.length - 1], ref = function (x) { return { name: x.name }; };
+        var rare = M.onKill({ ref: ref(a), rare: true }), none = [M.onKill({ ref: ref(a), boss: true, rare: true }), M.onKill({ ref: ref(a), hidden: true, rare: true }), M.onKill({ ref: ref(a), rift: true, rare: true }), M.onKill({ ref: { name: '없는 놈' }, rare: true })].every(function (r) { return r === null; });
+        var mini = 0, norm = 0, i; for (i = 0; i < 200; i++) { C.save.mobCards.c[b.name] = 0; if (M.onKill({ ref: ref(b), mini: true })) { mini++; } } for (i = 0; i < 2000; i++) { C.save.mobCards.c[b.name] = 0; if (M.onKill({ ref: ref(b) })) { norm++; } }
+        C.save.mobCards.c = {}; for (i = 0; i < 7; i++) { M.onKill({ ref: ref(z), rare: true }); } var full = M.count(z.name), mul = M.atkMul();
+        C.setTune('story.mobCards', 0); var off = M.onKill({ ref: ref(a), rare: true }), offMul = M.atkMul(); C.setTune('story.mobCards', 1);
+        var ok = L.length === 40 && rare && rare.n === 1 && none && mini > 70 && mini < 130 && norm > 60 && norm < 140 && full === 5 && Math.abs(mul - 1.002) < 1e-9 && off === null && offMul === 1 && M.cardHtml().indexOf('괴물 카드') > 0;
+        return ok ? ('종 ' + L.length + ' · 미니 ' + mini + '/200 · 보통 ' + norm + '/2000 · 다 모음 ' + full + ' → ×' + mul) : ('실패 ' + JSON.stringify({ L: L.length, rare: rare, none: none, mini: mini, norm: norm, full: full, mul: mul, off: off, offMul: offMul }));
+      } finally { C.save.mobCards = keep; }
+    });
     /* ── W-0398 4종횡 웹 역이식(정본 고돗 G-0333·G-0319) — 문파 · 숨은 우두머리 ── */
     t('문파(W-0398 ①) — 셋 중 하나 들기 · 처치 +1·보스 +10·오늘 의뢰 사냥터 두 배 · 공 100 제자 +2%(그 갈래만)·3000 문주 +10% · 나가면 공 0', function () {
       var SE = DG.sect, C = DG.core, bk = C.save.sect;
