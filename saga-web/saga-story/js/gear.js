@@ -159,6 +159,7 @@
       var s = statsOf(e[k]);
       sum.atk += s.atk; sum.def += s.def; sum.hp += s.hp;
     }
+    if (global.DG.gearSet) { var sb = global.DG.gearSet.bonus(); sum.atk += sb.atk; sum.def += sb.def; sum.hp += sb.hp; }   // W-0437 세트 짝 효과
     return sum;
   }
 

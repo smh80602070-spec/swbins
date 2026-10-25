@@ -133,6 +133,7 @@ window.DG_NO_TUNE = true;
 <script src="assets/illust/manifest.js"></script>
 <script src="js/illust.js"></script>
 <script src="js/gear.js"></script>
+<script src="js/gear-set.js"></script>
 <script src="js/job.js"></script>
 <script src="js/passive-web.js"></script>
 <script src="js/passive-web-ui.js"></script>
@@ -6525,6 +6526,15 @@ window.DG_NO_TUNE = true;
         var ok = eOk && none === null && blocked && bOk && loot >= 3 && still && gone && noRift && off;
         return ok ? ('엘리트 체력 ' + el.hpMax + '(잡몹 ' + base + ') · 셋째 → ' + boss.ref.name + ' · 전리품 ' + loot + ' · 60초 뒤 사라짐') : ('실패 ' + JSON.stringify({ eOk: eOk, none: none && none.ref.name, blocked: blocked, bOk: bOk, loot: loot, still: still, gone: gone, noRift: noRift, off: off, el: el && [el.sz, el.w, el.hpMax, el.ref.name, el.mini] }));
       } finally { C.setTune('st.fieldElite.every', 300); FE._reset(); if (S.active()) { S.leave(); } }
+    });
+    t('W-0437 ① 장비 세트 — 짝 수 셈·효과 누적(2·3·4)·네 짝이면 세트 무예(기력 0) · 스킬 막대 끝에 붙음 · 장비 합(gear.bonus)에 얹힘 · 손잡이 끔', function () {
+      var GS = DG.gearSet, S = DG.side, C = DG.core; if (!GS || !GS.SETS.length) { return '실패 DG.gearSet 없음'; }
+      var s0 = GS.SETS[0], two = s0.pieces.slice(0, 2), all = s0.pieces.slice();
+      var c2 = GS.counts(two)[s0.key], b2 = GS.bonus(two), b4 = GS.bonus(all), k2 = GS.skills(two).length, k4 = GS.skills(all);
+      var exp2 = s0.bonus[2], sum = function (b) { return b.atk + b.def + b.hp; }, ok1 = c2 === 2 && b2.atk === (exp2.atk || 0) && sum(b4) > sum(b2) && k2 === 0 && k4.length === 1 && k4[0].cost === 0 && GS.setOf(all[0]) === s0;
+      var keep = GS.skills; GS.skills = function () { return [{ key: '__t' }]; }; var bar = S.barSkills(); GS.skills = keep; var ok2 = bar.length > 0 && bar[bar.length - 1].key === '__t';
+      C.setTune('story.gearSet', 0); var off = sum(GS.bonus(all)) === 0 && GS.skills(all).length === 0; C.setTune('story.gearSet', 1);
+      return (ok1 && ok2 && off) ? (s0.name + ' 2짝 ' + JSON.stringify(b2) + ' → 4짝 ' + JSON.stringify(b4) + ' + ' + k4[0].name + ' · 막대 끝') : ('실패 ' + JSON.stringify({ c2: c2, b2: b2, b4: b4, k2: k2, k4: k4.length, ok2: ok2, off: off }));
     });
     /* ── W-0398 4종횡 웹 역이식(정본 고돗 G-0333·G-0319) — 문파 · 숨은 우두머리 ── */
     t('문파(W-0398 ①) — 셋 중 하나 들기 · 처치 +1·보스 +10·오늘 의뢰 사냥터 두 배 · 공 100 제자 +2%(그 갈래만)·3000 문주 +10% · 나가면 공 0', function () {

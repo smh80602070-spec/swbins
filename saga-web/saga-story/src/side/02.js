@@ -278,7 +278,7 @@
   /** 조작 띠에 놓인 무예들 (job.js 가 없으면 옛 네 가지로 돌아간다) */
   function barSkills() {
     var J = global.DG.job;
-    return J ? J.bar() : SD.SKILLS;
+    return J ? J.bar().concat(global.DG.gearSet ? global.DG.gearSet.skills() : []) : SD.SKILLS;   // W-0437 세트 무예(네 짝)는 막대 끝
   }
 
   /** "공격" 자리 — 쿨이 가장 짧은(=가장 자주 휘두르는) 무예를 손이 쥔다.
