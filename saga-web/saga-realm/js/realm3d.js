@@ -271,9 +271,12 @@
   function available() { return !!three() && !failed; }
   function active() { return ON() && ready; }
 
+  var lazy = false;   // 10-26 2D 고름이면 렌더러를 안 짓고 미룬다(폰 메모리 — W-0447 남은 것) · 🧊 로 켤 때 syncVisibility 가 init
   function init(cv) {
     var t = three();
     canvas = cv;
+    if (cv && !ON() && !renderer && t) { lazy = true; syncVisibility(); return; }
+    lazy = false;
     if (!t || !canvas) { failed = true; return; }
     try {
       renderer = new t.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
@@ -369,6 +372,7 @@
   function syncVisibility() {
     var map2d = document.getElementById('realm');
     if (!canvas) { return; }
+    if (lazy && ON()) { init(canvas); return; }   // init 끝에서 다시 불린다
     var on = active();
     canvas.style.display = on ? 'block' : 'none';
     if (map2d) { map2d.style.display = on ? 'none' : ''; }
@@ -1460,7 +1464,7 @@
     available: available,
     active: active,
     /** 10-26 사용자가 3D 지도를 골랐나(2D 고름이면 전황·전술판·초상·성도 2D — battle3d·tactics-view3d·portrait3d·city3d 가 본다) */
-    wants3d: ON,
+    wants3d: ON, _lazy: function () { return { lazy: lazy, ready: ready, failed: failed, canvas: !!canvas, renderer: !!renderer }; },   // 진단
     /** 진단 — 정적 소품 묶기 결과 {props, meshes, draws} (아직이면 null)·순수 재질 지문 */
     staticInstStats: function () { return ST().stats(); },
     staticCullStats: function () { return ST().cullStats(); }, _matSig: matSig, _tickGapMs: tickGapMs,

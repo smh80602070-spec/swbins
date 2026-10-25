@@ -271,9 +271,12 @@
   function available() { return !!three() && !failed; }
   function active() { return ON() && ready; }
 
+  var lazy = false;   // 10-26 2D 고름이면 렌더러를 안 짓고 미룬다(폰 메모리 — W-0447 남은 것) · 🧊 로 켤 때 syncVisibility 가 init
   function init(cv) {
     var t = three();
     canvas = cv;
+    if (cv && !ON() && !renderer && t) { lazy = true; syncVisibility(); return; }
+    lazy = false;
     if (!t || !canvas) { failed = true; return; }
     try {
       renderer = new t.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
@@ -369,6 +372,7 @@
   function syncVisibility() {
     var map2d = document.getElementById('realm');
     if (!canvas) { return; }
+    if (lazy && ON()) { init(canvas); return; }   // init 끝에서 다시 불린다
     var on = active();
     canvas.style.display = on ? 'block' : 'none';
     if (map2d) { map2d.style.display = on ? 'none' : ''; }
