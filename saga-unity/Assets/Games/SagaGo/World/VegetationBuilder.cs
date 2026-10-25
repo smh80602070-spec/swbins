@@ -130,7 +130,7 @@ namespace Saga.Go.World
             // 또 돌리는데, 편집기 빌드 스크립트가 이미 자식들을 만들어 둔
             // 뒤라 그대로 두면 나무·바위가 두 벌씩 겹쳐 생긴다 —
             // NpcBuilder.cs와 같은 방어(2026-09-12 GLB 교체 때 같이 발견).
-            if (transform.childCount > 0) { RegisterGrassWind(); return; }
+            if (transform.childCount > 0) { SwapToReal(); RegisterGrassWind(); return; }
             Build();
             RegisterGrassWind();
         }
@@ -157,6 +157,43 @@ namespace Saga.Go.World
             }
             return n;
         }
+
+        /// <summary>tasks U-0239(자체툴 K-0190) — 씬에 구워진 통일 세트 나무·바위·풀·갈대(툰 덩이 잎)를 사실판(`&lt;id&gt;_real`)으로 런타임에 갈아 끼운다.
+        /// 씬 재빌드 없이(구운 씬은 Awake 가 Build 를 건너뜀) · 같은 자리·회전·크기 · 단풍 사본(`_autumn`)도 사실판 + 지역 빛깔 · 끝나면 정적 배칭을 다시 묶는다.
+        /// `SAGA_REAL_NATURE=0` 이면 안 함. 바꾼 수.</summary>
+        public int SwapToReal()
+        {
+            if (!WorldModels.RealNature) return 0;
+            int n = 0;
+            var all = GetComponentsInChildren<Transform>(true);
+            foreach (var t in all)
+            {
+                if (t == null || t == transform || t.parent == null) continue;
+                string id = t.name.EndsWith("_autumn") ? t.name.Substring(0, t.name.Length - 7) : t.name;
+                if (!WorldModels.RealNatureIds.Contains(id) || !WorldModels.IsReal(id)) continue;
+                if (t.GetComponent<RealMark>() != null) continue;
+                var prefab = WorldModels.Load(id);
+                var holder = t.parent;
+                var go = InstantiateUnified(prefab, id, holder, GoWorldMap.RegionAt(holder.position));
+                go.transform.localPosition = t.localPosition;
+                go.transform.localRotation = t.localRotation;
+                go.transform.localScale = t.localScale;
+                go.AddComponent<RealMark>();
+                t.gameObject.SetActive(false);
+                Object.Destroy(t.gameObject);
+                n++;
+            }
+            if (n > 0) { Saga.Core.SourceMesh.Tag(gameObject); StaticBatchingUtility.Combine(gameObject); }
+            SwappedReal = n;
+            if (n > 0) Debug.Log($"[VegetationBuilder] 사실판으로 갈음 {n}");
+            return n;
+        }
+
+        /// <summary>진단 — 마지막 SwapToReal 이 바꾼 수.</summary>
+        public int SwappedReal { get; private set; }
+
+        /// <summary>사실판으로 갈아 끼운 자리 표시(두 번 안 갈게).</summary>
+        public sealed class RealMark : MonoBehaviour { }
 
         public void Build()
         {
@@ -302,7 +339,8 @@ namespace Saga.Go.World
                         {
                             int pick = Mathf.Clamp(Mathf.FloorToInt(Hash(x, y, i * 2 + 300) * candidates.Count), 0, candidates.Count - 1);
                             var (treeName, form) = UnifiedTrees[candidates[pick]];
-                            string model = WantsAutumn(veg.CanopyTint) && WorldModels.Load(treeName + "_autumn") != null ? treeName + "_autumn" : treeName;
+                            // tasks U-0239 — 사실판이면 단풍 사본이 없으니 같은 모델에 지역 빛깔(LeafTinted)만
+                            string model = !WorldModels.IsReal(treeName) && WantsAutumn(veg.CanopyTint) && WorldModels.Load(treeName + "_autumn") != null ? treeName + "_autumn" : treeName;
                             SpawnUnified(model, "Tree_" + form, visualParent.transform, basePos, rot, UnifiedTreeScale * s, region);
                         }
                         else if (hasModels)
@@ -571,7 +609,14 @@ namespace Saga.Go.World
             holder.transform.SetParent(parent, false);
             holder.transform.SetPositionAndRotation(pos, rot);
             holder.transform.localScale = Vector3.one * scale;
-            var go = Object.Instantiate(prefab, holder.transform, false);
+            InstantiateUnified(prefab, model, holder.transform, region);
+            return holder;
+        }
+
+        /// <summary>통일 세트 모델 하나를 holder 밑에(로컬 원점) — 배경 재질·지역 잎 빛깔. 런타임 사실판 갈기도 쓴다.</summary>
+        private GameObject InstantiateUnified(GameObject prefab, string model, Transform holder, string region)
+        {
+            var go = Object.Instantiate(prefab, holder, false);
             go.name = model;
             StripColliders(go);
             var tint = region != null ? GoWorldMap.VegetationOf(region).CanopyTint : Color.clear;
@@ -587,7 +632,7 @@ namespace Saga.Go.World
                 }
                 r.SetSharedMaterials(mats);
             }
-            return holder;
+            return go;
         }
 
         private static bool IsWoody(string name)

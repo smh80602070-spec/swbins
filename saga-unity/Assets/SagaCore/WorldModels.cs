@@ -13,12 +13,26 @@ namespace Saga.Core
     {
         private static readonly Dictionary<string, GameObject> Cache = new Dictionary<string, GameObject>();
 
+        /// <summary>tasks U-0239(자체툴 K-0190) — 자연물 사실판(잎 카드 나무·이어진 바위·들풀) 13 id. 있으면 같은 이름 `&lt;id&gt;_real` 을 먼저(옛 높이·축척 그대로).
+        /// 끄기 `SAGA_REAL_NATURE=0`(옛 툰 덩이 잎).</summary>
+        public static readonly HashSet<string> RealNatureIds = new HashSet<string>
+        {
+            "tree_broadleaf_01", "tree_broadleaf_02", "tree_broadleaf_03", "tree_pine_01", "tree_pine_02", "tree_pine_03", "tree_birch_01",
+            "rock_large_01", "rock_large_02", "rock_moss_01", "grass_tuft_01", "grass_tuft_02", "reed_clump_01",
+        };
+        public static bool RealNature = System.Environment.GetEnvironmentVariable("SAGA_REAL_NATURE") != "0";
+
+        /// <summary>이 id 가 지금 사실판으로 바뀌어 나오나(사실판 GLB 가 있고 손잡이가 켜짐).</summary>
+        public static bool IsReal(string name) => RealNature && RealNatureIds.Contains(name) && Resources.Load<GameObject>("World/" + name + "_real") != null;
+
         public static GameObject Load(string name)
         {
             if (string.IsNullOrEmpty(name)) return null;
-            if (Cache.TryGetValue(name, out var p) && p != null) return p;
-            p = Resources.Load<GameObject>("World/" + name);
-            Cache[name] = p;
+            string key = (RealNature ? "r|" : "t|") + name;
+            if (Cache.TryGetValue(key, out var p) && p != null) return p;
+            p = RealNature && RealNatureIds.Contains(name) ? Resources.Load<GameObject>("World/" + name + "_real") : null;
+            if (p == null) p = Resources.Load<GameObject>("World/" + name);
+            Cache[key] = p;
             return p;
         }
 

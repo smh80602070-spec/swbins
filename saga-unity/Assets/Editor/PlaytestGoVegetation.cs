@@ -184,7 +184,10 @@ namespace Saga.EditorTools
                 var (gx, gy) = TestMapData.WorldToGrid(t.position);
                 if (!VegetationBuilder.WantsAutumn(GoWorldMap.VegetationOf(GoWorldMap.RegionAt(gx, gy)).CanopyTint)) continue;
                 autumnWant++;
-                if (t.childCount > 0 && t.GetChild(0).name.EndsWith("_autumn")) autumnHas++;
+                // tasks U-0239 — 사실판은 단풍 사본이 없어 같은 모델 + 지역 잎 빛깔(LeafTinted)이 단풍이다(갈음 직후 옛 자식은 꺼진 채 남음 — 켜진 첫 자식)
+                Transform c0 = null;
+                for (int ci = 0; ci < t.childCount && c0 == null; ci++) if (t.GetChild(ci).gameObject.activeSelf) c0 = t.GetChild(ci);
+                if (c0 != null && (c0.name.EndsWith("_autumn") || Saga.Core.WorldModels.IsReal(c0.name))) autumnHas++;
             }
             if (autumnWant > 0 && autumnHas < autumnWant) Fail($"단풍 지역 나무 {autumnWant} 중 단풍판 {autumnHas}");
             foreach (var group in new[] { "Rocks", "Grass", "Reeds" })

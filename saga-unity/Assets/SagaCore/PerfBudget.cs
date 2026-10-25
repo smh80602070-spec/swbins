@@ -70,6 +70,8 @@ namespace Saga.Core
                 n++;
                 var root = r.transform.root.name;
                 LastGroups[root] = (LastGroups.TryGetValue(root, out int c) ? c : 0) + 1;
+                // 정적 배칭으로 묶인 렌더러는 묶음 메시를 공유한다 — 배칭 전에 적어 둔 원래 메시(SourceMesh)로 센다(U-0239 에서 135만으로 부풀던 것)
+                if (r.isPartOfStaticBatch && r.TryGetComponent<SourceMesh>(out var src) && src.Mesh != null) m = src.Mesh;
                 for (int k = 0; k < m.subMeshCount; k++) tris += (long)m.GetIndexCount(k) / 3;
             }
             return (n, tris);

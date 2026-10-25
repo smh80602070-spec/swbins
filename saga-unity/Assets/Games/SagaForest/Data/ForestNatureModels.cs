@@ -17,7 +17,7 @@ namespace Saga.Forest.Data
         public static GameObject FruitTree()
         {
             if (_fruitTreeLoaded && _fruitTree != null) return _fruitTree;
-            _fruitTree = Resources.Load<GameObject>(FruitTreeModel);
+            _fruitTree = Saga.Core.WorldModels.Load("tree_broadleaf_01"); // tasks U-0239 — 사실판이 있으면 그것(WorldModels 한 곳)
             _fruitTreeLoaded = _fruitTree != null;
             return _fruitTree;
         }
