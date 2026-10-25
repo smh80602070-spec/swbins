@@ -53,7 +53,7 @@ const RealmTraits := preload("res://games/saga_realm/data/realm_traits.gd")
 const RealmEvents := preload("res://games/saga_realm/data/realm_events.gd")
 const RealmTactics := preload("res://games/saga_realm/data/realm_tactics.gd")   # G-0182 격자 전술
 const RealmNews := preload("res://games/saga_realm/data/realm_news.gd")   # G-0194 영내 소식
-const Toast := preload("res://saga_core/ui/toast.gd")
+const Toast := preload("res://games/saga_realm/data/realm_toast.gd")   # G-0411 같은 프레임 알림을 한 칸에(공용 Toast 감쌈)
 const SessionCard := preload("res://saga_core/ui/session_card.gd")
 const LordPortrait := preload("res://games/saga_realm/ui/lord_portrait.gd")
 
