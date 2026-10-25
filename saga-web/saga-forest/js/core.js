@@ -494,7 +494,9 @@
       'tree:dead': ['tree_dead_01'], 'tree:birch': ['tree_birch_01'], 'bush': ['bush_01', 'bush_02'], 'rock': ['rock_large_01', 'rock_large_02', 'rock_small_01'], 'rock:moss': ['rock_moss_01'], 'grass': ['grass_tuft_01', 'grass_tuft_02'],
       'flower': ['flower_patch_01'], 'mushroom': ['mushroom_01'], 'stump': ['stump_01'], 'log': ['log_01'], 'mountain': ['mountain_01'], 'bench': ['bench_01'], 'building:bench': ['bench_01'], 'campfire': ['campfire_logs_01'], 'tent': ['tent_large_01'],
       'lantern': ['stone_lantern_01'], 'well': ['well_01'], 'bridge': ['plank_bridge_01'], 'crate': ['crate_small_01'], 'cart': ['handcart_01'], 'building:shop': ['market_stall_01'], 'building:board': ['notice_board_01'], 'building:pole': ['banner_pole_01'],
-      'stele': ['stele_01'], 'pot': ['kitchen_pot_01'], 'bottle': ['vase_tall_01'], 'chest': ['chest_01'], 'wisp': ['hanging_lantern_01'], 'rope': ['banner_pole_01'] },   // 엇맞춤 제 키(asset3d.js DEFAULTS 별칭)
+      'stele': ['stele_01'], 'pot': ['kitchen_pot_01'], 'bottle': ['vase_tall_01'], 'chest': ['chest_01'], 'wisp': ['hanging_lantern_01'], 'rope': ['banner_pole_01'],
+      /* W-0444 — 짝 없던 빌린 건물·소품 여섯(촬영으로 고름): 아치·폐탑(스캔)·우주 돔·정자·둘째 마을 집(House_4)·풀포기 */
+      'ruin:arch': ['stone_arch_01'], 'building:ruinTower': ['tower_ruin_01'], 'building:spaceDome': ['future_dome_01'], 'gazebo': ['pavilion_01'], 'building:hamlet2House': ['eu_house_01'], 'plant': ['bush_02'] },   // 엇맞춤 제 키(asset3d.js DEFAULTS 별칭)
     /* 빌린 몸(W-0074, shared/js/assets3d.js borrowRecipe) — 제 몸이 없는 사람(이름 있는 주민 NPC·손님·나·절차 주민)은 시대 구분 없이
        옛 몸(VRoid 샘플·숲 NPC 전용 VRoid·QRPG·folk·우주복) 대신 도감과 안 겹치는 VRoid 통일 몸(사용자 10-06 "인물은 모두 교체"). named 는 서로 다른 몸 */
     borrow: {
