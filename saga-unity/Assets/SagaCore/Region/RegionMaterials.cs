@@ -210,6 +210,26 @@ namespace Saga.Core.Region
         /// <summary>U-0085 2단계 — 색만 있는 배경 재질이 사진 세트에 들면 트라이플레이너 PBR 사본(원래 색으로 물들임). 아니면 null.</summary>
         public static Material PhotoFor(Material src) => src == null ? null : PhotoFor(src, PhotoSetFor(src.name));
 
+        /// <summary>tasks U-0241(자체툴 K-0193) — 바탕색까지 담긴 땅 섞음 결(mud_gravel·path_grass·field_mix)을 물들이지 않고 그대로 쓰는 트라이플레이너 PBR 재질.
+        /// 셋 중 하나라도 없거나 `SAGA_NO_PHOTO=1` 이면 null(부른 쪽 색 재질 그대로).</summary>
+        public static Material PhotoGround(string set, float tiling, string name)
+        {
+            if (PhotoOff) return null;
+            var tex = PhotoSet(set);
+            if (tex.b == null || tex.n == null || tex.r == null) return null;
+            var m = Make("TriplanarPBR");
+            if (m == null) return null;
+            m.name = name + " (" + set + ")";
+            m.SetColor("_BaseColor", Color.white);
+            m.SetTexture("_BaseMap", tex.b);
+            m.SetTexture("_BumpMap", tex.n);
+            m.SetTexture("_RoughMap", tex.r);
+            m.SetFloat("_Tiling", tiling);
+            m.SetFloat("_Metallic", 0f);
+            m.SetFloat("_Roughness", 1f);
+            return m;
+        }
+
         public static Material PhotoFor(Material src, (string set, float tiling)? ps)
         {
             if (PhotoOff || src == null || !ColorOnly(src)) return null;

@@ -779,3 +779,5 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 **자연물 사실판(tasks U-0239, 자체툴 K-0190)**: 나무(넓은잎·소나무·자작)·바위·이끼 바위·풀 포기·갈대 13 종이 잎 카드·이어진 바위 사실판(`Resources/World/<id>_real`)으로 나온다 — `WorldModels.Load` 한 곳에서 바꾸고, 1만리 들판(씬에 구운 식생)은 시작할 때 런타임으로 갈아 끼운다(단풍 지역은 같은 모델에 지역 잎 빛깔). 옛 툰 덩이 잎으로 보려면 `SAGA_REAL_NATURE=0`. 진단 `PlaytestHeadless` 의 vegetation·perf-budget 줄.
 
 **얼굴 SDF 그늘(tasks U-0240, 자체툴 K-0191 · U-0217 2단계)**: VRoid 인물 얼굴 살갗의 빛·그늘 경계가 원신식 SDF 그림(`Resources/Characters/FaceSdf/face_sdf`)을 따른다 — 옆빛이면 코 옆으로 깔끔한 반쪽 경계, 빛이 왼쪽이면 그림을 좌우로 뒤집어 씀. 입 안·눈 흰자·몸 살갗은 그대로. 끄기 `SAGA_FACE_SDF=0`(머리 앞 섞음 반쪽 그늘만). 진단 `PlaytestFaceLight.Run` 의 sdf 줄 · 촬영 `PlaytestFaceLight.FaceShots` + `SAGA_FACE_LIGHT=1 SAGA_FACE_SHOT_SDF=1`(GUI).
+
+**5천하 들판 땅 결(tasks U-0241, 자체툴 K-0193)**: 지역 지도·싸움터 땅(녹갈색 한 장)이 들판 섞음 결(field_mix — 바탕색·법선·거칠기, 6m 되풀이)로 나온다. 끄기 `SAGA_NO_PHOTO=1`(다른 사진 결과 같이). 2나락·3마을은 웹 묘사에 해당하는 바닥이 없어 그대로.

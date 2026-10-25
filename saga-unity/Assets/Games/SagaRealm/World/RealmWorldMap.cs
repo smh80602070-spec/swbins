@@ -127,8 +127,11 @@ namespace Saga.Realm.World
                 if (d != null) span = Mathf.Max(span, WorldPos(d, centerX, centerY).magnitude * 2f + 60f);
             }
             GroundRadius = span * 0.5f;
-            Spawn("Ground", transform, PrimitiveType.Cylinder, new Vector3(0f, -0.1f, 0f),
+            var ground = Spawn("Ground", transform, PrimitiveType.Cylinder, new Vector3(0f, -0.1f, 0f),
                 new Vector3(span, 0.2f, span), GroundColor, addCollider: false);
+            // tasks U-0241 — 녹갈색 한 장 → 들판 섞음 결(K-0193 field_mix, 바탕색 그대로). 없으면 색 그대로.
+            var fieldMat = Saga.Core.Region.RegionMaterials.PhotoGround(FieldSet, FieldTiling, "Ground");
+            if (fieldMat != null) ground.GetComponent<MeshRenderer>().sharedMaterial = fieldMat;
 
             foreach (var cityId in cityIds)
             {
@@ -305,6 +308,10 @@ namespace Saga.Realm.World
             t.fontSize = 24f; // 외곽선은 보일 때 RefreshLabels 가 건다 — 꺼진 지도(디오라마 보기)에서 지으면 재질이 없어 외곽선 설정이 터진다
             _labels.Add((def.Id, t));
         }
+
+        /// <summary>tasks U-0241 — 지도·싸움터 땅 섞음 결 세트·되풀이 크기(m).</summary>
+        public const string FieldSet = "field_mix";
+        public const float FieldTiling = 6f;
 
         private static GameObject Spawn(string name, Transform parent, PrimitiveType type, Vector3 localPos,
             Vector3 scale, Color color, bool addCollider)

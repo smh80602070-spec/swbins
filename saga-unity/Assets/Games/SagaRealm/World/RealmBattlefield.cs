@@ -97,7 +97,10 @@ namespace Saga.Realm.World
             Won = r.Won;
             Charge = Mathf.Max(1f, r.Charge);
 
-            Spawn("Ground", PrimitiveType.Cylinder, new Vector3(0f, -0.05f, 0f), new Vector3(GroundRadius * 2f, 0.05f, GroundRadius * 2f), Look.Ground);
+            var groundGo = Spawn("Ground", PrimitiveType.Cylinder, new Vector3(0f, -0.05f, 0f), new Vector3(GroundRadius * 2f, 0.05f, GroundRadius * 2f), Look.Ground);
+            // tasks U-0241 — 싸움터 땅도 들판 섞음 결(지도와 같은 세트). 없으면 색 그대로.
+            var fieldMat = Saga.Core.Region.RegionMaterials.PhotoGround(RealmWorldMap.FieldSet, RealmWorldMap.FieldTiling, "Ground");
+            if (fieldMat != null && groundGo != null) groundGo.GetComponent<MeshRenderer>().sharedMaterial = fieldMat;
             if (Look.Stream)
                 Spawn("Stream", PrimitiveType.Cube, new Vector3(0f, 0.01f, -6.2f), new Vector3(GroundRadius * 1.9f, 0.02f, 2.2f), StreamColor);
             foreach (var p in Look.Props) SpawnProp(p);
