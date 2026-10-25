@@ -8042,6 +8042,30 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       var a = Z.cut({ min: 0, max: 1 }) && Z.shown(); DG.core.setTune('zoneCut.on', 0); var b = Z.cut(); DG.core.setTune('zoneCut.on', 1);
       return (a && b === false) || ('실패 덮음 ' + a + ' · 끔 ' + b);
     });
+    t('W-0427 생일 — 주민마다 한 해 하루(12달×28일) · 같은 id 는 늘 같은 날 · 마을 안 겹침 없음 · 그날 번호면 isToday', function () {
+      var B = DG.birthday, V = DG.village; if (!B || !V) { return '실패 DG.birthday 없음'; }
+      var ids = V.raw().residents.map(function (r) { return r.id; }), seen = {}, bad = [];
+      ids.forEach(function (id) { var a = B.of(id), b = B.of(id, ids.slice().reverse()), k = a.m + '/' + a.d; if (a.m < 1 || a.m > 12 || a.d < 1 || a.d > 28 || a.m !== b.m || a.d !== b.d) { bad.push(id + ' ' + k); } if (seen[k]) { bad.push('겹침 ' + k); } seen[k] = 1;
+        var n = Date.UTC(2026, a.m - 1, a.d) / 86400000; if (!B.isToday(id, n, ids) || B.isToday(id, n + 1, ids) || B.todays(n, ids).indexOf(id) < 0) { bad.push(id + ' 오늘'); } });
+      return (ids.length >= 2 && !bad.length) ? ('주민 ' + ids.length + ' · 예 ' + ids[0] + ' ' + B.of(ids[0]).m + '월 ' + B.of(ids[0]).d + '일') : ('실패 ' + ids.length + ' ' + bad.join(','));
+    });
+    t('W-0427 생일 선물 — 그날 좋아하는 것 하트 +5(하루 상한 4 위로)·보통 것 +3 · 친밀도 ×2 · 보통 날은 1·3 그대로 · 손잡이 fo.birthday 0 이면 끔', function () {
+      var B = DG.birthday, V = DG.village, VD = DG.villageData, raw = V.raw(), s = V.state(); if (!B) { return '실패 DG.birthday 없음'; }
+      var keep = JSON.stringify({ g: s.gifted, f: s.friend, h: s.hearts, b: s.bag }), keepDay = s.day, px = raw.player.x, py = raw.player.y;
+      var W = DG.workshop ? function (d) { return DG.workshop.heart(d); } : function (d) { return d; }, br = DG.brew ? DG.brew.bonus('heart') : 0;
+      var cheap = function (cat) { return VD.ITEMS[cat].filter(function (i) { return i.price < 200; })[0]; };
+      var cats = ['fruit', 'nut', 'ore', 'flower', 'fish', 'bug', 'shell', 'fossil'];
+      function give(id, cat, onBd) { var a = B.of(id); s.day = onBd ? Date.UTC(2026, a.m - 1, a.d) / 86400000 : Date.UTC(2026, a.m - 1, a.d) / 86400000 + 1;
+        s.gifted = {}; s.friend = {}; s.hearts = {}; var it = cheap(cat); s.bag[it.key] = 2; var r = raw.residents.filter(function (x) { return x.id === id; })[0];
+        raw.player.x = r.x; raw.player.y = r.y + 8; V.giveGift(id, it.key); return [V.heartOf ? V.heartOf(id) : s.hearts[id].h, V.friendOf(id)]; }
+      try {
+        var A = raw.residents[0].id, like = V.giftLike(A), plain = cats.filter(function (c) { return c !== like && c !== V.giftDislike(A); })[0];
+        var bl = give(A, like, true), bp = give(A, plain, true), nl = give(A, like, false), np = give(A, plain, false);
+        DG.core.setTune('fo.birthday', 0); var off = give(A, like, true); DG.core.setTune('fo.birthday', 1);
+        var ok = bl[0] === W(5) && bp[0] === W(3) && nl[0] === Math.min(W(3), 4) && np[0] === W(1) && bl[1] === 3 * 2 + br && bp[1] === 1 * 2 + br && nl[1] === 3 + br && off[0] === nl[0];
+        return ok ? ('생일 좋아함 ♥' + bl[0] + '·정 ' + bl[1] + ' · 생일 보통 ♥' + bp[0] + ' · 보통 날 ♥' + nl[0] + '/' + np[0] + ' · 끔 ♥' + off[0]) : ('실패 ' + JSON.stringify({ bl: bl, bp: bp, nl: nl, np: np, off: off, br: br }));
+      } finally { var k = JSON.parse(keep); s.gifted = k.g; s.friend = k.f; s.hearts = k.h; s.bag = k.b; s.day = keepDay; raw.player.x = px; raw.player.y = py; }
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

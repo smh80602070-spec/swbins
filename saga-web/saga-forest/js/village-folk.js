@@ -38,7 +38,8 @@
     if (r.gainDay !== s.day) { r.gainDay = s.day; r.gained = 0; }
     if (global.DG.workshop) { delta = global.DG.workshop.heart(delta); } /* 솜씨도 하트 */ var applied = delta;
     if (delta > 0) {
-      applied = Math.max(0, Math.min(delta, HEART_DAILY_CAP - r.gained));
+      var cap = HEART_DAILY_CAP + (global.DG.birthday && global.DG.birthday.isToday(id, s.day) ? global.DG.birthday.BD_LOVED : 0);   // W-0427 생일엔 상한 위로
+      applied = Math.max(0, Math.min(delta, cap - r.gained));
       r.gained += applied;
     }
     r.h = Math.max(0, Math.min(HEART_MAX, r.h + applied));

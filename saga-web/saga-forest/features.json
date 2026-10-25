@@ -1573,5 +1573,24 @@
   "ticket": "W-0431",
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shot-fo-crops.mjs 폰 2D 네 칸 Read ○ · 3D 는 village3d-kinds 표에 없어 안 섬(배선만 — GLB 짝은 K-0195 고돗·유니티 줄) · 함정 id 가 pl* 이면 syncPlanted 가 걷어냄 → crop*."
+ }, {
+  "id": "fo.birthday",
+  "name": "주민 생일(W-0427 · 스타듀 밸리·동물의숲) — 주민마다 한 해 하루(id 해시 → 12달×28일, 겹치면 id 순 다음 날, 저장 안 함) · 그날 선물 하트 +3·좋아하는 것 +5(하루 상한 위로)·친밀도 ×2·싫어함도 안 깎음 · 아침 토스트 · 주민 창 🎂 날짜 · 「오늘」 창 한 줄 · 손잡이 fo.birthday",
+  "files": [
+   "js/birthday.js",
+   "js/village-folk.js",
+   "src/village/02.js",
+   "src/ui/01.js",
+   "js/goals-adapter.js"
+  ],
+  "tests": [
+   "W-0427 생일"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 qc+claude",
+  "fun": {},
+  "ticket": "W-0427",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 둘 · 촬영 shot-fo-birthday.mjs PC·폰 주민 창 🎂·「오늘」 줄·토스트 Read ○ · 함정 하트 하루 상한 4 가 생일 +5 를 깎아 folk bumpHeart 에서 생일엔 상한 +5."
  }
 ]
