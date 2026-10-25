@@ -109,6 +109,8 @@ const CUTS := [
 	["st_field_front", "res://games/saga_story/world/TestField.tscn", [["free_modal"]]],   # G-0187 사냥터 — 앞 층 풀·바위·큰 인물(화면 높이 약 1/7)
 	["st_forest_front", "res://games/saga_story/world/ForestHuntGround.tscn", [["free_modal"]]],   # 숲 사냥터도
 	["st_ladder", STORY_CAVE, [["near", "LadderArea", -1.4, 0.0]]],
+	["st_plat", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["near", "LadderArea", -1.4, 0.0]]],   # G-0403 나무 발판 키트·GLB 사다리(K-0193)
+	["st_plat_cave", STORY_CAVE, [["free_modal"], ["near", "LadderArea", -1.4, 0.0]]],   # G-0403 돌 발판 키트
 	# G-0050 — 시나리오를 시작해야 장수 명단이 생겨 등용 설전 문제가 뽑힌다
 	["rk_debate", REALM, [["free_modal"], ["call", "/root/RealmSaveState", "start_scenario", ["194"]], ["call", "RealmHUD/OrderButton", "_start_order", ["hire", "등용", "@box"]]]],
 	# G-0054 — 화질/성능. 사가만리 둘은 설정 파일을 안 쓰고(save=false) 메모리에서만 바꾼다 — forward_plus 로 찍어야 SSAO 차이가 보인다.

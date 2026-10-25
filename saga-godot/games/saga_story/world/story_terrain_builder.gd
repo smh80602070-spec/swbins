@@ -32,6 +32,16 @@ const WALL_HEIGHT := 20.0
 ## 세트가 없거나 SAGA_STORY_OLD=1 이면 예전 단색. 빛깔은 늘 ground_color·PLAT_COLOR(prop_real 은 결만 얹는다).
 const RealPbr := preload("res://saga_core/world/real_pbr.gd")
 const TOP_THICK := 0.06
+## G-0403 — 자체툴 K-0193 발판 키트·사다리 GLB(가운데 1.0m 반복 + 끝 0.5m(+x 끝, 왼끝 x 거울) · 원점 윗면 가운데 · 사다리 1.0m 마디 원점 아래).
+## [가운데, 끝, 가운데 (높이, 깊이), 끝 (높이, 깊이)] — 끝 조각은 x 로 0.03m 입술이 나온다(설계 그대로).
+## 다섯이 다 임포트돼 있고 SAGA_STORY_PLAT_GLB 가 "0" 이 아니면 상자 그림 대신 GLB — 충돌 상자는 그대로. 크기는 재어 둔 AABB(높이·깊이)로 PLATFORM_THICKNESS·PLAT_VIS_DEPTH 에 맞춘다.
+const PLAT_GLB := {
+	"wood": ["res://assets/world/plat_wood_mid_01.glb", "res://assets/world/plat_wood_end_01.glb", Vector2(0.18, 0.8), Vector2(0.195, 0.86)],
+	"stone": ["res://assets/world/plat_stone_mid_01.glb", "res://assets/world/plat_stone_end_01.glb", Vector2(0.67, 0.87), Vector2(0.67, 0.87)],
+}
+const LADDER_GLB := "res://assets/world/ladder_01.glb"
+## 그림 깊이 — 충돌 깊이 4.0 까지 늘리면 돌 결이 z 로 ×4.6 늘어나 널판처럼 보였다(창 모드 촬영) → 1.6m(×2 안팎)만. 플레이어는 z=0 고정이라 충돌 깊이와 달라도 된다.
+const PLAT_VIS_DEPTH := 1.6
 
 var _map: RefCounted
 
@@ -83,7 +93,73 @@ static func _real() -> bool:
 
 func _build_platform(p: Dictionary) -> void:
 	var w: float = float(p.half_w) * 2.0
-	_build_box(float(p.x), float(p.height) - PLATFORM_THICKNESS * 0.5, w, PLATFORM_THICKNESS, PLAT_COLOR, "Platform", "planks", 1, PLAT_COLOR)
+	var body := _build_box(float(p.x), float(p.height) - PLATFORM_THICKNESS * 0.5, w, PLATFORM_THICKNESS, PLAT_COLOR, "Platform", "planks", 1, PLAT_COLOR)
+	if plat_glb_ready():
+		var kit := build_plat_kit(w, plat_kind(ground_color))
+		kit.position = Vector3(0, PLATFORM_THICKNESS * 0.5, 0)   # 원점 = 윗면 가운데
+		for c: Node in body.get_children():
+			if c is MeshInstance3D:
+				c.queue_free()
+		body.add_child(kit)
+
+
+## G-0403 — 키트가 다 놓였나(이 PC 에 임포트 안 됐으면 옛 상자).
+static func plat_glb_ready() -> bool:
+	if OS.get_environment("SAGA_STORY_PLAT_GLB") == "0":
+		return false
+	for k: String in PLAT_GLB:
+		for i in 2:
+			if not ResourceLoader.exists(String(PLAT_GLB[k][i])):
+				return false
+	return ResourceLoader.exists(LADDER_GLB)
+
+
+## 바닥 윗면 결이 바위(동굴·성·나루)면 돌 발판, 그 밖은 나무.
+static func plat_kind(c: Color) -> String:
+	return "stone" if _top_set(c) == "rock" else "wood"
+
+
+## 너비 w 발판 한 장 — 왼끝(거울)·가운데 n 개(x 로 늘려 빈틈 없이)·오른끝. 뿌리 원점 = 윗면 가운데.
+static func build_plat_kit(w: float, kind: String) -> Node3D:
+	var spec: Array = PLAT_GLB[kind]
+	var mid := load(String(spec[0])) as PackedScene
+	var tip := load(String(spec[1])) as PackedScene
+	var ys: float = PLATFORM_THICKNESS / float(spec[2].x)
+	var zs: float = PLAT_VIS_DEPTH / float(spec[2].y)
+	var root := Node3D.new()
+	root.name = "PlatKit"
+	var end_w := minf(0.5, w * 0.5)
+	var mid_len := w - end_w * 2.0
+	var n := maxi(0, roundi(mid_len))
+	if mid_len > 0.05:
+		n = maxi(1, n)
+	for i in n:
+		var m := mid.instantiate() as Node3D
+		var sx := mid_len / float(n)
+		m.position = Vector3(-w * 0.5 + end_w + sx * (float(i) + 0.5), 0, 0)
+		m.scale = Vector3(sx, ys, zs)
+		root.add_child(m)
+	for side: float in [-1.0, 1.0]:
+		var e := tip.instantiate() as Node3D
+		e.position = Vector3(side * (w * 0.5 - end_w * 0.5), 0, 0)
+		e.scale = Vector3(side * end_w / 0.5, PLATFORM_THICKNESS / float(spec[3].x), PLAT_VIS_DEPTH / float(spec[3].y))
+		root.add_child(e)
+	return root
+
+
+## 사다리 높이 h — 1.0m 마디를 ceil(h) 개 쌓고 y 로 맞춘다(원점 아래). 뿌리 원점 = 사다리 아래끝.
+static func build_ladder_kit(h: float) -> Node3D:
+	var ps := load(LADDER_GLB) as PackedScene
+	var root := Node3D.new()
+	root.name = "LadderKit"
+	var n := maxi(1, ceili(h - 0.01))
+	var seg := h / float(n)
+	for i in n:
+		var s := ps.instantiate() as Node3D
+		s.position = Vector3(0, seg * float(i), 0)
+		s.scale = Vector3(1.0, seg, 1.0)
+		root.add_child(s)
+	return root
 
 
 func _build_box(center_x: float, center_y: float, width: float, thickness: float, color: Color, name_: String, real_set := "", real_kind := 0, real_tint := Color.WHITE) -> StaticBody3D:
@@ -163,6 +239,11 @@ func _build_ladder_visual(x: float, mid_y: float, height: float) -> void:
 	root.name = "Ladder"
 	root.position = Vector3(x, mid_y, 0)
 	add_child(root)
+	if plat_glb_ready():   # G-0403 GLB 사다리
+		var kit := build_ladder_kit(height)
+		kit.position = Vector3(0, -height * 0.5, 0)
+		root.add_child(kit)
+		return
 
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = LADDER_COLOR
