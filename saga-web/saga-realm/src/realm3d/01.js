@@ -309,7 +309,7 @@
       groundTN ? groundTN.lambertLike({ color: 0xffffff, map: groundTexture() })
         : new t.MeshLambertMaterial({ color: 0xffffff, map: groundTexture() })
     );
-    ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; if (global.DG.pbrground3d) { ground.material = global.DG.pbrground3d.standardFrom(t, ground.material, { tier: tier(), tune: 'realm3d', set: 'grass', tile: 18, w: GROUND_SPAN, h: GROUND_SPAN, gain: C().tuned('realm3d.pbrGain', 1.18) }); }   // W-0295 지역 색 지도는 그대로 + 자체 PBR 풀 법선·거칠기(LOW 옛 재질)   // W-0293 해 그림자를 받는 땅(realm-shadow3d.js)
+    ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; if (global.DG.pbrground3d) { ground.material = global.DG.pbrground3d.standardFrom(t, ground.material, { tier: tier(), tune: 'realm3d', set: C().tuned('realm3d.fieldMix', 1) ? 'field_mix' : 'grass', tile: 18, w: GROUND_SPAN, h: GROUND_SPAN, gain: C().tuned('realm3d.pbrGain', 1.18), detail: C().tuned('realm3d.fieldMix', 1) ? C().tuned('realm3d.detailMix', 0.7) : 0 }); }   // W-0295 지역 색 지도는 그대로 + 자체 PBR 법선·거칠기(LOW 옛 재질) · W-0415 들판 섞음 결 field_mix(K-0193) 법선 + 바탕 결 곱(지역 색 보존), 손잡이 realm3d.fieldMix 0 = 옛 풀   // W-0293 해 그림자를 받는 땅(realm-shadow3d.js)
     scene.add(ground);
 
     /* 바다 — 해협(STRAITS) 자리만 지형이 SEA_LEVEL 아래로 파여 있어서, 이

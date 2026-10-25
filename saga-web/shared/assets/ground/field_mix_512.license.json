@@ -1,0 +1,38 @@
+{
+ "id": "field_mix",
+ "ticket": "K-0193",
+ "generator": "tools/ai-art/ground_mix.py (코드 섞기 — GPU·SD 안 씀)",
+ "license": "파생물 — 재료 자체 PBR 바탕색(K-0093, 로컬 AI 상업 허용 모델)의 license 를 따른다",
+ "inputs": {
+  "grass": "z-image-turbo",
+  "dirt": "z-image-turbo",
+  "sand": "z-image-turbo"
+ },
+ "mix": {
+  "base": "grass",
+  "layers": [
+   {
+    "mat": "dirt",
+    "freq": 5,
+    "thr": 0.62,
+    "soft": 0.14,
+    "seed": 31
+   },
+   {
+    "mat": "sand",
+    "freq": 7,
+    "thr": 0.84,
+    "soft": 0.1,
+    "seed": 32
+   }
+  ]
+ },
+ "picked": "field_mix_v01.png",
+ "size": [
+  1024,
+  1024
+ ],
+ "derived": "tools/ai-art/pbr_from_albedo.py — make_seamless.seamless + flatten 1.0 → 법선·거칠기·높이(자체 코드) → 고돗 tiles_real hi 1024·512 WebP q90",
+ "file": "field_mix_512.webp",
+ "copied_from": "saga-godot/assets/generated/tiles_real/field_mix_512.webp (W-0415 복사 배치)"
+}

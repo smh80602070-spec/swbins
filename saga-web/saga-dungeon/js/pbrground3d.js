@@ -7,6 +7,8 @@
  *
  *   품질  LOW 끔(옛 재질 그대로 — 폰을 지킨다) · MEDIUM 법선·거칠기 512 · HIGH 법선 hi(1024)·거칠기 512
  *   세트  grass · dirt · rock · stonewall · gravel (다른 세트가 필요하면 자체툴에서 복사 배치 — 웹은 그림을 만들지 않는다)
+ *         + W-0415 섞음 결 mud_gravel · path_grass · field_mix(K-0193) — 바탕색 그림(<세트>_512.webp)도 있어 o.albedo 면 판 그림 대신 그것을 깐다,
+ *           o.detail(0~1) 이면 판 그림(지역 색 지도 등)은 그대로 두고 그 바탕색을 평균으로 나눈 결만 곱한다(디테일 맵 — 색 정보 보존)
  *   반복  tile = 맵 한 장이 덮는 세계 길이. 맵마다 따로 반복한다(three r151+ 맵별 변환) — 바탕색 그림의 반복은 안 건드린다
  *
  *   var PG = DG.pbrground3d;
@@ -21,7 +23,7 @@
   function core() { return global.DG && global.DG.core; }
   function tuned(k, d) { var C = core(); return C && C.tuned ? C.tuned(k, d) : d; }
 
-  var SETS = { grass: 1, dirt: 1, rock: 1, stonewall: 1, gravel: 1 };
+  var SETS = { grass: 1, dirt: 1, rock: 1, stonewall: 1, gravel: 1, mud_gravel: 2, path_grass: 2, field_mix: 2 };   // 2 = 바탕색 그림도 있음(W-0415)
 
   /** 품질 → 계획(순수). tier 는 low/medium/high(대소문자 무관) */
   function plan(tier, tune) {
@@ -43,7 +45,7 @@
   function root() { var A = global.DG && global.DG.assets3d; return A && A.root ? A.root() : null; }
 
   /** 원본 텍스처 한 장을 한 번만 받는다 — 다 실리면 cb(tex) */
-  function load(T, file, cb) {
+  function load(T, file, cb, srgb) {
     var e = base[file];
     if (!e) {
       var r = root();
@@ -53,7 +55,7 @@
           e.ok = true; var w = e.wait; e.wait = []; for (var i = 0; i < w.length; i++) { w[i](e.tex); }
         }, undefined, function () { e.fail = true; e.wait = []; stat.fail++; });
         e.tex.wrapS = e.tex.wrapT = T.RepeatWrapping;
-        if (T.NoColorSpace) { e.tex.colorSpace = T.NoColorSpace; }   // 법선·거칠기는 데이터 — 감마 변환 없이
+        if (srgb && T.SRGBColorSpace) { e.tex.colorSpace = T.SRGBColorSpace; } else if (T.NoColorSpace) { e.tex.colorSpace = T.NoColorSpace; }   // 법선·거칠기는 데이터 — 감마 변환 없이(바탕색만 sRGB)
       }
     }
     if (e.fail) { return; }
@@ -87,7 +89,42 @@
     }
     put('normalMap', p.normal);
     put('roughnessMap', p.rough);
+    /* W-0415 — 바탕색까지 바꾸는 세트(o.albedo): 판 그림 대신 <세트>_512.webp 를 tile 반복으로. 실리기 전엔 판 그림·색 그대로, 실리면 색은 o.albedo(16진, 기본 흰)로 */
+    if (o.albedo && SETS[set] === 2) {
+      load(T, set + '_512.webp', function (src) {
+        var t = src.clone(); t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(rep.x, rep.y); t.needsUpdate = true;
+        mat.map = t; mat.color.set(typeof o.albedo === 'number' ? o.albedo : 0xffffff); if (o.gain) { mat.color.multiplyScalar(o.gain); }
+        mat.needsUpdate = true; stat.maps++;
+      }, true);
+    }
     mat.userData.pbrGround = set;
+    return true;
+  }
+
+  /** W-0415 디테일 — 판 바탕 그림(mat.map)에 <세트>_512 바탕색/평균 을 tile 반복으로 곱한다. 판 그림 uv(0~1 한 장)를 rep 배로 */
+  function avgOf(img) {
+    try {
+      var c = global.document.createElement('canvas'); c.width = c.height = 8; var g = c.getContext('2d'); g.drawImage(img, 0, 0, 8, 8);
+      var d = g.getImageData(0, 0, 8, 8).data, s = [0, 0, 0], i;
+      for (i = 0; i < d.length; i += 4) { s[0] += d[i]; s[1] += d[i + 1]; s[2] += d[i + 2]; }
+      return s.map(function (v) { return Math.max(0.05, Math.pow(v / 64 / 255, 2.2)); });   // sRGB → 선형(셰이더 표본과 같은 공간)
+    } catch (e) { return [0.2, 0.2, 0.2]; }
+  }
+  function detail(T, mat, o) {
+    var set = o.set, rep = repeatOf(o.w, o.h, o.tile), k = Math.max(0, Math.min(1, +o.detail || 0));
+    if (!k || SETS[set] !== 2 || !mat.map || !global.document || !+tuned((o.tune || 'pbr') + '.detail', 1)) { return false; }
+    var uv = parseInt(T.REVISION, 10) >= 151 ? 'vMapUv' : 'vUv';
+    load(T, set + '_512.webp', function (src) {
+      var a = avgOf(src.image), prev = mat.onBeforeCompile, U = { uDet: { value: src }, uDetRep: { value: new T.Vector2(rep.x, rep.y) }, uDetAvg: { value: new T.Vector3(a[0], a[1], a[2]) }, uDetMix: { value: k } };
+      mat.onBeforeCompile = function (sh, r) {
+        if (prev) { prev.call(this, sh, r); }
+        for (var n in U) { sh.uniforms[n] = U[n]; }
+        sh.fragmentShader = 'uniform sampler2D uDet; uniform vec2 uDetRep; uniform vec3 uDetAvg; uniform float uDetMix;\n' + sh.fragmentShader.replace('#include <map_fragment>',
+          '#include <map_fragment>\n  diffuseColor.rgb *= mix(vec3(1.0), clamp(texture2D(uDet, ' + uv + ' * uDetRep).rgb / uDetAvg, 0.0, 2.0), uDetMix);');
+      };
+      var pk = mat.customProgramCacheKey; mat.customProgramCacheKey = function () { return (pk ? pk.call(mat) : '') + '+det'; };
+      mat.userData.pbrDetail = set; mat.needsUpdate = true; stat.maps++;
+    }, true);
     return true;
   }
 
@@ -103,6 +140,7 @@
     if (src.onBeforeCompile && o.keepShader) { m.onBeforeCompile = src.onBeforeCompile; if (src.customProgramCacheKey) { m.customProgramCacheKey = function () { return src.customProgramCacheKey() + '+std'; }; } }
     if (o.gain) { m.color.multiplyScalar(o.gain); }   // 툰 램프(중간 밝기를 끌어올린다)에서 표준으로 오면 어두워지는 만큼 — 판이 재서 준다
     apply(T, m, o);
+    if (o.detail) { detail(T, m, o); }
     stat.made++;
     return m;
   }
@@ -113,5 +151,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.pbrground3d = { plan: plan, repeatOf: repeatOf, apply: apply, standardFrom: standardFrom, stats: stats, SETS: SETS };
+  global.DG.pbrground3d = { plan: plan, repeatOf: repeatOf, apply: apply, detail: detail, standardFrom: standardFrom, stats: stats, SETS: SETS };
 })(window);

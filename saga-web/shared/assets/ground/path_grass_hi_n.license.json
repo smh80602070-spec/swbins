@@ -1,0 +1,38 @@
+{
+ "id": "path_grass",
+ "ticket": "K-0193",
+ "generator": "tools/ai-art/ground_mix.py (코드 섞기 — GPU·SD 안 씀)",
+ "license": "파생물 — 재료 자체 PBR 바탕색(K-0093, 로컬 AI 상업 허용 모델)의 license 를 따른다",
+ "inputs": {
+  "dirt": "z-image-turbo",
+  "grass": "z-image-turbo",
+  "gravel": "z-image-turbo"
+ },
+ "mix": {
+  "base": "dirt",
+  "layers": [
+   {
+    "mat": "grass",
+    "freq": 4,
+    "thr": 0.52,
+    "soft": 0.12,
+    "seed": 21
+   },
+   {
+    "mat": "gravel",
+    "freq": 9,
+    "thr": 0.78,
+    "soft": 0.05,
+    "seed": 22
+   }
+  ]
+ },
+ "picked": "path_grass_v01.png",
+ "size": [
+  1024,
+  1024
+ ],
+ "derived": "tools/ai-art/pbr_from_albedo.py — make_seamless.seamless + flatten 0.7 → 법선·거칠기·높이(자체 코드) → 고돗 tiles_real hi 1024·512 WebP q90",
+ "file": "path_grass_hi_n.webp",
+ "copied_from": "saga-godot/assets/generated/tiles_real/path_grass_hi_n.webp (W-0415 복사 배치)"
+}

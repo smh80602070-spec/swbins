@@ -556,7 +556,7 @@
     return list[h % list.length];
   }
   /** W-0355 자체 땅 타일(K-0136 ③, 공용 tiles/ground) — 마을 = 다진 흙, 던전 층 = 돌바닥·굴 바위를 옛 석 장과 함께 후보로(같은 씨앗 = 같은 그림). 공용 주소 전·손잡이 world3d.groundTiles 0 이면 null(옛 석 장) */
-  function groundTile(run) { var A3 = global.DG.assets3d, C = global.DG.core, on = !(C && C.tuned) || +C.tuned('world3d.groundTiles', 1) > 0, r = on && A3 && A3.state && A3.state() === 'ok' && A3.root ? A3.root() + 'tiles/ground/' : null; return !r ? null : run.town ? r + 'dg_town_dirt.webp' : pickTex([r + 'dg_dungeon_stone.webp', r + 'dg_cave_rock.webp'].concat(FLOOR_TEX), run, 'floortex'); }
+  function groundTile(run) { var A3 = global.DG.assets3d, C = global.DG.core, on = !(C && C.tuned) || +C.tuned('world3d.groundTiles', 1) > 0, r = on && A3 && A3.state && A3.state() === 'ok' && A3.root ? A3.root() + 'tiles/ground/' : null; return !r ? null : run.town ? ((C && C.tuned ? +C.tuned('dungeon3d.townMud', 1) : 1) ? A3.root() + 'ground/mud_gravel_512.webp' : r + 'dg_town_dirt.webp') : pickTex([r + 'dg_dungeon_stone.webp', r + 'dg_cave_rock.webp'].concat(FLOOR_TEX), run, 'floortex'); }
   var TILE = 70;               // 세계 단위 하나당 텍스처 한 칸 (바닥·벽 공통)
   var rawTexCache = {}, texWaiters = {};
   /** url 하나당 텍스처를 하나만 실어 두고, 실린 뒤에 할 일은 `onTexReady`로 받는다.
@@ -592,7 +592,7 @@
   var texMatCache = {};
   function texMat(hex, url, repU, repV) {
     var toon = TOON_ON();
-    var PGm = global.DG.pbrground3d, pset = (/real_(rock|stonewall|gravel)\.webp/.exec(url) || [])[1], pbr = !!(pset && PGm && PGm.plan(effectiveLevel(), 'dungeon3d').on), k = hex + '|' + url + '|' + repU.toFixed(2) + '|' + repV.toFixed(2) + '|' + (toon ? 't' : 'l') + (pbr ? '|p' : '');   // W-0295 PBR
+    var PGm = global.DG.pbrground3d, pset = (/(?:real_|ground\/)(rock|stonewall|gravel|mud_gravel|path_grass|field_mix)(?:_512)?\.webp/.exec(url) || [])[1], pbr = !!(pset && PGm && PGm.plan(effectiveLevel(), 'dungeon3d').on), k = hex + '|' + url + '|' + repU.toFixed(2) + '|' + repV.toFixed(2) + '|' + (toon ? 't' : 'l') + (pbr ? '|p' : '');   // W-0295 PBR
     if (texMatCache[k]) { return texMatCache[k]; }
     var base = rawTex(url);
     /* 로드가 끝나기 전에는 **맵 없이 층 색만**으로 그린다 — 예전의 단색
@@ -772,7 +772,8 @@
     var wallTex = pickTex(WALL_TEX, run, 'walltex');
     floorMesh.position.set(W / 2, 0, H / 2);
     floorMesh.scale.set(W, H, 1);
-    floorMesh.material = texMat(run.town ? mix(stone, 0xffffff, 0.4) : mix(stone, 0x1a1a20, 0.25), floorTex, W / TILE, H / TILE);   // W-0111 마을 바닥은 흰 쪽
+    var mud = run.town && /mud_gravel/.test(floorTex || '');   // W-0415 마을 바닥 = K-0193 진흙 자갈 섞음 결(바탕색·법선·거칠기 한 벌) — 그림 색이 살게 흰 쪽으로 더, 한 장이 두 칸
+    floorMesh.material = texMat(run.town ? mix(stone, 0xffffff, mud ? 0.75 : 0.4) : mix(stone, 0x1a1a20, 0.25), floorTex, W / TILE / (mud ? 2 : 1), H / TILE / (mud ? 2 : 1));   // W-0111 마을 바닥은 흰 쪽
 
     /* 벽 넷 — 뒤쪽 둘은 높고 앞쪽 둘은 낮다. 안 낮추면 방 안이 안 보인다.
        마을(run.town)은 사방으로 필드에 걸어 나갈 수 있는데(town.js 의

@@ -1,0 +1,38 @@
+{
+ "id": "mud_gravel",
+ "ticket": "K-0193",
+ "generator": "tools/ai-art/ground_mix.py (코드 섞기 — GPU·SD 안 씀)",
+ "license": "파생물 — 재료 자체 PBR 바탕색(K-0093, 로컬 AI 상업 허용 모델)의 license 를 따른다",
+ "inputs": {
+  "dirt": "z-image-turbo",
+  "gravel": "z-image-turbo",
+  "rock": "z-image-turbo"
+ },
+ "mix": {
+  "base": "dirt",
+  "layers": [
+   {
+    "mat": "gravel",
+    "freq": 6,
+    "thr": 0.58,
+    "soft": 0.1,
+    "seed": 11
+   },
+   {
+    "mat": "rock",
+    "freq": 7,
+    "thr": 0.86,
+    "soft": 0.06,
+    "seed": 12
+   }
+  ]
+ },
+ "picked": "mud_gravel_v01.png",
+ "size": [
+  1024,
+  1024
+ ],
+ "derived": "tools/ai-art/pbr_from_albedo.py — make_seamless.seamless + flatten 0.7 → 법선·거칠기·높이(자체 코드) → 고돗 tiles_real hi 1024·512 WebP q90",
+ "file": "mud_gravel_512_r.webp",
+ "copied_from": "saga-godot/assets/generated/tiles_real/mud_gravel_512_r.webp (W-0415 복사 배치)"
+}
