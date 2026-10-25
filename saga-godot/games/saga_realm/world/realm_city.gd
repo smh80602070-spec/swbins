@@ -50,6 +50,10 @@ const GRANARY_PER := 400.0
 
 var _dyn: Node3D
 var _last_sig := ""
+var _workers: Node3D   # G-0392 눈에 보이는 일꾼(world/realm_city_workers.gd)
+var _farm_pts: Array = []   # G-0392 _build_farms·_build_markets 가 놓은 자리(일꾼 길)
+var _market_pts: Array = []
+var _granary_pt := Vector3(-6.4, 0, -3.4)   # _build_granary 첫 곳간채
 var _scenario: Node   # G-0088 이야기 카드 엔진(world/scenario_runner.gd)
 
 
@@ -85,6 +89,9 @@ func _ready() -> void:
 	_dyn = Node3D.new()
 	_dyn.name = "Diorama"
 	add_child(_dyn)
+	_workers = preload("res://games/saga_realm/world/realm_city_workers.gd").new()
+	_workers.name = "Workers"
+	add_child(_workers)
 
 
 func _show_scenario_picker() -> void:
@@ -179,6 +186,7 @@ func _rebuild_if_changed() -> void:
 	_build_granary(c)
 	_build_roster_banners()
 	_build_sec_torch(c)
+	_workers.call("rebuild", _farm_pts, _market_pts, _granary_pt, int(c.get("sec", 0)))   # G-0392 일꾼도 다시(몸은 다시 씀)
 
 
 ## 2026-09-30 — 성 둘레가 하늘 아래 반구(빈 안개)였다(창 모드 TestCity). 풀밭 원반 + GO 마을 나무·바위 고리로 자리를 깐다.
@@ -313,7 +321,9 @@ func _build_sec_torch(c: Dictionary) -> void:
 func _build_farms(c: Dictionary) -> void:
 	var n := clampi(roundi(float(c.get("agri", 0)) / FARM_PER), 2, 6)
 	var wheat := load("res://assets/world/wheat_ripe_01.glb") as PackedScene
+	_farm_pts.clear()
 	for p: Vector2 in _ring(n, 6.4, -2.0):
+		_farm_pts.append(Vector3(p.x, 0, p.y))
 		var mi := MeshInstance3D.new()
 		var mesh := BoxMesh.new()
 		mesh.size = Vector3(1.1, 0.12, 0.8)
@@ -335,7 +345,9 @@ func _build_markets(c: Dictionary) -> void:
 	var n := clampi(roundi(float(c.get("comm", 0)) / MARKET_PER), 1, 5)
 	const OLD := "res://assets/generated/props/market_s1_01.glb"
 	var ps := WorldAsset.load_scene(OLD)
+	_market_pts.clear()
 	for p: Vector2 in _ring(n, 5.6, 1.1):
+		_market_pts.append(Vector3(p.x, 0, p.y))
 		if ps == null:
 			continue
 		## K-0057 통일 툰 좌판 GLB(옛 폭 4m 기준 0.3배 × WorldAsset 배율), 정면이 성 쪽을 보게.
