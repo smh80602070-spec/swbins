@@ -506,6 +506,9 @@
       tree: ['tree_broadleaf_01', 'tree_broadleaf_02', 'tree_broadleaf_03'], pine: ['tree_pine_01', 'tree_pine_02', 'tree_pine_03'], rock: ['rock_large_01', 'rock_large_02', 'rock_small_01', 'rock_moss_01'],
       grass: ['grass_tuft_01', 'grass_tuft_02', 'bush_01', 'bush_02'], tower: ['stone_tower_01'], peak: ['mountain_01'], shrine: ['altar_01'], market: ['market_stall_01'], bridge: ['rock_moss_01'], rice: ['wheat_growing_01'],
       zp_bonfire: ['campfire_logs_01'], zp_cauldron: ['kitchen_pot_01'],
+      /* W-0443 — 남은 Quaternius 퓨전 소품 중 짝이 뚜렷한 열셋(안테나 접시는 격자 철탑과 어긋나 뺌)(짝 없는 것은 옛 그대로, 수신함 K) */
+      zp_windmill: ['mill_01'], zp_hay: ['haystack_01'], zp_cart: ['handcart_01'], zp_tent: ['tent_small_01'], zp_wall: ['low_stone_wall_01'], zp_barrel: ['barrel_01'], zp_crate: ['crate_stack_01'],
+      zp_streetlight: ['street_lamp_01'], zp_lamp2: ['street_lamp_01'], zp_dome: ['future_dome_01'], zp_pylon: ['steel_pylon_01'], zp_pine_snow: ['tree_pine_01_snow'], zp_rock_snow: ['rock_large_01'],
       cave: ['earth_lodge_01'], ruin: ['stone_arch_01'], temple: ['chinese_hall_01'] },   // W-0322 — 남은 셋도 자체(K-0126 짝: 땀집·로마 아치·청더 사원)
     /* W-0260 — asset3d 키(성채 등급·지역 랜드마크·역참·석등·솥·상자·채집물·제단) → 자체 world3d. 표에 없는 키(옛 Quaternius)는 그대로 */
     reg: { 'fort:t1': ['stone_tower_01'], 'fort:t2': ['dungeon_gate_01'], 'fort:t3': ['chinese_hall_01'], 'fort': ['stone_tower_01'], 'station': ['inn_01'],
