@@ -99,6 +99,26 @@ def foot(surface, v):
     return mix(band(0.1, 2000, 7000, 0.25, 360 + r), noise(0.12, 1800, 600, 0.12, 365 + r), tone(70, 50, 0.08, 'sine', 0.1))   # snow
 
 
+# ---------------------------------------------------------------- 탈것 11 (K-0189 — 말굽 무른·단단한 땅 · 학 날갯짓 · 용 큰 날개)
+def swell(sig, p=1.6):
+    """부풀었다 잦아듦(날갯짓 바람) — 앞이 0 에서 시작하는 사인 봉우리."""
+    t = np.linspace(0, 1, len(sig))
+    return sig * np.sin(np.pi * t) ** p
+
+
+def mount(kind, v):
+    if kind == 'hoof_soft':                                  # 둔탁 120ms — 흙·풀·모래·눈
+        return mix(noise(0.12, 600 + 60 * v, 150, 0.45, 500 + v), tone(82 + 7 * v, 55, 0.1, 'sine', 0.35))
+    if kind == 'hoof_hard':                                  # 또각 100ms — 돌·나무
+        return mix(band(0.05, 1500, 5000, 0.4, 510 + v), tone(430 + 45 * v, 300, 0.05, 'triangle', 0.3), tone(160, 110, 0.08, 'sine', 0.2))
+    if kind == 'wing_flap':                                  # 깃 스치는 바람 250ms
+        return swell(mix(band(0.25, 350 + 60 * v, 2600, 0.5, 520 + v), noise(0.25, 900, 500, 0.2, 525 + v)), 1.4)
+    return mix(swell(noise(0.42, 420 + 40 * v, 140, 0.55, 530 + v), 1.2), swell(tone(58 - 4 * v, 40, 0.42, 'sine', 0.3), 2.0))   # wing_heavy 400ms 낮은 바람 덩이
+
+
+MOUNT = (('hoof_soft', 3), ('hoof_hard', 3), ('wing_flap', 3), ('wing_heavy', 2))
+
+
 # ---------------------------------------------------------------- UI 12
 def ui(name):
     f = {
@@ -182,6 +202,9 @@ def plan():
     for s in SURF:
         for v in (0, 1):
             P.append((f'sfx_step_{s}_{v + 1}', 'foot', (lambda s=s, v=v: foot(s, v))))
+    for k, n in MOUNT:                                  # K-0189 탈것(유니티 FootstepSfx 의 riding·flying)
+        for v in range(n):
+            P.append((f'sfx_{k}_{v + 1}', 'foot', (lambda k=k, v=v: mount(k, v))))
     for u in UIS:
         P.append((f'sfx_ui_{u}', 'ui', (lambda u=u: ui(u))))
     for e in EVENTS:
