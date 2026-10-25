@@ -466,15 +466,19 @@ namespace Saga.Dungeon.World
             var go = new GameObject("BountyChest");
             go.transform.SetParent(_contentRoot, false);
             go.transform.position = transform.TransformPoint(DoorPodOffsets[1] + new Vector3(2.5f, 0f, 0f));
-            var box = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            box.name = "Box";
-            Destroy(box.GetComponent<Collider>());
-            box.transform.SetParent(go.transform, false);
-            box.transform.localPosition = new Vector3(0f, 0.4f, 0f);
-            box.transform.localScale = new Vector3(1f, 0.8f, 0.7f);
-            var m = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "BountyChest (generated)", color = new Color(0.85f, 0.65f, 0.15f) };
-            m.EnableKeyword("_EMISSION"); m.SetColor("_EmissionColor", new Color(0.4f, 0.3f, 0.05f));
-            box.GetComponent<MeshRenderer>().sharedMaterial = m;
+            // tasks U-0242 — 자체 모델(K-0195 chest_bounty_01)이 있으면 그것, 없으면 금빛 상자 도형
+            if (WorldModels.Spawn("chest_bounty_01", go.transform, 1.1f) == null)
+            {
+                var box = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                box.name = "Box";
+                Destroy(box.GetComponent<Collider>());
+                box.transform.SetParent(go.transform, false);
+                box.transform.localPosition = new Vector3(0f, 0.4f, 0f);
+                box.transform.localScale = new Vector3(1f, 0.8f, 0.7f);
+                var m = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "BountyChest (generated)", color = new Color(0.85f, 0.65f, 0.15f) };
+                m.EnableKeyword("_EMISSION"); m.SetColor("_EmissionColor", new Color(0.4f, 0.3f, 0.05f));
+                box.GetComponent<MeshRenderer>().sharedMaterial = m;
+            }
             go.AddComponent<DungeonBountyChest>();
             BountyChest = go;
             DialogueLabel.Instance?.Show(DungeonLocalization.T("bounty.chest_ready", "📦 현상금 셋 다 채움 — 계단 곁에 현상금 상자"), 3.5f);

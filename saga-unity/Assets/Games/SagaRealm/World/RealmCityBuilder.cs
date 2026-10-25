@@ -111,7 +111,8 @@ namespace Saga.Realm.World
             var markets = BuildCountedProps("Market", Mathf.Clamp(record.Comm / 80, 0, MaxMarkets), MarketColor,
                 PrimitiveType.Cube, new Vector3(1.0f, 0.9f, 1.0f), radius: 7.5f, y: 0.45f, pbrMaterial: marketMaterial, half: 0.7f);
             var granaries = BuildCountedProps("Granary", Mathf.Clamp(record.Food / 400, 0, MaxGranaries), GranaryColor,
-                PrimitiveType.Cylinder, new Vector3(1.1f, 1.4f, 1.1f), radius: 9.2f, y: 0.7f, pbrMaterial: wallMaterial, half: 0.55f);
+                PrimitiveType.Cylinder, new Vector3(1.1f, 1.4f, 1.1f), radius: 9.2f, y: 0.7f, pbrMaterial: wallMaterial, half: 0.55f,
+                model: "grain_pile_01", modelWidth: 1.6f); // tasks U-0242 — 자체 곡창 더미(K-0195)가 있으면 원기둥 대신
             // tasks U-0224 — 소품 자리를 넘겨 일꾼을 세운다(Play 때만, 같은 성 = 같은 사람).
             if (Application.isPlaying)
                 RealmWorkers.Build(transform, farms, markets, granaries, record.Agri, record.Comm, record.Food, record.Pop,
@@ -256,8 +257,9 @@ namespace Saga.Realm.World
         }
 
         private List<RealmWorkers.Prop> BuildCountedProps(string label, int count, Color color, PrimitiveType type, Vector3 scale,
-            float radius, float y, Material pbrMaterial = null, float half = 0.5f)
+            float radius, float y, Material pbrMaterial = null, float half = 0.5f, string model = null, float modelWidth = 0f)
         {
+            bool useModel = model != null && WorldModels.Load(model) != null;
             var placed = new List<RealmWorkers.Prop>();
             if (count <= 0) return placed;
             var root = new GameObject($"{label}s");
@@ -270,6 +272,16 @@ namespace Saga.Realm.World
                 float angle = (360f / count) * i;
                 Vector3 pos = new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad) * radius, y,
                     Mathf.Cos(angle * Mathf.Deg2Rad) * radius);
+                if (useModel)
+                {
+                    var slot = new GameObject($"{label}_{i}");
+                    slot.transform.SetParent(root.transform, false);
+                    slot.transform.localPosition = new Vector3(pos.x, 0f, pos.z);
+                    slot.transform.localRotation = Quaternion.Euler(0f, angle, 0f);
+                    WorldModels.Spawn(model, slot.transform, modelWidth);
+                    placed.Add(new RealmWorkers.Prop { Pos = new Vector3(pos.x, 0f, pos.z), Half = Mathf.Max(half, modelWidth * 0.5f) });
+                    continue;
+                }
                 Spawn($"{label}_{i}", root.transform, type, pos, scale, color, tiled);
                 placed.Add(new RealmWorkers.Prop { Pos = new Vector3(pos.x, 0f, pos.z), Half = half });
             }

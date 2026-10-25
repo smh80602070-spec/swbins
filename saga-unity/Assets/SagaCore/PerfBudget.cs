@@ -25,7 +25,7 @@ namespace Saga.Core
             Add("dungeon.front", 154, 180869); Add("dungeon.back", 28, 171667);
             Add("forest.front", 128, 374360); Add("forest.back", 61, 125440);
             Add("story.front", 197, 347007);
-            Add("realm.front", 90, 141000);
+            Add("realm.front", 110, 172345); // U-0242 — 곡창 원기둥 → 자체 곡창 더미 모델(K-0195): 78→96 렌더러·12.3→15.0만 삼각형(화질 올림, 낭비 아님) → 새 값 ×1.15
         }
 
         public static float Scale

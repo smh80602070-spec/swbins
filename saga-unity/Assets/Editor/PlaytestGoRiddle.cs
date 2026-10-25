@@ -52,6 +52,14 @@ namespace Saga.EditorTools
                     field.Step(rock.Pos + new Vector3(1f, 0f, 0f), 0f);
                     if (!rock.Solved || GoRiddle.Seeds != s0 + 1 || !GoRiddle.Solved(4, rock.K)) Fail($"돌 들추기 안 됨 solved={rock.Solved} 씨앗 {s0}→{GoRiddle.Seeds}");
                     else Debug.Log($"{T} rock OK - 1m 다가가니 들춰짐 · 씨앗 {GoRiddle.Seeds}");
+                    // tasks U-0242 — 자체 모델(K-0195)이 있으면 들출 돌 모델 → 풀리면 _open
+                    if (Saga.Core.WorldModels.Load("puzzle_stone_01") != null)
+                    {
+                        bool openShown = rock.RockModel != null && Enumerable.Range(0, rock.RockModel.childCount).Any(i => rock.RockModel.GetChild(i).gameObject.activeSelf && rock.RockModel.GetChild(i).name == "puzzle_stone_01_open");
+                        if (!openShown) Fail("돌 모델: 풀렸는데 puzzle_stone_01_open 이 안 보임");
+                        else Debug.Log($"{T} rock-model OK - puzzle_stone_01 → 풀림 _open");
+                    }
+                    if (pin != null && Saga.Core.WorldModels.Load("pinwheel_01_blades") != null && (!pin.RotorAxisY || pin.Rotor == null || Mathf.Abs(pin.Rotor.localPosition.y - RiddleField.PinBladeY) > 0.01f)) Fail("바람개비 모델: 날개 자리·축");
                 }
                 // ④ 꽃
                 if (flw != null)

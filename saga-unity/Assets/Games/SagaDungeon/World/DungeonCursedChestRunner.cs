@@ -102,12 +102,20 @@ namespace Saga.Dungeon.World
 
         private void Build()
         {
+            // tasks U-0242 — 자체 모델(K-0195 chest_cursed_01)이 있으면 몸·뚜껑 도형 대신(뚜껑 여는 움직임은 없음 — 고리 기둥은 그대로)
+            var model = Saga.Core.WorldModels.Spawn("chest_cursed_01", transform, 1.3f);
+            if (model != null) { model.name = "Body"; BuildRing(); return; }
             var body = Prim(PrimitiveType.Cube, transform, "Body", new Vector3(0f, 0.45f, 0f), new Vector3(1.2f, 0.9f, 0.85f), new Color(0.28f, 0.08f, 0.1f));
             var hinge = new GameObject("LidHinge").transform;
             hinge.SetParent(transform, false);
             hinge.localPosition = new Vector3(0f, 0.9f, -0.42f);
             _lid = hinge;
             Prim(PrimitiveType.Cube, hinge, "Lid", new Vector3(0f, 0.12f, 0.42f), new Vector3(1.25f, 0.24f, 0.88f), new Color(0.45f, 0.12f, 0.55f));
+            BuildRing();
+        }
+
+        private void BuildRing()
+        {
             var ring = new GameObject("Ring").transform;
             ring.SetParent(transform, false);
             for (int i = 0; i < 24; i++)

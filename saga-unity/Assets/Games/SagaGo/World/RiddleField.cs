@@ -22,6 +22,9 @@ namespace Saga.Go.World
             public float Dir;
             public GameObject Root;
             public Transform Rock, Rotor;
+            /// <summary>tasks U-0242 — 들출 돌 모델 자리(풀리면 _open 으로 갈음) · 날개 모델이면 제 y 축으로 돈다.</summary>
+            public Transform RockModel;
+            public bool RotorAxisY;
             public readonly List<Transform> Flowers = new List<Transform>();
             public int Next;          // 꽃 — 다음에 밟을 꽃
             public float StartedAt;   // 꽃 — 첫 꽃 밟은 때(-1 = 아직)
@@ -54,7 +57,7 @@ namespace Saga.Go.World
             if (z != Zone) Build(z);
             foreach (var s in Spots)
             {
-                if (s.Solved) { if (s.Rotor != null) s.Rotor.Rotate(0f, 0f, 540f * Time.deltaTime, Space.Self); continue; }
+                if (s.Solved) { if (s.Rotor != null) { if (s.RotorAxisY) s.Rotor.Rotate(0f, 540f * Time.deltaTime, 0f, Space.Self); else s.Rotor.Rotate(0f, 0f, 540f * Time.deltaTime, Space.Self); } continue; }
                 switch (s.Kind)
                 {
                     case GoRiddle.Kind.Rock:
@@ -83,6 +86,9 @@ namespace Saga.Go.World
             s.Held = GoRiddle.InWind(s.Pos, s.Dir, p) ? s.Held + sec : 0f;
             if (!s.Solved && s.Held >= GoRiddle.PinHoldSec) Finish(s);
         }
+
+        /// <summary>tasks U-0242 — 바람개비 날개 모델 높이(받침 위, K-0195 규격).</summary>
+        public const float PinBladeY = 1.25f;
 
         private static float Flat(Vector3 d) => new Vector2(d.x, d.z).magnitude;
 
@@ -142,8 +148,15 @@ namespace Saga.Go.World
             switch (s.Kind)
             {
                 case GoRiddle.Kind.Rock:
+                {
+                    // tasks U-0242 — 자체 모델(K-0195 들출 돌 puzzle_stone_01 · 들춘 뒤 _open)이 있으면 그것
+                    var holder = new GameObject("Rock").transform;
+                    holder.SetParent(s.Root.transform, false);
+                    if (Saga.Core.WorldModels.Spawn(s.Solved ? "puzzle_stone_01_open" : "puzzle_stone_01", holder, 1.4f) != null) { s.RockModel = holder; break; }
+                    Destroy(holder.gameObject);
                     s.Rock = Prim(PrimitiveType.Sphere, s.Root.transform, "Rock", new Vector3(0f, 0.3f, 0f), new Vector3(1.1f, 0.7f, 1f), _rockMat).transform;
                     break;
+                }
                 case GoRiddle.Kind.Flowers:
                     for (int i = 0; i < GoRiddle.Flowers; i++)
                     {
@@ -158,6 +171,20 @@ namespace Saga.Go.World
                     PaintFlowers(s);
                     break;
                 case GoRiddle.Kind.Pinwheel:
+                    // tasks U-0242 — 자체 모델(K-0195 받침 pinwheel_01 + 날개 pinwheel_01_blades — 축 원점, 받침 위 1.25m, 날개 제 y 축으로 돈다)
+                    if (Saga.Core.WorldModels.Load("pinwheel_01") != null && Saga.Core.WorldModels.Load("pinwheel_01_blades") != null)
+                    {
+                        var baseGo = Saga.Core.WorldModels.Spawn("pinwheel_01", s.Root.transform);
+                        baseGo.transform.localRotation = Quaternion.Euler(0f, s.Dir, 0f);
+                        s.Rotor = new GameObject("Rotor").transform;
+                        s.Rotor.SetParent(s.Root.transform, false);
+                        s.Rotor.localPosition = new Vector3(0f, PinBladeY, 0f);
+                        s.Rotor.localRotation = Quaternion.Euler(0f, s.Dir, 0f);
+                        var blades = Object.Instantiate(Saga.Core.WorldModels.Load("pinwheel_01_blades"), s.Rotor, false);
+                        foreach (var c in blades.GetComponentsInChildren<Collider>(true)) Object.DestroyImmediate(c);
+                        s.RotorAxisY = true;
+                        break;
+                    }
                     Prim(PrimitiveType.Cylinder, s.Root.transform, "Pole", new Vector3(0f, 1f, 0f), new Vector3(0.1f, 1f, 0.1f), _poleMat);
                     var head = new GameObject("Head").transform;
                     head.SetParent(s.Root.transform, false);
@@ -176,6 +203,11 @@ namespace Saga.Go.World
         private static void ShowSolved(Spot s)
         {
             if (s.Rock != null) { s.Rock.localPosition = new Vector3(0.9f, 0.35f, 0f); s.Rock.localRotation = Quaternion.Euler(0f, 0f, 70f); }
+            if (s.RockModel != null && s.RockModel.childCount > 0 && s.RockModel.GetChild(0).name != "puzzle_stone_01_open")
+            {
+                var open = Saga.Core.WorldModels.Spawn("puzzle_stone_01_open", s.RockModel, 1.4f);
+                if (open != null) { var old = s.RockModel.GetChild(0).gameObject; old.SetActive(false); Object.Destroy(old); }
+            }
             foreach (var f in s.Flowers) { f.localScale = Vector3.one * 1.3f; SetMat(f, _doneMat); }
         }
 
