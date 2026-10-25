@@ -87,13 +87,13 @@ namespace Saga.Forest.World
             if (cam != null)
             {
                 var go = new GameObject("ShootingStar");
-                var a = cam.transform.position + cam.transform.forward * 60f + cam.transform.right * -25f + Vector3.up * 35f;
+                var a = cam.transform.position + cam.transform.forward * 25f - cam.transform.right * 14f + cam.transform.up * 7f; // 카메라 각과 상관없이 화면 위쪽에서(3마을은 내려다보는 카메라라 하늘 높이 두면 안 보였다)
                 go.transform.position = a;
                 var tr = go.AddComponent<TrailRenderer>();
-                tr.time = 0.6f; tr.startWidth = 0.6f; tr.endWidth = 0f;
+                tr.time = 0.9f; tr.startWidth = 1.5f; tr.endWidth = 0f; // 밝은 풀밭 위에서도 보이게(촬영 판정)
                 tr.material = new Material(Shader.Find("Sprites/Default")) { name = "ShootingStar (generated)" };
                 tr.startColor = new Color(1f, 0.95f, 0.8f, 1f); tr.endColor = new Color(0.7f, 0.8f, 1f, 0f);
-                go.AddComponent<StarFlight>().Init(a, a + cam.transform.right * 50f + Vector3.down * 15f, 1.2f);
+                go.AddComponent<StarFlight>().Init(a, a + cam.transform.right * 26f - cam.transform.up * 5f, 1.2f);
             }
             if (ForestStars.WishesTonight < ForestStars.MaxWishes) { _btn.gameObject.SetActive(true); _btnLeft = ForestStars.ButtonSec; }
         }
