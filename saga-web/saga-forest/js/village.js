@@ -1667,7 +1667,7 @@
     if (!fishing) { return null; }
     var now = Date.now();
     var early = now < fishing.biteAt;
-    var late = now > fishing.ends;
+    var late = now > fishing.ends, bite0 = fishing.biteAt, win0 = fishing.ends - fishing.biteAt;   // W-0422 낚시 대회 크기
     fishing = null;
     if (early) {
       core.emit('village:fish', { state: 'miss' });
@@ -1686,7 +1686,8 @@
     core.emit('village:fish', { state: 'catch', item: got });
     core.emit('changed');
     core.persist();
-    return { kind: 'gather', text: got.emoji + ' ' + got.name + ' ×' + fishN, item: got };
+    var dv = global.DG.fishDerby ? global.DG.fishDerby.onCatch(now - bite0, win0) : null;   // W-0422 일요일 대회
+    return { kind: 'gather', text: got.emoji + ' ' + got.name + ' ×' + fishN + (dv ? ' · 📏 ' + dv.size + 'cm' : ''), item: got, derby: dv };
   }
 
   /** 시간이 지나 입질을 놓쳤으면 줄을 거둔다 (update 가 부른다) */

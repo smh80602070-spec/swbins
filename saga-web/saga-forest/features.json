@@ -1536,5 +1536,22 @@
   "ticket": "W-0380",
   "since": "2026-10-23",
   "note": "D2(claude 2026-10-23): 폰 촬영 w380_saga-forest.png Read ○"
+ }, {
+  "id": "fo.derby",
+  "name": "낚시 대회(W-0422 ① 웹 역이식 — 고돗 G-0373 · 동물의숲) — 일요일엔 낚을 때 크기(곧바로 당길수록 15~55cm + 운 0~15), 그날 큰 셋 합 90·120·150cm 에 동·은·금상 금 300·800·2000 · 잡은 줄에 📏 · 「오늘」 창 한 줄 · 손잡이 fo.derby(0 끔·2 날마다)",
+  "files": [
+   "js/fish-derby.js",
+   "src/village/02.js",
+   "js/goals-adapter.js"
+  ],
+  "tests": [
+   "W-0422 낚시 대회"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 qc+claude",
+  "fun": {},
+  "ticket": "W-0422",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shot-fo-derby.mjs 폰 「오늘」 창 Read ○(처음 줄이 잘려 글자 줄임) · 요일은 turnip.dow(순무 장과 같은 일요일)."
  }
 ]
