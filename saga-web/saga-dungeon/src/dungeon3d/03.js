@@ -386,7 +386,7 @@
       g.add(body);
       g.userData.mixerNode = body;
       /* 발밑 고리 — 말이 걸리는 거리에 들어서면 켜진다 */
-      var nr = box(g, 0, 0.8, 0, 44, 1.6, 44, 0xffd489, 'glow', false);
+      var nr = flatRing(g, 0.8, 24, 0xffd489, 0.8, 44, 1.6);
       nr.visible = false;
       g.userData.ring = nr;
       g.userData.label = labelNode(((ref && ref.emoji) || '') + ' ' + ((ref && ref.name) || ''), 54, 72);
@@ -408,17 +408,17 @@
       g.add(AS3m ? AS3m.build(isGate ? 'crea:cave_hole_01' : 'crea:mark_pad_01', 'mark:' + mkey, isGate ? 9 : 5, null, padShape) : padShape());   // W-0320 ①② 자체 발판(가운데 34 폭 패임 — 빛 판 5.4 그대로)·굴혈(계단·버팀목·빛 결정 포함, 폭 46) — 못 받으면 옛 상자
       if (isGate) { /* 굴혈은 위 한 벌로 끝 */ } else if (mkey === 'waypoint') {
         var wpShape = function () { var sg = new T.Group(); box(sg, 0, 12, 0, 20, 20, 20, 0x2a3a4a, 'flat', true); box(sg, 0, 25, 0, 26, 4, 26, glow, 'glow', false); return sg; }, AS3w = MARK_GLB() ? AS() : null, wp = AS3w ? AS3w.build('post', 'mark:' + mkey, 47, null, wpShape) : wpShape();   // W-0202 맨 상자(20³) → 있는 이정표 모델(못 받으면 옛 상자 — build 의 대역)
-        wp.userData.cast = true; g.add(wp); if (AS3w) { box(g, 0, 5.4, 0, 34, 0.8, 34, glow, 'glow', false); }   // 파란빛은 발판 위 빛 판이 낸다
+        wp.userData.cast = true; g.add(wp); if (AS3w) { flatRing(g, 5.4, 17, glow, 0.6, 34, 0.8); }   // 파란빛은 발판 위 빛 판이 낸다
       } else if (isExit) {
         /* 들길(오버월드, PLAN 28-1절) — 비석이 아니라 **팻말**이다.
            장대 하나에 판을 얹어 "여기서 다른 마을로" 라는 느낌을 준다. */
         var spShape = function () { var sg = new T.Group(); box(sg, 0, 20, 0, 6, 40, 6, 0x5c4632, 'flat', true); box(sg, 0, 34, 0, 26, 8, 3, glow, 'glow', false); return sg; }, sp = AS3m ? AS3m.build('crea:signpost_01', 'mark:' + mkey, 40, null, spShape) : spShape();
-        sp.userData.cast = true; g.add(sp); if (AS3m) { box(g, 0, 5.4, 0, 34, 0.8, 34, glow, 'glow', false); }   // W-0320 ③ 자체 팻말 — 초록은 발판 위 빛 판이 낸다
+        sp.userData.cast = true; g.add(sp); if (AS3m) { flatRing(g, 5.4, 17, glow, 0.6, 34, 0.8); }   // W-0320 ③ 자체 팻말 — 초록은 발판 위 빛 판이 낸다
       } else {
         var stShape = function (cap) { var sg = new T.Group(); box(sg, 0, 17, 0, 16, 34, 8, 0x6a6a75, 'flat', true); if (cap) { box(sg, 0, 36, 0, 12, 4, 10, glow, 'glow', false); } return sg; }; var mm = markModel(mkey), AS3s = mm ? AS() : null, st = AS3s ? AS3s.build('crea:' + mm.id, 'mark:' + mkey, mm.h, null, stShape) : stShape(true);   // W-0219 결사비 = 자체 비석 stele_01 · 난입 = 깃대 banner_pole_01(world 표, lookup 'crea:') — 못 받거나 dg3d.markGlb 0 이면 옛 상자 비석
-        st.userData.cast = true; g.add(st); if (AS3s) { box(g, 0, 5.4, 0, 34, 0.8, 34, glow, 'glow', false); }   // 표식 색은 발판 위 빛 판이 낸다(역참과 같은 꼴)
+        st.userData.cast = true; g.add(st); if (AS3s) { flatRing(g, 5.4, 17, glow, 0.6, 34, 0.8); }   // 표식 색은 발판 위 빛 판이 낸다(역참과 같은 꼴)
       }
-      var mr = box(g, 0, 0.8, 0, 56, 1.6, 56, glow, 'glow', false);
+      var mr = flatRing(g, 0.8, 30, glow, 0.82, 56, 1.6);
       mr.visible = false;
       g.userData.ring = mr;
       g.userData.label = labelNode(((ref && ref.emoji) || '') + ' ' + ((ref && ref.name) || ''), 50, 82);

@@ -532,6 +532,14 @@
     g.add(m);
     return m;
   }
+  /** W-0415 — 마을 발밑 고리·표식 빛 판: 네모 발광 판(살구색 납작 판, 10-25 감사) → 얇은 둥근 고리. r = 바깥 반지름, inner = 안쪽 비율.
+   *  손잡이 dg3d.roundRing 0 = 옛 네모 상자(sq 폭 · th 두께) */
+  function flatRing(g, y, r, hex, inner, sq, th) {
+    if (!+tuned('dg3d.roundRing', 1) || !T.RingGeometry) { return box(g, 0, y, 0, sq, th, sq, hex, 'glow', false); }
+    var k = Math.round(inner * 100), m = new T.Mesh(geo('ring' + k, function () { return new T.RingGeometry(k / 100, 1, 48).rotateX(-Math.PI / 2); }), mat(hex, 'glow'));
+    m.position.set(0, y, 0); m.scale.set(r, 1, r); g.add(m);
+    return m;
+  }
 
   /** 바닥·벽 돌 텍스처(2026-09-04, 사용자 요청 "실사화") — Poly Haven CC0
    *  사진측량 텍스처(`assets/ASSET_LICENSES.md` 참고). 방 안 다른 소품

@@ -56,6 +56,9 @@
     return mat;
   }
 
+  /** W-0415 — 흙길 칸이 path_grass 결을 쓰면 칸 색(밝은 모래색)을 거의 흰 쪽으로 — 그림 색이 살고 하얗게 날아가지 않게 */
+  function tileTint(t, k, hex) { var c = new t.Color(hex); return k === 'path' && pathGrass() ? c.lerp(new t.Color(0xffffff), 0.75).multiplyScalar(0.92) : c; }
+
   /** 종류별 InstancedMesh 를 미리 만들어 둔다 — 칸 수는 매 프레임 늘렸다 줄였다 한다 */
   function initTerrain() {
     var t = three();
@@ -73,7 +76,7 @@
       var mat = k === 'water' ?
         waterMaterial(t, new t.Color(colors[k]), tileTexture(k)) :
         (global.DG.toon3d ?
-          global.DG.toon3d.lambertLike({ color: new t.Color(colors[k]), map: tileTexture(k) }) :
+          global.DG.toon3d.lambertLike({ color: tileTint(t, k, colors[k]), map: tileTexture(k) }) :
           new t.MeshLambertMaterial({ color: new t.Color(colors[k]), map: tileTexture(k) }));
       var im = new t.InstancedMesh(k === 'water' ? waterGeo : geo, mat, terrainCap);
       im.count = 0;
