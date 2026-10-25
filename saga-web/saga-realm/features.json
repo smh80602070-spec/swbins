@@ -1737,5 +1737,22 @@
   "ticket": "W-0425",
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 하나(셈·단계·명중·막음·의형제·원수·시트 줄) · 촬영 shot-realm-support.mjs 2D 판 🤝A 둘 Read ○(3D 판은 배선만 — 표식 없음, 명중 %에는 들어감) · save.rtk.support 순수 추가. qc 기계 확인 8/9(개입형 전투 「무장 없음」) → 다시 9/9 — 무작위 흔들림."
+ }, {
+  "id": "rk.recommend",
+  "name": "인재 천거(W-0424 웹 역이식 — 고돗 G-0383 · 삼국지) — 달 끝마다 12%(그 달 해시)로 충성 60↑ 지력 으뜸 내 장수가 내 성의 숨은 재야 하나를 천거(찾아냄)·그 장수 충성 +5 · 기록·토스트 · 「이번 달」 창 한 줄 · 손잡이 rtk.recommend",
+  "files": [
+   "js/recommend.js",
+   "src/rtk/02.js",
+   "js/goals-adapter.js"
+  ],
+  "tests": [
+   "W-0424 인재 천거"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 qc+claude",
+  "fun": {},
+  "ticket": "W-0424",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shot-realm-recommend.mjs 폰 「이번 달」 천거 줄 Read ○ · 내 세력만(AI 안 씀) · 고돗과 같은 달은 아님(웹은 FNV)."
  }
 ]

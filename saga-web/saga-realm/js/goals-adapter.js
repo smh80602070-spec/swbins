@@ -8,6 +8,7 @@
 
   function untilHour(h) { var n = new Date(), t = new Date(n); t.setHours(h, 0, 0, 0); if (t <= n) { t.setDate(t.getDate() + 1); } return Math.round((t - n) / 1000); }
 
+  function recRow() { var RC = global.DG.recommend, l = RC && RC.last ? RC.last() : null, O = global.DG.off, h = l && O && O.find ? O.find(l.got) : null; return l ? [{ label: '천거 — ' + (h ? h.name : l.got) + ' 을(를) 등용할 수 있다', icon: '📜', cur: 1, max: 1, done: true }] : []; }
   function model() {
     var R = global.DG.rtk;
     if (!R || !R.challengeDay) { return { today: [], week: [], note: '도전이 아직 없습니다.' }; }
@@ -19,7 +20,7 @@
     }
     return {
       resetIn: untilHour(0),
-      today: [row(R.challengeDay(), true, '오늘의 도전(12달)', '🎲')],
+      today: [row(R.challengeDay(), true, '오늘의 도전(12달)', '🎲')].concat(recRow()),   // W-0424 이번 달 천거가 있으면 한 줄
       week: [row(R.challengeWeek(), false, '주간 도전(60달)', '🏆')],
       claim: null,
       note: '점수 겨루기(성×10 + 무장 + 보물×20) — 보상은 없고 놓쳐도 잃는 것 없습니다. 새 판 세우기에서 고릅니다.'

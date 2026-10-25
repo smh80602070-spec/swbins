@@ -133,6 +133,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/event.js"></script>
 <script src="js/relation.js"></script>
 <script src="js/support.js"></script>
+<script src="js/recommend.js"></script>
 <script src="js/tactics.js"></script>
 <script src="js/tactics-view.js"></script>
 <script src="js/tactics-view3d.js"></script>
@@ -7571,6 +7572,27 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var oldB = T.makeBoard('old', 'plain', false), old = oldB.cols + 'x' + oldB.rows + (oldB.srpg ? ' srpg' : '');
       return (ok1 && ok2 && lead === 1 && ok3 && faced && k1 === 'rout' && k2 === 'rout' && k3 === 'win' && k4 === 'rout' && old === '8x6') ||
         ('실패 판 ' + JSON.stringify(sz) + ' 언덕 ' + hills + ' · 병종 ' + ok2 + '/' + Object.keys(arms) + ' 대장 ' + lead + ' · 덤 ' + nm(m1) + ' | ' + nm(m2) + ' · 방향 ' + faced + ' · 대장 ' + k1 + ' 성문 ' + k2 + ' 버팀 ' + k3 + ' 전멸 ' + k4 + ' · 옛 판 ' + old);
+    });
+    t('W-0424 인재 천거 — 그 달 해시 12%(240달 중 15~50) · 충성 60↑ 지력 으뜸이 내 성 숨은 재야를 찾아냄(found)·충성 +5 · 안 서는 달·손잡이 0 이면 없음 · 「이번 달」 줄', function () {
+      var RC = DG.recommend, R = DG.rtk, O = DG.off, C = DG.core; if (!RC || !R || !O) { return '실패 DG.recommend 없음'; }
+      var st = R.state(); if (!st || !R.me()) { return '실패 rtk 판 없음'; }
+      var n = 0, m, on = -1, off = -1; for (m = 0; m < 240; m++) { if (RC.rolls(m)) { n++; if (on < 0) { on = m; } } else if (off < 0) { off = m; } }
+      var mine = O.ofForce(R.me()), cities = R.citiesOf(R.me()); if (!mine.length || !cities.length) { return '실패 내 장수·성 없음'; }
+      var free = Object.keys(st.officers).filter(function (id) { var r = st.officers[id]; return !r.force && !r.dead; })[0]; if (!free) { return '실패 재야 없음'; }
+      var r0 = O.rec(mine[0].id), fr = O.rec(free), keep = { loyal: r0.loyal, fcity: fr.city, ffound: fr.found };
+      var keepOthers = {}; mine.forEach(function (h) { keepOthers[h.id] = O.rec(h.id).loyal; });
+      try {
+        mine.forEach(function (h) { O.rec(h.id).loyal = 30; }); r0.loyal = 80;
+        Object.keys(st.officers).forEach(function (id) { var r = st.officers[id]; if (!r.force && !r.dead && cities.indexOf(r.city) >= 0 && id !== free) { r.__kf = r.found; r.found = true; } });
+        fr.city = cities[0]; fr.found = false;
+        var none = RC.monthly(off), got = RC.monthly(on), l1 = r0.loyal, found = fr.found, row = DG.goalsAdapter.model().today.some(function (x) { return /천거/.test(x.label); });
+        C.setTune('rtk.recommend', 0); fr.found = false; var offK = RC.monthly(on); C.setTune('rtk.recommend', null);
+        var ok = n >= 15 && n <= 50 && none === null && got && got.by === mine[0].id && got.got === free && found && l1 === 85 && row && offK === null;
+        return ok || ('실패 ' + JSON.stringify({ n: n, none: none, got: got, l1: l1, found: found, row: row, offK: offK }));
+      } finally {
+        r0.loyal = keep.loyal; fr.city = keep.fcity; fr.found = keep.ffound; mine.forEach(function (h) { if (h.id !== mine[0].id) { O.rec(h.id).loyal = keepOthers[h.id]; } });
+        Object.keys(st.officers).forEach(function (id) { var r = st.officers[id]; if ('__kf' in r) { r.found = r.__kf; delete r.__kf; } });
+      }
     });
     t('W-0425 지원 — 이웃에서 친 쌍이 판 끝마다 +1(한 판 한 번) · 3·7·12 = C·B·A · 칠 때 명중 +5·+10·+15 · 맞을 때 막음 · 의형제는 B 부터 · 원수는 안 오름', function () {
       var SP = DG.support, T = DG.tactics, R = DG.rtk, st = R && R.state ? R.state() : null; if (!SP || !T) { return '실패 DG.support 없음'; } if (!st) { return '실패 rtk 상태 없음'; }
