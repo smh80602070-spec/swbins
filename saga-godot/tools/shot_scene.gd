@@ -140,6 +140,7 @@ const CUTS := [
 	["st_story", "res://games/saga_story/world/SinyaField.tscn", []],   # G-0087 사가종횡 이야기 첫 대화(새 판 신야성)
 	["fs_story", FOREST, []],   # G-0086 사가마을 이야기 첫 대화(새 판)
 	["dg_belt_room", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]]]],   # G-0185 벨트 카메라 — 첫 방 가운데(SAGA_DG_CAM=diablo 로 같이 돌리면 옛 시점)
+	["dg_shrine", DUNGEON, [["free_modal"], ["near", "Shrine1", -2.5, 2.0]]],   # G-0406 성소 기둥(상자 방)
 	["dg_belt_corridor", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", -10.0]]]],   # 첫 통로 — 다음 방이 오른쪽
 	["dg_death_card", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_belt.gd", "die", ["@tree"]]]],   # G-0193 사망 카드 세 줄 + 첫 방 은총 자리에서 다시 섬
 	["dg_skill_slots", DUNGEON, [["static", "res://tools/shot_dungeon_belt.gd", "slots", ["@tree"]], ["static", "res://tools/shot_dungeon_belt.gd", "stage", ["@tree", 1.0]]]],   # G-0198 무예 넉 자리 단추(Z·X·C·V) — 무장 넷을 건 첫 방
