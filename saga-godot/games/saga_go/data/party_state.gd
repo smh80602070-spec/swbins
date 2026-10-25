@@ -638,6 +638,7 @@ func stat(id: String, key: String) -> float:
 		for s in art.subs:
 			if s[0] == key:
 				v += float(s[1])
+		v += preload("res://games/saga_go/data/artifact_unique.gd").stat(art, key)   # G-0400 고유 보패 능력치
 	var counts := set_counts(id)
 	for set_id in counts:
 		if int(counts[set_id]) >= 2:
@@ -895,6 +896,8 @@ func set4(id: String, key: String) -> float:
 	for set_id in counts:
 		if int(counts[set_id]) >= 4:
 			v += float((Artifacts.SETS[set_id]["4"] as Dictionary).get(key, 0.0))
+	for art in equipped_artifacts(id):   # G-0400 고유 보패 4 세트급 한 줄(세트와 따로)
+		v += preload("res://games/saga_go/data/artifact_unique.gd").four(art, key)
 	return v
 
 ## 반응 피해 배율 — 무기 효과(반응) + 4 세트(불꽃 무녀: 증발·융해·과부하·연소 · 바람 나그네: 확산).

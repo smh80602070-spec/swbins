@@ -59,6 +59,7 @@ const CUTS := [
 		["call", "House", "_spawn_furniture_visual", [{"key": "dokja", "x": -2.0, "z": 0.6}]], ["call", "House", "_spawn_furniture_visual", [{"key": "deungjan", "x": 0.2, "z": 2.2}]]]],
 	["fs_finish_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_finish_menu"]]],
 	["fs_place_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_place_menu"]]],
+	["go_raid", GO, [["static", "res://tools/shot_go_raid.gd", "open", ["@tree"]], ["free_modal"], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 9.0]]],   # G-0400 들판 무리 습격
 	["st_hunt_wave", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_wave.gd", "open", ["@tree"]]]],   # G-0399 몰이 파도·세트 무예
 	["dg_set_skill", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_set.gd", "open", ["@tree"]]]],   # G-0398 세트 무예 T 단추
 	["go_hero_duel", GO, [["static", "res://tools/shot_hero_duel.gd", "open", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 7.0]]],   # G-0397 등용 「무로 겨루자」 결투 판

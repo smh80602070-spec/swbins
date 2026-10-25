@@ -286,6 +286,8 @@ func _ready() -> void:
 	if OS.get_environment("SAGA_WEEKLYGOAL_PROBE") != "":
 		add_child(load("res://tools/probe_weekly_goals.gd").new())
 	preload("res://games/saga_go/world/go_blood_moon.gd").attach(self)   # G-0379 핏빛 달 밤
+	preload("res://games/saga_go/world/go_art_skill.gd").attach(self)   # G-0400 보패 세트 기술(네 점마다 저절로)
+	preload("res://games/saga_go/world/go_raid.gd").attach(self)   # G-0400 들판 무리 습격(처치 60마다)
 	var hunt_log := preload("res://games/saga_go/world/hunt_log.gd").new()
 	hunt_log.name = "HuntLog"
 	add_child(hunt_log)

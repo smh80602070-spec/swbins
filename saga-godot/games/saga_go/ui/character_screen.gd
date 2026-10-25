@@ -512,7 +512,7 @@ func _refresh_artifacts(id: String) -> void:
 		var subs: Array[String] = []
 		for s in a.subs:
 			subs.append(Artifacts.stat_text(s[0], float(s[1])))
-		l.text = "%s  %s %s +%d  |  %s  |  %s" % [Artifacts.SLOT_NAMES[slot], Artifacts.SETS[a.set].name, "★".repeat(int(a.rarity)), int(a.lv),
+		l.text = "%s  %s%s %s +%d  |  %s  |  %s" % [Artifacts.SLOT_NAMES[slot], preload("res://games/saga_go/data/artifact_unique.gd").name_prefix(a), Artifacts.SETS[a.set].name, "★".repeat(int(a.rarity)), int(a.lv),
 			Artifacts.stat_text(a.main, Artifacts.main_value(a)), " · ".join(subs)]
 		(_art_up[slot] as Button).disabled = int(a.lv) >= int(Artifacts.MAX_LV[int(a.rarity)]) or PartyState.count("polish") <= 0
 	var spare := 0

@@ -83,6 +83,9 @@ static func generate(seed_value: int, rarity: int, set_id: String = "", slot: St
 	var n := (3 if rarity >= 5 else 2) + (1 if r.randf() < 0.25 else 0)
 	for i in n:
 		_add_sub(art, r)
+	var uq: String = preload("res://games/saga_go/data/artifact_unique.gd").roll(seed_value, rarity)   # G-0400 고유 보패(★5 의 8% — 주·부옵션 굴림과 따로)
+	if uq != "":
+		art["uq"] = uq
 	return art
 
 static func _add_sub(art: Dictionary, r: RandomNumberGenerator) -> void:
