@@ -23,7 +23,7 @@
   function start() {
     core.load();
 
-    if (global.DG.realm3d && !global.DG_NO_DRAW) {
+    if (global.DG.realm3d && !global.DG_NO_DRAW && !(global.DG.campaign && global.DG.campaign.on())) {   // W-0450 장 흐름이면 지도 3D 를 안 짓는다(노선도가 첫 화면)
       global.DG.realm3d.init(document.getElementById('realm3d'));
     }
 

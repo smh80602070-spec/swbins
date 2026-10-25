@@ -598,6 +598,7 @@
     core.on('rtk:challenge', function (res) { showChallenge(res); });
 
     if (!R().state().started) { showScenPick(); }
+    else if (global.DG.campaignView && global.DG.campaignView.on()) { global.DG.campaignView.open(); }   // W-0450 조조전식 장 흐름 — 옛 지도·달 사건 대신 노선도
     else { centerOnMine(); showEvent(); }
     renderTop(); renderMap();
   }
@@ -667,7 +668,7 @@
     if (a === 'pick-force') {
       if (pickChallenge) { R().setupChallenge(g('data-id'), null, pickChallenge === 'day'); pickChallenge = false; }
       else { R().setup(g('data-id'), pickScen); }
-      closeEnc();
+      closeEnc(); if (global.DG.campaignView && global.DG.campaignView.on() && !pickChallenge) { global.DG.campaignView.open(); }   // W-0450
       centerOnMine();
       renderTop(); renderMap(); syncDock();
       return;

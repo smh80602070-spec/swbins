@@ -34,7 +34,9 @@
   function three() { if (!T) { T = global.THREE || null; } return T; }
 
   /** 초상을 모델로 구울까 — 0 이면 여태 쓰던 캔버스 그림 그대로 (되돌림용) */
-  function ON() { var R = global.DG && global.DG.realm3d; return core().tuned('portrait3d.on', 1) && !(R && R.wants3d && !R.wants3d()) ? true : false; }   // 10-26 지도 2D 면 초상도 2D 그림
+  function ON() { return core().tuned('portrait3d.on', 1) ? true : false; }
+  /** 10-26 지도 2D 면 실시간 3D 굽기(WebGL)만 끈다 — 구워 둔 그림 파일 초상(diskById)은 그대로(W-0447 이 ON 을 꺼 2D 초상이 실루엣이 되던 것) */
+  function map2d() { var R = global.DG && global.DG.realm3d; return !!(R && R.wants3d && !R.wants3d()); }
 
   /* ── 값을 내는 함수 — three 없이도 돈다 (자가진단이 이것만 본다) ────── */
 
@@ -111,7 +113,7 @@
     return p ? diskById(p.kind, p.id, p.w, p.h) : null;
   }
 
-  function ready() { return !!(three() && ON() && !failed); }
+  function ready() { return !!(three() && ON() && !failed && !map2d()); }
 
   function boot() {
     if (renderer || failed) { return !!renderer; }

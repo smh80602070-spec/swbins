@@ -1,0 +1,169 @@
+/**
+ * 5천하 조조전식 장 흐름 화면 (W-0450) — 노선도 · 이야기 · 진영(편성·장비·상점·대화) · 격자 전투 · 결과
+ * ---------------------------------------------------------------
+ * 전체 화면 #campaign 이 옛 지역 지도 위를 덮는다(손잡이 realm.campaign 0 이면 안 연다). 셈은 campaign.js, 전투는 tacticsView 한 벌.
+ *   DG.campaignView.on() · open() · close() · show(step) · _host()
+ * 글자 클래스는 cpg-(strategy.css 의 cp- 와 안 겹치게). 색은 style.css 변수(--glass·--ink·--ink-dim·--gold).
+ */
+(function (global) {
+  'use strict';
+  var doc = global.document, host = null, tab = 'party', pick = null;
+  function CP() { return global.DG.campaign; }
+  function OFF() { return global.DG.off; }
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function on() { return !!(CP() && CP().on()); }
+  function face(id, sz) { var h = OFF().find(id), P3 = global.DG.portrait3d; sz = sz || 64; try { return h ? (P3 && P3.of && P3.of('hero', h, sz, sz)) || global.DG.sprite.portrait('hero', h, sz) : ''; } catch (e) { return ''; } }   // 구워 둔 초상 파일 먼저
+  function nm(id) { var h = OFF().find(id); return h ? h.name : id; }
+  function toast(t) { var U = global.DG.ui; if (U && U.toast) { U.toast(t); } }
+  var GOAL = { rout: '적 전멸', leader: '적 대장 격파', gate: '성문 점령', hold: '버티기' }, LAND = { plain: '평야', hill: '구릉', river: '강', mount: '산' };
+
+  function css() {
+    if (doc.getElementById('cpg-css')) { return; }
+    var st = doc.createElement('style'); st.id = 'cpg-css';
+    st.textContent = '#campaign{position:fixed;inset:0;z-index:30;overflow:auto;color:var(--ink,#eee);background:radial-gradient(ellipse at 50% 0%,#2a2218 0%,#14110d 60%,#0b0a08 100%);font-family:inherit;padding:calc(12px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom))}' +
+      '#campaign *{box-sizing:border-box}.cpg-top{display:flex;align-items:center;gap:10px;margin:0 auto 12px;max-width:980px}.cpg-top h2{margin:0;font-size:20px;flex:1;letter-spacing:.04em}' +
+      '.cpg-gold{color:var(--gold,#f0c860);font-weight:700}.cpg-btn{background:linear-gradient(#5a4526,#3b2c17);color:#f3e2bd;border:1px solid #8a6a3a;border-radius:8px;padding:9px 14px;font:inherit;font-weight:700;cursor:pointer;min-height:40px}' +
+      '.cpg-btn.ghost{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18);color:var(--ink,#eee)}.cpg-btn:disabled{opacity:.45;cursor:default}' +
+      '.cpg-wrap{max-width:980px;margin:0 auto}.cpg-act{margin:14px 0 6px;color:var(--ink-dim,#bba);font-size:13px;letter-spacing:.1em}' +
+      '.cpg-route{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.cpg-node{position:relative;width:132px;min-height:86px;border-radius:12px;padding:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);text-align:left;color:inherit;font:inherit;cursor:default}' +
+      '.cpg-node b{display:block;font-size:13px;margin-top:4px}.cpg-node small{color:var(--ink-dim,#bba);font-size:11px}.cpg-node .e{font-size:22px}.cpg-node.done{border-color:#5f8a4a}.cpg-node.done::after{content:"✓";position:absolute;right:8px;top:6px;color:#8fd06a;font-weight:800}' +
+      '.cpg-node.now{border-color:var(--gold,#f0c860);box-shadow:0 0 0 2px rgba(240,200,96,.35),0 0 18px rgba(240,200,96,.25);cursor:pointer;background:rgba(240,200,96,.08)}.cpg-node.lock{opacity:.38}.cpg-node.done{cursor:pointer}' +
+      '.cpg-story{position:relative;min-height:calc(100vh - 40px);display:flex;flex-direction:column;justify-content:flex-end;border-radius:14px;overflow:hidden;background:#000 center/cover no-repeat}' +
+      '.cpg-story .ov{background:linear-gradient(transparent,rgba(8,6,4,.86) 38%,rgba(8,6,4,.96));padding:24px 20px 20px}.cpg-story h3{margin:0 0 4px;font-size:22px}.cpg-story p{line-height:1.7;margin:8px 0 14px;max-width:760px;white-space:pre-wrap}' +
+      '.cpg-choices{display:grid;gap:8px;max-width:760px}.cpg-choice{text-align:left}.cpg-choice small{display:block;font-weight:400;color:#d9c9a4;font-size:12px;margin-top:2px}' +
+      '.cpg-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.cpg-tabs .cpg-btn{padding:7px 12px;min-height:36px}.cpg-tabs .on{outline:2px solid var(--gold,#f0c860)}' +
+      '.cpg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.cpg-card{display:flex;gap:8px;align-items:center;padding:8px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:inherit;font:inherit;text-align:left;cursor:pointer;position:relative}' +
+      '.cpg-card img{width:52px;height:52px;border-radius:8px;flex:none;background:#222}.cpg-card b{display:block;font-size:13px}.cpg-card small{color:var(--ink-dim,#bba);font-size:11px;line-height:1.4}' +
+      '.cpg-card.sel{border-color:var(--gold,#f0c860);background:rgba(240,200,96,.1)}.cpg-card .n{position:absolute;right:6px;top:4px;color:var(--gold,#f0c860);font-weight:800}' +
+      '.cpg-brief{margin:12px 0;padding:10px 12px;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);font-size:13px;line-height:1.6}' +
+      '.cpg-row{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}.cpg-battle{position:relative;min-height:calc(100vh - 40px)}.cpg-battle .tacview{position:absolute}' +
+      '.cpg-result{max-width:520px;margin:10vh auto 0;text-align:center;padding:22px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.12)}.cpg-result h3{font-size:26px;margin:0 0 8px}';
+    st.textContent += 'body.cpg-on #aq-go,body.cpg-on #rregion-hud{display:none!important}';   // 옛 지도 화면의 시정 위임 ▶·지역 고르기는 장 흐름 동안 숨김
+    doc.head.appendChild(st);
+  }
+  function ensure() {
+    css();
+    if (!host) { host = doc.createElement('div'); host.id = 'campaign'; doc.body.appendChild(host); host.addEventListener('click', onClick); }
+    host.style.display = ''; doc.body.classList.add('cpg-on');
+    return host;
+  }
+  function open() { if (!on()) { return false; } ensure(); var cp = CP().state(); show(cp && cp.step === 'camp' ? 'camp' : 'route'); return true; }
+  function close() { if (host) { host.style.display = 'none'; } doc.body.classList.remove('cpg-on'); }
+
+  function top(title, extra) {
+    var cp = CP().state(), lord = OFF().lordOf ? OFF().lordOf(global.DG.rtk.me()) : null;
+    return '<div class="cpg-top"><h2>' + esc(title) + '</h2>' + (extra || '') + '<span>' + (lord ? esc(nm(lord)) + ' 군 · ' : '') + '<span class="cpg-gold">💰 ' + cp.gold + '</span></span></div>';
+  }
+  function show(step) {
+    ensure();
+    var cp = CP().state();
+    if (!cp) { return; }
+    if (step) { CP().setStep(step); }
+    var s = cp.step, html = '';
+    if (s === 'story') { html = story(); }
+    else if (s === 'camp') { html = camp(); }
+    else { html = route(); }
+    host.innerHTML = html;
+    host.scrollTop = 0;
+  }
+
+  /* ── 노선도 ── */
+  function route() {
+    var cp = CP().state(), list = CP().chapters(), html = top('천하 노선도'), act = null;
+    html += '<div class="cpg-wrap">';
+    list.forEach(function (c) {
+      if (c.act !== act) { if (act !== null) { html += '</div>'; } act = c.act; html += '<div class="cpg-act">' + esc(c.actName) + '</div><div class="cpg-route">'; }
+      var done = !!cp.cleared[c.no], now = c.no === cp.ch, cls = done ? 'done' : now ? 'now' : 'lock';
+      html += '<button class="cpg-node ' + cls + '" data-cp="ch" data-no="' + c.no + '"><span class="e">' + esc(c.emoji) + '</span><small>제 ' + c.no + ' 장</small><b>' + esc(c.title) + '</b><small>' + esc(LAND[c.land] || c.land) + ' · ' + esc(GOAL[c.goal] || c.goal) + '</small></button>';
+    });
+    if (act !== null) { html += '</div>'; }
+    html += '<div class="cpg-row"><button class="cpg-btn ghost" data-cp="camp">🏕 진영</button><button class="cpg-btn" data-cp="ch" data-no="' + cp.ch + '">▶ 제 ' + cp.ch + ' 장으로</button></div></div>';
+    return html;
+  }
+  /* ── 이야기 ── */
+  function story() {
+    var cp = CP().state(), c = CP().chapter(cp.viewCh || cp.ch), CS = global.DG.cutscene, bg = CS && CS.url ? CS.url('realm', c.id) : null;
+    var html = '<div class="cpg-story" style="' + (bg ? 'background-image:url(' + bg + ')' : '') + '"><div class="ov">';
+    html += '<small style="color:var(--ink-dim,#bba)">' + esc(c.actName) + ' · 제 ' + c.no + ' 장</small><h3>' + esc(c.emoji) + ' ' + esc(c.title) + '</h3><p>' + esc(CP().fillText(c.text)) + '</p><div class="cpg-choices">';
+    if (c.no === cp.ch && !cp.cleared[c.no]) {
+      (c.choices.length ? c.choices : [{ k: 'atk', label: '나아간다' }]).forEach(function (ch) {
+        var how = ch.k === 'atk' ? '이번 장 내 병력 +15%' : ch.k === 'def' ? '이번 장 적 병력 −10%' : '금 +200';
+        html += '<button class="cpg-btn cpg-choice" data-cp="choose" data-k="' + esc(ch.k) + '">' + esc(ch.label || ch.k) + '<small>' + how + '</small></button>';
+      });
+    } else { html += '<button class="cpg-btn ghost" data-cp="route">노선도로</button>'; }
+    return html + '</div></div></div>';
+  }
+  /* ── 진영 ── */
+  function statLine(id) { var s = OFF().stats(id) || {}, r = OFF().rec(id), it = r && r.item && global.DG.item ? global.DG.item.itemById(r.item) : null; return '무 ' + (s.might || 0) + ' · 지 ' + (s.wisdom || 0) + ' · 통 ' + (s.command || 0) + (it ? '<br>' + esc(it.emoji + ' ' + it.name) : ''); }
+  function camp() {
+    var cp = CP().state(), c = CP().chapter(cp.ch), html = top('진영 — 제 ' + c.no + ' 장 「' + c.title + '」', '<button class="cpg-btn ghost" data-cp="route">노선도</button>');
+    html += '<div class="cpg-wrap"><div class="cpg-tabs">' + [['party', '⚔ 편성'], ['gear', '🛡 장비'], ['shop', '🏪 상점'], ['talk', '💬 대화']].map(function (t) { return '<button class="cpg-btn ghost' + (tab === t[0] ? ' on' : '') + '" data-cp="tab" data-t="' + t[0] + '">' + t[1] + '</button>'; }).join('') + '</div>';
+    if (tab === 'party') { html += partyTab(); } else if (tab === 'gear') { html += gearTab(); } else if (tab === 'shop') { html += shopTab(); } else { html += talkTab(); }
+    var o = CP().battleOpts(cp.ch), bn = cp.bonus && cp.bonus.ch === cp.ch ? (cp.bonus.k === 'atk' ? ' · 사기 높음(병력 +15%)' : cp.bonus.k === 'def' ? ' · 적 흔들림(적 −10%)' : '') : '';
+    html += '<div class="cpg-brief">📜 ' + esc(LAND[c.land] || c.land) + (c.siege ? ' 공성' : ' 들판') + ' · 승리 조건 <b>' + esc(GOAL[c.goal]) + '</b> · 내 병력 ' + o.myTroops[0] + ' / 적 ' + o.foeTroops[0] + bn + '<br>적장: ' + o.foes.map(nm).map(esc).join(' · ') + '</div>';
+    html += '<div class="cpg-row"><button class="cpg-btn" data-cp="go"' + (o.mine.length ? '' : ' disabled') + '>출진 ▶</button></div></div>';
+    return html;
+  }
+  function partyTab() {
+    var sel = CP().party(), html = '<div class="cpg-grid">';
+    CP().roster().forEach(function (h) { var i = sel.indexOf(h.id); html += '<button class="cpg-card' + (i >= 0 ? ' sel' : '') + '" data-cp="pick" data-id="' + esc(h.id) + '">' + (i >= 0 ? '<span class="n">' + (i + 1) + '</span>' : '') + '<img alt="" src="' + face(h.id, 52) + '"><span><b>' + esc(h.name) + '</b><small>' + statLine(h.id) + '</small></span></button>'; });
+    return html + '</div><div class="cpg-brief" style="margin-top:8px">출진은 셋까지 — 눌러 넣고 뺍니다. 첫째가 대장입니다.</div>';
+  }
+  function gearTab() {
+    var cp = CP().state(), I = global.DG.item, html = '<div class="cpg-brief">가방: ' + (cp.bag.length ? cp.bag.map(function (id, k) { var it = I.itemById(id); return '<button class="cpg-btn ghost' + (pick === k ? ' on' : '') + '" style="margin:2px" data-cp="bag" data-k="' + k + '">' + esc(it ? it.emoji + ' ' + it.name : id) + '</button>'; }).join('') : '비었음 — 상점에서 사거나 전투에서 얻습니다') + '</div>';
+    html += '<div class="cpg-grid">';
+    CP().party().forEach(function (id) { var r = OFF().rec(id); html += '<div class="cpg-card"><img alt="" src="' + face(id, 52) + '"><span><b>' + esc(nm(id)) + '</b><small>' + statLine(id) + '</small><br>' + (pick != null ? '<button class="cpg-btn" style="padding:4px 8px;min-height:30px;margin-top:4px" data-cp="equip" data-id="' + esc(id) + '">끼우기</button>' : '') + (r && r.item ? ' <button class="cpg-btn ghost" style="padding:4px 8px;min-height:30px;margin-top:4px" data-cp="unequip" data-id="' + esc(id) + '">빼기</button>' : '') + '</span></div>'; });
+    return html + '</div>';
+  }
+  function shopTab() {
+    var cp = CP().state(), html = '<div class="cpg-grid">';
+    CP().shop().forEach(function (it) { var p = CP().price(it); html += '<div class="cpg-card"><span style="font-size:30px;width:52px;text-align:center">' + esc(it.emoji) + '</span><span><b>' + esc(it.name) + '</b><small>' + esc((OFF().STAT_KOR || {})[it.stat] || it.stat) + ' +' + it.bonus + '<br>' + esc(it.desc || '') + '</small><br><button class="cpg-btn" style="padding:4px 8px;min-height:30px;margin-top:4px" data-cp="buy" data-id="' + esc(it.id) + '"' + (cp.gold < p ? ' disabled' : '') + '>💰 ' + p + '</button></span></div>'; });
+    return html + '</div>';
+  }
+  function talkTab() {
+    var html = '<div class="cpg-grid">', B = global.DG.data && global.DG.data.BIOS;
+    CP().party().forEach(function (id) { var h = OFF().find(id), bio = (B && B[id]) || (h && (h.bio || h.desc)) || ''; html += '<div class="cpg-card" style="align-items:flex-start"><img alt="" src="' + face(id, 52) + '"><span><b>' + esc(nm(id)) + '</b><small>' + esc(String(bio).slice(0, 120) || '「이번 싸움, 맡겨 주십시오.」') + '</small></span></div>'; });
+    return html + '</div>';
+  }
+  /* ── 전투 ── */
+  function battle() {
+    var cp = CP().state(), o = CP().battleOpts(cp.ch);
+    host.innerHTML = '<div class="cpg-battle"><div class="tacview" id="cpg-tac"></div></div>';
+    o.name = nm; o.face = function (id) { return face(id, 64); };
+    global.DG.tacticsView.open(doc.getElementById('cpg-tac'), o, function (out) { result(cp.ch, out); });
+  }
+  function result(no, out) {
+    var res = CP().reward(no, out), c = CP().chapter(no);
+    var html = '<div class="cpg-result"><h3>' + (res.win ? '🏆 승리' : '💥 패배') + '</h3><p>제 ' + no + ' 장 「' + esc(c.title) + '」' + (out ? ' — ' + esc(out.name || out.kind) : '') + '</p>';
+    if (res.win) { html += '<p>💰 +' + res.gold + ' · 경험 +' + res.exp + (res.item ? ' · 얻음 ' + esc(res.item.emoji + ' ' + res.item.name) : '') + '</p>'; }
+    html += '<div class="cpg-row" style="justify-content:center">' + (res.win ? '<button class="cpg-btn" data-cp="route">노선도 ▶</button>' : '<button class="cpg-btn" data-cp="camp">진영에서 다시 도전</button>') + '</div></div>';
+    host.innerHTML = html;
+  }
+
+  function onClick(e) {
+    var b = e.target.closest('[data-cp]');
+    if (!b || b.disabled) { return; }
+    var a = b.getAttribute('data-cp'), cp = CP().state();
+    if (a === 'ch') {
+      var no = +b.getAttribute('data-no');
+      if (no > cp.ch) { return; }
+      cp.viewCh = no; show(no === cp.ch && !cp.cleared[no] && cp.bonus && cp.bonus.ch === no ? 'camp' : 'story');
+    } else if (a === 'choose') { CP().choose(cp.ch, b.getAttribute('data-k')); tab = 'party'; show('camp'); }
+    else if (a === 'route') { show('route'); }
+    else if (a === 'camp') { show('camp'); }
+    else if (a === 'tab') { tab = b.getAttribute('data-t'); pick = null; show('camp'); }
+    else if (a === 'pick') {
+      var id = b.getAttribute('data-id'), sel = CP().party(), i = sel.indexOf(id);
+      if (i >= 0) { if (sel.length > 1) { sel.splice(i, 1); } } else { if (sel.length >= 3) { sel.pop(); } sel.push(id); }
+      CP().setParty(sel); show('camp');
+    }
+    else if (a === 'bag') { var k = +b.getAttribute('data-k'); pick = pick === k ? null : k; show('camp'); }
+    else if (a === 'equip') { if (pick != null) { var r = CP().equip(b.getAttribute('data-id'), cp.bag[pick]); if (!r.ok) { toast(r.why); } pick = null; show('camp'); } }
+    else if (a === 'unequip') { CP().unequip(b.getAttribute('data-id')); show('camp'); }
+    else if (a === 'buy') { var rb = CP().buy(b.getAttribute('data-id')); toast(rb.ok ? rb.item.name + ' 샀습니다' : rb.why); show('camp'); }
+    else if (a === 'go') { CP().setStep('battle'); battle(); }
+  }
+
+  global.DG = global.DG || {};
+  global.DG.campaignView = { on: on, open: open, close: close, show: show, _host: function () { return host; } };
+})(typeof window !== 'undefined' ? window : this);
