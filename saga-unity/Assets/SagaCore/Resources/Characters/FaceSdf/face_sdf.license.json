@@ -1,0 +1,13 @@
+{
+ "id": "face_sdf",
+ "generator": "tools/char-forge/face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기)",
+ "license": "MIT",
+ "model": "",
+ "model_license": "",
+ "base_body": "tools/char-forge/_out/vroid/sg_zhugeliang/sg_zhugeliang.glb (얼굴 살갗 메시 Face_00_SKIN 의 모양·UV 만 씀 — 다른 몸과 평균 차 1/255)",
+ "rule": "value = 0.5 - 0.5*cos(clamp(phi+90,0,180)), phi = 다듬은 법선(메시 법선 40번 고르기 45% + 머리 타원체 55%) 수평 각 · 빛 캐릭터 오른쪽 기준 · cel_toon.gdshader 112~116 문턱과 같은 식",
+ "note": "자체 계산 그림(AI·남의 그림 없음)",
+ "copied_by": "K-0191 (10-25) — 고돗 정본 그대로 복사(다시 굽지 않음)",
+ "uv_check": "유니티 VRoid 몸 AvatarSample_A·avatar_sample_k·dungeon_hero_01 의 Face_00_SKIN UV 에 기준 몸(sg_zhugeliang) UV 2266점이 전부 그대로 있음 (가장 가까운 점 거리 최대 0.00000, 범위 같음) — 유니티 쪽은 정점이 더 많을 뿐(쪼갠 이음매) 같은 UV 판",
+ "unity_note": "glTF UV(원점 위-왼쪽)를 glTFast 가 v 뒤집어 읽고 그림도 아래-왼쪽 원점으로 들어오므로 셰이더에서 v 를 따로 뒤집지 않는다 — 몸의 다른 그림과 같은 UV 그대로 샘플 · 임포트: sRGB 끔(선형)·밉맵 끔·압축 없음(문턱 계산이라 띠 금지) · 빛 캐릭터 오른쪽 기준(왼쪽 빛이면 u 뒤집기 — 고돗 face_sdf_flip 과 같음) · 입 안(FaceMouth)은 UV 가 달라 끔"
+}

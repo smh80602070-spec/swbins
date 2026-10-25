@@ -355,7 +355,7 @@
    "tool": "remote3d",
    "model": "microsoft/TRELLIS-image-large",
    "license": "MIT",
-   "count": 520,
+   "count": 531,
    "where": [
     "saga-assets/creatures3d",
     "saga-assets/pets3d",
@@ -527,7 +527,7 @@
    "tool": "build_prop.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 144,
+   "count": 169,
    "where": [
     "saga-assets/regions/pieces",
     "saga-assets/world/toon",
@@ -580,7 +580,7 @@
    "tool": "sfxset.py",
    "model": "",
    "license": "CC0-1.0 (코드 합성 — 외부 입력 없음)",
-   "count": 296,
+   "count": 340,
    "where": [
     "saga-assets/sfx",
     "saga-godot/assets/audio/sfx",
@@ -754,6 +754,20 @@
    "where": [
     "saga-assets/textures/face_sdf",
     "saga-godot/assets/face_sdf"
+   ]
+  },
+  {
+   "tool": "ground_mix.py (코드 섞기 — GPU·SD 안 씀)",
+   "model": "",
+   "license": "파생물 — 재료 자체 PBR 바탕색(K-0093, 로컬 AI 상업 허용 모델)의 license 를 따른다",
+   "count": 6,
+   "where": [
+    "saga-assets/textures_real/field_mix",
+    "saga-assets/textures_real/mud_gravel",
+    "saga-assets/textures_real/path_grass",
+    "saga-unity/Assets/SagaCore/Resources/TexturesReal/field_mix",
+    "saga-unity/Assets/SagaCore/Resources/TexturesReal/mud_gravel",
+    "saga-unity/Assets/SagaCore/Resources/TexturesReal/path_grass"
    ]
   },
   {
