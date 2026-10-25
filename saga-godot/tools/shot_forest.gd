@@ -38,6 +38,20 @@ static func show_crops(tree: SceneTree) -> void:
 
 
 ## G-0396 — 작은 우리에 꼬꼬·매매(메모리만 — 저장 안 함)를 넣고 그 앞에 선다(닭·염소 GLB 몸 확인).
+## G-0404 — 사고 다 모음 깃발(메모리만 세움) 앞에 선다.
+static func show_grand_flag(tree: SceneTree) -> void:
+	var mu := tree.current_scene.find_child("Museum", true, false) as Node3D
+	var p := tree.get_first_node_in_group("player") as Node3D
+	if mu == null:
+		print("FS_FLAG 사고 없음")
+		return
+	if mu.find_child("BundleGrandFlag", false, false) == null:
+		mu.call("_spawn_grand_flag")
+	print("FS_FLAG %s" % str((mu.find_child("BundleGrandFlag", false, false) as MeshInstance3D).mesh))
+	if p != null:
+		p.global_position = mu.global_position + Vector3(0, 0.3, 12.0)
+
+
 static func show_pen(tree: SceneTree) -> void:
 	var F: Node = tree.root.get_node("ForestSaveState")
 	F.livestock = {"pen": true, "roll": ForestDay.epoch_day_index(), "list": [{"kind": "chick", "name": "꼬꼬", "fed": false, "petted": false, "heart": 3, "hungry": 0},

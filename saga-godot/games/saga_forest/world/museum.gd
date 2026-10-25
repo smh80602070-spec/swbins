@@ -11,6 +11,9 @@ extends Node3D
 const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
+const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
+const GRAND_FLAG_GLB := "res://assets/world/banner_pole_01.glb"   # G-0404 K-0193 깃대(5.45m)
+const GRAND_FLAG_H := 3.3   # 옛 도형 깃대 3.0 + 깃발 위 끝과 비슷한 높이로 줄임
 const Toast := preload("res://saga_core/ui/toast.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Relics := preload("res://games/saga_forest/data/forest_relics.gd")
@@ -143,6 +146,18 @@ func _spawn_bundle_decoration(cat: String) -> void:
 ## 시스템 자체가 3D엔 없다, museum.gd 상단 주석과 같은 이유). 사고 바로
 ## 위에 깃발 하나를 더 세우는 것으로 "다 모았다"는 표시만 남긴다.
 func _spawn_grand_flag() -> void:
+	## G-0404 — 자체툴 깃대 GLB 가 있으면 그것(곡률 재질, 바닥 원점을 사고 위 2.4 에), 없으면 옛 도형
+	var glb: Mesh = GLBUtils.extract_mesh(GRAND_FLAG_GLB) if ResourceLoader.exists(GRAND_FLAG_GLB) else null
+	if glb != null:
+		var mi := MeshInstance3D.new()
+		mi.name = "BundleGrandFlag"
+		mi.mesh = WorldCurveMaterial.textured_surfaces(glb, CURVE_AMOUNT, 0.9)
+		var ab := glb.get_aabb()
+		var sc := GRAND_FLAG_H / maxf(ab.size.y, 0.01)
+		mi.scale = Vector3.ONE * sc
+		mi.position = Vector3(0, 2.4 - ab.position.y * sc, 0)
+		add_child(mi)
+		return
 	var pole := MeshInstance3D.new()
 	pole.name = "BundleGrandFlag"
 	var pole_mesh := CylinderMesh.new()

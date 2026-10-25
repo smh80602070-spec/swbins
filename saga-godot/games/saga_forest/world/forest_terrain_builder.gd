@@ -89,7 +89,7 @@ func _build_ground() -> void:
 	## terrain_triplanar를 곡률과 합친 변종으로 FOREST에도. 정점색(지형
 	## 종류·바이옴 tint)·구면 투영 로직은 한 줄도 안 바꿨다, 머티리얼만
 	## 교체.
-	var mat := WorldCurveMaterial.triplanar_material(CURVE_AMOUNT)
+	var mat := WorldCurveMaterial.triplanar_material(CURVE_AMOUNT, {"dirt": "path_grass"})   # G-0404 흙길 = 풀 섞인 길(K-0193, 없으면 dirt)
 
 	var mi := MeshInstance3D.new()
 	mi.mesh = mesh

@@ -12,7 +12,7 @@ const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.
 const OLD_ENV := "SAGA_DUNGEON_OLD"
 ## 원본 재질 이름 → tiles_real 세트. cliff_side·castle_wall_slates 는 지금 glb 에 없지만 티켓 표대로 둔다(K 가 갈아도 맞물리게).
 const SET_OF := {
-	"brown_mud": "dirt",
+	"brown_mud": "mud_gravel",   # G-0404 K-0193 흙·자갈 섞음(임포트 안 된 PC 는 set_for 가 dirt)
 	"coast_sand_rocks_02": "rock",
 	"cliff_side": "rock",
 	"concrete_wall_001": "concrete",
@@ -20,7 +20,7 @@ const SET_OF := {
 }
 ## 세트 _hi 그림 평균(sRGB, 1×1 축소로 잰 값 10-20).
 const SET_AVG := {
-	"dirt": Color("644a35"), "rock": Color("7b7979"), "concrete": Color("b9bcb9"), "stonewall": Color("afb1b3"),
+	"dirt": Color("644a35"), "mud_gravel": Color("67513b"), "rock": Color("7b7979"), "concrete": Color("b9bcb9"), "stonewall": Color("afb1b3"),
 }
 ## 원본 toon 그림 평균(sRGB) — "mood/재질 이름". 같은 mood 의 방·문·통로는 같은 그림 결이라 값이 같다(10-20 실측).
 const ORIG_AVG := {
@@ -72,7 +72,10 @@ static func set_for(mat_name: String) -> String:
 	var dot := base.rfind(".")
 	if dot > 0 and base.substr(dot + 1).is_valid_int():
 		base = base.substr(0, dot)
-	return String(SET_OF.get(base, ""))
+	var s := String(SET_OF.get(base, ""))
+	if s == "mud_gravel" and not ResourceLoader.exists(WorldCurveMaterial.REAL_DIR + s + "_hi.webp"):
+		s = "dirt"
+	return s
 
 
 ## mi 의 표면마다 표에 있는 재질이면 surface override 로 PBR 재질을 꽂는다. 바꾼 표면 수를 돌려준다.

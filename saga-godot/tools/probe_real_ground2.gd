@@ -97,7 +97,7 @@ func _initialize() -> void:
 						bad.append("%s#%d 덮개 있음" % [mi.name, i])
 					kept += 1
 					continue
-				if not (ov is ShaderMaterial and (ov as ShaderMaterial).shader == RealSurface.two_sided_shader() and RealSurface.two_sided_shader().code == (load(TRI) as Shader).code.replace("cull_back", "cull_disabled")) or _tex(ov, "grass_albedo") != REAL + want + "_hi.webp" or _tex(ov, "grass_normal") != REAL + want + "_hi_n.webp":
+				if not (ov is ShaderMaterial and (ov as ShaderMaterial).shader == RealSurface.two_sided_shader() and RealSurface.two_sided_shader().code == RealSurface.cutaway_code((load(TRI) as Shader).code.replace("cull_back", "cull_disabled"))) or _tex(ov, "grass_albedo") != REAL + want + "_hi.webp" or _tex(ov, "grass_normal") != REAL + want + "_hi_n.webp":
 					bad.append("%s#%d %s → %s" % [mi.name, i, orig.resource_name, _tex(ov, "grass_albedo")])
 					continue
 				swapped += 1
@@ -143,7 +143,7 @@ func _initialize() -> void:
 			if old:
 				if _shader(m) != VC:
 					res.append("%s %s" % [nm, _shader(m)])
-			elif _shader(m) != TRI or _tex(m, "grass_albedo") != REAL + "grass_hi.webp" or _tex(m, "stone_albedo") != REAL + "gravel_hi.webp" or _tex(m, "dirt_normal") != REAL + "dirt_hi_n.webp":
+			elif _shader(m) != TRI or _tex(m, "grass_albedo") != REAL + ("field_mix" if ResourceLoader.exists(REAL + "field_mix_hi.webp") else "grass") + "_hi.webp" or _tex(m, "stone_albedo") != REAL + "gravel_hi.webp" or _tex(m, "dirt_normal") != REAL + "dirt_hi_n.webp":
 				res.append("%s %s %s" % [nm, _shader(m), _tex(m, "stone_albedo")])
 		check(res.is_empty(), ("SAGA_REALM_OLD=1: 지도 땅·도읍 원반 = vertex_color" if old else "지도 땅·도읍 원반 = curved_triplanar 풀·흙·자갈") + (" (%s)" % ", ".join(res) if not res.is_empty() else ""))
 		await _close(scene)

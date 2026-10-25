@@ -64,6 +64,8 @@ const CUTS := [
 	["st_hunt_wave", "res://games/saga_story/world/TestField.tscn", [["free_modal"], ["static", "res://tools/shot_story_wave.gd", "open", ["@tree"]]]],   # G-0399 몰이 파도·세트 무예
 	["dg_set_skill", DUNGEON, [["free_modal"], ["static", "res://tools/shot_dungeon_set.gd", "open", ["@tree"]]]],   # G-0398 세트 무예 T 단추
 	["go_hero_duel", GO, [["static", "res://tools/shot_hero_duel.gd", "open", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 7.0]]],   # G-0397 등용 「무로 겨루자」 결투 판
+	["fs_grand_flag", FOREST, [["free_modal"], ["static", "res://tools/shot_forest.gd", "show_grand_flag", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 14.0]]],   # G-0404 사고 깃대 GLB·흙길 path_grass
+	["rk_ground", REALM, [["free_modal"]]],   # G-0404 지도 땅 풀 슬롯 field_mix
 	["fs_pen", FOREST, [["free_modal"], ["static", "res://tools/shot_forest.gd", "show_pen", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 4.5]]],   # G-0396 작은 우리 닭·염소 GLB 몸
 	["fs_crops", FOREST, [["free_modal"], ["static", "res://tools/shot_forest.gd", "show_crops", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0]]],   # G-0391 집 앞 밭 네 칸(씨·싹·자람·다 자람)
 	["fs_bench_tools", FOREST, [["free_modal"], ["static", "res://tools/shot_forest.gd", "open_bench_tools", ["@tree"]]]],   # G-0401 도구 등급·채집꾼 한 벌

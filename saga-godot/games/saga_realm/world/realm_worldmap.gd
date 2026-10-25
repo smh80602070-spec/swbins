@@ -392,7 +392,7 @@ func _mat(color: Color) -> ShaderMaterial:
 static func real_ground_mat(color: Color, tile_scale := -1.0, detile := 0.0) -> ShaderMaterial:
 	if OS.get_environment("SAGA_REALM_OLD") != "" or not ResourceLoader.exists(WorldCurveMaterial.REAL_DIR + "gravel_hi.webp"):
 		return WorldCurveMaterial.vertex_color_material(0.0, 0.9, color)
-	var m := WorldCurveMaterial.triplanar_material(0.0, {"grass": "grass", "dirt": "dirt", "stone": "gravel"}, "SAGA_REALM_OLD")
+	var m := WorldCurveMaterial.triplanar_material(0.0, {"grass": "field_mix", "dirt": "dirt", "stone": "gravel"}, "SAGA_REALM_OLD")   # G-0404 들판 녹갈 섞음(없으면 grass)
 	if tile_scale > 0.0:
 		m.set_shader_parameter("tile_scale", tile_scale)
 		m.set_shader_parameter("patch_scale", tile_scale * 0.3)

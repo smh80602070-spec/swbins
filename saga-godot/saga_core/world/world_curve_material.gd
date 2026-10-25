@@ -163,6 +163,8 @@ static func triplanar_material(curve_amount: float, sets := {}, old_env := "SAGA
 	for k: String in REAL_SETS:
 		if real:
 			var set_name := String(sets.get(k, REAL_SETS[k]))
+			if not ResourceLoader.exists(REAL_DIR + set_name + "_hi.webp"):   # G-0404 새 세트가 임포트 안 된 PC 는 그 슬롯 기본 세트
+				set_name = String(REAL_SETS[k])
 			var base := REAL_DIR + set_name + "_hi"
 			mat.set_shader_parameter(k + "_albedo", load(base + ".webp"))
 			mat.set_shader_parameter(k + "_normal", load(base + "_n.webp"))
@@ -182,6 +184,8 @@ static func triplanar_material(curve_amount: float, sets := {}, old_env := "SAGA
 
 const REAL_DIR := "res://assets/generated/tiles_real/"
 const REAL_SETS := {"grass": "grass", "dirt": "dirt", "stone": "rock"}
-const SET_GAIN := {"grass": Vector3(1.418, 2.341, 1.544), "dirt": Vector3(0.636, 0.546, 0.295), "rock": Vector3(0.946, 0.875, 0.768)}   # 세트 이름 → 빛깔 맞춤(옛 슬롯 REAL_GAIN 값 그대로)
+const SET_GAIN := {"grass": Vector3(1.418, 2.341, 1.544), "dirt": Vector3(0.636, 0.546, 0.295), "rock": Vector3(0.946, 0.875, 0.768),
+	## G-0404 K-0193 섞음 결 — 바꾸는 옛 세트 gain × 옛 평균 / 새 평균(선형 _hi 1×1): 빛깔 그대로·결만 새로
+	"mud_gravel": Vector3(0.663, 0.546, 0.315), "path_grass": Vector3(0.322, 0.198, 0.075), "field_mix": Vector3(1.161, 4.509, 2.005)}   # 세트 이름 → 빛깔 맞춤(옛 슬롯 REAL_GAIN 값 그대로)
 const PHOTO_COLOR := 0.35
 const BLOTCH_REAL := 0.45
