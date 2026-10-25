@@ -1,0 +1,35 @@
+{
+ "id": "wheat_growing_01",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (small square farm plot of half-grown green wheat:1.15), leafy stalks in rows, tilled soil, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+ "seed": 3015395869,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  256,
+  256
+ ],
+ "seconds": 146.2,
+ "date": "2026-10-25",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "mode": "img2img",
+ "init_image": "tools/ai-art/_out/busts/wheat_growing_01.png",
+ "denoise": 0.6,
+ "base_body": "saga-assets/world/toon/wheat_growing_01.glb",
+ "base_license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+ "base_inputs": [
+  "self-pbr: brown_mud",
+  "self-pbr: white_stucco"
+ ],
+ "packed_by": "tools/ai-art/pack_static2d.py",
+ "check": {
+  "cover": 0.289,
+  "transparent": 0.707,
+  "white_edge": 0.0,
+  "ok": true
+ }
+}

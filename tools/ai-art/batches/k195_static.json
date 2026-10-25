@@ -75,9 +75,33 @@
   {
    "id": "grain_pile_01",
    "seed": 4062225425,
-   "prompt": "(heap of golden grain:1.15), two tied burlap sacks beside it, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "prompt": "(conical heap of loose golden wheat grain on the ground:1.25), two tied burlap sacks beside it, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
    "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
    "init_image": "tools/ai-art/_out/k195_static_init/grain_pile_01.png",
+   "denoise": 0.42
+  },
+  {
+   "id": "wheat_sprout_01",
+   "seed": 198593256,
+   "prompt": "(small square farm plot with tiny green wheat sprouts in rows:1.15), dark tilled soil, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k195_static_init/wheat_sprout_01.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "wheat_growing_01",
+   "seed": 3015395869,
+   "prompt": "(small square farm plot of half-grown green wheat:1.15), leafy stalks in rows, tilled soil, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k195_static_init/wheat_growing_01.png",
+   "denoise": 0.6
+  },
+  {
+   "id": "wheat_ripe_01",
+   "seed": 3463490470,
+   "prompt": "(small square farm plot of ripe golden wheat:1.15), heavy wheat ears, tilled soil, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/k195_static_init/wheat_ripe_01.png",
    "denoise": 0.6
   }
  ]
