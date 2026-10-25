@@ -1115,7 +1115,7 @@
       formation: marchForm || undefined,
       onDuel: showDuelCard,
       onIntro: function (lines, repStub) {
-        var html = (global.DG.battle3d ? '<canvas id="battle3d"></canvas>' : '') +
+        var html = (global.DG.battle3d && global.DG.battle3d.on() ? '<canvas id="battle3d"></canvas>' : '') +
           '<div class="btop"><h3>⚔️ 전황 (진행 중)' +
             (repStub.land ? ' <small class="muted">' + (LAND_ICON[repStub.land] || '') + ' ' + esc(CD.LANDS[repStub.land].name) + '</small>' : '') + '</h3>' +
           battleHudHtml(repStub) + '<div class="bclock" id="bclock"></div></div>' +
@@ -1738,7 +1738,7 @@
    *  이제 render() 의 둘째 인자(onFrame)로 같은 타이밍을 받아 개입형 실시간
    *  전투(`updateBattleHud`, `showBattleLive` 참고)와 같은 함수로 갱신한다 */
   function showBattle(rep) {
-    var html = (global.DG.battle3d ? '<canvas id="battle3d"></canvas>' : '') +
+    var html = (global.DG.battle3d && global.DG.battle3d.on() ? '<canvas id="battle3d"></canvas>' : '') +
       '<h3 style="margin:0 0 6px;font-size:18px">⚔️ 전황</h3>' +
       battleHudHtml(rep) +
       '<div class="warlog">';

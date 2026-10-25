@@ -34,7 +34,7 @@
   function three() { if (!T) { T = global.THREE || null; } return T; }
 
   /** 초상을 모델로 구울까 — 0 이면 여태 쓰던 캔버스 그림 그대로 (되돌림용) */
-  function ON() { return core().tuned('portrait3d.on', 1) ? true : false; }
+  function ON() { var R = global.DG && global.DG.realm3d; return core().tuned('portrait3d.on', 1) && !(R && R.wants3d && !R.wants3d()) ? true : false; }   // 10-26 지도 2D 면 초상도 2D 그림
 
   /* ── 값을 내는 함수 — three 없이도 돈다 (자가진단이 이것만 본다) ────── */
 

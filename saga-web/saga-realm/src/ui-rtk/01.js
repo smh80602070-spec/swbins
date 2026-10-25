@@ -1115,7 +1115,7 @@
       formation: marchForm || undefined,
       onDuel: showDuelCard,
       onIntro: function (lines, repStub) {
-        var html = (global.DG.battle3d ? '<canvas id="battle3d"></canvas>' : '') +
+        var html = (global.DG.battle3d && global.DG.battle3d.on() ? '<canvas id="battle3d"></canvas>' : '') +
           '<div class="btop"><h3>⚔️ 전황 (진행 중)' +
             (repStub.land ? ' <small class="muted">' + (LAND_ICON[repStub.land] || '') + ' ' + esc(CD.LANDS[repStub.land].name) + '</small>' : '') + '</h3>' +
           battleHudHtml(repStub) + '<div class="bclock" id="bclock"></div></div>' +

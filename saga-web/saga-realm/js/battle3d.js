@@ -131,6 +131,8 @@
   }
 
   /** 캔버스가 매번 새로 태어나므로(innerHTML 교체) 옛 렌더러를 명시적으로 버리고 다시 묻는다 */
+  /** 10-26 사용자 「5번은 2d에서 아직 3d쓰는 구간이 있어」 — 지도를 2D 로 골랐으면 전황 디오라마도 안 그린다(캔버스도 안 넣음, ui-rtk) */
+  function on() { var R = global.DG && global.DG.realm3d; return !(R && R.wants3d && !R.wants3d()); }
   function ensureInit() {
     var t = three();
     var el = document.getElementById('battle3d');
@@ -1066,6 +1068,7 @@
    *  `onFrame(state)`(선택) — ui-rtk.js 가 화면 밖 HUD(숫자)를 같은 박자로
    *  갈아 끼우고 싶을 때 넘긴다. 안 넘기면 예전과 똑같이 디오라마만 돈다 */
   function render(rep, onFrame) {
+    if (rep && !on()) { if (onFrame) { onFrame({ atk: (rep.atkStart || 0) - (rep.lossA || 0), def: (rep.defStart || 0) - (rep.lossD || 0), wall: rep.wallTo, r: (rep.frames || []).length }); } return; }   // 2D — 숫자판만 끝 값으로
     if (!rep || !ensureInit()) { return; }
     playback(rep, onFrame);
     resize();
@@ -1081,7 +1084,7 @@
    * @returns base — showState() 에 그대로 넘긴다. 실패하면 null
    */
   function beginLive(repStub) {
-    if (!repStub || !ensureInit()) { return null; }
+    if (!repStub || !on() || !ensureInit()) { return null; }
     duelCamActive = false;   // 이 경로는 근접 연출을 안 쓴다(위 duelCamActive 주석 참고)
     clearTimers();
     var base = buildBase(repStub);
@@ -1214,7 +1217,7 @@
   global.DG = global.DG || {};
   global.DG.battle3d = {
     /** 싸움터 땅(§12) — 순수 함수, 진단이 값으로 본다 */
-    battleLook: battleLook, available: available, render: render, beginLive: beginLive, showState: showState,
+    battleLook: battleLook, available: available, on: on, render: render, beginLive: beginLive, showState: showState,
     /** 실시간 전장(Q9) — 명령·끝 자세(그림뿐)와 진단용 들여다보기 */
     setStance: setStance, armyEnd: armyEnd, armyCount: armyCount,
     armyView: function () {

@@ -62,7 +62,7 @@
   function available() { return !!three() && !failed; }
   function phone() { return !!(global.DG.deviceMode && global.DG.deviceMode.phone()); }
   /** W-0346 — 폰은 성 화면도 2D 가 기본(WebGL 하나가 지도의 두 배 메모리 — 10-18 pw-phone-budget 지도 15MB·성 35MB). 3D 는 그 탭에서 단추로만(deviceMode 'c3') */
-  function ON() { var v = global.DG.core.tuned('city3d.on', 1) ? true : false; return global.DG.deviceMode ? global.DG.deviceMode.want3d('c3', v) : v; }
+  function ON() { var R = global.DG.realm3d, v = global.DG.core.tuned('city3d.on', 1) && !(R && R.wants3d && !R.wants3d()) ? true : false; return global.DG.deviceMode ? global.DG.deviceMode.want3d('c3', v) : v; }
   /** 끈다 — 만든 렌더러·장면을 버리고(WebGL 문맥까지 놓는다) 캔버스를 숨긴다. 다시 켜면 ensureInit 이 새로 짓는다 */
   function off() {
     var cv = canvas || document.getElementById('city3d');

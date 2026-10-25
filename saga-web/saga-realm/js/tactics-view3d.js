@@ -40,8 +40,9 @@
   }
   /** 3D 판을 쓸까 — o 를 주면 그 값으로만 판단(진단) */
   function want(o) {
-    o = o || { knob: C() && C().tuned ? C().tuned('tactics3d', 1) : 1, three: !!three(), gl: webgl() };
-    return !!(o.knob && o.three && o.gl);
+    var R = global.DG && global.DG.realm3d;   // 10-26 지도를 2D 로 골랐으면 전술판도 2D(SVG)
+    o = o || { knob: C() && C().tuned ? C().tuned('tactics3d', 1) : 1, three: !!three(), gl: webgl(), map2d: !!(R && R.wants3d && !R.wants3d()) };
+    return !!(o.knob && o.three && o.gl && !o.map2d);
   }
   /** 칸 (x, y) → 판 가운데가 원점인 땅 자리(칸 = 1) */
   function cellCenter(x, y, cols, rows) { return { x: x - (cols - 1) / 2, z: y - (rows - 1) / 2 }; }

@@ -788,6 +788,8 @@
   global.DG.realm3d = {
     available: available,
     active: active,
+    /** 10-26 사용자가 3D 지도를 골랐나(2D 고름이면 전황·전술판·초상·성도 2D — battle3d·tactics-view3d·portrait3d·city3d 가 본다) */
+    wants3d: ON,
     /** 진단 — 정적 소품 묶기 결과 {props, meshes, draws} (아직이면 null)·순수 재질 지문 */
     staticInstStats: function () { return ST().stats(); },
     staticCullStats: function () { return ST().cullStats(); }, _matSig: matSig, _tickGapMs: tickGapMs,
