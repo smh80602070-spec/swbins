@@ -78,12 +78,17 @@ func _physics_process(delta: float) -> void:
 		var k := clampf((speed - 6.0) / 4.0, 0.0, 1.0)
 		_step_t = lerpf(STEP_SEC_WALK, STEP_SEC_RUN, k)
 		_step_alt = 1 - _step_alt
-		var surf := String(SURFACE.get(TestMap.region_at(_p.global_position), "grass"))
+		var surf := surface_now()
 		_play("step", "step_%s_%d" % [surf, _step_alt + 1])
 		var w := _wet()
 		if w > WET_MIN and surf != "snow":
 			(_players["splash"] as AudioStreamPlayer).volume_db = float(DB.splash) + linear_to_db(w)
 			_play("splash", "splash")
+
+
+## 지금 발밑 땅(지역 → 소리 이름) — 탈것 소리(saga_core mount_sounds, G-0405)도 묻는다.
+func surface_now() -> String:
+	return String(SURFACE.get(TestMap.region_at(_p.global_position), "grass")) if _p != null else "grass"
 
 
 ## G-0368 지금 땅 젖음(0~1) — WeatherFall 이 없으면 0

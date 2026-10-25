@@ -11,6 +11,7 @@ const Mounts := preload("res://saga_core/data/mounts.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const SeatPose := preload("res://saga_core/player/seat_pose.gd")
+const MountSounds := preload("res://saga_core/audio/mount_sounds.gd")
 ## 앉으면 엉덩이가 내려온다 — 서 있을 때 발 높이(ride)에서 이만큼 뺀다.
 const SEAT_DROP := 0.5
 ## 기수 엉덩이를 안장 윗면보다 이만큼 위에(엉덩이 두께).
@@ -48,6 +49,8 @@ func _ready() -> void:
 		last_id = String(cf.get_value("mount", "last", ""))
 	if DisplayServer.is_touchscreen_available():
 		_build_touch()
+	if MountSounds.enabled():   # G-0405 말발굽·날갯짓
+		add_child(MountSounds.new())
 
 ## 씬 경로(games/saga_* 를 담은)로 그 판의 탈것 키.
 static func keys_for(scene_path: String) -> Array:

@@ -90,7 +90,7 @@ func _physics_process(delta: float) -> void:
 	_was_floor = on_floor
 	_last_vy = v.y
 	var speed := Vector2(v.x, v.z).length()
-	if not on_floor or speed < STEP_MIN_SPEED:
+	if not on_floor or speed < STEP_MIN_SPEED or _p.get("mounted") == true:   # G-0405 탄 동안은 탈것 소리(mount_sounds)
 		_t = 0.0
 		return
 	_t -= delta
@@ -98,12 +98,17 @@ func _physics_process(delta: float) -> void:
 		return
 	_t = lerpf(STEP_SEC_WALK, STEP_SEC_RUN, clampf((speed - 6.0) / 4.0, 0.0, 1.0))
 	_alt = 1 - _alt
-	var surf := "wood" if (surface == "grass" and _p.global_position.x > INTERIOR_X) else surface
+	var surf := surface_now()
 	_play(_step, "%s_%d" % [surf, _alt + 1], "step")
 	var w := _wet()
 	if w > WET_MIN and surf != "wood":
 		_splash.volume_db = SPLASH_DB + linear_to_db(w)
 		_play(_splash, "splash", "splash")
+
+
+## 지금 발밑 땅(3마을 집 안은 나무) — 탈것 소리(mount_sounds)도 묻는다.
+func surface_now() -> String:
+	return "wood" if (surface == "grass" and _p != null and _p.global_position.x > INTERIOR_X) else surface
 
 
 func _play(ap: AudioStreamPlayer, key: String, kind: String) -> void:
