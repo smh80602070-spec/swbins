@@ -532,6 +532,7 @@
   global.DG.ui = {
     init: init, toast: toast, _defense: runDefense,   /* W-0403 진단·촬영 */
    
+    startDebate: startDebate, closeEnc: closeEnc, duelHand: function (a, d, done) { global.DG.war.duelHand(a, d, showDuelCard, function (res) { closeEnc(); done(res); }, '▶ 결과로'); },   // W-0450 장 흐름 — 전투 앞 설전·일기토
     openSheet: openSheet, closeSheet: closeSheet, openCity: openCity,
     renderTop: renderTop, renderMap: renderMap, renderSheet: renderSheet,
     showScenPick: showScenPick, showForcePick: showForcePick,

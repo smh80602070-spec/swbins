@@ -38,7 +38,8 @@
       '.cpg-brief{margin:12px 0;padding:10px 12px;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);font-size:13px;line-height:1.6}' +
       '.cpg-row{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}.cpg-battle{position:relative;min-height:calc(100vh - 40px)}.cpg-battle .tacview{position:absolute}' +
       '.cpg-result{max-width:520px;margin:10vh auto 0;text-align:center;padding:22px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.12)}.cpg-result h3{font-size:26px;margin:0 0 8px}';
-    st.textContent += 'body.cpg-on #aq-go,body.cpg-on #rregion-hud{display:none!important}';   // 옛 지도 화면의 시정 위임 ▶·지역 고르기는 장 흐름 동안 숨김
+    st.textContent += 'body.cpg-on #aq-go,body.cpg-on #rregion-hud,body.cpg-on #btn-3d,body.cpg-on #btn-gyeong,body.cpg-on #btn-rts,body.cpg-on #wallet,body.cpg-on #profile,body.cpg-on #dock{display:none!important}' +
+      'body.cpg-on #top{z-index:35}body.cpg-on #sheet{z-index:36}body.cpg-on .cpg-top{padding-right:112px}';   // ④ 지도용 단추는 숨기고 ⋯ 메뉴(소리·설정·도움·리셋)·설정창은 장 흐름 위로   // 옛 지도 화면의 시정 위임 ▶·지역 고르기는 장 흐름 동안 숨김
     doc.head.appendChild(st);
   }
   function ensure() {
@@ -100,7 +101,7 @@
     html += '<div class="cpg-wrap"><div class="cpg-tabs">' + [['party', '⚔ 편성'], ['gear', '🛡 장비'], ['shop', '🏪 상점'], ['talk', '💬 대화']].map(function (t) { return '<button class="cpg-btn ghost' + (tab === t[0] ? ' on' : '') + '" data-cp="tab" data-t="' + t[0] + '">' + t[1] + '</button>'; }).join('') + '</div>';
     if (tab === 'party') { html += partyTab(); } else if (tab === 'gear') { html += gearTab(); } else if (tab === 'shop') { html += shopTab(); } else { html += talkTab(); }
     var o = CP().battleOpts(cp.ch), bn = cp.bonus && cp.bonus.ch === cp.ch ? (cp.bonus.k === 'atk' ? ' · 사기 높음(병력 +15%)' : cp.bonus.k === 'def' ? ' · 적 흔들림(적 −10%)' : '') : '';
-    html += '<div class="cpg-brief">📜 ' + esc(LAND[c.land] || c.land) + (c.siege ? ' 공성' : ' 들판') + ' · 승리 조건 <b>' + esc(GOAL[c.goal]) + '</b> · 내 병력 ' + o.myTroops[0] + ' / 적 ' + o.foeTroops[0] + bn + '<br>적장: ' + o.foes.map(nm).map(esc).join(' · ') + '</div>';
+    html += '<div class="cpg-brief">📜 ' + esc(LAND[c.land] || c.land) + (c.siege ? ' 공성' : ' 들판') + ' · 승리 조건 <b>' + esc(GOAL[c.goal]) + '</b> · 내 병력 ' + o.myTroops[0] + ' / 적 ' + o.foeTroops[0] + bn + '<br>적장: ' + o.foes.map(nm).map(esc).join(' · ') + (function () { var s = CP().stageOf(cp.ch); if (!s) { return ''; } var p = cp.pre && cp.pre.ch === cp.ch ? cp.pre : null; return '<br>' + (s.kind === 'duel' ? '🤺 전투 앞 일기토' : '🗣 전투 앞 설전') + ' 「' + esc(s.title) + '」' + (p ? (p.won ? ' — 이김(적 병력 ' + (p.kind === 'duel' ? '−20%' : '−15%') + ')' : ' — 졌음') : ' — 출진 때 먼저'); })() + '</div>';
     html += '<div class="cpg-row"><button class="cpg-btn" data-cp="go"' + (o.mine.length ? '' : ' disabled') + '>출진 ▶</button></div></div>';
     return html;
   }
@@ -125,6 +126,17 @@
     CP().party().forEach(function (id) { var h = OFF().find(id), bio = (B && B[id]) || (h && (h.bio || h.desc)) || ''; html += '<div class="cpg-card" style="align-items:flex-start"><img alt="" src="' + face(id, 52) + '"><span><b>' + esc(nm(id)) + '</b><small>' + esc(String(bio).slice(0, 120) || '「이번 싸움, 맡겨 주십시오.」') + '</small></span></div>'; });
     return html + '</div>';
   }
+  /* ── ③ 전투 앞 설전·일기토 — 시나리오 단계 글 + 기존 설전·일기토 창(DG.ui, #encounter 가 장 흐름 위) ── */
+  function pre() {
+    var cp = CP().state(), s = CP().stageOf(cp.ch), A = CP().preActors(cp.ch);
+    host.innerHTML = '<div class="cpg-result" style="max-width:640px"><h3>' + (s.kind === 'duel' ? '🤺 ' : '🗣 ') + esc(s.title) + '</h3><p style="text-align:left;line-height:1.7">' + esc(CP().fillText(s.intro || '')) + '</p><p>' + esc(nm(A.me)) + (s.kind === 'duel' ? ' 대 ' + esc(nm(A.foe)) : ' 이(가) 나선다') + '</p><div class="cpg-row" style="justify-content:center"><button class="cpg-btn" data-cp="pre-go">' + (s.kind === 'duel' ? '일기토에 나선다' : '설전에 나선다') + '</button></div></div>';
+  }
+  function runPre() {
+    var cp = CP().state(), A = CP().preActors(cp.ch), U = global.DG.ui, after = function (won) { CP().preResult(cp.ch, won); toast(won ? '이겼다 — 적의 기세가 꺾였다' : '졌다 — 그래도 싸움은 연다'); show('camp'); };
+    if (A.kind === 'duel' && U && U.duelHand && A.foe) { U.duelHand(A.me, A.foe, function (res) { after(!!res && res.winner === A.me); }); }
+    else if (U && U.startDebate) { U.startDebate({ title: CP().stageOf(cp.ch).title, by: A.me, must: true, done: function (mul, ok) { if (U.closeEnc) { U.closeEnc(); } after((ok || 0) >= 2); } }); }
+    else { after(false); }
+  }
   /* ── 전투 ── */
   function battle() {
     var cp = CP().state(), o = CP().battleOpts(cp.ch);
@@ -135,7 +147,7 @@
   function result(no, out) {
     var res = CP().reward(no, out), c = CP().chapter(no);
     var html = '<div class="cpg-result"><h3>' + (res.win ? '🏆 승리' : '💥 패배') + '</h3><p>제 ' + no + ' 장 「' + esc(c.title) + '」' + (out ? ' — ' + esc(out.name || out.kind) : '') + '</p>';
-    if (res.win) { html += '<p>💰 +' + res.gold + ' · 경험 +' + res.exp + (res.item ? ' · 얻음 ' + esc(res.item.emoji + ' ' + res.item.name) : '') + '</p>'; }
+    if (res.win) { html += '<p>💰 +' + res.gold + ' · 경험 +' + res.exp + (res.item ? ' · 얻음 ' + esc(res.item.emoji + ' ' + res.item.name) : '') + (res.recruit ? '<br>🤝 ' + esc(res.recruit) + ' 합류' : '') + '</p>'; }
     html += '<div class="cpg-row" style="justify-content:center">' + (res.win ? '<button class="cpg-btn" data-cp="route">노선도 ▶</button>' : '<button class="cpg-btn" data-cp="camp">진영에서 다시 도전</button>') + '</div></div>';
     host.innerHTML = html;
   }
@@ -161,7 +173,8 @@
     else if (a === 'equip') { if (pick != null) { var r = CP().equip(b.getAttribute('data-id'), cp.bag[pick]); if (!r.ok) { toast(r.why); } pick = null; show('camp'); } }
     else if (a === 'unequip') { CP().unequip(b.getAttribute('data-id')); show('camp'); }
     else if (a === 'buy') { var rb = CP().buy(b.getAttribute('data-id')); toast(rb.ok ? rb.item.name + ' 샀습니다' : rb.why); show('camp'); }
-    else if (a === 'go') { CP().setStep('battle'); battle(); }
+    else if (a === 'go') { if (!CP().preDone(cp.ch)) { pre(); } else { CP().setStep('battle'); battle(); } }
+    else if (a === 'pre-go') { runPre(); }
   }
 
   global.DG = global.DG || {};

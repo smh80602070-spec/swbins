@@ -84,7 +84,8 @@
   function battleOpts(no) {
     var ch = chapter(no), cp = state(), b = cp.bonus || {};
     if (!ch) { return null; }
-    var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1));
+    var pre = cp.pre && cp.pre.ch === no && cp.pre.won ? (cp.pre.kind === 'duel' ? 0.8 : 0.85) : 1;   // ③ 전투 앞 설전·일기토를 이기면 적 병력 −15%/−20%
+    var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1) * pre);
     return { seed: 'cp|' + ch.id + '|' + (cp.tries || 0), land: ch.land, siege: ch.siege, srpg: true, goal: ch.goal,
       mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no };
   }
@@ -112,7 +113,9 @@
       if (IT() && IT().randomItem && ((no * 7 + (cp.tries || 0)) % 3 === 0 || no === 1)) { var it = IT().randomItem(); if (it) { cp.bag.push(it.id); res.item = it; } }
       cp.cleared[no] = (cp.cleared[no] || 0) + 1;
       if (cp.ch === no && no < MAIN) { cp.ch = no + 1; }
-      res.next = cp.ch; cp.bonus = null; cp.tries = 0; cp.step = 'route';
+      var sg = stageOf(no);   // ③ 일기토로 꺾은 이름 있는 장수는 장을 깨면 합류
+      if (sg && sg.kind === 'duel' && sg.foe && cp.pre && cp.pre.ch === no && cp.pre.won && OFF().find(sg.foe)) { var rr = OFF().rec(sg.foe), cs = R().citiesOf(R().me()); if (rr && rr.force !== R().me() && cs.length && OFF().placeAt) { OFF().placeAt(sg.foe, cs[0], R().me()); rr = OFF().rec(sg.foe); rr.dead = false; rr.loyal = 70; res.recruit = OFF().find(sg.foe).name; } }
+      res.next = cp.ch; cp.bonus = null; cp.tries = 0; cp.pre = null; cp.step = 'route';
       healAll();
     } else { cp.step = 'camp'; }
     save();
@@ -141,6 +144,16 @@
   }
   function unequip(offId) { var r = OFF().rec(offId); if (r && r.item) { state().bag.push(r.item); OFF().unequip(offId); save(); } }
   function setStep(s) { state().step = s; save(); }
+  /** ③ 장의 전투 앞 단계(시나리오 STAGES 의 debate·duel) — 없으면 null */
+  function stageOf(no) { var ch = chapter(no), S = SD() && SD().STAGES, s = ch && S ? S[ch.id] : null; return s && (s.kind === 'debate' || s.kind === 'duel') ? s : null; }
+  function preDone(no) { var cp = state(); return !stageOf(no) || !!(cp.pre && cp.pre.ch === no); }
+  function preResult(no, won) { var s = stageOf(no), cp = state(); cp.pre = { ch: no, kind: s ? s.kind : '', won: !!won }; save(); return cp.pre; }
+  /** 설전은 출진 셋 중 지력 1위, 일기토는 무력 1위가 나선다 · 일기토 상대 = 단계의 foe(있으면) 아니면 적 대장 */
+  function preActors(no) {
+    var s = stageOf(no), p = party(), st = function (id) { return OFF().stats(id) || {}; }, key = s && s.kind === 'duel' ? 'might' : 'wisdom';
+    var me = p.slice().sort(function (a, b) { return (st(b)[key] || 0) - (st(a)[key] || 0); })[0], o = battleOpts(no);
+    return { kind: s ? s.kind : '', me: me, foe: s && s.foe && OFF().find(s.foe) ? s.foe : (o && o.foes[0]) };
+  }
   /** 카드 글의 {책사}(내 세력 지력 1위, 군주 빼고)·{이웃}(다른 세력 군주)·{맹장}(무력 1위) — scenario.js fill 과 같은 칸 */
   function fillText(t) {
     var F = R().me(), lord = OFF().lordOf(F), list = OFF().ofForce(F), st = function (id) { return OFF().stats(id) || {}; };
@@ -152,5 +165,5 @@
 
   global.DG = global.DG || {};
   global.DG.campaign = { on: on, state: state, chapters: chapters, chapter: chapter, roster: roster, party: party, setParty: setParty, foesFor: foesFor,
-    battleOpts: battleOpts, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, power: power, MAIN: MAIN, BATTLE: BATTLE };
+    battleOpts: battleOpts, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
 })(typeof window !== 'undefined' ? window : this);
