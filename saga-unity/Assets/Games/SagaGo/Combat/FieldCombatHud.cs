@@ -122,6 +122,13 @@ namespace Saga.Go.Combat
             _pathLabel = PathButton.GetComponentInChildren<TextMeshProUGUI>();
             _pathLabel.fontSize = 22;
             PathButton.gameObject.SetActive(false);
+            // U-0232 웅크리기 — 쳐내기 위·잡기 왼쪽, 웅크린 동안 금빛(손잡이 SAGA_GO_STEALTH=0 이면 숨김)
+            CrouchButton = EncounterUiKit.NewButton(t, "", new Vector2(1f, 0f), new Vector2(-525f, 330f), new Vector2(110f, 90f), null);
+            CrouchButton.onClick.AddListener(OnCrouch);
+            _crouchLabel = CrouchButton.GetComponentInChildren<TextMeshProUGUI>();
+            _crouchLabel.fontSize = 22;
+            _crouchLabel.text = GoLocalization.T("field.btn.crouch", "웅크림") + "\n(Z)";
+            CrouchButton.gameObject.SetActive(GoStealth.On);
             _aimText = EncounterUiKit.NewText(t, "", new Vector2(0.5f, 0.5f), new Vector2(0f, 0f), new Vector2(360f, 110f), 30);
             _aimText.rectTransform.pivot = new Vector2(0.5f, 0.5f);
             _aimText.alignment = TextAlignmentOptions.Center;
@@ -134,6 +141,11 @@ namespace Saga.Go.Combat
         private TextMeshProUGUI _grabLabel;
         public string GrabText => _grabLabel != null ? _grabLabel.text : "";
         private void OnGrab() => _combat.Grab();
+        public Button CrouchButton { get; private set; }
+        private TextMeshProUGUI _crouchLabel;
+        private Saga.Go.Player.PlayerController _crouchPc;
+        private Saga.Go.Player.PlayerController CrouchPc() { if (_crouchPc == null) _crouchPc = GetComponent<Saga.Go.Player.PlayerController>(); if (_crouchPc == null) _crouchPc = FindFirstObjectByType<Saga.Go.Player.PlayerController>(); return _crouchPc; }
+        private void OnCrouch() { var pc = CrouchPc(); if (pc != null && !GoMounts.RidingGround && !GoMounts.RidingFly) pc.Crouching = !pc.Crouching; }
         public Button ParryButton { get; private set; }
         private TextMeshProUGUI _parryLabel;
         public string ParryText => _parryLabel != null ? _parryLabel.text : "";
@@ -239,6 +251,14 @@ namespace Saga.Go.Combat
                 bool cd = _combat.GrabCd > 0f, near = !cd && _combat.GrabTarget() != null;
                 _grabLabel.text = cd ? $"✊\n{Mathf.CeilToInt(_combat.GrabCd)}" : "✊\n(C)";
                 GrabButton.GetComponent<Image>().color = near ? new Color(1f, 0.82f, 0.48f, 0.55f) : new Color(1f, 1f, 1f, cd ? 0.1f : 0.18f);
+            }
+
+            if (CrouchButton != null)
+            {
+                bool crouchShow = GoStealth.On && !Saga.Go.World.FishingField.Busy; // 낚시 칸이 같은 자리를 쓴다(쳐내기와 같이 숨김)
+                if (CrouchButton.gameObject.activeSelf != crouchShow) CrouchButton.gameObject.SetActive(crouchShow);
+                var pc = CrouchPc();
+                CrouchButton.GetComponent<Image>().color = pc != null && pc.Crouching ? new Color(1f, 0.82f, 0.48f, 0.55f) : new Color(1f, 1f, 1f, 0.18f);
             }
 
             if (ParryButton != null)

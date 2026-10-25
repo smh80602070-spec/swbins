@@ -381,6 +381,25 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] riddle 구역 4 수수께끼 {rf.Spots.Count} · 꽃 고리 {fl.Pos}");
                         break;
                     }
+                    case "stealth":      // U-0232 사가만리 — 마을 들판 인물 등 뒤 5.5m 에 웅크려 선다(시야 밖·아직 안 들킴)
+                    case "stealthamb":   // U-0232 — 등 뒤 3.5m 로 → 기습 겨루기가 열리며 「기습!」
+                    {
+                        var who = GameObject.FindWithTag("Player");
+                        var fh = Saga.Go.Combat.FieldHeroes.Instance;
+                        var slot = fh == null ? null : System.Linq.Enumerable.FirstOrDefault(fh.Slots, x => x.Idle != null && x.Fighter == null);
+                        var pcS = who != null ? who.GetComponent<Saga.Go.Player.PlayerController>() : null;
+                        if (who == null || slot == null || pcS == null || !Saga.Go.Data.GoStealth.On) { Skip(act); return; }
+                        Vector3 hp = slot.Idle.transform.position;
+                        Vector3 back = -(Quaternion.Euler(0f, slot.BaseYaw, 0f) * Vector3.forward);
+                        Teleport(who.transform, hp + back * (act == "stealth" ? 5.5f : 3.5f) + Vector3.up * 0.3f);
+                        who.transform.rotation = Quaternion.LookRotation(-back);
+                        pcS.Crouching = true;
+                        // 지역 넘김 자막이 같은 대사 줄을 덮지 않게 — 이미 이 지역에 있던 것으로(촬영 프로세스 안에서만)
+                        var wm = Saga.Go.UI.WorldMapUi.Instance;
+                        if (wm != null) typeof(Saga.Go.UI.WorldMapUi).GetField("_lastRegion", BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(wm, Saga.Go.Data.GoWorldMap.RegionAt(who.transform.position));
+                        Debug.Log($"[ShowcaseGui] {act} {slot.HeroId} @ {hp} · 거리 {(act == "stealth" ? 5.5f : 3.5f)} · 웅크림 {pcS.Crouching}");
+                        break;
+                    }
                     case "gozone":   // U-0226 사가만리 — 구역 4 동쪽 경계 8m 안에서 동쪽(구역 5)을 본다(이웃 띠 24m 너머가 비는지)
                     {
                         var who = GameObject.FindWithTag("Player");

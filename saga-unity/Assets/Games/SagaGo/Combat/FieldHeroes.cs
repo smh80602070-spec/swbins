@@ -18,6 +18,9 @@ namespace Saga.Go.Combat
     /// </summary>
     public class FieldHeroes : MonoBehaviour
     {
+        /// <summary>tasks U-0232 몰래 다가가기 판정 결과.</summary>
+        public enum Sneak { None, Duel, Ambush, SpottedRetreat, SpottedDuel }
+
         public const float NextHeroSec = 4f;
         public const float ResetBackSec = 2f;
         public const float MinionSpread = 4.5f;
@@ -35,6 +38,10 @@ namespace Saga.Go.Combat
             public readonly List<FieldEnemy> Minions = new List<FieldEnemy>();
             public float Wait;
             public float YieldLeft = -1f;
+            /// <summary>tasks U-0232 — 둘러보는 기본 방향(지역 id 해시) · 나를 알아챘나(들킨 뒤엔 늘 나를 본다) · 겁 많은 이가 이미 물러섰나.</summary>
+            public float BaseYaw;
+            public bool Noticed;
+            public bool Retreated;
         }
 
         private readonly List<Slot> _slots = new List<Slot>();
@@ -91,12 +98,15 @@ namespace Saga.Go.Combat
             if (slot.Idle != null) Destroy(slot.Idle);
             slot.Idle = null;
             slot.YieldLeft = -1f;
+            slot.Noticed = slot.Retreated = false;
+            slot.BaseYaw = GoEras.Hash(slot.Stand.RegionId ?? "") % 360u;
             slot.HeroId = NextHero(slot.Roster, slot.Skip);
             if (slot.HeroId == null || !GoHeroes.TryGet(slot.HeroId, out var hero)) return;
 
             var root = new GameObject($"HeroIdle_{hero.Id}");
             root.transform.SetParent(transform, false);
             root.transform.position = StandPos(slot.Stand);
+            if (GoStealth.On) root.transform.rotation = Quaternion.Euler(0f, slot.BaseYaw, 0f); // U-0232 나를 보지 않고 제 쪽을 둘러본다
             var prefab = Bodies() != null ? _bodies.PrefabFor(hero.Id) : null;
             if (prefab != null)
             {
@@ -155,13 +165,77 @@ namespace Saga.Go.Combat
                 if (DuelGate.Active || Saga.Go.Cinematics.GoCutscenes.Playing || !fc.CanBeTargeted) continue;
                 Vector3 d = fc.transform.position - slot.Idle.transform.position;
                 d.y = 0f;
+                if (GoStealth.On)
+                {
+                    // tasks U-0232 — 시야 부채꼴·웅크림·풀숲으로 몰래 다가가면 기습 겨루기, 시야 안에서 달리면 들킨다
+                    var pc = Pc(fc);
+                    bool running = pc != null && (pc.RunningNow || pc.IsDashing);
+                    var r = Judge(slot, fc.transform.position, pc != null && pc.Crouching, running, GoStealth.InGrass(fc.transform.position));
+                    if (r != Sneak.None) { Act(slot, r, d); continue; }
+                    if (slot.Noticed) { if (d.sqrMagnitude > 0.01f) slot.Idle.transform.rotation = Quaternion.Slerp(slot.Idle.transform.rotation, Quaternion.LookRotation(d), 3f * dt); }
+                    else slot.Idle.transform.rotation = Quaternion.Euler(0f, GoStealth.LookYaw(slot.HeroId, slot.BaseYaw, Time.time), 0f);
+                    continue;
+                }
                 if (d.magnitude <= GoHeroes.ChallengeRadius) StartDuel(slot);
                 else if (d.sqrMagnitude > 0.01f) slot.Idle.transform.rotation = Quaternion.Slerp(slot.Idle.transform.rotation, Quaternion.LookRotation(d), 3f * dt);
             }
         }
 
-        /// <summary>겨루기를 연다 — 서 있던 사람을 들판 적으로 바꾸고 졸개를 붙인다. 진단도 부른다.</summary>
-        public void StartDuel(Slot slot)
+        private PlayerController _pc;
+        private PlayerController Pc(FieldCombat fc)
+        {
+            if (_pc == null && fc != null) _pc = fc.GetComponent<PlayerController>();
+            if (_pc == null) _pc = FindFirstObjectByType<PlayerController>();
+            return _pc;
+        }
+
+        /// <summary>tasks U-0232 — 서 있는 인물 곁의 한 판정(순수에 가깝게 — 진단이 자리·방향을 놓고 부른다).
+        /// 안 들킨 채 4m 안 = 기습 · 보이는 채 7m 안 = 보통 겨루기 · 보이는 데서 달리면(아직 못 알아챘을 때) 들킴(성격 따라 물러섬/겨루기).</summary>
+        public Sneak Judge(Slot slot, Vector3 playerPos, bool crouch, bool running, bool inGrass)
+        {
+            if (slot.Idle == null) return Sneak.None;
+            Vector3 hp = slot.Idle.transform.position;
+            Vector3 d = playerPos - hp;
+            d.y = 0f;
+            float dist = d.magnitude;
+            if (!GoStealth.On) return dist <= GoHeroes.ChallengeRadius ? Sneak.Duel : Sneak.None; // 끄면 예전 — 7m 에서 겨루기
+            bool sees = GoStealth.Sees(hp, slot.Idle.transform.forward, playerPos, crouch, inGrass, running);
+            if (sees && running && !slot.Noticed)
+                return GoStealth.Fierce(slot.HeroId) || slot.Retreated ? Sneak.SpottedDuel : Sneak.SpottedRetreat;
+            if (sees && dist <= GoHeroes.ChallengeRadius) return Sneak.Duel;
+            if (!sees && dist <= GoStealth.AmbushRange) return slot.Noticed ? Sneak.Duel : Sneak.Ambush;
+            return Sneak.None;
+        }
+
+        /// <summary>판정대로 움직인다 — 들킴은 머리 위 "!", 겁 많은 이는 나와 반대쪽으로 10m 물러서 나를 본다.</summary>
+        public void Act(Slot slot, Sneak r, Vector3 toPlayer)
+        {
+            if (r == Sneak.SpottedRetreat || r == Sneak.SpottedDuel)
+            {
+                slot.Noticed = true;
+                if (slot.Idle != null)
+                    FieldDamageText.Spawn(slot.Idle.transform.position + Vector3.up * (CharacterVisual.HumanHeight + 0.8f), "!", new Color(1f, 0.3f, 0.25f), 1.8f);
+            }
+            switch (r)
+            {
+                case Sneak.Duel: case Sneak.SpottedDuel: StartDuel(slot); break;
+                case Sneak.Ambush: StartDuel(slot, true); break;
+                case Sneak.SpottedRetreat:
+                {
+                    slot.Retreated = true;
+                    toPlayer.y = 0f;
+                    Vector3 away = toPlayer.sqrMagnitude > 0.01f ? -toPlayer.normalized : -slot.Idle.transform.forward;
+                    slot.Idle.transform.position = FolkWalker.Grounded(slot.Idle.transform.position + away * GoStealth.TimidRetreat + Vector3.up * 5f);
+                    slot.Idle.transform.rotation = Quaternion.LookRotation(-away);
+                    if (GoHeroes.TryGet(slot.HeroId, out var hero))
+                        DialogueLabel.Instance?.Show(string.Format(GoLocalization.T("hero.spotted", "{0} — 눈치채고 물러섰다(달리면 들킨다 · Z 웅크려 뒤로)"), GoHeroes.Name(hero)), 2.5f);
+                    break;
+                }
+            }
+        }
+
+        /// <summary>겨루기를 연다 — 서 있던 사람을 들판 적으로 바꾸고 졸개를 붙인다. 진단도 부른다. `ambush` = U-0232 기습(첫 타 ×1.15·굴복 문턱 37.5%).</summary>
+        public void StartDuel(Slot slot, bool ambush = false)
         {
             if (slot.HeroId == null || slot.Fighter != null || !GoHeroes.TryGet(slot.HeroId, out var hero)) return;
             Vector3 pos = slot.Idle != null ? slot.Idle.transform.position : StandPos(slot.Stand);
@@ -172,6 +246,7 @@ namespace Saga.Go.Combat
             slot.Fighter = FieldEnemy.SpawnHero(hero, pos, prefab, _bodies != null ? _bodies.BodyController : null, transform, _bodies);
             slot.Fighter.transform.rotation = rot;
             slot.Fighter.Challenge();
+            if (ambush) slot.Fighter.MarkAmbush();
             HeroDexState.MarkSeen(hero.Id); // 109-6b 도감 — 겨뤄 본 사람은 그림자에서 벗어난다
             int n = GoHeroes.Minions(hero.Rarity);
             var element = GoHeroes.ElementOf(hero);
@@ -183,7 +258,8 @@ namespace Saga.Go.Combat
                 GoEra era = i == 0 ? GoEra.Past : (GoEras.Hash(hero.Id) % 2 == 0 ? GoEra.Modern : GoEra.Future);
                 slot.Minions.Add(_spawner.SpawnHeroMinion(element, home, slot.Fighter.GroupId, era, i));
             }
-            DialogueLabel.Instance?.Show(string.Format(GoLocalization.T("hero.challenge", "⚔ {0} — \"{1}\"\n겨루기! 이겨서 굴복시키면 동행이 된다"),
+            DialogueLabel.Instance?.Show((ambush ? GoLocalization.T("hero.ambush_line", "⚡ 기습! 첫 타 +15% · 체력 37.5% 에서 굴복") + "\n" : "")
+                + string.Format(GoLocalization.T("hero.challenge", "⚔ {0} — \"{1}\"\n겨루기! 이겨서 굴복시키면 동행이 된다"),
                 GoHeroes.Label(hero), GoHeroes.Quote(hero)), 4f);
         }
 

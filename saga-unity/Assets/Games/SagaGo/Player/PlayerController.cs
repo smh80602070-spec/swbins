@@ -166,6 +166,10 @@ namespace Saga.Go.Player
         public bool OnFoot => Mode == MoveMode.Ground;
         /// <summary>U-0171 — 땅 위 마지막 이동 빠르기(m/초, 읽기만).</summary>
         public float GroundSpeedNow { get; set; }
+        /// <summary>tasks U-0232 웅크리기(Z, 땅 위·탈것 아님) — 걸음 0.5배, 달리기·대시면 풀린다. 들판 인물이 6m 밖에선 못 본다(`GoStealth`).</summary>
+        public bool Crouching { get; set; }
+        /// <summary>tasks U-0232 — 이 프레임 달리는 중(스태미나를 써서). 들킴 판정이 읽는다.</summary>
+        public bool RunningNow { get; private set; }
 
         /// <summary>PLAN.md 107-1 — `dir` 쪽으로 `seconds` 동안 `distance` 만큼 미끄러진다(입력 무시).
         /// Maria 면 구르기 클립(`Dodge` 트리거).</summary>
@@ -174,6 +178,7 @@ namespace Saga.Go.Player
             dir.y = 0f;
             if (dir.sqrMagnitude < 0.0001f) dir = visual != null ? visual.forward : transform.forward;
             dir.Normalize();
+            Crouching = false; // U-0232 대시면 웅크림 풀림
             _dashVelocity = dir * (distance / Mathf.Max(0.01f, seconds));
             _dashTimeLeft = seconds;
             if (visual != null) visual.rotation = Quaternion.LookRotation(dir);
@@ -432,8 +437,11 @@ namespace Saga.Go.Player
 
             bool moving = moveDir.sqrMagnitude > 0.05f * 0.05f;
             // PLAN.md 107-1 — 달리기는 스태미나를 초당 8 쓴다(바닥나면 30까지 잠김). 공중에선 안 닳는다.
+            if (!_testInput && Keyboard.current != null && Keyboard.current.zKey.wasPressedThisFrame && GoStealth.On && !GoMounts.RidingGround && !GoMounts.RidingFly) Crouching = !Crouching; // U-0232 Z 웅크리기
+            if (Crouching && (sprintHeld || GoMounts.RidingGround || !GoStealth.On)) Crouching = false;
             bool running = sprintHeld && moving && grounded && GoStamina.Drain(GoStamina.SprintPerSec * dt);
-            float speed = (running ? RunSpeed : WalkSpeed) * GoMounts.GroundMul; // 109-15 탄 탈것의 걷는 속도 배율
+            RunningNow = running;
+            float speed = (running ? RunSpeed : WalkSpeed * (Crouching ? GoStealth.CrouchSpeedMul : 1f)) * GoMounts.GroundMul; // 109-15 탄 탈것의 걷는 속도 배율
 
             Vector3 horizontal = moveDir * speed;
             GroundSpeedNow = horizontal.magnitude; // U-0171 말 위 전투 빠르기 비율

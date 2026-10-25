@@ -739,6 +739,17 @@ namespace Saga.Go.Combat
         /// <summary>109-6 — `FieldHeroes` 가 겨루기를 연다(바로 달려든다).</summary>
         public void Challenge() => EnterChase();
 
+        /// <summary>tasks U-0232 기습 겨루기 — 들키지 않고 4m 안까지 왔다. 첫 타 ×1.15 · 굴복 문턱이 체력 37.5%(`GoStealth`).</summary>
+        public bool Ambushed { get; private set; }
+        private bool _ambushFirst;
+        public void MarkAmbush()
+        {
+            if (!IsHero) return;
+            Ambushed = true;
+            _ambushFirst = true;
+            FieldDamageText.Spawn(transform.position + Vector3.up * (BodyHeight + 1.2f), GoLocalization.T("hero.ambush", "기습!"), new Color(1f, 0.85f, 0.3f), 1.3f);
+        }
+
         /// <summary>한 틱 — 진단이 시간을 건너뛰려고 직접 부른다.</summary>
         public void Tick(float dt)
         {
@@ -978,8 +989,10 @@ namespace Saga.Go.Combat
                 RefreshHeadUi();
                 return sd;
             }
+            if (_ambushFirst) { amount *= GoStealth.AmbushFirstHitMul; _ambushFirst = false; } // U-0232 기습 첫 타
             float dealt = Mathf.Min(Hp, amount);
             Hp -= amount;
+            if (Ambushed && IsHero && Hp > 0f && Hp <= MaxHp * GoStealth.AmbushYieldFrac) Hp = 0f; // U-0232 기습이면 37.5% 에서 굴복
             FieldDamageText.Spawn(transform.position + Vector3.up * (BodyHeight + 0.8f),
                 Mathf.RoundToInt(amount).ToString(), color, size);
             if (Hp <= 0f)
