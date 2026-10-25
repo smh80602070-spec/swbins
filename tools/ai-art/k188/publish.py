@@ -14,6 +14,9 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 P = os.path.join(ROOT, 'tools', 'ai-art', '_out', 'k188', 'p')
 CANON = os.path.join(ROOT, 'saga-assets', 'web2d', 'cutout')
 SOSO = {'kr_gyebaek', 'jp_yoshitsune', 'ru_geohae', 'rf_gongsunzan', 'wd_shaka'}   # △ — Claude 눈 판정(K-0188 메모)
+_soso = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'soso86.txt')   # ③ 86 의 △(관절 손질 때 적은 줄 «id 까닭»)
+if os.path.exists(_soso):
+    SOSO |= {ln.split()[0] for ln in open(_soso, encoding='utf-8') if ln.strip()}
 
 
 def main():

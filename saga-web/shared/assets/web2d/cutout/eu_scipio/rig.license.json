@@ -1,0 +1,28 @@
+{
+ "id": "cutout_eu_scipio",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short brown hair, rounded black and gold roman helmet without crest, red cloak, bronze cuirass, leather sandals, adult, tall, realistic body proportions, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, arms slightly away from body, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view",
+ "seed": 2026105181,
+ "steps": 30,
+ "cfg_scale": 6.0,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  768,
+  1152
+ ],
+ "seconds": 34.0,
+ "date": "2026-10-25",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "remote": "Kaggle T4 (tools/ai-art/remote, K-0140) — 같은 ComfyUI 커밋·같은 gen.py",
+ "ticket": "K-0188",
+ "from": "tools/ai-art/_out/k188/p/eu_scipio/side.png",
+ "tool": "tools/ai-art/k188_cutout.py cut",
+ "far": "copy",
+ "fill": "sd",
+ "joints": "tools/ai-art/k188/eu_scipio.joints.json",
+ "packed_by": "K-0188 tools/ai-art/k188/person.sh(옆모습 일러스트 → 관절 → 가린 몸통 로컬 SD 인페인트 → k188_cutout.py cut) → publish.py",
+ "judge": "○"
+}
