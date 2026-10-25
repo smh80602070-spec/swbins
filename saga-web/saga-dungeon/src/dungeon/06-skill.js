@@ -848,7 +848,7 @@
     /** 마을 들판 방랑 상인(PLAN §60 후보 1) — town.js/ui.js가 독자 재고
      *  상태를 굴릴 때 쓴다. `run.merchantChoice`와는 별개다. */
     rollMerchantStock: rollMerchantStock,
-    castSkill: castSkill, _secretMod: secretMod, refill: refill,
+    castSkill: castSkill, _secretMod: secretMod, refill: refill, _dropItem: dropItem,
     heavyAttack: heavyAttack, doDodge: doDodge, castSetSkill: castSetSkill,
     castSigSkill: castSigSkill,
     boonVal: boonVal, boonEffect: boonEffect,

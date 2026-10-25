@@ -2802,7 +2802,7 @@
   function update(dt) {
     if (!run || run.choice || run.merchantChoice) { return; }  // 고르는 동안에는 멈춘다
     dt = Math.min(dt, 0.05);
-    var p = run.player, room = run.room, i;
+    var p = run.player, room = run.room, i; if (global.DG.bloodOrb) { global.DG.bloodOrb.step(run, dt); } if (global.DG.cursedChest) { global.DG.cursedChest.step(run, dt); }   // W-0421 피 구슬·저주받은 상자
 
     /* 타격 정지(hitstop) — 한 대 맞은 순간 몇 프레임 시간을 확 늦춘다(멈추지는
        않는다 — dt를 0으로 주면 몇몇 카운트다운이 얼어붙은 티가 난다). 2026-09-10
@@ -4721,7 +4721,7 @@
     /** 마을 들판 방랑 상인(PLAN §60 후보 1) — town.js/ui.js가 독자 재고
      *  상태를 굴릴 때 쓴다. `run.merchantChoice`와는 별개다. */
     rollMerchantStock: rollMerchantStock,
-    castSkill: castSkill, _secretMod: secretMod, refill: refill,
+    castSkill: castSkill, _secretMod: secretMod, refill: refill, _dropItem: dropItem,
     heavyAttack: heavyAttack, doDodge: doDodge, castSetSkill: castSetSkill,
     castSigSkill: castSigSkill,
     boonVal: boonVal, boonEffect: boonEffect,
