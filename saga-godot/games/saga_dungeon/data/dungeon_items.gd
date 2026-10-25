@@ -371,6 +371,138 @@ const SETS: Array[Dictionary] = [
 			3: [{ "kind": "pct", "stat": "wisdom", "v": 8.0 }, { "kind": "world", "eff": "expPct", "v": 18.0 }] } },
 ]
 
+## G-0398 — data-set.js SETS 의 skill(세트 전용 무예) 열 그대로: 세 점을 다 걸치면 T 자리 하나(배우지 않음·단 없음·고정값·기력 없음 —
+## 세트를 맞춘 보상). 반경 환산은 위 무예 표와 같다(nova·curse = 웹 px ÷ BASE_REACH 34 · swing = 웹 값 그대로 미터). 웹 kb·spread·str 은
+## 고돗 시전기에 그 칸이 없어 뺐다(bolt shots·dash far·buff·summon sec 은 그대로). key 는 "set_<세트 key>"(쿨다운 자리).
+const SET_SKILLS := {
+	"chungmu": {"name": "귀선포(龜船砲)", "icon": "💥", "shape": "nova", "v": 3.2, "r": 160.0 / 34.0, "cd": 16.0, "desc": "거북선의 포문처럼 사방을 친다."},
+	"waryong": {"name": "팔진도(八陣圖)", "icon": "🌀", "shape": "curse", "v": 45.0, "r": 150.0 / 34.0, "sec": 6.0, "cd": 16.0, "desc": "둘레를 진(陣)으로 묶어 크게 약하게 한다."},
+	"horang": {"name": "맹호출림(猛虎出林)", "icon": "🐯", "shape": "dash", "v": 2.8, "far": 2.2, "cd": 12.0, "desc": "범처럼 뛰쳐나가 앞을 벤다."},
+	"cheongnang": {"name": "활인술(活人術)", "icon": "🌿", "shape": "heal", "v": 22.0, "cd": 20.0, "desc": "청낭의 의술로 그 자리에서 낫는다."},
+	"cheolong": {"name": "철옹성(鐵甕城)", "icon": "🧱", "shape": "buff", "buff_eff": "guardPct", "v": 45.0, "sec": 8.0, "cd": 20.0, "desc": "한동안 성벽처럼 버틴다."},
+	"eunha": {"name": "은하수(銀河水)", "icon": "✨", "shape": "nova", "v": 3.0, "r": 150.0 / 34.0, "el": "lit", "cd": 14.0, "desc": "별빛이 둘레에 쏟아진다."},
+	"maenghon": {"name": "광란베기(狂亂斬)", "icon": "🪓", "shape": "swing", "v": 3.4, "r": 2.6, "cd": 12.0, "desc": "도끼를 크게 휘둘러 둘레를 벤다."},
+	"biyeong": {"name": "비영시(飛影矢)", "icon": "🏹", "shape": "bolt", "v": 2.0, "shots": 5, "cd": 10.0, "desc": "그림자 화살 다섯이 부챗살로 퍼진다."},
+	"paewang": {"name": "패왕참(霸王斬)", "icon": "☄️", "shape": "nova", "v": 4.2, "r": 170.0 / 34.0, "cd": 18.0, "desc": "천하를 노리는 자의 일격, 둘레가 다 쓸린다."},
+	"hyeonhak": {"name": "학진(鶴陣)", "icon": "🕊️", "shape": "summon", "v": 2.0, "sec": 14.0, "cd": 20.0, "desc": "학의 진을 세운다. 대신 싸운다."},
+}
+
+
+## 세트 무예 한 벌(시전기가 쓰는 꼴 — 단 1 고정, grow 0). 없으면 {}.
+static func set_skill(set_key: String) -> Dictionary:
+	if not SET_SKILLS.has(set_key):
+		return {}
+	var sk: Dictionary = (SET_SKILLS[set_key] as Dictionary).duplicate()
+	sk["key"] = "set_" + set_key
+	sk["grow"] = 0.0
+	sk["eff"] = ""
+	return sk
+
+
+## G-0398 — data-unique.js UNIQUES 그대로(전설(4)에서만, 그 밑감 고유가 있을 때 UNIQUE_CHANCE · 접사는 안 굴리고 표 그대로 ·
+## flat·eldmg 는 수준(ilvl)을 탄다, %·world 는 안 탄다 — effectsAt()). 고돗 BASES 에 없는 밑감 짝(없음)은 뺐다.
+## 이름·수치 표 늘림(고유 100)은 자체툴 생성기 산출을 받는 자리 — 여기 한 줄씩.
+const UNIQUE_CHANCE := 0.4
+const UNIQUE_BASE_ILVL := 20
+const UNIQUES: Array[Dictionary] = [
+	{ "key": "u_ssanggeom", "base": "w_hwando", "name": "쌍룡도(雙龍刀)", "desc": "두 마리 용이 새겨진 환도. 쥔 손이 뜨거워진다.",
+		"eff": [{ "kind": "flat", "stat": "might", "v": 22.0 }, { "kind": "eldmg", "el": "fire", "v": 14.0 }, { "kind": "world", "eff": "critPct", "v": 9.0, "scale": false }] },
+	{ "key": "u_byeoksan", "base": "w_pyeongon", "name": "벽산편(劈山鞭)", "desc": "산을 쪼갠다는 편곤. 무겁고, 무겁게 든다.",
+		"eff": [{ "kind": "flat", "stat": "might", "v": 28.0 }, { "kind": "pct", "stat": "might", "v": 12.0, "scale": false }] },
+	{ "key": "u_cheonjigang", "base": "w_changj", "name": "천지창(天地槍)", "desc": "하늘과 땅을 꿰는 창. 끝이 보이지 않는다.",
+		"eff": [{ "kind": "flat", "stat": "might", "v": 24.0 }, { "kind": "eldmg", "el": "lit", "v": 16.0 }, { "kind": "world", "eff": "atkPct", "v": 8.0, "scale": false }] },
+	{ "key": "u_cheongryong", "base": "w_wolto", "name": "청룡언월도(靑龍偃月刀)", "desc": "이름만으로 무게가 실리는 월도.",
+		"eff": [{ "kind": "flat", "stat": "might", "v": 34.0 }, { "kind": "flat", "stat": "command", "v": 14.0 }, { "kind": "world", "eff": "atkPct", "v": 12.0, "scale": false }] },
+	{ "key": "u_manbal", "base": "w_gakgung", "name": "만발궁(萬發弓)", "desc": "쏘아도 쏘아도 화살이 남는다는 각궁.",
+		"eff": [{ "kind": "flat", "stat": "might", "v": 18.0 }, { "kind": "eldmg", "el": "cold", "v": 12.0 }, { "kind": "world", "eff": "critPct", "v": 12.0, "scale": false }] },
+	{ "key": "u_gwiseon", "base": "w_bugae", "name": "귀선부(鬼仙斧)", "desc": "귀신이 벼렸다는 부월. 날이 검다.",
+		"eff": [{ "kind": "flat", "stat": "might", "v": 26.0 }, { "kind": "eldmg", "el": "pois", "v": 18.0 }] },
+	{ "key": "u_baekhak", "base": "w_seonchae", "name": "백학선(白鶴扇)", "desc": "흰 학이 그려진 부채. 부치면 바람이 차다.",
+		"eff": [{ "kind": "flat", "stat": "wisdom", "v": 26.0 }, { "kind": "eldmg", "el": "cold", "v": 16.0 }, { "kind": "world", "eff": "expPct", "v": 15.0, "scale": false }] },
+	{ "key": "u_jukjang", "base": "w_jukjang", "name": "녹죽장(綠竹杖)", "desc": "푸른 대로 만든 지팡이. 짚으면 기가 돈다.",
+		"eff": [{ "kind": "flat", "stat": "wisdom", "v": 22.0 }, { "kind": "eldmg", "el": "chi", "v": 18.0 }, { "kind": "world", "eff": "findPct", "v": 20.0, "scale": false }] },
+	{ "key": "u_iljabul", "base": "w_bilbut", "name": "일자필(一字筆)", "desc": "한 글자로 사람을 움직였다는 붓.",
+		"eff": [{ "kind": "flat", "stat": "wisdom", "v": 20.0 }, { "kind": "pct", "stat": "wisdom", "v": 14.0, "scale": false }] },
+	{ "key": "u_yukdo", "base": "w_byeongseo", "name": "육도삼략(六韜三略)", "desc": "병법의 뿌리. 읽은 자가 곧 장수가 된다.",
+		"eff": [{ "kind": "flat", "stat": "command", "v": 24.0 }, { "kind": "pct", "stat": "all", "v": 7.0, "scale": false }, { "kind": "world", "eff": "lootPct", "v": 14.0, "scale": false }] },
+	{ "key": "u_danryeong", "base": "a_pigap", "name": "단령피갑(丹領皮甲)", "desc": "붉은 깃을 댄 피갑. 갖춰 입으면 위엄이 선다.",
+		"eff": [{ "kind": "flat", "stat": "command", "v": 20.0 }, { "kind": "elres", "el": "pois", "v": 18.0, "scale": false }, { "kind": "world", "eff": "atkPct", "v": 10.0, "scale": false }] },
+	{ "key": "u_dujeong", "base": "a_dujeong", "name": "흑린두정(黑鱗頭釘)", "desc": "검은 비늘을 박은 두정갑. 화살이 튕긴다.",
+		"eff": [{ "kind": "flat", "stat": "command", "v": 26.0 }, { "kind": "elres", "el": "fire", "v": 20.0, "scale": false }, { "kind": "elres", "el": "cold", "v": 20.0, "scale": false }, { "kind": "world", "eff": "hpPct", "v": 10.0, "scale": false }] },
+	{ "key": "u_chalgap", "base": "a_chalgap", "name": "만인갑(萬人甲)", "desc": "만 사람을 막아 냈다는 찰갑.",
+		"eff": [{ "kind": "flat", "stat": "command", "v": 22.0 }, { "kind": "flat", "stat": "might", "v": 14.0 }, { "kind": "world", "eff": "hpPct", "v": 14.0, "scale": false }] },
+	{ "key": "u_dopo", "base": "a_dopo", "name": "학창의(鶴氅衣)", "desc": "학의 깃으로 지은 도포. 걸치면 걸음이 가볍다.",
+		"eff": [{ "kind": "flat", "stat": "wisdom", "v": 24.0 }, { "kind": "elres", "el": "chi", "v": 25.0, "scale": false }, { "kind": "world", "eff": "expPct", "v": 18.0, "scale": false }] },
+	{ "key": "u_cheollip", "base": "a_cheollip", "name": "흑철립(黑鐵笠)", "desc": "검은 무쇠로 만든 삿갓. 그늘이 짙다.",
+		"eff": [{ "kind": "flat", "stat": "might", "v": 18.0 }, { "kind": "elres", "el": "lit", "v": 25.0, "scale": false }, { "kind": "world", "eff": "findPct", "v": 16.0, "scale": false }] },
+	{ "key": "u_okro", "base": "a_myeongap", "name": "옥로관(玉鷺冠)", "desc": "백로 깃을 꽂은 관. 먼 곳이 눈에 들어온다.",
+		"eff": [{ "kind": "flat", "stat": "wisdom", "v": 20.0 }, { "kind": "pct", "stat": "wisdom", "v": 10.0, "scale": false }, { "kind": "world", "eff": "findPct", "v": 18.0, "scale": false }] },
+	{ "key": "u_eunwol", "base": "h_tumo", "name": "은월투구(銀月兜)", "desc": "달빛을 두른 투구. 부딪는 소리가 맑다.",
+		"eff": [{ "kind": "flat", "stat": "command", "v": 20.0 }, { "kind": "elres", "el": "lit", "v": 22.0, "scale": false }, { "kind": "world", "eff": "atkPct", "v": 10.0, "scale": false }] },
+	{ "key": "u_cheongeun", "base": "g_wangap", "name": "천근완갑(千斤腕甲)", "desc": "천 근을 든다는 팔찌. 손끝이 저릿하다.",
+		"eff": [{ "kind": "flat", "stat": "might", "v": 18.0 }, { "kind": "world", "eff": "atkPct", "v": 12.0, "scale": false }] },
+	{ "key": "u_yusu", "base": "g_wandae", "name": "유수완대(流水腕帶)", "desc": "흐르는 물처럼 부드러운 완대. 손이 빨라진다.",
+		"eff": [{ "kind": "flat", "stat": "wisdom", "v": 18.0 }, { "kind": "world", "eff": "critPct", "v": 10.0, "scale": false }] },
+	{ "key": "u_cheolli", "base": "b_hwaje", "name": "천리화(千里靴)", "desc": "천 리를 간다는 신. 걸음이 가벼워진다.",
+		"eff": [{ "kind": "flat", "stat": "might", "v": 14.0 }, { "kind": "world", "eff": "findPct", "v": 14.0, "scale": false }] },
+	{ "key": "u_unmun", "base": "b_jipsin", "name": "운문리(雲紋履)", "desc": "구름 무늬를 놓은 짚신. 딛는 곳마다 인연이 닿는다.",
+		"eff": [{ "kind": "flat", "stat": "wisdom", "v": 12.0 }, { "kind": "world", "eff": "expPct", "v": 16.0, "scale": false }] },
+	{ "key": "u_taeeul", "base": "n_okpae", "name": "태을옥패(太乙玉佩)", "desc": "태을성의 기운을 담은 옥패.",
+		"eff": [{ "kind": "flat", "stat": "wisdom", "v": 20.0 }, { "kind": "elres", "el": "cold", "v": 20.0, "scale": false }, { "kind": "world", "eff": "findPct", "v": 15.0, "scale": false }] },
+	{ "key": "u_geumin", "base": "n_geumpae", "name": "금인패(金印牌)", "desc": "금인이 새겨진 패. 지니면 사람이 따른다.",
+		"eff": [{ "kind": "flat", "stat": "command", "v": 20.0 }, { "kind": "pct", "stat": "all", "v": 6.0, "scale": false }] },
+	{ "key": "u_yongmun", "base": "r_geumji", "name": "용문지환(龍紋指環)", "desc": "용무늬를 새긴 가락지. 낀 손이 든든하다.",
+		"eff": [{ "kind": "flat", "stat": "command", "v": 16.0 }, { "kind": "world", "eff": "hpPct", "v": 12.0, "scale": false }] },
+	{ "key": "u_hopae", "base": "c_hopae", "name": "어사호패(御史號牌)", "desc": "암행어사의 호패. 내보이면 길이 열린다.",
+		"eff": [{ "kind": "flat", "stat": "all", "v": 10.0 }, { "kind": "world", "eff": "goldPct", "v": 35.0, "scale": false }] },
+	{ "key": "u_okgae", "base": "c_okgae", "name": "월하옥지(月下玉指)", "desc": "달빛에 비추면 속이 비치는 옥가락지.",
+		"eff": [{ "kind": "pct", "stat": "all", "v": 9.0, "scale": false }, { "kind": "world", "eff": "findPct", "v": 28.0, "scale": false }] },
+	{ "key": "u_dokkaebi", "base": "c_dokkaebi", "name": "도깨비방울(鬼鈴)", "desc": "흔들면 도깨비가 웃는다. 웃을 때마다 뭔가 떨어진다.",
+		"eff": [{ "kind": "flat", "stat": "might", "v": 16.0 }, { "kind": "world", "eff": "lootPct", "v": 26.0, "scale": false }, { "kind": "world", "eff": "goldPct", "v": 20.0, "scale": false }] },
+	{ "key": "u_gyeong", "base": "c_gyeong", "name": "조요경(照妖鏡)", "desc": "요괴를 비추는 청동경. 비친 것은 숨지 못한다.",
+		"eff": [{ "kind": "flat", "stat": "command", "v": 18.0 }, { "kind": "elres", "el": "pois", "v": 25.0, "scale": false }, { "kind": "world", "eff": "critPct", "v": 8.0, "scale": false }] },
+	{ "key": "u_mandara", "base": "c_yeombul", "name": "만다라주(曼陀羅珠)", "desc": "천 번을 굴렸다는 염주. 마음이 가라앉는다.",
+		"eff": [{ "kind": "flat", "stat": "wisdom", "v": 22.0 }, { "kind": "elres", "el": "pois", "v": 20.0, "scale": false }, { "kind": "world", "eff": "expPct", "v": 20.0, "scale": false }] },
+	{ "key": "u_byeoksa", "base": "c_hobu", "name": "벽사호부(辟邪護符)", "desc": "삿된 것을 물린다는 부적. 태우면 재가 남지 않는다.",
+		"eff": [{ "kind": "flat", "stat": "might", "v": 20.0 }, { "kind": "elres", "el": "chi", "v": 20.0, "scale": false }, { "kind": "world", "eff": "hpPct", "v": 12.0, "scale": false }] },
+]
+
+
+static func unique_by_key(k: String) -> Dictionary:
+	for u: Dictionary in UNIQUES:
+		if u.key == k:
+			return u
+	return {}
+
+
+static func unique_of_base(base_key: String) -> Dictionary:
+	for u: Dictionary in UNIQUES:
+		if u.base == base_key:
+			return u
+	return {}
+
+
+## data-unique.js effectsAt() — 수준에 맞춘 효과(flat·eldmg 만 수준을 탄다, 하한 ×0.45). 고유가 아니면 [].
+static func unique_effects(it: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var u := unique_by_key(str(it.get("uniq", "")))
+	if u.is_empty():
+		return out
+	var mul := maxf(0.45, 1.0 + (float(it.get("ilvl", UNIQUE_BASE_ILVL)) - float(UNIQUE_BASE_ILVL)) * 0.035)
+	for e: Dictionary in u.eff:
+		var scale: bool = bool(e.get("scale", true)) and (e.kind == "flat" or e.kind == "eldmg")
+		out.append({"kind": e.kind, "stat": e.get("stat", ""), "eff": e.get("eff", ""), "el": e.get("el", ""), "v": maxf(1.0, roundf(float(e.v) * (mul if scale else 1.0)))})
+	return out
+
+
+## item.js rollUnique() — 전설(4)에서만, 그 밑감 고유가 있을 때 UNIQUE_CHANCE. SAGA_UNIQUES=0 이면 끔.
+static func roll_unique(base: Dictionary, tier: int) -> String:
+	if tier != LEGENDARY_TIER or OS.get_environment("SAGA_UNIQUES") == "0":
+		return ""
+	var u := unique_of_base(str(base.key))
+	return str(u.key) if not u.is_empty() and randf() < UNIQUE_CHANCE else ""
+
+
 const SET_TIER := 3 # 보물(寶物) 등급에만 붙는다
 const SET_CHANCE := 0.55
 const LEGENDARY_TIER := 4 # 전설(傳說) — PLAN 101-2 DUNGEON ⑥(월드 보스)의 "전설 확률×3"이 가리키는 자리
@@ -788,6 +920,10 @@ static func roll(ilvl: int, slot: String = "", forced_tier: int = -1, force_iden
 		"set": roll_set(base, t),
 		"unid": false if force_identified else t >= 1,
 	}
+	var uq := roll_unique(base, t)   # G-0398 고유 — 접사 대신 표 그대로
+	if uq != "":
+		it["uniq"] = uq
+		it["aff"] = []
 	it["dur"] = dur_max_of(it)
 	return it
 
@@ -808,11 +944,15 @@ static func roll_tier_gamble() -> int:
 
 ## item.js::name() — 미확인이면 밑감 이름만(원작처럼 접사·부문어·투장이
 ## 안 새어 나간다), 그 외엔 부문어·투장이 이루어졌을 때 그 이름이 앞선다
-## (원작과 같은 순서). 고유(uniq)는 이 슬라이스에 없어 그 분기는 뺐다.
+## (원작과 같은 순서). G-0398 고유면 그 이름 하나 + 밑감 이름(작게 뒤에).
 static func item_name(it: Dictionary) -> String:
 	var b := base_by_key(str(it.get("base", "")))
 	if b.is_empty():
 		return "?"
+	if not bool(it.get("unid", false)) and str(it.get("uniq", "")) != "":
+		var u := unique_by_key(str(it.uniq))
+		if not u.is_empty():
+			return "★%s · %s" % [str(u.name), str(b.name)]
 	if bool(it.get("unid", false)):
 		return b.name
 	var sock: Array = it.get("sock", [])

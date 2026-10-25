@@ -239,6 +239,21 @@ theme_override_font_sizes/font_size = 30
 script = ExtResource("slot_button")
 slot = 3
 
+[node name="SetSkillButton" type="Button" parent="."]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -330.0
+offset_top = -260.0
+offset_right = -190.0
+offset_bottom = -190.0
+text = "T ·"
+theme_override_font_sizes/font_size = 30
+script = ExtResource("slot_button")
+slot = 4
+
 [node name="WeaponSwapButton" type="Button" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0

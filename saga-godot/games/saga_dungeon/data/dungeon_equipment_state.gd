@@ -218,7 +218,22 @@ func _affix_and_socket_effects() -> Array[Dictionary]:
 			out.append({"kind": a.kind, "stat": a.get("stat", ""), "eff": a.get("eff", ""), "v": float(a_ref.v)})
 		for e: Dictionary in DungeonItems.socket_effects(it):
 			out.append(e)
+		for e: Dictionary in DungeonItems.unique_effects(it):   # G-0398 고유 효과(접사 자리)
+			out.append(e)
 	return out
+
+
+## G-0398 — 세 점을 다 걸친 세트 key(세트 무예 T 자리). 없으면 "". 둘이면 SETS 순서 앞의 것.
+func full_set_key() -> String:
+	var counts: Dictionary = {}
+	for it: Dictionary in _active_items():
+		var set_key := str(it.get("set", ""))
+		if set_key != "":
+			counts[set_key] = int(counts.get(set_key, 0)) + 1
+	for s: Dictionary in DungeonItems.SETS:
+		if int(counts.get(str(s.key), 0)) >= (s.pieces as Array).size():
+			return str(s.key)
+	return ""
 
 
 ## 걸친(안 부서진) 무기·갑주·부적이 같은 투장(세트)에 속하면 그 점수만큼의

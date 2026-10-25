@@ -25,6 +25,7 @@ const RING_SEC := 0.55 # 웹 applyShapeSkill fx ring life
 const SELF_BURST_R := 1.2 # buff·heal 은 제 자리에 작게
 const HIT_QUIET := {"stop_ms": 0, "shake_mul": 0.0, "quiet": true}
 const SLOT_ACTIONS: Array[String] = ["dungeon_slot_1", "dungeon_slot_2", "dungeon_slot_3", "dungeon_slot_4"]
+const SET_ACTION := "dungeon_set_skill"   # G-0398 세트 무예(T) — 세 점을 다 걸쳤을 때만
 const BOLT_RANGE := 12.0
 const DASH_SPEED := 620.0 * (6.0 / 148.0) # 웹 BASE_SPD(148px/s)→WALK_SPEED(6.0m/s) 환산
 const DASH_DURATION := 0.2 # 원작 "0.2 * (sk.far||1)"
@@ -60,6 +61,8 @@ func _process(delta: float) -> void:
 	for i in SLOT_ACTIONS.size():
 		if Input.is_action_just_pressed(SLOT_ACTIONS[i]):
 			try_slot(i)
+	if InputMap.has_action(SET_ACTION) and Input.is_action_just_pressed(SET_ACTION):
+		try_set_skill()
 
 
 ## 지금 직업의 i번째 자리에 걸린 무예 키("" = 빈 칸). HUD 단추가 이모지·쿨다운을 그릴 때도 읽는다.
@@ -89,12 +92,50 @@ func try_cast(skill_key: String) -> bool:
 	if not DungeonSkills.is_active(sk):
 		return false
 	sk = SkillTree.mods(sk)   # G-0241 나무 — 복제본에 r·el·shots·hops·tree_* (원본 표는 그대로)
-	var ok := false
 	var blood := Meridian.blood_cost(get_tree())   # G-0217 혈공(경락 규칙) — 무예마다 최대 체력 5%, 모자라면 못 쓴다
 	var ph: Node = get_tree().get_first_node_in_group("player_health") if blood > 0.0 else null
 	if ph != null and float(ph.hp) <= blood:
 		return false
 	_hits = 0
+	var ok := _cast_shape(sk, rank)
+	if ok and _player.has_method("play_once"):   # G-0284 무예 몸짓 — 모양별(SHAPE_POSE)
+		_player.call("play_once", String(SHAPE_POSE.get(str(sk.shape), "skill")), 0.4)
+	if ok:
+		_cd[skill_key] = float(sk.cd) * Meridian.mul("cd") * float(sk.get("tree_cd", 1.0))   # G-0217 기력·혈공·무심(경락) × G-0241 나무(재냉각·기력, 하한 ×0.3)
+		if float(sk.get("tree_drain", 0.0)) > 0.0:   # G-0241 나무 흡수 — 시전 때 6초 흡혈
+			DungeonRunState.add_temp_buff("drainPct", float(sk.tree_drain), SkillTree.DRAIN_SEC)
+		var g := SkillTree.gain(skill_key)   # G-0241 시전 1 = 경험 1 (ok 일 때만)
+		if bool(g.up) and is_inside_tree():
+			Toast.show(self, "🌱 %s %s 무예 레벨 %d — 나무에 점 하나" % [str(sk.get("icon", "")), str(sk.name), int(g.lv)], 2.5)
+		if ph != null:
+			ph.hp = maxf(1.0, float(ph.hp) - blood)
+			ph.hp_changed.emit(ph.hp, ph.max_hp)
+	return ok
+
+
+## G-0398 — 지금 세 점을 다 걸친 세트의 무예(없으면 {}). HUD T 단추도 읽는다.
+func set_skill() -> Dictionary:
+	var k: String = DungeonEquipmentState.full_set_key()
+	return DungeonItems.set_skill(k) if k != "" else {}
+
+
+## G-0398 세트 무예 — 단 1 고정(배우지 않음)·나무·혈공·경락 재냉각 없음(웹 "세트를 맞춘 보상" — 쿨다운만).
+func try_set_skill() -> bool:
+	var sk := set_skill()
+	if sk.is_empty() or cooldown_left(String(sk.key)) > 0.0:
+		return false
+	_hits = 0
+	var ok := _cast_shape(sk, 1)
+	if ok:
+		_cd[String(sk.key)] = float(sk.cd)
+		if _player.has_method("play_once"):
+			_player.call("play_once", String(SHAPE_POSE.get(str(sk.shape), "skill")), 0.4)
+	return ok
+
+
+## 모양별 판정(무예 표·세트 무예 공용 — 옛 try_cast 안 match 를 옮김)
+func _cast_shape(sk: Dictionary, rank: int) -> bool:
+	var ok := false
 	match str(sk.shape):
 		"bolt": ok = _cast_bolt(sk, rank)
 		"swing": ok = _cast_area(sk, rank, float(sk.r) * DungeonRunState.reach_mult() * (1.0 + Meridian.add("swingRangePct") / 100.0))
@@ -111,18 +152,6 @@ func try_cast(skill_key: String) -> bool:
 		"curse": ok = _cast_curse(sk, rank)
 		"summon": ok = _cast_summon(sk, rank)
 		"chain": ok = _cast_chain(sk, rank)
-	if ok and _player.has_method("play_once"):   # G-0284 무예 몸짓 — 모양별(SHAPE_POSE)
-		_player.call("play_once", String(SHAPE_POSE.get(str(sk.shape), "skill")), 0.4)
-	if ok:
-		_cd[skill_key] = float(sk.cd) * Meridian.mul("cd") * float(sk.get("tree_cd", 1.0))   # G-0217 기력·혈공·무심(경락) × G-0241 나무(재냉각·기력, 하한 ×0.3)
-		if float(sk.get("tree_drain", 0.0)) > 0.0:   # G-0241 나무 흡수 — 시전 때 6초 흡혈
-			DungeonRunState.add_temp_buff("drainPct", float(sk.tree_drain), SkillTree.DRAIN_SEC)
-		var g := SkillTree.gain(skill_key)   # G-0241 시전 1 = 경험 1 (ok 일 때만)
-		if bool(g.up) and is_inside_tree():
-			Toast.show(self, "🌱 %s %s 무예 레벨 %d — 나무에 점 하나" % [str(sk.get("icon", "")), str(sk.name), int(g.lv)], 2.5)
-		if ph != null:
-			ph.hp = maxf(1.0, float(ph.hp) - blood)
-			ph.hp_changed.emit(ph.hp, ph.max_hp)
 	return ok
 
 

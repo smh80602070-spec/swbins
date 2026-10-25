@@ -63,7 +63,7 @@ func _initialize() -> void:
 		var t := int(it.tier)
 		tier_seen[t] = true
 		var keys := {}
-		var ok: bool = not b.is_empty() and (it.aff as Array).size() == t and float(it.main) >= 1.0
+		var ok: bool = not b.is_empty() and (it.aff as Array).size() == (0 if str(it.get("uniq", "")) != "" else t) and float(it.main) >= 1.0
 		for a in it.aff:
 			keys[a.k] = true
 			ok = ok and float(a.v) >= 1.0 and not Items.affix_by_key(String(a.k)).is_empty()
@@ -82,7 +82,9 @@ func _initialize() -> void:
 	for s in Items.SOCK_MAX:
 		for n in 40:
 			slot_ok = slot_ok and Items.base_by_key(String(Items.roll(5, s).base)).slot == s
+	OS.set_environment("SAGA_UNIQUES", "0")   # G-0398 — 전설 접사 4 를 보는 칸이라 고유는 끔
 	var forced: Dictionary = Items.roll(8, "weapon", 4, true)
+	OS.set_environment("SAGA_UNIQUES", "")
 	var forced0: Dictionary = Items.roll(8, "charm", 0)
 	check(slot_ok and int(forced.tier) == 4 and (forced.aff as Array).size() == 4 and not bool(forced.unid) and int(forced0.tier) == 0 and (forced0.aff as Array).is_empty(), "부위 지정을 지킴 · forced_tier 4 는 접사 4·확인됨 · 0 은 접사 없음")
 	var deeper := 0.0
