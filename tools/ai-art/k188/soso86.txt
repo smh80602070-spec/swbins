@@ -3,3 +3,11 @@ eu_augustus toga-bits
 eu_aurelius hem-bit
 eu_richard blade-ghost
 jp_ieyasu hem-block
+jp_taira foot-bit
+kr_daejoyeong hem-bits
+kr_euljimundeok foot-bit
+kr_gwanggaeto arm-under-cloak
+kr_jangyeongsil sash-strip
+kr_jeongyakyong foot-bit
+kr_kimyusin sword-dup
+kr_wanggeon arm-under-robe
