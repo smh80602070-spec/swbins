@@ -502,6 +502,8 @@ static func pose_clip(id: String) -> String:
 
 ## 공격·무예 한 번(80곳이 부른다).
 func _skill_pose(id: String) -> void:
+	preload("res://games/saga_story/data/story_unique_fx.gd").fire("cast", StorySaveState, self, maxf(0.0, float(get_meta("mp_seen", mp)) - mp))   # G-0399 고유 시전 효과(쓴 기력 = 이 프레임 시작 mp 와의 차)
+	set_meta("mp_seen", mp)
 	var clip := pose_clip(id)
 	if clip == "sprint" or OS.get_environment("SAGA_STORY_ACTION") == "0" or _anim == null or not _anim.has_animation(clip):
 		_play_anim("sprint")

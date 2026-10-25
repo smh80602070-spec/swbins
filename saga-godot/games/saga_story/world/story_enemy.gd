@@ -547,6 +547,7 @@ func _die() -> void:
 	_dead = true
 	died.emit()
 	StorySaveState.add_kill(stage_key)
+	preload("res://games/saga_story/data/story_unique_fx.gd").fire("boss" if (is_boss or is_mini) else "kill", StorySaveState, get_tree().get_first_node_in_group("player") if is_inside_tree() else null)   # G-0399 고유 효과
 	if is_boss:
 		StorySaveState.add_boss_kill()
 	if is_champion:

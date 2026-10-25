@@ -29,6 +29,10 @@ static func model(hud: Node) -> Dictionary:
 	if MB.on():
 		stats.append({"label": "🃏 카드 도감", "value": "%d/%d" % [MB.found_count(StorySaveState), MB.species().size()],
 			"detail": "다 모음 %d종 · 공격 +%.1f%%" % [MB.complete_count(StorySaveState), (MB.atk_mul(StorySaveState) - 1.0) * 100.0]})
+	stats.append_array(preload("res://games/saga_story/data/story_gear_set.gd").me_rows(StorySaveState))   # G-0399 세트 줄
+	var ufx: Dictionary = preload("res://games/saga_story/data/story_unique_fx.gd").me_row(StorySaveState)   # G-0399 고유 효과 줄
+	if not ufx.is_empty():
+		stats.append(ufx)
 	var job := String(StoryCombat.job_info(StorySaveState.job).get("name", "")) if StorySaveState.job != "none" else "무직"
 	var cb := hud.get_node_or_null("ConstellationButton") if hud != null else null
 	var grow := {}

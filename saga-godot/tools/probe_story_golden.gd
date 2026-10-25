@@ -10,7 +10,7 @@ const GOLDEN := "50cedb05dcaf854f533dc4078d69d94d"  # G-0356 다시 잼(10-25 HE
 const PLAYER_DIR := "res://games/saga_story/player/"
 const SEED := 20260824
 ## G-0246 — 5차 각성기(story_skills_awaken.gd)는 기준값 뒤에 생긴 것이라 그 시전·쿨다운 칸은 뺀다(점검은 probe_story_awaken) — 빼면 옛 92 무예 동작은 기준값 그대로.
-const AWAKEN_PREFIXES := ["_cast_godwar_", "_cast_skybow_", "_cast_noshadow_", "_cast_voidsage_", "_cd_godwar_", "_cd_skybow_", "_cd_noshadow_", "_cd_voidsage_"]
+const AWAKEN_PREFIXES := ["_cast_godwar_", "_cast_skybow_", "_cast_noshadow_", "_cast_voidsage_", "_cd_godwar_", "_cd_skybow_", "_cd_noshadow_", "_cd_voidsage_", "_set_cd"]   # G-0399 세트 무예 쿨(F, 기준값 뒤 — 점검은 probe_story_gear_wave)
 
 
 func _is_awaken(n: String) -> bool:

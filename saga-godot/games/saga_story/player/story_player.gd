@@ -55,6 +55,26 @@ func take_damage(amount: float) -> void:
 ## PLAN 101-2 STORY ⑤(비경) — StoryLabyrinthState가 healOnPick·healOnClear를
 ## 적용할 때 부르는 공개 헬퍼. pct는 0~1 분수(기존 스킬들의 heal 계산과
 ## 같은 단위, story_combat.gd skill_mul() 결과와 동일하게 소수로 받는다).
+## G-0399 세트 무예(F) — 네 점을 다 채운 세트의 무예(기력 0 · 쿨만). aoe = 둘레 r(웹 px × 0.02) · bolt = 기탄 사거리. 쓰면 true.
+var _set_cd := 0.0
+func cast_gear_set() -> bool:
+	var GS := preload("res://games/saga_story/data/story_gear_set.gd")
+	var L: Array = GS.skills_of(GS.worn_keys(StorySaveState))
+	if L.is_empty() or _set_cd > 0.0:
+		return false
+	var sk: Dictionary = L[0]
+	_set_cd = float(sk.cd)
+	var range_m: float = float(sk.get("r", 0.0)) * GS.PX_M if String(sk.effect) == "aoe" else ATTACK_RANGE * StoryCombat.BOLT_RANGE_MUL
+	_skill_fx("bolt" if String(sk.effect) == "bolt" else "aoe", range_m)
+	_skill_pose("bolt" if String(sk.effect) == "bolt" else "warrior_whirl")
+	_melee_hit(range_m, float(sk.mul))
+	return true
+
+
+func set_skill_cd() -> float:
+	return _set_cd
+
+
 func heal_pct(pct: float) -> void:
 	if pct <= 0.0:
 		return
@@ -107,7 +127,9 @@ func _attach_vignette() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	set_meta("mp_seen", mp)   # G-0399 고유 시전 효과가 쓴 기력을 셈
 	_attack_cd_left = maxf(0.0, _attack_cd_left - delta)
+	_set_cd = maxf(0.0, _set_cd - delta)
 	## G-0214 무예 재사용 — 성좌 배수만큼 쿨이 빨리(늦게) 돈다(시전 자리 수십 곳을 안 건드리고 이 한 곳에서)
 	var cd_delta := delta / StoryConstellation.mul("cd")
 	_cd_sweep = maxf(0.0, _cd_sweep - cd_delta)
@@ -248,6 +270,8 @@ func _physics_process(delta: float) -> void:
 		_cast_bolt()
 	if Input.is_action_just_pressed("story_skill_brace"):
 		_cast_brace()
+	if InputMap.has_action("story_set_skill") and Input.is_action_just_pressed("story_set_skill"):
+		cast_gear_set()
 	## **2026-09-13 추가 — 2~4차 전직**: `job` 문자열과의 정확 일치 대신
 	## 사슬 소속(네 갈래는 서로 안 섞이므로 여전히 최대 하나만 걸린다)으로
 	## 바꿨다 — 장군(general)으로 전직해도 무사 무예 넷(w_cut 등)을 계속

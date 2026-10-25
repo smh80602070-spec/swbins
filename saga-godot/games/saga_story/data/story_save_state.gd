@@ -365,6 +365,10 @@ func gear_totals() -> Dictionary:
 		totals.atk = float(totals.atk) + float(b.get("atk", 0.0))
 		totals.def = float(totals.def) + float(b.get("def", 0.0))
 		totals.hp = float(totals.hp) + float(b.get("hp", 0.0))
+	var sb: Dictionary = preload("res://games/saga_story/data/story_gear_set.gd").bonus_of(preload("res://games/saga_story/data/story_gear_set.gd").worn_keys(self))   # G-0399 세트 효과
+	totals.atk = float(totals.atk) + float(sb.atk)
+	totals.def = float(totals.def) + float(sb.def)
+	totals.hp = float(totals.hp) + float(sb.hp)
 	return totals
 
 

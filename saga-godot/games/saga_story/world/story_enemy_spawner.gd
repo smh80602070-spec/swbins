@@ -106,6 +106,7 @@ func _ready() -> void:
 	add_to_group("story_hunt_events")   # G-0212 채집이 배수를 묻는 곳
 	preload("res://games/saga_story/world/story_rune.gd").attach(self)   # G-0382 룬(사냥터에만)
 	preload("res://games/saga_story/world/story_elite.gd").attach(self)   # G-0389 엘리트(처치 N 마다)
+	preload("res://games/saga_story/world/story_hunt_wave.gd").attach(self)   # G-0399 몰이 파도(처치 150 마다)
 	for x: float in _map.enemy_positions_m():
 		spawn_at(x)
 	if event_seed < 0:
@@ -324,6 +325,9 @@ func _on_died() -> void:
 	var el := get_node_or_null("StoryElite")   # G-0389 처치 셈
 	if el != null:
 		el.call("on_kill")
+	var hw := get_node_or_null("StoryHuntWave")   # G-0399 몰이 셈
+	if hw != null:
+		hw.call("on_kill")
 	_respawn.call_deferred()
 
 
