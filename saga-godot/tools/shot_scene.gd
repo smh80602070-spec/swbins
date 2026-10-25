@@ -59,6 +59,7 @@ const CUTS := [
 		["call", "House", "_spawn_furniture_visual", [{"key": "dokja", "x": -2.0, "z": 0.6}]], ["call", "House", "_spawn_furniture_visual", [{"key": "deungjan", "x": 0.2, "z": 2.2}]]]],
 	["fs_finish_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_finish_menu"]]],
 	["fs_place_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_place_menu"]]],
+	["go_hero_duel", GO, [["static", "res://tools/shot_hero_duel.gd", "open", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 7.0]]],   # G-0397 등용 「무로 겨루자」 결투 판
 	["fs_pen", FOREST, [["free_modal"], ["static", "res://tools/shot_forest.gd", "show_pen", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 4.5]]],   # G-0396 작은 우리 닭·염소 GLB 몸
 	["fs_crops", FOREST, [["free_modal"], ["static", "res://tools/shot_forest.gd", "show_crops", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0]]],   # G-0391 집 앞 밭 네 칸(씨·싹·자람·다 자람)
 	["fs_bench", FOREST, [["static", "res://tools/shot_forest.gd", "open_bench", ["@tree"]]]],   # G-0196 제작대 화면(레시피 12 — 만들 수 있는 것 ✓)

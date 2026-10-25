@@ -23,6 +23,9 @@ const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
+const HeroDuel := preload("res://games/saga_go/data/hero_duel.gd")   # G-0397 「무로 겨루자」 = 실시간 결투
+const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
+const Adventure := preload("res://games/saga_go/data/adventure.gd")
 ## PersuadeRules는 class_name으로 전역 등록돼 있어(duel_rules.gd와 같은
 ## 경계) 여기서 다시 preload하지 않는다 — 이름이 겹치면 파싱 오류가 난다.
 
@@ -60,6 +63,11 @@ var _rig: Node = null
 const FRAME_STILL := 0.3   # m/s 밑이면 멈춘 것
 const FRAME_MOVING := 1.5  # m/s 넘으면 걷는 것
 var _player: Node3D = null
+var _body: Node3D = null   # 서 있는 인물 몸(결투 동안 숨김)
+var _duel_foes: Array = []   # G-0397 결투 판 적(인물 + 졸개)
+var _duel_down := false
+var _duel_wiped := false
+var _duel_fc: Node = null
 
 func _ready() -> void:
 	add_to_group("go_heroes") # 사진 도감(photo_album.gd)이 화면 안 인물을 찾는다
@@ -79,7 +87,8 @@ func _spawn_visual() -> void:
 	position = TestMap.world_pos(grid.x, grid.y, region_id) + Vector3(0, ground, 0)
 
 	## PLAN 106장 ④ — 캡슐 → VRoid 몸(인물 id 로 머리·옷 색 고정, ★5 는 금 테두리).
-	add_child(VroidBody.build(hero_id, int(_hero.rarity), null, true))   # G-0024 — dex 설치 시 같은 id 의 몸
+	_body = VroidBody.build(hero_id, int(_hero.rarity), null, true)   # G-0024 — dex 설치 시 같은 id 의 몸
+	add_child(_body)
 
 func _spawn_area() -> void:
 	var area := Area3D.new()
@@ -154,6 +163,8 @@ func _show_round() -> void:
 	_layer = ChoicePrompt.build(self, title, choices, true)   # G-0158·G-0174 — 창은 늘 아래(멈춰 서면 카메라가 인물을 비춘다)
 
 func _do_appeal(key: String) -> void:
+	if key == "might" and _start_duel():   # G-0397 무는 굴림 대신 싸워서
+		return
 	var r: Dictionary = _persuade.appeal(key)
 	_revealed = true
 	if not r.get("ok", false):
@@ -188,3 +199,92 @@ func _recruit() -> void:
 	Toast.show(self, "%s가 부대에 합류했다! \"%s\" (경험 +%d)" % [_hero.name, _hero.quote, int(exp_reward)], TOAST_SEC)
 	EventState.mark_resolved(name)
 	queue_free()
+
+
+## G-0397 — 설득 창을 닫고 인물이 서 있던 자리에 결투 판(인물 + 졸개)을 세운다. 들판 전투가 없으면(다른 씬·꺼짐) false → 옛 굴림.
+func _start_duel() -> bool:
+	var fc := get_tree().get_first_node_in_group("go_field_combat")
+	if not HeroDuel.on() or fc == null or not fc.has_signal("party_wiped") or not _duel_foes.is_empty():
+		return false
+	if _layer:
+		_layer.queue_free()
+		_layer = null
+	set_physics_process(false)
+	_end_frame()
+	var c := HeroDuel.camp(int(_hero.rarity))
+	var wl := Adventure.world_level()
+	var host := get_parent()
+	var e := FieldEnemy.new()
+	e.name = hero_id   # 사람 몸 = 노드 이름의 인물(field_enemy _build_visual)
+	e.setup("duel_hero", global_position + Vector3(0, 0.3, 0), 20260824 + 900)
+	var d: Dictionary = e.def.duplicate()
+	d["name"] = String(_hero.name)
+	d["hp"] = float(c.hp)
+	d["atk"] = float(c.atk)
+	e.def = d
+	e.max_hp = float(c.hp)
+	e.hp = float(c.hp)
+	_duel_foes.append(e)
+	var spots: Array = c.minions
+	for k in spots.size():
+		var m := FieldEnemy.new()
+		m.name = "HeroDuelGuard_%s_%d" % [hero_id, k]
+		m.setup("bandit", global_position + (spots[k] as Vector3) + Vector3(0, 0.3, 0), 20260824 + 901 + k)
+		_duel_foes.append(m)
+	for f: Node in _duel_foes:
+		f.set("respawns", false)
+		f.set("drops", false)   # 보상은 등용(옛 설득 성공과 같다) — 졸개로 냥을 캐지 않게
+		f.call("apply_world_level", wl)
+		host.add_child(f)
+	e.connect("died", func(_n: Node) -> void: _duel_down = true)
+	_duel_fc = fc
+	_duel_down = false
+	_duel_wiped = false
+	fc.connect("party_wiped", _on_duel_wiped)
+	if _body != null:
+		_body.visible = false
+	Toast.show(self, "⚔️ %s 이(가) 칼을 뽑았다 — 쓰러뜨리면 굴복한다(멀어지면 물러남)" % _hero.name, TOAST_SEC)
+	return true
+
+
+func _on_duel_wiped() -> void:
+	_duel_wiped = true
+
+
+func _process(_delta: float) -> void:
+	if _duel_foes.is_empty():
+		return
+	var pl := get_tree().get_first_node_in_group("player") as Node3D
+	var dist := pl.global_position.distance_to(global_position) if pl != null else 0.0
+	match HeroDuel.result(not _duel_down, _duel_wiped, dist):
+		"win":
+			_end_duel()
+			Toast.show(self, "%s — \"과연 대단하오. 그대를 따르겠소.\"" % _hero.name, TOAST_SEC)
+			_recruit()
+		"lose":
+			_end_duel()
+			_fail()
+		"flee":
+			_end_duel()
+			if _body != null:
+				_body.visible = true
+			_triggered = false
+			Toast.show(self, "%s 이(가) 칼을 거두었다 — 다시 다가가면 처음부터." % _hero.name, TOAST_SEC)
+
+
+func _end_duel() -> void:
+	for f: Variant in _duel_foes:
+		if is_instance_valid(f):
+			(f as Node).queue_free()
+	_duel_foes.clear()
+	if _duel_fc != null and is_instance_valid(_duel_fc) and _duel_fc.is_connected("party_wiped", _on_duel_wiped):
+		_duel_fc.disconnect("party_wiped", _on_duel_wiped)
+	_duel_fc = null
+
+
+## 점검용 — 결투 판 적 수(살아 있는 노드)
+func duel_count() -> int:
+	var n := 0
+	for f: Variant in _duel_foes:
+		n += 1 if is_instance_valid(f) else 0
+	return n

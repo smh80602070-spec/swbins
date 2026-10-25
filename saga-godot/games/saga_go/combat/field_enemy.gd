@@ -22,6 +22,9 @@ const KINDS := {
 		"reach": 1.8, "tell": 0.7, "cd": 1.6, "exp": 10.0},
 	"bandit": {"name": "떠돌이 도적", "hp": 320.0, "atk": 18.0, "speed": 4.2, "aggro": 12.0,
 		"reach": 2.0, "tell": 0.9, "cd": 2.0, "exp": 14.0},
+	## G-0397 등용 「무로 겨루자」 인물(data/hero_duel.gd 가 이름·체력·공격을 덮어쓴 사본을 쓴다) — 몸은 노드 이름(인물 id)의 사람 몸.
+	"duel_hero": {"name": "인물", "hp": 520.0, "atk": 18.0, "speed": 4.4, "aggro": 30.0,
+		"reach": 2.0, "tell": 0.8, "cd": 1.8, "exp": 0.0, "vroid": true},
 	## PLAN 106장 ⑦ — 원소 쓰는 적(퓨전 괴물). 원소 방패(shield)가 있는 동안 체력은 안 깎이고
 	## 방패만 깎인다(상성은 elements.gd shield_mul). 깨지면 BREAK_STAGGER 초 비틀거리고 그 뒤론
 	## 보통 적처럼 원소가 붙고 반응도 난다. 덤벼 맞히면 원소 효과(field_combat.gd take_damage).
