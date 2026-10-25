@@ -1633,7 +1633,7 @@
     "*.glb",
     "*.license.json"
    ],
-   "note": "K-0103 자체 짐승 몸 fox·birb·snake(K-0096 정본 creatures3d) 유니티판 — decode.mjs --glb --only 로 Meshopt·양자화·WebP 를 푼 한 파일 GLB(JPEG q90, 뼈·동작 7 그대로). glTFast 6.14 가 meshopt·WebP 를 못 읽어서. 원본은 _out(정본에서 다시 만듦). 쓰는 곳 U-0100",
+   "note": "K-0103 자체 짐승 몸 fox·birb·snake(K-0096 정본 creatures3d) 유니티판 — decode.mjs --glb --only 로 Meshopt·양자화·WebP 를 푼 한 파일 GLB(JPEG q90, 뼈·동작 7 그대로). glTFast 6.14 가 meshopt·WebP 를 못 읽어서. 원본은 _out(정본에서 다시 만듦). 쓰는 곳 U-0100 · K-0186 farm_hen·farm_goat(U-0173 3마을 가축)",
    "targets": [
     {
      "track": "unity",
@@ -1651,7 +1651,7 @@
     "*.glb",
     "*.license.json"
    ],
-   "note": "K-0166 자체 짐승·괴물 몸 138(정본 creatures3d) 고돗 엔진판 — godot_safe.mjs saga-assets/creatures3d tools/glb-compress/_out/godot_safe/creatures 로 Meshopt·양자화·WebP 를 모두 푼 GLB(JPEG q90). Godot 4.7.2 가 세 필수 확장을 못 읽어 임포트 실패(G-0274). 원본은 _out(정본에서 다시 만듦)",
+   "note": "K-0166 자체 짐승·괴물 몸 138(정본 creatures3d) 고돗 엔진판 — godot_safe.mjs saga-assets/creatures3d tools/glb-compress/_out/godot_safe/creatures 로 Meshopt·양자화·WebP 를 모두 푼 GLB(JPEG q90). Godot 4.7.2 가 세 필수 확장을 못 읽어 임포트 실패(G-0274). 원본은 _out(정본에서 다시 만듦) · K-0194 farm_hen·farm_goat(G-0311) + K-0180 2나락 자체 괴물 일곱(그때 고돗 대상 빠짐)",
    "targets": [
     {
      "track": "godot",

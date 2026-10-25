@@ -381,7 +381,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1851,
+   "count": 1933,
    "where": [
     "saga-assets/icons/license",
     "saga-assets/portraits-expr",
@@ -858,18 +858,6 @@
    ]
   },
   {
-   "tool": "cutout_parts.py (Blender 옆모습 부위 렌더 + 무기 부위)",
-   "model": "",
-   "license": "MIT",
-   "count": 4,
-   "where": [
-    "saga-assets/web2d/cutout/hl_mukhyang",
-    "saga-assets/web2d/cutout/sg_zhugeliang",
-    "saga-web/shared/assets/web2d/cutout/hl_mukhyang",
-    "saga-web/shared/assets/web2d/cutout/sg_zhugeliang"
-   ]
-  },
-  {
    "tool": "make_realm_ui.py",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
@@ -992,7 +980,7 @@
    "tool": "ground_tile.py",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
-   "count": 18,
+   "count": 22,
    "where": [
     "saga-assets/web2d/tile",
     "saga-web/shared/assets/web2d/tile"
@@ -1078,7 +1066,7 @@
    "tool": "build_village.py",
    "model": "",
    "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
-   "count": 552,
+   "count": 582,
    "where": [
     "saga-assets/world/real",
     "saga-assets/world/toon",
