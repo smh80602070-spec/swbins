@@ -88,8 +88,8 @@
   function officerUnit(id, side, stats) {
     var s = stats || (OFF() ? OFF().stats(id) : { might: 60, wisdom: 60, command: 60 });
     var hp = 50 + s.command;
-    return { uid: side + ':' + id, id: id, side: side, kind: 'officer', hp: hp, max: hp, atk: 10 + s.might / 5, def: s.might / 10,
-      mov: MOV, rng: s.wisdom >= s.might ? 2 : 1, x: 0, y: 0, moved: false, acted: false, wis: s.wisdom };   // wis — W-0401 책략
+    var u = { uid: side + ':' + id, id: id, side: side, kind: 'officer', hp: hp, max: hp, atk: 10 + s.might / 5, def: s.might / 10,
+      mov: MOV, rng: s.wisdom >= s.might ? 2 : 1, x: 0, y: 0, moved: false, acted: false, wis: s.wisdom }; return global.DG.treasureSet && global.DG.treasureSet.tactic ? global.DG.treasureSet.tactic(u) : u;   /* W-0440 세트 전법 */   // wis — W-0401 책략
   }
   /** 부대 유닛 — 병력에서 */
   function troopUnit(n, side, troops) {

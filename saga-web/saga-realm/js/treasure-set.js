@@ -6,16 +6,16 @@
  *   셈     세트 조각을 지닌 같은 세력(살아 있는) 장수 수 n — 2 = 그 세트 능력치 +PCT2 · 3 = +PCT3(누적 아님, 큰 쪽)
  *   닿는 곳 data-item statBonus(heroId) 의 pct 칸(hero.js gearOf 계약 그대로) — 화면·판정이 같은 값
  * SETS 는 지금 있는 보물 아홉으로 셋 — K 생성기 표(W-0435: 보물 60·세트 10)가 오면 줄만 늘린다. 세이브 안 바뀜.
- * 세트 전법(SRPG 전법 칸)은 다음 조각 — 지금은 능력치만. 손잡이 rt.treasureSet(1, 0 = 끔).
+ * 세트 전법 — 둘 이상 모이면 격자 전술 유닛에 진형 효과 하나(무장 돌격진 공격 +3 · 군사 원거리 계책 사거리 +1 · 군주 진군 이동 +1). 손잡이 rt.treasureSet(1, 0 = 끔).
  */
 (function (global) {
   'use strict';
 
   var PCT2 = 0.05, PCT3 = 0.1;
   var SETS = [
-    { key: 'set_mujang', name: '무장의 채비', stat: 'might',   pieces: ['itm_ironblade', 'itm_warhorse', 'itm_armor'] },
-    { key: 'set_gunsa',  name: '군사의 채비', stat: 'wisdom',  pieces: ['itm_scroll', 'itm_compass', 'itm_jade'] },
-    { key: 'set_gunju',  name: '군주의 채비', stat: 'command', pieces: ['itm_seal', 'itm_drum', 'itm_boneseal'] }
+    { key: 'set_mujang', name: '무장의 채비', stat: 'might',   tactic: { name: '돌격진', atk: 3 }, pieces: ['itm_ironblade', 'itm_warhorse', 'itm_armor'] },
+    { key: 'set_gunsa',  name: '군사의 채비', stat: 'wisdom',  tactic: { name: '원거리 계책', rng: 1 }, pieces: ['itm_scroll', 'itm_compass', 'itm_jade'] },
+    { key: 'set_gunju',  name: '군주의 채비', stat: 'command', tactic: { name: '진군', mov: 1 }, pieces: ['itm_seal', 'itm_drum', 'itm_boneseal'] }
   ];
 
   function core() { return global.DG.core; }
@@ -35,8 +35,15 @@
     if (p) { out.pct[s.stat] += p; }
     return p;
   }
+  /** 세트 전법 — 격자 전술(tactics.js officerUnit) 유닛에 덧붙임: 그 장수 세트가 둘 이상 모였을 때만. 붙은 전법 이름은 u.tactic */
+  function tactic(u) {
+    var off = global.DG.off; if (!on() || !u || !off || !off.has(u.id)) { return u; }
+    var r = off.rec(u.id), s = r && r.item ? setOf(r.item) : null; if (!s || !s.tactic || r.dead || countIn(r.force, s) < 2) { return u; }
+    var t = s.tactic; if (t.atk) { u.atk += t.atk; } if (t.rng) { u.rng = Math.min(3, u.rng + t.rng); } if (t.mov) { u.mov += t.mov; }
+    u.tactic = t.name; return u;
+  }
   function label(itemId) { var s = setOf(itemId); return s ? s.name : ''; }
 
   global.DG = global.DG || {};
-  global.DG.treasureSet = { SETS: SETS, PCT2: PCT2, PCT3: PCT3, setOf: setOf, countIn: countIn, apply: apply, label: label };
+  global.DG.treasureSet = { SETS: SETS, PCT2: PCT2, PCT3: PCT3, setOf: setOf, countIn: countIn, apply: apply, tactic: tactic, label: label };
 })(window);

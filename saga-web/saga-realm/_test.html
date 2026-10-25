@@ -7703,6 +7703,20 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         return ok ? ('하나 0 · 둘 +5% · 다른 세력·죽음 안 셈 · 셋 +10% · 끔 0') : ('실패 ' + JSON.stringify({ one: one, two: two, two2: two2, other: other, dead: dead, three: three, off: off }));
       } finally { R.state().officers = JSON.parse(keep); }
     });
+    t('W-0440 ② 세트 전법 — 같은 세력이 세트 조각 둘 이상 = 격자 전술 장수 유닛에 진형(무장 돌격진 공격 +3·군사 사거리 +1(최대 3)·군주 이동 +1) · 하나면 없음', function () {
+      var TS = DG.treasureSet, R = DG.rtk; if (!TS || !TS.tactic) { return '실패 tactic 없음'; }
+      var m = R.state().officers, keep = JSON.stringify(m);
+      try {
+        var mk = function (id, force, item) { m[id] = { force: force, city: null, loyal: 50, done: false, hurt: 0, feats: 0, camp: null, journey: null, item: item, dead: false }; };
+        var U = function (id) { return { id: id, atk: 20, rng: 2, mov: 3 }; };
+        mk('__a', 'fX', 'itm_ironblade'); var lone = TS.tactic(U('__a'));
+        mk('__b', 'fX', 'itm_armor'); var mj = TS.tactic(U('__a'));
+        mk('__c', 'fY', 'itm_scroll'); mk('__d', 'fY', 'itm_jade'); var gs = TS.tactic(U('__c'));
+        mk('__e', 'fZ', 'itm_seal'); mk('__f', 'fZ', 'itm_drum'); var gj = TS.tactic(U('__e'));
+        var ok = !lone.tactic && lone.atk === 20 && mj.tactic === '돌격진' && mj.atk === 23 && gs.rng === 3 && gs.tactic === '원거리 계책' && gj.mov === 4;
+        return ok ? ('하나 없음 · 돌격진 공격 23 · 원거리 계책 사거리 3 · 진군 이동 4') : ('실패 ' + JSON.stringify({ lone: lone, mj: mj, gs: gs, gj: gj }));
+      } finally { R.state().officers = JSON.parse(keep); }
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
