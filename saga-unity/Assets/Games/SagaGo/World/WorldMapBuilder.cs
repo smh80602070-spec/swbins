@@ -57,6 +57,8 @@ namespace Saga.Go.World
             if (GetComponent<StationField>() == null) gameObject.AddComponent<StationField>(); // 109-14-36 옛 역참 터(돌담·마구간)
             if (GetComponent<KnotField>() == null) gameObject.AddComponent<KnotField>(); // 109-14-52 8부 무대 — 여섯 매듭·먹구름 눈
             if (GetComponent<NightEchoField>() == null) gameObject.AddComponent<NightEchoField>(); // 109-14-56b 결말 뒤 밤의 잔불
+            if (GetComponent<BloodMoonField>() == null) gameObject.AddComponent<BloodMoonField>(); // tasks U-0227 핏빛 달 밤(고돗 G-0379)
+            if (GetComponent<RiddleField>() == null) gameObject.AddComponent<RiddleField>(); // tasks U-0227 들판 수수께끼(웹 W-0426)
             if (GetComponent<MountField>() == null) gameObject.AddComponent<MountField>(); // 109-15 탈것·비행
             if (GetComponent<Saga.Go.UI.AchieveUi>() == null) gameObject.AddComponent<Saga.Go.UI.AchieveUi>(); // 109-14-25 업적 창(Y)·알림
             if (GetComponent<Saga.Go.UI.HuntLogUi>() == null) gameObject.AddComponent<Saga.Go.UI.HuntLogUi>(); // U-0031 사냥 기록 창(K)·알림

@@ -1022,7 +1022,7 @@ namespace Saga.Go.Combat
             _headUi.gameObject.SetActive(false);
             RefreshElementFx();
             if (DomainFoe || StoryFoe) { if (IsWeeklyBoss || IsStoryBoss) { AchieveState.Bump("boss"); Saga.Go.Audio.GoSfx.Play("victory"); Saga.Core.SagaVoice.System("victory"); } Killed?.Invoke(this); Invoke(nameof(HideBody), 2.5f); return; } // 109-14-9 경험·전리품·일과 없음(109-14-12 임무 적도)
-            if (!(IsGuardian && BossDefeated)) PlayerStats.AddExp(ExpReward); // 109-14-10 다시 선 수호장은 경험 없이 꽃만
+            if (!(IsGuardian && BossDefeated)) PlayerStats.AddExp(ExpReward * GoBloodMoon.Mul); // 109-14-10 다시 선 수호장은 경험 없이 꽃만 · tasks U-0227 핏빛 달 밤 ×2
             DailyTaskState.ReportProgress(DailyTaskState.Kind.FieldKill, 1); // 109-14-8 일일 의뢰 — 들판 적
             AchieveState.Bump("kills"); // 109-14-25 업적 — 들판 처치
             GoHuntResearch.OnKill(kind, rsTags); // tasks U-0220 종 연구 과제(막타·쳐냄·던짐 — 덤·알림)
@@ -1050,8 +1050,10 @@ namespace Saga.Go.Combat
             {
                 // 109-14-4 방패 두른 원소 괴물 — 무예 쪽지 하나(웹 ⑲-4 얻는 곳)
                 string mats = TalentState.Add(GoTalent.EliteMats);
-                WeaponState.AddOre(GoWeapons.EliteOre); // 109-14-5a 강화석 하나
-                mats += (mats.Length > 0 ? " · " : "") + string.Format(GoLocalization.T("weapon.ore_plus", "강화석 +{0}"), GoWeapons.EliteOre);
+                for (int bm = 1; bm < GoBloodMoon.Mul; bm++) TalentState.Add(GoTalent.EliteMats); // tasks U-0227 핏빛 달 밤 재료 ×2
+                WeaponState.AddOre(GoWeapons.EliteOre * GoBloodMoon.Mul); // 109-14-5a 강화석 하나(핏빛 달 밤 ×2)
+                mats += (mats.Length > 0 ? " · " : "") + string.Format(GoLocalization.T("weapon.ore_plus", "강화석 +{0}"), GoWeapons.EliteOre * GoBloodMoon.Mul);
+                if (GoBloodMoon.Active) mats += " · 🌕×" + GoBloodMoon.Mul;
                 mats += " · " + ArtifactState.OnElite(); // 109-14-5b 보패 ★4 하나
                 if (mats.Length > 0) FieldDamageText.Spawn(transform.position + Vector3.up * (BodyHeight + 2.6f), mats, new Color(0.95f, 0.85f, 0.55f), 0.9f);
             }

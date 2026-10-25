@@ -326,6 +326,27 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] track 흔적 {traces.Count}곳 · 둘레 {tf.ShownCount} · 첫 흔적 {traces[0].Key} {traces[0].Kind} @ {traces[0].Pos} · 줄 {Saga.Go.Data.GoTrack.Line(traces[0].Pos)}");
                         break;
                     }
+                    case "bloodmoon":   // U-0227 사가만리 — 붉은 밤 켬(덧칠·토스트)
+                    {
+                        var bm = Saga.Go.World.BloodMoonField.Instance;
+                        if (bm == null) { Skip(act); return; }
+                        bm.SetRed(true);
+                        Debug.Log($"[ShowcaseGui] bloodmoon 붉음 {Saga.Go.Data.GoBloodMoon.Active} · 덧칠 {bm.VeilShown}");
+                        break;
+                    }
+                    case "riddle":   // U-0227 사가만리 — 구역 4 꽃 고리 앞 6m 로, 고리를 본다
+                    {
+                        var rf = Saga.Go.World.RiddleField.Instance;
+                        var who = GameObject.FindWithTag("Player");
+                        if (rf == null || who == null) { Skip(act); return; }
+                        rf.Build(4);
+                        var fl = rf.Spots.Find(x => x.Kind == Saga.Go.Data.GoRiddle.Kind.Flowers);
+                        if (fl == null) { Skip(act); return; }
+                        Teleport(who.transform, fl.Pos + new Vector3(0f, 0.3f, -6f));
+                        who.transform.rotation = Quaternion.LookRotation(Vector3.forward);
+                        Debug.Log($"[ShowcaseGui] riddle 구역 4 수수께끼 {rf.Spots.Count} · 꽃 고리 {fl.Pos}");
+                        break;
+                    }
                     case "gozone":   // U-0226 사가만리 — 구역 4 동쪽 경계 8m 안에서 동쪽(구역 5)을 본다(이웃 띠 24m 너머가 비는지)
                     {
                         var who = GameObject.FindWithTag("Player");
