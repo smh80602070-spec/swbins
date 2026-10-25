@@ -177,6 +177,7 @@ namespace Saga.EditorTools
                 if (!PlaytestCameraZoom.Run("PlaytestDungeonHeadless", "dungeon")) _hadError = true; // tasks U-0161 휠 줌 한계(줌 되돌림)
                 if (!PlaytestHurtSignal.Run("PlaytestDungeonHeadless", "dg")) _hadError = true; // tasks U-0105 "내가 맞았다" 신호 — 진짜 TakeDamage 번쩍·붉은 숫자·흔들림·맥박(체력·무적·피격자 되돌림)
                 if (!PlaytestTalkFace.Check("PlaytestDungeonHeadless", false)) _hadError = true; // tasks U-0233 얼굴
+                if (!PlaytestPerfBudget.Check("PlaytestDungeonHeadless", "dungeon")) _hadError = true; // tasks U-0234 판별 폰 예산(막 진단 앞 — 장면 그대로)
                 if (!PlaytestZoneCut.Run("PlaytestDungeonHeadless", "dungeon")) _hadError = true; // tasks U-0225 구역 넘김 막
                 CheckTemple(); // PLAN.md 106-2 — 플레이어를 순간이동시키므로 맨 끝(finally 에서 되돌린다).
                 StartCutCameraProbe(); // PLAN.md 106-3 — 6·8프레임째에 이어서 본다.

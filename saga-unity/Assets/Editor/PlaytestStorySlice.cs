@@ -224,6 +224,7 @@ namespace Saga.EditorTools
                     if (!PlaytestStoryBond.Run()) { Fail(); return; } // tasks U-0208 동료 우정 — 처치·교대·단·지기 곱·꼬리표·세이브(우정·나와 있는 동료 되돌림)
                     if (!PlaytestStoryMonsterBook.Run()) { Fail(); return; } // tasks U-0222 괴물 카드 도감 — 종·확률·다 모음·곱·끔·저장·진짜 처치(카드·사명·문파·우정·콤보·판 등급 되돌림)
                     if (!PlaytestTalkFace.Check("PlaytestStorySlice", true)) { Fail(); return; } // tasks U-0233 얼굴
+                    if (!PlaytestPerfBudget.Check("PlaytestStorySlice", "story")) { Fail(); return; } // tasks U-0234 판별 폰 예산
                     if (!PlaytestZoneCut.Run("PlaytestStorySlice", "story")) { Fail(); return; } // tasks U-0225 구역 넘김 막
                     _enemyIndex = 0;
                     _phase = Phase.TalkNpc;
