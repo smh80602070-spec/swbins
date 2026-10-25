@@ -228,10 +228,18 @@
     if (a && now - a.at >= ms) { delete lastAtk[k]; }
     return { clip: clip, t: t };
   }
+  /** W-0446 — 컷아웃은 옆모습 한 장뿐이라 좌우로 볼 때만. mode2d dirOf8 과 같은 여덟 칸 셈으로 ±2(옆)만 참, 위아래·대각·front/back 은 거짓(→ 8·16방향 시트).
+   *  방향 정보가 없으면(4종횡 옆보기) 늘 참. 순수(진단) */
+  function sideView(o) {
+    var dx = +o.dirX || 0, dy = +o.dirY || 0;
+    if (dx || dy) { return Math.abs(Math.round(Math.atan2(dx, dy) / (Math.PI / 4))) === 2; }
+    return o.facing !== 'front' && o.facing !== 'back';
+  }
   /** mode2d.draw 의 갈래 — 손잡이 cutout2d.on 이 0 이면 아무것도 안 한다 */
   function drawFor(ctx, o, bodyPx) {
     var mode = +tuned('cutout2d.on', 1);   // W-0402 기본 켬 — 그림 묶음이 있는 풀만
     if (!mode || !ctx || !o) { return false; }
+    if (mode < 2 && +tuned('cutout2d.sideOnly', 1) && !sideView(o)) { return false; }   // W-0446 위아래·대각은 옛 방향 시트(앞·뒤 컷아웃 K-0198 오기 전 임시, 사용자 "앞모습 뒷모습이 있어야지")
     var R = null;
     if (mode >= 2) { R = stubOf(o.pool); }
     else { var id = rigIdFor(o.pool); R = id ? rigOf(id) : null; }
@@ -272,5 +280,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.cutout2d = { BONES: BONES, PARENT: PARENT, REST: REST, CLIPS: CLIPS, sample: sample, phaseOf: phaseOf, pose: pose, stubRig: stubRig, has: has, drawFor: drawFor, nameOf: nameOf, packClips: packClips, WPN_ATK: WPN_ATK, PACK_OK: PACK_OK, demo: demo, bounds: bounds, base: base, rigIdFor: rigIdFor, holdClip: holdClip };
+  global.DG.cutout2d = { BONES: BONES, PARENT: PARENT, REST: REST, CLIPS: CLIPS, sample: sample, phaseOf: phaseOf, pose: pose, stubRig: stubRig, has: has, drawFor: drawFor, nameOf: nameOf, packClips: packClips, sideView: sideView, WPN_ATK: WPN_ATK, PACK_OK: PACK_OK, demo: demo, bounds: bounds, base: base, rigIdFor: rigIdFor, holdClip: holdClip };
 })(window);
