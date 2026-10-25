@@ -409,7 +409,7 @@
     return '<div class="stat-row"><span class="muted">보물</span><b>' + ico('equip', it.id, 22, it.emoji) + ' ' +
       esc(it.name) + (gr && gr.name ? ' <small style="color:' + gr.color + '">' + esc(gr.name) + '</small>' : '') +
       ' <span class="muted">(' + (off().STAT_KOR[it.stat] || it.stat) +
-      ' +' + it.bonus + ')</span></b></div>';
+      ' +' + it.bonus + ')</span>' + (global.DG.treasureSet && global.DG.treasureSet.label(it.id) ? ' <small class="muted">🧩 ' + esc(global.DG.treasureSet.label(it.id)) + '</small>' : '') + '</b></div>';   // W-0440 세트 이름
   }
 
   /** 명마 한 줄 + 바꾸기 단추(mount.js) — 우리 세력 장수만. 말이 하나도 안 열렸으면 감춘다 */

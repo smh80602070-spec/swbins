@@ -68,6 +68,7 @@
     if (!off || !off.has(heroId)) { return out; }
     var it = itemById(off.rec(heroId).item);
     if (it) { out.flat[it.stat] += it.bonus; }
+    if (global.DG.treasureSet) { global.DG.treasureSet.apply(heroId, out); }   // W-0440 같은 세력이 나눠 지닌 세트
     return out;
   }
 

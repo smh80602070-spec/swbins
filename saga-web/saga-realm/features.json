@@ -1754,5 +1754,22 @@
   "ticket": "W-0424",
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shot-realm-recommend.mjs 폰 「이번 달」 천거 줄 Read ○ · 내 세력만(AI 안 씀) · 고돗과 같은 달은 아님(웹은 FNV)."
+ }, {
+  "id": "rt.treasure-set",
+  "name": "보물 세트(W-0440 · W-0435 ⑤) — 같은 세력 장수들이 한 세트 보물을 나눠 지니면 그 장수들 능력치 +5%(둘)·+10%(셋) · statBonus pct · 장수 창 보물 줄에 🧩 세트 이름 · 손잡이 rt.treasureSet (세트 전법은 다음 조각)",
+  "files": [
+   "js/treasure-set.js",
+   "js/data-item.js",
+   "js/ui-rtk-sheets.js"
+  ],
+  "tests": [
+   "W-0440"
+  ],
+  "level": "D1",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "W-0440",
+  "since": "2026-10-25",
+  "note": "D1(오퍼스 10-25): 진단 하나 461/461 · 촬영 안 함(장수 창까지 가는 촬영 장면 없음 — 눈 확인 남음) · 세트 전법(SRPG) 미착수."
  }
 ]
