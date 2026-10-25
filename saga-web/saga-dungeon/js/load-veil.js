@@ -12,17 +12,17 @@
 (function (global) {
   'use strict';
   var doc = global.document;
-  var el = null, bar = null, key = null, armAt = 0, armed = false, shownAt = 0, maxP = 0, hiding = false;
+  var busyAt = 0, el = null, bar = null, key = null, armAt = 0, armed = false, shownAt = 0, maxP = 0, hiding = false;
   var MIN_MS = 300;
 
   function tuned(k, d) { var C = global.DG && global.DG.core; return C && C.tuned ? C.tuned(k, d) : d; }
   function now() { return (global.performance && global.performance.now) ? global.performance.now() : Date.now(); }
   function ratio() { var A = global.DG && global.DG.asset3d; return A && A.readyRatio ? A.readyRatio() : 1; }
   /** 걷을 때인가 — 'done'(다 옴)·'ratio'(시야 안 80%)·'max'(상한)·'' */
-  function shouldHide(p, r, ms) { if (ms <= MIN_MS) { return ''; } if (p === 0) { return 'done'; } if (r >= tuned('loadVeil.ratio', 0.8)) { return 'ratio'; } if (ms > tuned('loadVeil.maxMs', 8000)) { return 'max'; } return ''; }
+  function shouldHide(p, r, ms) { if (ms <= MIN_MS) { return ''; } if (p === 0) { return 'done'; } if (r >= tuned('loadVeil.ratio', 2)) { return 'ratio'; } if (ms > tuned('loadVeil.maxMs', 15000)) { return 'max'; } return ''; }   // W-0449 시야 80% 걷기 끔(남은 20% 가 눈앞에서 솟았다 — 손잡이 ratio<1 이면 옛) · 상한 8 → 15초
   function is3d() { var D3 = global.DG && global.DG.dungeon3d; return !!(D3 && ((D3.active && D3.active()) || (D3.wanted && D3.wanted()))); }
   /** W-0405 3D 몸 받기 줄 — 2D 면 0(2D 는 3D 몸을 안 그리는데 뒤에서 받는 GLB 를 기다려 마을·층 넘김이 최대 8초 막에 덮였다) */
-  function pending() { var A = global.DG && global.DG.asset3d; return is3d() && A && A.hiPending ? A.hiPending() : 0; }
+  function pending() { var A = global.DG && global.DG.asset3d, Z = global.DG && global.DG.zoneCut; return (is3d() && A && A.hiPending ? A.hiPending() : 0) + (Z && Z.netBusy && Z.netBusy() ? 1 : 0); }   // W-0449 + 페이지가 받는 중인 그림·모델(2D 그림·낮은 줄 마을 사람 몸도)
   function scen() { var S = global.DG && global.DG.scenario; return !!(S && S.isOpen && S.isOpen()); }
   function area() {
     var D = global.DG || {}, T = D.town, G = D.dungeon;
@@ -80,7 +80,7 @@
     if (!cutEl || cutEl.style.opacity !== '1') { return; }
     var ms = now() - cutAt;
     var D3 = global.DG && global.DG.dungeon3d, d3 = !!(D3 && D3.active && D3.active());   // 2D 는 3D 짓기·그림 줄을 안 기다린다(0.18초 넘김만)
-    if (ms < 180 || (d3 && ms < tuned('loadVeil.cutMax', 1600) && (cutBusy() || pending() > 0))) { return; }
+    if (ms < 180 || (ms < tuned('loadVeil.cutMax', 12000) && ((d3 && cutBusy()) || pending() > 0))) { return; }   // W-0449 상한 1.6 → 12초 · 2D 도 받는 중인 그림을 기다림
     cutEl.style.transition = 'opacity .3s ease-out'; cutEl.style.opacity = '0';
   }
   function hook() { var C = global.DG && global.DG.core; if (hooked || !C || !C.on) { return; } hooked = true; ['dungeon:room', 'dungeon:floor', 'dungeon:enter', 'dungeon:end'].forEach(function (e) { C.on(e, function () { cut(); }); }); }
@@ -101,7 +101,8 @@
     if (el && !hiding) {
       var p = pending(); maxP = Math.max(maxP, p);
       if (bar) { bar.style.width = Math.round(100 * (1 - p / maxP)) + '%'; }
-      var hw = shouldHide(p, ratio(), t - shownAt); if (hw) { hide(hw); } else if (scen() && !town) { hide('scene'); } else if (a !== key || !a) { hide('area'); }
+      if (p > 0) { busyAt = t; }   // W-0449 받기 사이 빈틈(그림 하나 받고 다음 요청)에 걷히지 않게 — 0.4초 조용해야 done
+      var hw = shouldHide(p > 0 || t - busyAt < tuned('loadVeil.quiet', 400) ? Math.max(1, p) : 0, ratio(), t - shownAt); if (hw) { hide(hw); } else if (scen() && !town) { hide('scene'); } else if (a !== key || !a) { hide('area'); }
     }
   }
 

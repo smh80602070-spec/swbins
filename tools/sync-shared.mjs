@@ -68,7 +68,7 @@ const FILES = [
   ['js/toon3d.js', 'js/toon3d.js', ['saga-go', 'saga-dungeon']],
   ['css/ui-kit.css', 'css/ui-kit.css', ['saga-go', 'saga-realm', 'saga-dungeon', 'saga-forest', 'saga-story']],
   ['js/menu-grid.js', 'js/menu-grid.js', ['saga-go', 'saga-realm', 'saga-dungeon', 'saga-forest', 'saga-story']],   // W-0253 ☰ 메뉴 화면 — 판 core.js 에 DG.cfg.menu.keep 이 있어야 켜진다   // W-0252 공용 창 틀(메뉴 UI 갈아엎기) — 판을 입히는 티켓(W-0254·0255)이 판을 더한다
-  ['js/zone-cut.js', 'js/zone-cut.js', ['saga-go', 'saga-forest', 'saga-story', 'saga-realm']],   // W-0414 구역 넘김 막(2나락은 제 load-veil) — 판 js/zone-wire.js 가 경계에 건다
+  ['js/zone-cut.js', 'js/zone-cut.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // W-0414 구역 넘김 막(2나락은 제 load-veil + W-0449 받는 중 셈·첫 진입 막) — 판 js/zone-wire.js 가 경계에 건다
   ['js/goals-panel.js', 'js/goals-panel.js', ['saga-go', 'saga-realm', 'saga-dungeon', 'saga-forest', 'saga-story']],   // W-0380 「오늘」 창 — 판 js/goals-adapter.js 가 model 을 준다
   ['js/me-panel.js', 'js/me-panel.js', ['saga-go', 'saga-realm', 'saga-dungeon', 'saga-forest', 'saga-story']],   // W-0361 「내 정보」 창 — 판 js/me-adapter.js 가 model 을 준다
   ['js/dragdrop.js', 'js/dragdrop.js', ['saga-go', 'saga-dungeon', 'saga-story']],   // W-0362 끌어 놓기 — 판 js/dd-adapter.js 가 받는다(3마을 겉옷·5천하 보물 자동 배정은 범위 밖)

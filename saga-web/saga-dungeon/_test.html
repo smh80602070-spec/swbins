@@ -168,6 +168,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="assets/sprites2d/people-manifest.js"></script>
 <script src="js/asset3d-people.js"></script>
 <script src="js/asset3d.js"></script>
+<script src="js/zone-cut.js"></script>
 <script src="js/load-veil.js"></script>
 <script src="js/spawn-view.js"></script>
 <script src="js/terrain3d.js"></script>
@@ -9508,7 +9509,7 @@ window.requestAnimationFrame = function () { return 0; };
       C.setTune('asset3d.glb', 0); var s3 = A.build('gear:helmet', 'w0325c', 1, null, mk), shape3 = s3.children[0]; C.setTune('asset3d.glb', keepGlb === 1 ? null : keepGlb);
       var st1 = s1.userData.assetState, hid = !!g1 && (st1 === 'fail' ? g1.visible === true : (st1 === 'shape' ? g1.visible === false : true));   // 받기 실패(로더 없음)면 상자가 다시 보여야 한다
       var ok = [hid, !g2 && s2.children.length > 0 && s2.children[0].visible !== false, !!shape3 && shape3.visible !== false && !A.ghostOf(s3),
-        V.shouldHide(5, 0.3, 200) === '', V.shouldHide(0, 0, 400) === 'done', V.shouldHide(5, 0.85, 1000) === 'ratio', V.shouldHide(5, 0.3, 8100) === 'max', V.shouldHide(5, 0.3, 7000) === ''];
+        V.shouldHide(5, 0.3, 200) === '', V.shouldHide(0, 0, 400) === 'done', V.shouldHide(5, 0.85, 1000) === '', V.shouldHide(5, 0.3, 15100) === 'max', V.shouldHide(5, 0.3, 8100) === ''];   // W-0449 시야 비율 걷기 끔·상한 15초
       return ok.every(Boolean) && ('대역 숨김 · 손잡이 1 = 옛 상자 · GLB 끔 = 도형 그대로 · 가림막 done/ratio/max') || '실패 ' + ok.join(',');
     });
 
