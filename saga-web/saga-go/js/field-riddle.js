@@ -49,7 +49,7 @@
   function solve(r) {
     var s = st(); if (s.done[r.id]) { return false; }
     var before = bagAdd();
-    s.done[r.id] = 1; s.seeds = (s.seeds || 0) + 1;
+    s.done[r.id] = 1; s.seeds = (s.seeds || 0) + 1; if (r.kind === 'stone') { opened[r.id] = { x: r.x, y: r.y, t: Date.now() }; }   // W-0432 열린 돌 3초
     var nm = r.kind === 'stone' ? '돌 밑에서' : (r.kind === 'ring' ? '꽃 고리를 다 돌아' : '바람개비가 돌아');
     toast('🌰 ' + nm + ' 씨앗을 찾았다 (' + s.seeds + ')' + (bagAdd() > before ? ' — 🎒 행낭 상한 +' + BAG_ADD : ''));
     var c = core(); if (c && c.emit) { c.emit('riddle:solve', { id: r.id, kind: r.kind, seeds: s.seeds }); }
@@ -86,10 +86,13 @@
 
   /** world 2D 그리기 — 안 푼 것만, 코드 도형 */
   /** K-0195 그림(shared/assets/world2d) — 못 받았으면 false, 부른 쪽이 코드 도형 */
-  var sprOk = {};   // 고리 id → 지난 그림이 깔렸나(near() 는 매번 새 객체라 거기 달면 안 남는다)
+  var sprOk = {}, opened = {}, OPEN_MS = 3000;   // W-0432 들춘 돌 id → {x, y, t} — 그 자리에 열린 돌(puzzle_stone_01_open)이 옅어지며 3초(메모리)
+  function openLeft(id, now) { var o = opened[id]; if (!o) { return 0; } var a = 1 - ((now || Date.now()) - o.t) / OPEN_MS; if (a <= 0) { delete opened[id]; return 0; } return a; }   // 고리 id → 지난 그림이 깔렸나(near() 는 매번 새 객체라 거기 달면 안 남는다)
   function sprite(ctx, id, x, y, h, alpha) { var M = global.DG.mode2d; return !!(M && M.drawSprite && M.drawSprite(ctx, { id: id, x: x, y: y, h: h, alpha: alpha })); }
   function draw2d(ctx, pos, sc, project, now, items, bk) {
     if (!on() || !ctx) { return; }
+    Object.keys(opened).forEach(function (id) { var o = opened[id], a = openLeft(id); if (!a || Math.hypot(o.x - pos.x, o.y - pos.y) > 140 * KD()) { return; } var u = (o.x - pos.x) * sc, v = (o.y - pos.y) * sc;
+      items.push({ v: v, draw: function () { var pr = project(u, v); if (pr.s < 0.2) { return; } sprite(ctx, 'puzzle_stone_01_open', pr.x, pr.y, 40 * Math.max(0.5, Math.min(1.8, pr.s)) * (bk || 1), a); } }); });
     near(pos.x, pos.y).forEach(function (r) {
       if (Math.hypot(r.x - pos.x, r.y - pos.y) > 140 * KD()) { return; }
       if (r.kind === 'ring') {   // 꽃 고리 한 장(다섯 송이) — 고리 가운데에 깔고, 밟은 꽃은 빛
@@ -136,7 +139,7 @@
   global.DG = global.DG || {};
   global.DG.fieldRiddle = {
     KINDS: KINDS, STEPS: STEPS, BAG_ADD: BAG_ADD, RING_T: RING_T, PIN_T: PIN_T,
-    inZone: inZone, near: near, flowers: flowers, bagAdd: bagAdd, solve: solve, tick: tick, draw2d: draw2d, seeds: function () { return st().seeds || 0; },
-    _reset: function () { ring = null; pin = { id: null, t: 0, x: 0, y: 0 }; }
+    inZone: inZone, near: near, flowers: flowers, bagAdd: bagAdd, solve: solve, tick: tick, draw2d: draw2d, openLeft: openLeft, seeds: function () { return st().seeds || 0; },
+    _reset: function () { opened = {}; ring = null; pin = { id: null, t: 0, x: 0, y: 0 }; }
   };
 })(window);

@@ -66,6 +66,7 @@
       b.all = true;
       var DR = D(), pp = run.player || { x: 350, y: 220 };
       for (var i = 0; i < BOX_N; i++) { if (DR && DR._dropItem && run.room) { DR._dropItem(run.room, pp.x, pp.y + 10, BOX_BIAS); } }
+      b.boxAt = { x: pp.x + 30, y: pp.y + 10, room: run.room, t: Date.now() };   // W-0432 현상금 상자 4초(메모리)
       toast('🎁 현상금 상자 — 이 층 현상금을 다 했다 · 전리품 ' + BOX_N);
     }
     return got;
@@ -97,5 +98,13 @@
   function step(run, dt) { hook(); acc += dt || 0; if (acc < 0.25) { return; } acc = 0; if (run) { state(run); } paint(run); }
 
   global.DG = global.DG || {};
-  global.DG.bounty = { TABLE: TABLE, PICK: PICK, GOLD_PER_FLOOR: GOLD_PER_FLOOR, BOX_N: BOX_N, pick: pick, state: state, add: add, step: step, paint: paint };
+  /** W-0432 현상금 상자(chest_bounty_01) — 다 한 자리 곁 바닥에 4초 옅어지며. 못 받으면 안 그림(토스트가 이미 알림) */
+  var BOX_MS = 4000;
+  function boxLeft(b, now) { var o = b && b.boxAt; if (!o) { return 0; } var a = 1 - ((now || Date.now()) - o.t) / BOX_MS; return a > 0 ? a : 0; }
+  function draw2d(ctx, m, proj) {
+    var run = runOf(), b = state(run), a = boxLeft(b); if (!a || !run || b.boxAt.room !== run.room) { return; }
+    var p = proj(m, b.boxAt.x, b.boxAt.y), s = Math.max(0.7, m.s), M = global.DG.mode2d;
+    if (M && M.drawSprite) { M.drawSprite(ctx, { id: 'chest_bounty_01', x: p.x, y: p.y + 2 * s, h: 30 * s, alpha: Math.min(1, a * 1.5) }); }
+  }
+  global.DG.bounty = { TABLE: TABLE, PICK: PICK, GOLD_PER_FLOOR: GOLD_PER_FLOOR, BOX_N: BOX_N, pick: pick, state: state, add: add, step: step, paint: paint, boxLeft: boxLeft, draw2d: draw2d };
 })(window);

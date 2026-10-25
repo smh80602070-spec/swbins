@@ -4829,6 +4829,20 @@ window.requestAnimationFrame = function () { return 0; };
       var ok = f1 === '+12.3%' && f2 === '위력 150% · 앞 부채꼴' && (!DG.core.save.party.length || (v.indexOf('손에 든 넷') >= 0 && v.indexOf('갈래 1') >= 0));
       return ok ? ('수치 ' + f1 + ' · ' + f2 + ' · 시트 ' + v.length + '자') : ('실패 ' + JSON.stringify({ f1: f1, f2: f2, v: v.length }));
     });
+    t('W-0432 현상금 상자 — 셋 다 하면 주인공 곁 바닥에 chest_bounty_01 4초(그 방에서만·옅어짐, 메모리)', function () {
+      var BN = DG.bounty, DN = DG.dungeon, C = DG.core; if (!BN || !BN.boxLeft) { return '실패 boxLeft 없음'; }
+      var keepRaw = DN.raw, keepDi = DN._dropItem, run = { floor: 3, bountySeed: 9, room: { kind: 'fight', drops: [], enemies: [] }, player: { x: 120, y: 90 } };
+      DN.raw = function () { return run; }; DN._dropItem = function () {};
+      try {
+        var b = BN.state(run); b.list = [{ id: 'kills', n: 0, done: true }, { id: 'nohit', n: 0, done: true }, { id: 'elite', n: 0, done: false }];
+        C.emit('dungeon:kill', { e: { x: 1, y: 1, elite: true }, floor: 3 });
+        var at = b.boxAt, now = Date.now(), a0 = BN.boxLeft(b, now), a2 = BN.boxLeft(b, now + 4100), drew = 0;
+        var M = DG.mode2d, keepDS = M && M.drawSprite; if (M) { M.drawSprite = function (c, o) { if (o.id === 'chest_bounty_01') { drew++; } return true; }; }
+        BN.draw2d({}, { s: 1 }, function (m, x, y) { return { x: x, y: y }; }); var other = run.room; run.room = { kind: 'fight' }; BN.draw2d({}, { s: 1 }, function (m, x, y) { return { x: x, y: y }; }); run.room = other;
+        if (M) { M.drawSprite = keepDS; }
+        return (b.all && at && at.room === run.room && a0 > 0.9 && a2 === 0 && drew === 1) ? ('상자 x' + at.x + ' · 4.1초 0 · 다른 방 안 그림') : ('실패 ' + JSON.stringify({ all: b.all, at: !!at, a0: a0, a2: a2, drew: drew }));
+      } finally { DN.raw = keepRaw; DN._dropItem = keepDi; }
+    });
     t('W-0428 층 현상금 — 층마다 여덟 중 셋(씨앗 고정이면 같음) · 사건으로 셈(처치·피격·방·비움·무예) · 하나마다 금 20×층 · 셋 다 = 상자 전리품 둘 · 층 바뀌면 새로', function () {
       var BN = DG.bounty, DN = DG.dungeon, C = DG.core; if (!BN || !DN) { return '실패 DG.bounty 없음'; }
       var keepRaw = DN.raw, keepDi = DN._dropItem, items = 0;

@@ -17740,6 +17740,15 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         return ok || ('실패 ' + JSON.stringify({ same: same, s1: s1, s1b: s1b, wrong: wrong, s2: s2, s3a: s3a, s3: s3, gone: gone }));
       } finally { sv.goRiddle = keep; pos.x = px; pos.y = py; FR._reset(); }
     });
+    t('W-0432 열린 돌 — 돌을 들추면 그 자리에 열린 돌(puzzle_stone_01_open) 3초 옅어짐(메모리) · 꽃 고리·바람개비는 없음', function () {
+      var FR = DG.fieldRiddle, C = DG.core; if (!FR || !FR.openLeft) { return '실패 openLeft 없음'; }
+      var sv = C.save, keep = sv.goRiddle; sv.goRiddle = { done: {}, seeds: 0 }; FR._reset();
+      try {
+        var z = FR.inZone(5, 1), st = z[0], rg = z[1]; FR.solve(st); FR.solve(rg);
+        var now = Date.now(), a0 = FR.openLeft(st.id, now), a1 = FR.openLeft(st.id, now + 1500), a2 = FR.openLeft(st.id, now + 3100), ringNo = FR.openLeft(rg.id, now);
+        return (a0 > 0.9 && a1 > 0.3 && a1 < 0.7 && a2 === 0 && ringNo === 0) ? ('열림 ' + a0.toFixed(2) + ' → 1.5초 ' + a1.toFixed(2) + ' → 3.1초 0') : ('실패 ' + [a0, a1, a2, ringNo].join(','));
+      } finally { sv.goRiddle = keep; FR._reset(); }
+    });
     t('W-0426 들판 수수께끼 — 씨앗 5·15·30·60 에서 행낭 상한 +10(250 → 290) · go.riddle 0 이면 안 셈', function () {
       var FR = DG.fieldRiddle, B = DG.bag, C = DG.core; if (!FR || !B || !B.capNow) { return '실패 없음'; }
       var sv = C.save, keep = sv.goRiddle;
