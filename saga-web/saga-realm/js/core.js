@@ -445,8 +445,9 @@
       'tree': ['tree_broadleaf_01', 'tree_broadleaf_02', 'tree_pine_01'], 'rock': ['rock_large_01', 'rock_small_01'], 'bush': ['bush_01', 'bush_02'], 'grass': ['grass_tuft_01'], 'flower': ['flower_patch_01'],
       'market': ['market_stall_01'], 'well': ['well_01'], 'log': ['log_01'], 'tent': ['tent_large_01'],
       'wpn:sword': ['wpn_sword_common'], 'wpn:spear': ['wpn_spear_common'], 'wpn:axe': ['wpn_axe_common'], 'wpn:bow': ['wpn_bow_common'], 'wpn:staff': ['wpn_staff_common'],
+      'wpn:club': ['wpn_club_01'], 'wpn:scroll': ['wpn_scroll_01'], 'wpn:brush': ['wpn_brush_01'], 'wpn:fan': ['wpn_fan_01'],   /* W-0441 뒤따름 — K-0192 자체 몽둥이·두루마리·붓·부채(2나락 core 와 같은 짝). 붓 brush.glb(CC-BY)는 이제 기본 길에서 빠짐 */
       'gear:helmet': ['eq_past_1_head'], 'gear:crown': ['acc_crown'], 'gear:gapju': ['eq_past_2_head'],
-      'edge:mound': ['hill_01'], 'edge:dune': ['dune_01'], 'edge:peak': ['rock_outcrop_01'], 'edge:rubble': ['rubble_wall_01'], 'edge:grave': ['stele_01'], 'edge:grass': ['grass_tuft_01', 'grass_tuft_02'], 'edge:reed': ['reed_clump_01'] },   // 전장 가장자리(battle3d EDGE_H)   // 몽둥이·두루마리·붓(CC-BY)은 자체 짝이 없어 옛 길(K 몫)
+      'edge:mound': ['hill_01'], 'edge:dune': ['dune_01'], 'edge:peak': ['rock_outcrop_01'], 'edge:rubble': ['rubble_wall_01'], 'edge:grave': ['stele_01'], 'edge:grass': ['grass_tuft_01', 'grass_tuft_02'], 'edge:reed': ['reed_clump_01'] },   // 전장 가장자리(battle3d EDGE_H)
     /* 빌린 몸(W-0074, shared/js/assets3d.js borrowRecipe) — 제 몸이 없는 사람(시간 틈 무장 아홉·도시 군중)도 시대 구분 없이 VRoid 통일 몸.
        이 판은 도감 105 + 장수 194 = 299 전부가 판 인물이라 pool: 'all'(얼굴이 장수와 겹친다 — NPC 몸이 더 오면 풀린다). named 는 서로 다른 몸 */
     borrow: {

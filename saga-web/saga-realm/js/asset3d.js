@@ -610,7 +610,7 @@
     var jobs = 0, finished = false;
     function one() { jobs--; if (jobs <= 0 && !finished) { finished = true; done(); } }
 
-    var wKey = WPN_ALIAS[look.weapon] || look.weapon;
+    var wKey = look.weapon === 'fan' && REG['wpn:fan'] ? 'fan' : (WPN_ALIAS[look.weapon] || look.weapon);   // W-0441 뒤따름 — 자체 부채(wpn_fan_01)가 실리면 붓 대신
     if (wKey && wKey !== 'none' && REG['wpn:' + wKey]) {
       jobs++;
       acquire(REG['wpn:' + wKey], function (c) {
