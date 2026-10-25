@@ -24,8 +24,9 @@ STEP = int(arg('--step', '2'))
 VIEW = arg('--view', 'side')
 NEUTRAL = arg('--neutral', 'idle')        # 이 클립 평균을 0(반듯한 쉼)으로 — 빈 값이면 안 뺌
 ROBE = float(arg('--robe', '0.35'))
-BASE_IN, BASE_OUT = arg('--base-in'), arg('--base-out')
-ROOTX = '--rootx' in A                     # 골반 앞뒤 이동 살리기(기본 끔)   # 기준(서기 평균) 파일 주고받기
+BASE_IN, BASE_OUT = arg('--base-in'), arg('--base-out')   # 기준(서기 평균) 파일 주고받기
+ROOTX = '--rootx' in A                     # 골반 앞뒤 이동 살리기(기본 끔)
+LIM = {'legL': (-5.0, 85.0), 'armL': (-100.0, 5.0)}   # 무릎·팔꿈치 상대 각 범위(옆, 오른쪽 봄, 서기 기준 뺀 값) — 정강이는 뒤로만 85°, 아래팔은 앞으로만 100°
 
 # 컷아웃 뼈 → (머리 J_Bip, 꼬리 J_Bip 또는 None=자식 머리, 반듯한 쉼 방향(화면))
 DOWN, UP, FWD = (0, 1), (0, -1), (1, 0)
@@ -129,6 +130,8 @@ def main():
             for b, ks in c['keys'].items():
                 for k in ks:
                     k[1] = round(wrap(k[1] - base.get(b, 0.0)), 1)
+                    if b[:4] in LIM:                       # 무릎·팔꿈치는 사람 범위로(서기 기준 뺀 뒤) — 크게 굽으면 컷아웃 이음이 벌어진다(10-25 사용자 「끊긴 부분이 많네」)
+                        k[1] = max(LIM[b[:4]][0], min(LIM[b[:4]][1], k[1]))
     # 옷자락(도포·치마) 인물용 — 다리 각을 0.35 배로(엔진 rig.skirt 와 같은 값, 다리가 옷자락 밖으로 휘둘리지 않게) · 이름 <클립>~robe
     for nm in list(out):
         c = json.loads(json.dumps(out[nm]))

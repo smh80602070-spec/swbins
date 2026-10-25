@@ -54,6 +54,7 @@ def grid(src, out):
 
 # ---------------------------------------------------------------- 관절 자동 추정(옆모습)
 # 비율 = sg_zhugeliang 옆모습에 손으로 찍은 값(머리 끝 0 · 발바닥 1) — 사람 손은 덧그린 점 확인판을 보고 틀린 것만 고친다
+CAP = float(os.environ.get('K188_CAP', '1.35'))   # K-0199 무릎·팔꿈치 덧살 배수(두께 기준, 옛 0.9 — 90° 넘게 굽으면 바깥이 벌어짐)
 FRONT_CLIPS = {   # K-0198 앞·뒷모습 클립(키 [t, 각, dx, dy] — 엔진 CLIPS 와 같은 꼴, 뼈 단위 몸 100)
     'walk': {'len': 1.0, 'loop': True, 'keys': {
         'hip': [[0, 0, 0, 0], [0.25, 0, 0, -1.2], [0.5, 0, 0, 0], [0.75, 0, 0, -1.2], [1, 0, 0, 0]], 'chest': [[0, 0], [0.25, 1.5], [0.75, -1.5], [1, 0]],
@@ -222,7 +223,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         m = lab == k
         _, _, r, pv, par = B[n]
         # 관절 덧살 — 제 관절 둘레 원(부모 쪽 그림)을 같이 가져간다
-        cap = (np.hypot(xs - pv[0], ys - pv[1]) < r * 0.9) & alpha
+        cap = (np.hypot(xs - pv[0], ys - pv[1]) < r * (CAP if n[:4] in ('legL', 'armL') else 0.9)) & alpha   # K-0199 — 무릎·팔꿈치는 크게 굽어(모캡 동작) 덧살을 키운다
         if j.get('skirt') and n[:4] in ('legU', 'legL') and pv[1] < j['skirt']:
             cap = cap & False                              # 옷자락 속 관절 — 둘레 원을 가져가면 도포 조각이 떠다닌다
         kin = [k] + ([names.index(par)] if par in names else []) + [names.index(c_) for c_, v_ in B.items() if v_[4] == n and c_ != 'weapon']
@@ -232,7 +233,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         # 아이 관절 둘레도 가져간다(아이가 돌면 부모 끝이 납작하게 잘린 게 보이지 않게)
         for c_, (_, _, cr, cpv, cpar) in B.items():
             if cpar == n and c_ != 'weapon' and not (j.get('skirt') and cpv[1] < j['skirt']):
-                m2 = m2 | ((np.hypot(xs - cpv[0], ys - cpv[1]) < cr * 0.9) & alpha & np.isin(lab, [k, names.index(c_)]))
+                m2 = m2 | ((np.hypot(xs - cpv[0], ys - cpv[1]) < cr * (CAP if c_[:4] in ('legL', 'armL') else 0.9)) & alpha & np.isin(lab, [k, names.index(c_)]))
         rgb = A[..., :3]                                   # 부위마다 원본에서 — 몸통 채움 색이 뒤 순서 팔·손 조각에 새지 않게(10-24 버그)
         if n in ('chest', 'hip') and fill != 'none':
             # 팔·다리에 가린 몸통·허리 자리(돌리면 드러남) — 제 캡슐 안인데 팔·다리가 가져간 곳을 둘레 색으로 채움

@@ -1,7 +1,7 @@
 {
  "id": "cutout_clips_side",
  "ticket": "K-0199",
- "generator": "tools/char-forge/clips_to_cutout.py (Blender — 3D 동작 → 컷아웃 뼈 16 옆 2D 각도, 기준 = 모캡 서기 평균, 골반 앞뒤 이동 뺌, ~robe = 다리 0.35배)",
+ "generator": "tools/char-forge/clips_to_cutout.py (Blender — 3D 동작 → 컷아웃 뼈 16 옆 2D 각도, 기준 = 모캡 서기 평균, 골반 앞뒤 이동 뺌, 무릎·팔꿈치 사람 범위, ~robe = 다리 0.35배) · k199_build.sh",
  "license": "CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함) · 자체 키프레임(tools/char-forge/keyframes.py) · 바탕 자세 UAL(Quaternius, CC0)",
  "clips": 196,
  "sources": {

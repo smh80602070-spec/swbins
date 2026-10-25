@@ -14,7 +14,9 @@ new = json.load(open(cj, encoding='utf-8'))
 tmp = tempfile.mkdtemp()
 shutil.copytree(src, os.path.join(tmp, 'new'))
 r = json.load(open(os.path.join(tmp, 'new', 'rig.json'), encoding='utf-8'))
-r['clips'] = dict(r.get('clips') or {}, **{k: v for k, v in new.items() if k in names})
+robe = bool(r.get('clips'))   # 옷자락 인물(cut 이 rig.clips 에 다리 줄인 기본을 실음) → 팩의 <이름>~robe
+r['clips'] = dict(r.get('clips') or {}, **{k: new.get(k + '~robe', v) if robe else v for k, v in new.items() if k in names})
+print('ROBE', robe)
 json.dump(r, open(os.path.join(tmp, 'new', 'rig.json'), 'w', encoding='utf-8'))
 rows = []
 for nm in names:
