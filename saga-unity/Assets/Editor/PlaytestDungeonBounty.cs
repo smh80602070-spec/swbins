@@ -93,7 +93,7 @@ namespace Saga.EditorTools
                 if (p.Count != DungeonBounty.PickCount) { Fail($"씨앗 {s} 셋이 아님 {p.Count}"); break; }
                 foreach (var r in p) seen.Add(r.Id);
             }
-            if (seen.Count != 5) Fail($"다섯이 다 안 나옴 {seen.Count}");
+            if (seen.Count != DungeonBounty.PoolCount) Fail($"표 {DungeonBounty.PoolCount} 가 다 안 나옴 {seen.Count}");
             runner.JumpToFloor(12);
             DungeonRunRank.ClearForTest();
             DungeonRunRank.OnHit(100f);

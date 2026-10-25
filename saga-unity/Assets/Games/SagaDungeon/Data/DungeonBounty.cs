@@ -12,7 +12,7 @@ namespace Saga.Dungeon.Data
     /// </summary>
     public static class DungeonBounty
     {
-        public enum Id { Elite, Kills, Props, NoHit, Fast }
+        public enum Id { Elite, Kills, Props, NoHit, Fast, Rooms, Trove }
 
         private sealed class Def
         {
@@ -26,7 +26,39 @@ namespace Saga.Dungeon.Data
             new Def { Id = Id.Props, Key = "props", Ko = "통·항아리 {0} 부수기", N = 6, Live = true },
             new Def { Id = Id.NoHit, Key = "nohit", Ko = "{0}번 넘게 맞지 않고 깨기", N = 5, Live = false },
             new Def { Id = Id.Fast, Key = "fast", Ko = "{0}분 안에 깨기", N = 360, Live = false },
+            // tasks U-0228 (웹 W-0428 · 디아블로 3 모험 모드) — 갈래 둘 더. 웹의 "원소 막타"는 2나락 유니티에 원소 체계가 없어 뺌.
+            new Def { Id = Id.Rooms, Key = "rooms", Ko = "방 {0}개 연달아 안 맞고 지나기", N = 3, Live = true },
+            new Def { Id = Id.Trove, Key = "trove", Ko = "보물 방 {0}번 들르기", N = 1, Live = true },
         };
+
+        public static int PoolCount => Pool.Length;
+
+        /// <summary>tasks U-0228 셋을 다 채우면 현상금 상자 — 금 = 현상금 하나 덤 × 급 × <see cref="ChestMul"/>(정예 보상 두 번 결). 판마다 한 번.</summary>
+        public const int ChestMul = 2;
+        public static bool ChestClaimed { get; private set; }
+        /// <summary>판 도중 셋이 다 찼다(끝 판정 갈래가 없을 때만 판 도중에 참 — 계단 곁에 상자를 세운다).</summary>
+        public static bool AllDone { get { if (_active.Count == 0) return false; foreach (var b in _active) if (!b.Done) return false; return true; } }
+        public static int ChestGold => GoldPer * Grade * ChestMul;
+
+        /// <summary>현상금 상자를 연다 — 처음이면 금을 주고 그 금, 아니면 0.</summary>
+        public static int ClaimChest()
+        {
+            if (ChestClaimed) return 0;
+            ChestClaimed = true;
+            int g = ChestGold;
+            HeroState.AddGold(g);
+            return g;
+        }
+
+        /// <summary>방을 넘어감 — 이 방에서 안 맞았으면 연달아 셈 +1, 맞았으면 0 으로(채운 뒤는 그대로).</summary>
+        public static string Room(bool clean)
+        {
+            if (clean) return Bump(Id.Rooms);
+            foreach (var b in _active) if (b.Id == Id.Rooms && !b.Done) b.Cur = 0;
+            return "";
+        }
+
+        public static string TroveVisit() => Bump(Id.Trove);
 
         public const int PickCount = 3, GoldPer = 150;
 
@@ -40,8 +72,8 @@ namespace Saga.Dungeon.Data
 
         public readonly struct Result
         {
-            public readonly int Done, Of, Gold, Grade; public readonly bool Dead;
-            public Result(int done, int of, int gold, int grade, bool dead) { Done = done; Of = of; Gold = gold; Grade = grade; Dead = dead; }
+            public readonly int Done, Of, Gold, Grade, Chest; public readonly bool Dead;
+            public Result(int done, int of, int gold, int grade, bool dead, int chest = 0) { Done = done; Of = of; Gold = gold; Grade = grade; Dead = dead; Chest = chest; }
         }
 
         private static readonly List<Row> _active = new List<Row>();
@@ -82,6 +114,7 @@ namespace Saga.Dungeon.Data
             _active.Clear();
             Floor = floor;
             Grade = GradeOf(floor);
+            ChestClaimed = false;
             if (!On) return "";
             _active.AddRange(Pick(SeedOf(floor)));
             return BeginText();
@@ -125,15 +158,17 @@ namespace Saga.Dungeon.Data
             foreach (var b in _active) if (b.Done) got++;
             int gold = dead ? 0 : got * GoldPer * Grade;
             if (gold > 0) HeroState.AddGold(gold);
-            var r = new Result(got, _active.Count, gold, Grade, dead);
+            int chest = !dead && got == _active.Count ? ClaimChest() : 0; // 끝 판정 갈래로 셋이 찼거나 상자를 안 열고 내려가면 여기서
+            var r = new Result(got, _active.Count, gold, Grade, dead, chest);
             _active.Clear();
             Last = r;
             return r;
         }
 
-        public static string Text(Result r) => r.Gold > 0
+        public static string Text(Result r) => (r.Gold > 0
             ? string.Format(DungeonLocalization.T("bounty.result", "📜 현상금 {0}/{1} — 금 +{2}"), r.Done, r.Of, r.Gold)
-            : string.Format(DungeonLocalization.T("bounty.result_none", "📜 현상금 {0}/{1} — 덤 없음"), r.Done, r.Of);
+            : string.Format(DungeonLocalization.T("bounty.result_none", "📜 현상금 {0}/{1} — 덤 없음"), r.Done, r.Of))
+            + (r.Chest > 0 ? string.Format(DungeonLocalization.T("bounty.chest_auto", " · 📦 현상금 상자 금 +{0}"), r.Chest) : "");
 
         public static string BeginText()
         {
@@ -169,6 +204,13 @@ namespace Saga.Dungeon.Data
         }
 
         /// <summary>진단 — 판 상태를 비운다.</summary>
-        public static void ClearForTest() { _active.Clear(); Last = null; }
+        public static void ClearForTest() { _active.Clear(); Last = null; ChestClaimed = false; }
+
+        /// <summary>진단 — 이 셋만 건다.</summary>
+        public static void BeginForTest(int floor, params Id[] ids)
+        {
+            _active.Clear(); Floor = floor; Grade = GradeOf(floor); ChestClaimed = false;
+            foreach (var id in ids) { var d = DefOf(id); _active.Add(new Row { Id = d.Id, N = d.N, Live = d.Live }); }
+        }
     }
 }

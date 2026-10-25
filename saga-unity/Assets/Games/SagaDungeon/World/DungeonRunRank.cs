@@ -96,6 +96,7 @@ namespace Saga.Dungeon.World
 
         public static void OnHurt()
         {
+            _hurtThisRoom = true; // tasks U-0228 방 연달아 안 맞기(판 열리기 전 맞아도 그 방은 깨끗하지 않음)
             if (!_on || Busy) return;
             _hits++;
             _combo = 0;
@@ -112,6 +113,29 @@ namespace Saga.Dungeon.World
         {
             if (!_on || Busy) return;
             foreach (var n in DungeonBounty.Kill(elite)) Notify(DungeonBounty.FilledText(n));
+            CheckAllDone();
+        }
+
+        private static bool _hurtThisRoom;
+
+        /// <summary>tasks U-0228 셋을 다 채운 순간(판 도중) — 층 달리기가 계단 곁에 현상금 상자를 세운다.</summary>
+        public static event Action BountyAllDone;
+
+        /// <summary>tasks U-0228 현상금 — 방을 넘어감(그 방에서 안 맞았나). 보물 방이면 들름 셈도.</summary>
+        public static void OnBountyRoom(string nextKind)
+        {
+            bool clean = !_hurtThisRoom;
+            _hurtThisRoom = false;
+            if (!_on || Busy) return;
+            string a = DungeonBounty.Room(clean);
+            if (a.Length > 0) Notify(DungeonBounty.FilledText(a));
+            if (nextKind == "trove") { string b = DungeonBounty.TroveVisit(); if (b.Length > 0) Notify(DungeonBounty.FilledText(b)); }
+            CheckAllDone();
+        }
+
+        private static void CheckAllDone()
+        {
+            if (DungeonBounty.AllDone && !DungeonBounty.ChestClaimed) BountyAllDone?.Invoke();
         }
 
         /// <summary>tasks U-0221 현상금 — 판 도중 통·항아리 깸.</summary>
@@ -120,6 +144,7 @@ namespace Saga.Dungeon.World
             if (!_on || Busy) return;
             string n = DungeonBounty.Prop();
             if (n.Length > 0) Notify(DungeonBounty.FilledText(n));
+            CheckAllDone();
         }
 
         /// <summary>알림 — 떠 있는 글(처치 글 등) 밑에 한 줄 붙인다.</summary>

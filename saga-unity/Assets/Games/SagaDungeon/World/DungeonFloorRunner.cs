@@ -161,6 +161,7 @@ namespace Saga.Dungeon.World
         {
             Instance = this;
             DungeonRunRank.Hook(); // tasks U-0169 한 판 결과 등급
+            DungeonRunRank.BountyAllDone += SpawnBountyChest; // tasks U-0228 현상금 셋 다 → 계단 곁 상자
             var playerGo = GameObject.FindWithTag("Player");
             _player = playerGo != null ? playerGo.transform : null;
             _playerController = playerGo != null ? playerGo.GetComponent<CharacterController>() : null;
@@ -343,6 +344,7 @@ namespace Saga.Dungeon.World
         {
             _roomIndex++;
             bool forceBoss = _landmark < 0 && DungeonFormulas.IsBossFloor(_floor) && _roomIndex >= _roomTotal - 1;
+            DungeonRunRank.OnBountyRoom(forceBoss ? "boss" : kind); // tasks U-0228 현상금 — 방 연달아 안 맞기·보물 방 들름
             BuildRoomContent(forceBoss ? "boss" : kind);
             RepositionPlayerToEntry();
             if (_landmark >= 0) DialogueLabel.Instance?.Show(LandmarkHud, 2.5f); // 108 ③ 방마다 이름
@@ -427,7 +429,55 @@ namespace Saga.Dungeon.World
             }
             // tasks U-0158 부서지는 통·항아리 — 명소 층은 시대 꾸밈이 방을 채워 안 세운다
             if (_landmark < 0) DungeonBreakable.BuildRoom(_contentRoot, _floor, _roomIndex, kind == "fight" || kind == "elite");
+            // tasks U-0228 저주받은 상자 — 층마다 싸움 방 3·6 중 하나(층 씨앗)
+            if (_landmark < 0 && kind == "fight" && DungeonCursedChest.On && _roomIndex == DungeonCursedChest.RoomFor(_floor, _roomTotal)) SpawnCursedChest();
             RoomBuilt?.Invoke(_floor, _roomIndex);
+        }
+
+        /// <summary>tasks U-0228 지금 방의 저주받은 상자(없으면 null — 진단).</summary>
+        public DungeonCursedChestRunner CursedChest { get; private set; }
+        /// <summary>tasks U-0228 지금 방의 현상금 상자(없으면 null — 진단).</summary>
+        public GameObject BountyChest { get; private set; }
+
+        /// <summary>진단 — 지금 방에 저주받은 상자를 바로 세운다.</summary>
+        public DungeonCursedChestRunner SpawnCursedChest()
+        {
+            var go = new GameObject("CursedChest");
+            go.transform.SetParent(_contentRoot, false);
+            go.transform.localPosition = new Vector3(0f, 0f, 2f);
+            CursedChest = go.AddComponent<DungeonCursedChestRunner>();
+            CursedChest.Init(this, _floor, DungeonMode.Gold(DungeonFormulas.EliteRewardGold(_floor)));
+            return CursedChest;
+        }
+
+        /// <summary>tasks U-0228 저주 상자 파도 — 그 월드 자리(방 안으로 끌어옴)에 잡졸 하나.</summary>
+        public GameObject SpawnWaveGrunt(Vector3 world)
+        {
+            var local = _contentRoot.InverseTransformPoint(world);
+            float lim = DungeonRoomBuilder.RoomWidth * 0.5f - 1.5f;
+            local.x = Mathf.Clamp(local.x, -lim, lim); local.z = Mathf.Clamp(local.z, -lim, lim); local.y = 0f;
+            return SpawnGrunt(local, -1f);
+        }
+
+        /// <summary>tasks U-0228 현상금 셋을 다 채움 — 계단 문 자리 곁(오른쪽 2.5m)에 금빛 상자 하나(층마다 한 번). 다가가면 열림.</summary>
+        private void SpawnBountyChest()
+        {
+            if (BountyChest != null || DungeonBounty.ChestClaimed) return;
+            var go = new GameObject("BountyChest");
+            go.transform.SetParent(_contentRoot, false);
+            go.transform.position = transform.TransformPoint(DoorPodOffsets[1] + new Vector3(2.5f, 0f, 0f));
+            var box = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            box.name = "Box";
+            Destroy(box.GetComponent<Collider>());
+            box.transform.SetParent(go.transform, false);
+            box.transform.localPosition = new Vector3(0f, 0.4f, 0f);
+            box.transform.localScale = new Vector3(1f, 0.8f, 0.7f);
+            var m = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "BountyChest (generated)", color = new Color(0.85f, 0.65f, 0.15f) };
+            m.EnableKeyword("_EMISSION"); m.SetColor("_EmissionColor", new Color(0.4f, 0.3f, 0.05f));
+            box.GetComponent<MeshRenderer>().sharedMaterial = m;
+            go.AddComponent<DungeonBountyChest>();
+            BountyChest = go;
+            DialogueLabel.Instance?.Show(DungeonLocalization.T("bounty.chest_ready", "📦 현상금 셋 다 채움 — 계단 곁에 현상금 상자"), 3.5f);
         }
 
         /// <summary>tasks U-0092 — 방 하나를 다 지은 뒤(층·방 번호). 은총에서 다시 선 뒤 유품을 그 방에 다시 세우는 데 쓴다.</summary>

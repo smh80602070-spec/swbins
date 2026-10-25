@@ -326,6 +326,19 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] track 흔적 {traces.Count}곳 · 둘레 {tf.ShownCount} · 첫 흔적 {traces[0].Key} {traces[0].Kind} @ {traces[0].Pos} · 줄 {Saga.Go.Data.GoTrack.Line(traces[0].Pos)}");
                         break;
                     }
+                    case "cursed":   // U-0228 사가나락 — 싸움 방에 저주받은 상자를 세우고 열어 첫 파도·붉은 고리를 보인다
+                    {
+                        var fr = Object.FindFirstObjectByType<Saga.Dungeon.World.DungeonFloorRunner>();
+                        var who = GameObject.FindWithTag("Player");
+                        if (fr == null || who == null) { Skip(act); return; }
+                        fr.BuildRoomForTest("fight");
+                        var cc = fr.SpawnCursedChest();
+                        Teleport(who.transform, cc.transform.position + new Vector3(0f, 0.3f, -5f));
+                        who.transform.rotation = Quaternion.LookRotation(Vector3.forward);
+                        cc.Step(0.1f, cc.transform.position);
+                        Debug.Log($"[ShowcaseGui] cursed 상자 {cc.State} · 파도 {cc.Spawned}");
+                        break;
+                    }
                     case "bloodmoon":   // U-0227 사가만리 — 붉은 밤 켬(덧칠·토스트)
                     {
                         var bm = Saga.Go.World.BloodMoonField.Instance;
