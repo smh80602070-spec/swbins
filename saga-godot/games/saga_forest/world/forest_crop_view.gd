@@ -50,7 +50,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if _in_range and Input.is_action_just_pressed("forest_gather") and Crops.has_field(ForestSaveState):
+	if _in_range and Input.is_action_just_pressed("forest_gather") and Crops.has_field(ForestSaveState) and not preload("res://games/saga_forest/world/forest_bees.gd").any_gathering(get_tree()):
 		open_menu()
 	_tick += delta
 	if _tick < 1.0:

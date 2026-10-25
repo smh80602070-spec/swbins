@@ -131,6 +131,8 @@ func _build(d: Dictionary) -> void:
 
 
 func _process(_delta: float) -> void:
+	if preload("res://games/saga_forest/world/forest_bees.gd").any_gathering(get_tree()):   # R-5 벌떼 잡기가 먼저
+		return
 	for d: Dictionary in DEFS:
 		if _in_range.get(d.id, false) and Input.is_action_just_pressed("forest_gather"):
 			_gather(d)

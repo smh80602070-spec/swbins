@@ -58,6 +58,8 @@ func _run() -> void:
 			got_near = true
 			break
 	check(b != null and got_near, "② 쫓아와 붙음 → 모임")
+	var src_g := FileAccess.get_file_as_string("res://games/saga_forest/world/gatherable_builder.gd")
+	check(bool(Bees.call("any_gathering", self)) and src_g.contains("forest_bees.gd\").any_gathering(get_tree())"), "② 모이는 중 = any_gathering · 채집 [G] 폴링은 건너뜀(R-5)")
 
 	# ③
 	var bug0 := int(F.items.get("곤충", 0))

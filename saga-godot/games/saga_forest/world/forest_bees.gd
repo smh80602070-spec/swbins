@@ -123,6 +123,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
+## 벌떼가 모이는 중인가 — 그 사이 [G] 는 잡기 몫(채집·밭이 같은 키를 폴링하다 알림이 덮였다, R-5 10-25)
+static func any_gathering(tree: SceneTree) -> bool:
+	for b in tree.get_nodes_in_group("forest_bees"):
+		if int(b.get("state")) == S.GATHER:
+			return true
+	return false
+
+
 ## [G] — 모이는 중이면 잡음(true)
 func try_catch() -> bool:
 	if state != S.GATHER:

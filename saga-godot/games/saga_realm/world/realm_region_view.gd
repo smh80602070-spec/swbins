@@ -18,6 +18,7 @@ var _map: Node3D = null
 var _shown_region := ""
 var _shown_count := -1
 var _shown_cur := ""
+var _shown_mine := -1   # 우리 성 수 — 성을 차지하면 이름 글(⚔ → 우리 표시)을 다시 쓴다(R-5 10-25)
 var _arrows: Array = []
 var _names := {}   # city_id → Label3D(성 이름 — 기둥은 지도 카메라 거리에서 점이라 글로 읽힘, 촬영 rk_map_wide)
 var _ui: CanvasLayer = null
@@ -99,11 +100,12 @@ func _process(_delta: float) -> void:
 		_cards.visible = false
 	var markers: Dictionary = _map.get("_markers")
 	var r := region()
-	if r == _shown_region and markers.size() == _shown_count and String(RealmSaveState.current_city) == _shown_cur:
+	if r == _shown_region and markers.size() == _shown_count and String(RealmSaveState.current_city) == _shown_cur and RealmSaveState.cities.size() == _shown_mine:
 		return
 	_shown_region = r
 	_shown_count = markers.size()
 	_shown_cur = String(RealmSaveState.current_city)
+	_shown_mine = RealmSaveState.cities.size()
 	apply()
 
 
