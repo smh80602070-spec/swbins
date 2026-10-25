@@ -97,6 +97,7 @@
     var art = { set: setId, slot: slot, rarity: rarity, lv: 0, spent: 0, main: pick(r, SLOT_MAINS[slot]), subs: [], seed: seed >>> 0, owner: '' };
     var n = (rarity >= 5 ? 3 : 2) + (r() < 0.25 ? 1 : 0);
     for (var i = 0; i < n; i++) { addSub(art, r); }
+    var uq = global.DG.artifactUnique ? global.DG.artifactUnique.roll(seed, rarity) : null; if (uq) { art.uq = uq; }   // W-0438 ② 고유(★5 · 씨앗 따로)
     return art;
   }
   /** +3 에 닿을 때 — 넷 미만이면 새로, 넷이면 하나 올린다(씨앗 = 보패 씨앗 × 31 + Lv) */
@@ -229,7 +230,7 @@
       if (!Object.prototype.hasOwnProperty.call(eq, slot)) { continue; }
       var art = get(eq[slot]);
       addStat(art.main, mainValue(art));
-      for (i = 0; i < art.subs.length; i++) { addStat(art.subs[i][0], art.subs[i][1]); }
+      for (i = 0; i < art.subs.length; i++) { addStat(art.subs[i][0], art.subs[i][1]); } if (global.DG.artifactUnique) { global.DG.artifactUnique.apply(art, addStat, four); }   // W-0438 ② 고유 줄
       cnt[art.set] = (cnt[art.set] || 0) + 1;
     }
     var sets = [];
@@ -252,7 +253,7 @@
 
   function label(uid) {
     var a = get(uid);
-    return a ? SLOT_ICON[a.slot] + ' ★' + a.rarity + ' ' + SETS[a.set].name + ' ' + SLOT_NAMES[a.slot] : '';
+    return a ? SLOT_ICON[a.slot] + ' ★' + a.rarity + ' ' + (global.DG.artifactUnique ? global.DG.artifactUnique.nameOf(a) : '') + SETS[a.set].name + ' ' + SLOT_NAMES[a.slot] : '';
   }
   function onChest(grade) {
     var rs = CHEST_ARTS[grade] || [], out = [];

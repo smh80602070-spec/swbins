@@ -107,8 +107,10 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/talent.js"></script>
 <script src="js/kits.js"></script>
 <script src="js/weapon.js"></script>
+<script src="js/artifact-unique.js"></script>
 <script src="js/artifact.js"></script>
 <script src="js/artifact-skill.js"></script>
+<script src="js/field-raid.js"></script>
 <script src="js/cooking.js"></script>
 <script src="js/fishing.js"></script>
 <script src="js/achieve.js"></script>
@@ -17754,6 +17756,30 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
         var ok = sk.length === 1 && sk[0].set === 'crimson' && n1 === 1 && n2 === 0 && n3 === 1 && hits.length === 4 && hits[0][1] === 180 && hits[0][2] === 'fire' && three === 0 && off === 0;
         return ok ? (sk[0].name + ' · 쿨 ' + sk[0].cd + '초 · 적 둘 ×' + sk[0].mul + ' = ' + hits[0][1] + ' · 셋 점 없음') : ('실패 ' + JSON.stringify({ sk: sk.length, n1: n1, n2: n2, n3: n3, hits: hits, three: three, off: off }));
       } finally { A.equippedOf = keep.eq; A.get = keep.get; FC.foesWithin = keep.fw; FC.hitFoe = keep.hf; FC.push = keep.push; AS._reset(); }
+    });
+    t('W-0438 ② 고유 보패 — ★5 만 씨앗으로 8% 안팎 · 같은 씨앗 늘 같음 · 고유 줄이 능력치·4 세트급 효과에 더해짐 · 이름 앞 ⭐ · ★4·끔이면 없음', function () {
+      var U = DG.artifactUnique, A = DG.artifact, C = DG.core; if (!U || !A) { return '실패 DG.artifactUnique 없음'; }
+      var n5 = 0, n4 = 0, first = null, i; for (i = 1; i <= 2000; i++) { var a5 = A.generate(i, 5), a4 = A.generate(i, 4); if (a5.uq) { n5++; if (!first) { first = i; } } if (a4.uq) { n4++; } }
+      var same = first && A.generate(first, 5).uq === A.generate(first, 5).uq, plain = A.generate(first, 5); delete plain.uq;
+      var st = {}, four = {}, add = function (k, v) { st[k] = (st[k] || 0) + v; }, got = A.generate(first, 5), applied = U.apply(got, add, four), u = U.UQ[got.uq];
+      var line = Object.keys(u.stats).every(function (k) { return st[k] === u.stats[k]; }) && Object.keys(u.four).every(function (k) { return four[k] === u.four[k]; });
+      C.setTune('go.artUnique', 0); var off = A.generate(first, 5).uq; C.setTune('go.artUnique', 1);
+      var ok = n5 > 100 && n5 < 230 && n4 === 0 && same && applied && line && U.nameOf(got).indexOf('⭐') === 0 && !off && plain.subs.length === got.subs.length;
+      return ok ? ('★5 2000 중 ' + n5 + ' · ★4 0 · 예 ' + u.name + ' · 끔 없음') : ('실패 ' + JSON.stringify({ n5: n5, n4: n4, same: same, applied: applied, line: line, off: off }));
+    });
+    t('W-0438 ③ 무리 습격 — 들판 처치 60(손잡이)마다 · 파도 셋(4·6·8, 둘레에 둥글게·처음부터 쫓아옴) · 다 잡으면 다음 · 끝 금 · 150초 넘으면 흩어짐 · 습격 무리 처치는 안 셈', function () {
+      var R = DG.fieldRaid, FC = DG.fieldCombat, C = DG.core; if (!R || !FC) { return '실패 DG.fieldRaid 없음'; }
+      var g0 = C.save.player.gold, S = { camps: {}, foes: {}, uid: 0 }, sizes = [], chase = true, k;
+      R._reset(); C.setTune('go.raid.every', 2); C.setTune('go.raid', 1);
+      try {
+        R.onKill({ camp: 'rd:9:0' }); R.onKill({ camp: 'c1' }); var notYet = !R.state().pending; R.onKill({ camp: 'c2' });
+        var r = R.tick(S, 0.1, 100, 100); if (!r) { return '실패 시작 안 함'; }
+        for (k = 0; k < 3; k++) { var key = 'rd:' + r.id + ':' + k, c = S.camps[key]; sizes.push(c ? c.uids.length : -1); if (c) { c.uids.forEach(function (u) { if (S.foes[u].st !== 'chase') { chase = false; } S.foes[u].dead = true; }); } R.tick(S, 0.1, 100, 100); }
+        var paid = C.save.player.gold > g0 && !R.state().raid;
+        R.onKill({ camp: 'c3' }); R.onKill({ camp: 'c4' }); var r2 = R.tick(S, 0.1, 100, 100), key2 = 'rd:' + r2.id + ':0'; R.tick(S, 151, 100, 100); var gone = !S.camps[key2] && !R.state().raid;
+        var ok = notYet && sizes.join(',') === '4,6,8' && chase && paid && gone;
+        return ok ? ('파도 ' + sizes.join('·') + ' · 끝 금 +' + (C.save.player.gold - g0) + ' · 150초 흩어짐') : ('실패 ' + JSON.stringify({ notYet: notYet, sizes: sizes, chase: chase, paid: paid, gone: gone }));
+      } finally { C.save.player.gold = g0; C.setTune('go.raid.every', null); C.setTune('go.raid', null); R._reset(); }
     });
     t('W-0426 들판 수수께끼 — 구역마다 셋(돌·꽃 고리·바람개비, 결정적·구역 안) · 돌 곁 = 씨앗 · 꽃 다섯 차례로 = 씨앗(틀리면 처음부터) · 바람개비 2초 가만히 = 씨앗 · 푼 자리 다시 안 섬', function () {
       var FR = DG.fieldRiddle, C = DG.core; if (!FR) { return '실패 DG.fieldRiddle 없음'; }

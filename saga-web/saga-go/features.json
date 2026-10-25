@@ -2037,5 +2037,53 @@
   "ticket": "W-0430",
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 하나(결투 대역으로 부름·카드 닫힘·못 열면 옛 굴림·지혜는 굴림) · 촬영 shot-go-duel.mjs 폰 카드(설명 「실시간 결투로 이겨 마음을 얻는다」)·⚔️ 뒤 결투 무리 셋 ○ · data.js 다섯 벌 같은 한 줄(md5 같음)."
+ }, {
+  "id": "go.art-skill",
+  "name": "보패 세트 기술(W-0438 ①) — 네 점 맞춘 세트마다 기술 하나, 들판 싸움 중 쿨마다 둘레 적 전부(세트 원소) · 손잡이 go.artSkill",
+  "files": [
+   "js/artifact-skill.js",
+   "src/field-combat/02.js"
+  ],
+  "tests": [
+   "W-0438 ①"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "W-0438",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영은 ③ 들판 장면으로 갈음(기술 연출 = heavyGo)."
+ }, {
+  "id": "go.art-unique",
+  "name": "고유 보패(W-0438 ②) — ★5 가 씨앗으로 8% 고유(art.uq) · 고정 능력치 + 4 세트급 효과 한 줄 · 이름 앞 ⭐ · 손잡이 go.artUnique (대역 넷, K 표 40 대기)",
+  "files": [
+   "js/artifact-unique.js",
+   "js/artifact.js"
+  ],
+  "tests": [
+   "W-0438 ②"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "W-0438",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나."
+ }, {
+  "id": "go.raid",
+  "name": "들판 무리 습격(W-0438 ③ · 군단/몰이) — 들판 처치 60 마다 파도 셋(4·6·8, 둘레에 둥글게 쫓아옴) · 끝 금 · 150초 흩어짐 · 손잡이 go.raid(자가진단 기본 0)",
+  "files": [
+   "js/field-raid.js",
+   "src/field-combat/02.js"
+  ],
+  "tests": [
+   "W-0438 ③"
+  ],
+  "level": "D2",
+  "verified": "2026-10-25 claude",
+  "fun": {},
+  "ticket": "W-0438",
+  "since": "2026-10-25",
+  "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 shots/w0438/raid.png(pw-look2d LOOK_EVAL) ○."
  }
 ]
