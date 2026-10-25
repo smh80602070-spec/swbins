@@ -381,7 +381,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1933,
+   "count": 1992,
    "where": [
     "saga-assets/icons/license",
     "saga-assets/portraits-expr",
@@ -750,17 +750,18 @@
    "tool": "face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기)",
    "model": "",
    "license": "MIT",
-   "count": 2,
+   "count": 3,
    "where": [
     "saga-assets/textures/face_sdf",
-    "saga-godot/assets/face_sdf"
+    "saga-godot/assets/face_sdf",
+    "saga-unity/Assets/SagaCore/Resources/Characters/FaceSdf"
    ]
   },
   {
    "tool": "ground_mix.py (코드 섞기 — GPU·SD 안 씀)",
    "model": "",
    "license": "파생물 — 재료 자체 PBR 바탕색(K-0093, 로컬 AI 상업 허용 모델)의 license 를 따른다",
-   "count": 6,
+   "count": 18,
    "where": [
     "saga-assets/textures_real/field_mix",
     "saga-assets/textures_real/mud_gravel",
@@ -869,6 +870,16 @@
     "saga-godot/assets/audio/voice",
     "saga-unity/Assets/SagaCore/Resources/Audio/Voice",
     "saga-web/shared/audio/voice"
+   ]
+  },
+  {
+   "tool": "clips_to_cutout.py (Blender — 3D 동작 → 컷아웃 뼈 16 옆 2D 각도, 기준 = 모캡 서기 평균, 골반 앞뒤 이동 뺌, 무릎·팔꿈치 사람 범위, ~robe = 다리 0.35배) · k199_build.sh",
+   "model": "",
+   "license": "CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함) · 자체 키프레임(tools/char-forge/keyframes.py) · 바탕 자세 UAL(Quaternius, CC0)",
+   "count": 2,
+   "where": [
+    "saga-assets/web2d/cutout/_clips",
+    "saga-web/shared/assets/web2d/cutout/_clips"
    ]
   },
   {
@@ -1033,20 +1044,22 @@
    "tool": "build_foliage.py",
    "model": "",
    "license": "자체 생성 — 형태는 전부 코드, 결은 자체 아틀라스(Z-Image-Turbo 출력 · foliage_atlas.py)",
-   "count": 14,
+   "count": 17,
    "where": [
     "saga-assets/world/foliage",
-    "saga-godot/assets/world/foliage"
+    "saga-godot/assets/world/foliage",
+    "saga-unity/Assets/SagaCore/Resources/World"
    ]
   },
   {
    "tool": "build_nature_real.py",
    "model": "",
    "license": "CC0-1.0 자체 생성 — 형태는 코드, 잎은 자체 아틀라스(foliage_atlas.py), 줄기·바위는 자체 PBR(K-0093·K-0113)",
-   "count": 28,
+   "count": 38,
    "where": [
     "saga-assets/world/foliage",
-    "saga-godot/assets/world/foliage"
+    "saga-godot/assets/world/foliage",
+    "saga-unity/Assets/SagaCore/Resources/World"
    ]
   },
   {
