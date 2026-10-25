@@ -77,12 +77,13 @@
       var g = c.getContext('2d'), gr = g.createRadialGradient(64, 64, 4, 64, 64, 64);
       gr.addColorStop(0, 'rgba(255,196,120,0.9)'); gr.addColorStop(0.45, 'rgba(255,170,90,0.42)'); gr.addColorStop(1, 'rgba(255,150,70,0)');
       g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
-      lamp = new t.Mesh(new t.PlaneGeometry(1, 1), new t.MeshBasicMaterial({ map: new t.CanvasTexture(c), transparent: true, blending: t.AdditiveBlending, depthWrite: false }));
+      var lt = new t.CanvasTexture(c); if (t.SRGBColorSpace) { lt.colorSpace = t.SRGBColorSpace; }   // W-0415 — 색 공간을 안 정하면 그림 값이 선형으로 읽혀(후처리 HDR 경로) 가운데가 하얗게 날아갔다
+      lamp = new t.Mesh(new t.PlaneGeometry(1, 1), new t.MeshBasicMaterial({ map: lt, transparent: true, blending: t.AdditiveBlending, depthWrite: false }));
       lamp.rotation.x = -Math.PI / 2; lamp.renderOrder = 3; lamp.frustumCulled = false; scene.add(lamp);
     }
     var R = 3 * TILE * s;
     lamp.visible = true; lamp.scale.set(R * 2, R * 2, 1); lamp.position.set(0, 0.04, 0);
-    lamp.material.opacity = Math.min(1, 0.5 * k) * (0.94 + 0.06 * Math.sin(Date.now() / 260));   // 등잔불처럼 아주 조금 일렁인다
+    lamp.material.opacity = Math.min(1, tuned('village3d.lampA', 0.3) * k) * (0.94 + 0.06 * Math.sin(Date.now() / 260));   // W-0415 0.5 → 손잡이 lampA 0.3(저녁 광장이 하얗게 날던 것)   // 등잔불처럼 아주 조금 일렁인다
   }
 
 
