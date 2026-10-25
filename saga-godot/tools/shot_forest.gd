@@ -20,3 +20,18 @@ static func open_bench(tree: SceneTree) -> void:
 	if p != null:
 		p.global_position = (bench as Node3D).global_position + Vector3(0, 0.3, 2.2)
 	bench.call("open_menu")
+
+
+## G-0391 — 집 앞 밭 네 칸을 씨·싹·자람·다 자람으로(메모리만 — 저장 안 함) 세우고 그 앞에 선다.
+static func show_crops(tree: SceneTree) -> void:
+	var F: Node = tree.root.get_node("ForestSaveState")
+	F.crops = {"field": true, "roll": ForestDay.epoch_day_index(), "plots": [{"st": 0, "wet": true}, {"st": 1, "wet": false}, {"st": 2, "wet": true}, {"st": 3, "wet": false}]}
+	var view := tree.current_scene.find_child("CropView", true, false)
+	var p := tree.get_first_node_in_group("player") as Node3D
+	if view == null:
+		print("FS_CROPS 밭 없음")
+		return
+	view.call("sync")
+	if p != null:
+		p.global_position = (view as Node3D).global_position + Vector3(0, 0.3, 3.2)
+	print("FS_CROPS 작물 %d" % int(view.call("sync")))

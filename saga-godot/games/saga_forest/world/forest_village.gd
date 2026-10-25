@@ -56,6 +56,10 @@ func _ready() -> void:
 	if not lsm.is_empty() and String(lsm.text) != "":
 		Toast.show(self, String(lsm.text), 4.0)
 	add_child(preload("res://games/saga_forest/world/forest_livestock_view.gd").new())   # G-0311 작은 우리(길 남쪽)
+	var crm: Dictionary = preload("res://games/saga_forest/data/forest_crops.gd").advance(ForestSaveState)   # G-0391 밭 아침 자람
+	if not crm.is_empty() and String(crm.text) != "":
+		Toast.show(self, String(crm.text), 4.0)
+	add_child(preload("res://games/saga_forest/world/forest_crop_view.gd").new())   # G-0391 집 앞 밭 네 칸
 	preload("res://games/saga_forest/world/forest_stars.gd").attach(self)   # G-0381 별똥별 소원
 	preload("res://games/saga_forest/data/forest_birthday.gd").attach(self)   # G-0388 주민 생일 알림
 	add_child(preload("res://games/saga_forest/world/forest_cave_view.gd").new())   # G-0242 땅 아래 층(바위 아치 [G])

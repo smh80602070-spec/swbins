@@ -69,6 +69,8 @@ var lots: Array = []
 var lots_roll := -1
 ## G-0311 가축 — {pen, list: [{kind, name, fed, petted, heart, hungry}], roll}. 순수 추가 칸. data/forest_livestock.gd.
 var livestock: Dictionary = {}
+## G-0391 밭 작물 — {field, plots: [{st, wet}], roll}. 순수 추가 칸. data/forest_crops.gd.
+var crops: Dictionary = {}
 ## G-0315 유적 복원 — {got: {key: n}, restored: [key…], feast: 날|-1}. 순수 추가 칸. data/forest_relics.gd.
 var relics: Dictionary = {}
 ## G-0320 물약 양조 — {found: [재료…], drunk: 재료, day: 날}. 순수 추가 칸. data/forest_brew.gd.
@@ -478,6 +480,7 @@ func save() -> bool:
 		"lots_roll": lots_roll,
 		"cave": cave,   # G-0242
 		"livestock": livestock,   # G-0311
+		"crops": crops,   # G-0391
 		"relics": relics,   # G-0315
 		"brew": brew,   # G-0320
 		"contest": contest,   # G-0373
@@ -547,6 +550,8 @@ func try_load() -> bool:
 	lots_roll = int(data.get("lots_roll", -1))
 	var loaded_ls: Variant = data.get("livestock", {})   # G-0311 — 옛 세이브는 우리 없음
 	livestock = (loaded_ls as Dictionary).duplicate(true) if typeof(loaded_ls) == TYPE_DICTIONARY else {}
+	var loaded_cr: Variant = data.get("crops", {})   # G-0391 — 옛 세이브는 밭 없음 · JSON 실수는 int() 로 읽는다
+	crops = (loaded_cr as Dictionary).duplicate(true) if typeof(loaded_cr) == TYPE_DICTIONARY else {}
 	var loaded_rl: Variant = data.get("relics", {})   # G-0315 — 옛 세이브는 조각 없음
 	relics = (loaded_rl as Dictionary).duplicate(true) if typeof(loaded_rl) == TYPE_DICTIONARY else {}
 	var loaded_brew: Variant = data.get("brew", {})   # G-0320 — 옛 세이브는 빈 것

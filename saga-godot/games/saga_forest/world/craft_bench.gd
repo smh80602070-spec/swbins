@@ -11,6 +11,7 @@ const ForestCraft := preload("res://games/saga_forest/data/forest_craft.gd")
 const ForestHome := preload("res://games/saga_forest/data/forest_home.gd")
 const Lots := preload("res://games/saga_forest/data/forest_lots.gd")   # G-0237 입주 조건
 const Livestock := preload("res://games/saga_forest/data/forest_livestock.gd")   # G-0311 가축
+const Crops := preload("res://games/saga_forest/data/forest_crops.gd")   # G-0391 밭
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
@@ -119,6 +120,12 @@ func open_menu() -> void:
 		choices.append({"label": "🐔 작은 우리 — 새끼 들이기·먹이·쓰다듬기 (%d/%d)" % [Livestock.animals(ForestSaveState).size(), Livestock.MAX], "cb": func() -> void:
 			(box["layer"] as CanvasLayer).queue_free()
 			open_pen()})
+	if Crops.on() and not Crops.has_field(ForestSaveState):   # G-0391 밭 — 레시피 표 밖 한 줄(지으면 집 앞에서 [G])
+		var why_f := Crops.why_not_build(ForestSaveState)
+		choices.append({"label": "🌾 밭 — %s %d · 집 앞 네 칸%s" % [Crops.FRUIT, Crops.FIELD_COST, "  ✓" if why_f == "" else "  (%s)" % why_f], "cb": func() -> void:
+			(box["layer"] as CanvasLayer).queue_free()
+			var r := Crops.build(ForestSaveState)
+			Toast.show(self, "🌾 밭을 지었다 — 집 앞 · 씨(%s 1)를 뿌리고 날마다 물을 준다" % Crops.FRUIT if bool(r.ok) else "🔨 아직 못 짓는다 — %s" % String(r.why), 3.0)})
 	if preload("res://games/saga_forest/data/forest_brew.gd").on():   # G-0320 물약 달이기
 		choices.append({"label": "⚗️ 물약 달이기 — 약초 + 재료 하나 (찾은 %d/%d)" % [(preload("res://games/saga_forest/data/forest_brew.gd").st(ForestSaveState).found as Array).size(), preload("res://games/saga_forest/data/forest_brew.gd").MIXES.size()], "cb": func() -> void:
 			(box["layer"] as CanvasLayer).queue_free()

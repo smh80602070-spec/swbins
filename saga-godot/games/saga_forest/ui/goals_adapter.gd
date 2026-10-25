@@ -32,6 +32,9 @@ static func model(_hud: Node) -> Dictionary:
 	var contest: Dictionary = preload("res://games/saga_forest/data/forest_contest.gd").row(S, ForestDay.epoch_day_index())
 	if not contest.is_empty():
 		today.append(contest)
+	var crop: Dictionary = preload("res://games/saga_forest/data/forest_crops.gd").today_row(S) if S != null else {}   # G-0391 밭 지었을 때만
+	if not crop.is_empty():
+		today.append(crop)
 	return {"title": "오늘", "reset_in": midnight_left(),
 		"today": today,
 		"week": [], "claim": {},
