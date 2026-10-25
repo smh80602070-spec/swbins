@@ -135,6 +135,8 @@
     Pink_Slime: 'pink_slime', Ghost: 'ghost', Alpaking: 'alpaking', Dragon: 'dragon', Dragon_Evolved: 'dragon_evolved', Goleling: 'goleling',
     Goleling_Evolved: 'goleling_evolved', Hywirl: 'hywirl', Ghost_Skull: 'ghost_skull', Rat: 'rat', Wasp: 'wasp', Spider: 'spider',
     FrogEnemy: 'frog_brute', Robot_Drone: 'robot_drone', Robot_Walker: 'robot_walker', Robot_Large: 'robot_large', EnemySmall: 'space_bug',
+    /* W-0441 뒤따름(10-25) — 1만리·4종횡 적 Zombie·Alien(foes/, Quaternius)·Alien_2 대역 → 2나락이 쓰던 자체 짝 그대로 */
+    Zombie: 'zombie', Alien: 'alien_grunt', Alien_2: 'alien_grunt',
     /* W-0194 — K-0096 ⑤ 물고기 38(뼈 worm·동작 7). Koi 는 animals·animals_extra2 같은 몸, Shark 는 두 폴더 다른 몸이지만 둘 다 상어. ✗ 셋(Puffer·Whale·Fish1)은 K-0102 자체판(W-0206) */
     Anglerfish: 'anglerfish', Armored_Catfish: 'armored_catfish', Betta: 'betta', Black_Lion_Fish: 'black_lionfish', Blobfish: 'blobfish',
     Blue_Goldfish: 'blue_goldfish', Blue_Tang: 'blue_tang', Butterfly_Fish: 'butterflyfish', Cardinal_Fish: 'cardinalfish',
