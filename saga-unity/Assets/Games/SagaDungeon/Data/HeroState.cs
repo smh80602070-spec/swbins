@@ -29,7 +29,7 @@ namespace Saga.Dungeon.Data
         public static int Gold { get; private set; }
         /// <summary>tasks U-0169 — 지금껏 번 금(쓴 것·유품은 안 뺌, 저장 안 함) — 한 판 등급 덤의 밑.</summary>
         public static int GoldEarned { get; private set; }
-        public static int HpMax => BaseHp + (Level - 1) * HpPerLevel;
+        public static int HpMax => RoundInt((BaseHp + (Level - 1) * HpPerLevel + Gear.Totals.HpFlat) * (1f + Gear.Totals.HpPct / 100f)); // tasks U-0245 장비
         public static int Hp { get; private set; } = BaseHp;
         public static string EquippedWeaponId { get; private set; } = "wp_start";
         public static ItemData EquippedWeapon => ItemData.Get(EquippedWeaponId);
@@ -88,8 +88,9 @@ namespace Saga.Dungeon.Data
         public static float DepthAtkBonus =>
             Math.Max(0f, ((DungeonFloorRunner.Instance?.CurrentFloor ?? 1) - 1) * DepthAtkPerFloor);
 
-        public static float Atk => BaseAtk + (Level - 1) * AtkPerLevel
-            + (EquippedWeapon?.AtkBonus ?? 0f) + (SocketedGem?.AtkBonus ?? 0f) + DepthAtkBonus;
+        public static float Atk => (BaseAtk + (Level - 1) * AtkPerLevel
+            + (EquippedWeapon?.AtkBonus ?? 0f) + (SocketedGem?.AtkBonus ?? 0f) + DepthAtkBonus
+            + Gear.Totals.AtkFlat) * (1f + Gear.Totals.AtkPct / 100f); // tasks U-0245 — 장비 접사·세트·고유(없으면 옛 값 그대로)
 
         /// <summary>js/dungeon.js:140 — `Math.max(4, p.atk * ... / 6)` 한 타 피해.
         /// PLAN.md 101-2 5.1 "축복 3택" 공(攻) 축(<see cref="BlessingState.AtkMultiplier"/>)을
@@ -98,7 +99,10 @@ namespace Saga.Dungeon.Data
         /// 같은 자리에 곱한다 — 그 층에선 플레이어도 더 세게 때린다.</summary>
         public static float HitDamage => Math.Max(4f, Atk / 6f) * BlessingState.AtkMultiplier
             * SigilState.PlayerDamageMultiplier(DungeonFloorRunner.Instance?.CurrentFloor ?? 1)
-            * DungeonMastery.AtkMul; // tasks U-0178 무기 숙련(단계마다 +3%)
+            * DungeonMastery.AtkMul // tasks U-0178 무기 숙련(단계마다 +3%)
+            * (1f + Gear.Totals.CritPct / 100f * CritExtra); // tasks U-0245 치명타% — 이 트랙엔 치명 굴림이 없어 기대값(×1.5 의 덤)으로
+
+        private const float CritExtra = 0.5f;
 
         /// <summary>회피(Player/PlayerController.cs) 중에만 켜진다 — 켜져
         /// 있는 동안 TakeDamage가 전부 무시된다(dungeon.js `p.invuln`과
@@ -204,7 +208,7 @@ namespace Saga.Dungeon.Data
             LastHitWho = who;
             LastHitHow = how;
             int before = Hp;
-            Hp = Math.Max(0, Hp - RoundInt(amount * DungeonMastery.GuardMul / BlessingState.DefMultiplier)); // tasks U-0178 갑주 숙련(단계마다 −2%)
+            Hp = Math.Max(0, Hp - RoundInt(amount * DungeonMastery.GuardMul / BlessingState.DefMultiplier * (1f - Gear.Totals.GuardPct / 100f))); // tasks U-0178 갑주 숙련(단계마다 −2%) · U-0245 장비 막기
             LastDealt = before - Hp;
             if (LastDealt > 0) DungeonMastery.OnHurt();
             Saga.Dungeon.Audio.SfxPlayer.Play("sword_hurt", minGap: HurtSfxGap); // tasks U-0104 — 피격(연타는 한 번).

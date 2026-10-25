@@ -933,6 +933,7 @@ namespace Saga.Dungeon.World
             SfxPlayer.PlayEnemyDeath();
 
             int levelBefore = HeroState.Level;
+            int rewardExp = Gear.WithPct(this.rewardExp, Gear.Totals.ExpPct), rewardGold = Gear.WithPct(this.rewardGold, Gear.Totals.GoldPct); // tasks U-0245 장비 경험·금 % — 처치 보상에만
             HeroState.AddExp(rewardExp);
             HeroState.AddGold(rewardGold);
             DungeonMastery.OnKill(); // tasks U-0178 — 든 무기 숙련(줍기 전 무기에)
@@ -952,6 +953,15 @@ namespace Saga.Dungeon.World
             if (item != null && item.Lore != Secret.None) msg += "\n" + SecretState.LoreLine(item.Lore); // PLAN.md 109-10-2 비전
             if (gem != null) msg += string.Format(DungeonLocalization.T(socketed ? "enemy.gem_socketed" : "enemy.loot_plain",
                 socketed ? "\n{0}을(를) 주웠다 — 바로 세공했다." : "\n{0}을(를) 주웠다."), gem.Name);
+            // tasks U-0245 — 굴린 장비(웹 item.js 결: 등급·접사·세트 조각·고유). 두목 늘·정예 절반·잡졸 14%, 더 세면 바로 갖춘다.
+            string gearId = Gear.RollDrop(Mathf.Max(1, (DungeonFloorRunner.Instance?.CurrentFloor ?? 1) * 2 + HeroState.Level / 2), isBoss, IsElite);
+            var gearItem = Gear.Parse(gearId);
+            if (gearItem != null)
+            {
+                bool gearOn = Gear.EquipIfBetter(gearId);
+                msg += string.Format(DungeonLocalization.T(gearOn ? "gear.loot_equipped" : "gear.loot_plain", gearOn ? "\n<color={0}>{1}</color>({2})을(를) 주웠다 — 바로 갖췄다." : "\n<color={0}>{1}</color>({2})을(를) 주웠다."),
+                    gearItem.Tier.Color, Gear.NameOf(gearItem), gearItem.Tier.Name);
+            }
             if (newlyDiscovered) msg += string.Format(DungeonLocalization.T("enemy.bestiary_new", "\n📖 도감에 처음 기록됨 — {0}"), LocalizedDisplayName);
             if (deathFlag != TempleFlag.None)
             {

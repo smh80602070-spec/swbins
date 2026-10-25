@@ -17,7 +17,10 @@ namespace Saga.Dungeon.Data
 
         public readonly string Id;
         private readonly string _name;
-        public string Name => DungeonLocalization.T("item." + Id, _name);
+        public string Name => WebTier >= 0 ? _name : DungeonLocalization.T("item." + Id, _name);
+
+        /// <summary>tasks U-0245 — 굴린 무기(`Gear` rx: id)의 웹 등급 0~4. 옛 고정 무기는 −1(LootFilter 가 Grade 로 옮겨 셈).</summary>
+        public readonly int WebTier = -1;
         public readonly float AtkBonus;
 
         // PLAN.md 101-3 G "장비 가시화" — 무기 소켓의 이미시브 림 3단(0~2)을
@@ -83,6 +86,31 @@ namespace Saga.Dungeon.Data
             ["wp_lm_nameless"] = new ItemData("wp_lm_nameless", "무명 묵검", 51f, 2, lore: Secret.Leech),  // 혈해 — 삼킨 이름(31층, tasks U-0028)
         };
 
-        public static ItemData Get(string id) => id != null && Catalog.TryGetValue(id, out var d) ? d : null;
+        private static readonly Dictionary<string, ItemData> Rolled = new Dictionary<string, ItemData>();
+
+        private ItemData(Gear.Item g)
+        {
+            Id = g.Id;
+            _name = Gear.NameOf(g);
+            AtkBonus = g.Main; // 웹 무기 주 능력치 = 이 트랙 무기 공격력(옛 서열 12~51 과 같은 자리) — 접사는 Gear.Totals 로
+            WebTier = g.Tier.Key;
+            Grade = g.Tier.Key >= 3 ? 2 : g.Tier.Key >= 1 ? 1 : 0;
+            Shape = g.Base.Look == "lance_e" || g.Base.Look == "spear" || g.Base.Look == "halberd" ? WeaponShape.Lance
+                : g.Base.Look == "gauntlet" ? WeaponShape.Gauntlet : WeaponShape.Blade;
+            Lore = Secret.None;
+        }
+
+        /// <summary>고정 무기 id 또는 굴린 무기 id(`rx:` — tasks U-0245). 굴린 것이 무기가 아니면 null.</summary>
+        public static ItemData Get(string id)
+        {
+            if (id == null) return null;
+            if (Catalog.TryGetValue(id, out var d)) return d;
+            if (!Gear.IsGear(id)) return null;
+            if (Rolled.TryGetValue(id, out d)) return d;
+            var g = Gear.Parse(id);
+            d = g != null && g.IsWeapon ? new ItemData(g) : null;
+            if (d != null) Rolled[id] = d;
+            return d;
+        }
     }
 }

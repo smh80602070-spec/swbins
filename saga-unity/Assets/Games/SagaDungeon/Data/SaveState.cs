@@ -64,6 +64,7 @@ namespace Saga.Dungeon.Data
             public string weaponId;
             public string gemId;
             public string mode; // tasks U-0137 난도 — 옛 세이브엔 없음(null = 평), 버전 안 올림.
+            public string gearJson; // tasks U-0245 장비 일곱 부위·굴림 차례 — 옛 세이브엔 없음(null = 빈 칸), 버전 안 올림.
             public string treeJson; // tasks U-0135 무예 나무 — 옛 세이브엔 없음(null = 빈 나무), 버전 안 올림.
             public string seasonJson; // tasks U-0195 시즌·래더 — 옛 세이브엔 없음(null = 처음 켠 기기), 버전 안 올림.
             public string bondJson; // tasks U-0201 부대 우정 — 옛 세이브엔 없음(null = 점수 0), 버전 안 올림.
@@ -138,6 +139,7 @@ namespace Saga.Dungeon.Data
                 weaponId = HeroState.EquippedWeaponId,
                 gemId = HeroState.SocketedGemId,
                 weapon2Id = HeroState.SecondWeaponId,
+                gearJson = Gear.Snapshot(), // tasks U-0245
                 treeJson = SkillTree.Snapshot(),
                 masteryJson = DungeonMastery.Snapshot(),
                 favorJson = DungeonFavor.Snapshot(), // tasks U-0194
@@ -216,6 +218,7 @@ namespace Saga.Dungeon.Data
             // 이 빌드보다 나중 버전(다운그레이드)이면 반쯤 바뀐 채로 적용하지 않는다.
             if (SaveMigrator.IsFuture(data.version, SaveVersion)) return false;
 
+            Gear.Restore(data.gearJson); // tasks U-0245 — 체력 상한이 장비를 타니 HeroState 보다 먼저
             HeroState.Restore(data.level, data.exp, data.hp, data.gold, data.weaponId, data.gemId, data.weapon2Id);
             SkillTree.Restore(data.treeJson); // tasks U-0135
             DungeonMastery.Restore(data.masteryJson); // tasks U-0178

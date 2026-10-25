@@ -77,6 +77,7 @@ namespace Saga.Dungeon.Data
         public static int TierOf(ItemData item)
         {
             if (item == null) return 0;
+            if (item.WebTier >= 0) return item.WebTier; // tasks U-0245 굴린 무기는 웹 등급 그대로
             if (item.Id.StartsWith("wp_lm_")) return 4;
             return item.Grade >= 2 ? 3 : item.Grade == 1 ? 2 : 0;
         }

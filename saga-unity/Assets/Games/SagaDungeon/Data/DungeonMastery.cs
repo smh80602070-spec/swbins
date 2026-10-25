@@ -35,9 +35,16 @@ namespace Saga.Dungeon.Data
             return t;
         }
 
+        /// <summary>tasks U-0245 — 굴린 무기(rx:바탕:…)는 바탕마다 하나로 숙련을 센다(줍는 족족 0 부터가 아니게).</summary>
+        public static string KeyOf(string id)
+        {
+            var g = Gear.Parse(id);
+            return g != null ? Gear.Prefix + g.Base.Key : id;
+        }
+
         public static int WeaponXp(string id)
         {
-            int i = id == null ? -1 : _s.ids.IndexOf(id);
+            int i = id == null ? -1 : _s.ids.IndexOf(KeyOf(id));
             return i < 0 ? 0 : _s.xps[i];
         }
 
@@ -54,8 +61,9 @@ namespace Saga.Dungeon.Data
             if (!On) return;
             string id = HeroState.EquippedWeaponId;
             if (string.IsNullOrEmpty(id)) return;
-            int i = _s.ids.IndexOf(id);
-            if (i < 0) { _s.ids.Add(id); _s.xps.Add(0); i = _s.ids.Count - 1; }
+            string key = KeyOf(id);
+            int i = _s.ids.IndexOf(key);
+            if (i < 0) { _s.ids.Add(key); _s.xps.Add(0); i = _s.ids.Count - 1; }
             int before = Tier(_s.xps[i]);
             _s.xps[i]++;
             int after = Tier(_s.xps[i]);
