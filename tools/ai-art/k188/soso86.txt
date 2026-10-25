@@ -1,0 +1,5 @@
+eu_nelson arm-strip
+eu_augustus toga-bits
+eu_aurelius hem-bit
+eu_richard blade-ghost
+jp_ieyasu hem-block
