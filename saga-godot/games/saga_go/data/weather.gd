@@ -97,6 +97,25 @@ static func current() -> Dictionary:
 	return KINDS[current_key()]
 
 
+## G-0408 날씨 부스트(포켓몬GO — 그 날씨에 맞는 속성 기술이 세짐) — 명단 공격 피해만(field_combat _dmg_bonus 가 곱함), 적 공격은 그대로.
+const BOOST := {"clear": ["fire", "grass"], "cloud": ["rock"], "rain": ["water", "thunder"], "wind": ["wind"], "fog": ["rock", "wind"], "snow": ["ice"]}
+const BOOST_MUL := 1.2
+
+
+## 손잡이 SAGA_WEATHER_BOOST=0 끔 · 헤드리스(점검)는 시각 의존 축이라 기본 끔, =1 이면 켬(probe_weather_boost).
+static func boost_on() -> bool:
+	var e := OS.get_environment("SAGA_WEATHER_BOOST")
+	return e == "1" or (e != "0" and DisplayServer.get_name() != "headless")
+
+
+static func boosted(element: String) -> bool:
+	return element != "" and boost_on() and (BOOST.get(current_key(), []) as Array).has(element)
+
+
+static func boost_mul(element: String) -> float:
+	return BOOST_MUL if boosted(element) else 1.0
+
+
 ## party_state.gd::add_exp()가 곱해 쓴다 — 사건 보상 경험치만 탄다
 ## (걷기·시간 경과로는 애초에 exp가 안 붙으니 손댈 자리가 없다).
 static func exp_bonus_mul() -> float:

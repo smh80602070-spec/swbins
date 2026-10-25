@@ -26,6 +26,7 @@ var night_mul := Color(1, 1, 1)
 ## G-0349 — 비·눈 입자(공용 weather_visual 빌림)와 그 키의 최소 안개(바탕 0.004 에 곱만으론 비·안개가 안 보였다 — 세 판과 같은 값).
 const WeatherVisual := preload("res://saga_core/world/weather_visual.gd")
 const GoWeatherFall := preload("res://games/saga_go/world/go_weather_fall.gd")
+const Elements := preload("res://games/saga_go/combat/elements.gd")   # G-0408 부스트 원소 이름
 var _fall: Node = null
 
 
@@ -78,4 +79,7 @@ func _apply() -> void:
 static func summary() -> String:
 	var s: Dictionary = Season.current()
 	var w: Dictionary = Weather.current()
-	return "%s %s · %s %s" % [s["emoji"], s["name"], w["emoji"], w["name"]]
+	var up := ""
+	for el: String in Weather.BOOST.get(Weather.current_key(), []):   # G-0408 날씨 부스트 원소
+		up += Elements.INFO[el].name
+	return "%s %s · %s %s%s" % [s["emoji"], s["name"], w["emoji"], w["name"], (" ⬆%s" % up) if up != "" and Weather.boost_on() else ""]

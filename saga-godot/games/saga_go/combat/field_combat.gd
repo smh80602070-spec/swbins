@@ -1308,7 +1308,7 @@ func _deal(enemy: Node, base: float, element: String, dir: Vector3) -> float:
 
 ## 원소(물리) 피해 보너스 — 치는 인물(_crit_id)이 있을 때만.
 func _dmg_bonus(element: String) -> float:
-	return PartyState.dmg_bonus(_crit_id, element) if _crit_id != "" else 1.0
+	return (PartyState.dmg_bonus(_crit_id, element) if _crit_id != "" else 1.0) * Weather.boost_mul(element)   # G-0408 날씨 부스트
 
 ## 치명타 — 치는 인물(_crit_id)이 있을 때만 굴린다. 배율(1 또는 1 + 치명타 피해).
 func _crit_roll() -> float:
