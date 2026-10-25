@@ -519,7 +519,96 @@ def pen_gate_01(C):
         obox(M, (-0.5, -0.12, z), (0.14, 0.02, 0.05), 0, iron)
     tube(M, (0.5, -0.13, 0.5), (0.5, -0.17, 0.5), 0.025, 0.025, iron, 0.3, 6)
 
+
+# ---------------------------------------------------------------- K-0193 4종횡 옆보기 발판 키트(폭이 가변이라 이어 붙인다)
+# 원점 = **윗면 가운데**(z 0 = 밟는 면, 아래로 내려감) · x = 발판 길이 · y = 깊이(화면 안쪽 +). 가운데 마디는 x 1.0m 를 이음매 없이 반복,
+# 끝 마디는 +x 쪽이 끝(왼쪽 끝은 엔진이 x −1 거울) · 사다리 마디는 원점 = 아래 가운데, z 1.0m 반복.
+
+def _plank_deck(M, wd, x0, x1, seed):
+    """x0→x1 을 깊이 방향 판자(폭 0.19·틈 0.01)로 덮는다 — 판마다 두께·높이 조금씩 다름."""
+    n = max(1, round((x1 - x0) / 0.2))
+    w = (x1 - x0) / n
+    for k in range(n):
+        h = 0.055 + 0.01 * ((k * 7 + seed) % 3) / 2
+        dz = -0.004 * ((k * 5 + seed) % 2)
+        obox(M, (x0 + w * (k + 0.5), 0, dz - h), (w - 0.012, 0.8, h), 0, wd)
+
+
+def plat_wood_mid_01(C):
+    """나무 발판 가운데 마디 1.0 × 0.8m — 판자 다섯 + 밑 각재 둘(깊이 앞뒤) + 받침 쐐기."""
+    M = C.M
+    wd = C.s('brown_planks_03', 0.8, tint='#b58a5e')
+    beam = C.s('coated_pine', 0.6, tint='#6e5034')
+    _plank_deck(M, wd, -0.5, 0.5, 1)
+    for y in (-0.28, 0.28):
+        obox(M, (0, y, -0.18), (1.0, 0.1, 0.12), 0, beam)
+    obox(M, (0, 0, -0.16), (0.12, 0.5, 0.08), 0, beam)
+
+
+def plat_wood_end_01(C):
+    """나무 발판 끝 마디 0.5 × 0.8m — 판자 둘 + 각재 끝 + 끝 통나무 마구리(깊이 방향)·밧줄 감기."""
+    M = C.M
+    wd = C.s('brown_planks_03', 0.8, tint='#b58a5e')
+    beam = C.s('coated_pine', 0.6, tint='#6e5034')
+    rope = C.s('thatch_roof_angled', 0.3, tint='#b9a070')
+    _plank_deck(M, wd, -0.25, 0.14, 2)
+    for y in (-0.28, 0.28):
+        obox(M, (-0.07, y, -0.18), (0.36, 0.1, 0.12), 0, beam)
+    tube(M, (0.2, -0.43, -0.07), (0.2, 0.43, -0.07), 0.075, 0.075, beam, 0.6, 10)
+    for y in (-0.33, 0.33):
+        tube(M, (0.2, y - 0.03, -0.07), (0.2, y + 0.03, -0.07), 0.085, 0.085, rope, 0.3, 10)
+
+
+def _stone_chunk(M, rock, x0, x1, taper_end):
+    """윗판 아래 흙돌 덩어리 — 깊이·높이로 둥글게 좁아지는 얇은 층 아홉(계단이 안 보이게, taper_end 면 +x 끝도 안으로)."""
+    n, z = 9, -0.12
+    for i in range(n):
+        t = (i + 1) / n
+        d = 0.76 * math.sqrt(max(0.0, 1 - t * t)) + 0.1      # 깊이 — 아래로 갈수록 둥글게
+        h = 0.06
+        e = (0.3 * t * t) if taper_end else 0.0
+        z -= h
+        obox(M, ((x0 + x1 - e) / 2, 0.015 * ((i * 3) % 2), z), (x1 - e - x0, d, h + 0.004), 0, rock)
+
+
+def plat_stone_mid_01(C):
+    """돌 발판 가운데 마디 1.0 × 0.8m — 판석 윗판(두 장) + 풀 앞 가장자리 + 아래로 좁아지는 돌 덩어리."""
+    M = C.M
+    top = C.s('cobblestone_floor_01', 0.8)
+    rock = C.s('japanese_stone_wall', 0.9, tint='#9a8f80')
+    grass = C.s('aerial_grass_rock', 0.6, tint='#7fa25a')
+    for k, x in enumerate((-0.25, 0.25)):
+        obox(M, (x, 0, -0.12 - 0.005 * k), (0.49, 0.8, 0.12 - 0.005 * k), 0, top)
+    obox(M, (0, -0.41, -0.06), (1.0, 0.05, 0.07), 0, grass)
+    _stone_chunk(M, rock, -0.5, 0.5, False)
+
+
+def plat_stone_end_01(C):
+    """돌 발판 끝 마디 0.5 × 0.8m — 판석 한 장 + 둥근 모서리 돌 + 풀 + +x 로 좁아지는 덩어리."""
+    M = C.M
+    top = C.s('cobblestone_floor_01', 0.8)
+    rock = C.s('japanese_stone_wall', 0.9, tint='#9a8f80')
+    grass = C.s('aerial_grass_rock', 0.6, tint='#7fa25a')
+    obox(M, (-0.06, 0, -0.12), (0.38, 0.8, 0.12), 0, top)
+    tube(M, (0.18, -0.36, -0.07), (0.18, 0.36, -0.07), 0.07, 0.07, rock, 0.6, 10)
+    obox(M, (-0.06, -0.41, -0.06), (0.38, 0.05, 0.07), 0, grass)
+    _stone_chunk(M, rock, -0.25, 0.22, True)
+
+
+def ladder_01(C):
+    """사다리 마디 높이 1.0m · 폭 0.5m — 기둥 둘(통나무) + 디딤 셋(간격 0.33, 마디 이어도 같은 간격) + 밧줄 묶음."""
+    M = C.M
+    log = C.s('coated_pine', 0.6, tint='#8a6a48')
+    rope = C.s('thatch_roof_angled', 0.3, tint='#b9a070')
+    for sx in (-0.22, 0.22):
+        tube(M, (sx, 0, 0), (sx, 0, 1.0), 0.035, 0.035, log, 0.6, 8)
+    for z in (0.165, 0.5, 0.835):
+        tube(M, (-0.25, 0, z), (0.25, 0, z), 0.024, 0.024, log, 0.6, 6)
+        for sx in (-0.22, 0.22):
+            tube(M, (sx, 0, z - 0.03), (sx, 0, z + 0.03), 0.042, 0.042, rope, 0.3, 8)
+
 PROPS = {f.__name__: f for f in (
+    plat_wood_mid_01, plat_wood_end_01, plat_stone_mid_01, plat_stone_end_01, ladder_01,
     pen_fence_01, pen_gate_01, well_01, street_lamp_01, signal_pylon_01, torch_stand_01, altar_01, iron_fence_01, wood_fence_01, mailbox_01,
     haystack_01, bamboo_clump_01, stele_01, stone_lantern_01, banner_pole_01, city_wall_segment_01, brazier_01,
     road_barrier_01, covered_car_01, old_tyre_01, generator_01, searchlight_01, power_box_01, security_camera_01, wicker_basket_01,

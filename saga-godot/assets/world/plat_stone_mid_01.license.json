@@ -1,0 +1,20 @@
+{
+ "id": "plat_stone_mid_01",
+ "generator": "tools/world-forge/build_prop.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드)",
+ "inputs": [
+  "self-pbr: aerial_grass_rock",
+  "self-pbr: cobblestone_floor_01",
+  "self-pbr: japanese_stone_wall"
+ ],
+ "size_m": [
+  1.0,
+  0.87,
+  0.67
+ ],
+ "tris": 144,
+ "ticket": "K-0193",
+ "pbr_maps": "K-0154 tools/glb-compress/add_pbr_maps.mjs --size 128 --flat 0.05 — 그 재질 색 그림에서 자체 계산한 법선·거칠기(남의 텍스처 0, 거의 단색 그림은 맵 없이 거칠기만)"
+}
