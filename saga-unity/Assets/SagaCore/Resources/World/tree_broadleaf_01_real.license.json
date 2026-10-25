@@ -1,0 +1,33 @@
+{
+ "id": "tree_broadleaf_01_real",
+ "generator": "tools/world-forge/build_nature_real.py",
+ "ticket": "K-0190",
+ "blender": "5.2.1 LTS",
+ "recipe": "tools/world-forge/build_nature.py tree_broadleaf_01",
+ "license": "CC0-1.0 자체 생성 — 형태는 코드, 잎은 자체 아틀라스(foliage_atlas.py), 줄기·바위는 자체 PBR(K-0093·K-0113)",
+ "commercial_use": true,
+ "inputs": [
+  "saga-assets/world/foliage/_atlas/foliage_atlas.png",
+  "self-pbr: cliff_side",
+  "self-pbr: white_stucco"
+ ],
+ "atlas_inputs": [
+  "tools/ai-art/_out/k104_foliage/leaf_broad_v03.png",
+  "tools/ai-art/_out/k104_foliage/leaf_small_v02.png",
+  "tools/ai-art/_out/k104_foliage/grass_blades_v03.png",
+  "tools/ai-art/_out/k104_foliage/grass_seed_v01.png",
+  "tools/ai-art/_out/k104_foliage/flower_white_blk_v01.png",
+  "tools/ai-art/_out/k104_foliage/flower_yellow_v01.png",
+  "tools/ai-art/_out/k104_foliage/flower_purple_v04.png",
+  "tools/ai-art/_out/k104_foliage/fern_frond_blk_v02.png"
+ ],
+ "size_m": [
+  4.6,
+  4.61,
+  6.7
+ ],
+ "tris": 524,
+ "card_normals": true,
+ "packed": "tools/glb-compress/k190_unity_nature.mjs — 고돗 사실판 gltf → GLB 한 덩이, 그림 긴 변 1024(형식 그대로)",
+ "source_gltf": "saga-godot/assets/world/foliage/tree_broadleaf_01_real.gltf"
+}

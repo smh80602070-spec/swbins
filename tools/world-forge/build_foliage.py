@@ -174,7 +174,13 @@ def fern_01(C):
         C.card('fern_frond', (0, 0, 0.0), rnd.uniform(0.45, 0.55), a, rnd.uniform(0.2, 0.35), 0.0, 'bottom', nf)
 
 
-KINDS = {f.__name__: f for f in (bush_leafy_01, bush_leafy_02, grass_clump_01, grass_clump_02, flower_clump_01, flower_clump_02, fern_01)}
+def reed_clump_01_real(C):
+    """K-0190 갈대 무리 ≈ 1.4m — 이삭 달린 키 큰 줄기 + 밑 잎(유니티 reed_clump_01 사실판, 옛 판은 build_nature 상자 잎)."""
+    tuft(C, 'grass_seed', 9, 0.16, 1.15, 1.45, 0.12, 1051)
+    tuft(C, 'grass_blades', 7, 0.2, 0.55, 0.8, 0.22, 1052, 0.3)
+
+
+KINDS = {f.__name__: f for f in (bush_leafy_01, bush_leafy_02, grass_clump_01, grass_clump_02, flower_clump_01, flower_clump_02, fern_01, reed_clump_01_real)}
 TRIS_MAX = {'bush_leafy_01': 1500, 'bush_leafy_02': 1500}
 
 
