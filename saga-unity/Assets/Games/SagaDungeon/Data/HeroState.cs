@@ -208,7 +208,7 @@ namespace Saga.Dungeon.Data
             LastHitWho = who;
             LastHitHow = how;
             int before = Hp;
-            Hp = Math.Max(0, Hp - RoundInt(amount * DungeonMastery.GuardMul / BlessingState.DefMultiplier * (1f - Gear.Totals.GuardPct / 100f))); // tasks U-0178 갑주 숙련(단계마다 −2%) · U-0245 장비 막기
+            Hp = Math.Max(0, Hp - RoundInt(amount * DungeonMastery.GuardMul / BlessingState.DefMultiplier * (1f - Gear.Totals.GuardPct / 100f) * (1f - Gear.BuffGuardPct / 100f))); // tasks U-0178 갑주 숙련(단계마다 −2%) · U-0245 장비 막기
             LastDealt = before - Hp;
             if (LastDealt > 0) DungeonMastery.OnHurt();
             Saga.Dungeon.Audio.SfxPlayer.Play("sword_hurt", minGap: HurtSfxGap); // tasks U-0104 — 피격(연타는 한 번).

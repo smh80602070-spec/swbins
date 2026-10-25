@@ -43,6 +43,16 @@ namespace Saga.Dungeon.UI
             var lore = SecretState.EquippedLore; // PLAN.md 109-10-2 비전
             weapon += DungeonMastery.Stars(DungeonMastery.WeaponTier(HeroState.EquippedWeaponId)); // tasks U-0178 무기 숙련
             if (lore != Secret.None) weapon += string.Format(DungeonLocalization.T("lore.hud", " [비전 {0}]"), SecretState.LoreName(lore));
+            // tasks U-0245 — 굴린 무기는 웹 등급색 · 한 벌을 다 걸치면 세트 무예(C) 표 · 두 점이면 세트 점수만
+            var wpn = HeroState.EquippedWeapon;
+            if (wpn != null && wpn.WebTier >= 0) weapon = $"<color={GearTables.Tiers[wpn.WebTier].Color}>{weapon}</color>";
+            var full = Gear.Totals.FullSet;
+            if (full?.Skill != null)
+            {
+                float cd = Saga.Dungeon.Player.PlayerCombat.SetSkillReadyAt - Time.time;
+                weapon += cd > 0.05f ? $" [C {full.Skill.Emoji}{Mathf.CeilToInt(cd)}]" : $" [C {full.Skill.Emoji}]";
+            }
+            else foreach (var kv in Gear.Totals.SetCount) if (kv.Value >= 2) { weapon += $" [{kv.Value}/3]"; break; }
             // "절차적 층 진행" 슬라이스 — ProcRoom에 아직 안 닿았으면(Room1~4,
             // 개념상 "층1") DungeonFloorRunner.Instance가 null이라 1로 대신함.
             int floor = DungeonFloorRunner.Instance?.CurrentFloor ?? 1;

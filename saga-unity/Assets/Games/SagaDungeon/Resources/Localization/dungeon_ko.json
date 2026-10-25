@@ -156,6 +156,7 @@
     { "key": "enemy.loot_equipped", "value": "\n{0}을(를) 주웠다 — 바로 갖췄다." },
     { "key": "gear.loot_equipped", "value": "\n<color={0}>{1}</color>({2})을(를) 주웠다 — 바로 갖췄다." },
     { "key": "gear.loot_plain", "value": "\n<color={0}>{1}</color>({2})을(를) 주웠다." },
+    { "key": "gear.setskill_none", "value": "세트 무예가 없다 — 한 벌 세 점을 다 걸쳐야 한다" },
     { "key": "enemy.loot_plain", "value": "\n{0}을(를) 주웠다." },
     { "key": "enemy.gem_socketed", "value": "\n{0}을(를) 주웠다 — 바로 세공했다." },
     { "key": "enemy.bestiary_new", "value": "\n📖 도감에 처음 기록됨 — {0}" },

@@ -122,6 +122,7 @@ namespace Saga.EditorTools
                 CheckWeaponVisual();
                 CheckEraFusion();
                 CheckWhirl();
+                CheckSetSkill(); // tasks U-0245
                 CheckDebugHud();
                 CheckSettingsPanel();
                 PlaytestSettingsVoice.Check("PlaytestDungeonHeadless", typeof(Saga.Dungeon.UI.DungeonSettingsPanel)); // U-0075 음성 줄
@@ -613,6 +614,52 @@ namespace Saga.EditorTools
             for (int i = contentRoot.childCount - 1; i >= fromIndex; i--)
             {
                 Object.DestroyImmediate(contentRoot.GetChild(i).gameObject);
+            }
+        }
+
+        /// <summary>tasks U-0245 세트 무예 — 세트가 없으면 안 나감 · 첫 세트(nova) 세 점을 걸치면 둘레 더미만 맞고 먼 더미는 그대로 · 쿨 걸림. 장비는 되돌린다.</summary>
+        private static void CheckSetSkill()
+        {
+            var playerGo = GameObject.FindWithTag("Player");
+            var combat = playerGo != null ? playerGo.GetComponent<PlayerCombat>() : null;
+            if (combat == null) { Debug.LogError("[PlaytestDungeonHeadless] set skill — PlayerCombat 없음"); _hadError = true; return; }
+            string gearBefore = Gear.Snapshot(), weaponBefore = HeroState.EquippedWeaponId, gemBefore = HeroState.SocketedGemId, w2Before = HeroState.SecondWeaponId;
+            int lv = HeroState.Level, xp = HeroState.Exp, hp = HeroState.Hp, gold = HeroState.Gold;
+            DungeonEnemy near = null, far = null;
+            try
+            {
+                Gear.Restore(null);
+                if (combat.TriggerSetSkill()) { Debug.LogError("[PlaytestDungeonHeadless] set skill — 세트 없이 나감"); _hadError = true; return; }
+                GearSet set = null;
+                foreach (var s in GearTables.Sets) if (s.Skill != null && s.Skill.Shape == "nova") { set = s; break; }
+                if (set == null) { Debug.LogError("[PlaytestDungeonHeadless] set skill — nova 세트 없음"); _hadError = true; return; }
+                foreach (var piece in set.Pieces)
+                {
+                    string id = Gear.Roll(10, baseKey: piece, tier: GearTables.SetTier, set: true);
+                    if (GearTables.Base(piece).Slot == "weapon") HeroState.Restore(lv, xp, hp, gold, id, gemBefore, w2Before);
+                    else Gear.EquipIfBetter(id);
+                }
+                if (Gear.Totals.FullSet != set) { Debug.LogError($"[PlaytestDungeonHeadless] set skill — 세 점인데 한 벌 아님({Gear.Totals.FullSet?.Key})"); _hadError = true; return; }
+                Vector3 o = playerGo.transform.position;
+                near = SpawnDummyEnemy(o + new Vector3(1.5f, 0f, 0f));
+                far = SpawnDummyEnemy(o + new Vector3(set.Skill.R / PlayerCombat.PxPerM + 4f, 0f, 0f));
+                float farHp = (float)GetPrivate(far, "hp");
+                bool cast = combat.TriggerSetSkill();
+                float farAfter = (float)GetPrivate(far, "_curHp");
+                bool again = combat.TriggerSetSkill();
+                if (!cast || combat.LastSetSkillHits < 1 || !Mathf.Approximately(farAfter, farHp) || again)
+                {
+                    Debug.LogError($"[PlaytestDungeonHeadless] set skill FAIL - 나감 {cast}·맞음 {combat.LastSetSkillHits}·먼 더미 {farAfter}/{farHp}·쿨 무시 {again}");
+                    _hadError = true;
+                }
+                else Debug.Log($"[PlaytestDungeonHeadless] set skill OK - {set.Key} {set.Skill.Name}({set.Skill.Shape}) 맞음 {combat.LastSetSkillHits}·먼 더미 그대로·쿨 {combat.SetSkillCooldownLeft:F0}초");
+            }
+            finally
+            {
+                if (near != null) Object.Destroy(near.gameObject);
+                if (far != null) Object.Destroy(far.gameObject);
+                Gear.Restore(gearBefore);
+                HeroState.Restore(lv, xp, hp, gold, weaponBefore, gemBefore, w2Before);
             }
         }
 

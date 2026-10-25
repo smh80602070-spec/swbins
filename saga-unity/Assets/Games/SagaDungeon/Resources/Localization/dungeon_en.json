@@ -156,6 +156,7 @@
     { "key": "enemy.loot_equipped", "value": "\nPicked up {0} — equipped it right away." },
     { "key": "gear.loot_equipped", "value": "\nPicked up <color={0}>{1}</color> ({2}) — equipped it right away." },
     { "key": "gear.loot_plain", "value": "\nPicked up <color={0}>{1}</color> ({2})." },
+    { "key": "gear.setskill_none", "value": "No set skill — wear all three pieces of one set." },
     { "key": "enemy.loot_plain", "value": "\nPicked up {0}." },
     { "key": "enemy.gem_socketed", "value": "\nPicked up {0} — socketed it right away." },
     { "key": "enemy.bestiary_new", "value": "\n📖 Newly recorded in the bestiary — {0}" },

@@ -218,6 +218,17 @@ namespace Saga.Dungeon.Data
             return Roll(ilvl, bias: boss ? 60f : 0f);
         }
 
+        // ── 세트 무예 buff(웹 shape 'buff' — 지금은 막기 % 하나: guardPct) ─────
+        private static float _buffGuard, _buffUntil = -1f;
+        public static void Buff(string eff, float v, float sec)
+        {
+            if (eff != "guardPct") return;
+            _buffGuard = v;
+            _buffUntil = Time.time + Mathf.Max(0.5f, sec);
+        }
+        /// <summary>지금 걸린 세트 무예 막기 %(끝났으면 0) — HeroState.TakeDamage 가 곱한다.</summary>
+        public static float BuffGuardPct => Time.time < _buffUntil ? _buffGuard : 0f;
+
         /// <summary>처치 보상 경험·금에 장비 % 를 얹는다(0 이면 그대로).</summary>
         public static int WithPct(int amount, float pct) => pct > 0f && amount > 0 ? Mathf.RoundToInt(amount * (1f + pct / 100f)) : amount;
 

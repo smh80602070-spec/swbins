@@ -41,7 +41,7 @@ namespace Saga.Dungeon.Player
     /// 얼리고, 흡혈이면 창 안의 피해로 체력을 되찾는다. 비결 없음 = 옛 수치 그대로.
     /// </summary>
     [RequireComponent(typeof(PlayerController))]
-    public class PlayerCombat : MonoBehaviour
+    public partial class PlayerCombat : MonoBehaviour
     {
         private const float AttackRange = 2.5f;
         private const float AttackCooldown = 0.55f; // js/dungeon.js BASE_ATK_CD
@@ -159,6 +159,7 @@ namespace Saga.Dungeon.Player
             if (_cooldownLeft > 0f) _cooldownLeft -= Time.deltaTime;
             if (_heavyCooldownLeft > 0f) _heavyCooldownLeft -= Time.deltaTime;
             if (_whirlCooldownLeft > 0f) _whirlCooldownLeft -= Time.deltaTime;
+            if (_setSkillCdLeft > 0f) _setSkillCdLeft -= Time.deltaTime; // tasks U-0245
 
             var kb = Keyboard.current;
             if (kb == null && !SagaPad.Connected) return; // tasks U-0017 — 패드만 있어도 싸운다
@@ -176,6 +177,7 @@ namespace Saga.Dungeon.Player
                 TryWhirl();
             }
             if (kb != null && kb.gKey.wasPressedThisFrame) TrySwap(); // tasks U-0131 — Q 는 락온·Tab 은 다음 대상이라 G
+            if (kb != null && kb.cKey.wasPressedThisFrame) TrySetSkill(); // tasks U-0245 세트 무예 — 웹 F 는 이 트랙 점프라 C
         }
 
         /// <summary>tasks U-0131 무기 두 벌 — 폰 단추(<see cref="WeaponSwapButton"/>)가 부른다.</summary>
