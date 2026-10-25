@@ -157,6 +157,22 @@ namespace Saga.EditorTools
             PlaytestKit.Check(perBody == distinct, $"얼굴 사본이 몸끼리 겹침 {perBody}/{distinct}");
             Debug.Log($"{Tag} copies OK - 공유 재질 바뀜 0 · 얼굴 사본 {distinct}(몸마다)");
 
+            // tasks U-0239b 얼굴 SDF — 얼굴 살갗 사본만 켜짐(입·눈 흰자·몸 아님) · 텍스처 임포트(sRGB 끔·밉맵 없음)
+            var sdfTex = FaceLight.Sdf;
+            if (sdfTex == null) Debug.Log($"{Tag} sdf OK - SKIP(그림 없음 — K-0191 전)");
+            else
+            {
+                var (sdfOn, sdfAll) = FaceLight.SdfCount();
+                int wrong = bodies.SelectMany(b => b.mats).Count(m => m != null && m.GetFloat(FaceLight.SdfOnId) > 0.5f && !m.name.ToLowerInvariant().Contains("skin"));
+                PlaytestKit.Check(sdfOn > 0, $"SDF 켜진 얼굴 살갗 0(사본 {sdfAll})");
+                PlaytestKit.Check(wrong == 0, $"살갗 아닌 얼굴 칸에 SDF {wrong}");
+                PlaytestKit.Check(sdfTex.mipmapCount == 1, $"SDF 밉맵 {sdfTex.mipmapCount}");
+                string sdfPath = UnityEditor.AssetDatabase.GetAssetPath(sdfTex);
+                var imp = UnityEditor.AssetImporter.GetAtPath(sdfPath) as UnityEditor.TextureImporter;
+                PlaytestKit.Check(imp != null && !imp.sRGBTexture, "SDF sRGB 켜짐");
+                Debug.Log($"{Tag} sdf OK - 얼굴 살갗 {sdfOn}/{sdfAll} 칸 켬 · 입·눈 0 · 밉맵 1 · sRGB 끔");
+            }
+
             // 한 프레임 뒤 머리 앞
             FaceLight.TickAll(true);
             int zero = 0, back = 0;
@@ -193,6 +209,7 @@ namespace Saga.EditorTools
             System.IO.Directory.CreateDirectory(dir);
             int.TryParse(System.Environment.GetEnvironmentVariable("SAGA_FACE_SHOT_MAX"), out int max);
             if (max <= 0) max = 2;
+            bool sdfShots = System.Environment.GetEnvironmentVariable("SAGA_FACE_SHOT_SDF") == "1";
             bool asyncWas = ShaderUtil.allowAsyncCompilation;
             ShaderUtil.allowAsyncCompilation = false;
             try
@@ -222,12 +239,14 @@ namespace Saga.EditorTools
                     var lights = new List<(string tag, Quaternion rot)> { ("scene", sunRot0) };
                     lights.Add(("side", Quaternion.LookRotation(-(right * 0.82f + Vector3.up * 0.57f + fwd * 0.05f))));   // 몸 오른쪽 35° 위
                     lights.Add(("high", Quaternion.LookRotation(-(fwd * 0.34f + right * 0.2f + Vector3.up * 0.92f))));   // 앞쪽 높은 해(~67°)
+                    if (sdfShots) lights.Add(("sideL", Quaternion.LookRotation(-(-right * 0.82f + Vector3.up * 0.57f + fwd * 0.05f))));   // U-0239b 몸 왼쪽(SDF u 뒤집기 확인)
                     foreach (var (tag, rot) in lights)
                     {
                         if (sun != null) sun.transform.rotation = rot;
-                        FaceLight.SetModeForTest(false);
+                        // U-0239b `SAGA_FACE_SHOT_SDF=1` — 얼굴 모드는 켠 채 SDF 끔/켬을 견준다
+                        if (sdfShots) { FaceLight.SetModeForTest(true); FaceLight.SetSdfForTest(false); } else FaceLight.SetModeForTest(false);
                         var a0 = Render(cam, $"{dir}face_{k}_{tag}_a_off.png");
-                        FaceLight.SetModeForTest(true);
+                        if (sdfShots) FaceLight.SetSdfForTest(true); else FaceLight.SetModeForTest(true);
                         var a1 = Render(cam, $"{dir}face_{k}_{tag}_b_on.png");
                         double sum = 0; int big = 0;
                         for (int i = 0; i < a0.Length; i++)

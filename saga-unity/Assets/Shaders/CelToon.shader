@@ -27,6 +27,10 @@ Shader "Saga/CelToon"
         [HideInInspector] _FaceMode("얼굴 표면(0/1)", Float) = 0
         _FaceFlatten("얼굴 법선 → 머리 앞 섞음", Range(0, 1)) = 0.65
         [HideInInspector] _HeadFwd("머리 앞(월드)", Vector) = (0, 0, 0, 0)
+        // 얼굴 SDF(원신식 그늘 경계 그림, 자체툴 K-0191) — FaceLight 가 얼굴 살갗 재질에만 켠다(입 안·눈 흰자 끔). 그림은 빛이 캐릭터 오른쪽일 때 기준, 왼쪽이면 u 뒤집기.
+        [NoScaleOffset] _FaceSdf("얼굴 SDF", 2D) = "white" {}
+        [HideInInspector] _FaceSdfOn("얼굴 SDF 켬(0/1)", Float) = 0
+        [HideInInspector] _FaceSdfFlip("얼굴 SDF 좌우 규약(1/-1)", Float) = 1
 
         [HideInInspector] _Surface("_Surface", Float) = 0
         [HideInInspector] _Cull("_Cull", Float) = 2
@@ -112,7 +116,7 @@ Shader "Saga/CelToon"
             // tasks U-0217 — 얼굴 표면의 빛 세기(0~1), cel_toon.gdshader face_ndotl 과 같은 식. 얼굴 아니면(_FaceMode 0) 법선·빛 그대로.
             // 얼굴 법선·빛을 둘 다 수평(월드 위 성분 뺌)으로 눌러 머리 앞과 _FaceFlatten 만큼 섞는다 — 코·입가·턱 밑 얼룩 그늘 없이 좌우 반쪽 경계.
             // 해가 높을수록 고르게 밝게 · 머리 앞을 모르면(0 벡터) 그늘 바닥만 0.7 로 올린다.
-            half FaceNdotL(half3 n, half3 l)
+            half FaceNdotL(half3 n, half3 l, half2 sdf2)
             {
                 half plain = saturate(dot(n, l));
                 if (_FaceMode < 0.5) return plain;
@@ -126,15 +130,28 @@ Shader "Saga/CelToon"
                 float lhl = length(lh);
                 if (lhl < 0.05) return lv > 0.0 ? 1.0h : 0.0h;   // 바로 위(아래)에서 오는 빛
                 lh /= lhl;
-                float3 nh = float3(n.x, 0.0, n.z);
-                float3 fn = normalize(lerp(nh, hf, _FaceFlatten) + hf * 1e-3);
-                float d = saturate(dot(fn, lh));
+                float d;
+                if (_FaceSdfOn > 0.5)
+                {
+                    // tasks U-0239b 얼굴 SDF(고돗 face_ndotl 같은 식) — 빛 수평 각으로 문턱(정면 0 · 옆 0.5 · 뒤 1), 그림 값이 넘으면 밝음.
+                    // 유니티는 왼손 좌표 — 캐릭터 오른쪽 = cross(위, 앞)(고돗 cross(앞, 위) 와 같은 쪽).
+                    float side = dot(lh, cross(float3(0, 1, 0), hf)) * _FaceSdfFlip;
+                    float sdf = side >= 0.0 ? sdf2.x : sdf2.y;
+                    float thr = 0.5 - 0.5 * dot(hf, lh);
+                    d = smoothstep(thr - 0.02, thr + 0.02, sdf);
+                }
+                else
+                {
+                    float3 nh = float3(n.x, 0.0, n.z);
+                    float3 fn = normalize(lerp(nh, hf, _FaceFlatten) + hf * 1e-3);
+                    d = saturate(dot(fn, lh));
+                }
                 return (half)lerp(d, 1.0, smoothstep(0.8, 0.98, lv));
             }
 
-            half3 CelLight(Light light, half3 albedo, half3 normalWS, half3 viewDirWS)
+            half3 CelLight(Light light, half3 albedo, half3 normalWS, half3 viewDirWS, half2 sdf2)
             {
-                half ndotl = FaceNdotL(normalWS, light.direction);
+                half ndotl = FaceNdotL(normalWS, light.direction, sdf2);
                 half lit = CelBand(ndotl);
                 half rim = pow(1.0h - saturate(dot(normalWS, viewDirWS)), _RimPower) * _RimStrength;
                 rim *= smoothstep(0.0h, 0.3h, ndotl);
@@ -174,9 +191,12 @@ Shader "Saga/CelToon"
                 inputData.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
                 inputData.shadowMask = half4(1, 1, 1, 1);
 
+                half2 sdf2 = half2(1.0h, 1.0h);
+                if (_FaceSdfOn > 0.5) // U-0239b — 그림 값(u 그대로·u 뒤집음), v 는 안 뒤집음
+                    sdf2 = half2(SAMPLE_TEXTURE2D(_FaceSdf, sampler_FaceSdf, input.uv).r, SAMPLE_TEXTURE2D(_FaceSdf, sampler_FaceSdf, float2(1.0 - input.uv.x, input.uv.y)).r);
                 Light mainLight = GetMainLight(inputData.shadowCoord, input.positionWS, inputData.shadowMask);
                 half3 color = SampleSH(normalWS) * albedo;
-                color += CelLight(mainLight, albedo, normalWS, viewDirWS);
+                color += CelLight(mainLight, albedo, normalWS, viewDirWS, sdf2);
 
                 #if defined(_ADDITIONAL_LIGHTS)
                     uint pixelLightCount = GetAdditionalLightsCount();
@@ -188,12 +208,12 @@ Shader "Saga/CelToon"
                     {
                         CLUSTER_LIGHT_LOOP_SUBTRACTIVE_LIGHT_CHECK
                         Light light = GetAdditionalLight(lightIndex, inputData, inputData.shadowMask, aoFactor);
-                        color += CelLight(light, albedo, normalWS, viewDirWS);
+                        color += CelLight(light, albedo, normalWS, viewDirWS, sdf2);
                     }
                     #endif
                     LIGHT_LOOP_BEGIN(pixelLightCount)
                         Light light = GetAdditionalLight(lightIndex, inputData, inputData.shadowMask, aoFactor);
-                        color += CelLight(light, albedo, normalWS, viewDirWS);
+                        color += CelLight(light, albedo, normalWS, viewDirWS, sdf2);
                     LIGHT_LOOP_END
                 #endif
 

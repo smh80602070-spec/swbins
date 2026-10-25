@@ -23,6 +23,37 @@ namespace Saga.Core
         public static readonly int FaceModeId = Shader.PropertyToID("_FaceMode");
         public static readonly int HeadFwdId = Shader.PropertyToID("_HeadFwd");
         private static readonly int FlattenId = Shader.PropertyToID("_FaceFlatten");
+        // tasks U-0239b 얼굴 SDF(자체툴 K-0191 `Resources/Characters/FaceSdf/face_sdf`) — 얼굴 살갗 재질만(입 안·눈 흰자·몸 살갗 아님). 끄기 `SAGA_FACE_SDF=0`.
+        public static readonly int SdfTexId = Shader.PropertyToID("_FaceSdf");
+        public static readonly int SdfOnId = Shader.PropertyToID("_FaceSdfOn");
+        public const string SdfPath = "Characters/FaceSdf/face_sdf";
+        private static Texture2D _sdf;
+        private static bool _sdfTried;
+        public static Texture2D Sdf
+        {
+            get
+            {
+                if (!_sdfTried) { _sdfTried = true; _sdf = System.Environment.GetEnvironmentVariable("SAGA_FACE_SDF") != "0" ? Resources.Load<Texture2D>(SdfPath) : null; }
+                return _sdf;
+            }
+        }
+
+        /// <summary>SDF 를 받을 얼굴 살갗 — 재질 이름에 `_skin` 이 있고 얼굴(`face` 가 든 재질 또는 `Face…` 물체). 입(`mouth`)·눈 흰자(`_eye`)·몸 살갗(`body`)은 아님.</summary>
+        public static bool IsSdfSurface(Renderer r, Material src)
+        {
+            if (src == null) return false;
+            string n = src.name.ToLowerInvariant();
+            if (!n.Contains("_skin") || n.Contains("mouth") || n.Contains("body")) return false;
+            return n.Contains("face") || (r != null && r.name.StartsWith("Face"));
+        }
+
+        private static void ApplySdf(Material mine, bool on)
+        {
+            if (mine == null || !mine.HasProperty(SdfOnId)) return;
+            var t = Sdf;
+            if (on && t != null) { mine.SetTexture(SdfTexId, t); mine.SetFloat(SdfOnId, 1f); }
+            else mine.SetFloat(SdfOnId, 0f);
+        }
 
         public sealed class Body
         {
@@ -179,6 +210,7 @@ namespace Saga.Core
                         if (mine.HasProperty(FlattenId)) mine.SetFloat(FlattenId, Flatten);
                         Source[mine] = m;
                     }
+                    ApplySdf(mine, IsSdfSurface(r, Source.TryGetValue(mine, out var srcM) ? srcM : m));
                     if (body.last.sqrMagnitude > 0.5f) mine.SetVector(HeadFwdId, body.last);
                     Owned.Add(mine);
                     if (!body.mats.Contains(mine)) body.mats.Add(mine);
@@ -212,6 +244,28 @@ namespace Saga.Core
                 foreach (var m in b.mats) if (m != null) m.SetVector(HeadFwdId, v);
             }
             if (dead != null) foreach (var a in dead) Bodies.Remove(a);
+        }
+
+        /// <summary>진단 U-0239b — SDF 가 켜진 사본 수·전체 사본 수.</summary>
+        public static (int sdf, int all) SdfCount()
+        {
+            int s = 0, a = 0;
+            foreach (var b in Bodies.Values) foreach (var m in b.mats) if (m != null) { a++; if (m.HasProperty(SdfOnId) && m.GetFloat(SdfOnId) > 0.5f && m.GetTexture(SdfTexId) != null) s++; }
+            return (s, a);
+        }
+
+        /// <summary>진단·촬영 U-0239b — SDF 켬/끔(켬은 원래 SDF 칸만). 바꾼 재질 수.</summary>
+        public static int SetSdfForTest(bool on)
+        {
+            int n = 0;
+            foreach (var b in Bodies.Values)
+                foreach (var m in b.mats)
+                {
+                    if (m == null) continue;
+                    var src = Source.TryGetValue(m, out var s0) ? s0 : m;
+                    ApplySdf(m, on && IsSdfSurface(null, src)); n++;
+                }
+            return n;
         }
 
         /// <summary>진단·촬영 — 붙인 사본의 `_FaceMode` 를 한꺼번에 켬/끔(같은 프레임·같은 자세 전후 비교). 바꾼 재질 수.</summary>

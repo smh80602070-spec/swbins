@@ -24,7 +24,12 @@ CBUFFER_START(UnityPerMaterial)
     half _FaceMode;      // tasks U-0217 얼굴 그림자
     half _FaceFlatten;
     float4 _HeadFwd;
+    half _FaceSdfOn;     // tasks U-0239b 얼굴 SDF(자체툴 K-0191) — 얼굴 살갗 재질만 1
+    half _FaceSdfFlip;
 CBUFFER_END
+
+TEXTURE2D(_FaceSdf);
+SAMPLER(sampler_FaceSdf);
 
 // tasks U-0148 — 인물 외곽선 전역 배율(CharacterOutline 이 켬, 화질 낮음이면 0). 안 넣으면 0 이라 _OutlinePx 외곽선은 꺼진 채.
 float _SagaOutlineMul;
