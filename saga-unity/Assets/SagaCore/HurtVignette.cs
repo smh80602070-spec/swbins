@@ -52,7 +52,7 @@ namespace Saga.Core
         public static Func<float> BoundFunc => _bind;
 
         /// <summary>맞은 순간 — 가장자리 붉게 번쩍.</summary>
-        public static void Flash() => Flash(Red);
+        public static void Flash() { Flash(Red); TalkFace.HeroHurt(); } // tasks U-0233 붉은 번쩍 = 맞음 → 주인공 얼굴 놀람
 
         /// <summary>tasks U-0142 — 색만 다른 번쩍(4종횡 저스트 회피 = 금빛). 번쩍이 끝나도 그 색이 맥박까지 남지 않게 다음 Flash()·맥박은 붉게.</summary>
         public static Color Tint => _tint;

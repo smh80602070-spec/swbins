@@ -63,6 +63,7 @@ namespace Saga.Go.World
         private void OnLeveledUp(int newLevel)
         {
             _cameraRig?.PlayLevelUpCut();
+            Saga.Core.TalkFace.HeroJoy(); // tasks U-0233 레벨업 웃음 2초
             Saga.Go.Audio.GoSfx.Play("levelup"); // U-0048
             Saga.Core.SagaVoice.System("levelup"); // U-0068 — 해설 안내 한 줄
             // 109-14-7 여정 등급 보상·천하 등급

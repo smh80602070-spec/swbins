@@ -306,6 +306,14 @@ namespace Saga.EditorTools
                 rot = Quaternion.LookRotation(big.center - pos, Vector3.up);
                 return true;
             }
+            // tasks U-0233 `SAGA_SHOT_HEAD=1` — Humanoid 머리 뼈 가까이(얼굴 0.75m 3/4)
+            if (System.Environment.GetEnvironmentVariable("SAGA_SHOT_HEAD") == "1" && anim != null && anim.isHuman && anim.GetBoneTransform(HumanBodyBones.Head) != null)
+            {
+                var head = anim.GetBoneTransform(HumanBodyBones.Head).position + Vector3.up * 0.06f;
+                pos = head + fwd * 0.75f;
+                rot = Quaternion.LookRotation(head - pos, Vector3.up);
+                return true;
+            }
             float.TryParse(System.Environment.GetEnvironmentVariable("SAGA_SHOT_DIST"), out var dist);   // 거리 배율(기본 1.25) — 작은 것은 0.6 쯤
             if (dist <= 0f) dist = 1.25f;
             pos = center + fwd * (size * dist + 1.2f) + Vector3.up * (size * 0.18f);

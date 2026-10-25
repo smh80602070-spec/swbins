@@ -70,6 +70,7 @@ namespace Saga.Core
             fVisual.SetValue(owner, inst.transform);
             fAnim.SetValue(owner, anim);
             oldVisual.gameObject.SetActive(false);
+            TalkFace.AttachHero(inst); // tasks U-0233 깜박임·놀람·웃음
             Debug.Log($"[VroidHeroSwap] {ScenePlayer(player)} 주인공 몸 → VRoid(키 {hOld:0.00}m, 컨트롤러 {anim.runtimeAnimatorController.name})");
             return true;
         }

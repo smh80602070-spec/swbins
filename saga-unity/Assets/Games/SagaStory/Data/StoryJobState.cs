@@ -40,6 +40,7 @@ namespace Saga.Story.Data
                 Exp -= StoryCombat.ExpNeed(Level);
                 Level++;
                 LeveledUp?.Invoke(Level);
+                Saga.Core.TalkFace.HeroJoy(); // tasks U-0233 레벨업 웃음 2초
                 StorySkillState.OnLevelUp(Level);   // tasks U-0093 무예 3택(구독 순서에 안 기대게 직접)
             }
         }

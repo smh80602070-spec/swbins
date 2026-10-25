@@ -124,6 +124,7 @@ namespace Saga.Go.Player
             else inst.SetActive(false);
             if (old != null && old != _heroVisual) old.gameObject.SetActive(false);
             _heroSwapped = true;
+            Saga.Core.TalkFace.AttachHero(inst); // tasks U-0233 깜박임·놀람·웃음
             if (heroShown) Shown?.Invoke(HeroId);
             return true;
         }

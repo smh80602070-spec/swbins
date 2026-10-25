@@ -232,6 +232,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoBloodMoon.Run()) _hadError = true; // tasks U-0227 ① 핏빛 달 밤
                 if (!PlaytestGoRiddle.Run()) _hadError = true; // tasks U-0227 ② 들판 수수께끼(세이브 JSON 되돌림)
                 if (!PlaytestGoZones.Run()) _hadError = true; // tasks U-0226 본 지도 12구역(막 진단보다 먼저 — go.zone 이 wired 에 잡힘)
+                if (!PlaytestTalkFace.Check("PlaytestHeadless", true)) _hadError = true; // tasks U-0233 얼굴
                 if (!PlaytestZoneCut.Run("PlaytestHeadless", "go")) _hadError = true; // tasks U-0225 구역 넘김 막
                 // 반드시 마지막 — DailyTaskState 진단이 SaveState.TryLoad()로
                 // 세이브 파일을 v9 모양으로 잠깐 바꿔치기해 로드하는데, 이건

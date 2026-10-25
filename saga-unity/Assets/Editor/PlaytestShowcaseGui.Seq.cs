@@ -400,6 +400,21 @@ namespace Saga.EditorTools
                         Debug.Log($"[ShowcaseGui] {act} {slot.HeroId} @ {hp} · 거리 {(act == "stealth" ? 5.5f : 3.5f)} · 웅크림 {pcS.Crouching}");
                         break;
                     }
+                    case "facesurprised":   // U-0233 주인공 얼굴 — 놀람(30초 붙듦) · 대상 name:HeroVroid + SAGA_SHOT_HEAD=1
+                    case "facejoy":         // U-0233 — 웃음
+                    case "faceblink":       // U-0233 — 눈 감긴 프레임에서 얼굴을 멈춤
+                    {
+                        var f = Saga.Core.TalkFace.Hero;
+                        if (f == null) { Skip(act); return; }
+                        if (act == "faceblink")
+                        {
+                            for (int i = 0; i < 600 && f.EyeMorphWeight < 99f; i++) f.Tick(0.01f);
+                            f.enabled = false;
+                        }
+                        else f.Flash(act == "facejoy" ? Saga.Core.TalkFace.Mood.Joy : Saga.Core.TalkFace.Mood.Surprised, 30f);
+                        Debug.Log($"[ShowcaseGui] {act} 모프 {f.MorphCount} · 꽉 찬 무게 {f.EyeFullWeight} · 눈 {f.EyeMorphWeight:0} · 놀람 {f.WeightOf(Saga.Core.TalkFace.Mood.Surprised):0} · 웃음 {f.WeightOf(Saga.Core.TalkFace.Mood.Joy):0}");
+                        break;
+                    }
                     case "gozone":   // U-0226 사가만리 — 구역 4 동쪽 경계 8m 안에서 동쪽(구역 5)을 본다(이웃 띠 24m 너머가 비는지)
                     {
                         var who = GameObject.FindWithTag("Player");

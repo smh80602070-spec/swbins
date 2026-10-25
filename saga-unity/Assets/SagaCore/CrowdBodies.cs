@@ -57,6 +57,7 @@ namespace Saga.Core
             var animator = holder.AddComponent<Animator>();
             animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
             holder.AddComponent<CrowdBodyAnimator>().Init(List.idle, List.walk);
+            TalkFace.Attach(holder, true); // tasks U-0233 군중은 깜박임만(20m 안)
             if (parent.GetComponent<BlobShadow>() == null) parent.gameObject.AddComponent<BlobShadow>();
             return holder;
         }
