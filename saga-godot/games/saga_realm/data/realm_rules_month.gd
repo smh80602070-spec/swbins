@@ -222,7 +222,7 @@ func officer_hint(id: String) -> String:
 	var amb := _ambition(id)
 	var def: Dictionary = RealmTraits.AMBITIONS.get(String(amb.k), {})
 	var mark := "달성" if bool(amb.get("done", false)) else "%d/%d" % [int(amb.get("prog", 0)), int(def.get("target", 1))]
-	return "%s 야망:%s(%s)" % [badge, String(def.get("name", "")), mark] + preload("res://games/saga_realm/data/realm_support.gd").hint(self, id) + preload("res://games/saga_realm/data/realm_relation.gd").hint(self, id)   # G-0316 관계 줄
+	return "%s 야망:%s(%s)" % [badge, String(def.get("name", "")), mark] + preload("res://games/saga_realm/data/realm_support.gd").hint(self, id) + preload("res://games/saga_realm/data/realm_treasure.gd").hint(self, id) + preload("res://games/saga_realm/data/realm_relation.gd").hint(self, id)   # G-0316 관계 줄
 
 
 ## PLAN 101-2 REALM ③후보(웹판 §5-1) — 달마다 로스터 전원의 야망 진행도를

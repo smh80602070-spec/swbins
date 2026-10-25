@@ -30,6 +30,9 @@ func _effective_stat(id: String, stat_key: String) -> float:
 	var mul := base * RealmGrowth.grow_mul(int(g.get("lv", 1)), int(g.get("rank", 0)))
 	var bonus: Dictionary = g.get("bonus", {})
 	var total := mul + float(bonus.get(stat_key, 0))
+	if not officer_item.is_empty():   # G-0402 장수 보물(flat)·보물 세트(%) — 보물 없으면 옛 값 그대로
+		var tb: Dictionary = preload("res://games/saga_realm/data/realm_treasure.gd").bonus(self, id, stat_key)
+		total = (total + float(tb.flat)) * (1.0 + float(tb.pct))
 	var SC: GDScript = load("res://games/saga_realm/data/realm_statecraft.gd")
 	if SC.call("has_rule", "ilin") and roster.has(id):   # G-0216 일인지하 — 으뜸 무장 ×1.5·나머지 ×0.9(내 무장만)
 		total *= float(SC.call("officer_mul", self, id))

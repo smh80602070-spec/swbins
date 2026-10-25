@@ -37,6 +37,7 @@ func save() -> bool:
 		"trade": trade,   # G-0310
 		"rel_master": rel_master,   # G-0316
 		"support": support,   # G-0390 덧붙임만(버전 그대로)
+		"officer_item": officer_item,   # G-0402 덧붙임만(버전 그대로)
 		"laws": laws,   # G-0321
 		"age": age,   # G-0329
 		"marriages": marriages,   # G-0332
@@ -113,6 +114,8 @@ func try_load() -> bool:
 	trade = (loaded_trade as Array).duplicate(true) if typeof(loaded_trade) == TYPE_ARRAY else []
 	var loaded_rm: Variant = data.get("rel_master", {})   # G-0316 — 옛 세이브(25)는 빈 것
 	rel_master = (loaded_rm as Dictionary).duplicate(true) if typeof(loaded_rm) == TYPE_DICTIONARY else {}
+	var loaded_oi: Variant = data.get("officer_item", {})   # G-0402 — 키 없는 세이브는 보물 없음
+	officer_item = (loaded_oi as Dictionary).duplicate() if typeof(loaded_oi) == TYPE_DICTIONARY else {}
 	var loaded_sup: Variant = data.get("support", {})   # G-0390 — 키 없는 세이브는 빈 것 · JSON 실수 → 정수
 	support = {}
 	if typeof(loaded_sup) == TYPE_DICTIONARY:

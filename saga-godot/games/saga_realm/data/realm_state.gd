@@ -155,6 +155,8 @@ var trade: Array = []
 var rel_master: Dictionary = {}
 ## G-0390 지원 단계 — 함께 싸운 장수 쌍 점수 {'a|b': n}(저장 키 "support", 덧붙임만·버전 그대로). 규칙 data/realm_support.gd.
 var support: Dictionary = {}
+## G-0402 장수 보물 — {장수 id: 보물 id}(저장 키 "officer_item", 덧붙임만·버전 그대로). 규칙 data/realm_treasure.gd.
+var officer_item: Dictionary = {}
 ## G-0321 법령 — {list: [key…], next: 해×12+달}(저장 키 "laws", 26→27). 규칙 data/realm_laws.gd · 곱은 _sc 에서.
 var laws: Dictionary = {}
 ## G-0329 국세 단계 0 난세 ~ 3 성세(저장 키 "age", 27→28). 규칙 data/realm_ages.gd · 곱은 _sc 에서.
@@ -444,6 +446,7 @@ func start_scenario(id: String) -> void:
 	trade = []   # G-0310 새 판은 상단 없음
 	rel_master = {}   # G-0316
 	support = {}   # G-0390
+	officer_item = {}   # G-0402
 	laws = {}   # G-0321
 	age = 0   # G-0329
 	marriages = {}   # G-0332

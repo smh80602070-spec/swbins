@@ -746,6 +746,7 @@ func _capture_city(enemy_id: String, enemy_def: Dictionary, officer_id: String, 
 				break
 		if not boss_beaten.is_empty():
 			gold += BOSS_BONUS_GOLD
+			preload("res://games/saga_realm/data/realm_treasure.gd").give(self, officer_id, enemy_id)   # G-0402 보스전 보물(war.js capture 의 randomItem 자리 — 해시로 골라 난수 순서 그대로)
 		## war.js capture() "사로잡힌다" — 소패는 몸 붙일 이웃 성이 없어
 		## (refuge 없음, `bei`가 소패 하나뿐) 원작에서도 전부 사로잡히는
 		## 경로만 탄다. 사로잡힌 무장은 그 성(이제 우리 성)의 재야가
@@ -865,6 +866,9 @@ func _put_support(b: Dictionary, mine: Array) -> void:
 	var t: Dictionary = preload("res://games/saga_realm/data/realm_support.gd").board_table(self, mine)
 	if not t.is_empty():
 		b["sup"] = t
+	if not officer_item.is_empty():   # G-0402 보물 세트 전법(돌격진·원거리 계책·진군)
+		for u: Dictionary in b.units:
+			preload("res://games/saga_realm/data/realm_treasure.gd").tactic(self, u)
 
 
 ## G-0182 — 양쪽 다 AI 로 끝까지 둔 결과의 보정값(attack() 셋째 인자로 바로 넘긴다). 못 열면 {}.
