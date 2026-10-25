@@ -58,6 +58,7 @@ namespace Saga.EditorTools
         private static StoryPlayerController _storyController;
         private static GameObject _ropeGo;
         private static StoryRope _rope;
+        private static bool _origGearDrops = true;
         private static FieldMapData.RopeDef _ropeDef;
         private static StoryEnemy _sweepDummy;
         private static StoryEnemy _boltNearDummy;
@@ -75,6 +76,8 @@ namespace Saga.EditorTools
                 EnterPlayModeOptions.DisableDomainReload | EnterPlayModeOptions.DisableSceneReload;
 
             EditorSceneManager.OpenScene(ScenePath);
+            _origGearDrops = Saga.Story.Data.StoryGear.DropsOn;
+            Saga.Story.Data.StoryGear.DropsOn = false; // tasks U-0246 — 진단이 쓰러뜨린 두목의 장비가 끼워져 체력·피해 셈(보스 패턴 등)이 흔들리지 않게
 
             _hadError = false;
             _framesSeen = 0;
@@ -116,7 +119,8 @@ namespace Saga.EditorTools
                 EditorApplication.playModeStateChanged -= OnStateChanged;
                 EditorSettings.enterPlayModeOptionsEnabled = _origEnterPlayModeOptionsEnabled;
                 EditorSettings.enterPlayModeOptions = _origEnterPlayModeOptions;
-                SagaFlow.SuppressAutoSave = _origSuppressAutoSave; // 플레이 끝 자동 저장(OnApplicationQuit)이 지난 뒤라 되돌려도 된다(tasks U-0111)
+                SagaFlow.SuppressAutoSave = _origSuppressAutoSave;
+                Saga.Story.Data.StoryGear.DropsOn = _origGearDrops; // tasks U-0246 // 플레이 끝 자동 저장(OnApplicationQuit)이 지난 뒤라 되돌려도 된다(tasks U-0111)
 
                 bool ok = !_hadError && _phase == Phase.Done;
                 Debug.Log(ok
@@ -124,6 +128,33 @@ namespace Saga.EditorTools
                     : $"[PlaytestStorySlice] FAIL - error={_hadError} phase={_phase} frames={_framesSeen}");
                 EditorApplication.Exit(ok ? 0 : 1);
             }
+        }
+
+        /// <summary>tasks U-0246 세트 무예 — 세트 없으면 안 나감 · 첫 세트를 다 끼면(Lv 20) 나가고 쿨이 걸림. 장비·레벨은 아래 Init 이 되돌린다.</summary>
+        private static bool CheckSetSkill()
+        {
+            var pc = Object.FindFirstObjectByType<StoryPlayerController>();
+            if (pc == null) { Debug.LogError("[PlaytestStorySlice] set-skill 주인공 없음"); return false; }
+            StoryGear.Restore(null);
+            if (pc.TriggerSetSkill()) { Debug.LogError("[PlaytestStorySlice] set-skill 세트 없이 나감"); return false; }
+            StoryJobState.Restore(20, 0f, StoryJobState.NoJob);
+            var set = StoryGearTables.Sets[0];
+            foreach (var piece in set.Pieces) StoryGear.EquipIfBetter(piece);
+            // 첫 잡졸이 주인공 1m 옆이라(x 2 ↔ 3) 범위 무예가 진단 적을 치지 않게 — 시전하는 동안만 30m 위로
+            var cc = pc.GetComponent<CharacterController>();
+            Vector3 at = pc.transform.position;
+            if (cc != null) cc.enabled = false;
+            pc.transform.position = at + Vector3.up * 30f;
+            bool cast = pc.TriggerSetSkill();
+            bool again = pc.TriggerSetSkill();
+            float cd = pc.SetSkillCooldownLeft;
+            pc.transform.position = at;
+            if (cc != null) cc.enabled = true;
+            StoryGear.Restore(null);
+            StoryJobState.Restore(1, 0f, StoryJobState.NoJob);
+            if (!cast || again || cd <= 0f) { Debug.LogError($"[PlaytestStorySlice] set-skill FAIL — 나감 {cast}·쿨 무시 {again}·쿨 {cd}"); return false; }
+            Debug.Log($"[PlaytestStorySlice] set-skill OK — {set.Key} {set.Skill.Name}({set.Skill.Effect}) · 쿨 {cd:F0}초");
+            return true;
         }
 
         /// <summary>tasks U-0243 — K-0193 발판 키트: 구운 "Platform" 큐브마다 PlatKit 하나, 큐브 렌더러 꺼짐·충돌체 남음, 키트 윗면 ≈ 큐브 윗면(±0.05), 렌더러 = 재질 수(합침).</summary>
@@ -185,6 +216,7 @@ namespace Saga.EditorTools
                     StorySkillState.RestorePicks(0, 0, 0, 0);
                     _rope = _ropeGo != null ? _ropeGo.GetComponent<StoryRope>() : null;
                     if (!CheckPlatKit()) { Fail(); return; }
+                    if (!CheckSetSkill()) { Fail(); return; }
 
                     if (_player == null || _storyController == null || _rope == null || StoryEnemy.All.Count != ExpectedEnemyCount + 1)
                     {
@@ -200,6 +232,7 @@ namespace Saga.EditorTools
                     StoryWorldEventState.Restore(null); // 위와 같은 이유 — 이전 실행이 남긴 save_story.json 무시.
                     StoryNpcState.Restore(0, 0); // 위와 같은 이유 — 새 정적 상태를 추가할 때마다 여기 잊지 말 것(2026-09-14에 한 번 빠뜨려 겪음).
                     StoryJobState.Restore(1, 0f, StoryJobState.NoJob); // 위와 같은 이유(2026-09-15 "전직" 추가).
+                    Saga.Story.Data.StoryGear.Restore(null); // tasks U-0246 장비 — 위와 같은 이유(지난 실행이 낀 장비 무시)
                     // 101-2 5-4 "관문 대장"(2026-09-20) — 위와 같은 이유. 리셋 전에
                     // GameBootstrap.Start()가 이미 (이전 실행이 남긴 값으로) 잘못
                     // 판정해 TryBecomeChampion()을 불렀을 수 있어, 리셋 뒤 다시 부른다

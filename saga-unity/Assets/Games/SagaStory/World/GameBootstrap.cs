@@ -39,6 +39,7 @@ namespace Saga.Story.World
             StoryCampfireSpot.Install(); // tasks U-0170 모닥불에 모여 쉬기 — 들머리 불, 판 사이 앉으면 앞 동료 온기(Play 때, 씬 재빌드 없이)
             MountField.Install(); // PLAN.md 109-15 탈것·비행 — H 타기·Shift+H 고르기·타기 단추(Play 때, 씬 재빌드 없이)
             Saga.Story.UI.StoryGuildUi.Install(); // tasks U-0192 문파 — 일시정지 왼쪽 🏯 창(Play 때, 씬 재빌드 없이)
+            Saga.Story.UI.StorySetSkillButton.Install(); // tasks U-0246 세트 무예 폰 단추 — 한 벌을 다 껴야 보임(데스크톱 C, Play 때)
             Saga.Story.UI.StoryTodaySource.Install(); // tasks U-0213 「오늘」 창 — 의뢰 사냥터·관문 대장·달 사명을 한 창에(📅, Play 때)
             Saga.Story.UI.StoryAutoQuest.Install(); // tasks U-0165 자동 퀘스트 — 목표판 ▶(좌우 걷기·평타·장면 줄 넘김, Play 때)
         }

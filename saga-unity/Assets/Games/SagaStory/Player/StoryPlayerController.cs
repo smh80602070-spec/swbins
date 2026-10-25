@@ -90,7 +90,7 @@ namespace Saga.Story.Player
         /// 중 공격 축복(AtkMul, 회차 밖엔 항상 1)을 더 얹는다. 101-2 5-8
         /// "동료 교대"(2026-09-21) — 활성 역할의 공격 배율(웹판 "인물의
         /// 몸" 재해석)도 곱한다.</summary>
-        private float CurrentAtk => (StoryCombat.StartAtk + StoryJobState.AtkBonus + StoryLabyrinthState.MemoryAtkBonus)
+        private float CurrentAtk => (StoryCombat.StartAtk + StoryJobState.AtkBonus + StoryLabyrinthState.MemoryAtkBonus + StoryGear.Atk) // tasks U-0246 장비 공격(웹 power().atk 에 g.atk)
             * (BuffActive ? _buffAtk : 1f) * StoryLabyrinthState.AtkMul * StoryPartyState.AtkMultiplier * StoryGuild.AtkMul; // tasks U-0192 검각 덤(문파 없으면 ×1)
 
         private void Awake()
@@ -143,6 +143,7 @@ namespace Saga.Story.Player
             _attackCooldownLeft = Mathf.Max(0f, _attackCooldownLeft - dt);
             _sweepCooldownLeft = Mathf.Max(0f, _sweepCooldownLeft - dt);
             _boltCooldownLeft = Mathf.Max(0f, _boltCooldownLeft - dt);
+            _setSkillCdLeft = Mathf.Max(0f, _setSkillCdLeft - dt); // tasks U-0246
             _braceCooldownLeft = Mathf.Max(0f, _braceCooldownLeft - dt);
             _dodgeCooldownLeft = Mathf.Max(0f, _dodgeCooldownLeft - dt);
             StoryJust.Tick(dt); // tasks U-0142 — 저스트 슬로·쿨은 실제 dt 로
@@ -176,6 +177,7 @@ namespace Saga.Story.Player
             if (WantsSweep()) TrySweep();
             if (WantsBolt()) TryBolt();
             if (WantsBrace()) TryBrace();
+            if (Keyboard.current != null && Keyboard.current.cKey.wasPressedThisFrame) TriggerSetSkill(); // tasks U-0246 세트 무예(C — 2나락과 같은 키)
             for (int i = 0; i < StorySkillState.SlotCount; i++)
             {
                 if (WantsJobSkill(i)) TriggerJobSkill(i);
@@ -294,6 +296,32 @@ namespace Saga.Story.Player
                 }
             }
             ApplyHitFeedback(hitAny, anyCrit);
+        }
+
+        // ── tasks U-0246 세트 무예(웹 gear-set.js skill — aoe 둘레·bolt 꿰뚫는 기) ──
+        private float _setSkillCdLeft;
+        public float SetSkillCooldownLeft => _setSkillCdLeft;
+        /// <summary>HUD — 다시 쓸 수 있는 시각(Time.time).</summary>
+        public static float SetSkillReadyAt { get; private set; }
+
+        /// <summary>폰 단추·C 키·진단. 세트를 다 모으지 않았거나 쿨이면 false.</summary>
+        public bool TriggerSetSkill()
+        {
+            var set = StoryGear.FullSet;
+            if (set?.Skill == null)
+            {
+                DialogueLabel.Instance?.Show(StoryLocalization.T("gear.setskill_none", "세트 무예가 없다 — 한 벌을 다 모아 껴야 한다"), 2f);
+                return false;
+            }
+            if (_setSkillCdLeft > 0f || StoryPlayerHp.Hp <= 0f) return false;
+            var k = set.Skill;
+            if (k.Effect == "bolt") SpawnShot(k.Mul, true, StoryCombat.BoltSpeed, StoryCombat.BoltLife, 1f, new Color(0.55f, 0.95f, 0.75f));
+            else CastAoe(k.Mul, Mathf.Max(1f, (k.R > 0f ? k.R : 150f) * FieldMapData.ScaleMPerPx));
+            _setSkillCdLeft = Mathf.Max(1f, k.Cd);
+            SetSkillReadyAt = Time.time + _setSkillCdLeft;
+            if (animator != null) animator.SetTrigger("Attack");
+            DialogueLabel.Instance?.Show($"{k.Emoji} {k.Name}", 1.4f);
+            return true;
         }
 
         private void CastAoe(float mul, float radius)

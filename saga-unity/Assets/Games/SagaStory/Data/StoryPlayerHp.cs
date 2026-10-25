@@ -23,7 +23,7 @@ namespace Saga.Story.Data
         /// <summary>tasks U-0142 회피 무적(웹 DODGE_INVULN).</summary>
         public const float DodgeInvuln = 0.12f;
 
-        public static float HpMax => (60f + 15f * 6f + StoryJobState.Level * 12f + StoryJobState.HpBonus) * StoryCampfire.HpMul; // tasks U-0170 호법 온기 +10%
+        public static float HpMax => (60f + 15f * 6f + StoryJobState.Level * 12f + StoryJobState.HpBonus + StoryGear.Hp) * StoryCampfire.HpMul; // tasks U-0246 장비 체력 // tasks U-0170 호법 온기 +10%
         public static float Hp { get; private set; } = StoryCombat.StartHp;
         public static float Invuln { get; private set; }
         public static float SinceHurt { get; private set; } = 99f;
@@ -49,7 +49,7 @@ namespace Saga.Story.Data
                 if (DodgeLeft > 0f) StoryJust.Evaded(DodgeLeft); // tasks U-0142 웹 hurtMe 무적 가지
                 return false;
             }
-            float n = Mathf.Max(1f, StoryBossPattern.JsRound(amount));
+            float n = Mathf.Max(1f, StoryBossPattern.JsRound(amount * StoryGear.TakeMul)); // tasks U-0246 장비 방어 — 웹 gear.cut def/(def+40) 상한 60%
             Hp = Mathf.Max(0f, Hp - n);
             Invuln = HitCool;
             SinceHurt = 0f;

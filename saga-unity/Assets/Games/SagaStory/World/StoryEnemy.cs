@@ -548,6 +548,8 @@ namespace Saga.Story.World
                         string.Format(StoryLocalization.T("gatechampion.claimed", "🚪 관문 대장 처치! 경험치 ×{0:0} — 다음 주에 다시 나타난다"), ChampionExpMul), 4f);
                 }
             }
+            string gearKey = StoryGear.RollDrop(isBoss || _hidden); // tasks U-0246 장비 떨굼(웹 rollDrop — 잡졸 3.5%·두목 90%·고유 16%), 더 세면 바로 낌
+            if (gearKey != null) DialogueLabel.Instance?.Show(StoryGear.LootLine(gearKey, StoryGear.EquipIfBetter(gearKey)), 3f);
             StoryComboKill.OnKill(transform.position); // tasks U-0207 콤보 킬 — 들판·비경·숨은 우두머리 모두(구슬 경험은 판 경험에 안 넣음)
             // tasks U-0192 문파 공 — 들판·비경 어디서든(두목·숨은 우두머리 +10, 오늘 의뢰 사냥터 ×2), 단계가 오르면 알림
             int guildUp = StoryGuild.OnKill(isLabyrinthEnemy, isBoss || _hidden);

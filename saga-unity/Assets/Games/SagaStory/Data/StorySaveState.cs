@@ -121,6 +121,7 @@ namespace Saga.Story.Data
             public string bondJson; // tasks U-0208 동료 우정 — 버전 그대로: 옛 세이브는 null → 셋 다 0.
             public string hiddenJson; // tasks U-0181 숨은 우두머리 — 버전 그대로: 옛 세이브는 null → 안 읽음·처치 0.
             public string lifeJson; // tasks U-0133 생활 기술(채집) — 버전 그대로: 옛 세이브는 null → F·재료 0.
+            public string gearJson; // tasks U-0246 장비 열 부위·떨굼 난수 — 옛 세이브엔 없음(null = 빈 칸), 버전 안 올림.
         }
 
         public static bool Save()
@@ -177,6 +178,7 @@ namespace Saga.Story.Data
             data.tutDone = StoryTutorial.Ids();
             data.rankBest = StoryRunRank.Best; // tasks U-0128
             data.lifeJson = StoryLife.Snapshot(); // tasks U-0133
+            data.gearJson = StoryGear.Snapshot(); // tasks U-0246
             data.hiddenJson = StoryHidden.Snapshot(); // tasks U-0181
             data.guildJson = StoryGuild.Snapshot(); // tasks U-0192
             data.cardsJson = StoryMonsterBook.Snapshot(); // tasks U-0222
@@ -225,6 +227,7 @@ namespace Saga.Story.Data
             StoryWorldEventState.Restore(data.triggeredEvents);
             StoryNpcState.Restore(data.scoutTalkCount, data.choiceMade);
             StoryJobState.Restore(data.level, data.exp, data.job);
+            StoryGear.Restore(data.gearJson); // tasks U-0246 — 요구 Lv 를 보니 레벨 다음
             _championWeek = data.championWeek;
             StoryLabyrinthState.Restore(data.memoryShards, data.memoryTier);
             StoryPartyState.Restore(data.partyActiveIndex);
