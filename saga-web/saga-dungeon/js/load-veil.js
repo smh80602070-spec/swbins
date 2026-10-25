@@ -89,14 +89,19 @@
     if (!tuned('loadVeil.on', 1)) { if (el) { hide(); } return; }
     var a = area(), t = now();
     if (a !== key) { key = a; armed = !!a; armAt = t; }
+    /* 10-26 「아직 맵이 짤리는 느낌」 — 80ms 한 번만 보던 것: 그때 3D 가 아직 안 켜졌거나 줄이 비었거나 이야기 장면이 떠 있으면 막을 놓쳐
+       빈 광장이 8초 동안 솟아올랐다(dg-load-seq 3초 집·사람 0). 들어선 뒤 loadVeil.armMs(2000) 동안 계속 보고, 장면이 떠 있는 동안은 기다린다.
+       마을 막은 장면(#scnbox 60) 아래라 장면 중에도 띄운다. */
+    var town = a === 'town';
     if (armed && t - armAt >= 80) {
-      armed = false;
-      if (pending() > 0 && !scen()) { show(a); }
+      if (pending() > 0 && (town || !scen())) { armed = false; show(a); }
+      else if (scen() && !town) { armAt = t - 80; }
+      else if (t - armAt > tuned('loadVeil.armMs', 2000)) { armed = false; }
     }
     if (el && !hiding) {
       var p = pending(); maxP = Math.max(maxP, p);
       if (bar) { bar.style.width = Math.round(100 * (1 - p / maxP)) + '%'; }
-      var hw = shouldHide(p, ratio(), t - shownAt); if (hw) { hide(hw); } else if (scen()) { hide('scene'); } else if (a !== key || !a) { hide('area'); }
+      var hw = shouldHide(p, ratio(), t - shownAt); if (hw) { hide(hw); } else if (scen() && !town) { hide('scene'); } else if (a !== key || !a) { hide('area'); }
     }
   }
 
