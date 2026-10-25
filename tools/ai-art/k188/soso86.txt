@@ -11,3 +11,11 @@ kr_jangyeongsil sash-strip
 kr_jeongyakyong foot-bit
 kr_kimyusin sword-dup
 kr_wanggeon arm-under-robe
+kr_yihwang arm-under-cloak
+kr_yisunsin sword-dup
+sg_guanyu glaive-cape-strip
+sg_luxun foot-shadow
+sg_machao spear-robe-flap
+sg_zhangfei spear-lower-split
+sg_zhaoyun spear-blade-static
+wd_khubilai arm-under-cloak
