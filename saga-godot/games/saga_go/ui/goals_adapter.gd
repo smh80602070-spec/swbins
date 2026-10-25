@@ -27,6 +27,16 @@ static func model(hud: Node) -> Dictionary:
 		for e: Dictionary in com.call("entries"):
 			var c: Dictionary = Commissions.POOL.get(String(e.id), {})
 			today.append({"label": String(c.get("name", e.id)), "cur": int(e.p), "max": int(c.get("n", 1)), "done": bool(e.done), "go": open_c})
+	## G-0387 들판 수수께끼 — 이 지역에 남은 것(전부 풀면 끝)
+	var fr: Node = tree.get_first_node_in_group("go_field_riddles")
+	var me: Node3D = tree.get_first_node_in_group("player") as Node3D
+	if fr != null and me != null:
+		var rid: String = preload("res://games/saga_go/data/test_map.gd").region_at(me.global_position)
+		if rid != "":
+			var FR: GDScript = fr.get_script()
+			var total: int = FR.PER_KIND * FR.KINDS.size()
+			var left: int = FR.left_in(rid)
+			today.append({"label": "🌰 들판 수수께끼(이 지역)", "cur": total - left, "max": total, "done": left == 0})
 	var week: Array = []
 	var claim := {}
 	if wk != null:

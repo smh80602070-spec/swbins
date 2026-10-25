@@ -71,6 +71,7 @@ func _ready() -> void:
 	fork.name = "Region10Fork"
 	add_child(fork)
 	add_child(preload("res://games/saga_go/world/go_zone_gate.gd").new())   # G-0385 — 선 지역 + 이웃만 켬(폰 발열)
+	preload("res://games/saga_go/world/go_field_riddles.gd").attach(self)   # G-0387 들판 수수께끼(지역 뒤 — 땅 높이 씀)
 	## G-0184 — 열 지역 높은 실루엣·거리 이름표(야숨 "저기 보이는 곳으로", 지역들이 다 선 뒤 — 이미 있는 성루·다층탑을 이름으로 찾는다)
 	add_child(preload("res://games/saga_go/world/landmark_reads.gd").new())
 	if OS.get_environment("SAGA_LANDMARK_PROBE") != "":

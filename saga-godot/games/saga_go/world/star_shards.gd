@@ -208,9 +208,12 @@ func pick(id: String) -> void:
 func offer() -> int:
 	var before := statue_level()
 	var n := 0
-	for row in SHARDS:
-		var id: String = row[0]
-		if EventState.is_resolved("shard_" + id) and not EventState.is_resolved("shardgive_" + id):
+	## G-0387 — 들판 수수께끼 씨앗 덤 별조각(shard_rd<n>)도 바친다: 고정 목록 대신 주운 기록 전부(옛 20개는 결과 같음).
+	for key: String in EventState.resolved.duplicate():
+		if not key.begins_with("shard_"):
+			continue
+		var id := key.substr(6)
+		if not EventState.is_resolved("shardgive_" + id):
 			EventState.mark_resolved("shardgive_" + id)
 			n += 1
 	if n == 0:

@@ -14,7 +14,7 @@ const SCENES := {"go": "res://games/saga_go/world/TestVillage.tscn", "dungeon": 
 	"forest": "res://games/saga_forest/world/TestVillageForest.tscn", "story": "res://games/saga_story/world/SinyaField.tscn",
 	"realm": "res://games/saga_realm/world/TestCity.tscn"}   # G-0364 5천하 「이번 달」
 ## [오늘 줄 수, 주간 줄 수] — 2나락 오늘 칸 = 이번 판 현상금 셋(G-0372) · 3마을 셋째 = 낚시 대회(G-0373)
-const WANT := {"go": [4, 5], "dungeon": [3, 2], "forest": [3, 0], "story": [2, 1], "realm": [2, 3]}
+const WANT := {"go": [5, 5], "dungeon": [3, 2], "forest": [3, 0], "story": [2, 1], "realm": [2, 3]}   # G-0387 — 1만리 오늘 = 의뢰 넷 + 들판 수수께끼(이 지역) 한 줄
 
 var fails := 0
 var game := "go"
