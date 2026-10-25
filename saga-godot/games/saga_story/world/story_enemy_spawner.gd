@@ -105,6 +105,7 @@ func _ready() -> void:
 	_rng.seed = hash(String(_map.stage_key())) % 100000 + 211
 	add_to_group("story_hunt_events")   # G-0212 채집이 배수를 묻는 곳
 	preload("res://games/saga_story/world/story_rune.gd").attach(self)   # G-0382 룬(사냥터에만)
+	preload("res://games/saga_story/world/story_elite.gd").attach(self)   # G-0389 엘리트(처치 N 마다)
 	for x: float in _map.enemy_positions_m():
 		spawn_at(x)
 	if event_seed < 0:
@@ -320,6 +321,9 @@ func spawn_at(x: float, boost: Dictionary = {}) -> Node3D:
 
 
 func _on_died() -> void:
+	var el := get_node_or_null("StoryElite")   # G-0389 처치 셈
+	if el != null:
+		el.call("on_kill")
 	_respawn.call_deferred()
 
 
