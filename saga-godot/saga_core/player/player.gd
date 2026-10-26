@@ -258,7 +258,7 @@ func play_once(clip: String, sec: float) -> bool:
 	_once_until = Engine.get_physics_frames() + int(sec * Engine.physics_ticks_per_second)
 	_anim.speed_scale = (float(w[1]) - float(w[0])) / sec
 	_once_scaled = true
-	_anim.play(clip)
+	_anim.play(clip, _motion_blend(clip))
 	_anim.seek(float(w[0]), true)   # 같은 클립 연타도 매번 구간 시작부터
 	_current_anim = clip
 	return true
@@ -293,6 +293,15 @@ func unhold() -> void:
 	hold_anim = ""
 	_current_anim = ""
 
+## G-0412 — 공격 진입·복귀는 짧게, 피격은 더 빠르게 반응한다.
+func _motion_blend(next: String) -> float:
+	if next == "hit" or _current_anim == "hit":
+		return 0.05
+	var actions := ["attack", "strong", "skill", "cast", "burst", "dodge"]
+	if actions.has(next) or actions.has(_current_anim):
+		return 0.08
+	return 0.15
+
 func _play_anim(anim_name: String) -> void:
 	if _anim == null or not _anim.has_animation(anim_name):
 		return
@@ -306,8 +315,8 @@ func _play_anim(anim_name: String) -> void:
 		_gait_scaled = false
 	if _current_anim == anim_name:
 		return
+	_anim.play(anim_name, _motion_blend(anim_name))
 	_current_anim = anim_name
-	_anim.play(anim_name)
 
 ## 조이스틱이 있으면 그걸 우선한다(모바일) — 없거나 안 밀었으면 키보드로 되돈다.
 func _movement_input() -> Vector2:

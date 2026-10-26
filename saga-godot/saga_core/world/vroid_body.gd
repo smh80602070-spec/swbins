@@ -179,6 +179,7 @@ static func _build_dex(id: String, rarity: int) -> Node3D:
 		_gold_rim(v)
 	var ap := AnimationPlayer.new()
 	ap.name = "AnimationPlayer"
+	ap.playback_default_blend_time = 0.15   # G-0412 이동·대기 전환의 기본 보간
 	v.add_child(ap)
 	ap.add_animation_library("", lib)
 	var arm := skel.get_parent()

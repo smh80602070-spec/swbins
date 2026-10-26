@@ -740,7 +740,7 @@ func play_action(anim_name: String, dur: float, move_scale: float) -> void:
 			start = float(w[0])
 			_anim.speed_scale = (float(w[1]) - float(w[0])) / dur
 			_action_scaled = true
-		_anim.play(anim_name)
+		_anim.play(anim_name, _motion_blend(anim_name))
 		_anim.seek(start, true)
 		_current_anim = anim_name
 
