@@ -26,13 +26,17 @@ try {
     await c.ev(`DG.core.setTune('field.campChance2d', ${cc}); DG.core.setTune('field.pack2d', ${pk}); DG.core.setTune('world3d.dayNight', 0);`);
     const rows = [];
     for (const [x, y] of SPOTS) {
-      await c.ev(`(function(){ var S = DG.fieldCombat.state(); if (S) { S.camps = {}; S.foes = {}; S.cleared = {}; } var p = DG.core.save.player.pos; p.x = ${x}; p.y = ${y}; })()`);
+      await c.ev(`(function(){ var S = DG.fieldCombat.state(); if (S) { S.camps = {}; S.foes = {}; S.cleared = {}; } var p = DG.core.save.player.pos; p.x = ${x}; p.y = ${y}; if (DG.world && DG.world.walkTo) { DG.world.walkTo(p.x, p.y); } DG.core.emit('region:teleport', { key: 'probe' }); })()`);   // 순간이동 — biome.teleport 와 같은 길(화면이 따라온다)
+      for (let w = 0; w < 24 && (await c.ev('!!(DG.zoneCut && DG.zoneCut.shown())')); w++) { await sleep(500); }
       await sleep(2500);
       rows.push(JSON.parse(await c.ev(`(function(){ var S = DG.fieldCombat.state(), p = DG.core.save.player.pos, kd = DG.fieldCombat._kd ? DG.fieldCombat._kd() : 0, n = 0, camps = {}, R = 600;
         for (var k in S.foes) { var f = S.foes[k]; if (f.dead || f.sky) continue; if (Math.hypot(f.x - p.x, f.y - p.y) <= R) { n++; camps[f.camp] = 1; } }
         return JSON.stringify({ foes: n, camps: Object.keys(camps).length }); })()`)));
     }
-    const s = await c.send('Page.captureScreenshot', { format: 'png' });
+    await c.ev(`(function(){ var p = DG.core.save.player.pos; p.x = ${SPOTS[1][0]}; p.y = ${SPOTS[1][1]}; if (DG.world && DG.world.walkTo) { DG.world.walkTo(p.x, p.y); } DG.core.emit('region:teleport', { key: 'probe2' }); })()`);
+    for (let w = 0; w < 24 && (await c.ev('!!(DG.zoneCut && DG.zoneCut.shown())')); w++) { await sleep(500); }
+    await sleep(3000);
+    const s = await c.send('Page.captureScreenshot', { format: 'png' });   // 무리가 있던 둘째 자리에서 찍는다
     fs.writeFileSync(path.join(OUT, 'go-2d-crowd-' + tag + '.png'), Buffer.from(s.result.data, 'base64'));
     res[tag] = rows;
     console.log(tag, JSON.stringify(rows), '합 몹', rows.reduce((a, r) => a + r.foes, 0), '무리', rows.reduce((a, r) => a + r.camps, 0));

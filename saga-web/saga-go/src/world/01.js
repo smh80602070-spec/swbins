@@ -680,7 +680,7 @@
   }
 
   /** 지금 깔아 둘 대상 수 — 향(🕯️)을 피우면 늘어난다 */
-  var NEAR_R = 120; function nearCap() { return Math.max(0, +core.tuned('go.nearCap', 4)); } function nearCount(pos, kind) { var n = 0; for (var i = 0; i < spawns.length; i++) { if (spawns[i].kind === kind && Math.hypot(spawns[i].x - pos.x, spawns[i].y - pos.y) < NEAR_R) { n++; } } return n; }   /* W-0369 */ function maxSpawns() {
+  var NEAR_R = 120; function nearCap() { var c = +core.tuned('go.nearCap', 4), DM = global.DG.deviceMode; if (DM && DM.want3d && !DM.want3d() && !global.DG_NO_DRAW) { c = Math.min(c, +core.tuned('go.nearCap2d', 2)); } /* W-0468 2D 는 화면이 내 둘레를 거의 다 담아 들짐승이 몰려 보인다 — 2D 둘레 상한 2 */ return Math.max(0, c); } function nearCount(pos, kind) { var n = 0; for (var i = 0; i < spawns.length; i++) { if (spawns[i].kind === kind && Math.hypot(spawns[i].x - pos.x, spawns[i].y - pos.y) < NEAR_R) { n++; } } return n; }   /* W-0369 */ function maxSpawns() {
     var lure = global.DG.bag && global.DG.bag.lured();
     var few = global.DG.weather && global.DG.weather.fewer();
     return Math.round(Math.max(4, MAX_SPAWNS + (lure ? 6 : 0) - (few ? 3 : 0)) * (global.DG.starchart ? global.DG.starchart.spawn() : 1));   // 큰 그물(성도 규칙) 두 배
