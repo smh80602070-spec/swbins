@@ -77,7 +77,8 @@
 | face_sdf_bake.py (K-0151 — Blender, VRoid 얼굴 살갗 UV 위 원신식 그림자 문턱 계산 굽기) | - | MIT | 3 |
 | ground_mix.py (코드 섞기 — GPU·SD 안 씀) | - | 파생물 — 재료 자체 PBR 바탕색(K-0093, 로컬 AI 상업 허용 모델)의 license 를 따른다 | 18 |
 | compress.mjs | - | CC0-1.0 (형태·뼈·동작 전부 코드, 외부 입력 없음) | 1 |
-| uigen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 380 |
+| uigen_stone.py (K-0202 乙 새긴 돌판) | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 38 |
+| uigen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 342 |
 | k130_unity_pbr.py | - | self-pbr: rock (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0) | 2 |
 | k130_unity_pbr.py | - | self-pbr: stonewall (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0 | 1 |
 | k130_unity_pbr.py | - | self-pbr: paving (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0) | 1 |

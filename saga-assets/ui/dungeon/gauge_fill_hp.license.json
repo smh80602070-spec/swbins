@@ -1,6 +1,6 @@
 {
  "id": "dungeon/gauge_fill_hp",
- "generator": "tools/asset-forge/uigen.py",
+ "generator": "tools/asset-forge/uigen_stone.py (K-0202 乙 새긴 돌판)",
  "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
  "theme": "dungeon",
  "game": "saga-dungeon",

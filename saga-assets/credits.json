@@ -790,17 +790,27 @@
    ]
   },
   {
+   "tool": "uigen_stone.py (K-0202 乙 새긴 돌판)",
+   "model": "",
+   "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+   "count": 38,
+   "where": [
+    "saga-assets/ui/dungeon",
+    "saga-web/shared/assets/ui/dungeon"
+   ]
+  },
+  {
    "tool": "uigen.py",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
-   "count": 380,
+   "count": 342,
    "where": [
-    "saga-assets/ui/dungeon",
     "saga-assets/ui/forest",
     "saga-assets/ui/go",
     "saga-assets/ui/realm",
     "saga-assets/ui/story",
-    "saga-godot/assets/ui_skin/dungeon"
+    "saga-godot/assets/ui_skin/dungeon",
+    "saga-godot/assets/ui_skin/forest"
    ]
   },
   {
