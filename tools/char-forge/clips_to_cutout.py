@@ -1,6 +1,6 @@
 """K-0199 — 3D 동작(VRoid 뼈 J_Bip 팩 GLB)을 2D 컷아웃 뼈 16 의 클립 키로 옮긴다(옆모습 — 오른쪽을 본다).
 
-  blender -b --factory-startup -P tools/char-forge/clips_to_cutout.py -- --pack <팩 .glb(절대)> --out <클립 .json(절대)> [--only walk,run] [--rename walk=walk_m] [--step 2] [--view side|front] [--neutral idle] [--robe 0.35]
+  blender -b --factory-startup -P tools/char-forge/clips_to_cutout.py -- --pack <팩 .glb(절대)> --out <클립 .json(절대)> [--only walk,run] [--rename walk=walk_m] [--step 1] [--tol 0.25] [--view side|front] [--neutral idle] [--robe 0.35]
 
 규약(엔진 saga-web/shared/js/cutout2d.js 와 같음): 화면 x 앞(오른쪽) · y 아래 · 각 양수 = 시계 방향(늘어진 팔이 뒤로 감) · 키 [t(0~1), 각(도), dx, dy] 는
 그림 쉼 자세에 더하는 차 — 여기서는 「반듯한 쉼」(팔·다리 곧게 아래 · 몸통·머리 곧게 위 · 발 앞) 기준 차로 낸다(손그림 쉼 자세가 거의 그 꼴).
@@ -20,7 +20,8 @@ arg = lambda k, d=None: A[A.index(k) + 1] if k in A else d
 PACK, OUT = arg('--pack'), arg('--out')
 ONLY = set(arg('--only', '').split(',')) - {''}
 REN = dict(kv.split('=') for kv in arg('--rename', '').split(',') if '=' in kv)
-STEP = int(arg('--step', '2'))
+STEP = int(arg('--step', '1'))   # K-0200 — 매 프레임(옛 2)
+TOL = float(arg('--tol', '0.25'))   # K-0200 — 직선 보간에서 이만큼(°) 안이면 키 뺌(옛 1.0 — 숨쉬기·끝 여운이 사라졌다)
 VIEW = arg('--view', 'side')
 NEUTRAL = arg('--neutral', 'idle')        # 이 클립 평균을 0(반듯한 쉼)으로 — 빈 값이면 안 뺌
 ROBE = float(arg('--robe', '0.35'))
@@ -107,7 +108,7 @@ def main():
                 for i in range(1, len(ks) - 1):
                     a, m, c = kept[-1], ks[i], ks[i + 1]
                     u = (m[0] - a[0]) / max(1e-6, c[0] - a[0])
-                    if any(abs(m[j] - (a[j] + (c[j] - a[j]) * u)) > (1.0 if j == 1 else 0.3) for j in range(1, len(m))):
+                    if any(abs(m[j] - (a[j] + (c[j] - a[j]) * u)) > (TOL if j == 1 else TOL * 0.3) for j in range(1, len(m))):
                         kept.append(m)
                 kept.append(ks[-1])
                 keys[b] = kept

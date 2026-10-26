@@ -176,6 +176,7 @@ def smear_fill(rgb, hole, keep, it=40):
 def cut(src, jp, outdir, far='copy', fill='smear'):
     os.makedirs(outdir, exist_ok=True)
     j = json.load(open(jp, encoding='utf-8'))
+    far, fill = j.get('far', far), j.get('fill', fill)   # K-0200 — 사람마다 고른 길(먼 팔 copyall·몸통 smear)을 관절 파일에 적어 둔다
     im = load_rgba(src)
     if j.get('flip'):
         im = im.transpose(Image.FLIP_LEFT_RIGHT)
@@ -210,6 +211,13 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             sub = np.argmin(score[arm_ids], 0); best = np.min(score[arm_ids], 0)
             near = best < j.get('w', {}).get('arm', 40) * L_.get('reach', 0.6)   # 윤곽 안이라도 팔 선분 가까이만 — 손 둘레 갑옷·치마는 몸에 남김
             lab = np.where(pm & near, np.array(arm_ids)[sub], np.where(pm & ~near & np.isin(lab, arm_ids), names.index('chest'), lab))
+            if j.get('arm_poly_only', True):            # K-0200 — 윤곽 밖인데 거리로 팔·손에 간 픽셀(주먹 앞 바지 등)은 팔 아닌 다음 가까운 부위로(칼날 조각 막기)
+                out_ = ~pm & np.isin(lab, arm_ids)
+                if out_.any():
+                    sc2 = score.copy(); sc2[arm_ids] = 1e9
+                    if 'weapon' in names:
+                        sc2[names.index('weapon')] = 1e9
+                    lab = np.where(out_, np.argmin(sc2, 0), lab)
     for key, bone in (('chest_poly', 'chest'), ('hip_poly', 'hip')):   # 망토·앞자락처럼 몸통·허리에 묶을 영역(팔·다리 거리로 가면 떠다닌다)
         for poly in j.get(key, []):
             pm = Image.new('L', (W, H), 0); ImageDraw.Draw(pm).polygon([tuple(q) for q in poly], fill=255)
@@ -276,7 +284,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             u = to_u(pv); bones[n] = {'x': round(u[0], 2), 'y': round(u[1], 2), 'rot': 0}
         else:
             bones[n] = {'x': round((pv[0] - piv[par][0]) * S, 2), 'y': round((pv[1] - piv[par][1]) * S, 2), 'rot': 0}
-    if 'armUL' not in B and far == 'copy':
+    if 'armUL' not in B and far in ('copy', 'copyall'):   # K-0200 — copyall 이 조건에서 빠져 먼 다리까지 없어지던 것
         # 안쪽 팔·다리 = 바깥 것을 어둡게 복사(몸 뒤, z 낮게) — 옆모습에서 가려 안 보이는 쪽
         # 팔은 복사하지 않는다 — 인페인트 몸통이 몸에 붙은 팔을 새로 그려 그게 뒤팔 노릇을 한다(K-0188 ② 눈 판정 · 셋째 팔 막기)
         for s in (('armU', 'armL', 'hand', 'legU', 'legL', 'foot') if far == 'copyall' else ('legU', 'legL', 'foot')):
