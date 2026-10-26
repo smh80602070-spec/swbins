@@ -308,7 +308,7 @@
 
   var CELL = 160;          // 무리 격자(m)
   var TILE = 48;           // world3d GRID — 지형 칸
-  function CAMP_CHANCE() { return K('campChance', 0.45); }
+  function CAMP_CHANCE() { return K('campChance', 0.45) * (KDV > 1 ? K('campChance2d', 0.6) : 1); } function PACK2D() { return KDV > 1 ? K('pack2d', 2) : 99; }   // 사용자 10-26 「1번 2d몹이 너무 몰려있어」 — 2D 는 몸·거리가 ×KDV 인데 무리 격자(CELL)는 그대로라 화면에 무리가 겹쳐 든다 → 2D 만 무리 수 0.6배·무리당 2마리(합 약 45%) · PACK2D = 2D 무리당 최대 마리(앞쪽 = 우두머리·정예 먼저)
   function SAFE_R() { return 60; }                 // 시작점 둘레에는 안 선다
   function TIER_STEP() { return K('tierStep', 900); }
   function tierAt(x, y) { return 1 + Math.min(5, Math.floor(Math.hypot(x, y) / TIER_STEP())); }
@@ -383,7 +383,7 @@
       list = th ? THEMES[th[Math.floor(h3(cx, cy, 23) * th.length) % th.length]]
         : THEMES[Math.floor(h3(cx, cy, 23) * THEMES.length) % THEMES.length];
     }
-    var foes = [];
+    var foes = []; list = list.slice(0, PACK2D());   // 2D 무리당 최대 마리
     for (var i = 0; i < list.length; i++) {
       var a = (i / list.length) * Math.PI * 2 + h3(cx, cy, 29) * 6.283;
       var rr = i === 0 && kind !== 'plain' ? 0 : 3.2;
