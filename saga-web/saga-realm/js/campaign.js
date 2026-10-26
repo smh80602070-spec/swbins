@@ -26,7 +26,7 @@
     r1_start: ['plain', false, 'rout', 0.00], r1_rift_sign: ['hill', false, 'leader', 0.06], r1_first_ally: ['plain', false, 'rout', 0.12],
     r2_fallen: ['hill', false, 'leader', 0.18], r2_plains: ['plain', false, 'rout', 0.26], r2_debate: ['plain', true, 'gate', 0.32],
     r3_navigator: ['river', false, 'leader', 0.38], r3_river: ['river', false, 'leader', 0.46], r3_duel: ['mount', false, 'leader', 0.52],
-    r4_rift: ['mount', true, 'gate', 0.58], r4_plague: ['hill', true, 'hold', 0.64], r4_tomb: ['mount', false, 'leader', 0.70],
+    r4_rift: ['mount', true, 'gate', 0.50], r4_plague: ['hill', true, 'hold', 0.64], r4_tomb: ['mount', false, 'leader', 0.66],
     r5_silk: ['plain', false, 'rout', 0.76], r5_west: ['plain', true, 'gate', 0.82], r5_south: ['river', false, 'leader', 0.88],
     r6_end: ['plain', true, 'rout', 1.00]
   };
@@ -91,8 +91,17 @@
     var pp = cp.prep && cp.prep.ch === no ? cp.prep : {};   // W-0451 준비물 — 군량 보급 내 병력 +10% · 척후 적 −5%
     var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1) * (pp.food ? 1.1 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1) * pre * rd * (pp.scout ? 0.95 : 1) * (no === MAIN ? 1.2 : 1));   // W-0454 균형 — 마지막 장은 적 +20%(14·15장보다 쉬웠다)
     return { seed: 'cp|' + ch.id + '|' + (cp.tries || 0), land: ch.land, siege: ch.siege, srpg: true, goal: ch.goal,
-      mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no };
+      mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no, mercs: mercsAll(no), mercMul: 1.35, mercN: mercN(no) };
   }
+  /* W-0455 용병 병종 — 장수마다 둘, 진영에서 눌러 창→기→궁. 고르지 않으면 출진 순서로 */
+  var MA = ['spear', 'cav', 'bow'];
+  function mercN(no) { return no >= 9 ? 3 : 2; }   // 9장부터 장수당 용병 셋(후반 적장이 세지는 만큼 내 군도 커진다 — realm-balance)
+  function mercFull(id) { var cp = state(), i = Math.max(0, party().indexOf(id)), d = [MA[i % 3], MA[(i + 1) % 3], MA[(i + 2) % 3]], m = ((cp.mercs = cp.mercs || {})[id] || []).slice(0, 3); while (m.length < 3) { m.push(d[m.length]); } return m; }
+  function mercsOf(id) { return mercFull(id).slice(0, mercN(state().ch)); }
+  function mercsAll(no) { var o = {}; party().forEach(function (id) { o[id] = mercFull(id).slice(0, mercN(no)); }); return o; }
+  function cycleMerc(id, k) { var cp = state(), m = mercFull(id); m[k] = MA[(MA.indexOf(m[k]) + 1) % 3]; cp.mercs[id] = m; save(); return m.slice(0, mercN(cp.ch)); }
+  /** 적 편성 미리 보기 — [{id, arms:[a,a]}] (판의 command.setup 과 같은 씨앗·같은 셈) */
+  function foeMercs(no) { var o = battleOpts(no), CM = global.DG.command; if (!o || !CM) { return []; } var fa = CM.foeArms(o.seed, o.foes); return o.foes.map(function (id, i) { return { id: id, arms: fa[i] }; }); }
   /** 이야기 고름 — 이번 장 한정 보너스(atk 내 병력 +15% · def 적 병력 −10% · util 금 +200) */
   function choose(no, k) {
     var cp = state(), ch = chapter(no);
@@ -235,5 +244,5 @@
 
   global.DG = global.DG || {};
   global.DG.campaign = { on: on, state: state, chapters: chapters, chapter: chapter, roster: roster, party: party, setParty: setParty, foesFor: foesFor,
-    battleOpts: battleOpts, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, PREP: PREP, prepHave: prepHave, buyPrep: buyPrep, pairs: pairs, talk: talk, gearShop: gearShop, buyGear: buyGear, gearOf: gearOf, equipGear: equipGear, unequipGear: unequipGear, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
+    battleOpts: battleOpts, mercN: mercN, mercsOf: mercsOf, cycleMerc: cycleMerc, foeMercs: foeMercs, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, PREP: PREP, prepHave: prepHave, buyPrep: buyPrep, pairs: pairs, talk: talk, gearShop: gearShop, buyGear: buyGear, gearOf: gearOf, equipGear: equipGear, unequipGear: unequipGear, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
 })(typeof window !== 'undefined' ? window : this);

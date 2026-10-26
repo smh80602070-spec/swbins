@@ -79,7 +79,7 @@
   function brd(v, c, r) { return v.vert ? { x: v.b.cols - 1 - r, y: c } : { x: c, y: r }; }
 
   function offName(id) { var h = global.DG.off && global.DG.off.find(id); return h ? h.name : id; }
-  function nameOf(v, u) { return u.kind === 'troop' ? '부대' : (v.opts.name || offName)(u.id); }
+  function nameOf(v, u) { var CM = global.DG.command, m = CM && v.b ? CM.nameOf(v.b, u, v.opts.name || offName) : null; return m || (u.kind === 'troop' ? '부대' : (v.opts.name || offName)(u.id)); }   // W-0455 「○○ 휘하 창병」
 
   /** 지금 고른 장수가 할 수 있는 것 — 갈 칸·칠 수 있는 적(명중 %) */
   function reach(v) {
@@ -200,7 +200,7 @@
     /* 판 밖 — 같은 땅을 어둡게 깔아 네모로 뚝 끊기지 않게 */
     s += '<rect x="' + (-M) + '" y="' + (-M) + '" width="' + (W + 2 * M) + '" height="' + (H + 2 * M) + '" fill="url(#tvs-plain)" pointer-events="none"/><rect x="' + (-M) + '" y="' + (-M) + '" width="' + (W + 2 * M) + '" height="' + (H + 2 * M) + '" fill="#0d0b06" fill-opacity=".62" pointer-events="none"/>';
     for (k = 0; k < 14; k++) { var ex = (hashS('ex' + k) % 1000) / 1000, side = k % 4, px = side < 2 ? ex * W : (side === 2 ? -M * 0.8 : W + M * 0.1), py = side < 2 ? (side === 0 ? -M * 0.95 : H + M * 0.05) : ex * H, ph0 = propHref(PROP.forest[k % PROP.forest.length]); if (ph0) { s += '<image href="' + esc(ph0) + '" x="' + px + '" y="' + py + '" width="' + M * 0.9 + '" height="' + M * 0.9 + '" opacity=".55" pointer-events="none"/>'; } }
-    var rc = reach(v), mv = {}, deco = '', trees = [];
+    var rc = reach(v), mv = {}, deco = '', trees = [], cr = global.DG.command ? global.DG.command.range(b, v.sel) : {};   // W-0455 지휘 범위
     rc.moves.forEach(function (m) { mv[m.x + ',' + m.y] = 1; });
     for (y = 0; y < b.rows; y++) {
       for (x = 0; x < b.cols; x++) {
@@ -214,6 +214,7 @@
         else if (t === 'plain' && h % 100 < 13) { var bh = propHref(h % 3 ? 'bush_0' + (1 + h % 2) : 'flower_patch_01'); if (bh) { deco += '<image href="' + esc(bh) + '" x="' + (X + CELL * (0.1 + (h % 7) * 0.08)) + '" y="' + (Y + CELL * (0.35 + (h % 5) * 0.06)) + '" width="' + CELL * 0.42 + '" height="' + CELL * 0.42 + '" opacity=".9" pointer-events="none"/>'; } }
         if (b.fire && b.fire[x + ',' + y]) { deco += '<text x="' + (X + CELL / 2) + '" y="' + (Y + CELL / 2 + 6) + '" font-size="22" text-anchor="middle" pointer-events="none">🔥</text>'; }
         if (rc.plot && rc.plot[x + ',' + y]) { deco += '<rect class="tv-plot" x="' + (X + 3) + '" y="' + (Y + 3) + '" width="' + (CELL - 6) + '" height="' + (CELL - 6) + '" rx="6" fill="#ff9d3a33" stroke="#ff9d3a" stroke-width="2.5" pointer-events="none"/>'; }
+        if (cr[x + ',' + y]) { deco += '<rect x="' + (X + 1) + '" y="' + (Y + 1) + '" width="' + (CELL - 2) + '" height="' + (CELL - 2) + '" fill="#f3d27a14" stroke="#f3d27a" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="3 3" pointer-events="none"/>'; }
         if (mv[x + ',' + y]) { deco += '<rect x="' + (X + 2) + '" y="' + (Y + 2) + '" width="' + (CELL - 4) + '" height="' + (CELL - 4) + '" rx="6" fill="#5fb8ff3d" stroke="#8fd0ff" stroke-width="2" pointer-events="none"/>' + coverSvg(T().coverAt(b, x, y), p, false); }
       }
     }
@@ -240,7 +241,7 @@
   function floatsSvg(v) {
     var b = v.b, now = Date.now(), s = '', i;
     v.fl = v.fl || []; v.flN = v.flN == null ? b.log.length : v.flN;
-    for (i = v.flN; i < b.log.length; i++) { var e = b.log[i], t = T().unit(b, e.to); if (t) { v.fl.push({ x: t.x, y: t.y, txt: e.hit ? '−' + e.dmg : '빗나감', col: e.hit ? (t.side === 'me' ? '#ff8a6a' : '#ffe27a') : '#cfd8e3', at: now }); } var sa = e.skills && e.skills.length ? T().unit(b, e.a) : null; if (sa) { v.fl.push({ x: sa.x, y: sa.y - 0.45, txt: '✦ ' + e.skills.join('·'), col: '#f3d27a', at: now }); } }
+    for (i = v.flN; i < b.log.length; i++) { var e = b.log[i], t = T().unit(b, e.to); if (t) { v.fl.push({ x: t.x, y: t.y, txt: (e.counter ? '반격 ' : '') + (e.hit ? '−' + e.dmg : '빗나감'), col: e.hit ? (t.side === 'me' ? '#ff8a6a' : '#ffe27a') : '#cfd8e3', at: now }); } var sa = e.skills && e.skills.length ? T().unit(b, e.a) : null; if (sa) { v.fl.push({ x: sa.x, y: sa.y - 0.45, txt: '✦ ' + e.skills.join('·'), col: '#f3d27a', at: now }); } }
     v.flN = b.log.length; v.fl = v.fl.filter(function (q) { return now - q.at < 1000; });
     v.fl.forEach(function (q) { var p = scr(v, q.x, q.y); s += '<text class="tvs-float" x="' + (p.c * CELL + CELL / 2) + '" y="' + (p.r * CELL + 4) + '" text-anchor="middle" font-size="17" fill="' + q.col + '" pointer-events="none">' + q.txt + '</text>'; });
     if (v.fl.length && !v.flT) { v.flT = global.setTimeout(function () { v.flT = null; if (cur === v) { render(); } }, 1000); }
@@ -249,11 +250,12 @@
   function boardSvg(v) {
     if (skin() && art()) { return boardSkin(v); }
     var b = v.b, W = (v.vert ? b.rows : b.cols) * CELL, H = (v.vert ? b.cols : b.rows) * CELL, s = '', x, y;
-    var rc = reach(v), mv = {};
+    var rc = reach(v), mv = {}, cr = global.DG.command ? global.DG.command.range(b, v.sel) : {};   // W-0455 지휘 범위
     rc.moves.forEach(function (m) { mv[m.x + ',' + m.y] = 1; });
     for (y = 0; y < b.rows; y++) {
       for (x = 0; x < b.cols; x++) {
         var t = T().cellAt(b, x, y), p = scr(v, x, y);
+        if (cr[x + ',' + y]) { s += '<rect x="' + (p.c * CELL + 1) + '" y="' + (p.r * CELL + 1) + '" width="' + (CELL - 2) + '" height="' + (CELL - 2) + '" fill="none" stroke="#f3d27a" stroke-opacity=".55" stroke-dasharray="3 3" pointer-events="none"/>'; }
         s += '<rect class="tv-cell" data-x="' + x + '" data-y="' + y + '" x="' + (p.c * CELL) + '" y="' + (p.r * CELL) + '" width="' + CELL + '" height="' + CELL +
           '" fill="' + (art() ? 'url(#tvp-' + t + ')' : COL[t]) + '" stroke="#0003"/>';
         if (art()) {   // W-0134 — 숲은 짙은 그늘 + 나무, 성벽은 돌담 그림(이모지 대신)
@@ -371,13 +373,13 @@
   /** 고른 장수 카드 — 초상·이름·병종·체력 막대·공·사거리·지형·책략 단추. 안 골랐으면 짧은 안내 */
   function cardHtml(v) {
     var u = v.sel ? T().unit(v.b, v.sel) : null, A = T().ARM_NAME || {};
-    if (!u) { return '<div class="tvs-card"><div>🔵 <b>내 장수를 누르십시오</b><br><span class="muted">파란 칸으로 이동 → 빨간 적을 눌러 공격 · 숲 −30%p · 언덕 위 +10%p · 상성 창>기>궁>창 · 뒤치기 +20%p</span></div></div>'; }
+    if (!u) { return '<div class="tvs-card"><div>🔵 <b>내 장수를 누르십시오</b><br><span class="muted">파란 칸으로 이동 → 빨간 적을 눌러 공격 · 숲 −30%p · 언덕 위 +10%p · 상성 창>기>궁>창 · 뒤치기 +20%p' + (v.b.command ? '<br>⚑ 장수마다 용병 둘 — 금빛 지휘 범위 안이면 강해지고, 지휘관이 쓰러지면 휘하가 흩어진다 · 맞닿아 치면 반격을 받는다(궁·책사 두 칸은 안전)' : '') + '</span></div></div>'; }
     var f = Math.max(0, u.hp / u.max), col = f > 0.5 ? '#5bd16a' : (f > 0.25 ? '#e3c33f' : '#e2553f'), face = u.kind === 'officer' && v.opts.face ? v.opts.face(u.id) : '';
     return '<div class="tvs-card' + (u.side === 'me' ? '' : ' foe') + '">' + (face ? '<img src="' + esc(face) + '" alt="">' : '<span style="font-size:40px;width:58px;text-align:center">' + (u.kind === 'troop' ? '🪖' : '⚔️') + '</span>') +
       '<div style="flex:1;min-width:0"><b>' + esc(nameOf(v, u)) + '</b>' + (u.arm ? ' <span class="muted">' + esc(A[u.arm] || '') + '</span>' : '') + (u.leader ? ' 👑' : '') +
       '<div class="tvs-hp"><i style="width:' + Math.round(f * 100) + '%;background:' + col + '"></i></div>' +
       '<span class="muted">체력 ' + Math.round(u.hp) + '/' + u.max + ' · 공 ' + Math.round(u.atk) + ' · 사거리 ' + u.rng + ' · ' + esc(NAME[T().cellAt(v.b, u.x, u.y)] || '') + (u.moved ? ' · 이동함' : '') + (u.acted ? ' · 공격함' : '') + '</span>' + (u.skill ? '<br><span style="color:#f3d27a">✦ ' + esc(u.skill.name) + '</span> <span class="muted">' + esc(u.skill.desc) + '</span>' : '') +
-      (v.plot ? '<br><span style="color:#ffb35c">' + esc((T().PLOT_NAME || {})[v.plot] || '') + ' — 주황 칸을 누르십시오</span>' : '') + plotBtns(v, u) + '</div></div>';
+      (v.plot ? '<br><span style="color:#ffb35c">' + esc((T().PLOT_NAME || {})[v.plot] || '') + ' — 주황 칸을 누르십시오</span>' : '') + (global.DG.command ? global.DG.command.cardLine(v.b, u, function (id) { return (v.opts.name || offName)(id); }) : '') + plotBtns(v, u) + '</div></div>';   // W-0455 지휘
   }
   /** 공격 컷(W-0134) — 두 장수가 좌우에서 미끄러져 마주 서고 명중·피해. 판정 결과(r)를 재생만 한다 */
   /** W-0452 공격 컷 SRPG 겉모습 — 가운데 띠 위로 두 장수 반신(일러스트 → 카드 초상 → 작은 초상)이 미끄러져 들어오고 · 베기 섬광 · 큰 피해 숫자 · 맞은 쪽 체력 막대가 줄어든다 */
@@ -509,7 +511,7 @@
     if (!host) { cur = null; if (done) { done(null); } return null; }
     var b = opts.srpg && T().makeBoardSrpg ? T().makeBoardSrpg(opts.seed, opts.land, opts.siege, opts.goal) : T().makeBoard(opts.seed, opts.land, opts.siege);   // W-0401 SRPG 본전투 판
     if (b.srpg && opts.defend && T().mirror) { T().mirror(b); }   // W-0403 방어 판 — 성벽이 내 쪽
-    if (b.srpg) { T().unitsOfSrpg(b, opts.mine, opts.foes, opts.foeTroops, null, opts.myTroops || []); } else { T().unitsOf(b, opts.mine, opts.foes, opts.foeTroops); }
+    if (b.srpg) { T().unitsOfSrpg(b, opts.mine, opts.foes, opts.foeTroops, { mercs: opts.mercs, mercMul: opts.mercMul, mercN: opts.mercN }, opts.myTroops || []); } else { T().unitsOf(b, opts.mine, opts.foes, opts.foeTroops); }
     host.classList.add('show');   // 먼저 보여야 폭을 잰다(display:none 이면 0)
     if (!host.__tvBound) { host.addEventListener('click', onClick); host.__tvBound = true; }
     var wide = host.clientWidth || 0;

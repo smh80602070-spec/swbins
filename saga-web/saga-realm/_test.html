@@ -141,6 +141,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/campaign-view.js"></script>
 <script src="js/hero-skill.js"></script>
 <script src="js/realm-gear.js"></script>
+<script src="js/command.js"></script>
 <script src="js/tactics-view3d.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/scenario.js"></script>
@@ -7575,7 +7576,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       T.unitsOfSrpg(b, mine, foes, [1500 + (i % 5) * 400], { stats: st }, [1500 + ((i + 2) % 5) * 400]);
       return b;
     }
-    t('W-0401 SRPG — 판 크기 넷·언덕·성문 · 병종 수치·대장 하나 · 덤(높이+10·상성±20·뒤+20) · 걸어간 쪽을 봄 · 승리 조건 넷(전멸·대장·성문·6턴 버팀)', function () {
+    function cmdOff(fn) { return function () { var c0 = DG.core.tuned; DG.core.tuned = function (k, d) { return k === 'rtk.command' ? 0 : c0.apply(DG.core, arguments); }; try { return fn(); } finally { DG.core.tuned = c0; } }; }   // W-0455 — W-0401 덩어리 부대 판을 그대로 잰다
+    t('W-0401 SRPG — 판 크기 넷·언덕·성문 · 병종 수치·대장 하나 · 덤(높이+10·상성±20·뒤+20) · 걸어간 쪽을 봄 · 승리 조건 넷(전멸·대장·성문·6턴 버팀)', cmdOff(function () {
       var T = DG.tactics, sz = {}, i;
       ['plain', 'river', 'hill', 'mount'].forEach(function (l) { var b = T.makeBoardSrpg('size', l, false, 'rout'); sz[l] = b.cols + 'x' + b.rows; });
       var hills = T.makeBoardSrpg('hills', 'hill', false, 'rout').cells.filter(function (c) { return c === 'hill'; }).length;
@@ -7595,7 +7597,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var oldB = T.makeBoard('old', 'plain', false), old = oldB.cols + 'x' + oldB.rows + (oldB.srpg ? ' srpg' : '');
       return (ok1 && ok2 && lead === 1 && ok3 && faced && k1 === 'rout' && k2 === 'rout' && k3 === 'win' && k4 === 'rout' && old === '8x6') ||
         ('실패 판 ' + JSON.stringify(sz) + ' 언덕 ' + hills + ' · 병종 ' + ok2 + '/' + Object.keys(arms) + ' 대장 ' + lead + ' · 덤 ' + nm(m1) + ' | ' + nm(m2) + ' · 방향 ' + faced + ' · 대장 ' + k1 + ' 성문 ' + k2 + ' 버팀 ' + k3 + ' 전멸 ' + k4 + ' · 옛 판 ' + old);
-    });
+    }));   // W-0455 옛 판(용병 끔) 규칙
     t('W-0424 인재 천거 — 그 달 해시 12%(240달 중 15~50) · 충성 60↑ 지력 으뜸이 내 성 숨은 재야를 찾아냄(found)·충성 +5 · 안 서는 달·손잡이 0 이면 없음 · 「이번 달」 줄', function () {
       var RC = DG.recommend, R = DG.rtk, O = DG.off, C = DG.core; if (!RC || !R || !O) { return '실패 DG.recommend 없음'; }
       var st = R.state(); if (!st || !R.me()) { return '실패 rtk 판 없음'; }
@@ -7637,12 +7639,12 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         return ok || ('실패 ' + JSON.stringify({ none: none, p3: p3, lvC: lvC, ups: ups.length, mC: mC, mA: mA, mD: mD, swLv: swLv, foLv: foLv, row: row }));
       } finally { st.support = keep; }
     });
-    t('W-0401 SRPG 자동 대국 60판 — 승률 45~65% · 평균 턴 ≤ 12 · 목표 넷 다 나옴(고돗 G-0347 과 같은 57%·5.5턴)', function () {
+    t('W-0401 SRPG 자동 대국 60판 — 승률 45~65% · 평균 턴 ≤ 12 · 목표 넷 다 나옴(고돗 G-0347 과 같은 57%·5.5턴)', cmdOff(function () {
       var wins = 0, turns = 0, by = {}, i;
       for (i = 0; i < 60; i++) { var b = srpgGame(i), o = DG.tactics.autoPlay(b), w = o.kind === 'rout' || o.kind === 'win'; if (w) { wins++; } turns += o.turn; by[b.goal] = (by[b.goal] || 0) + 1; }
       var rate = wins / 60, avg = turns / 60, line = '승률 ' + Math.round(rate * 100) + '% · 평균 ' + avg.toFixed(1) + '턴 · ' + JSON.stringify(by);
       return (rate >= 0.45 && rate <= 0.65 && avg <= 12 && Object.keys(by).length === 4) || ('실패 ' + line);
-    });
+    }));   // W-0455 옛 판(용병 끔) 규칙
     t('W-0401 SRPG 책략 — 지력 70 이상 장수만 · 한 판 두 번 · 화계(숲 불·번짐·적 턴 끝 탐·두 턴 꺼짐) · 혼란(한 차례 쉼) · 회복(최대 안 넘음)', function () {
       var T = DG.tactics, b = T.makeBoardSrpg('plot', 'mount', false, 'rout'), st = { s: { might: 40, wisdom: 95, command: 70 }, d: { might: 80, wisdom: 30, command: 70 }, f: { might: 60, wisdom: 40, command: 60 } };
       T.unitsOfSrpg(b, ['s', 'd'], ['f'], [2000], { stats: st }, []);
@@ -7700,6 +7702,26 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var it = CP.shop()[0], gb = cp.gold, by = CP.buy(it.id), rt = JSON.parse(JSON.stringify(R.state().campaign)), txt = CP.fillText('{책사}·{이웃}·{맹장}');
       var ok = L.length === 19 && L.filter(function (c) { return c.epi; }).length === 3 && L.every(function (c) { return c.land && c.goal; }) && o.srpg && o.mine.length >= 1 && o.mine.length <= 3 && o.foes.length >= 1 && o.myTroops[0] > 0 && g1 === g0 + 200 && w.win && ch2 === 2 && cp.cleared[1] === 1 && !l.win && cp.ch === 2 && by.ok && cp.gold === gb - CP.price(it) && rt.ch === 2 && rt.bag.indexOf(it.id) >= 0 && txt.indexOf('{') < 0 && (function () { cp.ch = 17; var e1 = CP.choose(17, 'util'); cp.ch = 19; var e3 = CP.choose(19, 'util'); var end = CP.ended(), f0 = CP.battleOpts(1).foeTroops[0], rd = CP.newRound(), f1 = CP.battleOpts(1).foeTroops[0]; return e1.epi && !e1.end && e3.end && end && rd === 1 && cp.ch === 1 && f1 > f0; })();
       return ok || ('실패 ' + JSON.stringify({ n: L.length, mine: o.mine.length, foes: o.foes.length, g0: g0, g1: g1, w: w.win, ch2: ch2, l: l.win, by: by, txt: txt }));
+    });
+    t('W-0455 지휘관·용병(랑그릿사식) — 장수마다 용병 둘(고른 병종)·부대 덩어리 없음 · 지휘 범위 명중 ± · 지휘관 격파 → 휘하 궤주 · 맞닿음 반격(두 칸은 없음) · 맡김 · 곁 보급 · 손잡이 0 = 옛 판 · 진영 병종 고름·적 편성 미리 보기', function () {
+      fresh('cao'); var T = DG.tactics, CM = DG.command, CP = DG.campaign; if (!CM) { return '실패 모듈 없음'; }
+      var st = { a: { might: 70, wisdom: 50, command: 90 }, x: { might: 60, wisdom: 50, command: 45 } };
+      var b = T.makeBoardSrpg('w455', 'plain', false, 'rout'); T.unitsOfSrpg(b, ['a'], ['x'], [4000], { stats: st, mercs: { a: ['bow', 'cav'] } }, [4000]);
+      var mm = b.units.filter(function (u) { return u.merc && u.side === 'me'; }), fm = b.units.filter(function (u) { return u.merc && u.side === 'foe'; }), lump = b.units.filter(function (u) { return u.kind === 'troop' && !u.merc; }).length;
+      var A = T.unit(b, 'me:a'), X = T.unit(b, 'foe:x'), armsOk = mm.map(function (u) { return u.arm; }).join() === 'bow,cav' && A.cmdR === 4 && X.cmdR === 3;
+      var m0 = mm[0], inR = CM.inCmd(b, m0), md = []; CM.mods(b, m0, X, md); var far = { uid: 'q', merc: true, cmd: A.uid, x: A.x + 9, y: A.y, hp: 9 }, md2 = []; CM.mods(b, far, X, md2);
+      var fa = CM.foeArms(b.seed, ['x'])[0].join() === fm.map(function (u) { return u.arm; }).join();
+      X.hp = 0; T.attack(b, 'me:a', 'foe:x'); CM.sweep(b); var fled = fm.every(function (u) { return u.hp === 0 && u.fled; });
+      var b2 = T.makeBoardSrpg('w455b', 'plain', false, 'rout'); T.unitsOfSrpg(b2, ['a'], ['x'], [4000], { stats: st }, [4000]); var a2 = T.unit(b2, 'me:a'), x2 = T.unit(b2, 'foe:x');
+      b2.units.forEach(function (u) { if (u !== a2 && u !== x2) { u.x = 0; u.y = 7; u.hp = 0; } }); a2.x = 3; a2.y = 3; x2.x = 4; x2.y = 3; a2.rng = 1; x2.hp = 999; x2.max = 999; var n0 = b2.log.length, r = T.attack(b2, 'me:a', 'foe:x'), ctr = !!(r.counter && b2.log[b2.log.length - 1].counter && b2.log.length === n0 + 1 + ((r.skills || []).length ? 1 : 0) || r.counter);
+      a2.acted = false; a2.moved = false; a2.x = 2; a2.rng = 2; var r2 = T.attack(b2, 'me:a', 'foe:x'), noCtr = r2.ok && !r2.counter;
+      var b3 = T.makeBoardSrpg('w455c', 'plain', false, 'rout'); T.unitsOfSrpg(b3, ['a'], ['x'], [4000], { stats: st }, [4000]); var m3 = b3.units.filter(function (u) { return u.merc && u.side === 'me'; }); m3[0].moved = true; var auto = CM.autoMercs(b3) === 1;
+      var A3 = T.unit(b3, 'me:a'), mz = m3[0]; mz.x = A3.x; mz.y = A3.y + 1 < b3.rows ? A3.y + 1 : A3.y - 1; mz.hp = 1; CM.turnStart(b3); var sup = mz.hp > 1;
+      var c0 = DG.core.tuned; DG.core.tuned = function (k, d) { return k === 'rtk.command' ? 0 : c0.apply(DG.core, arguments); }; var b4 = T.makeBoardSrpg('w455d', 'plain', false, 'rout'); T.unitsOfSrpg(b4, ['a'], ['x'], [4000], { stats: st }, [4000]); DG.core.tuned = c0; var old = !b4.command && !b4.units.some(function (u) { return u.merc; });
+      R.state().campaign = null; var cp = CP.state(), me = CP.party()[0], m1 = CP.mercsOf(me).slice(), m2 = CP.cycleMerc(me, 0), o = CP.battleOpts(cp.ch), pv = CP.foeMercs(cp.ch);
+      var camp = m2[0] !== m1[0] && o.mercs[me][0] === m2[0] && pv.length === o.foes.length && pv.every(function (p) { return p.arms.length === 2; });
+      var ok = mm.length === 2 && fm.length === 2 && !lump && armsOk && inR && md[0][1] === A.cmdA && !md2.length && fa && fled && ctr && noCtr && auto && sup && old && camp;
+      return ok || ('실패 ' + JSON.stringify({ mm: mm.length, fm: fm.length, lump: lump, armsOk: armsOk, inR: !!inR, md: md, md2: md2, fa: fa, fled: fled, ctr: ctr, noCtr: noCtr, auto: auto, sup: sup, old: old, camp: camp }));
     });
     t('W-0453 장수 고유 스킬·장비 — 500명 모두 스킬(같은 장수 늘 같음·★5 극) · officerUnit 에 스킬(맹진 이동+1)·장비(공·체력·이동) · 철벽 피해 줄임 · 불굴 한 번 버팀 · 장비 60·상점 진열·떨굼·끼우기/빼기', function () {
       fresh('cao'); var HS = DG.heroSkill, G = DG.realmGear, CP = DG.campaign, T = DG.tactics; if (!HS || !G || !CP) { return '실패 모듈 없음'; }

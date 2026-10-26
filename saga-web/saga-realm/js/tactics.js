@@ -175,8 +175,9 @@
     a.acted = true; a.moved = true; if (global.DG.support) { global.DG.support.onAct(b, a); }   // W-0425 지원 — 이웃 쌍 적기
     var le = { t: b.turn, a: uid, to: tuid, hit: hit, dmg: dmg, ch: ch }; b.log.push(le);
     var sk = HS ? HS.after(b, a, t, hit, dmg) : []; if (sk.length) { le.skills = sk; }
+    var ct = global.DG.command ? global.DG.command.counter(b, a, t) : null;   // W-0455 맞붙음 반격
     check(b);
-    return { ok: true, hit: hit, dmg: dmg, killed: t.hp <= 0, chance: ch, skills: sk };
+    return { ok: true, hit: hit, dmg: dmg, killed: t.hp <= 0, chance: ch, skills: sk, counter: ct };
   }
 
   /* ── AI(같은 규칙을 양쪽이 쓴다 — 진단의 자동 대국도 이것) ── */
@@ -188,7 +189,7 @@
     if (!foes.length) { return; }
     function bestTarget() {
       var best = null, bc = -1;
-      foes.forEach(function (t) { if (t.hp > 0 && inRange(u, t)) { var c = hitChanceB(b, u, t); if (c > bc) { bc = c; best = t; } } });
+      foes.forEach(function (t) { if (t.hp > 0 && inRange(u, t)) { var c = hitChanceB(b, u, t) + (global.DG.command ? global.DG.command.prio(b, t) : 0); if (c > bc) { bc = c; best = t; } } });
       return best;
     }
     var tg = bestTarget();
@@ -223,11 +224,12 @@
     b.units.forEach(function (u) { u.moved = false; u.acted = false; });
     b.side = 'me';
     if (global.DG.heroSkill) { global.DG.heroSkill.turnStart(b); }   // W-0453 치유·인덕
+    if (global.DG.command) { global.DG.command.turnStart(b); }   // W-0455 지휘관 곁 용병 보급
     check(b);
     return b.done;
   }
   /** 내 턴 끝 → 적 턴 */
-  function endTurn(b) { return aiTurn(b); }
+  function endTurn(b) { if (global.DG.command) { global.DG.command.autoMercs(b); } return aiTurn(b); }   // W-0455 손대지 않은 용병은 맡김
 
   /* ── 결과 ─────────────────────────────────────────── */
 
@@ -238,6 +240,7 @@
   }
   function check(b) {
     if (b.done) { return b.done; }
+    if (b.command && global.DG.command) { global.DG.command.sweep(b); }   // W-0455 지휘관 격파 → 휘하 궤주
     if (b.srpg) { return checkSrpg(b); }
     if (!alive(b, 'foe').length) { b.done = 'rout'; }
     else if (!alive(b, 'me').length) { b.done = 'lose'; }
@@ -399,6 +402,7 @@
     });
     for (i = 0; i < list.length; i++) { if (list[i].side === 'foe' && list[i].kind === 'officer') { list[i].leader = true; break; } }
     if (global.DG.heroSkill && b.plots != null) { b.plots += global.DG.heroSkill.plotsBonus(b); }   // W-0453 묘책
+    if (global.DG.command) { global.DG.command.setup(b, { myTroops: myTroops, foeTroops: foeTroops, mercs: opts && opts.mercs, mercMul: opts && opts.mercMul, mercN: opts && opts.mercN, stats: opts && opts.stats }); list = b.units; }   // W-0455 지휘관·용병
     return list;
   }
   function faceTo(u, x, y) {
@@ -417,6 +421,7 @@
     if (att.arm && tgt.arm) { if (BEATS[att.arm] === tgt.arm) { out.push(['상성', COUNTER_HIT]); } else if (BEATS[tgt.arm] === att.arm) { out.push(['상성', -COUNTER_HIT]); } }
     if (isBack(att, tgt)) { out.push(['뒤', BACK_HIT]); } if (global.DG.support) { global.DG.support.mods(b, att, tgt, out); }   // W-0425 지원 명중·막음
     if (global.DG.heroSkill) { global.DG.heroSkill.mods(b, att, tgt, out); }   // W-0453 고유 스킬·장비 명중
+    if (global.DG.command) { global.DG.command.mods(b, att, tgt, out); }   // W-0455 지휘 범위
     return out;
   }
   /** 판을 보는 명중률 — SRPG 판이면 높이·상성·뒤까지(옛 판은 hitChance 그대로) */
@@ -554,7 +559,7 @@
   global.DG.tactics = {
     COLS: COLS, ROWS: ROWS, TURNS: TURNS, COVER: COVER, OUT: OUT, WOUND_MONTHS: WOUND_MONTHS,
     hash: hash, makeBoard: makeBoard, cellAt: cellAt, coverAt: coverAt, officerUnit: officerUnit, troopUnit: troopUnit, unitsOf: unitsOf,
-    unit: unit, alive: alive, moves: moves, move: move, hitChance: hitChance, attack: attack,
+    unit: unit, alive: alive, actAuto: actAuto, moves: moves, move: move, hitChance: hitChance, attack: attack,
     aiTurn: aiTurn, endTurn: endTurn, outcome: outcome, apply: apply, annalize: annalize, autoPlay: autoPlay, permadeath: permadeath,
     marchGrid: marchGrid, marchApply: marchApply, srpgOn: srpgOn, fallOut: fallOut, defenseOpts: defenseOpts, defenseApply: defenseApply, mirror: mirror,
     SRPG_SIZE: SRPG_SIZE, HEIGHT_HIT: HEIGHT_HIT, COUNTER_HIT: COUNTER_HIT, BACK_HIT: BACK_HIT, ARMS: ARMS, BEATS: BEATS, ARM_NAME: ARM_NAME, GOALS: GOALS, GOAL_NAME: GOAL_NAME,

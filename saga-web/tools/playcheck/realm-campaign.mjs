@@ -22,6 +22,7 @@ try {
   for (const t of ['gear', 'shop', 'talk', 'party']) { await click('[data-cp="tab"][data-t="' + t + '"]'); await sleep(300); if (t !== 'party') { if (t === 'gear') { await click('[data-cp="bag"]'); await sleep(200); } await shot(t); } }
   await click('[data-cp="go"]'); await sleep(2500);
   console.log('STEP battle', JSON.stringify(await ev(() => ({ tac: !!document.querySelector('#cpg-tac.show'), cells: document.querySelectorAll('#cpg-tac [data-c], #cpg-tac .tv-cell, #cpg-tac td').length })))); await shot('battle');
+  if (await ev(() => { const g = document.querySelector('#cpg-tac g.tv-unit[data-uid^="me:"]:not([data-uid*=":m"])'); if (!g) { return false; } g.dispatchEvent(new MouseEvent('click', { bubbles: true })); return true; })) { await sleep(400); await shot('battle_cmd'); }   // W-0455 장수 골라 지휘 범위
   await click('#cpg-tac [data-tv="auto"]');
   for (let i = 0; i < 40 && !(await ev(() => !!document.querySelector('#cpg-tac [data-tv="go"]'))); i++) { await sleep(500); }
   await click('#cpg-tac [data-tv="go"]'); await sleep(1200);

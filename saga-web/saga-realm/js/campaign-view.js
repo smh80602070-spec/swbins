@@ -111,7 +111,18 @@
   function partyTab() {
     var sel = CP().party(), html = '<div class="cpg-grid">';
     CP().roster().forEach(function (h) { var i = sel.indexOf(h.id); html += '<button class="cpg-card' + (i >= 0 ? ' sel' : '') + '" data-cp="pick" data-id="' + esc(h.id) + '">' + (i >= 0 ? '<span class="n">' + (i + 1) + '</span>' : '') + '<img alt="" src="' + face(h.id, 52) + '"><span><b>' + esc(h.name) + '</b><small>' + statLine(h.id) + '</small></span></button>'; });
-    return html + '</div><div class="cpg-brief" style="margin-top:8px">출진은 셋까지 — 눌러 넣고 뺍니다. 첫째가 대장입니다.</div>';
+    return html + '</div><div class="cpg-brief" style="margin-top:8px">출진은 셋까지 — 눌러 넣고 뺍니다. 첫째가 대장입니다.</div>' + mercHtml();
+  }
+  /* W-0455 용병 — 장수마다 둘(눌러 창→기→궁) · 적 편성 미리 보기(상성 창>기>궁>창) */
+  var ARM_IC = { spear: '🔱 창병', cav: '🐎 기병', bow: '🏹 궁병' };
+  function mercHtml() {
+    if (!global.DG.command || !global.DG.command.on()) { return ''; }
+    var cp = CP().state(), btn = 'class="cpg-btn ghost" style="margin:2px;padding:4px 9px;min-height:30px"';
+    var html = '<div class="cpg-brief" style="margin-top:8px"><b>⚑ 용병</b> <span class="muted">장수마다 둘 — 눌러 병종을 바꿉니다. 지휘관이 쓰러지면 휘하가 흩어집니다.</span>';
+    CP().party().forEach(function (id) { html += '<div style="margin-top:4px"><b>' + esc(nm(id)) + '</b> ' + CP().mercsOf(id).map(function (a, k) { return '<button ' + btn + ' data-cp="merc" data-id="' + esc(id) + '" data-k="' + k + '">' + ARM_IC[a] + '</button>'; }).join('') + '</div>'; });
+    var fm = CP().foeMercs(cp.ch);
+    if (fm.length) { html += '<div style="margin-top:6px;color:#ffb3a6">🔴 적 편성 — ' + fm.map(function (f) { return esc(nm(f.id)) + ' (' + f.arms.map(function (a) { return ARM_IC[a]; }).join(' · ') + ')'; }).join(' / ') + '</div><div class="muted">상성 창 > 기 > 궁 > 창 (±20%p)</div>'; }
+    return html + '</div>';
   }
   /* W-0453 장비 탭 — 가방(장비 g:id · 보물 t:번호)에서 하나 고르고 → 그 칸이 맞는 장수의 「끼우기」. 장수마다 무기·방어구·장신구·보물 네 칸 */
   function GR() { return global.DG.realmGear; }
@@ -209,6 +220,7 @@
       if (i >= 0) { if (sel.length > 1) { sel.splice(i, 1); } } else { if (sel.length >= 3) { sel.pop(); } sel.push(id); }
       CP().setParty(sel); show('camp');
     }
+    else if (a === 'merc') { CP().cycleMerc(b.getAttribute('data-id'), +b.getAttribute('data-k')); show('camp'); }
     else if (a === 'bag') { var k = b.getAttribute('data-k'); pick = pick === k ? null : k; show('camp'); }
     else if (a === 'equip') { if (pick != null) { var ps = String(pick), r = ps.indexOf('g:') === 0 ? CP().equipGear(b.getAttribute('data-id'), ps.slice(2)) : CP().equip(b.getAttribute('data-id'), cp.bag[+ps.slice(2)]); if (!r.ok) { toast(r.why); } pick = null; show('camp'); } }
     else if (a === 'ungear') { CP().unequipGear(b.getAttribute('data-id'), b.getAttribute('data-s')); show('camp'); }

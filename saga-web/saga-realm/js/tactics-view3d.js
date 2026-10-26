@@ -180,7 +180,7 @@
   function coverOn() { var C = global.DG.core; return !(C && C.tuned && !C.tuned('realm.coverMark', 1)); }
 
   /** 고른 장수의 갈 칸·고른 칸 고리 — render 마다 */
-  var hiMat = null, selMat = null;
+  var hiMat = null, selMat = null, cmdMat = null;
   function buildHighlights(v) {
     var t = three(), b = v.b;
     clear(hiGrp);
@@ -196,6 +196,8 @@
       cells.forEach(function (m) { var p = cellCenter(m.x, m.y, b.cols, b.rows), h = HGT[T().cellAt(b, m.x, m.y)] || 0, q = new t.Mesh(new t.PlaneGeometry(0.86, 0.86), pm); q.rotation.x = -Math.PI / 2; q.position.set(p.x, h + 0.02, p.z); hiGrp.add(q); });
       return;
     }
+    var CM = global.DG.command, cr = CM ? CM.range(b, u.uid) : {};   // W-0455 지휘 범위 — 옅은 금빛 판
+    Object.keys(cr).forEach(function (k) { var xy = k.split(','), x = +xy[0], y = +xy[1], c = T().cellAt(b, x, y); if (c === 'river' || c === 'wall') { return; } if (!cmdMat) { cmdMat = new t.MeshBasicMaterial({ color: 0xf3d27a, transparent: true, opacity: 0.16, depthWrite: false }); } var p = cellCenter(x, y, b.cols, b.rows), q = new t.Mesh(new t.PlaneGeometry(0.94, 0.94), cmdMat); q.rotation.x = -Math.PI / 2; q.position.set(p.x, (HGT[c] || 0) + 0.012, p.z); hiGrp.add(q); });
     if (!u.moved) {
       T().moves(b, u.uid).forEach(function (m) {
         var p = cellCenter(m.x, m.y, b.cols, b.rows), h = HGT[T().cellAt(b, m.x, m.y)] || 0;
