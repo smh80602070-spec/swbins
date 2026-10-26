@@ -135,6 +135,9 @@
       '</div>';
     h.classList.add('show');
     renderCount(need);
+    /* W-0464 공용 에셋 경로(assets3d.sharedUrl)가 정해지기 전에 그려지면 일러스트가 예비 경로 ../shared(로컬 서버 404)로 간다 — 정해진 뒤 다시 잡는다 */
+    var A3 = global.DG.assets3d;
+    if (A3 && A3.whenSettled) { A3.whenSettled(function () { list.forEach(function (hh) { var im = h.querySelector('.stc-cell[data-id="' + hh.id + '"] img'), u = global.DG.portrait3d && global.DG.portrait3d.of('hero', hh, 96, 110); if (im && u && im.getAttribute('src') !== u) { im.src = u; } }); }); }
 
     h.addEventListener('click', function (e) {
       var cell = e.target.closest('.stc-cell');
