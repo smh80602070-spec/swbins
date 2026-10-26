@@ -199,6 +199,8 @@
     var res = CP().reward(no, out), c = CP().chapter(no);
     var html = '<div class="cpg-result"><h3>' + (res.win ? '🏆 승리' : '💥 패배') + '</h3><p>제 ' + no + ' 장 「' + esc(c.title) + '」' + (out ? ' — ' + esc(out.name || out.kind) : '') + '</p>';
     if (res.win) { html += '<p>💰 +' + res.gold + ' · 경험 +' + res.exp + (res.item ? ' · 얻음 ' + esc(res.item.emoji + ' ' + res.item.name) : '') + (res.gear && GR() ? '<br>🎁 장비 ' + gname(res.gear) : '') + (res.recruit ? '<br>🤝 ' + esc(res.recruit) + ' 합류' : '') + '</p>'; }
+    var BSx = global.DG.battleScript, ldr = CP().party()[0]; if (BSx && BSx.endLine && ldr) { html += '<p style="font:600 17px/1.5 serif;color:#ffe9a0">🗨 ' + esc(nm(ldr)) + ': ' + esc(BSx.endLine(c.id, res.win)) + '</p>'; }   // W-0466 이긴 뒤·진 뒤 대사
+    if (res.chestGear && res.chestGear.length && GR()) { html += '<p>📦 상자에서 ' + res.chestGear.map(gname).join(' · ') + '</p>'; }   // W-0466 상자 장비
     if (res.side && (res.side.chests || res.side.total)) { html += '<p>' + (res.side.chests ? '📦 보물 ' + res.side.loot + '/' + res.side.chests : '') + (res.side.total ? (res.side.chests ? ' · ' : '') + '🏘️ 마을 ' + res.side.kept + '/' + res.side.total + (res.side.kept === res.side.total && res.win ? ' (모두 지킴!)' : '') : '') + (res.sideGold ? ' — 💰 +' + res.sideGold : '') + '</p>'; }   // W-0460
     html += '<div class="cpg-row" style="justify-content:center">' + (res.win ? '<button class="cpg-btn" data-cp="route">노선도 ▶</button>' : '<button class="cpg-btn" data-cp="camp">진영에서 다시 도전</button>') + '</div></div>';
     host.innerHTML = html;

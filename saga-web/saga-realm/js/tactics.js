@@ -196,7 +196,7 @@
     }
     var tg = bestTarget();
     if (!tg) {
-      var near = foes.slice().sort(function (p, q) { return dist(u, p) - dist(u, q) || (p.uid < q.uid ? -1 : 1); })[0];
+      var near = (b.sg && global.DG.sideGoal ? global.DG.sideGoal.lure(b, u) : null) || foes.slice().sort(function (p, q) { return dist(u, p) - dist(u, q) || (p.uid < q.uid ? -1 : 1); })[0];   // W-0466 적 부대는 지키는 이 없는 마을부터
       var opts = moves(b, u.uid), pick = null, pd = Infinity, pc = -1;
       opts.forEach(function (c) {
         var d = Math.max(0, dist(c, near) - u.rng), cv = coverAt(b, c.x, c.y);

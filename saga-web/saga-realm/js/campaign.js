@@ -143,6 +143,8 @@
     cp.tries = (cp.tries || 0) + 1;
     var sd = out && out.side, SGG = global.DG.sideGoal ? global.DG.sideGoal.GOLD : null;   // W-0460 보조 목표 — 상자는 져도 챙기고, 마을은 이겼을 때
     if (sd && SGG) { res.sideGold = sd.loot * SGG.chest + (won(out) && sd.total ? sd.kept * SGG.village + (sd.kept === sd.total ? SGG.allVillages : 0) : 0); res.side = sd; cp.gold += res.sideGold; }
+    var GRc = global.DG.realmGear; res.chestGear = [];   // W-0466 상자 셋 중 하나꼴로 장비(장·회차·도전 수 씨앗)
+    for (var ci = 0; sd && GRc && SGG && ci < sd.loot; ci++) { if ((no * 7 + (cp.tries || 0) * 3 + ci) % (global.DG.sideGoal.CHEST_GEAR || 3) === 0) { var cg = GRc.drop(no, 'chest' + ci + ':' + (cp.round || 0) + ':' + (cp.tries || 0), cp.round); if (cg) { cp.gbag.push(cg.id); res.chestGear.push(cg); } } }
     (out && out.wounded || []).forEach(function (w) { var id = w.id || w; var r = OFF().rec(id); if (r) { r.hurt = Math.max(r.hurt || 0, 1); } });
     var lord = OFF().lordOf ? OFF().lordOf(R().me()) : null;   // 영구 전사(손잡이 rtk.permadeath) — 군주는 중상으로
     (out && out.fallen || []).forEach(function (id) { var r = OFF().rec(id); if (!r) { return; } if (id === lord) { r.hurt = 1; } else { r.dead = true; } });

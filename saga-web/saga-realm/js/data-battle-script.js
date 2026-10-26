@@ -89,6 +89,15 @@
       low: '「이 이야기가… 이렇게 끝나는가…」', down: '「천하는… 그대의 것이다…」', reinf: '「끝을 막아라! 끝을 막아라!」'
     }
   };
+  /* W-0466 이긴 뒤·진 뒤 — 장 대본에 win/lose 가 없으면 이 줄들(내 첫째 장수, 장 id 로 고름) */
+  var WIN = ['「이겼다! 다들 잘 버텼다.」', '「한 고비 넘겼군. 다음 장으로 가자.」', '「이 땅은 지켜 냈다. 숨 돌리고 다시 나아간다.」', '「적장의 깃발이 꺾였다 — 우리 차례다.」'];
+  var LOSE = ['「물러난다… 다음엔 반드시 되갚는다.」', '「진영으로 돌아가 다시 짠다. 편성을 바꿔 보자.」', '「상성을 잘못 읽었다… 다시 겨룬다.」'];
+  S.r6_end.win = '「천하의 끝… 함께 온 모두의 이름으로 맺는다.」';
+  S.r3_river.win = '「바람이 우리 편이었다. 강은 이제 조용하다.」';
+  S.r4_rift.win = '「문이 닫혔다. 세 시대의 성벽이 버텼다!」';
+  function hashS(s) { var h = 2166136261, i; for (i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
+  /** 결과 한 줄 — win 참이면 이긴 줄 */
+  function endLine(id, win) { var s = S[id] || {}; if (win && s.win) { return s.win; } if (!win && s.lose) { return s.lose; } var L = win ? WIN : LOSE; return L[hashS(String(id) + (win ? 'w' : 'l')) % L.length]; }
   global.DG = global.DG || {};
-  global.DG.battleScript = { S: S, of: function (id) { return S[id] || null; } };
+  global.DG.battleScript = { S: S, of: function (id) { return S[id] || null; }, endLine: endLine };
 })(typeof window !== 'undefined' ? window : this);

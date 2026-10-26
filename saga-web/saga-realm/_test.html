@@ -7709,6 +7709,20 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var ok = L.length === 19 && L.filter(function (c) { return c.epi; }).length === 3 && L.every(function (c) { return c.land && c.goal; }) && o.srpg && o.mine.length >= 1 && o.mine.length <= 3 && o.foes.length >= 1 && o.myTroops[0] > 0 && g1 === g0 + 200 && w.win && ch2 === 2 && cp.cleared[1] === 1 && !l.win && cp.ch === 2 && by.ok && cp.gold === gb - CP.price(it) && rt.ch === 2 && rt.bag.indexOf(it.id) >= 0 && txt.indexOf('{') < 0 && (function () { cp.ch = 17; var e1 = CP.choose(17, 'util'); cp.ch = 19; var e3 = CP.choose(19, 'util'); var end = CP.ended(), f0 = CP.battleOpts(1).foeTroops[0], rd = CP.newRound(), f1 = CP.battleOpts(1).foeTroops[0]; return e1.epi && !e1.end && e3.end && end && rd === 1 && cp.ch === 1 && f1 > f0; })();
       return ok || ('실패 ' + JSON.stringify({ n: L.length, mine: o.mine.length, foes: o.foes.length, g0: g0, g1: g1, w: w.win, ch2: ch2, l: l.win, by: by, txt: txt }));
     });
+    t('W-0466 보조 목표·대사 마무리 — 적 부대가 지키는 이 없는 마을로(가장 가까운 하나만·내가 곁이면 안 감) · 상자 셋에 장비 하나 · 이긴 뒤·진 뒤 대사', function () {
+      fresh('cao'); var T = DG.tactics, SG = DG.sideGoal, CP = DG.campaign, BS = DG.battleScript;
+      var H = Object.values(DG.data.HEROES || DG.data.heroes).map(function (h) { return h.id; });
+      var b = T.makeBoardSrpg('w466', 'plain', false, 'rout'); T.unitsOfSrpg(b, [H[0]], [H[1]], [4000], { side: { villages: 1 } }, [4000]); var v = b.sg.villages[0];
+      var fm = b.units.filter(function (u) { return u.side === 'foe' && u.kind === 'troop'; }), me = b.units.filter(function (u) { return u.side === 'me'; });
+      me.forEach(function (u) { u.x = 0; u.y = 0; }); b.units.filter(function (u) { return u.side === 'foe' && u.kind === 'officer'; }).forEach(function (u) { u.x = b.cols - 1; u.y = b.rows - 1; });
+      fm[0].x = v.x + 3; fm[0].y = v.y; fm[1].x = b.cols - 1; fm[1].y = 0; var l0 = SG.lure(b, fm[0]), l1 = SG.lure(b, fm[1]), pick = !!l0 && l0.x === v.x && !l1;
+      b.side = 'foe'; var d0 = Math.abs(fm[0].x - v.x) + Math.abs(fm[0].y - v.y); T.actAuto(b, fm[0]); var d1 = Math.abs(fm[0].x - v.x) + Math.abs(fm[0].y - v.y), go = d1 < d0;
+      var A = me[0]; A.x = v.x - 1 >= 0 ? v.x - 1 : v.x + 1; A.y = v.y; var guarded = !SG.lure(b, fm[0]);
+      R.state().campaign = null; var cp = CP.state(), g0 = cp.gbag.length, rw = CP.reward(1, { kind: 'rout', name: '대승', fallen: [], wounded: [], side: { loot: 3, chests: 3, kept: 0, total: 0 } }), gear = rw.chestGear.length === 1 && cp.gbag.length >= g0 + 2;
+      var lines = BS.endLine('r6_end', true) === BS.S.r6_end.win && !!BS.endLine('r1_start', true) && BS.endLine('r1_start', false) !== BS.endLine('r1_start', true);
+      var ok = pick && go && guarded && gear && lines;
+      return ok || ('실패 ' + JSON.stringify({ pick: pick, go: go, d0: d0, d1: d1, guarded: guarded, gear: gear, cg: rw.chestGear.length, lines: lines }));
+    });
     t('W-0465 한 바퀴 자동(autoRound) — 부를 때마다 턴 +1(내 편·적 한 차례씩) · 결국 끝남 · autoPlay 와 같은 결과 · 화면 autoTurn', function () {
       var T = DG.tactics, st = { a: { might: 80, wisdom: 50, command: 70 }, x: { might: 60, wisdom: 50, command: 50 } }; if (!T.autoRound) { return '실패 함수 없음'; }
       function board() { var b = T.makeBoardSrpg('w465', 'plain', false, 'rout'); T.unitsOfSrpg(b, ['a'], ['x'], [4000], { stats: st }, [4000]); return b; }
