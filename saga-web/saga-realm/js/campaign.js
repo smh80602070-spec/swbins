@@ -25,10 +25,10 @@
   var BATTLE = {
     r1_start: ['plain', false, 'rout', 0.00], r1_rift_sign: ['hill', false, 'leader', 0.06], r1_first_ally: ['plain', false, 'rout', 0.12],
     r2_fallen: ['hill', false, 'leader', 0.18], r2_plains: ['plain', false, 'rout', 0.26], r2_debate: ['plain', true, 'gate', 0.32],
-    r3_navigator: ['river', false, 'rout', 0.38], r3_river: ['river', false, 'leader', 0.46], r3_duel: ['mount', false, 'leader', 0.52],
+    r3_navigator: ['river', false, 'leader', 0.38], r3_river: ['river', false, 'leader', 0.46], r3_duel: ['mount', false, 'leader', 0.52],
     r4_rift: ['mount', true, 'gate', 0.58], r4_plague: ['hill', true, 'hold', 0.64], r4_tomb: ['mount', false, 'leader', 0.70],
-    r5_silk: ['plain', false, 'rout', 0.76], r5_west: ['plain', true, 'gate', 0.82], r5_south: ['river', false, 'rout', 0.88],
-    r6_end: ['plain', true, 'leader', 1.00]
+    r5_silk: ['plain', false, 'rout', 0.76], r5_west: ['plain', true, 'gate', 0.82], r5_south: ['river', false, 'leader', 0.88],
+    r6_end: ['plain', true, 'rout', 1.00]
   };
   var MAIN = 16, ALL = 19, cache = null;   // ⑤ 17~19 = 7막 후일담(이야기만, 싸움 없음)
   function chapters() {
@@ -87,7 +87,7 @@
     if (!ch) { return null; }
     var pre = cp.pre && cp.pre.ch === no && cp.pre.won ? (cp.pre.kind === 'duel' ? 0.8 : 0.85) : 1;   // ③ 전투 앞 설전·일기토를 이기면 적 병력 −15%/−20%
     var rd = 1 + 0.15 * (cp.round || 0);   // ⑤ 회차마다 적 +15%
-    var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1) * pre * rd);
+    var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1) * pre * rd * (no === MAIN ? 1.2 : 1));   // W-0454 균형 — 마지막 장은 적 +20%(14·15장보다 쉬웠다)
     return { seed: 'cp|' + ch.id + '|' + (cp.tries || 0), land: ch.land, siege: ch.siege, srpg: true, goal: ch.goal,
       mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no };
   }
