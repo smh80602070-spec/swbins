@@ -176,6 +176,7 @@
     var le = { t: b.turn, a: uid, to: tuid, hit: hit, dmg: dmg, ch: ch }; b.log.push(le);
     var sk = HS ? HS.after(b, a, t, hit, dmg) : []; if (sk.length) { le.skills = sk; }
     var ct = global.DG.command ? global.DG.command.counter(b, a, t) : null;   // W-0455 맞붙음 반격
+    if (global.DG.ultimate) { global.DG.ultimate.onAttack(b, a, t, hit); }   // W-0456 필살 게이지
     check(b);
     return { ok: true, hit: hit, dmg: dmg, killed: t.hp <= 0, chance: ch, skills: sk, counter: ct };
   }
@@ -185,6 +186,7 @@
   function actAuto(b, u) {
     if (u.hp <= 0 || b.done) { return; }
     if (u.confused) { u.confused = false; u.moved = true; u.acted = true; return; }   // W-0401 혼란 — 이번 차례를 쉬고 풀린다
+    if (global.DG.ultimate && global.DG.ultimate.ai(b, u)) { return; }   // W-0456 게이지가 차면 필살기
     var foes = alive(b, u.side === 'me' ? 'foe' : 'me');
     if (!foes.length) { return; }
     function bestTarget() {
@@ -422,6 +424,7 @@
     if (isBack(att, tgt)) { out.push(['뒤', BACK_HIT]); } if (global.DG.support) { global.DG.support.mods(b, att, tgt, out); }   // W-0425 지원 명중·막음
     if (global.DG.heroSkill) { global.DG.heroSkill.mods(b, att, tgt, out); }   // W-0453 고유 스킬·장비 명중
     if (global.DG.command) { global.DG.command.mods(b, att, tgt, out); }   // W-0455 지휘 범위
+    if (global.DG.ultimate) { global.DG.ultimate.mods(b, att, tgt, out); }   // W-0456 총공격
     return out;
   }
   /** 판을 보는 명중률 — SRPG 판이면 높이·상성·뒤까지(옛 판은 hitChance 그대로) */
@@ -559,7 +562,7 @@
   global.DG.tactics = {
     COLS: COLS, ROWS: ROWS, TURNS: TURNS, COVER: COVER, OUT: OUT, WOUND_MONTHS: WOUND_MONTHS,
     hash: hash, makeBoard: makeBoard, cellAt: cellAt, coverAt: coverAt, officerUnit: officerUnit, troopUnit: troopUnit, unitsOf: unitsOf,
-    unit: unit, alive: alive, actAuto: actAuto, moves: moves, move: move, hitChance: hitChance, attack: attack,
+    unit: unit, alive: alive, actAuto: actAuto, check: check, moves: moves, move: move, hitChance: hitChance, attack: attack,
     aiTurn: aiTurn, endTurn: endTurn, outcome: outcome, apply: apply, annalize: annalize, autoPlay: autoPlay, permadeath: permadeath,
     marchGrid: marchGrid, marchApply: marchApply, srpgOn: srpgOn, fallOut: fallOut, defenseOpts: defenseOpts, defenseApply: defenseApply, mirror: mirror,
     SRPG_SIZE: SRPG_SIZE, HEIGHT_HIT: HEIGHT_HIT, COUNTER_HIT: COUNTER_HIT, BACK_HIT: BACK_HIT, ARMS: ARMS, BEATS: BEATS, ARM_NAME: ARM_NAME, GOALS: GOALS, GOAL_NAME: GOAL_NAME,

@@ -191,8 +191,8 @@
     }
     var u = v.sel ? T().unit(b, v.sel) : null;
     if (!u || u.hp <= 0 || b.done) { return; }
-    if (v.plot && T().canPlot && T().canPlot(b, u.uid)) {   // W-0401 책략 고르는 중 — 대상 칸만 주황
-      var pm = new t.MeshBasicMaterial({ color: 0xff9d3a, transparent: true, opacity: 0.45, depthWrite: false }), cells = v.plot === 'fire' ? T().fireCells(b, u.uid) : T().plotTargets(b, u.uid, v.plot).map(function (id) { return T().unit(b, id); });
+    if ((v.plot && T().canPlot && T().canPlot(b, u.uid)) || (v.ult && global.DG.ultimate)) {   // W-0401 책략 고르는 중 — 대상 칸만 주황 · W-0456 필살 대상 칸도
+      var pm = new t.MeshBasicMaterial({ color: 0xff9d3a, transparent: true, opacity: 0.45, depthWrite: false }), cells = v.ult ? global.DG.ultimate.cells(b, u.uid) : v.plot === 'fire' ? T().fireCells(b, u.uid) : T().plotTargets(b, u.uid, v.plot).map(function (id) { return T().unit(b, id); });
       cells.forEach(function (m) { var p = cellCenter(m.x, m.y, b.cols, b.rows), h = HGT[T().cellAt(b, m.x, m.y)] || 0, q = new t.Mesh(new t.PlaneGeometry(0.86, 0.86), pm); q.rotation.x = -Math.PI / 2; q.position.set(p.x, h + 0.02, p.z); hiGrp.add(q); });
       return;
     }

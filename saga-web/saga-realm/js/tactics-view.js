@@ -85,6 +85,7 @@
   function reach(v) {
     var b = v.b, u = v.sel ? T().unit(b, v.sel) : null, out = { moves: [], hits: {} };
     if (!u || u.hp <= 0 || b.done) { return out; }
+    if (v.ult && global.DG.ultimate) { out.plot = {}; global.DG.ultimate.cells(b, u.uid).forEach(function (c) { out.plot[c.x + ',' + c.y] = 1; }); return out; }   // W-0456 필살 대상 칸
     if (!u.moved) { out.moves = T().moves(b, u.uid); }
     if (!u.acted) {
       T().alive(b, 'foe').forEach(function (t) {
@@ -379,7 +380,7 @@
       '<div style="flex:1;min-width:0"><b>' + esc(nameOf(v, u)) + '</b>' + (u.arm ? ' <span class="muted">' + esc(A[u.arm] || '') + '</span>' : '') + (u.leader ? ' 👑' : '') +
       '<div class="tvs-hp"><i style="width:' + Math.round(f * 100) + '%;background:' + col + '"></i></div>' +
       '<span class="muted">체력 ' + Math.round(u.hp) + '/' + u.max + ' · 공 ' + Math.round(u.atk) + ' · 사거리 ' + u.rng + ' · ' + esc(NAME[T().cellAt(v.b, u.x, u.y)] || '') + (u.moved ? ' · 이동함' : '') + (u.acted ? ' · 공격함' : '') + '</span>' + (u.skill ? '<br><span style="color:#f3d27a">✦ ' + esc(u.skill.name) + '</span> <span class="muted">' + esc(u.skill.desc) + '</span>' : '') +
-      (v.plot ? '<br><span style="color:#ffb35c">' + esc((T().PLOT_NAME || {})[v.plot] || '') + ' — 주황 칸을 누르십시오</span>' : '') + (global.DG.command ? global.DG.command.cardLine(v.b, u, function (id) { return (v.opts.name || offName)(id); }) : '') + plotBtns(v, u) + '</div></div>';   // W-0455 지휘
+      (v.plot ? '<br><span style="color:#ffb35c">' + esc((T().PLOT_NAME || {})[v.plot] || '') + ' — 주황 칸을 누르십시오</span>' : '') + (global.DG.command ? global.DG.command.cardLine(v.b, u, function (id) { return (v.opts.name || offName)(id); }) : '') + (global.DG.ultimate ? global.DG.ultimate.cardHtml(v.b, u, v.ult) : '') + plotBtns(v, u) + '</div></div>';   // W-0455 지휘
   }
   /** 공격 컷(W-0134) — 두 장수가 좌우에서 미끄러져 마주 서고 명중·피해. 판정 결과(r)를 재생만 한다 */
   /** W-0452 공격 컷 SRPG 겉모습 — 가운데 띠 위로 두 장수 반신(일러스트 → 카드 초상 → 작은 초상)이 미끄러져 들어오고 · 베기 섬광 · 큰 피해 숫자 · 맞은 쪽 체력 막대가 줄어든다 */
@@ -402,6 +403,8 @@
       '<div class="tvs-cut-num' + (r.hit ? '' : ' miss') + '">' + (r.hit ? '−' + r.dmg + (r.killed ? '<small>격파</small>' : '') : '빗나감') + '<em>명중 ' + r.chance + '%</em>' + ((r.skills || []).length ? '<b class="tvs-cut-sk">✦ ' + r.skills.map(esc).join(' · ') + '</b>' : '') + '</div></div>';
   }
   function cutHtml(v) {
+    var UL = global.DG.ultimate, uc = UL ? UL.cutFor(v, function (u) { return cutArt(v, u); }, function (u) { return nameOf(v, u); }, function () { if (cur === v) { render(); } }) : '';   // W-0456 필살 컷인이 먼저
+    if (uc) { return uc; }
     var c = v.cut;
     if (!c || Date.now() - c.at > (skin() && art() ? 1300 : 1100)) { return ''; }
     if (skin() && art()) { return cutSkin(v, c); }
@@ -437,13 +440,14 @@
     var b = v.b, here = null;
     b.units.forEach(function (u) { if (u.hp > 0 && u.x === x && u.y === y) { here = u; } });
     var sel = v.sel ? T().unit(b, v.sel) : null;
+    if (v.ult && sel && global.DG.ultimate) { var ur = global.DG.ultimate.use(b, sel.uid, x, y); v.ult = false; if (ur.ok) { v.sel = null; settle(); } render(); return; }   // W-0456 필살 — 대상이 아니면 풀기만
     if (v.plot && sel) {   // W-0401 책략 — 불은 칸, 혼란·회복은 유닛
       var pr = v.plot === 'fire' ? T().fire(b, sel.uid, x, y) : (here ? T().plot(b, sel.uid, v.plot, here.uid) : { ok: false });
       v.plot = null;
       if (pr.ok) { v.sel = null; settle(); }
       render(); return;   // 대상이 아니면 책략만 풀고 끝 — 같은 누르기가 이동·공격으로 흘러가 행동을 써 버렸다
     }
-    if (here && here.side === 'me') { v.sel = here.uid; v.plot = null; render(); return; }
+    if (here && here.side === 'me') { v.sel = here.uid; v.plot = null; v.ult = false; render(); return; }
     if (here && here.side === 'foe' && sel) {
       var r = T().attack(b, sel.uid, here.uid);
       if (r.ok && r.hit && !(global.DG.tacticsView3d && global.DG.tacticsView3d.want()) && global.DG.core && global.DG.core.emit) { global.DG.core.emit('tac:hit', { kill: !!r.killed }); }   // W-0230 2D 판도 타격음(3D 는 맞는 순간에)
@@ -495,6 +499,7 @@
     if (btn) {
       var k = btn.getAttribute('data-tv');
       if (k === 'end') { endTurn(); } else if (k === 'auto') { auto(); } else if (k === 'quit') { quit(); } else if (k === 'go') { go(); }
+      else if (k === 'ult' && cur && global.DG.ultimate) { var UL = global.DG.ultimate, su = cur.sel ? T().unit(cur.b, cur.sel) : null; if (su && UL.kindOf(su) === 'chonggong') { if (UL.use(cur.b, su.uid, su.x, su.y).ok) { cur.sel = null; settle(); } } else { cur.ult = !cur.ult; cur.plot = null; } render(); }   // W-0456 총공격은 바로
       else if (k === 'plot' && cur) { var pk = btn.getAttribute('data-plot'); cur.plot = cur.plot === pk ? null : pk; render(); }
       return;
     }
