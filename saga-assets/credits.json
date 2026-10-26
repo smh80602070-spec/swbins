@@ -375,6 +375,15 @@
    ]
   },
   {
+   "tool": "미상",
+   "model": "",
+   "license": "SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음)",
+   "count": 1,
+   "where": [
+    "saga-assets/fonts/hahmlet"
+   ]
+  },
+  {
    "tool": "icon_pack.py",
    "model": "none",
    "license": "CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음)",

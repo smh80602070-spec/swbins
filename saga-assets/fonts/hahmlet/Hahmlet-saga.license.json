@@ -1,0 +1,10 @@
+{
+ "id": "fonts/hahmlet",
+ "file": "Hahmlet-saga.woff2",
+ "source": "https://github.com/google/fonts/tree/main/ofl/hahmlet (Hahmlet[wght].ttf)",
+ "authors": "The Hahmlet Project Authors (https://github.com/hyper-type/hahmlet)",
+ "license": "SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음)",
+ "modified": "서브셋(한글 KS X 1001 2350 + 사가 다섯 판 글자 + ASCII·문장부호) · woff2 · 굵기 가변 유지 — tools K-0202",
+ "ticket": "K-0202",
+ "use": "2나락 제목·버튼(乙 새긴 돌판, W-0460)"
+}
