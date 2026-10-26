@@ -144,6 +144,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/command.js"></script>
 <script src="js/ultimate.js"></script>
 <script src="js/realm-class.js"></script>
+<script src="js/battle-event.js"></script>
 <script src="js/tactics-view3d.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/scenario.js"></script>
@@ -7578,7 +7579,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       T.unitsOfSrpg(b, mine, foes, [1500 + (i % 5) * 400], { stats: st }, [1500 + ((i + 2) % 5) * 400]);
       return b;
     }
-    function cmdOff(fn) { return function () { var c0 = DG.core.tuned; DG.core.tuned = function (k, d) { return k === 'rtk.command' || k === 'rtk.ultimate' || k === 'rtk.class' ? 0 : c0.apply(DG.core, arguments); }; try { return fn(); } finally { DG.core.tuned = c0; } }; }   // W-0455·0456 — W-0401 덩어리 부대 판을 그대로 잰다(용병·필살 끔)
+    function cmdOff(fn) { return function () { var c0 = DG.core.tuned; DG.core.tuned = function (k, d) { return k === 'rtk.command' || k === 'rtk.ultimate' || k === 'rtk.class' || k === 'rtk.battleEvent' ? 0 : c0.apply(DG.core, arguments); }; try { return fn(); } finally { DG.core.tuned = c0; } }; }   // W-0455·0456 — W-0401 덩어리 부대 판을 그대로 잰다(용병·필살 끔)
     t('W-0401 SRPG — 판 크기 넷·언덕·성문 · 병종 수치·대장 하나 · 덤(높이+10·상성±20·뒤+20) · 걸어간 쪽을 봄 · 승리 조건 넷(전멸·대장·성문·6턴 버팀)', cmdOff(function () {
       var T = DG.tactics, sz = {}, i;
       ['plain', 'river', 'hill', 'mount'].forEach(function (l) { var b = T.makeBoardSrpg('size', l, false, 'rout'); sz[l] = b.cols + 'x' + b.rows; });
@@ -7704,6 +7705,23 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var it = CP.shop()[0], gb = cp.gold, by = CP.buy(it.id), rt = JSON.parse(JSON.stringify(R.state().campaign)), txt = CP.fillText('{책사}·{이웃}·{맹장}');
       var ok = L.length === 19 && L.filter(function (c) { return c.epi; }).length === 3 && L.every(function (c) { return c.land && c.goal; }) && o.srpg && o.mine.length >= 1 && o.mine.length <= 3 && o.foes.length >= 1 && o.myTroops[0] > 0 && g1 === g0 + 200 && w.win && ch2 === 2 && cp.cleared[1] === 1 && !l.win && cp.ch === 2 && by.ok && cp.gold === gb - CP.price(it) && rt.ch === 2 && rt.bag.indexOf(it.id) >= 0 && txt.indexOf('{') < 0 && (function () { cp.ch = 17; var e1 = CP.choose(17, 'util'); cp.ch = 19; var e3 = CP.choose(19, 'util'); var end = CP.ended(), f0 = CP.battleOpts(1).foeTroops[0], rd = CP.newRound(), f1 = CP.battleOpts(1).foeTroops[0]; return e1.epi && !e1.end && e3.end && end && rd === 1 && cp.ch === 1 && f1 > f0; })();
       return ok || ('실패 ' + JSON.stringify({ n: L.length, mine: o.mine.length, foes: o.foes.length, g0: g0, g1: g1, w: w.win, ch2: ch2, l: l.win, by: by, txt: txt }));
+    });
+    t('W-0458 전투 중 이벤트 — 시작 도발 대사 · 증원(그 턴 적장+용병, 오른쪽 끝) · 원군(3턴부터 내 체력 45% 밑 한 번, 왼쪽 끝·바로 움직임) · 대장 절반·격파 대사 한 번씩 · 장 흐름 4·7·10·13·16장 증원 · 손잡이 0 = 없음', function () {
+      fresh('cao'); var T = DG.tactics, BE = DG.battleEvent, CP = DG.campaign; if (!BE) { return '실패 모듈 없음'; }
+      var H = Object.values(DG.data.HEROES || DG.data.heroes).map(function (h) { return h.id; }), me = H[0], fo = H[1], rf = H[2], al = H[3];
+      function board(ev) { var b = T.makeBoardSrpg('w458', 'plain', false, 'rout'); T.unitsOfSrpg(b, [me], [fo], [4000], { events: ev }, [4000]); return b; }
+      var b = board({ reinforce: { turn: 2, id: rf, arms: ['cav', 'spear'], hp: 30 }, ally: { id: al, arms: ['spear', 'bow'], hp: 30 } });
+      var start = (b.evLog || [])[0], st = !!start && start.kind === 'start' && start.text.indexOf(DG.off.find(fo).name) === 0;
+      b.turn = 2; BE.turnStart(b); var R1 = T.unit(b, 'foe:' + rf), rm = b.units.filter(function (u) { return R1 && u.cmd === R1.uid; }), reinf = !!R1 && R1.x >= b.cols - 3 && rm.length === 2 && rm[0].arm === 'cav' && b.evLog.some(function (e) { return e.kind === 'reinforce'; });
+      BE.turnStart(b); var once = b.units.filter(function (u) { return u.id === rf; }).length === 1;
+      b.turn = 3; BE.turnStart(b); var noAlly = !T.unit(b, 'me:' + al);
+      b.units.forEach(function (u) { if (u.side === 'me') { u.hp = Math.max(1, Math.round(u.max * 0.2)); } }); BE.turnStart(b); var A = T.unit(b, 'me:' + al), ally = !!A && A.x <= 2 && !A.acted && !A.moved && b.evLog.some(function (e) { return e.kind === 'ally'; });
+      var L = T.unit(b, 'foe:' + fo); L.hp = Math.floor(L.max * 0.4); T.outcome(b); var low = b.evLog.filter(function (e) { return e.kind === 'low'; }).length === 1; T.outcome(b); var low1 = b.evLog.filter(function (e) { return e.kind === 'low'; }).length === 1;
+      L.hp = 0; T.outcome(b); var down = b.evLog.some(function (e) { return e.kind === 'leaderDown'; });
+      var c0 = DG.core.tuned; DG.core.tuned = function (k, d) { return k === 'rtk.battleEvent' ? 0 : c0.apply(DG.core, arguments); }; var b0 = board({ reinforce: { turn: 1, id: rf } }), off = !b0.ev && !(b0.evLog || []).length; DG.core.tuned = c0;
+      R.state().campaign = null; CP.state(); var e4 = CP.battleOpts(4).events, e5 = CP.battleOpts(5).events, camp = !!(e4 && e4.reinforce && e4.reinforce.turn === 3 && e4.reinforce.id) && !(e5 && e5.reinforce);
+      var ok = st && reinf && once && noAlly && ally && low && low1 && down && off && camp;
+      return ok || ('실패 ' + JSON.stringify({ st: st, reinf: reinf, once: once, noAlly: noAlly, ally: ally, low: low, low1: low1, down: down, off: off, camp: camp, log: (b.evLog || []).map(function (e) { return e.kind; }) }));
     });
     t('W-0457 전직 — 직업 아홉(1차 셋·2차 둘씩) · Lv5/Lv12 고름 · 판에 얹힘(맹장 공·체력 · 덤 병종 용병 체력·공 · 대장군 지휘 · 비장 반격 안 받음 · 철벽장 막음 · 현자 곁 회복) · 적장 직업(장 단계) · 진영 전직 · 손잡이 0 = 없음', function () {
       fresh('cao'); var T = DG.tactics, RC = DG.realmClass, CP = DG.campaign; if (!RC) { return '실패 모듈 없음'; }

@@ -228,6 +228,7 @@
     if (global.DG.heroSkill) { global.DG.heroSkill.turnStart(b); }   // W-0453 치유·인덕
     if (global.DG.command) { global.DG.command.turnStart(b); }   // W-0455 지휘관 곁 용병 보급
     if (global.DG.realmClass) { global.DG.realmClass.turnStart(b); }   // W-0457 현자 곁 회복
+    if (global.DG.battleEvent) { global.DG.battleEvent.turnStart(b); }   // W-0458 증원·원군
     check(b);
     return b.done;
   }
@@ -244,6 +245,7 @@
   function check(b) {
     if (b.done) { return b.done; }
     if (b.command && global.DG.command) { global.DG.command.sweep(b); }   // W-0455 지휘관 격파 → 휘하 궤주
+    if (b.ev && global.DG.battleEvent) { global.DG.battleEvent.scan(b); }   // W-0458 대장 위기·쓰러짐 대사
     if (b.srpg) { return checkSrpg(b); }
     if (!alive(b, 'foe').length) { b.done = 'rout'; }
     else if (!alive(b, 'me').length) { b.done = 'lose'; }
@@ -407,6 +409,7 @@
     if (global.DG.heroSkill && b.plots != null) { b.plots += global.DG.heroSkill.plotsBonus(b); }   // W-0453 묘책
     if (global.DG.command) { global.DG.command.setup(b, { myTroops: myTroops, foeTroops: foeTroops, mercs: opts && opts.mercs, mercMul: opts && opts.mercMul, mercN: opts && opts.mercN, stats: opts && opts.stats }); list = b.units; }   // W-0455 지휘관·용병
     if (global.DG.realmClass) { global.DG.realmClass.apply(b, opts || {}); }   // W-0457 전직
+    if (global.DG.battleEvent) { global.DG.battleEvent.setup(b, opts || {}); }   // W-0458 전투 중 이벤트(시작 대사)
     return list;
   }
   function faceTo(u, x, y) {

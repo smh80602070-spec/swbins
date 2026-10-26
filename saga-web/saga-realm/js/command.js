@@ -75,6 +75,13 @@
     });
     b.command = true;
   }
+  /** 판 도중 들어온 장수(W-0458 증원·원군)에게 휘하 — 지휘 범위·용병 [병종…] 체력 hp */
+  function squad(b, o, arms, hp) {
+    var c = cmdOf(o.id), out = [];
+    o.cmdR = 2 + Math.floor(c / 45); o.cmdA = Math.round(6 + c / 10); o.squad = 1 + b.units.filter(function (u) { return u.side === o.side && u.kind === 'officer'; }).length;
+    (arms || []).forEach(function (a, k) { var m = merc(b, o, k, ARMS.indexOf(a) >= 0 ? a : 'spear', hp); if (m) { m.squad = o.squad; b.units.push(m); out.push(m); } });
+    return out;
+  }
   function boss(b, u) { if (!u || !u.cmd) { return null; } var o = T().unit(b, u.cmd); return o && o.hp > 0 ? o : null; }
   function inCmd(b, u) { var o = boss(b, u); return o && Math.abs(o.x - u.x) + Math.abs(o.y - u.y) <= o.cmdR ? o : null; }
   function mods(b, att, tgt, out) {
@@ -134,5 +141,5 @@
 
   global.DG = global.DG || {};
   global.DG.command = { on: on, PER: PER, ARMS: ARMS, ARM_FULL: ARM_FULL, COUNTER_MUL: COUNTER_MUL, setup: setup, foeArms: foeArms, mods: mods, counter: counter,
-    sweep: sweep, turnStart: turnStart, autoMercs: autoMercs, range: range, prio: prio, nameOf: nameOf, cardLine: cardLine, inCmd: inCmd };
+    sweep: sweep, squad: squad, turnStart: turnStart, autoMercs: autoMercs, range: range, prio: prio, nameOf: nameOf, cardLine: cardLine, inCmd: inCmd };
 })(typeof window !== 'undefined' ? window : this);

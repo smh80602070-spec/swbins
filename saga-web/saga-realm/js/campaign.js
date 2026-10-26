@@ -91,7 +91,21 @@
     var pp = cp.prep && cp.prep.ch === no ? cp.prep : {};   // W-0451 준비물 — 군량 보급 내 병력 +10% · 척후 적 −5%
     var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1) * (pp.food ? 1.1 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1) * pre * rd * (pp.scout ? 0.95 : 1) * (no === MAIN ? 1.2 : 1));   // W-0454 균형 — 마지막 장은 적 +20%(14·15장보다 쉬웠다)
     return { seed: 'cp|' + ch.id + '|' + (cp.tries || 0), land: ch.land, siege: ch.siege, srpg: true, goal: ch.goal,
-      mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no, mercs: mercsAll(no), mercMul: 1.2, mercN: mercN(no), cls: clsMap(no, ch) };
+      mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no, mercs: mercsAll(no), mercMul: 1.2, mercN: mercN(no), cls: clsMap(no, ch), events: eventsFor(no, ch, foe, my) };
+  }
+  /* W-0458 전투 중 이벤트 — 증원(4·7·10·13·16장 3턴, 적 줄에서 다음 장수) · 원군(출진 안 한 가장 센 장수, 질 때 한 번) */
+  var REINF = { 4: 1, 7: 1, 10: 1, 13: 1, 16: 1 };
+  function eventsFor(no, ch, foe, my) {
+    var me = R().me(), st = R().state(), all = [], k, used = foesFor(ch), out = {};
+    if (REINF[no]) {
+      for (k in st.officers) { if (Object.prototype.hasOwnProperty.call(st.officers, k)) { var r = st.officers[k]; if (!r.dead && r.force && r.force !== me && OFF().find(k) && used.indexOf(k) < 0) { all.push(k); } } }
+      all.sort(function (a, b) { return power(a) - power(b); });
+      var at = Math.min(all.length - 1, Math.floor(ch.tier * (all.length - 1)));
+      if (all.length) { var rid = all[Math.max(0, at)]; out.reinforce = { turn: 3, id: rid, arms: ['cav', 'spear'], hp: Math.max(20, Math.round(18 + foe * 0.15 / 50)), cls: foeCls(no, rid) }; }
+    }
+    var pt = party(), spare = roster().filter(function (h) { return pt.indexOf(h.id) < 0; })[0];
+    if (spare) { out.ally = { id: spare.id, arms: ['spear', 'bow'], hp: Math.max(20, Math.round(18 + my * 0.15 / 50)), cls: clsOf(spare.id) }; }
+    return out;
   }
   /* W-0457 전직 — cp.cls = {장수 id: 직업 키}. 적장 직업은 장 단계·장 id 씨앗(다시 도전해도 같다) */
   function RC() { return global.DG.realmClass; }
