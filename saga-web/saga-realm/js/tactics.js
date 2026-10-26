@@ -227,6 +227,7 @@
     b.side = 'me';
     if (global.DG.heroSkill) { global.DG.heroSkill.turnStart(b); }   // W-0453 치유·인덕
     if (global.DG.command) { global.DG.command.turnStart(b); }   // W-0455 지휘관 곁 용병 보급
+    if (global.DG.realmClass) { global.DG.realmClass.turnStart(b); }   // W-0457 현자 곁 회복
     check(b);
     return b.done;
   }
@@ -405,6 +406,7 @@
     for (i = 0; i < list.length; i++) { if (list[i].side === 'foe' && list[i].kind === 'officer') { list[i].leader = true; break; } }
     if (global.DG.heroSkill && b.plots != null) { b.plots += global.DG.heroSkill.plotsBonus(b); }   // W-0453 묘책
     if (global.DG.command) { global.DG.command.setup(b, { myTroops: myTroops, foeTroops: foeTroops, mercs: opts && opts.mercs, mercMul: opts && opts.mercMul, mercN: opts && opts.mercN, stats: opts && opts.stats }); list = b.units; }   // W-0455 지휘관·용병
+    if (global.DG.realmClass) { global.DG.realmClass.apply(b, opts || {}); }   // W-0457 전직
     return list;
   }
   function faceTo(u, x, y) {
@@ -425,6 +427,7 @@
     if (global.DG.heroSkill) { global.DG.heroSkill.mods(b, att, tgt, out); }   // W-0453 고유 스킬·장비 명중
     if (global.DG.command) { global.DG.command.mods(b, att, tgt, out); }   // W-0455 지휘 범위
     if (global.DG.ultimate) { global.DG.ultimate.mods(b, att, tgt, out); }   // W-0456 총공격
+    if (global.DG.realmClass) { global.DG.realmClass.mods(b, att, tgt, out); }   // W-0457 직업(뒤치기·막음)
     return out;
   }
   /** 판을 보는 명중률 — SRPG 판이면 높이·상성·뒤까지(옛 판은 hitChance 그대로) */
@@ -501,7 +504,7 @@
     return hits;
   }
   function confuseChance(u, t) { return Math.max(20, Math.min(90, 50 + Math.trunc(((u.wis || 0) - (t.wis == null ? 40 : t.wis)) * 2))); }
-  function healAmount(u) { return Math.round(HEAL_BASE + (u.wis || 0) / 5); }
+  function healAmount(u) { return Math.round((HEAL_BASE + (u.wis || 0) / 5) * (u.healMul || 1)); }   // W-0457 현자 ×1.5
   /** 혼란·회복을 걸 수 있는 대상 [uid…] */
   function plotTargets(b, uid, plot) {
     var out = [], u = unit(b, uid);

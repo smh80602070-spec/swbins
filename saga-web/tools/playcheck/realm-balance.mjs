@@ -21,6 +21,7 @@ try {
       for (let ch = 1; ch <= 16; ch++) {
         let win = 0, hp = 0, turns = 0;
         for (let s = 0; s < n; s++) {
+          if (DG.realmClass && !tune.noCls && s === 0) { const cs = CP.state(); cs.cls = {}; CP.party().forEach((id) => { const st = DG.off.stats(id), t1 = st.wisdom >= st.might ? 'tactic' : (st.command > st.might ? 'rider' : 'brave'), t2 = { tactic: 'sage', rider: 'marshal', brave: 'overlord' }[t1]; if (ch >= 3) { cs.cls[id] = ch >= 9 ? t2 : t1; } }); }   // W-0457 사람처럼 — 3장부터 1차·9장부터 2차
           const o = CP.battleOpts(ch); o.seed = 'bal|' + ch + '|' + s;
           if (DG.command && !tune.noPick) { const fa = DG.command.foeArms(o.seed, o.foes), win = { cav: 'spear', bow: 'cav', spear: 'bow' }; o.mercs = {}; o.mine.forEach((id, i) => { const f2 = fa[i % Math.max(1, fa.length)] || ['spear', 'spear']; o.mercs[id] = [win[f2[0]], win[f2[1]]]; }); }   // W-0455 사람처럼 — 적 편성 보고 상성 맞춤
           const b = T.makeBoardSrpg(o.seed, o.land, o.siege, o.goal); T.unitsOfSrpg(b, o.mine, o.foes, o.foeTroops, o, o.myTroops);

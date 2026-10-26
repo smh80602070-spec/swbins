@@ -46,7 +46,7 @@
     if (!ready(b, uid)) { return []; }
     var u = T().unit(b, uid), k = kindOf(u), out = [], x, y;
     if (k === 'musang') { foesOf(b, u).forEach(function (t) { if (d1(u, t.x, t.y) <= u.rng) { out.push({ x: t.x, y: t.y }); } }); }
-    else if (k === 'cheonroe') { for (y = 0; y < b.rows; y++) { for (x = 0; x < b.cols; x++) { if (d1(u, x, y) <= BOLT_R) { out.push({ x: x, y: y }); } } } }
+    else if (k === 'cheonroe') { for (y = 0; y < b.rows; y++) { for (x = 0; x < b.cols; x++) { if (d1(u, x, y) <= (u.boltR || BOLT_R)) { out.push({ x: x, y: y }); } } } }
     else { out.push({ x: u.x, y: u.y }); }
     return out;
   }
@@ -60,12 +60,12 @@
     if (!cells(b, uid).some(function (c) { return c.x === x && c.y === y; })) { return { ok: false }; }
     var u = T().unit(b, uid), k = kindOf(u), K = KIND[k], hits = [], heal = 0;
     if (k === 'musang') {
-      var tg = foesOf(b, u).filter(function (t) { return t.x === x && t.y === y; })[0], base = Math.round(u.atk * DMG());
+      var tg = foesOf(b, u).filter(function (t) { return t.x === x && t.y === y; })[0], base = Math.round(u.atk * DMG() * (u.ultMul || 1));   // W-0457 패왕 ×1.3
       if (x !== u.x || y !== u.y) { if (Math.abs(x - u.x) >= Math.abs(y - u.y)) { u.fx = Math.sign(x - u.x); u.fy = 0; } else { u.fx = 0; u.fy = Math.sign(y - u.y); } }
       hurt(b, u, tg, base * 2, K.name, hits);
       foesOf(b, u).forEach(function (o) { if (o !== tg && d1(o, x, y) === 1) { hurt(b, u, o, Math.round(base), K.name, hits); } });
     } else if (k === 'cheonroe') {
-      var bolt = Math.round((14 + (u.wis || 0) / 4) * DMG());
+      var bolt = Math.round((14 + (u.wis || 0) / 4) * DMG() * (u.boltMul || 1) * (u.ultMul || 1));   // W-0457 귀모 ×1.3
       foesOf(b, u).forEach(function (o) { if (d1(o, x, y) <= 1) { hurt(b, u, o, bolt, K.name, hits); } });
     } else {
       var R = u.cmdR || 3;

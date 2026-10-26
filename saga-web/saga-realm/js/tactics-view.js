@@ -380,7 +380,7 @@
       '<div style="flex:1;min-width:0"><b>' + esc(nameOf(v, u)) + '</b>' + (u.arm ? ' <span class="muted">' + esc(A[u.arm] || '') + '</span>' : '') + (u.leader ? ' 👑' : '') +
       '<div class="tvs-hp"><i style="width:' + Math.round(f * 100) + '%;background:' + col + '"></i></div>' +
       '<span class="muted">체력 ' + Math.round(u.hp) + '/' + u.max + ' · 공 ' + Math.round(u.atk) + ' · 사거리 ' + u.rng + ' · ' + esc(NAME[T().cellAt(v.b, u.x, u.y)] || '') + (u.moved ? ' · 이동함' : '') + (u.acted ? ' · 공격함' : '') + '</span>' + (u.skill ? '<br><span style="color:#f3d27a">✦ ' + esc(u.skill.name) + '</span> <span class="muted">' + esc(u.skill.desc) + '</span>' : '') +
-      (v.plot ? '<br><span style="color:#ffb35c">' + esc((T().PLOT_NAME || {})[v.plot] || '') + ' — 주황 칸을 누르십시오</span>' : '') + (global.DG.command ? global.DG.command.cardLine(v.b, u, function (id) { return (v.opts.name || offName)(id); }) : '') + (global.DG.ultimate ? global.DG.ultimate.cardHtml(v.b, u, v.ult) : '') + plotBtns(v, u) + '</div></div>';   // W-0455 지휘
+      (v.plot ? '<br><span style="color:#ffb35c">' + esc((T().PLOT_NAME || {})[v.plot] || '') + ' — 주황 칸을 누르십시오</span>' : '') + (global.DG.command ? global.DG.command.cardLine(v.b, u, function (id) { return (v.opts.name || offName)(id); }) : '') + (global.DG.realmClass ? global.DG.realmClass.cardLine(u) : '') + (global.DG.ultimate ? global.DG.ultimate.cardHtml(v.b, u, v.ult) : '') + plotBtns(v, u) + '</div></div>';   // W-0455 지휘
   }
   /** 공격 컷(W-0134) — 두 장수가 좌우에서 미끄러져 마주 서고 명중·피해. 판정 결과(r)를 재생만 한다 */
   /** W-0452 공격 컷 SRPG 겉모습 — 가운데 띠 위로 두 장수 반신(일러스트 → 카드 초상 → 작은 초상)이 미끄러져 들어오고 · 베기 섬광 · 큰 피해 숫자 · 맞은 쪽 체력 막대가 줄어든다 */

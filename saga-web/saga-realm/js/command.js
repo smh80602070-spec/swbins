@@ -85,6 +85,7 @@
   function counter(b, a, t) {
     var cm = knob('rtk.cmdCounter', COUNTER_MUL * 100) / 100;
     if (!b.command || !cm || t.hp <= 0 || a.hp <= 0 || t.confused || Math.abs(a.x - t.x) + Math.abs(a.y - t.y) !== 1) { return null; }
+    if (a.noCounter) { return null; }   // W-0457 비장 — 맞붙어 쳐도 반격 안 받음
     if (t.skill && t.skill.key === 'bangyeok' && global.DG.heroSkill && global.DG.heroSkill.on()) { return null; }   // 고유 스킬 반격이 대신
     var ch = T().hitChanceB(b, t, a), hit = T().hash(b.seed, 'ct#' + b.log.length) * 100 < ch, d = 0;
     if (hit) { d = Math.max(1, Math.round(t.atk * (C().tuned ? +C().tuned('rtk.tacticsDmg', 2) : 2) * cm * (0.8 + T().hash(b.seed, 'cd#' + b.log.length) * 0.4))); a.hp = Math.max(0, a.hp - d); }
