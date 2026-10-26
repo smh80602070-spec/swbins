@@ -316,7 +316,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             bones[n] = {'x': round((pv[0] - piv[par][0]) * S, 2), 'y': round((pv[1] - piv[par][1]) * S, 2), 'rot': 0}
     # K-0201 쉼 보정 — 팩 동작은 「팔다리 곧게 아래·몸통 곧게 위·발 앞」 기준 각인데 그림은 숙이고 팔을 뒤로 늘어뜨린 채 그려져 있어,
     # 그대로 더하면 팔이 원본보다 훨씬 뒤로 돌고 몸이 기울어 「뒤로 걷는·팔 거꾸로·젖혀진」 꼴(사용자 10-26). 뼈마다 그려진 각(부모 기준)을 쉼 rot 에서 뺀다.
-    #   joints "rest_fix": {뼈: 0~1} 로 덜 고칠 수 있다(부채 든 손처럼 그림 자세를 살릴 때) · "rest_fix": false 면 끔
+    #   손(hand)은 0 — 펴면 쥔 물건째 손목에서 벌어졌다(K-0201 16명) · joints "rest_fix": {뼈: 0~1} 로 덜 고칠 수 있다(부채 든 손처럼 그림 자세를 살릴 때) · "rest_fix": false 면 끔
     if j.get('rest_fix', True) is not False:
         CAN = {'hip': (0, 1), 'chest': (0, -1), 'head': (0, -1), 'foot': (1, 0)}
         def _cw(n):
@@ -324,7 +324,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             dx, dy = b[0] - a[0], b[1] - a[1]
             c = CAN.get(n, CAN.get(n[:4], (0, 1)))
             return math.degrees(math.atan2(c[0] * dy - c[1] * dx, c[0] * dx + c[1] * dy))   # 화면(y 아래)에서 시계 = +
-        RW = dict({'hip': 1.0, 'chest': 1.0, 'head': 0.8, 'armU': 1.0, 'armL': 0.7, 'hand': 0.5, 'legU': 1.0, 'legL': 1.0, 'foot': 1.0}, **(j.get('rest_fix') if isinstance(j.get('rest_fix'), dict) else {}))
+        RW = dict({'hip': 1.0, 'chest': 1.0, 'head': 0.8, 'armU': 1.0, 'armL': 0.7, 'hand': 0.0, 'legU': 1.0, 'legL': 1.0, 'foot': 1.0}, **(j.get('rest_fix') if isinstance(j.get('rest_fix'), dict) else {}))
         drawn = {n: _cw(n) for n in names if n not in ('weapon', 'hair') and B[n][0] != B[n][1]}
         for n, th in drawn.items():
             par = B[n][4]
