@@ -44,7 +44,17 @@
       '.tvs-float{animation:tvsFl .95s ease-out forwards;font-weight:800;paint-order:stroke;stroke:#000;stroke-width:3px}@keyframes tvsFl{0%{opacity:0;transform:translateY(6px)}15%{opacity:1}100%{opacity:0;transform:translateY(-22px)}}' +
       '.tvs .tv-unit.sel .tv-body{filter:drop-shadow(0 0 4px #ffe08a)}.tvs .tv-unit.spent{filter:grayscale(.85) brightness(.8)}' +
       '.tvs-res{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(420px,calc(100% - 24px));background:linear-gradient(#211a10f7,#120e08f7);border:1px solid #c9a35a;border-radius:14px;padding:16px;box-shadow:0 10px 40px #000c}' +
-      '@media (max-width:700px){.tvs-board{top:44px;bottom:176px}.tvs-acts{left:10px;right:10px;bottom:10px}.tvs-acts .btn{flex:1}.tvs-card{bottom:64px}.tvs-log{display:none}}';
+      '.tvs-cut{position:absolute;inset:0;pointer-events:none;z-index:4}.tvs-cut *{animation-delay:var(--e)!important}.tvs-cut-band{position:absolute;left:0;right:0;top:22%;height:52%;background:linear-gradient(180deg,transparent,#0b0906e6 14%,#0b0906e6 86%,transparent);animation:tvsBand 1.3s ease-out both}' +
+      '.tvs-cut-a,.tvs-cut-t{position:absolute;top:20%;height:56%;width:46%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}.tvs-cut-a{left:2%;animation:tvsInL 1.3s cubic-bezier(.2,.9,.3,1) both}.tvs-cut-t{right:2%;animation:tvsInR 1.3s cubic-bezier(.2,.9,.3,1) both}' +
+      '.tvs-cut-a img,.tvs-cut-t img{height:82%;max-width:100%;object-fit:contain;filter:drop-shadow(0 6px 14px #000c)}.tvs-cut-t img{transform:scaleX(-1)}.tvs-cut-emo{font-size:64px}' +
+      '.tvs-cut-nm{margin-top:4px;padding:3px 12px;border-radius:999px;font-size:13px;background:#1d3550e6;border:1px solid #4f9be0}.tvs-cut-t .tvs-cut-nm,.tvs-cut-a.foe .tvs-cut-nm{background:#5a1e18e6;border-color:#d24b3c}.tvs-cut-a.foe .tvs-cut-nm{background:#5a1e18e6}.tvs-cut-t.me .tvs-cut-nm{background:#1d3550e6;border-color:#4f9be0}' +
+      '.tvs-cut-hp{position:relative;width:min(220px,80%);height:12px;margin-top:5px;background:#000a;border-radius:6px;overflow:hidden;border:1px solid #fff3}.tvs-cut-hp i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#e2553f,#f0c34f);animation:tvsHp 1.3s ease-out both}.tvs-cut-hp span{position:absolute;inset:0;text-align:center;font-size:10px;line-height:12px;color:#fff;text-shadow:0 1px 2px #000}' +
+      '.tvs-cut-slash{position:absolute;left:44%;top:30%;width:12%;height:36%;background:linear-gradient(115deg,transparent 42%,#fff 49%,#ffe9a0 51%,transparent 58%);animation:tvsSl 1.3s ease-out both;filter:drop-shadow(0 0 10px #ffd27a)}' +
+      '.tvs-cut-num{position:absolute;left:0;right:0;top:40%;text-align:center;font:900 46px/1 serif;color:#ffe27a;text-shadow:0 3px 0 #7a2a10,0 6px 18px #000;animation:tvsNum 1.3s ease-out both}.tvs-cut-num.miss{color:#cfd8e3;text-shadow:0 3px 10px #000;font-size:34px}.tvs-cut-num small{display:block;font-size:18px;color:#ff8a6a;margin-top:4px}.tvs-cut-num em{display:block;font:600 12px/1.6 sans-serif;color:#d8c9a2;font-style:normal}' +
+      '@keyframes tvsBand{0%{opacity:0;transform:scaleY(.2)}12%{opacity:1;transform:none}82%{opacity:1}100%{opacity:0}}@keyframes tvsInL{0%{opacity:0;transform:translateX(-40%)}20%{opacity:1;transform:none}82%{opacity:1}100%{opacity:0}}@keyframes tvsInR{0%{opacity:0;transform:translateX(40%)}20%{opacity:1;transform:none}82%{opacity:1}100%{opacity:0}}' +
+      '@keyframes tvsSl{0%,24%{opacity:0;transform:translate(-40%,-30%) scale(.6)}32%{opacity:1;transform:none}48%{opacity:0;transform:translate(40%,30%)}100%{opacity:0}}@keyframes tvsNum{0%,30%{opacity:0;transform:scale(1.8)}40%{opacity:1;transform:none}82%{opacity:1}100%{opacity:0;transform:translateY(-12px)}}' +
+      '@keyframes tvsHp{0%,34%{width:var(--from)}62%,100%{width:var(--to)}}' +
+      '@media (max-width:700px){.tvs-cut-a,.tvs-cut-t{top:27%;height:40%}.tvs-cut-band{top:25%;height:46%}.tvs-cut-num{top:36%;font-size:40px}.tvs-board{top:44px;bottom:176px}.tvs-acts{left:10px;right:10px;bottom:10px}.tvs-acts .btn{flex:1}.tvs-card{bottom:64px}.tvs-log{display:none}}';
     global.document.head.appendChild(st);
   }
   function tileHref(kind) { return TILE[kind] ? (cfg2().tileBase || 'assets/web2d/tile/') + TILE[kind] + '.webp' : ''; }
@@ -369,9 +379,29 @@
       (v.plot ? '<br><span style="color:#ffb35c">' + esc((T().PLOT_NAME || {})[v.plot] || '') + ' — 주황 칸을 누르십시오</span>' : '') + plotBtns(v, u) + '</div></div>';
   }
   /** 공격 컷(W-0134) — 두 장수가 좌우에서 미끄러져 마주 서고 명중·피해. 판정 결과(r)를 재생만 한다 */
+  /** W-0452 공격 컷 SRPG 겉모습 — 가운데 띠 위로 두 장수 반신(일러스트 → 카드 초상 → 작은 초상)이 미끄러져 들어오고 · 베기 섬광 · 큰 피해 숫자 · 맞은 쪽 체력 막대가 줄어든다 */
+  function cutArt(v, u) {
+    if (u.kind !== 'officer') { return ''; }
+    var I = global.DG.illust, P3 = global.DG.portrait3d, h = global.DG.off && global.DG.off.find(u.id);
+    if (I && I.has && I.has(u.id)) { return I.url(u.id, 'neutral'); }
+    var c = h && P3 && P3.of ? P3.of('hero', h, 150, 172) : null;
+    return c || (v.opts.face ? v.opts.face(u.id) : '');
+  }
+  function cutSkin(v, c) {
+    var e = (Date.now() - c.at) / 1000, A = T().ARM_NAME || {}, t = c.t, r = c.r, hp1 = Math.max(0, Math.round(t.hp)), hp0 = Math.min(t.max, hp1 + (r.hit ? r.dmg : 0));
+    function side(u, cls) {
+      var src = cutArt(v, u);
+      return '<div class="tvs-cut-' + cls + (u.side === 'me' ? ' me' : ' foe') + '">' + (src ? '<img src="' + esc(src) + '" alt="">' : '<span class="tvs-cut-emo">' + (u.kind === 'troop' ? '🪖' : '⚔️') + '</span>') +
+        '<div class="tvs-cut-nm"><b>' + esc(nameOf(v, u)) + '</b>' + (u.arm ? ' · ' + esc(A[u.arm] || '') : '') + '</div>' +
+        (cls === 't' ? '<div class="tvs-cut-hp"><i style="--from:' + Math.round(100 * hp0 / t.max) + '%;--to:' + Math.round(100 * hp1 / t.max) + '%"></i><span>' + hp1 + ' / ' + t.max + '</span></div>' : '') + '</div>';
+    }
+    return '<div class="tvs-cut" style="--e:' + (-e).toFixed(2) + 's"><div class="tvs-cut-band"></div>' + side(c.a, 'a') + side(t, 't') + (r.hit ? '<div class="tvs-cut-slash"></div>' : '') +
+      '<div class="tvs-cut-num' + (r.hit ? '' : ' miss') + '">' + (r.hit ? '−' + r.dmg + (r.killed ? '<small>격파</small>' : '') : '빗나감') + '<em>명중 ' + r.chance + '%</em></div></div>';
+  }
   function cutHtml(v) {
     var c = v.cut;
-    if (!c || Date.now() - c.at > 1100) { return ''; }
+    if (!c || Date.now() - c.at > (skin() && art() ? 1300 : 1100)) { return ''; }
+    if (skin() && art()) { return cutSkin(v, c); }
     function side(u, cls) {
       var f = u.kind === 'officer' && v.opts.face ? v.opts.face(u.id) : '';
       return '<div class="tv-cut-side ' + cls + (u.side === 'me' ? ' me' : ' foe') + '">' + (f ? '<img src="' + esc(f) + '" alt="">' : '<span class="tv-cut-emo">' + (u.kind === 'troop' ? '🪖' : '⚔️') + '</span>') +
@@ -414,7 +444,7 @@
     if (here && here.side === 'foe' && sel) {
       var r = T().attack(b, sel.uid, here.uid);
       if (r.ok && r.hit && !(global.DG.tacticsView3d && global.DG.tacticsView3d.want()) && global.DG.core && global.DG.core.emit) { global.DG.core.emit('tac:hit', { kill: !!r.killed }); }   // W-0230 2D 판도 타격음(3D 는 맞는 순간에)
-      if (r.ok) { v.cut = { a: sel, t: here, r: r, at: Date.now() }; setTimeout(function () { if (cur === v) { v.cut = null; render(); } }, 1150); settle(); }
+      if (r.ok) { v.cut = { a: sel, t: here, r: r, at: Date.now() }; setTimeout(function () { if (cur === v) { v.cut = null; render(); } }, skin() && art() ? 1320 : 1150); settle(); }
       render();
       return;
     }
