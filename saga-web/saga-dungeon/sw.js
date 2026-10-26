@@ -11,7 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'dungeon-v0.199.289';
+var VERSION = 'dungeon-v0.199.290';
 var APP_CACHE = 'yd-app-' + VERSION;
 
 /* index.html 이 부르는 스크립트가 여기 다 있어야 오프라인에서 게임이 돈다.
@@ -24,6 +24,7 @@ var SHELL = [
   './css/style.css',
   './css/diablo.css',
   './css/ui-kit.css',   // W-0255 공용 창 틀
+  './css/stone-ui.css',   // W-0469 2나락 돌판 겉옷
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png'

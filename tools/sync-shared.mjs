@@ -67,6 +67,9 @@ const FILES = [
   ['js/itemicon.js', 'js/itemicon.js'],
   ['js/toon3d.js', 'js/toon3d.js', ['saga-go', 'saga-dungeon']],
   ['css/ui-kit.css', 'css/ui-kit.css', ['saga-go', 'saga-realm', 'saga-dungeon', 'saga-forest', 'saga-story']],
+  ['assets/fonts/Hahmlet-saga.woff2', 'assets/fonts/Hahmlet-saga.woff2', ['saga-dungeon']],   // W-0469 2나락 돌판 UI 제목·버튼 글꼴(OFL) — 라이선스 둘도 같이
+  ['assets/fonts/Hahmlet-OFL.txt', 'assets/fonts/Hahmlet-OFL.txt', ['saga-dungeon']],
+  ['assets/fonts/Hahmlet-saga.license.json', 'assets/fonts/Hahmlet-saga.license.json', ['saga-dungeon']],
   ['js/menu-grid.js', 'js/menu-grid.js', ['saga-go', 'saga-realm', 'saga-dungeon', 'saga-forest', 'saga-story']],   // W-0253 ☰ 메뉴 화면 — 판 core.js 에 DG.cfg.menu.keep 이 있어야 켜진다   // W-0252 공용 창 틀(메뉴 UI 갈아엎기) — 판을 입히는 티켓(W-0254·0255)이 판을 더한다
   ['js/zone-cut.js', 'js/zone-cut.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // W-0414 구역 넘김 막(2나락은 제 load-veil + W-0449 받는 중 셈·첫 진입 막) — 판 js/zone-wire.js 가 경계에 건다
   ['js/goals-panel.js', 'js/goals-panel.js', ['saga-go', 'saga-realm', 'saga-dungeon', 'saga-forest', 'saga-story']],   // W-0380 「오늘」 창 — 판 js/goals-adapter.js 가 model 을 준다
