@@ -1,6 +1,6 @@
 {
  "id": "go/tab_on",
- "generator": "tools/asset-forge/uigen.py",
+ "generator": "tools/asset-forge/uigen_styles.py (K-0202 1번 지도 앱 알약)",
  "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
  "theme": "go",
  "game": "saga-go",

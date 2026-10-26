@@ -377,10 +377,22 @@
   {
    "tool": "미상",
    "model": "",
-   "license": "SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음)",
-   "count": 1,
+   "license": "SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용)",
+   "count": 3,
    "where": [
-    "saga-assets/fonts/hahmlet"
+    "saga-assets/fonts/gowundodum",
+    "saga-assets/fonts/jua",
+    "saga-assets/fonts/songmyung"
+   ]
+  },
+  {
+   "tool": "미상",
+   "model": "",
+   "license": "SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음)",
+   "count": 2,
+   "where": [
+    "saga-assets/fonts/hahmlet",
+    "saga-web/shared/assets/fonts"
    ]
   },
   {
@@ -809,17 +821,43 @@
    ]
   },
   {
-   "tool": "uigen.py",
+   "tool": "uigen_styles.py (K-0202 1번 나무 판자)",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
-   "count": 342,
+   "count": 38,
    "where": [
     "saga-assets/ui/forest",
+    "saga-web/shared/assets/ui/forest"
+   ]
+  },
+  {
+   "tool": "uigen_styles.py (K-0202 1번 지도 앱 알약)",
+   "model": "",
+   "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+   "count": 38,
+   "where": [
     "saga-assets/ui/go",
+    "saga-web/shared/assets/ui/go"
+   ]
+  },
+  {
+   "tool": "uigen_styles.py (K-0202 1번 비단 족자)",
+   "model": "",
+   "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+   "count": 38,
+   "where": [
     "saga-assets/ui/realm",
+    "saga-web/shared/assets/ui/realm"
+   ]
+  },
+  {
+   "tool": "uigen_styles.py (K-0202 1번 통통 게임창)",
+   "model": "",
+   "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+   "count": 38,
+   "where": [
     "saga-assets/ui/story",
-    "saga-godot/assets/ui_skin/dungeon",
-    "saga-godot/assets/ui_skin/forest"
+    "saga-web/shared/assets/ui/story"
    ]
   },
   {
@@ -1216,6 +1254,20 @@
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
     "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "uigen.py",
+   "model": "",
+   "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+   "count": 190,
+   "where": [
+    "saga-godot/assets/ui_skin/dungeon",
+    "saga-godot/assets/ui_skin/forest",
+    "saga-godot/assets/ui_skin/go",
+    "saga-godot/assets/ui_skin/realm",
+    "saga-godot/assets/ui_skin/story",
+    "saga-unity/Assets/SagaCore/Resources/UI/dungeon"
    ]
   },
   {

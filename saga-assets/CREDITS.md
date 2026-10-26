@@ -41,7 +41,8 @@
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
 | remote3d | microsoft/TRELLIS-image-large | MIT | 531 |
-| 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음) | 1 |
+| 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용) | 3 |
+| 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음) | 2 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
 | gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 2105 |
 | make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |
@@ -79,7 +80,10 @@
 | ground_mix.py (코드 섞기 — GPU·SD 안 씀) | - | 파생물 — 재료 자체 PBR 바탕색(K-0093, 로컬 AI 상업 허용 모델)의 license 를 따른다 | 18 |
 | compress.mjs | - | CC0-1.0 (형태·뼈·동작 전부 코드, 외부 입력 없음) | 1 |
 | uigen_stone.py (K-0202 乙 새긴 돌판) | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 38 |
-| uigen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 342 |
+| uigen_styles.py (K-0202 1번 나무 판자) | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 38 |
+| uigen_styles.py (K-0202 1번 지도 앱 알약) | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 38 |
+| uigen_styles.py (K-0202 1번 비단 족자) | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 38 |
+| uigen_styles.py (K-0202 1번 통통 게임창) | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 38 |
 | k130_unity_pbr.py | - | self-pbr: rock (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0) | 2 |
 | k130_unity_pbr.py | - | self-pbr: stonewall (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0 | 1 |
 | k130_unity_pbr.py | - | self-pbr: paving (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0) | 1 |
@@ -116,6 +120,7 @@
 | shatter.py (Blender bisect 평면 둘 · 자른 면 막기) | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 48 |
 | build_nature.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 150 |
 | build_weapon.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 155 |
+| uigen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 190 |
 | build_real.py | - | CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다) | 166 |
 | make_k167_marks.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·이모지 그림 없음) | 25 |
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요) | 5 |
