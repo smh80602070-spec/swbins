@@ -48,6 +48,47 @@ for nk in ('walk', 'run', 'k.walk', 'walk~robe', 'run~robe', 'k.walk~robe'):
             if b == 'hip' and len(k) > 3:
                 k[3] = round(k[3] * 1.6, 3)
     src[nk] = src.get(nk, '') + ' · K-0200 과장'
+# K-0200 hair 늦게 따라오기 — 머리 세계각(hip+chest+head)을 용수철로 쫓는 각 − 머리 각 = hair 상대각. 몸 오르내림 속도도 조금. 반복 클립은 두 바퀴 돌려 둘째 것
+def _at(ks, u, j=1):
+    if not ks: return 0.0
+    if u <= ks[0][0]: return ks[0][j] if len(ks[0]) > j else 0.0
+    for a, b in zip(ks, ks[1:]):
+        if u <= b[0]:
+            w = (u - a[0]) / max(1e-6, b[0] - a[0]); va = a[j] if len(a) > j else 0.0; vb = b[j] if len(b) > j else 0.0
+            return va + (vb - va) * w
+    return ks[-1][j] if len(ks[-1]) > j else 0.0
+def bake_hair(c, K_=90.0, C_=11.0, VY=1.8, LIM=35.0):
+    n = max(8, int(round(c['len'] * 30))); dt = c['len'] / n; ks = c['keys']
+    head = lambda u: _at(ks.get('hip'), u) + _at(ks.get('chest'), u) + _at(ks.get('head'), u)
+    dy = lambda u: _at(ks.get('hip'), u, 3)
+    x, v = head(0.0), 0.0; out = []
+    rounds = 2 if c.get('loop') else 1
+    for r in range(rounds):
+        for i in range(n + 1):
+            u = i / n
+            vy = (dy(min(1, u + 1 / n)) - dy(max(0, u - 1 / n))) / (2 * dt)
+            tgt = head(u) + vy * VY
+            v += ((tgt - x) * K_ - v * C_) * dt; x += v * dt
+            if r == rounds - 1:
+                out.append([round(u, 3), round(max(-LIM, min(LIM, x - head(u))), 1)])
+    kept = [out[0]]
+    for i in range(1, len(out) - 1):
+        a, m, b = kept[-1], out[i], out[i + 1]; w = (m[0] - a[0]) / max(1e-6, b[0] - a[0])
+        if abs(m[1] - (a[1] + (b[1] - a[1]) * w)) > 0.25: kept.append(m)
+    kept.append(out[-1]); c['keys']['hair'] = kept
+# K-0200 도포 판 골반 — 도포 인물은 hip 그림이 발끝까지라 골반이 기울면 도포 통째로 기울어 젖혀 보인다 → 골반 0.3배, 덜 돈 만큼 가슴에 보태 상체 세계각은 그대로
+ROBE_HIP = 0.3
+for nk, c in out.items():
+    if not nk.endswith('~robe') or 'hip' not in c['keys']:
+        continue
+    hk = [list(k) for k in c['keys']['hip']]
+    if 'chest' in c['keys']:
+        for k in c['keys']['chest']:
+            k[1] = round(k[1] + _at(hk, k[0]) * (1 - ROBE_HIP), 2)
+    for k in c['keys']['hip']:
+        k[1] = round(k[1] * ROBE_HIP, 2)
+for nk, c in out.items():
+    bake_hair(c)
 D = 'saga-assets/web2d/cutout/_clips'; os.makedirs(D, exist_ok=True)
 json.dump(out, open(D + '/side.json', 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 json.dump({'id': 'cutout_clips_side', 'ticket': 'K-0199',

@@ -54,6 +54,7 @@ def grid(src, out):
 
 # ---------------------------------------------------------------- 관절 자동 추정(옆모습)
 # 비율 = sg_zhugeliang 옆모습에 손으로 찍은 값(머리 끝 0 · 발바닥 1) — 사람 손은 덧그린 점 확인판을 보고 틀린 것만 고친다
+BLEED = int(os.environ.get('K188_BLEED', '3'))   # K-0200 이음 겹침 px(0 = 옛 판)
 FAR = 0.6   # 10-26 — 다리·발 캡슐 반지름의 이만큼 밖이면 옷자락(허리에 묶음) · 기본 끔(70명 시험에서 나빠짐 — joints "far_cloth": true 로만)
 CAP = float(os.environ.get('K188_CAP', '1.35'))   # K-0199 무릎·팔꿈치 덧살 배수(두께 기준, 옛 0.9 — 90° 넘게 굽으면 바깥이 벌어짐)
 FRONT_CLIPS = {   # K-0198 앞·뒷모습 클립(키 [t, 각, dx, dy] — 엔진 CLIPS 와 같은 꼴, 뼈 단위 몸 100)
@@ -189,6 +190,8 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
     alpha = A[..., 3] > 24
     ys, xs = np.mgrid[0:H, 0:W]
     B = bones_of(j)
+    if j.get('hair_poly') and j.get('hair_root'):         # K-0200 — 머리카락·깃털·갓끈 덧뼈(엔진 hair 뼈, 부모 head) — 윤곽 안만, 뿌리 = 도는 자리
+        hr = j['hair_root']; B['hair'] = (hr, hr, 1.0, hr, 'head')
     names = list(B)
     score = np.full((len(names), H, W), 1e9, np.float32)
     for k, n in enumerate(names):
@@ -196,6 +199,8 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         d = seg_dist(xs, ys, a, b) - r * (1.15 if n in FRONT else 1.0)
         if j.get('skirt_cut') and j.get('skirt') and n in ('hip', 'chest'):   # 무릎 아래 단 — 둥근 끝이 단 아래 정강이를 먹지 않게 단에서 자름
             d = np.where(ys > j['skirt'] + 6, 1e9, d)
+        if n == 'hair':
+            d = np.full_like(d, 1e9)                   # 거리로는 아무것도 안 가져감(윤곽으로만)
         score[k] = d
     lab = np.argmin(score, 0)
     for k, n in enumerate(names):                      # 10-26 K-0199 떨어짐 검사 — 몸통·팔·손에 간 목 위 픽셀(갓 챙·깃털)은 머리에(머리가 숙이면 남아 떠 있었다)
@@ -218,7 +223,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
                     if 'weapon' in names:
                         sc2[names.index('weapon')] = 1e9
                     lab = np.where(out_, np.argmin(sc2, 0), lab)
-    for key, bone in (('chest_poly', 'chest'), ('hip_poly', 'hip')):   # 망토·앞자락처럼 몸통·허리에 묶을 영역(팔·다리 거리로 가면 떠다닌다)
+    for key, bone in (('chest_poly', 'chest'), ('hip_poly', 'hip')) + ((('hair_poly', 'hair'),) if 'hair' in B else ()):   # 망토·앞자락처럼 몸통·허리에 묶을 영역(팔·다리 거리로 가면 떠다닌다)
         for poly in j.get(key, []):
             pm = Image.new('L', (W, H), 0); ImageDraw.Draw(pm).polygon([tuple(q) for q in poly], fill=255)
             lab = np.where(np.asarray(pm) > 0, names.index(bone), lab)
@@ -264,11 +269,16 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
                     rgb = rgb.copy(); rgb[under] = smear_fill(A[..., :3], under, m)[under]
                 m2 = m2 | under
                 UNDER[0] = under if UNDER[0] is None else (UNDER[0] | under)
+        if BLEED > 0 and n != 'weapon':                 # K-0200 — 이음 겹침: 몸 안쪽으로 BLEED px 더 가져가 돌 때 흰 실금이 안 비치게(옛 1px)
+            from scipy import ndimage as _nd
+            m2 = m2 | (_nd.binary_dilation(m2, iterations=BLEED) & alpha)
         yy, xx = np.nonzero(m2)
         x0, x1, y0, y1 = xx.min(), xx.max() + 1, yy.min(), yy.max() + 1
         P = np.zeros((y1 - y0, x1 - x0, 4), np.uint8)
-        soft = np.asarray(Image.fromarray((m2[y0:y1, x0:x1] * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(1.2))).astype(np.float32) / 255
-        P[..., :3] = rgb[y0:y1, x0:x1]; P[..., 3] = (A[y0:y1, x0:x1, 3] * np.minimum(1, soft * 1.25)).astype(np.uint8)   # 자른 안쪽 가장자리만 살짝 부드럽게
+        soft = np.asarray(Image.fromarray(((m2 | ~alpha)[y0:y1, x0:x1] * 255).astype(np.uint8))   # K-0200 — 배경 쪽은 안으로 쳐서 바깥 윤곽은 안 흐리게(안쪽 이음만 부드럽게)
+       .filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(1.2))).astype(np.float32) / 255
+        P[..., :3] = rgb[y0:y1, x0:x1]; near = np.asarray(Image.fromarray((m2[y0:y1, x0:x1] * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(5))) > 0   # K-0200 — 이웃 부위 윤곽 찌꺼기가 상자 안에서 새지 않게
+        P[..., 3] = (A[y0:y1, x0:x1, 3] * np.minimum(1, soft * 1.25) * near).astype(np.uint8)   # 자른 안쪽 가장자리만 살짝 부드럽게
         pim = Image.fromarray(P).filter(ImageFilter.SMOOTH) if False else Image.fromarray(P)
         pim.save(os.path.join(outdir, n + '.webp'), 'WEBP', quality=90, method=6)
         if n == 'weapon':
@@ -297,7 +307,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             parts.append(dict(src_p, bone=s + 'L', img=s + 'L.webp', z=Z[s + 'L']))
             bones[s + 'L'] = dict(bones[s + 'R'])
         # 다리는 앞뒤로 살짝 벌려 서게(같은 자리면 겹쳐 하나로 보인다)
-    bones['hair'] = {'x': 0, 'y': 0, 'rot': 0}
+    bones.setdefault('hair', {'x': 0, 'y': 0, 'rot': 0})
     if UNDER[0] is not None:                           # 인페인트 마스크(--fill sd 첫 판을 만들 재료)
         mk = Image.fromarray((UNDER[0] * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(9)).filter(ImageFilter.GaussianBlur(4))
         if j.get('flip'):
@@ -317,7 +327,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         # K-0198 — 앞·뒷모습: 엔진 기본 클립은 옆 기준(다리·팔 앞뒤 회전)이라 앞에서 보면 다리가 옆으로 벌어진다 → 다리는 번갈아 들기(dy),
         # 팔은 작게 흔들기, 골반 오르내림·몸통 좌우 흔들림. 뒤모습도 같은 클립(보는 쪽만 다르다)
         clips = json.loads(json.dumps(FRONT_CLIPS))
-    rig = {'h': 100, 'clips': clips, 'src': os.path.relpath(src, ROOT).replace('\\', '/'), 'bones': bones, 'parts': sorted(parts, key=lambda p: p['z']), 'sway': {}}
+    rig = {'h': 100, 'clips': clips, 'src': os.path.relpath(src, ROOT).replace('\\', '/'), 'bones': bones, 'parts': sorted(parts, key=lambda p: p['z']), 'sway': ({'hair': 0.6} if 'hair' in B else {})}   # K-0200 — hair 부위가 있으면 엔진 이동 관성도
     json.dump(rig, open(os.path.join(outdir, 'rig.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     lp = os.path.splitext(src)[0] + '.license.json'
     lic = json.load(open(lp, encoding='utf-8')) if os.path.exists(lp) else {}
