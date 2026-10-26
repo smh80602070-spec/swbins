@@ -23,6 +23,30 @@
   var PROP = { forest: ['tree_pine_01', 'tree_broadleaf_01', 'tree_pine_02', 'tree_broadleaf_02'], wall: ['city_wall_segment_01'] };
   function cfg2() { return (global.DG.cfg && global.DG.cfg.mode2d) || {}; }
   function art() { var o = global.DG.core; return !(o && o.tuned && !o.tuned('realm.tacArt', 1)); }
+  /* ── W-0452 SRPG 겉모습(사용자 10-26 「턴방식 화면 수정해줘 누가 이거 보고 하게?」) — 판이 화면을 꽉 채우고 위 띠(턴·조건)·왼쪽 아래 장수 카드·오른쪽 아래 명령,
+     이어진 땅 질감(칸마다 같은 타일 반복 대신)·옅은 격자·숲 나무 무리·들판 덤불·판 밖 어둑한 땅, 몸 1.35배, 턴 띠·피해 숫자. 손잡이 tactics.skin(1, 0 = 옛 모습) ── */
+  function skin() { var o = global.DG.core; return !(o && o.tuned && !+o.tuned('tactics.skin', 1)); }
+  function groundHref(name) { var A = global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('ground/') : null; return (u || '../shared/assets/ground/') + name + '_512.webp'; }
+  function skinCss() {
+    if (!global.document || global.document.getElementById('tvs-css')) { return; }
+    var st = global.document.createElement('style'); st.id = 'tvs-css';
+    st.textContent = '.tacview:has(.tvs){padding:0;background:#0b0a08}.tv.tvs{max-width:none;width:100%;margin:0;display:block;gap:0}.tvs{position:relative;height:100%;min-height:100%;color:#f1e6cc;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#2b2a1e 0%,#12110c 75%)}' +
+      '.tvs-board{position:absolute;left:0;right:0;top:48px;bottom:74px;display:flex;align-items:center;justify-content:center}.tvs-board .tv-svg{width:100%!important;height:100%!important;aspect-ratio:auto!important;filter:drop-shadow(0 10px 24px #000a)}' +
+      '.tvs-top{position:absolute;left:10px;right:118px;top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;pointer-events:none}.tvs-chip{background:linear-gradient(#3a2c18ee,#21180ccc);border:1px solid #9a7840;border-radius:999px;padding:5px 12px;font-weight:700;font-size:13px;letter-spacing:.03em;box-shadow:0 2px 8px #0008}' +
+      '.tvs-chip.turn{font-size:15px}.tvs-chip.me{border-color:#4f9be0;background:linear-gradient(#1e3a5aee,#12243acc)}.tvs-chip.goal{color:#f3d27a}' +
+      '.tvs-card{position:absolute;left:10px;bottom:10px;width:min(380px,calc(100% - 20px));display:flex;gap:10px;align-items:flex-start;background:linear-gradient(#211a10f2,#120e08f2);border:1px solid #9a7840;border-radius:12px;padding:9px 10px;box-shadow:0 6px 20px #000b;font-size:13px;line-height:1.45}' +
+      '.tvs-card img{width:58px;height:58px;border-radius:9px;border:2px solid #4f9be0;flex:none;background:#222}.tvs-card.foe img{border-color:#d24b3c}.tvs-card b{font-size:15px}.tvs-hp{height:7px;border-radius:4px;background:#0009;overflow:hidden;margin:4px 0 3px}.tvs-hp i{display:block;height:100%}' +
+      '.tvs-card .muted{color:#c9b48a}.tvs-acts{position:absolute;right:10px;bottom:10px;display:flex;gap:6px}.tvs-acts .btn{min-height:44px;padding:8px 14px;font-weight:700}' +
+      '.tvs-log{position:absolute;right:10px;top:46px;width:min(300px,42%);font-size:12px;line-height:1.5;background:#0007;border-radius:8px;padding:5px 8px;pointer-events:none}.tvs-log:empty{display:none}' +
+      '.tvs-banner{position:absolute;left:0;right:0;top:38%;text-align:center;pointer-events:none;font:800 30px/1.2 serif;letter-spacing:.12em;color:#fff3d0;text-shadow:0 3px 12px #000;animation:tvsBan 1.3s ease-out forwards}' +
+      '.tvs-banner span{display:inline-block;padding:10px 40px;background:linear-gradient(90deg,transparent,#1d3550e6 20%,#1d3550e6 80%,transparent)}.tvs-banner.foe span{background:linear-gradient(90deg,transparent,#5a1e18e6 20%,#5a1e18e6 80%,transparent)}' +
+      '@keyframes tvsBan{0%{opacity:0;transform:translateX(-30px)}18%{opacity:1;transform:none}75%{opacity:1}100%{opacity:0}}' +
+      '.tvs-float{animation:tvsFl .95s ease-out forwards;font-weight:800;paint-order:stroke;stroke:#000;stroke-width:3px}@keyframes tvsFl{0%{opacity:0;transform:translateY(6px)}15%{opacity:1}100%{opacity:0;transform:translateY(-22px)}}' +
+      '.tvs .tv-unit.sel .tv-body{filter:drop-shadow(0 0 4px #ffe08a)}.tvs .tv-unit.spent{filter:grayscale(.85) brightness(.8)}' +
+      '.tvs-res{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(420px,calc(100% - 24px));background:linear-gradient(#211a10f7,#120e08f7);border:1px solid #c9a35a;border-radius:14px;padding:16px;box-shadow:0 10px 40px #000c}' +
+      '@media (max-width:700px){.tvs-board{top:44px;bottom:176px}.tvs-acts{left:10px;right:10px;bottom:10px}.tvs-acts .btn{flex:1}.tvs-card{bottom:64px}.tvs-log{display:none}}';
+    global.document.head.appendChild(st);
+  }
   function tileHref(kind) { return TILE[kind] ? (cfg2().tileBase || 'assets/web2d/tile/') + TILE[kind] + '.webp' : ''; }
   function propHref(id) { var A = global.DG.assets3d; return A && A.spriteUrl ? (A.spriteUrl(id) || '') : ''; }
   function stillHref(pool, view) { var A = global.DG && global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('web2d/moving/') : null; return (cfg2().stillBase || u || 'assets/web2d/moving/') + pool + '/' + view + '.webp'; }   // W-0359 shared 한 벌
@@ -112,10 +136,10 @@
     s += '<ellipse cx="' + cx + '" cy="' + foot + '" rx="' + (CELL * 0.36) + '" ry="' + (CELL * 0.12) + '" fill="' + ring + '" fill-opacity="' + (sel ? 0.75 : 0.45) + '" stroke="' + ring + '" stroke-width="' + (sel ? 3 : 1.5) + '"/>';
     var flip = v.vert ? false : !me, view = v.vert ? (me ? 'back' : 'front') : 'side';
     if (B.still) {
-      var sz = CELL * 1.12, x = cx - sz / 2, y = foot - sz * 252 / 256;
+      var sz = CELL * (skin() ? 1.5 : 1.12), x = cx - sz / 2, y = foot - sz * 252 / 256;
       s += '<image class="tv-body" href="' + esc(stillHref(B.still, view)) + '" x="' + x + '" y="' + y + '" width="' + sz + '" height="' + sz + '"' + (flip ? ' transform="translate(' + (2 * cx) + ',0) scale(-1,1)"' : '') + '/>';
     } else {
-      var fz = CELL * 1.55, row = view === 'front' ? 0 : view === 'back' ? 2 : 1, fx = cx - fz / 2, fy = foot - fz * 0.89;
+      var fz = CELL * (skin() ? 2.05 : 1.55), row = view === 'front' ? 0 : view === 'back' ? 2 : 1, fx = cx - fz / 2, fy = foot - fz * 0.89;
       s += '<svg x="' + fx + '" y="' + fy + '" width="' + fz + '" height="' + fz + '" viewBox="0 ' + (row * 128) + ' 128 128"' + (flip ? ' transform="translate(' + (2 * cx) + ',0) scale(-1,1)"' : '') + '>' +
         '<image href="' + esc(B.sheet) + '" width="1024" height="384"/>' +
         '<animate attributeName="viewBox" dur="1.2s" repeatCount="indefinite" calcMode="discrete" values="' + [0, 1, 2, 3, 4, 5, 6, 7].map(function (f) { return (f * 128) + ' ' + (row * 128) + ' 128 128'; }).join(';') + '"/></svg>';
@@ -154,7 +178,58 @@
     return s + '</defs>';
   }
 
+  /** W-0452 이어진 땅 — 패턴을 칸 넷 크기로(userSpaceOnUse 라 칸끼리 결이 이어진다) · 판 밖 테두리 땅 · 옅은 격자 · 숲 나무 무리 · 들판 덤불 */
+  var GROUND = { plain: 'plain', hill: 'plain', forest: 'forest', gate: 'gate' };   // 판 타일(realm_grass·forest_grass·realm_stone)을 칸 넷 크기로 — 섞음 결(field_mix)은 이 척도에서 흙얼룩투성이
+  function boardSkin(v) {
+    var b = v.b, cols = v.vert ? b.rows : b.cols, rows = v.vert ? b.cols : b.rows, W = cols * CELL, H = rows * CELL, M = CELL * 0.9, s = '', x, y, k, P = CELL * 4;
+    var defs = '<defs>';
+    ['plain', 'hill', 'forest', 'gate'].forEach(function (t) { defs += '<pattern id="tvs-' + t + '" patternUnits="userSpaceOnUse" width="' + P + '" height="' + P + '"><rect width="' + P + '" height="' + P + '" fill="' + COL[t] + '"/><image href="' + esc(tileHref(GROUND[t])) + '" width="' + P + '" height="' + P + '" preserveAspectRatio="xMidYMid slice"/></pattern>'; });
+    ['river', 'wall'].forEach(function (t) { defs += '<pattern id="tvs-' + t + '" patternUnits="userSpaceOnUse" width="' + CELL * 2 + '" height="' + CELL * 2 + '"><rect width="' + CELL * 2 + '" height="' + CELL * 2 + '" fill="' + COL[t] + '"/><image href="' + esc(tileHref(t)) + '" width="' + CELL * 2 + '" height="' + CELL * 2 + '" preserveAspectRatio="xMidYMid slice"/></pattern>'; });
+    defs += '<radialGradient id="tvs-vig" cx="50%" cy="50%" r="70%"><stop offset="60%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".55"/></radialGradient></defs>';
+    /* 판 밖 — 같은 땅을 어둡게 깔아 네모로 뚝 끊기지 않게 */
+    s += '<rect x="' + (-M) + '" y="' + (-M) + '" width="' + (W + 2 * M) + '" height="' + (H + 2 * M) + '" fill="url(#tvs-plain)" pointer-events="none"/><rect x="' + (-M) + '" y="' + (-M) + '" width="' + (W + 2 * M) + '" height="' + (H + 2 * M) + '" fill="#0d0b06" fill-opacity=".62" pointer-events="none"/>';
+    for (k = 0; k < 14; k++) { var ex = (hashS('ex' + k) % 1000) / 1000, side = k % 4, px = side < 2 ? ex * W : (side === 2 ? -M * 0.8 : W + M * 0.1), py = side < 2 ? (side === 0 ? -M * 0.95 : H + M * 0.05) : ex * H, ph0 = propHref(PROP.forest[k % PROP.forest.length]); if (ph0) { s += '<image href="' + esc(ph0) + '" x="' + px + '" y="' + py + '" width="' + M * 0.9 + '" height="' + M * 0.9 + '" opacity=".55" pointer-events="none"/>'; } }
+    var rc = reach(v), mv = {}, deco = '', trees = [];
+    rc.moves.forEach(function (m) { mv[m.x + ',' + m.y] = 1; });
+    for (y = 0; y < b.rows; y++) {
+      for (x = 0; x < b.cols; x++) {
+        var t = T().cellAt(b, x, y), p = scr(v, x, y), X = p.c * CELL, Y = p.r * CELL, h = hashS(x + ':' + y);
+        s += '<rect class="tv-cell" data-x="' + x + '" data-y="' + y + '" x="' + X + '" y="' + Y + '" width="' + (CELL + 0.5) + '" height="' + (CELL + 0.5) + '" fill="url(#tvs-' + (GROUND[t] || t === 'river' || t === 'wall' ? t : 'plain') + ')"/>';
+        if (t === 'forest') { s += '<rect x="' + X + '" y="' + Y + '" width="' + CELL + '" height="' + CELL + '" fill="#0b2a0e" fill-opacity=".3" pointer-events="none"/>'; for (k = 0; k < 3; k++) { trees.push({ x: X + CELL * (0.05 + ((h >> (k * 3)) % 5) * 0.12), y: Y + CELL * (-0.32 + k * 0.22), sz: CELL * (0.62 + ((h >> (k * 5)) % 4) * 0.06), id: PROP.forest[(h >> k) % PROP.forest.length] }); } }
+        else if (t === 'hill') { s += '<path d="M' + (X - CELL * 0.08) + ',' + (Y + CELL) + ' Q' + (X + CELL / 2) + ',' + (Y - CELL * 0.05) + ' ' + (X + CELL * 1.08) + ',' + (Y + CELL) + ' Z" fill="#7a5a2a" fill-opacity=".5" pointer-events="none"/><path d="M' + (X + CELL * 0.18) + ',' + (Y + CELL * 0.7) + ' Q' + (X + CELL / 2) + ',' + (Y + CELL * 0.3) + ' ' + (X + CELL * 0.82) + ',' + (Y + CELL * 0.7) + '" fill="none" stroke="#e8d3a0" stroke-opacity=".35" stroke-width="2" pointer-events="none"/>'; }
+        else if (t === 'river') { s += '<rect x="' + X + '" y="' + Y + '" width="' + CELL + '" height="' + CELL + '" fill="#9fd4ff" fill-opacity=".12" pointer-events="none"/>'; }
+        else if (t === 'wall') { var pw = propHref(PROP.wall[0]); if (pw) { deco += '<image href="' + esc(pw) + '" x="' + (X - CELL * 0.05) + '" y="' + (Y - CELL * 0.25) + '" width="' + CELL * 1.1 + '" height="' + CELL * 1.1 + '" pointer-events="none"/>'; } }
+        else if (t === 'gate') { s += '<rect x="' + (X + 3) + '" y="' + (Y + 3) + '" width="' + (CELL - 6) + '" height="' + (CELL - 6) + '" rx="4" fill="none" stroke="#f3d27a" stroke-width="2.5" stroke-dasharray="6 4" pointer-events="none"/><text x="' + (X + CELL / 2) + '" y="' + (Y + CELL / 2 + 6) + '" text-anchor="middle" font-size="18" pointer-events="none">🚪</text>'; }
+        else if (t === 'plain' && h % 100 < 13) { var bh = propHref(h % 3 ? 'bush_0' + (1 + h % 2) : 'flower_patch_01'); if (bh) { deco += '<image href="' + esc(bh) + '" x="' + (X + CELL * (0.1 + (h % 7) * 0.08)) + '" y="' + (Y + CELL * (0.35 + (h % 5) * 0.06)) + '" width="' + CELL * 0.42 + '" height="' + CELL * 0.42 + '" opacity=".9" pointer-events="none"/>'; } }
+        if (b.fire && b.fire[x + ',' + y]) { deco += '<text x="' + (X + CELL / 2) + '" y="' + (Y + CELL / 2 + 6) + '" font-size="22" text-anchor="middle" pointer-events="none">🔥</text>'; }
+        if (rc.plot && rc.plot[x + ',' + y]) { deco += '<rect class="tv-plot" x="' + (X + 3) + '" y="' + (Y + 3) + '" width="' + (CELL - 6) + '" height="' + (CELL - 6) + '" rx="6" fill="#ff9d3a33" stroke="#ff9d3a" stroke-width="2.5" pointer-events="none"/>'; }
+        if (mv[x + ',' + y]) { deco += '<rect x="' + (X + 2) + '" y="' + (Y + 2) + '" width="' + (CELL - 4) + '" height="' + (CELL - 4) + '" rx="6" fill="#5fb8ff3d" stroke="#8fd0ff" stroke-width="2" pointer-events="none"/>' + coverSvg(T().coverAt(b, x, y), p, false); }
+      }
+    }
+    /* 옅은 격자 */
+    var g = '<g stroke="#000" stroke-opacity=".16" stroke-width="1" pointer-events="none">';
+    for (x = 1; x < cols; x++) { g += '<line x1="' + x * CELL + '" y1="0" x2="' + x * CELL + '" y2="' + H + '"/>'; }
+    for (y = 1; y < rows; y++) { g += '<line x1="0" y1="' + y * CELL + '" x2="' + W + '" y2="' + y * CELL + '"/>'; }
+    s += g + '</g><rect width="' + W + '" height="' + H + '" fill="url(#tvs-vig)" pointer-events="none"/><rect x="-1.5" y="-1.5" width="' + (W + 3) + '" height="' + (H + 3) + '" fill="none" stroke="#c9a35a" stroke-opacity=".7" stroke-width="2" rx="3" pointer-events="none"/>' + deco;
+    /* 나무·장수 — 위 줄부터(앞이 뒤를 가린다) */
+    var items = trees.map(function (tr) { return { y: tr.y + tr.sz, h: '<image href="' + esc(propHref(tr.id)) + '" x="' + tr.x + '" y="' + tr.y + '" width="' + tr.sz + '" height="' + tr.sz + '" pointer-events="none"/>' }; });
+    b.units.filter(function (u) { return u.hp > 0; }).forEach(function (u) { var p2 = scr(v, u.x, u.y); items.push({ y: p2.r * CELL + CELL, h: unitSvg(v, u, rc.hits[u.uid]) + (rc.hits[u.uid] != null ? coverSvg(T().coverAt(b, u.x, u.y), p2, true) : '') }); });
+    items.sort(function (a, c) { return a.y - c.y; }).forEach(function (it) { s += it.h; });
+    s += floatsSvg(v);
+    return '<svg class="tv-svg" viewBox="' + (-M) + ' ' + (-M) + ' ' + (W + 2 * M) + ' ' + (H + 2 * M) + '" preserveAspectRatio="xMidYMid meet">' + defs + s + '</svg>';
+  }
+  /** W-0452 피해 숫자 — 새 기록마다 0.95초 떠오름(render 마다 다시 그려도 처음 본 때로 잰다) */
+  function floatsSvg(v) {
+    var b = v.b, now = Date.now(), s = '', i;
+    v.fl = v.fl || []; v.flN = v.flN == null ? b.log.length : v.flN;
+    for (i = v.flN; i < b.log.length; i++) { var e = b.log[i], t = T().unit(b, e.to); if (t) { v.fl.push({ x: t.x, y: t.y, txt: e.hit ? '−' + e.dmg : '빗나감', col: e.hit ? (t.side === 'me' ? '#ff8a6a' : '#ffe27a') : '#cfd8e3', at: now }); } }
+    v.flN = b.log.length; v.fl = v.fl.filter(function (q) { return now - q.at < 1000; });
+    v.fl.forEach(function (q) { var p = scr(v, q.x, q.y); s += '<text class="tvs-float" x="' + (p.c * CELL + CELL / 2) + '" y="' + (p.r * CELL + 4) + '" text-anchor="middle" font-size="17" fill="' + q.col + '" pointer-events="none">' + q.txt + '</text>'; });
+    if (v.fl.length && !v.flT) { v.flT = global.setTimeout(function () { v.flT = null; if (cur === v) { render(); } }, 1000); }
+    return s;
+  }
   function boardSvg(v) {
+    if (skin() && art()) { return boardSkin(v); }
     var b = v.b, W = (v.vert ? b.rows : b.cols) * CELL, H = (v.vert ? b.cols : b.rows) * CELL, s = '', x, y;
     var rc = reach(v), mv = {};
     rc.moves.forEach(function (m) { mv[m.x + ',' + m.y] = 1; });
@@ -238,6 +313,7 @@
     var v = cur;
     if (!v || !v.host) { return; }
     var b = v.b, done = !!b.done || !!v.out;
+    if (skin() && art()) { renderSkin(v, b, done); return; }
     v.host.innerHTML = '<div class="tv">' +
       '<div class="tv-head"><b>♟️ 전술판</b> <span class="muted">' + (b.srpg ? b.turn + '턴' : Math.min(b.turn, T().TURNS) + ' / ' + T().TURNS + '턴') + ' · ' + esc(NAME[b.land] || '') +
         (b.siege ? ' · 공성' : '') + '</span>' + (b.srpg ? ' <span class="tv-goal" style="color:#f3d27a;font-weight:700">🎯 ' + esc(T().goalText(b)) + '</span>' : '') + '</div>' +
@@ -253,6 +329,34 @@
     if (V3 && v.host.querySelector) { V3.attach(v, v.host.querySelector('.tv-board')); }
   }
 
+  /** W-0452 SRPG 배치 — 판이 꽉 차고 위 띠·장수 카드·명령·기록·턴 띠가 위에 뜬다(판정·클릭 길은 옛 render 와 같다) */
+  function renderSkin(v, b, done) {
+    skinCss();
+    var turnTxt = b.srpg ? '제 ' + b.turn + ' 턴' : Math.min(b.turn, T().TURNS) + ' / ' + T().TURNS + ' 턴';
+    if (v.banT !== b.turn) { v.banT = b.turn; v.banAt = Date.now(); }
+    var html = '<div class="tv tvs"><div class="tv-board tvs-board">' + boardSvg(v) + cutHtml(v) + '</div>' +
+      '<div class="tvs-top"><span class="tvs-chip turn me">⚔ ' + esc(turnTxt) + ' · 아군 차례</span>' + (b.srpg ? '<span class="tvs-chip goal tv-goal">🎯 ' + esc(T().goalText(b)) + '</span>' : '') + '<span class="tvs-chip">' + esc(NAME[b.land] || '') + (b.siege ? ' · 공성' : ' · 들판') + '</span></div>';
+    if (!done && Date.now() - v.banAt < 1300) { html += '<div class="tvs-banner"><span>' + esc(turnTxt) + ' — 아군 차례</span></div>'; }
+    if (done) { html += '<div class="tvs-res">' + resultHtml(v) + '</div>'; }
+    else {
+      html += '<div class="tvs-log">' + logLines(v) + '</div>' + cardHtml(v) +
+        '<div class="tvs-acts"><button class="btn primary" data-tv="end">⏭ 턴 끝</button><button class="btn ghost" data-tv="auto">' + (b.srpg ? '🤖 자동 전투' : '🎲 맡기기') + '</button><button class="btn ghost" data-tv="quit">↩ 물러나기</button></div>';
+    }
+    v.host.innerHTML = html + '</div>';
+    var V3 = global.DG.tacticsView3d;
+    if (V3 && v.host.querySelector) { V3.attach(v, v.host.querySelector('.tv-board')); }
+  }
+  /** 고른 장수 카드 — 초상·이름·병종·체력 막대·공·사거리·지형·책략 단추. 안 골랐으면 짧은 안내 */
+  function cardHtml(v) {
+    var u = v.sel ? T().unit(v.b, v.sel) : null, A = T().ARM_NAME || {};
+    if (!u) { return '<div class="tvs-card"><div>🔵 <b>내 장수를 누르십시오</b><br><span class="muted">파란 칸으로 이동 → 빨간 적을 눌러 공격 · 숲 −30%p · 언덕 위 +10%p · 상성 창>기>궁>창 · 뒤치기 +20%p</span></div></div>'; }
+    var f = Math.max(0, u.hp / u.max), col = f > 0.5 ? '#5bd16a' : (f > 0.25 ? '#e3c33f' : '#e2553f'), face = u.kind === 'officer' && v.opts.face ? v.opts.face(u.id) : '';
+    return '<div class="tvs-card' + (u.side === 'me' ? '' : ' foe') + '">' + (face ? '<img src="' + esc(face) + '" alt="">' : '<span style="font-size:40px;width:58px;text-align:center">' + (u.kind === 'troop' ? '🪖' : '⚔️') + '</span>') +
+      '<div style="flex:1;min-width:0"><b>' + esc(nameOf(v, u)) + '</b>' + (u.arm ? ' <span class="muted">' + esc(A[u.arm] || '') + '</span>' : '') + (u.leader ? ' 👑' : '') +
+      '<div class="tvs-hp"><i style="width:' + Math.round(f * 100) + '%;background:' + col + '"></i></div>' +
+      '<span class="muted">체력 ' + Math.round(u.hp) + '/' + u.max + ' · 공 ' + Math.round(u.atk) + ' · 사거리 ' + u.rng + ' · ' + esc(NAME[T().cellAt(v.b, u.x, u.y)] || '') + (u.moved ? ' · 이동함' : '') + (u.acted ? ' · 공격함' : '') + '</span>' +
+      (v.plot ? '<br><span style="color:#ffb35c">' + esc((T().PLOT_NAME || {})[v.plot] || '') + ' — 주황 칸을 누르십시오</span>' : '') + plotBtns(v, u) + '</div></div>';
+  }
   /** 공격 컷(W-0134) — 두 장수가 좌우에서 미끄러져 마주 서고 명중·피해. 판정 결과(r)를 재생만 한다 */
   function cutHtml(v) {
     var c = v.cut;

@@ -7157,7 +7157,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         V.open(host, { seed: 3, land: 'forest', mine: ids, foes: [], foeTroops: [3000, 3000], name: function (id) { return id; } }, function () {});
         var html = host.innerHTML;
         r = [inf.still === 'rts_inf_ally', arcF.still === 'rts_arc_enemy', /^hero_[mf]$/.test(off.still || ''), V.tileHref('plain').indexOf('realm_grass.webp') >= 0,
-             html.indexOf('url(#tvp-') >= 0, (html.indexOf('tv-body') >= 0 || html.indexOf('viewBox="0 128') >= 0), !/🪖|⚔️|🏹|🌲|🧱/.test(html)];
+             (html.indexOf('url(#tvp-') >= 0 || html.indexOf('url(#tvs-') >= 0),   /* W-0452 SRPG 겉모습은 tvs- 무늬 */ (html.indexOf('tv-body') >= 0 || html.indexOf('viewBox="0 128') >= 0), !/🪖|⚔️|🏹|🌲|🧱/.test(html)];
         V.quit(); V.go();
       } finally { host.remove(); }
       return r.every(Boolean) && '무늬·몸 그림·이모지 0' || '실패 ' + r.join(',');

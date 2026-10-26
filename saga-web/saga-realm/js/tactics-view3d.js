@@ -22,6 +22,8 @@
   var HGT = { plain: 0, forest: 0.2, river: -0.3, wall: 0.8, hill: 0.4, gate: 0.1 };   // W-0401 언덕·성문(SRPG 판)
   var COL = { plain: 0xc8b47a, forest: 0x5f8446, river: 0x4f86b3, wall: 0x857563, hill: 0xa98f5c, gate: 0x6e4b2c };
   var SIDE = { me: 0x3d8bd9, foe: 0xd24b3c };
+  /* W-0452 SRPG 겉모습(사용자 10-26 「턴방식 화면 수정해줘」) — 판 자리 높이를 다 쓰고 · 하늘·밝은 들판 · 칸 이음선 없앰 · 몸 1.3배 · 카메라 조금 가까이. 손잡이 tactics.skin */
+  function skin() { var o = global.DG.core; return !(o && o.tuned && !+o.tuned('tactics.skin', 1)); }
   var STEP_S = 0.25, SWING_S = 0.4, PITCH = 50 * Math.PI / 180, FOV = 40;
 
   function C() { return global.DG.core; }
@@ -76,10 +78,13 @@
     if (TN && TN.toneRenderer) { TN.toneRenderer(R); }
     var LG = TN && TN.lightGain ? TN.lightGain() : 1;
     scene = new t.Scene();
-    scene.background = new t.Color(0x26303c);
+    scene.background = skin() && TN && TN.skyBackground ? TN.skyBackground(0x9fd0e8) : new t.Color(skin() ? 0x9fc7dc : 0x26303c);
+    if (skin()) { scene.fog = new t.Fog(0xb9d4dc, 16, 46); }
     scene.add(new t.HemisphereLight(0xffffff, 0x4a5a3a, 0.95 * LG));
     var sun = new t.DirectionalLight(0xfff4e0, 1.0 * LG); sun.position.set(-4, 9, 6); scene.add(sun);
-    var field = new t.Mesh(new t.PlaneGeometry(60, 60), new t.MeshLambertMaterial({ color: 0x5d6b42 }));
+    var fm = new t.MeshLambertMaterial({ color: skin() ? 0x7f9a52 : 0x5d6b42 }), ft = skin() ? tex('plain') : null;
+    if (ft) { ft = ft.clone(); ft.wrapS = ft.wrapT = t.RepeatWrapping; ft.repeat.set(30, 30); ft.needsUpdate = true; fm.map = ft; fm.color.setHex(0xb8c98e); }
+    var field = new t.Mesh(new t.PlaneGeometry(60, 60), fm);
     field.rotation.x = -Math.PI / 2; field.position.y = -0.62; scene.add(field);
     cam = new t.PerspectiveCamera(FOV, 1, 0.1, 200);
     boardGrp = new t.Group(); hiGrp = new t.Group(); unitGrp = new t.Group();
@@ -112,8 +117,8 @@
     for (y = 0; y < b.rows; y++) {
       for (x = 0; x < b.cols; x++) {
         var k = T().cellAt(b, x, y), h = HGT[k] || 0, p = cellCenter(x, y, b.cols, b.rows);
-        if (!mats[k]) { mats[k] = new t.MeshLambertMaterial({ color: k === 'plain' ? 0xd8c48a : 0xffffff, map: tex(k) }); if (!mats[k].map) { mats[k].color.setHex(COL[k]); } }
-        var m = new t.Mesh(new t.BoxGeometry(0.97, 0.6 + h, 0.97), mats[k]);
+        if (!mats[k]) { mats[k] = new t.MeshLambertMaterial({ color: k === 'plain' ? (skin() ? 0xf4f0d8 : 0xd8c48a) : 0xffffff, map: tex(k) }); if (!mats[k].map) { mats[k].color.setHex(COL[k]); } }
+        var m = new t.Mesh(new t.BoxGeometry(skin() ? 1.001 : 0.97, 0.6 + h, skin() ? 1.001 : 0.97), mats[k]);
         m.position.set(p.x, (h - 0.6) / 2, p.z);
         m.userData.cell = { x: x, y: y };
         boardGrp.add(m);
@@ -248,8 +253,8 @@
       if (!m || a.gone) { return; }
       m.scale.setScalar(sc * (1 + 0.035 * rk)); grp.remove(stub); grp.add(m); a.model = m; a.fm = null;   // W-0234 관직 한 단마다 몸 3.5% 크게 · 몸이 오면 번쩍임 재질을 다시 뗀다
     }
-    if (A && u.kind === 'officer' && A.buildHero && O && O.find && O.find(u.id)) { A.buildHero(O.find(u.id), col, function (m) { put(m, 1.05); }); }
-    else if (A && A.buildTrooper) { A.buildTrooper('inf', col, function (m) { put(m, 0.78); }); }
+    if (A && u.kind === 'officer' && A.buildHero && O && O.find && O.find(u.id)) { A.buildHero(O.find(u.id), col, function (m) { put(m, skin() ? 1.36 : 1.05); }); }
+    else if (A && A.buildTrooper) { A.buildTrooper('inf', col, function (m) { put(m, skin() ? 1.0 : 0.78); }); }
     actors[u.uid] = a;
     return a;
   }
@@ -392,6 +397,7 @@
     var dist = Math.max(w / 2 / (half * asp), (d * Math.sin(PITCH) / 2 + 0.7) / half);   // 가로 폭 · 50° 로 눕힌 깊이(+몸 키) 둘 다 담는 가장 가까운 거리
     var tx = 0, tz = 0, u = v.sel ? T().unit(b, v.sel) : null;
     if (u && u.hp > 0) { var p = cellCenter(u.x, u.y, b.cols, b.rows); tx = p.x * 0.25; tz = p.z * 0.25; dist *= 0.9; }
+    if (skin()) { dist *= 0.92; }
     var yaw = vert ? -Math.PI / 2 : 0;   // 눕힌 판 — 내 편(왼쪽 x)이 카메라 쪽(아래)으로
     var want = { x: tx + Math.sin(yaw) * Math.cos(PITCH) * dist, y: Math.sin(PITCH) * dist, z: tz + Math.cos(yaw) * Math.cos(PITCH) * dist };
     view.camWant = { pos: want, look: { x: tx, y: 0, z: tz } };
@@ -417,6 +423,7 @@
   function size(host, v) {
     var w = Math.max(264, host.clientWidth || 0), h = Math.round(w * (v.vert ? 1.15 : 0.66));
     h = Math.min(h, Math.max(240, Math.round((global.innerHeight || 800) * 0.6)));
+    if (skin() && host.clientHeight > 200) { h = host.clientHeight; }   // W-0452 판 자리(위 띠·아래 카드 사이)를 다 쓴다
     R.setSize(w, h, true);
     cam.aspect = w / h; cam.updateProjectionMatrix();
   }
