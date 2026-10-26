@@ -19,6 +19,7 @@ const GOLD_RIM := Color(1.0, 0.82, 0.35)
 ## 머리뼈 높이를 id 해시로 정한 목표(1.38~1.50m ≈ 키 1.57~1.70m)에 맞춰 배율을 구한다.
 const DEX_DIR := "res://assets/characters_dex/"
 const DEX_LIB := "res://assets/characters_vroid/anim_cc0/dex_common_lib.res"   # G-0025 — 18클립(기본 8 + 이동·시전 10, K-0059). tools/ual_lib_build.gd 로 만든다
+const COMBAT_LIB := "res://assets/characters_vroid/anim_cc0/combat_lib.res"
 ## G-0275 — K-0139 CMU 모캡(같은 VRoid 뼈, tools/ual_lib_build.gd 로 구움 — 원본 assets/anim_mocap/vroid_mocap_anims.glb).
 ## dex 공용 18 위에 MOCAP_OVER 는 모캡으로 덮고 MOCAP_NEW 는 새 이름으로 더한다. sprint·attack·skill 등 나머지는 UAL 그대로.
 ## 덮는 것 중 MOCAP_FIT 은 쓰는 곳이 시간 창(피격 0.3초·쓰러짐 뒤 0.5초 줄이기 등)에 맞춰져 있어 옛 길이로 빠르기를 맞춘다.
@@ -75,6 +76,67 @@ static func _dex_or_missing(id: String, rarity: int) -> Node3D:
 ## 주인공("self")이면 DEX_SELF_ID, 아니면 id 그대로 — 편성원 id 로 부르는 쪽(플레이어 몸 교체)이 쓴다. dex 없으면 null.
 static func build_hero(id: String, rarity: int = 3) -> Node3D:
 	return _dex_or_missing(DEX_SELF_ID if id == "self" else id, rarity)
+
+## G-0412 — GO의 조작 몸만 호출. 옷·머리 보조 뼈만, 몸통·가슴 뼈는 제외.
+static func attach_springs(body: Node) -> SpringBoneSimulator3D:
+	var skels := body.find_children("*", "Skeleton3D", true, false)
+	if skels.is_empty():
+		return null
+	var skel := skels[0] as Skeleton3D
+	for child in skel.get_children():
+		if child is SpringBoneSimulator3D and child.get_meta("motion_springs", false):
+			return child as SpringBoneSimulator3D
+	var chains: Array[Vector2i] = []
+	for b in skel.get_bone_count():
+		if not _spring_bone(skel.get_bone_name(b)):
+			continue
+		var p := skel.get_bone_parent(b)
+		if p >= 0 and _spring_bone(skel.get_bone_name(p)):
+			continue
+		# VRoid의 선형 줄만. 갈라지는 뼈를 여러 설정에서 중복 수정하지 않는다.
+		var end := b
+		while true:
+			var children: Array[int] = []
+			for c in skel.get_bone_children(end):
+				if _spring_bone(skel.get_bone_name(c)):
+					children.append(c)
+			if children.size() != 1:
+				break
+			end = children[0]
+		if end != b:
+			chains.append(Vector2i(b, end))
+	if chains.is_empty():
+		return null
+	var spring := SpringBoneSimulator3D.new()
+	spring.name = "MotionSprings"
+	spring.set_meta("motion_springs", true)
+	skel.add_child(spring)
+	spring.set_setting_count(chains.size())
+	var hips := skel.find_bone("J_Bip_C_Hips")
+	for i in chains.size():
+		spring.set_root_bone(i, chains[i].x)
+		spring.set_end_bone(i, chains[i].y)
+		# 엔진 기본 stiffness=1·drag=0.4·gravity=0. 골반 기준이라 지역 순간이동에 튀지 않는다.
+		if hips >= 0:
+			spring.set_center_from(i, SpringBoneSimulator3D.CENTER_FROM_BONE)
+			spring.set_center_bone(i, hips)
+	return spring
+
+static func _spring_bone(bone_name: String) -> bool:
+	if not bone_name.begins_with("J_Sec_"):
+		return false
+	for part in ["Hair", "Skirt", "Coat", "Cape", "Mantle"]:
+		if bone_name.contains(part):
+			return true
+	return false
+
+static func attach_combat(body: Node) -> bool:
+	var ap := body.find_child("AnimationPlayer", true, false) as AnimationPlayer
+	if ap == null or not ResourceLoader.exists(COMBAT_LIB):
+		return false
+	if not ap.has_animation_library("combat"):
+		ap.add_animation_library("combat", load(COMBAT_LIB) as AnimationLibrary)
+	return true
 
 ## G-0030 — 장면에 둔 빈 "Visual" 자리를 새 몸으로 갈아 끼운다(위치·회전·형제 순서 그대로). 플레이어 장면·군주 초상이 시작할 때 쓴다.
 static func wear(slot: Node3D, id: String, rarity: int = 3) -> Node3D:

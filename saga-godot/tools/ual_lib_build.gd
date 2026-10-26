@@ -115,6 +115,10 @@ func _init():
 				var dg: Vector3 = ((tg * g_glob[sg.find_bone(REF[n])]).origin - (tg * g_glob[sg.find_bone(n)]).origin).normalized()
 				clip_worst = maxf(clip_worst, rad_to_deg(da.angle_to(dg)))
 		worst = maxf(worst, clip_worst)
+		if args[2] == "combat":
+			out.set_meta("strike_time", _strike_time(out))
+			if String(clip).ends_with("_idle"):
+				out.loop_mode = Animation.LOOP_LINEAR
 		lib.add_animation(clip, out)
 		report.append("%s %.2fs %.3f°" % [clip, src.length, clip_worst])
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(OUT_DIR))
@@ -126,6 +130,29 @@ func _init():
 	a_root.free()
 	g_root.free()
 	quit(0 if err == OK and worst <= 0.5 else 2)
+
+## G-0412 — 양팔 각속도 합의 최대 프레임. 원본 키는 바꾸지 않고 타격 시점만 기록.
+func _strike_time(a: Animation) -> float:
+	var tracks: Array[int] = []
+	for tr in a.get_track_count():
+		if a.track_get_type(tr) != Animation.TYPE_ROTATION_3D:
+			continue
+		var path := String(a.track_get_path(tr))
+		if path.contains("UpperArm") or path.contains("LowerArm"):
+			tracks.append(tr)
+	var peak := -1.0
+	var time := a.length * 0.5
+	for f in range(1, int(ceil(a.length * FPS))):
+		var t := float(f) / FPS
+		var speed := 0.0
+		for tr in tracks:
+			var before: Quaternion = a.rotation_track_interpolate(tr, t - 1.0 / FPS)
+			var after: Quaternion = a.rotation_track_interpolate(tr, minf(t + 1.0 / FPS, a.length))
+			speed += before.angle_to(after)
+		if speed > peak:
+			peak = speed
+			time = t
+	return clampf(time, 1.0 / FPS, maxf(a.length - 1.0 / FPS, 1.0 / FPS))
 
 
 func _find(node: Node, cls: String) -> Node:

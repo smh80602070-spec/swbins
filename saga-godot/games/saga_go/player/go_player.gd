@@ -141,6 +141,9 @@ var _ring: StaminaRing = null
 ## G-0024 — 편성원 id("self" = 주인공)의 몸으로 교체. dex 몸이 설치돼 있을 때만(없으면 지금 몸 그대로).
 var _body_id := ""
 
+func _motion_layers_on() -> bool:
+	return true
+
 func set_hero_body(id: String) -> void:
 	if id == _body_id or not VroidBody.dex_available():
 		return
@@ -717,7 +720,6 @@ func face_toward(pos: Vector3) -> void:
 const CLIP_WINDOW := {"attack": [0.30, 0.95], "dodge": [0.05, 0.85], "land": [0.0, 0.8], "skill": [0.0, 0.53], "burst": [0.0, 1.13],
 	"cast": [0.0, 0.8], "strong": [0.35, 0.75]}   # G-0284 모캡 시전·내리찍기(웹 W-0357 짝 — 창은 G-0283 자세 시트)   # G-0025 — land·skill·burst 는 클립 전체(속도만 맞춘다)
 var _action_scaled := false # 동작이 재생 속도를 바꿨으면, 끝나고 1.0 으로 되돌린다
-
 ## G-0025 — 이동 상태별 동작(K-0059 클립, dex 동작 라이브러리). 클립이 없는 몸(옛 공방 몸·옛 VRoid 라이브러리)은 fallback.
 func _pose(anim_name: String, fallback: String) -> void:
 	_play_anim(anim_name if _anim != null and _anim.has_animation(anim_name) else fallback)

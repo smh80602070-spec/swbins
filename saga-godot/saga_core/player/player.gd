@@ -232,7 +232,15 @@ func _attach_foot_lock() -> void:
 		if FootLock.attach(s as Skeleton3D) != null:
 			break
 	_life = LifePose.attach(visual) if _life_pose_on() else null
+	if _life != null:
+		_life.call("set_motion_layers", _motion_layers_on())
 	TalkFace.player_attach(visual)
+	if _motion_layers_on():
+		VroidBody.attach_combat(visual)
+		VroidBody.attach_springs(visual)
+
+func _motion_layers_on() -> bool:
+	return false
 
 ## G-0265 — 생활 몸짓을 붙이는 판(1만리 go_player 는 G-0266 까지 false).
 func _life_pose_on() -> bool:
@@ -295,8 +303,10 @@ func unhold() -> void:
 
 ## G-0412 — 공격 진입·복귀는 짧게, 피격은 더 빠르게 반응한다.
 func _motion_blend(next: String) -> float:
-	if next == "hit" or _current_anim == "hit":
+	if next.get_file() == "hit" or _current_anim.get_file() == "hit":
 		return 0.05
+	if next.begins_with("combat/") or _current_anim.begins_with("combat/"):
+		return 0.08
 	var actions := ["attack", "strong", "skill", "cast", "burst", "dodge"]
 	if actions.has(next) or actions.has(_current_anim):
 		return 0.08

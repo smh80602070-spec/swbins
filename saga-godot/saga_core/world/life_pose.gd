@@ -17,6 +17,13 @@ extends SkeletonModifier3D
 
 const SIT_AFTER := 8.0
 const BLEND_T := 0.25
+## G-0412 — GO 플레이어만 켜는 층. 클립 평균 자세는 그대로 두고 흔들림만 키운다.
+const BREATH_PERIOD := 2.4
+const BREATH_CHEST := 1.5
+const BREATH_SHOULDER := 1.0
+const ARM_SWING_GAIN := 1.3
+const BREATH_CLIPS := ["idle", "idle_b", "sword_idle", "spear_idle", "axe_idle", "dagger_idle", "bow_idle", "staff_idle", "gun_idle"]
+const GAIT_CLIPS := ["walk", "run", "sprint"]
 const DUR := {"wave": 1.6, "look": 2.6, "shift": 3.0}
 ## G-0394 — 옛 SIT_HIP_UP(발목 쉬는 높이 +0.08m)은 발목 뼈가 땅 위 10~13cm 라 엉덩이 살이 6~8cm 떴다(probe_life_sit).
 ## 이제 허벅지 뼈(다리 시작)를 땅(몸 원점 y 0) 위 허벅지 반지름에 둔다 — 반지름은 몸 크기 비례(허벅지 쉬는 높이 0.9m 에 0.08m).
@@ -42,6 +49,7 @@ const CHECK_SEC := 0.5
 const HIPS := ["J_Bip_C_Hips", "pelvis"]
 const SPINE := ["J_Bip_C_Spine", "spine_01"]
 const CHEST := ["J_Bip_C_Chest", "spine_02"]
+const SHOULDER := [["J_Bip_L_Shoulder", "clavicle_l"], ["J_Bip_R_Shoulder", "clavicle_r"]]
 const NECK := ["J_Bip_C_Neck", "neck_01"]
 const HEAD := ["J_Bip_C_Head", "head", "Head"]
 const THIGH := [["J_Bip_L_UpperLeg", "thigh_l"], ["J_Bip_R_UpperLeg", "thigh_r"]]
@@ -72,6 +80,10 @@ var _seat: Node = null
 var _face: Node = null   # attach_npc 가 붙인 talk_face
 var _talk_left := 0.0
 var _hold := false
+var _motion_layers := false
+var _breath_w := 0.0
+var _gait_w := 0.0
+var _arm_means := {}
 var _rng := RandomNumberGenerator.new()
 var _clip_act := ""      # G-0275 — 클립으로 대신 트는 몸짓 이름(current 가 돌려줌)
 var _clip_left := 0.0
@@ -119,6 +131,7 @@ func _init_bones(skel: Skeleton3D) -> void:
 	for k in ["hips", "spine", "chest", "neck", "head"]:
 		_b[k] = _find(skel, {"hips": HIPS, "spine": SPINE, "chest": CHEST, "neck": NECK, "head": HEAD}[k])
 	for s in 2:
+		_b["shoulder%d" % s] = _find(skel, SHOULDER[s])
 		_b["thigh%d" % s] = _find(skel, THIGH[s])
 		_b["calf%d" % s] = _find(skel, CALF[s])
 		_b["foot%d" % s] = _find(skel, FOOT[s])
@@ -247,12 +260,24 @@ func is_held() -> bool:
 func sit_weight() -> float:
 	return _sit_w
 
+func set_motion_layers(on: bool) -> void:
+	_motion_layers = on
+	if not on:
+		_breath_w = 0.0
+		_gait_w = 0.0
+
 func _process(delta: float) -> void:
 	step(delta)
 
 ## 시계·섞기(점검은 이걸 직접 부른다).
 func step(delta: float) -> void:
 	_clock += delta
+	if _motion_layers:
+		var ap := _body_ap()
+		var clip := String(ap.current_animation).get_file() if ap != null and ap.is_playing() else ""
+		var free_pose := not _hold and not _rest and _sit_w < 0.001 and _act == "" and not _seated()
+		_breath_w = move_toward(_breath_w, 1.0 if free_pose and BREATH_CLIPS.has(clip) else 0.0, delta / BLEND_T)
+		_gait_w = move_toward(_gait_w, 1.0 if free_pose and GAIT_CLIPS.has(clip) else 0.0, delta / BLEND_T)
 	if _talk_left > 0.0:
 		_talk_left -= delta
 		if _talk_left <= 0.0 and _face != null and is_instance_valid(_face):
@@ -316,9 +341,11 @@ func _process_modification() -> void:
 	var skel := get_skeleton()
 	if skel == null or _hold:
 		return
-	if _sit_w < 0.001 and _act == "" and absf(_look_yaw) < 0.05:
-		return
 	if _seated():
+		return
+	if _motion_layers and not _rest and _sit_w < 0.001 and _act == "":
+		_apply_motion_layers(skel)
+	if _sit_w < 0.001 and _act == "" and absf(_look_yaw) < 0.05:
 		return
 	if _sit_w > 0.001:
 		_sit(skel, _smooth(_sit_w))
@@ -333,6 +360,58 @@ func _process_modification() -> void:
 				_shift(skel, _keyed(u, [[0.0, 0.0], [0.25, 1.0], [0.75, 1.0], [1.0, 0.0]]))
 	if absf(_look_yaw) >= 0.05:
 		_turn_head(skel, _look_yaw)
+
+func _apply_motion_layers(skel: Skeleton3D) -> void:
+	var ap := _body_ap()
+	if ap == null or not ap.is_playing():
+		return
+	var clip := String(ap.current_animation).get_file()
+	if BREATH_CLIPS.has(clip) and _breath_w > 0.0:
+		var breath := sin(TAU * fmod(_clock, BREATH_PERIOD) / BREATH_PERIOD) * _breath_w
+		_rot(skel, _b.chest, _pitch_axis(), BREATH_CHEST * breath)
+		for s in 2:
+			_rot(skel, _b["shoulder%d" % s], _fwd, BREATH_SHOULDER * breath * (-1.0 if s == 0 else 1.0))
+	elif GAIT_CLIPS.has(clip) and _gait_w > 0.0:
+		var a := ap.get_animation(clip)
+		for s in 2:
+			var bone: int = _b["uarm%d" % s]
+			if bone < 0:
+				continue
+			var mean: Variant = _arm_mean(a, skel.get_bone_name(bone))
+			if mean == null:
+				continue
+			var q := skel.get_bone_pose_rotation(bone)
+			var swing: Quaternion = (mean as Quaternion).inverse() * q
+			if swing.w < 0.0:
+				swing = -swing
+			var extra := Quaternion.IDENTITY.slerp(swing.normalized(), (ARM_SWING_GAIN - 1.0) * _gait_w)
+			skel.set_bone_pose_rotation(bone, (q * extra).normalized())
+
+## 한 번 샘플링한 클립 평균을 캐시. 몸의 A자 쉼 자세까지 1.3배 하지 않는다.
+func _arm_mean(a: Animation, bone_name: String) -> Variant:
+	var key := "%s:%s" % [a.get_instance_id(), bone_name]
+	if _arm_means.has(key):
+		return _arm_means[key]
+	var result: Variant = null
+	for tr in a.get_track_count():
+		if a.track_get_type(tr) != Animation.TYPE_ROTATION_3D or not a.track_is_enabled(tr):
+			continue
+		var path := a.track_get_path(tr)
+		if path.get_subname_count() == 0 or String(path.get_subname(0)) != bone_name or a.track_get_key_count(tr) == 0:
+			continue
+		var sum := Vector4.ZERO
+		var ref: Quaternion = a.rotation_track_interpolate(tr, 0.0)
+		for i in 32:
+			var q: Quaternion = a.rotation_track_interpolate(tr, a.length * float(i) / 32.0)
+			if ref.dot(q) < 0.0:
+				q = -q
+			sum += Vector4(q.x, q.y, q.z, q.w)
+		if sum.length_squared() > 0.0001:
+			sum = sum.normalized()
+			result = Quaternion(sum.x, sum.y, sum.z, sum.w)
+		break
+	_arm_means[key] = result
+	return result
 
 static func _smooth(x: float) -> float:
 	return x * x * (3.0 - 2.0 * x)
