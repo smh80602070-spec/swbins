@@ -30,15 +30,15 @@
     r5_silk: ['plain', false, 'rout', 0.76], r5_west: ['plain', true, 'gate', 0.82], r5_south: ['river', false, 'rout', 0.88],
     r6_end: ['plain', true, 'leader', 1.00]
   };
-  var MAIN = 16, cache = null;
+  var MAIN = 16, ALL = 19, cache = null;   // ⑤ 17~19 = 7막 후일담(이야기만, 싸움 없음)
   function chapters() {
     if (cache) { return cache; }
     var S = SD(), out = [];
     if (!S || !S.CARDS) { return out; }
-    for (var i = 0; i < S.CARDS.length && out.length < MAIN; i++) {
+    for (var i = 0; i < S.CARDS.length && out.length < ALL; i++) {
       var c = S.CARDS[i], b = BATTLE[c.id] || ['plain', false, 'rout', out.length / MAIN];
       out.push({ no: out.length + 1, id: c.id, act: c.act, actName: (S.ACTS || {})[c.act] || '', title: c.title, emoji: c.emoji || '⚔️', text: c.text || '',
-        choices: c.choices || [], land: b[0], siege: b[1], goal: b[2], tier: b[3], foeN: b[3] < 0.15 ? 2 : 3 });
+        choices: c.choices || [], land: b[0], siege: b[1], goal: b[2], tier: b[3], foeN: b[3] < 0.15 ? 2 : 3, epi: out.length >= MAIN });
     }
     cache = out;
     return out;
@@ -85,13 +85,15 @@
     var ch = chapter(no), cp = state(), b = cp.bonus || {};
     if (!ch) { return null; }
     var pre = cp.pre && cp.pre.ch === no && cp.pre.won ? (cp.pre.kind === 'duel' ? 0.8 : 0.85) : 1;   // ③ 전투 앞 설전·일기토를 이기면 적 병력 −15%/−20%
-    var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1) * pre);
+    var rd = 1 + 0.15 * (cp.round || 0);   // ⑤ 회차마다 적 +15%
+    var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1) * pre * rd);
     return { seed: 'cp|' + ch.id + '|' + (cp.tries || 0), land: ch.land, siege: ch.siege, srpg: true, goal: ch.goal,
       mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no };
   }
   /** 이야기 고름 — 이번 장 한정 보너스(atk 내 병력 +15% · def 적 병력 −10% · util 금 +200) */
   function choose(no, k) {
-    var cp = state();
+    var cp = state(), ch = chapter(no);
+    if (ch && ch.epi) { cp.gold += 300; cp.cleared[no] = (cp.cleared[no] || 0) + 1; if (cp.ch === no && no < ALL) { cp.ch = no + 1; } cp.step = 'route'; save(); return { epi: true, end: no >= ALL }; }   // 후일담 — 읽으면 다음
     cp.bonus = { ch: no, k: k };
     if (k === 'util') { cp.gold += 200; }
     cp.step = 'camp'; save();
@@ -112,7 +114,7 @@
       if (OFF().gainExpAll) { OFF().gainExpAll(party(), res.exp); }
       if (IT() && IT().randomItem && ((no * 7 + (cp.tries || 0)) % 3 === 0 || no === 1)) { var it = IT().randomItem(); if (it) { cp.bag.push(it.id); res.item = it; } }
       cp.cleared[no] = (cp.cleared[no] || 0) + 1;
-      if (cp.ch === no && no < MAIN) { cp.ch = no + 1; }
+      if (cp.ch === no && no < ALL) { cp.ch = no + 1; }
       var sg = stageOf(no);   // ③ 일기토로 꺾은 이름 있는 장수는 장을 깨면 합류
       if (sg && sg.kind === 'duel' && sg.foe && cp.pre && cp.pre.ch === no && cp.pre.won && OFF().find(sg.foe)) { var rr = OFF().rec(sg.foe), cs = R().citiesOf(R().me()); if (rr && rr.force !== R().me() && cs.length && OFF().placeAt) { OFF().placeAt(sg.foe, cs[0], R().me()); rr = OFF().rec(sg.foe); rr.dead = false; rr.loyal = 70; res.recruit = OFF().find(sg.foe).name; } }
       res.next = cp.ch; cp.bonus = null; cp.tries = 0; cp.pre = null; cp.step = 'route';
@@ -144,6 +146,9 @@
   }
   function unequip(offId) { var r = OFF().rec(offId); if (r && r.item) { state().bag.push(r.item); OFF().unequip(offId); save(); } }
   function setStep(s) { state().step = s; save(); }
+  /** ⑤ 다 끝났나(19장 후일담까지) · 회차 — 1장부터, 장수·금·가방·경험은 그대로, 적은 회차마다 +15% */
+  function ended() { var cp = state(); return !!cp.cleared[ALL]; }
+  function newRound() { var cp = state(); cp.round = (cp.round || 0) + 1; cp.ch = 1; cp.cleared = {}; cp.bonus = null; cp.pre = null; cp.tries = 0; cp.step = 'route'; save(); return cp.round; }
   /** ③ 장의 전투 앞 단계(시나리오 STAGES 의 debate·duel) — 없으면 null */
   function stageOf(no) { var ch = chapter(no), S = SD() && SD().STAGES, s = ch && S ? S[ch.id] : null; return s && (s.kind === 'debate' || s.kind === 'duel') ? s : null; }
   function preDone(no) { var cp = state(); return !stageOf(no) || !!(cp.pre && cp.pre.ch === no); }
@@ -165,5 +170,5 @@
 
   global.DG = global.DG || {};
   global.DG.campaign = { on: on, state: state, chapters: chapters, chapter: chapter, roster: roster, party: party, setParty: setParty, foesFor: foesFor,
-    battleOpts: battleOpts, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
+    battleOpts: battleOpts, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
 })(typeof window !== 'undefined' ? window : this);

@@ -17,7 +17,7 @@ async function clearCards() { for (let i = 0; i < 8 && await ev(() => { var e = 
 async function nextMonth() { await clearCards(); await page.locator('[data-act="next-month"]').click(); await sleep(1500); await clearCards(); }
 try {
   await page.goto(r.url('index.html')); await sleep(1500);
-  await ev(() => { DG.account.create('확인'); });
+  await ev(() => { DG.account.create('확인'); DG.core.setTune('realm.campaign', 0); });   // W-0450 장 흐름이 첫 화면 — 이 시트는 옛 지역 지도·달 루프를 본다(손잡이 0, 장 흐름은 realm-campaign.mjs)
   await page.goto(r.url('index.html')); await sleep(3000);
   await ev(() => { var b = document.getElementById('title-continue'); if (b) { b.click(); } });
   await sleep(3000);

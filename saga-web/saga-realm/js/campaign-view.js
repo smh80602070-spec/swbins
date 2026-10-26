@@ -70,15 +70,15 @@
 
   /* ── 노선도 ── */
   function route() {
-    var cp = CP().state(), list = CP().chapters(), html = top('천하 노선도'), act = null;
+    var cp = CP().state(), list = CP().chapters(), html = top('천하 노선도' + (cp.round ? ' · ' + (cp.round + 1) + '회차' : '')), act = null;
     html += '<div class="cpg-wrap">';
     list.forEach(function (c) {
       if (c.act !== act) { if (act !== null) { html += '</div>'; } act = c.act; html += '<div class="cpg-act">' + esc(c.actName) + '</div><div class="cpg-route">'; }
       var done = !!cp.cleared[c.no], now = c.no === cp.ch, cls = done ? 'done' : now ? 'now' : 'lock';
-      html += '<button class="cpg-node ' + cls + '" data-cp="ch" data-no="' + c.no + '"><span class="e">' + esc(c.emoji) + '</span><small>제 ' + c.no + ' 장</small><b>' + esc(c.title) + '</b><small>' + esc(LAND[c.land] || c.land) + ' · ' + esc(GOAL[c.goal] || c.goal) + '</small></button>';
+      html += '<button class="cpg-node ' + cls + '" data-cp="ch" data-no="' + c.no + '"><span class="e">' + esc(c.emoji) + '</span><small>제 ' + c.no + ' 장</small><b>' + esc(c.title) + '</b><small>' + (c.epi ? '후일담' : esc(LAND[c.land] || c.land) + ' · ' + esc(GOAL[c.goal] || c.goal)) + '</small></button>';
     });
     if (act !== null) { html += '</div>'; }
-    html += '<div class="cpg-row"><button class="cpg-btn ghost" data-cp="camp">🏕 진영</button><button class="cpg-btn" data-cp="ch" data-no="' + cp.ch + '">▶ 제 ' + cp.ch + ' 장으로</button></div></div>';
+    html += '<div class="cpg-row"><button class="cpg-btn ghost" data-cp="camp">🏕 진영</button>' + (CP().ended() ? '<button class="cpg-btn" data-cp="ending">👑 결말 · 회차</button>' : '<button class="cpg-btn" data-cp="ch" data-no="' + cp.ch + '">▶ 제 ' + cp.ch + ' 장으로</button>') + '</div></div>';
     return html;
   }
   /* ── 이야기 ── */
@@ -86,7 +86,8 @@
     var cp = CP().state(), c = CP().chapter(cp.viewCh || cp.ch), CS = global.DG.cutscene, bg = CS && CS.url ? CS.url('realm', c.id) : null;
     var html = '<div class="cpg-story" style="' + (bg ? 'background-image:url(' + bg + ')' : '') + '"><div class="ov">';
     html += '<small style="color:var(--ink-dim,#bba)">' + esc(c.actName) + ' · 제 ' + c.no + ' 장</small><h3>' + esc(c.emoji) + ' ' + esc(c.title) + '</h3><p>' + esc(CP().fillText(c.text)) + '</p><div class="cpg-choices">';
-    if (c.no === cp.ch && !cp.cleared[c.no]) {
+    if (c.epi && c.no === cp.ch && !cp.cleared[c.no]) { html += '<button class="cpg-btn cpg-choice" data-cp="choose" data-k="util">이어서 ▶<small>후일담 — 금 +300</small></button>'; }
+    else if (c.no === cp.ch && !cp.cleared[c.no]) {
       (c.choices.length ? c.choices : [{ k: 'atk', label: '나아간다' }]).forEach(function (ch) {
         var how = ch.k === 'atk' ? '이번 장 내 병력 +15%' : ch.k === 'def' ? '이번 장 적 병력 −10%' : '금 +200';
         html += '<button class="cpg-btn cpg-choice" data-cp="choose" data-k="' + esc(ch.k) + '">' + esc(ch.label || ch.k) + '<small>' + how + '</small></button>';
@@ -137,6 +138,11 @@
     else if (U && U.startDebate) { U.startDebate({ title: CP().stageOf(cp.ch).title, by: A.me, must: true, done: function (mul, ok) { if (U.closeEnc) { U.closeEnc(); } after((ok || 0) >= 2); } }); }
     else { after(false); }
   }
+  /* ── ⑤ 결말 · 회차 ── */
+  function ending() {
+    var cp = CP().state();
+    host.innerHTML = '<div class="cpg-result"><h3>👑 천하 평정</h3><p>' + (cp.round ? (cp.round + 1) + '회차 ' : '') + '열아홉 장을 모두 지났다.<br>같은 장수·보물로 처음부터 — 적은 더 강해진다(회차마다 +15%).</p><div class="cpg-row" style="justify-content:center"><button class="cpg-btn ghost" data-cp="route">노선도</button><button class="cpg-btn" data-cp="round">회차 ▶ ' + ((cp.round || 0) + 2) + '회차</button></div></div>';
+  }
   /* ── 전투 ── */
   function battle() {
     var cp = CP().state(), o = CP().battleOpts(cp.ch);
@@ -160,7 +166,9 @@
       var no = +b.getAttribute('data-no');
       if (no > cp.ch) { return; }
       cp.viewCh = no; show(no === cp.ch && !cp.cleared[no] && cp.bonus && cp.bonus.ch === no ? 'camp' : 'story');
-    } else if (a === 'choose') { CP().choose(cp.ch, b.getAttribute('data-k')); tab = 'party'; show('camp'); }
+    } else if (a === 'choose') { var rc = CP().choose(cp.ch, b.getAttribute('data-k')); if (rc && rc.epi) { if (rc.end) { ending(); } else { show('route'); } } else { tab = 'party'; show('camp'); } }
+    else if (a === 'ending') { ending(); }
+    else if (a === 'round') { CP().newRound(); show('route'); }
     else if (a === 'route') { show('route'); }
     else if (a === 'camp') { show('camp'); }
     else if (a === 'tab') { tab = b.getAttribute('data-t'); pick = null; show('camp'); }

@@ -36,7 +36,7 @@ const HIGH = {
   'saga-dungeon': [['dg3d.quality', 'high']],
   'saga-forest': [['village3d.quality', 'high'], ['village3d.on', 1]],
   'saga-story': [],
-  'saga-realm': [['realm3d.on', 1], ['realm3d.quality', 'high']]
+  'saga-realm': [['realm3d.on', 1], ['realm3d.quality', 'high'], ['realm.campaign', 0]]   // W-0450 장 흐름이 첫 화면 — 지도 3D 기준선은 옛 지도로(손잡이 0)
 };
 /* 판별 들어가서 3D 켜기 */
 const ENTER = {
