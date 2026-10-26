@@ -6,7 +6,7 @@
  *   이야기   첫째 고름(atk — 내 병력 +15%) · 후일담은 「이어서」
  *   진영     prep(no): 전직할 수 있으면 능력 갈래대로(지력 → 군사·귀모 · 통솔 > 무력 → 기장·대장군 · 그 밖 → 맹장·패왕) · 용병은 적 편성을 보고 상성 맞춤
  *   설전·일기토  미니게임 대신 능력 비교(일기토 무력·설전 지력 — 내가 같거나 높으면 이김)
- *   전투     tacticsView.auto() 로 끝까지 → 결과 → 노선도. 지면 멈춤(진영에서 다시 고르라고) · 결말에서 멈춤
+ *   전투     턴마다 tacticsView.autoTurn()(W-0465, 손잡이 realm.campaignAutoTurn 0 = auto() 로 한 번에) → 결과 → 노선도. 지면 멈춤(진영에서 다시 고르라고) · 결말에서 멈춤
  * 손잡이 realm.campaignAuto(1, 0 = 단추 없음). 켬 상태는 저장하지 않는다(다시 열면 꺼짐).
  *
  *   DG.campaignAuto.on() · running() · toggle() · prep(no) · preWin(no) · btnHtml() · tick()
@@ -20,6 +20,7 @@
   function OFF() { return global.DG.off; }
   function on() { var c = C(); return !(c && c.tuned && !+c.tuned('realm.campaignAuto', 1)); }
   var run = false, timer = null, phase = '', at = 0, STEP_MS = 900;
+  function TURN_MODE() { var c = C(); return !(c && c.tuned && !+c.tuned('realm.campaignAutoTurn', 1)); }   // W-0465 1 = 전투를 턴마다 보여 줌(BATTLE_WAIT 간격) · 0 = 한 번에
   function BATTLE_WAIT() { var c = C(); return c && c.tuned ? +c.tuned('realm.campaignAutoWait', 1800) : 1800; }   // 전투를 펼쳐 보이는 시간(ms) — 진단은 0
   var BEAT = { cav: 'spear', bow: 'cav', spear: 'bow' };   // 이 병종을 이기는 병종(창>기>궁>창)
 
@@ -84,7 +85,7 @@
     if (tv && global.document.getElementById('cpg-tac')) {   // 격자 전투
       if (!tv.b.done && !tv.out) {
         if (phase !== 'battle') { phase = 'battle'; at = Date.now(); }
-        if (Date.now() - at >= BATTLE_WAIT()) { TV().auto(); }
+        if (Date.now() - at >= BATTLE_WAIT()) { if (TURN_MODE() && TV().autoTurn) { TV().autoTurn(); at = Date.now(); } else { TV().auto(); } }
       } else if (TV().go) { phase = ''; TV().go(); }
       schedule(); return;
     }

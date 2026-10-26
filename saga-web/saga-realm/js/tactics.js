@@ -560,6 +560,14 @@
     return { grid: { give: 1 - A.winPct / 100, take: A.kind === 'rout' ? 1.3 : 1, kind: 'def-' + A.kind }, out: out2, lines: lines, A: A };
   }
 
+  /** W-0465 한 바퀴만 — 내 편 AI 한 차례 + 적 턴(장 흐름 자동 진행이 턴마다 보여 주려고) · 끝났으면 결과 */
+  function autoRound(b) {
+    if (b.done) { return b.done; }
+    autoSide(b, 'me'); check(b);
+    if (!b.done) { aiTurn(b); }
+    if (!b.done && b.turn > SRPG_CAP + 5) { b.done = 'draw'; }
+    return b.done;
+  }
   /** 진단·균형용 — 양쪽 다 AI 로 끝까지 둔다 */
   function autoPlay(b) {
     var guard = 0;
@@ -572,7 +580,7 @@
     COLS: COLS, ROWS: ROWS, TURNS: TURNS, COVER: COVER, OUT: OUT, WOUND_MONTHS: WOUND_MONTHS,
     hash: hash, makeBoard: makeBoard, cellAt: cellAt, coverAt: coverAt, officerUnit: officerUnit, troopUnit: troopUnit, unitsOf: unitsOf,
     unit: unit, alive: alive, actAuto: actAuto, check: check, moves: moves, move: move, hitChance: hitChance, attack: attack,
-    aiTurn: aiTurn, endTurn: endTurn, outcome: outcome, apply: apply, annalize: annalize, autoPlay: autoPlay, permadeath: permadeath,
+    aiTurn: aiTurn, endTurn: endTurn, outcome: outcome, apply: apply, annalize: annalize, autoPlay: autoPlay, autoRound: autoRound, permadeath: permadeath,
     marchGrid: marchGrid, marchApply: marchApply, srpgOn: srpgOn, fallOut: fallOut, defenseOpts: defenseOpts, defenseApply: defenseApply, mirror: mirror,
     SRPG_SIZE: SRPG_SIZE, HEIGHT_HIT: HEIGHT_HIT, COUNTER_HIT: COUNTER_HIT, BACK_HIT: BACK_HIT, ARMS: ARMS, BEATS: BEATS, ARM_NAME: ARM_NAME, GOALS: GOALS, GOAL_NAME: GOAL_NAME,
     HOLD_TURNS: HOLD_TURNS, SRPG_CAP: SRPG_CAP, PLOTS: PLOTS, FIRE_WIS: FIRE_WIS, PLOT_NAME: PLOT_NAME,

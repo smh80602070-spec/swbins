@@ -7709,6 +7709,13 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var ok = L.length === 19 && L.filter(function (c) { return c.epi; }).length === 3 && L.every(function (c) { return c.land && c.goal; }) && o.srpg && o.mine.length >= 1 && o.mine.length <= 3 && o.foes.length >= 1 && o.myTroops[0] > 0 && g1 === g0 + 200 && w.win && ch2 === 2 && cp.cleared[1] === 1 && !l.win && cp.ch === 2 && by.ok && cp.gold === gb - CP.price(it) && rt.ch === 2 && rt.bag.indexOf(it.id) >= 0 && txt.indexOf('{') < 0 && (function () { cp.ch = 17; var e1 = CP.choose(17, 'util'); cp.ch = 19; var e3 = CP.choose(19, 'util'); var end = CP.ended(), f0 = CP.battleOpts(1).foeTroops[0], rd = CP.newRound(), f1 = CP.battleOpts(1).foeTroops[0]; return e1.epi && !e1.end && e3.end && end && rd === 1 && cp.ch === 1 && f1 > f0; })();
       return ok || ('실패 ' + JSON.stringify({ n: L.length, mine: o.mine.length, foes: o.foes.length, g0: g0, g1: g1, w: w.win, ch2: ch2, l: l.win, by: by, txt: txt }));
     });
+    t('W-0465 한 바퀴 자동(autoRound) — 부를 때마다 턴 +1(내 편·적 한 차례씩) · 결국 끝남 · autoPlay 와 같은 결과 · 화면 autoTurn', function () {
+      var T = DG.tactics, st = { a: { might: 80, wisdom: 50, command: 70 }, x: { might: 60, wisdom: 50, command: 50 } }; if (!T.autoRound) { return '실패 함수 없음'; }
+      function board() { var b = T.makeBoardSrpg('w465', 'plain', false, 'rout'); T.unitsOfSrpg(b, ['a'], ['x'], [4000], { stats: st }, [4000]); return b; }
+      var b = board(), t0 = b.turn; T.autoRound(b); var inc = b.done || b.turn === t0 + 1, n = 1; while (!b.done && n < 60) { T.autoRound(b); n++; }
+      var b2 = board(); T.autoPlay(b2); var same = b.done === b2.done && b.turn === b2.turn;
+      return (inc && !!b.done && same) || ('실패 ' + JSON.stringify({ inc: inc, done: b.done, n: n, turn: b.turn, done2: b2.done, turn2: b2.turn }));
+    });
     t('W-0463 장 흐름 자동 진행 — ▶ 단추 · 진영 준비(전직 갈래·용병 상성) · 설전·일기토 능력 비교 · 박자를 돌리면 1장 이야기→진영→전투→결과→2장 · 멈춤', function () {
       fresh('cao'); var CA = DG.campaignAuto, CP = DG.campaign, CV = DG.campaignView; if (!CA || !CV) { return '실패 모듈 없음'; }
       R.state().campaign = null; var cp = CP.state(), me = CP.party()[0], g = DG.off.grow(me), lv0 = g.lv; g.lv = 5;

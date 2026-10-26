@@ -481,6 +481,17 @@
     render();
     return v.out;
   }
+  /** W-0465 한 바퀴만 AI 로(내 편 한 차례 + 적 턴) — 피해 숫자·필살 컷·대사는 그 턴 것만 뜬다 */
+  function autoTurn() {
+    var v = cur;
+    if (!v || v.b.done) { return v ? v.out : null; }
+    v.sel = null; v.plot = null; v.ult = false;
+    T().autoRound(v.b);
+    v.foeBan = Date.now();
+    settle();
+    render();
+    return v.out;
+  }
   function quit() {
     var v = cur;
     if (!v) { return null; }
@@ -563,7 +574,7 @@
 
   global.DG = global.DG || {};
   global.DG.tacticsView = {
-    open: open, tap: tap, endTurn: endTurn, auto: auto, quit: quit, go: go, annalsHtml: annalsHtml, plotMode: function (k) { if (cur) { cur.plot = k || null; render(); } },
+    open: open, tap: tap, endTurn: endTurn, auto: auto, autoTurn: autoTurn, quit: quit, go: go, annalsHtml: annalsHtml, plotMode: function (k) { if (cur) { cur.plot = k || null; render(); } },
     _coverSvg: coverSvg,   // W-0168 진단
     cur: function () { return cur; }, scr: scr, brd: brd, bodyOf: bodyOf, tileHref: tileHref
   };
