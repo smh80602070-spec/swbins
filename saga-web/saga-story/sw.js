@@ -11,7 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'side-v0.118.255';
+var VERSION = 'side-v0.118.256';
 var APP_CACHE = 'ys-app-' + VERSION;
 
 /* index.html 이 부르는 스크립트가 여기 다 있어야 오프라인에서 게임이 돈다.
@@ -24,6 +24,7 @@ var SHELL = [
   './css/style.css',
   './css/maple.css',
   './css/ui-kit.css',   // W-0255 공용 창 틀
+  './css/skin-ui.css',   // W-0470 판 UI 겉옷
   './dist/app.js',
   './icons/icon-192.png',
   './icons/icon-512.png',

@@ -10,8 +10,9 @@
  */
 (function (global) {
   'use strict';
-  var EMO = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{1F1E6}-\u{1F1FF}️‍⃣]/gu;
-  var LEAD = /^[\s\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}️‍]+/u;
+  /* 그림 글자로 뜨는 이모지만(기본 그림 표시 · FE0F 붙은 것) — ✕ 닫기·★ 등급·✦ 같은 글자 기호는 남긴다(W-0470 — 처음엔 범위로 걸러 ✕·★ 까지 지웠다) */
+  var EMO = /\p{Emoji_Presentation}|\p{Extended_Pictographic}\uFE0F|[\uFE0F\u200D\u20E3]/gu;
+  var LEAD = /^\s*(?:\p{Emoji_Presentation}|\p{Extended_Pictographic}\uFE0F)[\uFE0F\u200D\s]*/u;
   function C() { return global.DG && global.DG.core; }
   function on() { var c = C(); return !(c && c.tuned && !+c.tuned('ui.stone', 1)); }
   function strip(t) { return String(t).replace(EMO, '').replace(/ {2,}/g, ' '); }

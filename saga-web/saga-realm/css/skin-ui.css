@@ -1,0 +1,82 @@
+/**
+ * 5천하 「비단 족자」 UI 겉옷 (W-0470 · 그림·글꼴 K-0202 — 사용자 10-26 「ui도 너무 ai스러워」 → 시안 「1번으로 모두」)
+ * ---------------------------------------------------------------
+ * ui-kit.css(다섯 판 공용) **뒤에** 얹는 이 판만의 겉옷. 자리·크기는 안 바꾼다 — 모서리·결·글자색·글꼴만.
+ *   창(시트·결과·상세)  9-slice 그림(assets/ui — sync) 이 바탕까지 · 반투명 흐림 끔 · 창 안 글자색을 이 판 잉크로(--ink 계열을 창 범위에서 덮음)
+ *   버튼               주 버튼(.primary)도 그림 · 모서리 0
+ *   글꼴               제목·버튼 = SongMyung-saga(OFL, assets/fonts — 정본 shared/assets/fonts, sync-shared 가 이 판에만 복사)
+ *   이모지             js/skin-ui.js(공용)가 창 글에서 걷고 줄 머리에 작은 점(.st-li)
+ * 되돌리기: index.html 의 이 <link> 한 줄을 빼거나 손잡이 ui.skin 0(body.skin-off).
+ */
+@font-face { font-family: 'SkinHead'; src: url(../assets/fonts/SongMyung-saga.woff2) format('woff2'); font-display: swap; }
+
+body:not(.skin-off) {
+  --sk-ink: #3a1d12; --sk-dim: #5e3a28; --sk-faint: #8a6a55; --sk-bg: #f1e6cc;
+  --sk-r-win: 0; --sk-r-btn: 0; --sk-btn-ink: #6b1a12; --sk-ghost: #6b1a12; --sk-accent: #9b2a1f;
+  --sk-head: 'SkinHead', 'Song Myung', serif;
+}
+
+/* ── 창 — 불투명 그림·이 판 잉크 ── */
+body:not(.skin-off) #sheet,
+body:not(.skin-off) .enc-card,
+body:not(.skin-off) .dt-card,
+body:not(.skin-off) #acc-host .acc-card {
+  border-radius: var(--sk-r-win);
+  background-color: var(--sk-bg);
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  --ink: var(--sk-ink); --ink-dim: var(--sk-dim); --ink-faint: var(--sk-faint);
+  color: var(--sk-ink);
+}
+
+/* ── 버튼 — 주 버튼도 그림 ── */
+body:not(.skin-off) .btn,
+body:not(.skin-off) #dock button {
+  border-radius: var(--sk-r-btn);
+  font-family: var(--sk-head);
+  color: var(--sk-btn-ink);
+  text-shadow: none;
+}
+body:not(.skin-off) .btn.primary {
+  border-image: var(--ui-btn) 24 fill / 12px stretch;
+  background: none;
+  font-weight: 700;
+}
+body:not(.skin-off) .btn.primary:hover:not(:disabled) { border-image-source: var(--ui-btn-hv); filter: none; }
+body:not(.skin-off) .btn.primary:active:not(:disabled) { border-image-source: var(--ui-btn-dn); }
+body:not(.skin-off) .btn.ghost { border-image: var(--ui-btn) 24 fill / 12px stretch; background: none; color: var(--sk-ghost); opacity: .9; }
+
+/* ── 글꼴 — 제목 ── */
+body:not(.skin-off) #sheet-title,
+body:not(.skin-off) .sheet-head h3,
+body:not(.skin-off) .enc-card h3,
+body:not(.skin-off) .dt-card h3 { font-family: var(--sk-head); letter-spacing: .02em; }
+
+/* ── 줄 머리 — 이모지 대신 작은 점 ── */
+body:not(.skin-off) .st-li::before {
+  content: ''; display: inline-block; width: 7px; height: 7px; margin: 0 7px 2px 1px; border-radius: 50%;
+  background: var(--sk-accent); vertical-align: middle;
+}
+
+/* 5천하 — 주 선택 = 붉은 바탕 크림 글(그림 대신 CSS — 붉은 단추 그림이 없다) */
+body:not(.skin-off) .btn.primary, body:not(.skin-off) #campaign .cpg-btn:not(.ghost) { border-image: none; background: #9b2a1f; border: 2px solid #5e140d; color: #f6ecd2; text-shadow: 0 1px 0 #3a0a05; }
+body:not(.skin-off) .btn.primary:hover:not(:disabled), body:not(.skin-off) #campaign .cpg-btn:not(.ghost):hover { background: #b23324; }
+/* 장 흐름(기본 첫 화면) — 족자 종이 카드·크림 선택지 + 붉은 테 */
+body:not(.skin-off) #campaign .cpg-card, body:not(.skin-off) #campaign .cpg-brief, body:not(.skin-off) #campaign .cpg-result, body:not(.skin-off) #campaign .cpg-node {
+  border-radius: 0; border-image: var(--ui-window) 32 fill / 14px stretch; background: #f1e6cc; color: #3a1d12; --ink: #3a1d12; --ink-dim: #5e3a28; --ink-faint: #8a6a55; box-shadow: 0 4px 16px rgba(0,0,0,.35);
+}
+body:not(.skin-off) #campaign .cpg-card.sel { box-shadow: 0 0 0 3px #9b2a1f, 0 4px 16px rgba(0,0,0,.35); }
+body:not(.skin-off) #campaign .cpg-node.lock { filter: grayscale(.6) brightness(.8); }
+body:not(.skin-off) #campaign .cpg-choice, body:not(.skin-off) #campaign .cpg-btn.ghost { border-radius: 0; border-image: none; background: #f6ecd2; border: 2px solid #9b2a1f; color: #6b1a12; }
+body:not(.skin-off) #campaign .cpg-choice small, body:not(.skin-off) #campaign .cpg-card small { color: #5e3a28; }
+body:not(.skin-off) #campaign h2, body:not(.skin-off) #campaign h3, body:not(.skin-off) #campaign .cpg-act { font-family: var(--sk-head); letter-spacing: .04em; }
+body:not(.skin-off) #campaign .cpg-btn { border-radius: 0; font-family: var(--sk-head); }
+
+/* ── 폰 폭 — 버튼 최소 48px ── */
+@media (max-width: 520px) { body:not(.skin-off) .btn:not(.tiny) { min-height: 48px; } }
+
+/* 창 위 아이콘 단추(닫기 ✕ 등)는 창 잉크를 따르지 않고 흰 글 */
+body:not(.skin-off) #sheet .icon-btn, body:not(.skin-off) .sheet-head .icon-btn { color: #fff; }
+
+/* 장 흐름 화면 코드에 박힌 밝은 글색(스킬 연노랑·적 편성 연분홍·흐린 회색) — 족자 종이 위에선 안 읽혀 붉은 먹으로(촬영) */
+body:not(.skin-off) #campaign .cpg-card [style*="#f3d27a"], body:not(.skin-off) #campaign .cpg-brief [style*="#f3d27a"], body:not(.skin-off) #campaign .cpg-brief [style*="#ffb3a6"], body:not(.skin-off) #campaign .cpg-brief [style*="#ffe27a"], body:not(.skin-off) #campaign .cpg-card [style*="#cfe6ff"], body:not(.skin-off) #campaign .cpg-brief [style*="#cfe6ff"] { color: #9b2a1f !important; }
+body:not(.skin-off) #campaign .cpg-card .muted, body:not(.skin-off) #campaign .cpg-brief .muted { color: #6e4a36 !important; }

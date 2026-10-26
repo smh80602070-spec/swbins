@@ -1,0 +1,68 @@
+/**
+ * 3마을 「나무 판자」 UI 겉옷 (W-0470 · 그림·글꼴 K-0202 — 사용자 10-26 「ui도 너무 ai스러워」 → 시안 「1번으로 모두」)
+ * ---------------------------------------------------------------
+ * ui-kit.css(다섯 판 공용) **뒤에** 얹는 이 판만의 겉옷. 자리·크기는 안 바꾼다 — 모서리·결·글자색·글꼴만.
+ *   창(시트·결과·상세)  9-slice 그림(assets/ui — sync) 이 바탕까지 · 반투명 흐림 끔 · 창 안 글자색을 이 판 잉크로(--ink 계열을 창 범위에서 덮음)
+ *   버튼               주 버튼(.primary)도 그림 · 모서리 14px
+ *   글꼴               제목·버튼 = Jua-saga(OFL, assets/fonts — 정본 shared/assets/fonts, sync-shared 가 이 판에만 복사)
+ *   이모지             js/skin-ui.js(공용)가 창 글에서 걷고 줄 머리에 작은 점(.st-li)
+ * 되돌리기: index.html 의 이 <link> 한 줄을 빼거나 손잡이 ui.skin 0(body.skin-off).
+ */
+@font-face { font-family: 'SkinHead'; src: url(../assets/fonts/Jua-saga.woff2) format('woff2'); font-display: swap; }
+
+body:not(.skin-off) {
+  --sk-ink: #3b2312; --sk-dim: #5a3a1e; --sk-faint: #7a5634; --sk-bg: #c58a52;
+  --sk-r-win: 10px; --sk-r-btn: 14px; --sk-btn-ink: #ffffff; --sk-ghost: #fff6e0; --sk-accent: #5c9a2c;
+  --sk-head: 'SkinHead', 'Jua', sans-serif;
+}
+
+/* ── 창 — 불투명 그림·이 판 잉크 ── */
+body:not(.skin-off) #sheet,
+body:not(.skin-off) .enc-card,
+body:not(.skin-off) .dt-card,
+body:not(.skin-off) #acc-host .acc-card {
+  border-radius: var(--sk-r-win);
+  background-color: var(--sk-bg);
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  --ink: var(--sk-ink); --ink-dim: var(--sk-dim); --ink-faint: var(--sk-faint);
+  color: var(--sk-ink);
+}
+
+/* ── 버튼 — 주 버튼도 그림 ── */
+body:not(.skin-off) .btn,
+body:not(.skin-off) #dock button {
+  border-radius: var(--sk-r-btn);
+  font-family: var(--sk-head);
+  color: var(--sk-btn-ink);
+  text-shadow: 0 1px 0 #2f5a14;
+}
+body:not(.skin-off) .btn.primary {
+  border-image: var(--ui-btn) 24 fill / 12px stretch;
+  background: none;
+  font-weight: 700;
+}
+body:not(.skin-off) .btn.primary:hover:not(:disabled) { border-image-source: var(--ui-btn-hv); filter: none; }
+body:not(.skin-off) .btn.primary:active:not(:disabled) { border-image-source: var(--ui-btn-dn); }
+body:not(.skin-off) .btn.ghost { border-image: var(--ui-btn) 24 fill / 12px stretch; background: none; color: var(--sk-ghost); opacity: .9; }
+
+/* ── 글꼴 — 제목 ── */
+body:not(.skin-off) #sheet-title,
+body:not(.skin-off) .sheet-head h3,
+body:not(.skin-off) .enc-card h3,
+body:not(.skin-off) .dt-card h3 { font-family: var(--sk-head); letter-spacing: .02em; }
+
+/* ── 줄 머리 — 이모지 대신 작은 점 ── */
+body:not(.skin-off) .st-li::before {
+  content: ''; display: inline-block; width: 7px; height: 7px; margin: 0 7px 2px 1px; border-radius: 50%;
+  background: var(--sk-accent); vertical-align: middle;
+}
+
+/* 3마을 — 판자 창 안 줄 목록은 크림 칸(카드 그림은 아래가 나무라 늘리면 어색해 CSS 칸) */
+body:not(.skin-off) #sheet-body .card, body:not(.skin-off) .enc-card .sec, body:not(.skin-off) .dt-card .sec { background: #f6ead2; border: 2px solid #8a5a2b; border-radius: 10px; border-image: none; color: #3b2312; }
+body:not(.skin-off) #sheet-title, body:not(.skin-off) .sheet-head h3 { color: #fff6e0; text-shadow: 0 2px 0 #5a3a1e; }
+
+/* ── 폰 폭 — 버튼 최소 48px ── */
+@media (max-width: 520px) { body:not(.skin-off) .btn:not(.tiny) { min-height: 48px; } }
+
+/* 창 위 아이콘 단추(닫기 ✕ 등)는 창 잉크를 따르지 않고 흰 글 */
+body:not(.skin-off) #sheet .icon-btn, body:not(.skin-off) .sheet-head .icon-btn { color: #fff; }

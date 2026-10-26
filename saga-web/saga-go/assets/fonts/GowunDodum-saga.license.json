@@ -1,0 +1,10 @@
+{
+ "id": "fonts/gowundodum",
+ "file": "GowunDodum-saga.woff2",
+ "source": "https://github.com/google/fonts/tree/main/ofl/gowundodum",
+ "authors": "The Gowun Dodum Project Authors (https://github.com/yangheeryu/Gowun-Dodum)",
+ "license": "SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용)",
+ "modified": "서브셋(한글 KS X 1001 2350 + 사가 다섯 판 글자 + ASCII·문장부호) · woff2 — tools K-0202",
+ "ticket": "K-0202",
+ "use": "1만리 제목·버튼(지도 앱 알약)"
+}
