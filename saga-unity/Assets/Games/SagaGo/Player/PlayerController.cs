@@ -259,7 +259,11 @@ namespace Saga.Go.Player
             _controller = GetComponent<CharacterController>();
             LastLand = transform.position;
             // tasks U-0146 — 가만히 8초면 앉는다(땅 위 걷기 모드만, 탈것·돌진·조작 잠금 중엔 안 함).
-            if (Application.isPlaying) LifePose.Attach(gameObject, false, () => !OnFoot || GoMounts.Riding != null || MoveLocked || IsDashing);
+            if (Application.isPlaying)
+            {
+                LifePose.Attach(gameObject, false, () => !OnFoot || GoMounts.Riding != null || MoveLocked || IsDashing).Breathing = true;
+                if (animator != null) SpringChain.Attach(animator.gameObject);
+            }
             // tasks U-0200 ① 모션 30 — 재료 줍기·요리·물고기 잡음(모닥불 앉기는 RestSiteField.Sit)
             CookState.Picked += OnMotionPicked;
             CookState.Cooked += OnMotionCooked;
@@ -313,6 +317,7 @@ namespace Saga.Go.Player
             newVisual.gameObject.SetActive(true);
             visual = newVisual;
             animator = newAnimator;
+            if (Application.isPlaying && animator != null) SpringChain.Attach(animator.gameObject);
             CacheAnimatorParams();
             if (_wings != null) AttachWings(_wings.transform, visual);
             SetModeParams();
@@ -448,7 +453,10 @@ namespace Saga.Go.Player
 
             Vector3 horizontal = moveDir * speed;
             GroundSpeedNow = horizontal.magnitude; // U-0171 말 위 전투 빠르기 비율
+            Vector3 beforeMove = transform.position;
             _controller.Move(new Vector3(horizontal.x, _verticalVelocity, horizontal.z) * dt);
+            Vector3 travelled = transform.position - beforeMove;
+            float actualSpeed = dt > 0f ? new Vector2(travelled.x, travelled.z).magnitude / dt : 0f;
             bool wasGrounded = grounded;
             grounded = _controller.isGrounded;
             // 107-3 비탈 — 내리막을 걸으면 매 프레임 발이 살짝 떠서 "공중"이 됐다(낙하 동작·활공 가능). 방금까지 딛고 있었고
@@ -488,7 +496,12 @@ namespace Saga.Go.Player
             // >0.6 뛰기 임계값은 Animator Controller 쪽에 있다).
             if (animator != null)
             {
-                animator.SetFloat("Speed", moving ? (running ? 1f : 0.5f) : 0f);
+                // U-0249 실제 이동 거리: 벽에 막히면 제자리 달리기 대신 대기, 아날로그 이동은 연속값.
+                float motionSpeed = actualSpeed <= WalkSpeed
+                    ? 0.5f * actualSpeed / WalkSpeed
+                    : 0.5f + 0.5f * (actualSpeed - WalkSpeed) / (RunSpeed - WalkSpeed);
+                if (GoMounts.Riding != null) motionSpeed = moving ? (running ? 1f : 0.5f) : 0f;
+                animator.SetFloat("Speed", Mathf.Clamp01(motionSpeed));
             }
 
             if (!traversal) return;

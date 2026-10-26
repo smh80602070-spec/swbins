@@ -47,6 +47,10 @@ namespace Saga.Core
         public int Greets { get; private set; }
         public bool Humanoid => _bones != null;
         public bool HoldNow { get; private set; }
+        // U-0249 대표 몸만 선택적으로 켠다. 다른 판·주민의 자세는 기존대로.
+        public bool Breathing { get; set; }
+        public const float BreathPeriod = 2.4f;
+        private float _breathPhase, _breathWeight;
 
         // 뼈 — 0 엉덩이 1 허리 2 가슴 3 목 4 머리 5·6 허벅지 L·R 7·8 정강이 9·10 발 11·12 윗팔 13·14 아래팔
         private static readonly HumanBodyBones[] BoneIds =
@@ -141,6 +145,9 @@ namespace Saga.Core
             if (!_bound || (_animator != null && !_animator.isActiveAndEnabled) || (_bones != null && _bones[BHips] == null)) Bind();
             var idle = GetComponent<NpcIdle>();
             HoldNow = (_hold != null && SafeHold()) || !still || (idle != null && idle.StateName != "Idle") || BusyClip();
+            _breathPhase = Mathf.Repeat(_breathPhase + Mathf.Max(0f, dt), BreathPeriod);
+            _breathWeight = Mathf.MoveTowards(_breathWeight,
+                Breathing && !HoldNow ? 1f : 0f, Mathf.Max(0f, dt) / Blend);
             if (HoldNow)
             {
                 StillT = 0f;
@@ -221,6 +228,13 @@ namespace Saga.Core
             Vector3 f = Vector3.ProjectOnPlane(body.forward, Vector3.up).normalized;
             if (f.sqrMagnitude < 1e-4f) f = Vector3.forward;
             Vector3 r = Vector3.Cross(Vector3.up, f);
+            if (_breathWeight > 0f && SitW < 0.001f && Current == Act.None)
+            {
+                float breath = Mathf.Sin(_breathPhase * (2f * Mathf.PI / BreathPeriod)) * _breathWeight;
+                Turn(BChest, 1.2f * breath, r);
+                Turn(BUArm, 0.3f * breath, f);
+                Turn(BUArm + 1, -0.3f * breath, f);
+            }
             if (SitW > 0.001f) PoseSit(SitW, f, r, body.position.y);
             if (Current == Act.None) return;
             float k = ActT / DurOf(Current);
