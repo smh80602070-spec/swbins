@@ -53,41 +53,9 @@
   /** 병사 몸(2026-09-25) — 1 이면 원정군 병사가 CC0 기사·기병(`asset3d.buildTrooper`), 0 이면 옛 도형 */
   function TROOP_MODEL() { return C().tuned('realm3d.troopModel', 1) ? true : false; }
 
-  /**
-   * 그래픽 품질 3단(SAGA-DESIGN §8 성능 상한, PLAN §7-2 "성능 상한") — 이 판은
-   * 걷는 인물이 없어 saga-forest `village-view3d.js` 처럼 "인물 주변 렌더
-   * 반경"을 좁힐 대상이 없다. 대신 값이 큰 두 축만 등급표로 묶는다 —
-   * 픽셀 비율(dpr, 폰 GPU 부담의 대부분)과 `scatterField()` 빈 들 소품 밀도
-   * (전체 1070개 선 중 가장 큰 덩이). 성 둘레(`scatterAround`/`scatterSmall`,
-   * 카메라가 늘 머무는 자리)는 등급과 무관하게 항상 다 세운다 — 그림 손실
-   * 체감이 크고 수도 field 쪽보다 훨씬 적어서다. `deviceScore`/`probeDevice`는
-   * saga-forest 것과 같은 요령(순수 함수 — three 없이도 헤드리스로 진단된다).
-   */
-  var QUALITY_PRESET = {
-    low:    { dpr: 1,   fieldDensity: 16 },
-    medium: { dpr: 1.5, fieldDensity: 24 },
-    high:   { dpr: 2,   fieldDensity: 32 }
-  };
+  /* 그래픽 품질 3단 — 등급표·기기 점수·기기 재기는 realm3d-quality.js(DG.realm3dQuality, R-4 로 뗌) · 여기는 고르기·손잡이 */
+  function QQ() { return global.DG.realm3dQuality; } var QUALITY_PRESET = QQ().PRESET; function deviceScore(o) { return QQ().deviceScore(o); } function tierFor(sc) { return QQ().tierFor(sc); } function probeDevice() { return QQ().probeDevice(); }
   function QUALITY() { return C().tuned('realm3d.quality', 'auto'); }
-  function deviceScore(o) {
-    var s = 0;
-    var cores = o.cores || 0, mem = o.mem || 0;
-    var px = (o.w || 0) * (o.h || 0) * (o.dpr || 1) * (o.dpr || 1);
-    s += cores >= 8 ? 2 : (cores >= 4 ? 1 : (cores > 0 ? 0 : 1));
-    s += mem >= 8 ? 2 : (mem >= 4 ? 1 : (mem > 0 ? 0 : (o.ios ? -1 : 1)));   // W-0333 iOS 는 deviceMemory 가 없다 — 모름을 "넉넉"이 아니라 "빠듯"으로
-    s += px > 4000000 ? -1 : (px > 1600000 ? 0 : 1);
-    if (o.touch) { s -= 1; }
-    return s;
-  }
-  function tierFor(score) { return score >= 3 ? 'high' : (score >= 1 ? 'medium' : 'low'); }
-  function probeDevice() {
-    var n = global.navigator || {}, sc = global.screen || {};
-    return {
-      cores: n.hardwareConcurrency || 0, mem: n.deviceMemory || 0,
-      w: sc.width || 0, h: sc.height || 0, dpr: global.devicePixelRatio || 1,
-      touch: !!(('ontouchstart' in global) || (n.maxTouchPoints > 0)), ios: /iPhone|iPad|iPod/.test(n.userAgent || '') || (/Macintosh/.test(n.userAgent || '') && n.maxTouchPoints > 1)
-    };
-  }
   var autoTierCache = null, aqV = null; function AQ() { return aqV || (global.DG.autoq ? (aqV = global.DG.autoq.make('realm3d')) : null); }   /* W-0302 자동 품질 FPS 내리기(shared/js/autoq.js) */ function isAutoQ() { var q = QUALITY(); return q !== 'low' && q !== 'medium' && q !== 'high'; }
   function autoTier() {
     if (!autoTierCache) { autoTierCache = tierFor(deviceScore(probeDevice())); }

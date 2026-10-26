@@ -160,25 +160,7 @@
      보고 시작 등급을 고르는 손잡이(`probe`·`score`·`start`)를 두고 있어 —
      같은 요령을 옮긴다. 코어 수·메모리·화면 픽셀·터치 여부로 점수를 매겨
      시작 등급만 낮춘다(그 뒤로는 여느 때처럼 실측이 올리고 내린다). */
-  function deviceScore(o) {
-    var s = 0;
-    var cores = o.cores || 0, mem = o.mem || 0;
-    var px = (o.w || 0) * (o.h || 0) * (o.dpr || 1) * (o.dpr || 1);
-    s += cores >= 8 ? 2 : (cores >= 4 ? 1 : (cores > 0 ? 0 : 1));
-    s += mem >= 8 ? 2 : (mem >= 4 ? 1 : (mem > 0 ? 0 : 1));
-    s += px > 4000000 ? -1 : (px > 1600000 ? 0 : 1);
-    if (o.touch) { s -= 1; }
-    return s;
-  }
-  function startLevelFor(s) { return s >= 3 ? 'high' : (s >= 1 ? 'medium' : 'low'); }
-  function probeDevice() {
-    var n = global.navigator || {}, sc = global.screen || {};
-    return {
-      cores: n.hardwareConcurrency || 0, mem: n.deviceMemory || 0,
-      w: sc.width || 0, h: sc.height || 0, dpr: global.devicePixelRatio || 1,
-      touch: !!(('ontouchstart' in global) || (n.maxTouchPoints > 0))
-    };
-  }
+  function DQ() { return global.DG.dungeon3dQuality; } function deviceScore(o) { return DQ().deviceScore(o); } function startLevelFor(sc) { return DQ().startLevelFor(sc); } function probeDevice() { return DQ().probeDevice(); }   /* 순수 함수는 dungeon3d-quality.js(R-4 로 뗌) */
   var autoLevel = startLevelFor(deviceScore(probeDevice())); // AUTO 가 지금 고른 등급(시작은 기기 보기)
   var perfEma = 16.7;                   // 프레임 시간 이동평균(ms) — 처음엔 60fps 로 가정
   var lastFrameT = null;

@@ -153,26 +153,7 @@
     high:   { renderR: 40, groundTileR: 14, dpr: 2,   shadow: true }
   };
   function QUALITY() { return C().tuned('village3d.quality', 'auto'); }
-  /** 순수 함수 — probe 값만으로 점수를 매긴다(scene·navigator 없이도 진단됨) */
-  function deviceScore(o) {
-    var s = 0;
-    var cores = o.cores || 0, mem = o.mem || 0;
-    var px = (o.w || 0) * (o.h || 0) * (o.dpr || 1) * (o.dpr || 1);
-    s += cores >= 8 ? 2 : (cores >= 4 ? 1 : (cores > 0 ? 0 : 1));
-    s += mem >= 8 ? 2 : (mem >= 4 ? 1 : (mem > 0 ? 0 : 1));
-    s += px > 4000000 ? -1 : (px > 1600000 ? 0 : 1);
-    if (o.touch) { s -= 1; }
-    return s;
-  }
-  function tierFor(score) { return score >= 3 ? 'high' : (score >= 1 ? 'medium' : 'low'); }
-  function probeDevice() {
-    var n = global.navigator || {}, sc = global.screen || {};
-    return {
-      cores: n.hardwareConcurrency || 0, mem: n.deviceMemory || 0,
-      w: sc.width || 0, h: sc.height || 0, dpr: global.devicePixelRatio || 1,
-      touch: !!(('ontouchstart' in global) || (n.maxTouchPoints > 0))
-    };
-  }
+  function VQ() { return global.DG.village3dQuality; } function deviceScore(o) { return VQ().deviceScore(o); } function tierFor(sc) { return VQ().tierFor(sc); } function probeDevice() { return VQ().probeDevice(); }   /* 순수 함수는 village3d-quality.js(R-4 로 뗌) */
   var autoTierCache = null, aqV = null; function AQ() { return aqV || (global.DG.autoq ? (aqV = global.DG.autoq.make('village3d')) : null); }   /* W-0302 자동 품질 FPS 내리기(shared/js/autoq.js) */ function isAutoQ() { var q = QUALITY(); return q !== 'low' && q !== 'medium' && q !== 'high'; }
   function autoTier() {
     if (!autoTierCache) { autoTierCache = tierFor(deviceScore(probeDevice())); }
