@@ -28,6 +28,17 @@ body:not(.skin-off) #acc-host .acc-card {
   color: var(--sk-ink);
 }
 
+/* ── HUD 카드(상태·지갑·근처) — 같은 창 그림이라 글도 이 판 잉크로(W-0471, 바탕은 안 건드림) ── */
+body:not(.skin-off) #profile,
+body:not(.skin-off) #wallet,
+body:not(.skin-off) .near-card {
+  --ink: var(--sk-ink); --ink-dim: var(--sk-dim); --ink-faint: var(--sk-faint);
+  color: var(--sk-ink);
+}
+body:not(.skin-off) #profile .p-sub b, body:not(.skin-off) #profile .p-goal, body:not(.skin-off) #profile .p-goal b { color: var(--sk-ink); }
+body:not(.skin-off) #profile .p-goal.ready { color: #1b7a34; }
+body:not(.skin-off) :is(#profile, #wallet, .near-card) .coin.hi { background: rgba(26, 26, 26, .10); color: var(--sk-ink); }
+
 /* ── 버튼 — 주 버튼도 그림 ── */
 body:not(.skin-off) .btn,
 body:not(.skin-off) #dock button {
