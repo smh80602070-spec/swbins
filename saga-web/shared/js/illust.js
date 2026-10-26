@@ -31,7 +31,7 @@
   function stand(id) { var M = man(); return has(id) && (!M.files || M.files.indexOf('stand') >= 0) ? baseOf(M) + id + '/stand.webp' : null; }
   function ids() { var M = man(); return M ? M.ids.slice() : []; }
   /** W-0394 — manifest 에 base 가 없으면 shared 한 벌(K-0183 116명)로: 공용 주소(assets3d.sharedUrl) → 못 잡으면 상대 경로 */
-  function baseOf(M) { if (M && M.base) { return M.base; } var A = global.DG && global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('illust/') : null; return u || '../shared/assets/illust/'; }
+  function baseOf(M) { var A = global.DG && global.DG.assets3d, u = A && A.sharedUrl ? A.sharedUrl('illust/') : null; if (M && M.base && !(u && M.base.indexOf('../shared/') === 0)) { return M.base; } return u || (M && M.base) || '../shared/assets/illust/'; }   /* W-0464 목록 base 가 예비 경로 ../shared(로컬 서버 404)면 정해진 공용 주소 먼저 */
 
   global.DG = global.DG || {};
   global.DG.illust = { has: has, url: url, stand: stand, moodOf: moodOf, ids: ids, MOOD: MOOD, baseOf: baseOf };
