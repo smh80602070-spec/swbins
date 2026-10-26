@@ -146,6 +146,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/realm-class.js"></script>
 <script src="js/battle-event.js"></script>
 <script src="js/data-battle-script.js"></script>
+<script src="js/side-goal.js"></script>
 <script src="js/tactics-view3d.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/scenario.js"></script>
@@ -7580,7 +7581,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       T.unitsOfSrpg(b, mine, foes, [1500 + (i % 5) * 400], { stats: st }, [1500 + ((i + 2) % 5) * 400]);
       return b;
     }
-    function cmdOff(fn) { return function () { var c0 = DG.core.tuned; DG.core.tuned = function (k, d) { return k === 'rtk.command' || k === 'rtk.ultimate' || k === 'rtk.class' || k === 'rtk.battleEvent' ? 0 : c0.apply(DG.core, arguments); }; try { return fn(); } finally { DG.core.tuned = c0; } }; }   // W-0455·0456 — W-0401 덩어리 부대 판을 그대로 잰다(용병·필살 끔)
+    function cmdOff(fn) { return function () { var c0 = DG.core.tuned; DG.core.tuned = function (k, d) { return k === 'rtk.command' || k === 'rtk.ultimate' || k === 'rtk.class' || k === 'rtk.battleEvent' || k === 'rtk.sideGoal' ? 0 : c0.apply(DG.core, arguments); }; try { return fn(); } finally { DG.core.tuned = c0; } }; }   // W-0455·0456 — W-0401 덩어리 부대 판을 그대로 잰다(용병·필살 끔)
     t('W-0401 SRPG — 판 크기 넷·언덕·성문 · 병종 수치·대장 하나 · 덤(높이+10·상성±20·뒤+20) · 걸어간 쪽을 봄 · 승리 조건 넷(전멸·대장·성문·6턴 버팀)', cmdOff(function () {
       var T = DG.tactics, sz = {}, i;
       ['plain', 'river', 'hill', 'mount'].forEach(function (l) { var b = T.makeBoardSrpg('size', l, false, 'rout'); sz[l] = b.cols + 'x' + b.rows; });
@@ -7706,6 +7707,26 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var it = CP.shop()[0], gb = cp.gold, by = CP.buy(it.id), rt = JSON.parse(JSON.stringify(R.state().campaign)), txt = CP.fillText('{책사}·{이웃}·{맹장}');
       var ok = L.length === 19 && L.filter(function (c) { return c.epi; }).length === 3 && L.every(function (c) { return c.land && c.goal; }) && o.srpg && o.mine.length >= 1 && o.mine.length <= 3 && o.foes.length >= 1 && o.myTroops[0] > 0 && g1 === g0 + 200 && w.win && ch2 === 2 && cp.cleared[1] === 1 && !l.win && cp.ch === 2 && by.ok && cp.gold === gb - CP.price(it) && rt.ch === 2 && rt.bag.indexOf(it.id) >= 0 && txt.indexOf('{') < 0 && (function () { cp.ch = 17; var e1 = CP.choose(17, 'util'); cp.ch = 19; var e3 = CP.choose(19, 'util'); var end = CP.ended(), f0 = CP.battleOpts(1).foeTroops[0], rd = CP.newRound(), f1 = CP.battleOpts(1).foeTroops[0]; return e1.epi && !e1.end && e3.end && end && rd === 1 && cp.ch === 1 && f1 > f0; })();
       return ok || ('실패 ' + JSON.stringify({ n: L.length, mine: o.mine.length, foes: o.foes.length, g0: g0, g1: g1, w: w.win, ch2: ch2, l: l.win, by: by, txt: txt }));
+    });
+    t('W-0460 보조 목표 — 보물 상자(적 쪽 절반·밟으면 열림·진 판도 금) · 마을(가운데·지키는 이 없이 적이 곁이면 약탈) · outcome.side · 장 흐름 금(상자 70·마을 40·다 지키면 120) · 화면 길에도 · 손잡이 0 = 없음', function () {
+      fresh('cao'); var T = DG.tactics, SG = DG.sideGoal, CP = DG.campaign; if (!SG) { return '실패 모듈 없음'; }
+      var H = Object.values(DG.data.HEROES || DG.data.heroes).map(function (h) { return h.id; }), me = H[0], fo = H[1];
+      function board(side) { var b = T.makeBoardSrpg('w460', 'plain', false, 'rout'); T.unitsOfSrpg(b, [me], [fo], [4000], { side: side }, [4000]); return b; }
+      var b = board({ chests: 2, villages: 2 }), S = b.sg, mid = Math.floor(b.cols / 2);
+      var placed = !!S && S.chests.length === 2 && S.villages.length === 2 && S.chests.every(function (c) { return c.x >= mid; }) && S.villages.every(function (v) { return v.x >= mid - 1 && v.x <= mid; });
+      var A = T.unit(b, 'me:' + me), c0 = S.chests[0]; A.x = c0.x; A.y = c0.y; T.outcome(b); var chest = c0.got && S.loot === 1 && b.evLog.some(function (e) { return e.kind === 'loot'; }); T.outcome(b); var once = S.loot === 1;
+      b.units.forEach(function (u) { if (u !== A) { u.x = 0; u.y = 0; u.hp = u.side === 'foe' ? u.hp : 0; } }); var X = T.unit(b, 'foe:' + fo), v0 = S.villages[0], v1 = S.villages[1], mm = b.units.filter(function (u) { return u.side === 'me' && u.kind === 'troop'; })[0];
+      A.x = 0; A.y = b.rows - 1; X.x = v0.x + 1 < b.cols ? v0.x + 1 : v0.x - 1; X.y = v0.y; SG.foeTurnEnd(b); var burnt = v0.burnt && !v1.burnt;
+      mm.hp = 10; mm.x = v1.x; mm.y = v1.y; X.x = v1.x + 1; X.y = v1.y; SG.foeTurnEnd(b); var guard = !v1.burnt;
+      var o = T.outcome(b) || { side: SG.result(b) }, res = o.side && o.side.loot === 1 && o.side.chests === 2 && o.side.kept === 1 && o.side.total === 2;
+      var c0f = DG.core.tuned; DG.core.tuned = function (k, d) { return k === 'rtk.sideGoal' ? 0 : c0f.apply(DG.core, arguments); }; var off = !board({ chests: 2 }).sg; DG.core.tuned = c0f;
+      R.state().campaign = null; var cp = CP.state(), o3 = CP.battleOpts(3), o4 = CP.battleOpts(4), spec = o3.side.villages === 2 && o3.side.chests === 1 && o4.side.villages === 0 && o4.side.chests === 2;
+      var g0 = cp.gold, rw = CP.reward(1, { kind: 'rout', name: '대승', fallen: [], wounded: [], side: { loot: 1, chests: 2, kept: 2, total: 2 } }), gw = rw.sideGold === 270;
+      var rl = CP.reward(2, { kind: 'lose', name: '패', fallen: [], wounded: [], side: { loot: 1, chests: 2, kept: 2, total: 2 } }), gl = rl.sideGold === 70;
+      var host = document.createElement('div'), vw = false; document.body.appendChild(host);
+      try { DG.tacticsView.open(host, CP.battleOpts(3), function () {}); var vb = DG.tacticsView.cur().b; vw = !!vb.sg && vb.sg.villages.length === 2 && host.innerHTML.indexOf('🏘') >= 0; DG.tacticsView.quit(); } catch (e) { vw = 'err ' + e.message; } finally { host.remove(); }
+      var ok = placed && chest && once && burnt && guard && res && off && spec && gw && gl && vw === true;
+      return ok || ('실패 ' + JSON.stringify({ placed: placed, chest: chest, once: once, burnt: burnt, guard: guard, res: res, off: off, spec: spec, gw: gw, sg: rw.sideGold, gl: gl, vw: vw }));
     });
     t('W-0459 장별 전투 대본 — 화면 길(tacticsView.open)도 opts 통째(전직·이벤트) · 16장 모두 대본(시작 줄 셋 이상) · 시작 줄이 대본대로(판 밖 사람 줄·적 대장·내 장수 이름 채움) · 그 턴 줄 한 번 · 위기·격파·증원 줄이 대본 · 장 흐름이 대본을 넘김', function () {
       fresh('cao'); var T = DG.tactics, BE = DG.battleEvent, BS = DG.battleScript, CP = DG.campaign; if (!BS || !BE) { return '실패 모듈 없음'; }

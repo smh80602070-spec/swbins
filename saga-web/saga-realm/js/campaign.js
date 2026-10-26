@@ -91,10 +91,11 @@
     var pp = cp.prep && cp.prep.ch === no ? cp.prep : {};   // W-0451 준비물 — 군량 보급 내 병력 +10% · 척후 적 −5%
     var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1) * (pp.food ? 1.1 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1) * pre * rd * (pp.scout ? 0.95 : 1) * (no === MAIN ? 1.2 : 1));   // W-0454 균형 — 마지막 장은 적 +20%(14·15장보다 쉬웠다)
     return { seed: 'cp|' + ch.id + '|' + (cp.tries || 0), land: ch.land, siege: ch.siege, srpg: true, goal: ch.goal,
-      mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no, mercs: mercsAll(no), mercMul: 1.2, mercN: mercN(no), cls: clsMap(no, ch), events: eventsFor(no, ch, foe, my) };
+      mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no, mercs: mercsAll(no), mercMul: 1.2, mercN: mercN(no), cls: clsMap(no, ch), events: eventsFor(no, ch, foe, my), side: { chests: no % 2 ? 1 : 2, villages: VILL[no] || 0 } };
   }
   /* W-0458 전투 중 이벤트 — 증원(4·7·10·13·16장 3턴, 적 줄에서 다음 장수) · 원군(출진 안 한 가장 센 장수, 질 때 한 번) */
   var REINF = { 4: 1, 7: 1, 10: 1, 13: 1, 16: 1 };
+  var VILL = { 3: 2, 5: 2, 11: 2, 13: 2 };   // W-0460 마을 지키기 — 화친·관도·역병·실크로드(이야기에 백성·대상이 나오는 장)
   function eventsFor(no, ch, foe, my) {
     var me = R().me(), st = R().state(), all = [], k, used = foesFor(ch), out = {};
     if (REINF[no]) {
@@ -140,6 +141,8 @@
   function reward(no, out) {
     var cp = state(), res = { win: won(out), gold: 0, exp: 0, item: null, next: no };
     cp.tries = (cp.tries || 0) + 1;
+    var sd = out && out.side, SGG = global.DG.sideGoal ? global.DG.sideGoal.GOLD : null;   // W-0460 보조 목표 — 상자는 져도 챙기고, 마을은 이겼을 때
+    if (sd && SGG) { res.sideGold = sd.loot * SGG.chest + (won(out) && sd.total ? sd.kept * SGG.village + (sd.kept === sd.total ? SGG.allVillages : 0) : 0); res.side = sd; cp.gold += res.sideGold; }
     (out && out.wounded || []).forEach(function (w) { var id = w.id || w; var r = OFF().rec(id); if (r) { r.hurt = Math.max(r.hurt || 0, 1); } });
     var lord = OFF().lordOf ? OFF().lordOf(R().me()) : null;   // 영구 전사(손잡이 rtk.permadeath) — 군주는 중상으로
     (out && out.fallen || []).forEach(function (id) { var r = OFF().rec(id); if (!r) { return; } if (id === lord) { r.hurt = 1; } else { r.dead = true; } });

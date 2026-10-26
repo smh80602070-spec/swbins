@@ -219,6 +219,7 @@
   function aiTurn(b) {
     if (b.done) { return b.done; }
     autoSide(b, 'foe');
+    if (b.sg && global.DG.sideGoal) { global.DG.sideGoal.foeTurnEnd(b); }   // W-0460 마을 약탈
     if (b.done) { return b.done; }
     burnTick(b);   // 화계 — 불 없으면 아무것도 안 함
     if (b.done) { return b.done; }
@@ -246,6 +247,7 @@
     if (b.done) { return b.done; }
     if (b.command && global.DG.command) { global.DG.command.sweep(b); }   // W-0455 지휘관 격파 → 휘하 궤주
     if (b.ev && global.DG.battleEvent) { global.DG.battleEvent.scan(b); }   // W-0458 대장 위기·쓰러짐 대사
+    if (b.sg && global.DG.sideGoal) { global.DG.sideGoal.scan(b); }   // W-0460 상자 열기
     if (b.srpg) { return checkSrpg(b); }
     if (!alive(b, 'foe').length) { b.done = 'rout'; }
     else if (!alive(b, 'me').length) { b.done = 'lose'; }
@@ -263,7 +265,7 @@
     var pd = permadeath(), o = OUT[k];
     return { kind: k, name: o.name, winPct: o.winPct, lossMul: o.lossMul, turn: b.srpg ? b.turn : Math.min(b.turn, TURNS),
       hpMe: Math.round(hpFrac(b, 'me') * 100), hpFoe: Math.round(hpFrac(b, 'foe') * 100),
-      fallen: pd ? down : [], wounded: pd ? [] : down, foeDown: b.units.filter(function (u) { return u.side === 'foe' && u.hp <= 0; }).map(function (u) { return u.id || u.uid; }) };
+      fallen: pd ? down : [], wounded: pd ? [] : down, foeDown: b.units.filter(function (u) { return u.side === 'foe' && u.hp <= 0; }).map(function (u) { return u.id || u.uid; }), side: global.DG.sideGoal ? global.DG.sideGoal.result(b) : null };   // W-0460 보조 목표
   }
   /**
    * 공략 판정이 받을 보정값 — **판정을 하지 않는다**(W-0108 이 war.js 에 건넨다). marchCtx = {from, to, where} 는 기록용
@@ -410,6 +412,7 @@
     if (global.DG.command) { global.DG.command.setup(b, { myTroops: myTroops, foeTroops: foeTroops, mercs: opts && opts.mercs, mercMul: opts && opts.mercMul, mercN: opts && opts.mercN, stats: opts && opts.stats }); list = b.units; }   // W-0455 지휘관·용병
     if (global.DG.realmClass) { global.DG.realmClass.apply(b, opts || {}); }   // W-0457 전직
     if (global.DG.battleEvent) { global.DG.battleEvent.setup(b, opts || {}); }   // W-0458 전투 중 이벤트(시작 대사)
+    if (global.DG.sideGoal) { global.DG.sideGoal.setup(b, opts || {}); }   // W-0460 보물 상자·마을
     return list;
   }
   function faceTo(u, x, y) {

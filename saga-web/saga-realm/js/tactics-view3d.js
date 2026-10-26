@@ -163,6 +163,14 @@
 
   /** W-0168 엄폐 방패(반 30·온 50) — 칸 위에 뜨는 표지판. 갈 칸은 하늘빛, 노릴 적은 붉은빛. 손잡이 realm.coverMark 0 = 없음 */
   var shieldTex = {};
+  var emojiTex = {};
+  function emojiSprite(e) {
+    var t = three();
+    if (!emojiTex[e]) { var c = global.document.createElement('canvas'); c.width = 96; c.height = 96; var g = c.getContext('2d'); g.font = '72px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(e, 48, 54); emojiTex[e] = new t.CanvasTexture(c); }
+    var s = new t.Sprite(new t.SpriteMaterial({ map: emojiTex[e], transparent: true, depthWrite: false }));
+    s.scale.set(0.62, 0.62, 1);
+    return s;
+  }
   function shieldSprite(cov, foe) {
     var t = three(), key = cov + (foe ? 'f' : 'm');
     if (!shieldTex[key]) {
@@ -189,6 +197,8 @@
       var gp = cellCenter(b.gate[0], b.gate[1], b.cols, b.rows), gh = HGT.gate;
       [0.3, 0.44].forEach(function (r0) { var gr = new t.Mesh(new t.RingGeometry(r0, r0 + 0.06, 28), selMat); gr.rotation.x = -Math.PI / 2; gr.position.set(gp.x, gh + 0.04, gp.z); hiGrp.add(gr); });
     }
+    var SG = global.DG.sideGoal, sgc = SG ? SG.cells(b) : {};   // W-0460 상자·마을 — 칸 위 그림 글자
+    Object.keys(sgc).forEach(function (k) { var xy = k.split(','), p = cellCenter(+xy[0], +xy[1], b.cols, b.rows), h = HGT[T().cellAt(b, +xy[0], +xy[1])] || 0, sp = emojiSprite(SG.ICON[sgc[k]]); sp.position.set(p.x, h + 0.42, p.z); sp.material.opacity = sgc[k] === 'open' ? 0.45 : 1; hiGrp.add(sp); });
     var u = v.sel ? T().unit(b, v.sel) : null;
     if (!u || u.hp <= 0 || b.done) { return; }
     if ((v.plot && T().canPlot && T().canPlot(b, u.uid)) || (v.ult && global.DG.ultimate)) {   // W-0401 책략 고르는 중 — 대상 칸만 주황 · W-0456 필살 대상 칸도

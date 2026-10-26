@@ -201,7 +201,7 @@
     /* 판 밖 — 같은 땅을 어둡게 깔아 네모로 뚝 끊기지 않게 */
     s += '<rect x="' + (-M) + '" y="' + (-M) + '" width="' + (W + 2 * M) + '" height="' + (H + 2 * M) + '" fill="url(#tvs-plain)" pointer-events="none"/><rect x="' + (-M) + '" y="' + (-M) + '" width="' + (W + 2 * M) + '" height="' + (H + 2 * M) + '" fill="#0d0b06" fill-opacity=".62" pointer-events="none"/>';
     for (k = 0; k < 14; k++) { var ex = (hashS('ex' + k) % 1000) / 1000, side = k % 4, px = side < 2 ? ex * W : (side === 2 ? -M * 0.8 : W + M * 0.1), py = side < 2 ? (side === 0 ? -M * 0.95 : H + M * 0.05) : ex * H, ph0 = propHref(PROP.forest[k % PROP.forest.length]); if (ph0) { s += '<image href="' + esc(ph0) + '" x="' + px + '" y="' + py + '" width="' + M * 0.9 + '" height="' + M * 0.9 + '" opacity=".55" pointer-events="none"/>'; } }
-    var rc = reach(v), mv = {}, deco = '', trees = [], cr = global.DG.command ? global.DG.command.range(b, v.sel) : {};   // W-0455 지휘 범위
+    var rc = reach(v), mv = {}, deco = '', trees = [], cr = global.DG.command ? global.DG.command.range(b, v.sel) : {}, SG = global.DG.sideGoal, sgc = SG ? SG.cells(b) : {};   // W-0455 지휘 범위 · W-0460 상자·마을
     rc.moves.forEach(function (m) { mv[m.x + ',' + m.y] = 1; });
     for (y = 0; y < b.rows; y++) {
       for (x = 0; x < b.cols; x++) {
@@ -215,6 +215,7 @@
         else if (t === 'plain' && h % 100 < 13) { var bh = propHref(h % 3 ? 'bush_0' + (1 + h % 2) : 'flower_patch_01'); if (bh) { deco += '<image href="' + esc(bh) + '" x="' + (X + CELL * (0.1 + (h % 7) * 0.08)) + '" y="' + (Y + CELL * (0.35 + (h % 5) * 0.06)) + '" width="' + CELL * 0.42 + '" height="' + CELL * 0.42 + '" opacity=".9" pointer-events="none"/>'; } }
         if (b.fire && b.fire[x + ',' + y]) { deco += '<text x="' + (X + CELL / 2) + '" y="' + (Y + CELL / 2 + 6) + '" font-size="22" text-anchor="middle" pointer-events="none">🔥</text>'; }
         if (rc.plot && rc.plot[x + ',' + y]) { deco += '<rect class="tv-plot" x="' + (X + 3) + '" y="' + (Y + 3) + '" width="' + (CELL - 6) + '" height="' + (CELL - 6) + '" rx="6" fill="#ff9d3a33" stroke="#ff9d3a" stroke-width="2.5" pointer-events="none"/>'; }
+        if (sgc[x + ',' + y]) { deco += '<text x="' + (X + CELL / 2) + '" y="' + (Y + CELL * 0.72) + '" font-size="' + Math.round(CELL * 0.5) + '" text-anchor="middle" pointer-events="none" opacity="' + (sgc[x + ',' + y] === 'open' ? 0.5 : 1) + '">' + SG.ICON[sgc[x + ',' + y]] + '</text>'; }
         if (cr[x + ',' + y]) { deco += '<rect x="' + (X + 1) + '" y="' + (Y + 1) + '" width="' + (CELL - 2) + '" height="' + (CELL - 2) + '" fill="#f3d27a14" stroke="#f3d27a" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="3 3" pointer-events="none"/>'; }
         if (mv[x + ',' + y]) { deco += '<rect x="' + (X + 2) + '" y="' + (Y + 2) + '" width="' + (CELL - 4) + '" height="' + (CELL - 4) + '" rx="6" fill="#5fb8ff3d" stroke="#8fd0ff" stroke-width="2" pointer-events="none"/>' + coverSvg(T().coverAt(b, x, y), p, false); }
       }
@@ -251,11 +252,12 @@
   function boardSvg(v) {
     if (skin() && art()) { return boardSkin(v); }
     var b = v.b, W = (v.vert ? b.rows : b.cols) * CELL, H = (v.vert ? b.cols : b.rows) * CELL, s = '', x, y;
-    var rc = reach(v), mv = {}, cr = global.DG.command ? global.DG.command.range(b, v.sel) : {};   // W-0455 지휘 범위
+    var rc = reach(v), mv = {}, cr = global.DG.command ? global.DG.command.range(b, v.sel) : {}, SG = global.DG.sideGoal, sgc = SG ? SG.cells(b) : {};   // W-0455 지휘 범위 · W-0460 상자·마을
     rc.moves.forEach(function (m) { mv[m.x + ',' + m.y] = 1; });
     for (y = 0; y < b.rows; y++) {
       for (x = 0; x < b.cols; x++) {
         var t = T().cellAt(b, x, y), p = scr(v, x, y);
+        if (sgc[x + ',' + y]) { s += '<text x="' + (p.c * CELL + CELL / 2) + '" y="' + (p.r * CELL + CELL * 0.72) + '" font-size="' + Math.round(CELL * 0.5) + '" text-anchor="middle" pointer-events="none">' + SG.ICON[sgc[x + ',' + y]] + '</text>'; }
         if (cr[x + ',' + y]) { s += '<rect x="' + (p.c * CELL + 1) + '" y="' + (p.r * CELL + 1) + '" width="' + (CELL - 2) + '" height="' + (CELL - 2) + '" fill="none" stroke="#f3d27a" stroke-opacity=".55" stroke-dasharray="3 3" pointer-events="none"/>'; }
         s += '<rect class="tv-cell" data-x="' + x + '" data-y="' + y + '" x="' + (p.c * CELL) + '" y="' + (p.r * CELL) + '" width="' + CELL + '" height="' + CELL +
           '" fill="' + (art() ? 'url(#tvp-' + t + ')' : COL[t]) + '" stroke="#0003"/>';
@@ -357,7 +359,7 @@
     if (v.banT !== b.turn) { v.banT = b.turn; v.banAt = Date.now(); }
     var foeB = v.foeBan && Date.now() - v.foeBan < 2400;
     var html = '<div class="tv tvs"><div class="tv-board tvs-board">' + boardSvg(v) + cutHtml(v) + (global.DG.battleEvent ? global.DG.battleEvent.html(v, function (u) { return cutArt(v, u); }, function () { if (cur === v) { render(); } }) : '') + '</div>' +
-      '<div class="tvs-top"><span class="tvs-chip turn me">⚔ ' + esc(turnTxt) + ' · 아군 차례</span>' + (b.srpg ? '<span class="tvs-chip goal tv-goal">🎯 ' + esc(T().goalText(b)) + '</span>' : '') + '<span class="tvs-chip">' + esc(NAME[b.land] || '') + (b.siege ? ' · 공성' : ' · 들판') + '</span></div>';
+      '<div class="tvs-top"><span class="tvs-chip turn me">⚔ ' + esc(turnTxt) + ' · 아군 차례</span>' + (b.srpg ? '<span class="tvs-chip goal tv-goal">🎯 ' + esc(T().goalText(b)) + '</span>' : '') + '<span class="tvs-chip">' + esc(NAME[b.land] || '') + (b.siege ? ' · 공성' : ' · 들판') + '</span>' + (global.DG.sideGoal ? global.DG.sideGoal.chip(b) : '') + '</div>';
     /* 다시 그려도(피해 숫자 지우기 등) 띠가 처음부터 다시 돌지 않게 — 지난 시간만큼 animation-delay 를 당긴다 */
     var eF = foeB ? (Date.now() - v.foeBan) / 1000 : 0, eA = (Date.now() - v.banAt) / 1000;
     if (!done && foeB) { html += (eF < 1.3 ? '<div class="tvs-banner foe" style="animation-delay:' + (-eF).toFixed(2) + 's"><span>적군 차례</span></div>' : '') + '<div class="tvs-banner" style="animation-delay:' + (1 - eF).toFixed(2) + 's;animation-fill-mode:both"><span>' + esc(turnTxt) + ' — 아군 차례</span></div>'; }
