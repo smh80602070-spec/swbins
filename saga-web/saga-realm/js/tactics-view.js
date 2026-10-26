@@ -213,7 +213,14 @@
     s += g + '</g><rect width="' + W + '" height="' + H + '" fill="url(#tvs-vig)" pointer-events="none"/><rect x="-1.5" y="-1.5" width="' + (W + 3) + '" height="' + (H + 3) + '" fill="none" stroke="#c9a35a" stroke-opacity=".7" stroke-width="2" rx="3" pointer-events="none"/>' + deco;
     /* 나무·장수 — 위 줄부터(앞이 뒤를 가린다) */
     var items = trees.map(function (tr) { return { y: tr.y + tr.sz, h: '<image href="' + esc(propHref(tr.id)) + '" x="' + tr.x + '" y="' + tr.y + '" width="' + tr.sz + '" height="' + tr.sz + '" pointer-events="none"/>' }; });
-    b.units.filter(function (u) { return u.hp > 0; }).forEach(function (u) { var p2 = scr(v, u.x, u.y); items.push({ y: p2.r * CELL + CELL, h: unitSvg(v, u, rc.hits[u.uid]) + (rc.hits[u.uid] != null ? coverSvg(T().coverAt(b, u.x, u.y), p2, true) : '') }); });
+    v.pos = v.pos || {}; var nowP = Date.now();
+    b.units.filter(function (u) { return u.hp > 0; }).forEach(function (u) {
+      var p2 = scr(v, u.x, u.y), old = v.pos[u.uid], us = unitSvg(v, u, rc.hits[u.uid]);
+      if (old && (old.c !== p2.c || old.r !== p2.r)) { v.pos[u.uid] = { c: p2.c, r: p2.r, fc: old.c, fr: old.r, at: nowP }; } else if (!old) { v.pos[u.uid] = { c: p2.c, r: p2.r }; }
+      var mv0 = v.pos[u.uid], dl = mv0.at ? (nowP - mv0.at) / 1000 : 9, delay = u.side === 'foe' && v.foeBan && nowP - v.foeBan < 400 ? 0.25 : 0;   // 적은 적군 차례 띠 뒤로 조금 늦게
+      if (mv0.at && dl < 0.4) { us = us.replace(/<\/g>$/, '<animateTransform attributeName="transform" type="translate" from="' + ((mv0.fc - mv0.c) * CELL) + ' ' + ((mv0.fr - mv0.r) * CELL) + '" to="0 0" begin="' + delay + 's" dur="0.35s" fill="freeze"/></g>'); if (delay) { us = us.replace('<g class="tv-unit', '<g transform="translate(' + ((mv0.fc - mv0.c) * CELL) + ' ' + ((mv0.fr - mv0.r) * CELL) + ')" class="tv-unit'); } }
+      items.push({ y: p2.r * CELL + CELL, h: us + (rc.hits[u.uid] != null ? coverSvg(T().coverAt(b, u.x, u.y), p2, true) : '') });
+    });
     items.sort(function (a, c) { return a.y - c.y; }).forEach(function (it) { s += it.h; });
     s += floatsSvg(v);
     return '<svg class="tv-svg" viewBox="' + (-M) + ' ' + (-M) + ' ' + (W + 2 * M) + ' ' + (H + 2 * M) + '" preserveAspectRatio="xMidYMid meet">' + defs + s + '</svg>';
@@ -334,9 +341,13 @@
     skinCss();
     var turnTxt = b.srpg ? '제 ' + b.turn + ' 턴' : Math.min(b.turn, T().TURNS) + ' / ' + T().TURNS + ' 턴';
     if (v.banT !== b.turn) { v.banT = b.turn; v.banAt = Date.now(); }
+    var foeB = v.foeBan && Date.now() - v.foeBan < 2400;
     var html = '<div class="tv tvs"><div class="tv-board tvs-board">' + boardSvg(v) + cutHtml(v) + '</div>' +
       '<div class="tvs-top"><span class="tvs-chip turn me">⚔ ' + esc(turnTxt) + ' · 아군 차례</span>' + (b.srpg ? '<span class="tvs-chip goal tv-goal">🎯 ' + esc(T().goalText(b)) + '</span>' : '') + '<span class="tvs-chip">' + esc(NAME[b.land] || '') + (b.siege ? ' · 공성' : ' · 들판') + '</span></div>';
-    if (!done && Date.now() - v.banAt < 1300) { html += '<div class="tvs-banner"><span>' + esc(turnTxt) + ' — 아군 차례</span></div>'; }
+    /* 다시 그려도(피해 숫자 지우기 등) 띠가 처음부터 다시 돌지 않게 — 지난 시간만큼 animation-delay 를 당긴다 */
+    var eF = foeB ? (Date.now() - v.foeBan) / 1000 : 0, eA = (Date.now() - v.banAt) / 1000;
+    if (!done && foeB) { html += (eF < 1.3 ? '<div class="tvs-banner foe" style="animation-delay:' + (-eF).toFixed(2) + 's"><span>적군 차례</span></div>' : '') + '<div class="tvs-banner" style="animation-delay:' + (1 - eF).toFixed(2) + 's;animation-fill-mode:both"><span>' + esc(turnTxt) + ' — 아군 차례</span></div>'; }
+    else if (!done && eA < 1.3) { html += '<div class="tvs-banner" style="animation-delay:' + (-eA).toFixed(2) + 's"><span>' + esc(turnTxt) + ' — 아군 차례</span></div>'; }
     if (done) { html += '<div class="tvs-res">' + resultHtml(v) + '</div>'; }
     else {
       html += '<div class="tvs-log">' + logLines(v) + '</div>' + cardHtml(v) +
@@ -417,6 +428,7 @@
     if (!v || v.b.done) { return; }
     v.sel = null; v.plot = null;
     T().endTurn(v.b);
+    v.foeBan = Date.now();   // W-0452 적군 차례 띠 → 아군 차례 띠
     settle();
     render();
   }
