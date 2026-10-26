@@ -51,6 +51,7 @@
     var cp = st.campaign;
     if (!cp || typeof cp !== 'object') { cp = st.campaign = { ch: 1, step: 'route', party: [], gold: 300, bag: [], cleared: {}, bonus: null }; }
     if (!cp.cleared) { cp.cleared = {}; } if (!cp.bag) { cp.bag = []; } if (!cp.party) { cp.party = []; }
+    if (!cp.talks) { cp.talks = {}; }   // W-0451 본 지원 대화 단계
     if (!cp.gear) { cp.gear = {}; } if (!cp.gbag) { cp.gbag = ['gr_sword_n', 'gr_hide_n']; }   // W-0453 장비 칸·가방(처음엔 낡은 검·가죽 갑옷)
     return cp;
   }
@@ -87,7 +88,8 @@
     if (!ch) { return null; }
     var pre = cp.pre && cp.pre.ch === no && cp.pre.won ? (cp.pre.kind === 'duel' ? 0.8 : 0.85) : 1;   // ③ 전투 앞 설전·일기토를 이기면 적 병력 −15%/−20%
     var rd = 1 + 0.15 * (cp.round || 0);   // ⑤ 회차마다 적 +15%
-    var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1) * pre * rd * (no === MAIN ? 1.2 : 1));   // W-0454 균형 — 마지막 장은 적 +20%(14·15장보다 쉬웠다)
+    var pp = cp.prep && cp.prep.ch === no ? cp.prep : {};   // W-0451 준비물 — 군량 보급 내 병력 +10% · 척후 적 −5%
+    var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1) * (pp.food ? 1.1 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1) * pre * rd * (pp.scout ? 0.95 : 1) * (no === MAIN ? 1.2 : 1));   // W-0454 균형 — 마지막 장은 적 +20%(14·15장보다 쉬웠다)
     return { seed: 'cp|' + ch.id + '|' + (cp.tries || 0), land: ch.land, siege: ch.siege, srpg: true, goal: ch.goal,
       mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no };
   }
@@ -149,6 +151,46 @@
   }
   function unequip(offId) { var r = OFF().rec(offId); if (r && r.item) { state().bag.push(r.item); OFF().unequip(offId); save(); } }
   function setStep(s) { state().step = s; save(); }
+  /* ── W-0451 준비물(이번 장 한정) · 지원 대화 ── */
+  var PREP = [
+    { id: 'food', name: '군량 보급', emoji: '🌾', price: 160, desc: '이번 장 내 병력 +10%' },
+    { id: 'scout', name: '척후', emoji: '🔭', price: 140, desc: '이번 장 적 병력 −5%' },
+    { id: 'med', name: '의원', emoji: '⚕️', price: 120, desc: '다친 장수 모두 치료' }
+  ];
+  function prepHave(id) { var cp = state(); return id !== 'med' && !!(cp.prep && cp.prep.ch === cp.ch && cp.prep[id]); }
+  function buyPrep(id) {
+    var cp = state(), p = PREP.filter(function (x) { return x.id === id; })[0];
+    if (!p) { return { ok: false, why: '없는 물건' }; }
+    if (prepHave(id)) { return { ok: false, why: '이번 장엔 이미 갖췄습니다' }; }
+    if (cp.gold < p.price) { return { ok: false, why: '금이 모자랍니다' }; }
+    cp.gold -= p.price;
+    if (id === 'med') { healAll(); } else { if (!cp.prep || cp.prep.ch !== cp.ch) { cp.prep = { ch: cp.ch }; } cp.prep[id] = 1; }
+    save();
+    return { ok: true, item: p };
+  }
+  function relOf(a, b) { var RD = global.DG.relData, L = RD && RD.all ? RD.all() : [], i; for (i = 0; i < L.length; i++) { var p = L[i]; if ((p.a === a && p.b === b) || (p.a === b && p.b === a)) { return p.kind; } } return ''; }
+  /** 출진 셋의 짝 — 지원 단계·점수·다음 문턱·관계·볼 대화가 있나 */
+  function pairs() {
+    var S = global.DG.support, p = party(), out = [], i, j, cp = state();
+    for (i = 0; i < p.length; i++) { for (j = i + 1; j < p.length; j++) {
+      var a = p[i], b = p[j], k = S ? S.key(a, b) : a + '|' + b, lv = S ? S.level(a, b) : 0, pt = S ? S.points(a, b) : 0, nx = S && S.STEPS ? S.STEPS.filter(function (x) { return x > pt; })[0] : null;
+      out.push({ a: a, b: b, key: k, lv: lv, name: S ? S.nameOf(lv) : '', pts: pt, next: nx || null, rel: relOf(a, b), fresh: lv > (cp.talks[k] || 0) });
+    } }
+    return out;
+  }
+  var TALK = [
+    ['{a}: 지난 싸움, 등을 맡겨 줘서 고맙소.', '{b}: 서로 살아남았으니 그걸로 되었소. 다음에도 곁에 서겠소.'],
+    ['{b}: 이제 그대 발소리만 들어도 어디 서 있는지 알겠소.', '{a}: 하하, 그대 창끝이 보이면 나도 마음이 놓이오.', '{b}: 이 판이 끝나면 술 한 잔 합시다.'],
+    ['{a}: 이 난세가 끝나는 날까지 함께 갑시다.', '{b}: 맹세하오 — 그대 곁이 내 자리요.', '{a}: 그 맹세, 목숨으로 지키겠소.']
+  ];
+  /** 지원 대화 — 새로 닿은 단계를 처음 보면 금 60×단계 */
+  function talk(a, b) {
+    var S = global.DG.support, cp = state(), lv = S ? S.level(a, b) : 0, k = S ? S.key(a, b) : a + '|' + b, nmOf = function (id) { var h = OFF().find(id); return h ? h.name : id; };
+    if (!lv) { return { ok: false, why: '아직 지원 단계가 없습니다 — 판에서 나란히 싸우면 오른다' }; }
+    var first = lv > (cp.talks[k] || 0), gold = first ? 60 * lv : 0;
+    if (first) { cp.talks[k] = lv; cp.gold += gold; save(); }
+    return { ok: true, lv: lv, name: S.nameOf(lv), gold: gold, a: a, b: b, lines: TALK[lv - 1].map(function (l) { return l.replace('{a}', nmOf(a)).replace('{b}', nmOf(b)); }) };
+  }
   /* ── W-0453 장비(무기·방어구·장신구) — 표는 realm-gear.js ── */
   function GR() { return global.DG.realmGear; }
   function gearShop() { var cp = state(); return GR() ? GR().stock(cp.ch, cp.round) : []; }
@@ -193,5 +235,5 @@
 
   global.DG = global.DG || {};
   global.DG.campaign = { on: on, state: state, chapters: chapters, chapter: chapter, roster: roster, party: party, setParty: setParty, foesFor: foesFor,
-    battleOpts: battleOpts, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, gearShop: gearShop, buyGear: buyGear, gearOf: gearOf, equipGear: equipGear, unequipGear: unequipGear, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
+    battleOpts: battleOpts, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, PREP: PREP, prepHave: prepHave, buyPrep: buyPrep, pairs: pairs, talk: talk, gearShop: gearShop, buyGear: buyGear, gearOf: gearOf, equipGear: equipGear, unequipGear: unequipGear, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
 })(typeof window !== 'undefined' ? window : this);

@@ -7714,6 +7714,15 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var ok = miss === 0 && same && starOk && u0.mov === 4 && d1 === 30 && d2 === 9 && d3 === 40 && eq.ok && u1.atk > u2.atk && cp.gbag.length === bag0 && G.ITEMS.length === 60 && st.length >= 5 && !!dr;
       return ok || ('실패 ' + JSON.stringify({ miss: miss, starOk: starOk, mov: u0.mov, d1: d1, d2: d2, d3: d3, eq: eq, atk: [u1.atk, u2.atk], bag: [bag0, cp.gbag.length], items: G.ITEMS.length, st: st.length }));
     });
+    t('W-0451 장 흐름 준비물·지원 대화 — 군량 보급 내 병력 +10%·한 장 한 번 · 척후 적 −5% · 의원 치료 · 지원 없으면 대화 안 됨 · C 닿으면 대화·처음만 금 60', function () {
+      fresh('cao'); var CP = DG.campaign, S = DG.support; if (!CP || !CP.buyPrep) { return '실패 없음'; }
+      R.state().campaign = null; var cp = CP.state(); cp.gold = 2000; var m0 = CP.battleOpts(cp.ch).myTroops[0], f0 = CP.battleOpts(cp.ch).foeTroops[0];
+      var p1 = CP.buyPrep('food'), p2 = CP.buyPrep('food'), p3 = CP.buyPrep('scout'), m1 = CP.battleOpts(cp.ch).myTroops[0], f1 = CP.battleOpts(cp.ch).foeTroops[0];
+      var pr = CP.party(), a = pr[0], b2 = pr[1]; DG.off.rec(pr[2] || a).hurt = 2; var p4 = CP.buyPrep('med'), healed = !DG.off.rec(pr[2] || a).hurt;
+      var t0 = CP.talk(a, b2); R.state().support = R.state().support || {}; R.state().support[S.key(a, b2)] = 3; var g = cp.gold, t1 = CP.talk(a, b2), g1 = cp.gold, t2 = CP.talk(a, b2), pairs = CP.pairs();
+      var ok = p1.ok && !p2.ok && p3.ok && p4.ok && healed && Math.abs(m1 / m0 - 1.1) < 0.01 && Math.abs(f1 / f0 - 0.95) < 0.01 && !t0.ok && t1.ok && t1.lv === 1 && g1 === g + 60 && t2.ok && t2.gold === 0 && pairs.length === 3 && t1.lines.length >= 2;
+      return ok || ('실패 ' + JSON.stringify({ p: [p1.ok, p2.ok, p3.ok, p4.ok], healed: healed, m: [m0, m1], f: [f0, f1], t0: t0.ok, t1: t1, g: [g, g1], t2: t2.gold, pairs: pairs.length }));
+    });
     t('W-0440 보물 세트 — 같은 세력 장수 둘이 한 세트 조각을 나눠 지니면 그 장수들 능력치 +5%, 셋이면 +10% · 다른 세력·죽은 장수는 안 셈 · statBonus pct 에 닿음 · 끔', function () {
       var TS = DG.treasureSet, IT = DG.item, R = DG.rtk, C = DG.core; if (!TS || !IT || !R) { return '실패 DG.treasureSet 없음'; }
       var m = R.state().officers, keep = JSON.stringify(m), ids = ['__t1', '__t2', '__t3', '__t4'];

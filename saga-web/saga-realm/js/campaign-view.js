@@ -131,16 +131,33 @@
     return html + '</div>';
   }
   function shopTab() {
-    var cp = CP().state(), html = '<div class="cpg-act" style="margin-top:0">장비 — 이번 장 진열 (장이 오를수록 높은 등급)</div><div class="cpg-grid">';
+    var cp = CP().state(), html = '<div class="cpg-act" style="margin-top:0">준비물 — 이번 장 한정</div><div class="cpg-grid">';
+    CP().PREP.forEach(function (p) { var have = CP().prepHave(p.id); html += '<div class="cpg-card"><span style="font-size:30px;width:52px;text-align:center">' + esc(p.emoji) + '</span><span><b>' + esc(p.name) + '</b><small>' + esc(p.desc) + '</small><br><button class="cpg-btn" style="padding:4px 8px;min-height:30px;margin-top:4px" data-cp="buyp" data-id="' + p.id + '"' + (have || cp.gold < p.price ? ' disabled' : '') + '>' + (have ? '갖춤 ✓' : '💰 ' + p.price) + '</button></span></div>'; });
+    html += '</div><div class="cpg-act">장비 — 이번 장 진열 (장이 오를수록 높은 등급)</div><div class="cpg-grid">';
     CP().gearShop().forEach(function (it) { var p = GR().price(it), G = GR().GRADE[it.grade]; html += '<div class="cpg-card"><span style="font-size:30px;width:52px;text-align:center">' + esc(it.emoji) + '</span><span><b style="color:' + G.col + '">' + esc(it.name) + '</b><small>' + esc(G.name) + ' ' + esc(GR().SLOT_NAME[it.slot]) + '<br>' + esc(GR().lineOf(it)) + '</small><br><button class="cpg-btn" style="padding:4px 8px;min-height:30px;margin-top:4px" data-cp="buyg" data-id="' + esc(it.id) + '"' + (cp.gold < p ? ' disabled' : '') + '>💰 ' + p + '</button></span></div>'; });
     html += '</div><div class="cpg-act">보물</div><div class="cpg-grid">';
     CP().shop().forEach(function (it) { var p = CP().price(it); html += '<div class="cpg-card"><span style="font-size:30px;width:52px;text-align:center">' + esc(it.emoji) + '</span><span><b>' + esc(it.name) + '</b><small>' + esc((OFF().STAT_KOR || {})[it.stat] || it.stat) + ' +' + it.bonus + '<br>' + esc(it.desc || '') + '</small><br><button class="cpg-btn" style="padding:4px 8px;min-height:30px;margin-top:4px" data-cp="buy" data-id="' + esc(it.id) + '"' + (cp.gold < p ? ' disabled' : '') + '>💰 ' + p + '</button></span></div>'; });
     return html + '</div>';
   }
-  function talkTab() {
-    var html = '<div class="cpg-grid">', B = global.DG.data && global.DG.data.BIOS, HS = global.DG.heroSkill;
-    CP().party().forEach(function (id) { var h = OFF().find(id), bio = (B && B[id]) || (h && (h.bio || h.desc || h.quote)) || '', s = HS && HS.of ? HS.of(id) : null; html += '<div class="cpg-card" style="align-items:flex-start"><img alt="" src="' + face(id, 52) + '"><span><b>' + esc(nm(id)) + '</b><small>' + esc(String(bio).slice(0, 120) || '「이번 싸움, 맡겨 주십시오.」') + (s ? '<br><span style="color:#f3d27a">✦ ' + esc(s.name) + '</span> — ' + esc(s.desc) : '') + '</small></span></div>'; });
+  /* W-0451 지원 대화 — 출진 셋의 짝 · 단계 C·B·A · 새 단계면 「지원 대화」(처음 보면 금) · 원수는 안 오름 */
+  var talkShown = null;
+  function talkBox() {
+    var t = talkShown; if (!t) { return ''; }
+    return '<div class="cpg-brief" style="border-color:#c9a35a;margin-bottom:10px"><div style="display:flex;gap:10px;align-items:center;margin-bottom:6px"><img alt="" src="' + face(t.a, 44) + '" style="width:44px;height:44px;border-radius:8px"><b>지원 ' + esc(t.name) + '</b><img alt="" src="' + face(t.b, 44) + '" style="width:44px;height:44px;border-radius:8px">' + (t.gold ? '<span class="cpg-gold">💰 +' + t.gold + '</span>' : '') + '<button class="cpg-btn ghost" style="margin-left:auto;min-height:32px;padding:4px 10px" data-cp="talkx">닫기</button></div>' + t.lines.map(function (l) { return '<div style="margin:3px 0">' + esc(l) + '</div>'; }).join('') + '</div>';
+  }
+  function pairsHtml() {
+    var html = '<div class="cpg-act">지원 — 판에서 나란히 싸우면 오른다(C 3 · B 7 · A 12) · 이웃 지원이면 명중·회피 보정</div><div class="cpg-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">';
+    CP().pairs().forEach(function (p) {
+      var tag = p.rel === 'foe' ? '<span style="color:#ff8a6a">원수 — 오르지 않음</span>' : (p.lv ? '<b style="color:#f3d27a">' + esc(p.name) + '</b>' : '<span class="muted">없음</span>') + (p.rel === 'sworn' ? ' · 의형제' : '') + (p.next ? ' <span class="muted">(' + p.pts + '/' + p.next + ')</span>' : '');
+      html += '<div class="cpg-card"><img alt="" src="' + face(p.a, 40) + '" style="width:40px;height:40px"><img alt="" src="' + face(p.b, 40) + '" style="width:40px;height:40px"><span style="flex:1"><b>' + esc(nm(p.a)) + ' · ' + esc(nm(p.b)) + '</b><small style="display:block">' + tag + '</small>' + (p.lv && p.rel !== 'foe' ? '<button class="cpg-btn' + (p.fresh ? '' : ' ghost') + '" style="padding:4px 10px;min-height:30px;margin-top:4px" data-cp="talk" data-a="' + esc(p.a) + '" data-b="' + esc(p.b) + '">' + (p.fresh ? '💬 지원 대화 (새)' : '💬 다시 보기') + '</button>' : '') + '</span></div>';
+    });
     return html + '</div>';
+  }
+  function talkTab() {
+    var html = talkBox() + '<div class="cpg-grid">', B = global.DG.data && global.DG.data.BIOS, HS = global.DG.heroSkill;
+    var after = pairsHtml();
+    CP().party().forEach(function (id) { var h = OFF().find(id), bio = (B && B[id]) || (h && (h.bio || h.desc || h.quote)) || '', s = HS && HS.of ? HS.of(id) : null; html += '<div class="cpg-card" style="align-items:flex-start"><img alt="" src="' + face(id, 52) + '"><span><b>' + esc(nm(id)) + '</b><small>' + esc(String(bio).slice(0, 120) || '「이번 싸움, 맡겨 주십시오.」') + (s ? '<br><span style="color:#f3d27a">✦ ' + esc(s.name) + '</span> — ' + esc(s.desc) : '') + '</small></span></div>'; });
+    return html + '</div>' + after;
   }
   /* ── ③ 전투 앞 설전·일기토 — 시나리오 단계 글 + 기존 설전·일기토 창(DG.ui, #encounter 가 장 흐름 위) ── */
   function pre() {
@@ -195,6 +212,9 @@
     else if (a === 'bag') { var k = b.getAttribute('data-k'); pick = pick === k ? null : k; show('camp'); }
     else if (a === 'equip') { if (pick != null) { var ps = String(pick), r = ps.indexOf('g:') === 0 ? CP().equipGear(b.getAttribute('data-id'), ps.slice(2)) : CP().equip(b.getAttribute('data-id'), cp.bag[+ps.slice(2)]); if (!r.ok) { toast(r.why); } pick = null; show('camp'); } }
     else if (a === 'ungear') { CP().unequipGear(b.getAttribute('data-id'), b.getAttribute('data-s')); show('camp'); }
+    else if (a === 'buyp') { var rp = CP().buyPrep(b.getAttribute('data-id')); toast(rp.ok ? rp.item.name + ' 갖췄습니다' : rp.why); show('camp'); }
+    else if (a === 'talk') { var rt = CP().talk(b.getAttribute('data-a'), b.getAttribute('data-b')); if (rt.ok) { talkShown = rt; } else { toast(rt.why); } show('camp'); }
+    else if (a === 'talkx') { talkShown = null; show('camp'); }
     else if (a === 'buyg') { var rg = CP().buyGear(b.getAttribute('data-id')); toast(rg.ok ? rg.item.name + ' 샀습니다' : rg.why); show('camp'); }
     else if (a === 'unequip') { CP().unequip(b.getAttribute('data-id')); show('camp'); }
     else if (a === 'buy') { var rb = CP().buy(b.getAttribute('data-id')); toast(rb.ok ? rb.item.name + ' 샀습니다' : rb.why); show('camp'); }
