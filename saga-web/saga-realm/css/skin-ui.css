@@ -28,6 +28,8 @@ body:not(.skin-off) #acc-host .acc-card {
   color: var(--sk-ink);
 }
 
+body:not(.skin-off) #btn-more { color: var(--sk-ink); }   /* W-0473 크림 단추 위 「⋯」이 안 보였다 */
+
 /* ── 버튼 — 주 버튼도 그림 ── */
 body:not(.skin-off) .btn,
 body:not(.skin-off) #dock button {

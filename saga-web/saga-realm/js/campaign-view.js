@@ -39,6 +39,7 @@
       '.cpg-row{display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}.cpg-battle{position:relative;min-height:calc(100vh - 40px)}.cpg-battle .tacview{position:absolute}' +
       '.cpg-result{max-width:520px;margin:10vh auto 0;text-align:center;padding:22px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.12)}.cpg-result h3{font-size:26px;margin:0 0 8px}';
     st.textContent += 'body.cpg-on #aq-go,body.cpg-on #rregion-hud,body.cpg-on #btn-3d,body.cpg-on #btn-gyeong,body.cpg-on #btn-rts,body.cpg-on #wallet,body.cpg-on #profile,body.cpg-on #dock{display:none!important}' +
+      '@media (min-width:1100px){.cpg-wrap{columns:2;column-gap:24px;max-width:1240px}.cpg-act{break-after:avoid}.cpg-route{break-inside:avoid}.cpg-top{max-width:1240px}}' +
       'body.cpg-on #top{z-index:35}body.cpg-on #sheet{z-index:36}body.cpg-on .cpg-top{padding-right:112px}';   // ④ 지도용 단추는 숨기고 ⋯ 메뉴(소리·설정·도움·리셋)·설정창은 장 흐름 위로   // 옛 지도 화면의 시정 위임 ▶·지역 고르기는 장 흐름 동안 숨김
     doc.head.appendChild(st);
   }
