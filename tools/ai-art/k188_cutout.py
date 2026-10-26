@@ -366,6 +366,16 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         # K-0198 — 앞·뒷모습: 엔진 기본 클립은 옆 기준(다리·팔 앞뒤 회전)이라 앞에서 보면 다리가 옆으로 벌어진다 → 다리는 번갈아 들기(dy),
         # 팔은 작게 흔들기, 골반 오르내림·몸통 좌우 흔들림. 뒤모습도 같은 클립(보는 쪽만 다르다)
         clips = json.loads(json.dumps(FRONT_CLIPS))
+    if j.get('head_flip'):                             # K-0201 — 그림이 「몸은 오른쪽·고개는 뒤돌아 왼쪽」(rf_sunce) → 걸으면 뒤를 보며 걷는 꼴(사용자 10-26). 머리(와 머리카락)만 목 축으로 좌우 뒤집기
+        for p in parts:
+            if p['bone'] in ('head', 'hair') and p['img'] in ('head.webp', 'hair.webp'):
+                f_ = os.path.join(outdir, p['img'])
+                Image.open(f_).transpose(Image.FLIP_LEFT_RIGHT).save(f_, 'WEBP', quality=90, method=6)
+                p['x'] = round(-(p['x'] + p['w']), 2)
+        if 'hair' in bones:
+            bones['hair']['x'] = round(-bones['hair'].get('x', 0), 2)
+        if 'head' in bones:
+            bones['head']['rot'] = round(-bones['head'].get('rot', 0), 2)   # 그려진 머리 기울기도 거울(몸통 기울기는 작아 무시)
     rig = {'h': 100, 'clips': clips, 'src': os.path.relpath(src, ROOT).replace('\\', '/'), 'bones': bones, 'parts': sorted(parts, key=lambda p: p['z']), 'sway': ({'hair': 0.6} if 'hair' in B else {})}   # K-0200 — hair 부위가 있으면 엔진 이동 관성도
     json.dump(rig, open(os.path.join(outdir, 'rig.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     lp = os.path.splitext(src)[0] + '.license.json'
