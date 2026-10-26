@@ -89,6 +89,7 @@ namespace Saga.Story.World
         /// <summary>매 프레임(진단도 부른다) — 파도를 다 잡으면 다음 파도, 다섯을 다 잡으면 장비 굴림, 시간이 다하면 흩어짐.</summary>
         public StoryHuntWave.Turn TickWave(float dt)
         {
+            if (!StoryHuntWave.Active) return StoryHuntWave.Turn.None;
             var t = StoryHuntWave.Tick(dt, WaveAlive());
             switch (t)
             {

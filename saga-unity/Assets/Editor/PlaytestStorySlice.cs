@@ -134,6 +134,23 @@ namespace Saga.EditorTools
         /// 몰이 몹 처치는 셈 밖 · 둘째 몰이는 시간을 다 보내면 흩어짐(몹 사라짐).</summary>
         private static bool CheckHuntWave()
         {
+            string gear = StoryGear.Snapshot();
+            bool drops = StoryGear.DropsOn;
+            string path = System.IO.Path.Combine(Application.persistentDataPath, "save_story.json");
+            byte[] save = System.IO.File.Exists(path) ? System.IO.File.ReadAllBytes(path) : null;
+            try { return CheckHuntWaveCore(); }
+            finally
+            {
+                StoryGear.Restore(gear);
+                StoryGear.DropsOn = drops;
+                StoryHuntWave.ResetForTest();
+                if (save != null) System.IO.File.WriteAllBytes(path, save);
+                else if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+            }
+        }
+
+        private static bool CheckHuntWaveCore()
+        {
             var sp = Object.FindFirstObjectByType<StoryEnemySpawner>();
             if (sp == null) { Debug.LogError("[PlaytestStorySlice] huntwave 스포너 없음"); return false; }
             StoryHuntWave.ResetForTest();
@@ -143,6 +160,7 @@ namespace Saga.EditorTools
             if (!StoryHuntWave.OnFieldKill(false, false)) { Debug.LogError("[PlaytestStorySlice] huntwave 50 째에 안 시작"); return false; }
             var counts = new System.Collections.Generic.List<int>();
             counts.Add(sp.SpawnWave());
+            if (string.IsNullOrEmpty(StoryHud.HuntWaveLine())) { Debug.LogError("[PlaytestStorySlice] huntwave HUD 없음"); return false; }
             int guard = 0;
             while (StoryHuntWave.Active && guard++ < 20)
             {
@@ -152,7 +170,31 @@ namespace Saga.EditorTools
                     if (e.WaveId == StoryHuntWave.Id && !e.IsDead) e.TakeDamage(1e7f, false);
                 if (StoryHuntWave.Kills != killsBefore) { Debug.LogError("[PlaytestStorySlice] huntwave 몰이 몹 처치가 셈에 듦"); return false; }
                 int aliveBefore = sp.WaveAlive();
+                string expectedGear = null;
+                if (StoryHuntWave.IsLast(StoryHuntWave.Wave))
+                {
+                    string beforeGear = StoryGear.Snapshot();
+                    StoryGear.DropsOn = true;
+                    for (int i = 0; i < StoryHuntWave.Loot; i++)
+                    {
+                        string key = StoryGear.RollDrop(true);
+                        if (key != null) StoryGear.EquipIfBetter(key);
+                    }
+                    expectedGear = StoryGear.Snapshot();
+                    StoryGear.Restore(beforeGear);
+                }
                 var t = sp.TickWave(0.1f);
+                StoryGear.DropsOn = false;
+                if (expectedGear != null)
+                {
+                    if (StoryGear.Snapshot() != expectedGear) { Debug.LogError("[PlaytestStorySlice] huntwave 보상 굴림 불일치"); return false; }
+                    StorySaveState.Save();
+                    StoryGear.Restore(null);
+                    if (!StorySaveState.TryLoad() || StoryGear.Snapshot() != expectedGear)
+                    { Debug.LogError("[PlaytestStorySlice] huntwave 보상 저장 왕복 실패"); return false; }
+                    if (sp.TickWave(0.1f) != StoryHuntWave.Turn.None || StoryGear.Snapshot() != expectedGear)
+                    { Debug.LogError("[PlaytestStorySlice] huntwave 보상 중복 지급"); return false; }
+                }
                 if (t == StoryHuntWave.Turn.NextWave) counts.Add(sp.WaveAlive());
                 else if (t != StoryHuntWave.Turn.Done) { Debug.LogError($"[PlaytestStorySlice] huntwave 다 잡았는데 {t}(남음 {aliveBefore})"); return false; }
             }
@@ -167,8 +209,46 @@ namespace Saga.EditorTools
             int left = sp.WaveAlive();
             StoryHuntWave.ResetForTest();
             if (t2 != StoryHuntWave.Turn.Scattered || left != 0) { Debug.LogError($"[PlaytestStorySlice] huntwave 흩어짐 {t2}·남음 {left}"); return false; }
+            if (StoryHud.HuntWaveLine() != "") { Debug.LogError("[PlaytestStorySlice] huntwave 끝난 뒤 HUD 남음"); return false; }
             Debug.Log($"[PlaytestStorySlice] huntwave OK — 50 째에 몰이 · 파도 {string.Join("/", counts)}(마지막 대장 포함) · 끝 · 시간 다하면 흩어짐");
+            Debug.Log("[PlaytestStorySlice] huntwave reward + save round-trip + once-only + HUD OK");
             return true;
+        }
+
+        /// <summary>U-0247 마지막 파도 여덟을 실제 몸이 선 뒤 촬영하고 예산을 잰다. 전용 프로세스에서만 실행.</summary>
+        public static void RunHuntWaveShot()
+        {
+            System.Environment.SetEnvironmentVariable("SAGA_SHOT_SCENE", ScenePath);
+            System.Environment.SetEnvironmentVariable("SAGA_SHOT_TARGETS", "gamecam;screen");
+            System.Environment.SetEnvironmentVariable("SAGA_SHOT_SEQ", "2,30");
+            int frame = 0;
+            bool spawned = false;
+            EditorApplication.CallbackFunction prepare = null;
+            prepare = () =>
+            {
+                if (!EditorApplication.isPlaying) return;
+                frame++;
+                if (!spawned && frame >= 90)
+                {
+                    var sp = Object.FindFirstObjectByType<StoryEnemySpawner>();
+                    if (sp == null) return;
+                    SagaFlow.SuppressAutoSave = true;
+                    if (StoryScenarioUi.Instance != null) StoryScenarioUi.Instance.gameObject.SetActive(false);
+                    StoryHuntWave.ResetForTest();
+                    for (int i = 0; i < StoryHuntWave.Every; i++) StoryHuntWave.OnFieldKill(false, false);
+                    for (int i = 1; i < StoryHuntWave.Waves; i++) StoryHuntWave.Tick(0f, 0);
+                    sp.SpawnWave();
+                    spawned = true;
+                }
+                if (spawned && frame >= 180)
+                {
+                    PlaytestPerfBudget.Check("HuntWaveShot", "story");
+                    Debug.Log($"[HuntWaveShot] {StoryHud.HuntWaveLine()}");
+                    EditorApplication.update -= prepare;
+                }
+            };
+            PlaytestShowcaseGui.Run();
+            EditorApplication.update += prepare;
         }
 
         /// <summary>tasks U-0246 세트 무예 — 세트 없으면 안 나감 · 첫 세트를 다 끼면(Lv 20) 나가고 쿨이 걸림. 장비·레벨은 아래 Init 이 되돌린다.</summary>

@@ -19,8 +19,36 @@ namespace Saga.Story.UI
 
         private const float RefreshGapSec = 0.25f;
         private float _timer;
+        private TextMeshProUGUI _huntWaveLabel;
 
-        private void Start() => Refresh();
+        private void Start()
+        {
+            if (label != null)
+            {
+                _huntWaveLabel = Instantiate(label, label.transform.parent);
+                _huntWaveLabel.name = "HuntWaveHud";
+                var rt = _huntWaveLabel.rectTransform;
+                rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 1f);
+                rt.anchoredPosition = new Vector2(0f, -64f);
+                rt.sizeDelta = new Vector2(520f, 36f);
+                _huntWaveLabel.alignment = TextAlignmentOptions.Center;
+                _huntWaveLabel.fontSize = 22f;
+                _huntWaveLabel.raycastTarget = false;
+                _huntWaveLabel.text = "";
+            }
+            Refresh();
+        }
+
+        public static string HuntWaveLine()
+        {
+            if (!StoryHuntWave.Active) return "";
+            string format = StoryLocalization.CurrentLanguage == "en"
+                ? "Wave {0}/{1} · {2:0}s · {3} foes"
+                : "몰이 {0}/{1} · {2:0}초 · {3}마리";
+            int alive = StoryEnemySpawner.Instance != null ? StoryEnemySpawner.Instance.WaveAlive() : 0;
+            return string.Format(format, StoryHuntWave.Wave + 1, StoryHuntWave.Waves,
+                Mathf.Max(0f, StoryHuntWave.TimeLeft), alive);
+        }
 
         private void Update()
         {
@@ -32,6 +60,7 @@ namespace Saga.Story.UI
 
         private void Refresh()
         {
+            if (_huntWaveLabel != null) _huntWaveLabel.text = HuntWaveLine();
             if (label == null) return;
             bool done = StoryQuestState.QuestDone;
             bool bossDone = StoryQuestState.QuestBossDone;
