@@ -28,6 +28,7 @@
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-battle.ogg 를 mp3 로 옮김) | 1 |
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-field.ogg 를 mp3 로 옮김) | 1 |
 | k117_audio.py | - | CC0-1.0 (자체 — 자체 소리 story-town.ogg 를 mp3 로 옮김) | 1 |
+| bake_for_rig.py | - | CC0-1.0 (동작 = ual1_standard, 뼈대 구조는 대상 몸의 것) | 1 |
 | bake_for_rig.py --map vroid (vroid_batch.sh anim 단계, 2026-10-07) | - | CC0-1.0 (뼈대+동작만 — 메시·그림 없음. 동작 원본 Quaternius Universal Animation Library CC0 + 자체 키프레임 too | 1 |
 | mocap_retarget.py (K-0139·K-0161) + keyframes.py | - | CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함, mocap.cs.cmu.edu FAQ) ·  | 2 |
 | mocap_retarget.py (K-0139) | - | CMU Graphics Lab Motion Capture Database — "may be copied, modified, or redistributed with | 3 |
@@ -41,7 +42,7 @@
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
 | remote3d | microsoft/TRELLIS-image-large | MIT | 531 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
-| gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1992 |
+| gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 2105 |
 | make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |
 | k163_illust.py + gen.py (ComfyUI, Kaggle 원격) | animagine-xl-4.0-opt | saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상  | 500 |
 | gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 141 |

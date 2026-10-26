@@ -223,6 +223,15 @@
    ]
   },
   {
+   "tool": "bake_for_rig.py",
+   "model": "",
+   "license": "CC0-1.0 (동작 = ual1_standard, 뼈대 구조는 대상 몸의 것)",
+   "count": 1,
+   "where": [
+    "saga-assets/characters/anim-src/combat"
+   ]
+  },
+  {
    "tool": "bake_for_rig.py --map vroid (vroid_batch.sh anim 단계, 2026-10-07)",
    "model": "",
    "license": "CC0-1.0 (뼈대+동작만 — 메시·그림 없음. 동작 원본 Quaternius Universal Animation Library CC0 + 자체 키프레임 tools/char-forge/keyframes.py)",
@@ -381,7 +390,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 1992,
+   "count": 2105,
    "where": [
     "saga-assets/icons/license",
     "saga-assets/portraits-expr",
