@@ -19,7 +19,7 @@ try {
   console.log('STEP story', JSON.stringify(await state())); await shot('story');
   await click('[data-cp="choose"]'); await sleep(600);
   console.log('STEP camp', JSON.stringify(await state())); await shot('camp');
-  for (const t of ['gear', 'shop', 'talk', 'party']) { await click('[data-cp="tab"][data-t="' + t + '"]'); await sleep(300); if (t === 'shop') { await shot('shop'); } }
+  for (const t of ['gear', 'shop', 'talk', 'party']) { await click('[data-cp="tab"][data-t="' + t + '"]'); await sleep(300); if (t !== 'party') { if (t === 'gear') { await click('[data-cp="bag"]'); await sleep(200); } await shot(t); } }
   await click('[data-cp="go"]'); await sleep(2500);
   console.log('STEP battle', JSON.stringify(await ev(() => ({ tac: !!document.querySelector('#cpg-tac.show'), cells: document.querySelectorAll('#cpg-tac [data-c], #cpg-tac .tv-cell, #cpg-tac td').length })))); await shot('battle');
   await click('#cpg-tac [data-tv="auto"]');

@@ -89,7 +89,7 @@
     var s = stats || (OFF() ? OFF().stats(id) : { might: 60, wisdom: 60, command: 60 });
     var hp = 50 + s.command;
     var u = { uid: side + ':' + id, id: id, side: side, kind: 'officer', hp: hp, max: hp, atk: 10 + s.might / 5, def: s.might / 10,
-      mov: MOV, rng: s.wisdom >= s.might ? 2 : 1, x: 0, y: 0, moved: false, acted: false, wis: s.wisdom }; return global.DG.treasureSet && global.DG.treasureSet.tactic ? global.DG.treasureSet.tactic(u) : u;   /* W-0440 세트 전법 */   // wis — W-0401 책략
+      mov: MOV, rng: s.wisdom >= s.might ? 2 : 1, x: 0, y: 0, moved: false, acted: false, wis: s.wisdom }; u = global.DG.treasureSet && global.DG.treasureSet.tactic ? global.DG.treasureSet.tactic(u) : u; return global.DG.heroSkill ? global.DG.heroSkill.unit(u) : u;   /* W-0453 장수 고유 스킬·장비 */   /* W-0440 세트 전법 */   // wis — W-0401 책략
   }
   /** 부대 유닛 — 병력에서 */
   function troopUnit(n, side, troops) {
@@ -170,11 +170,13 @@
     var ch = hitChanceB(b, a, t);   // W-0401 SRPG 판이면 높이·상성·뒤까지
     if (b.srpg) { faceTo(a, t.x, t.y); }
     var hit = roll(b, 'h') * 100 < ch, dmg = 0;
-    if (hit) { dmg = Math.max(1, Math.round(a.atk * DMG() * (0.8 + roll(b, 'd') * 0.4))); t.hp = Math.max(0, t.hp - dmg); }
+    var HS = global.DG.heroSkill;   // W-0453 고유 스킬 — 피해 손질(치명·선봉·철벽·불굴…)·친 뒤(흡혈·반격·연격·처단)
+    if (hit) { dmg = Math.max(1, Math.round(a.atk * DMG() * (0.8 + roll(b, 'd') * 0.4))); if (HS) { dmg = HS.dmg(b, a, t, dmg); } t.hp = Math.max(0, t.hp - dmg); }
     a.acted = true; a.moved = true; if (global.DG.support) { global.DG.support.onAct(b, a); }   // W-0425 지원 — 이웃 쌍 적기
-    b.log.push({ t: b.turn, a: uid, to: tuid, hit: hit, dmg: dmg, ch: ch });
+    var le = { t: b.turn, a: uid, to: tuid, hit: hit, dmg: dmg, ch: ch }; b.log.push(le);
+    var sk = HS ? HS.after(b, a, t, hit, dmg) : []; if (sk.length) { le.skills = sk; }
     check(b);
-    return { ok: true, hit: hit, dmg: dmg, killed: t.hp <= 0, chance: ch };
+    return { ok: true, hit: hit, dmg: dmg, killed: t.hp <= 0, chance: ch, skills: sk };
   }
 
   /* ── AI(같은 규칙을 양쪽이 쓴다 — 진단의 자동 대국도 이것) ── */
@@ -220,6 +222,7 @@
     b.turn++;
     b.units.forEach(function (u) { u.moved = false; u.acted = false; });
     b.side = 'me';
+    if (global.DG.heroSkill) { global.DG.heroSkill.turnStart(b); }   // W-0453 치유·인덕
     check(b);
     return b.done;
   }
@@ -395,6 +398,7 @@
       }
     });
     for (i = 0; i < list.length; i++) { if (list[i].side === 'foe' && list[i].kind === 'officer') { list[i].leader = true; break; } }
+    if (global.DG.heroSkill && b.plots != null) { b.plots += global.DG.heroSkill.plotsBonus(b); }   // W-0453 묘책
     return list;
   }
   function faceTo(u, x, y) {
@@ -412,6 +416,7 @@
     if (heightAt(b, att.x, att.y) > heightAt(b, tgt.x, tgt.y)) { out.push(['높이', HEIGHT_HIT]); }
     if (att.arm && tgt.arm) { if (BEATS[att.arm] === tgt.arm) { out.push(['상성', COUNTER_HIT]); } else if (BEATS[tgt.arm] === att.arm) { out.push(['상성', -COUNTER_HIT]); } }
     if (isBack(att, tgt)) { out.push(['뒤', BACK_HIT]); } if (global.DG.support) { global.DG.support.mods(b, att, tgt, out); }   // W-0425 지원 명중·막음
+    if (global.DG.heroSkill) { global.DG.heroSkill.mods(b, att, tgt, out); }   // W-0453 고유 스킬·장비 명중
     return out;
   }
   /** 판을 보는 명중률 — SRPG 판이면 높이·상성·뒤까지(옛 판은 hitChance 그대로) */

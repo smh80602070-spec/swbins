@@ -51,6 +51,7 @@
     var cp = st.campaign;
     if (!cp || typeof cp !== 'object') { cp = st.campaign = { ch: 1, step: 'route', party: [], gold: 300, bag: [], cleared: {}, bonus: null }; }
     if (!cp.cleared) { cp.cleared = {}; } if (!cp.bag) { cp.bag = []; } if (!cp.party) { cp.party = []; }
+    if (!cp.gear) { cp.gear = {}; } if (!cp.gbag) { cp.gbag = ['gr_sword_n', 'gr_hide_n']; }   // W-0453 장비 칸·가방(처음엔 낡은 검·가죽 갑옷)
     return cp;
   }
   function save() { var c = C(); if (c && c.persist) { c.persist(); } }
@@ -113,6 +114,8 @@
       cp.gold += res.gold;
       if (OFF().gainExpAll) { OFF().gainExpAll(party(), res.exp); }
       if (IT() && IT().randomItem && ((no * 7 + (cp.tries || 0)) % 3 === 0 || no === 1)) { var it = IT().randomItem(); if (it) { cp.bag.push(it.id); res.item = it; } }
+      var GR = global.DG.realmGear, gd = GR ? GR.drop(no, (cp.round || 0) + ':' + (cp.tries || 0), cp.round) : null;   // W-0453 싸움마다 장비 하나
+      if (gd) { cp.gbag.push(gd.id); res.gear = gd; }
       cp.cleared[no] = (cp.cleared[no] || 0) + 1;
       if (cp.ch === no && no < ALL) { cp.ch = no + 1; }
       var sg = stageOf(no);   // ③ 일기토로 꺾은 이름 있는 장수는 장을 깨면 합류
@@ -146,6 +149,26 @@
   }
   function unequip(offId) { var r = OFF().rec(offId); if (r && r.item) { state().bag.push(r.item); OFF().unequip(offId); save(); } }
   function setStep(s) { state().step = s; save(); }
+  /* ── W-0453 장비(무기·방어구·장신구) — 표는 realm-gear.js ── */
+  function GR() { return global.DG.realmGear; }
+  function gearShop() { var cp = state(); return GR() ? GR().stock(cp.ch, cp.round) : []; }
+  function buyGear(id) {
+    var cp = state(), it = GR() && GR().byId(id), p = it ? GR().price(it) : 0;
+    if (!it) { return { ok: false, why: '없는 물건' }; }
+    if (cp.gold < p) { return { ok: false, why: '금이 모자랍니다' }; }
+    cp.gold -= p; cp.gbag.push(id); save();
+    return { ok: true, item: it };
+  }
+  function gearOf(offId) { var g = state().gear[offId] || {}; return { w: g.w || null, a: g.a || null, c: g.c || null }; }
+  function equipGear(offId, id) {
+    var cp = state(), i = cp.gbag.indexOf(id), it = GR() && GR().byId(id);
+    if (i < 0 || !it) { return { ok: false, why: '가방에 없음' }; }
+    var g = cp.gear[offId] = cp.gear[offId] || {}, old = g[it.slot];
+    cp.gbag.splice(i, 1); if (old) { cp.gbag.push(old); }
+    g[it.slot] = id; save();
+    return { ok: true };
+  }
+  function unequipGear(offId, slot) { var cp = state(), g = cp.gear[offId]; if (g && g[slot]) { cp.gbag.push(g[slot]); g[slot] = null; save(); } }
   /** ⑤ 다 끝났나(19장 후일담까지) · 회차 — 1장부터, 장수·금·가방·경험은 그대로, 적은 회차마다 +15% */
   function ended() { var cp = state(); return !!cp.cleared[ALL]; }
   function newRound() { var cp = state(); cp.round = (cp.round || 0) + 1; cp.ch = 1; cp.cleared = {}; cp.bonus = null; cp.pre = null; cp.tries = 0; cp.step = 'route'; save(); return cp.round; }
@@ -170,5 +193,5 @@
 
   global.DG = global.DG || {};
   global.DG.campaign = { on: on, state: state, chapters: chapters, chapter: chapter, roster: roster, party: party, setParty: setParty, foesFor: foesFor,
-    battleOpts: battleOpts, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
+    battleOpts: battleOpts, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, gearShop: gearShop, buyGear: buyGear, gearOf: gearOf, equipGear: equipGear, unequipGear: unequipGear, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
 })(typeof window !== 'undefined' ? window : this);

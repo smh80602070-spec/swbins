@@ -51,6 +51,7 @@
       '.tvs-cut-hp{position:relative;width:min(220px,80%);height:12px;margin-top:5px;background:#000a;border-radius:6px;overflow:hidden;border:1px solid #fff3}.tvs-cut-hp i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#e2553f,#f0c34f);animation:tvsHp 1.3s ease-out both}.tvs-cut-hp span{position:absolute;inset:0;text-align:center;font-size:10px;line-height:12px;color:#fff;text-shadow:0 1px 2px #000}' +
       '.tvs-cut-slash{position:absolute;left:44%;top:30%;width:12%;height:36%;background:linear-gradient(115deg,transparent 42%,#fff 49%,#ffe9a0 51%,transparent 58%);animation:tvsSl 1.3s ease-out both;filter:drop-shadow(0 0 10px #ffd27a)}' +
       '.tvs-cut-num{position:absolute;left:0;right:0;top:40%;text-align:center;font:900 46px/1 serif;color:#ffe27a;text-shadow:0 3px 0 #7a2a10,0 6px 18px #000;animation:tvsNum 1.3s ease-out both}.tvs-cut-num.miss{color:#cfd8e3;text-shadow:0 3px 10px #000;font-size:34px}.tvs-cut-num small{display:block;font-size:18px;color:#ff8a6a;margin-top:4px}.tvs-cut-num em{display:block;font:600 12px/1.6 sans-serif;color:#d8c9a2;font-style:normal}' +
+      '.tvs-cut-sk{display:inline-block;margin-top:6px;padding:3px 12px;border-radius:999px;background:#3a2c18ee;border:1px solid #f3d27a;font:800 15px/1.4 sans-serif;color:#ffe9a0;text-shadow:none}' +
       '@keyframes tvsBand{0%{opacity:0;transform:scaleY(.2)}12%{opacity:1;transform:none}82%{opacity:1}100%{opacity:0}}@keyframes tvsInL{0%{opacity:0;transform:translateX(-40%)}20%{opacity:1;transform:none}82%{opacity:1}100%{opacity:0}}@keyframes tvsInR{0%{opacity:0;transform:translateX(40%)}20%{opacity:1;transform:none}82%{opacity:1}100%{opacity:0}}' +
       '@keyframes tvsSl{0%,24%{opacity:0;transform:translate(-40%,-30%) scale(.6)}32%{opacity:1;transform:none}48%{opacity:0;transform:translate(40%,30%)}100%{opacity:0}}@keyframes tvsNum{0%,30%{opacity:0;transform:scale(1.8)}40%{opacity:1;transform:none}82%{opacity:1}100%{opacity:0;transform:translateY(-12px)}}' +
       '@keyframes tvsHp{0%,34%{width:var(--from)}62%,100%{width:var(--to)}}' +
@@ -239,7 +240,7 @@
   function floatsSvg(v) {
     var b = v.b, now = Date.now(), s = '', i;
     v.fl = v.fl || []; v.flN = v.flN == null ? b.log.length : v.flN;
-    for (i = v.flN; i < b.log.length; i++) { var e = b.log[i], t = T().unit(b, e.to); if (t) { v.fl.push({ x: t.x, y: t.y, txt: e.hit ? '−' + e.dmg : '빗나감', col: e.hit ? (t.side === 'me' ? '#ff8a6a' : '#ffe27a') : '#cfd8e3', at: now }); } }
+    for (i = v.flN; i < b.log.length; i++) { var e = b.log[i], t = T().unit(b, e.to); if (t) { v.fl.push({ x: t.x, y: t.y, txt: e.hit ? '−' + e.dmg : '빗나감', col: e.hit ? (t.side === 'me' ? '#ff8a6a' : '#ffe27a') : '#cfd8e3', at: now }); } var sa = e.skills && e.skills.length ? T().unit(b, e.a) : null; if (sa) { v.fl.push({ x: sa.x, y: sa.y - 0.45, txt: '✦ ' + e.skills.join('·'), col: '#f3d27a', at: now }); } }
     v.flN = b.log.length; v.fl = v.fl.filter(function (q) { return now - q.at < 1000; });
     v.fl.forEach(function (q) { var p = scr(v, q.x, q.y); s += '<text class="tvs-float" x="' + (p.c * CELL + CELL / 2) + '" y="' + (p.r * CELL + 4) + '" text-anchor="middle" font-size="17" fill="' + q.col + '" pointer-events="none">' + q.txt + '</text>'; });
     if (v.fl.length && !v.flT) { v.flT = global.setTimeout(function () { v.flT = null; if (cur === v) { render(); } }, 1000); }
@@ -375,7 +376,7 @@
     return '<div class="tvs-card' + (u.side === 'me' ? '' : ' foe') + '">' + (face ? '<img src="' + esc(face) + '" alt="">' : '<span style="font-size:40px;width:58px;text-align:center">' + (u.kind === 'troop' ? '🪖' : '⚔️') + '</span>') +
       '<div style="flex:1;min-width:0"><b>' + esc(nameOf(v, u)) + '</b>' + (u.arm ? ' <span class="muted">' + esc(A[u.arm] || '') + '</span>' : '') + (u.leader ? ' 👑' : '') +
       '<div class="tvs-hp"><i style="width:' + Math.round(f * 100) + '%;background:' + col + '"></i></div>' +
-      '<span class="muted">체력 ' + Math.round(u.hp) + '/' + u.max + ' · 공 ' + Math.round(u.atk) + ' · 사거리 ' + u.rng + ' · ' + esc(NAME[T().cellAt(v.b, u.x, u.y)] || '') + (u.moved ? ' · 이동함' : '') + (u.acted ? ' · 공격함' : '') + '</span>' +
+      '<span class="muted">체력 ' + Math.round(u.hp) + '/' + u.max + ' · 공 ' + Math.round(u.atk) + ' · 사거리 ' + u.rng + ' · ' + esc(NAME[T().cellAt(v.b, u.x, u.y)] || '') + (u.moved ? ' · 이동함' : '') + (u.acted ? ' · 공격함' : '') + '</span>' + (u.skill ? '<br><span style="color:#f3d27a">✦ ' + esc(u.skill.name) + '</span> <span class="muted">' + esc(u.skill.desc) + '</span>' : '') +
       (v.plot ? '<br><span style="color:#ffb35c">' + esc((T().PLOT_NAME || {})[v.plot] || '') + ' — 주황 칸을 누르십시오</span>' : '') + plotBtns(v, u) + '</div></div>';
   }
   /** 공격 컷(W-0134) — 두 장수가 좌우에서 미끄러져 마주 서고 명중·피해. 판정 결과(r)를 재생만 한다 */
@@ -396,7 +397,7 @@
         (cls === 't' ? '<div class="tvs-cut-hp"><i style="--from:' + Math.round(100 * hp0 / t.max) + '%;--to:' + Math.round(100 * hp1 / t.max) + '%"></i><span>' + hp1 + ' / ' + t.max + '</span></div>' : '') + '</div>';
     }
     return '<div class="tvs-cut" style="--e:' + (-e).toFixed(2) + 's"><div class="tvs-cut-band"></div>' + side(c.a, 'a') + side(t, 't') + (r.hit ? '<div class="tvs-cut-slash"></div>' : '') +
-      '<div class="tvs-cut-num' + (r.hit ? '' : ' miss') + '">' + (r.hit ? '−' + r.dmg + (r.killed ? '<small>격파</small>' : '') : '빗나감') + '<em>명중 ' + r.chance + '%</em></div></div>';
+      '<div class="tvs-cut-num' + (r.hit ? '' : ' miss') + '">' + (r.hit ? '−' + r.dmg + (r.killed ? '<small>격파</small>' : '') : '빗나감') + '<em>명중 ' + r.chance + '%</em>' + ((r.skills || []).length ? '<b class="tvs-cut-sk">✦ ' + r.skills.map(esc).join(' · ') + '</b>' : '') + '</div></div>';
   }
   function cutHtml(v) {
     var c = v.cut;

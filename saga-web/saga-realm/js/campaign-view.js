@@ -96,7 +96,9 @@
     return html + '</div></div></div>';
   }
   /* ── 진영 ── */
-  function statLine(id) { var s = OFF().stats(id) || {}, r = OFF().rec(id), it = r && r.item && global.DG.item ? global.DG.item.itemById(r.item) : null; return '무 ' + (s.might || 0) + ' · 지 ' + (s.wisdom || 0) + ' · 통 ' + (s.command || 0) + (it ? '<br>' + esc(it.emoji + ' ' + it.name) : ''); }
+  function skillTag(id) { var HS = global.DG.heroSkill, s = HS && HS.of ? HS.of(id) : null; return s ? '<span style="color:#f3d27a" title="' + esc(s.desc) + '">✦ ' + esc(s.name) + '</span>' : ''; }   // W-0453 고유 스킬
+  function lvOf(id) { var g = OFF().grow ? OFF().grow(id) : null; return g ? 'Lv ' + g.lv + ' · ' : ''; }
+  function statLine(id) { var s = OFF().stats(id) || {}, r = OFF().rec(id), it = r && r.item && global.DG.item ? global.DG.item.itemById(r.item) : null; return lvOf(id) + '무 ' + (s.might || 0) + ' · 지 ' + (s.wisdom || 0) + ' · 통 ' + (s.command || 0) + '<br>' + skillTag(id) + (it ? ' · ' + esc(it.emoji + ' ' + it.name) : ''); }
   function camp() {
     var cp = CP().state(), c = CP().chapter(cp.ch), html = top('진영 — 제 ' + c.no + ' 장 「' + c.title + '」', '<button class="cpg-btn ghost" data-cp="route">노선도</button>');
     html += '<div class="cpg-wrap"><div class="cpg-tabs">' + [['party', '⚔ 편성'], ['gear', '🛡 장비'], ['shop', '🏪 상점'], ['talk', '💬 대화']].map(function (t) { return '<button class="cpg-btn ghost' + (tab === t[0] ? ' on' : '') + '" data-cp="tab" data-t="' + t[0] + '">' + t[1] + '</button>'; }).join('') + '</div>';
@@ -111,20 +113,33 @@
     CP().roster().forEach(function (h) { var i = sel.indexOf(h.id); html += '<button class="cpg-card' + (i >= 0 ? ' sel' : '') + '" data-cp="pick" data-id="' + esc(h.id) + '">' + (i >= 0 ? '<span class="n">' + (i + 1) + '</span>' : '') + '<img alt="" src="' + face(h.id, 52) + '"><span><b>' + esc(h.name) + '</b><small>' + statLine(h.id) + '</small></span></button>'; });
     return html + '</div><div class="cpg-brief" style="margin-top:8px">출진은 셋까지 — 눌러 넣고 뺍니다. 첫째가 대장입니다.</div>';
   }
+  /* W-0453 장비 탭 — 가방(장비 g:id · 보물 t:번호)에서 하나 고르고 → 그 칸이 맞는 장수의 「끼우기」. 장수마다 무기·방어구·장신구·보물 네 칸 */
+  function GR() { return global.DG.realmGear; }
+  function gname(it) { var G = GR().GRADE[it.grade]; return '<span style="color:' + G.col + '">' + esc(it.emoji + ' ' + it.name) + '</span>'; }
+  function pickInfo() { if (pick == null) { return null; } var cp = CP().state(), s = String(pick); if (s.indexOf('g:') === 0) { var it = GR() && GR().byId(s.slice(2)); return it ? { g: it } : null; } var t = cp.bag[+s.slice(2)]; return t ? { t: t } : null; }
   function gearTab() {
-    var cp = CP().state(), I = global.DG.item, html = '<div class="cpg-brief">가방: ' + (cp.bag.length ? cp.bag.map(function (id, k) { var it = I.itemById(id); return '<button class="cpg-btn ghost' + (pick === k ? ' on' : '') + '" style="margin:2px" data-cp="bag" data-k="' + k + '">' + esc(it ? it.emoji + ' ' + it.name : id) + '</button>'; }).join('') : '비었음 — 상점에서 사거나 전투에서 얻습니다') + '</div>';
-    html += '<div class="cpg-grid">';
-    CP().party().forEach(function (id) { var r = OFF().rec(id); html += '<div class="cpg-card"><img alt="" src="' + face(id, 52) + '"><span><b>' + esc(nm(id)) + '</b><small>' + statLine(id) + '</small><br>' + (pick != null ? '<button class="cpg-btn" style="padding:4px 8px;min-height:30px;margin-top:4px" data-cp="equip" data-id="' + esc(id) + '">끼우기</button>' : '') + (r && r.item ? ' <button class="cpg-btn ghost" style="padding:4px 8px;min-height:30px;margin-top:4px" data-cp="unequip" data-id="' + esc(id) + '">빼기</button>' : '') + '</span></div>'; });
+    var cp = CP().state(), I = global.DG.item, pi = pickInfo(), btn = 'class="cpg-btn ghost" style="margin:2px;padding:5px 9px;min-height:32px"';
+    var html = '<div class="cpg-brief">🎒 장비: ' + (cp.gbag.length ? cp.gbag.map(function (id) { var it = GR().byId(id); return it ? '<button ' + btn.replace('ghost', 'ghost' + (pick === 'g:' + id ? ' on' : '')) + ' data-cp="bag" data-k="g:' + esc(id) + '" title="' + esc(GR().lineOf(it)) + '">' + gname(it) + '</button>' : ''; }).join('') : '없음') +
+      '<br>💎 보물: ' + (cp.bag.length ? cp.bag.map(function (id, k) { var it = I.itemById(id); return '<button ' + btn.replace('ghost', 'ghost' + (pick === 't:' + k ? ' on' : '')) + ' data-cp="bag" data-k="t:' + k + '">' + esc(it ? it.emoji + ' ' + it.name : id) + '</button>'; }).join('') : '없음') +
+      (pi && pi.g ? '<br><span style="color:#f3d27a">' + esc(GR().SLOT_NAME[pi.g.slot]) + ' — ' + esc(GR().lineOf(pi.g)) + '</span>' : '') + '</div><div class="cpg-grid" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr))">';
+    CP().party().forEach(function (id) {
+      var r = OFF().rec(id), g = CP().gearOf(id), rows = ['w', 'a', 'c'].map(function (s) { var it = GR().byId(g[s]); return '<div>' + esc(GR().SLOT_NAME[s]) + ' ' + (it ? gname(it) + ' <a data-cp="ungear" data-id="' + esc(id) + '" data-s="' + s + '" style="cursor:pointer;color:#c9b48a">✕</a>' : '<span class="muted">—</span>') + '</div>'; }).join('');
+      var tr = r && r.item ? I.itemById(r.item) : null;
+      rows += '<div>보물 ' + (tr ? esc(tr.emoji + ' ' + tr.name) + ' <a data-cp="unequip" data-id="' + esc(id) + '" style="cursor:pointer;color:#c9b48a">✕</a>' : '<span class="muted">—</span>') + '</div>';
+      html += '<div class="cpg-card" style="align-items:flex-start"><img alt="" src="' + face(id, 52) + '"><span style="flex:1"><b>' + esc(nm(id)) + '</b> <small>' + skillTag(id) + '</small><small style="display:block;line-height:1.7">' + rows + '</small>' + (pi ? '<button class="cpg-btn" style="padding:4px 10px;min-height:30px;margin-top:4px" data-cp="equip" data-id="' + esc(id) + '">끼우기</button>' : '') + '</span></div>';
+    });
     return html + '</div>';
   }
   function shopTab() {
-    var cp = CP().state(), html = '<div class="cpg-grid">';
+    var cp = CP().state(), html = '<div class="cpg-act" style="margin-top:0">장비 — 이번 장 진열 (장이 오를수록 높은 등급)</div><div class="cpg-grid">';
+    CP().gearShop().forEach(function (it) { var p = GR().price(it), G = GR().GRADE[it.grade]; html += '<div class="cpg-card"><span style="font-size:30px;width:52px;text-align:center">' + esc(it.emoji) + '</span><span><b style="color:' + G.col + '">' + esc(it.name) + '</b><small>' + esc(G.name) + ' ' + esc(GR().SLOT_NAME[it.slot]) + '<br>' + esc(GR().lineOf(it)) + '</small><br><button class="cpg-btn" style="padding:4px 8px;min-height:30px;margin-top:4px" data-cp="buyg" data-id="' + esc(it.id) + '"' + (cp.gold < p ? ' disabled' : '') + '>💰 ' + p + '</button></span></div>'; });
+    html += '</div><div class="cpg-act">보물</div><div class="cpg-grid">';
     CP().shop().forEach(function (it) { var p = CP().price(it); html += '<div class="cpg-card"><span style="font-size:30px;width:52px;text-align:center">' + esc(it.emoji) + '</span><span><b>' + esc(it.name) + '</b><small>' + esc((OFF().STAT_KOR || {})[it.stat] || it.stat) + ' +' + it.bonus + '<br>' + esc(it.desc || '') + '</small><br><button class="cpg-btn" style="padding:4px 8px;min-height:30px;margin-top:4px" data-cp="buy" data-id="' + esc(it.id) + '"' + (cp.gold < p ? ' disabled' : '') + '>💰 ' + p + '</button></span></div>'; });
     return html + '</div>';
   }
   function talkTab() {
-    var html = '<div class="cpg-grid">', B = global.DG.data && global.DG.data.BIOS;
-    CP().party().forEach(function (id) { var h = OFF().find(id), bio = (B && B[id]) || (h && (h.bio || h.desc)) || ''; html += '<div class="cpg-card" style="align-items:flex-start"><img alt="" src="' + face(id, 52) + '"><span><b>' + esc(nm(id)) + '</b><small>' + esc(String(bio).slice(0, 120) || '「이번 싸움, 맡겨 주십시오.」') + '</small></span></div>'; });
+    var html = '<div class="cpg-grid">', B = global.DG.data && global.DG.data.BIOS, HS = global.DG.heroSkill;
+    CP().party().forEach(function (id) { var h = OFF().find(id), bio = (B && B[id]) || (h && (h.bio || h.desc || h.quote)) || '', s = HS && HS.of ? HS.of(id) : null; html += '<div class="cpg-card" style="align-items:flex-start"><img alt="" src="' + face(id, 52) + '"><span><b>' + esc(nm(id)) + '</b><small>' + esc(String(bio).slice(0, 120) || '「이번 싸움, 맡겨 주십시오.」') + (s ? '<br><span style="color:#f3d27a">✦ ' + esc(s.name) + '</span> — ' + esc(s.desc) : '') + '</small></span></div>'; });
     return html + '</div>';
   }
   /* ── ③ 전투 앞 설전·일기토 — 시나리오 단계 글 + 기존 설전·일기토 창(DG.ui, #encounter 가 장 흐름 위) ── */
@@ -153,7 +168,7 @@
   function result(no, out) {
     var res = CP().reward(no, out), c = CP().chapter(no);
     var html = '<div class="cpg-result"><h3>' + (res.win ? '🏆 승리' : '💥 패배') + '</h3><p>제 ' + no + ' 장 「' + esc(c.title) + '」' + (out ? ' — ' + esc(out.name || out.kind) : '') + '</p>';
-    if (res.win) { html += '<p>💰 +' + res.gold + ' · 경험 +' + res.exp + (res.item ? ' · 얻음 ' + esc(res.item.emoji + ' ' + res.item.name) : '') + (res.recruit ? '<br>🤝 ' + esc(res.recruit) + ' 합류' : '') + '</p>'; }
+    if (res.win) { html += '<p>💰 +' + res.gold + ' · 경험 +' + res.exp + (res.item ? ' · 얻음 ' + esc(res.item.emoji + ' ' + res.item.name) : '') + (res.gear && GR() ? '<br>🎁 장비 ' + gname(res.gear) : '') + (res.recruit ? '<br>🤝 ' + esc(res.recruit) + ' 합류' : '') + '</p>'; }
     html += '<div class="cpg-row" style="justify-content:center">' + (res.win ? '<button class="cpg-btn" data-cp="route">노선도 ▶</button>' : '<button class="cpg-btn" data-cp="camp">진영에서 다시 도전</button>') + '</div></div>';
     host.innerHTML = html;
   }
@@ -177,8 +192,10 @@
       if (i >= 0) { if (sel.length > 1) { sel.splice(i, 1); } } else { if (sel.length >= 3) { sel.pop(); } sel.push(id); }
       CP().setParty(sel); show('camp');
     }
-    else if (a === 'bag') { var k = +b.getAttribute('data-k'); pick = pick === k ? null : k; show('camp'); }
-    else if (a === 'equip') { if (pick != null) { var r = CP().equip(b.getAttribute('data-id'), cp.bag[pick]); if (!r.ok) { toast(r.why); } pick = null; show('camp'); } }
+    else if (a === 'bag') { var k = b.getAttribute('data-k'); pick = pick === k ? null : k; show('camp'); }
+    else if (a === 'equip') { if (pick != null) { var ps = String(pick), r = ps.indexOf('g:') === 0 ? CP().equipGear(b.getAttribute('data-id'), ps.slice(2)) : CP().equip(b.getAttribute('data-id'), cp.bag[+ps.slice(2)]); if (!r.ok) { toast(r.why); } pick = null; show('camp'); } }
+    else if (a === 'ungear') { CP().unequipGear(b.getAttribute('data-id'), b.getAttribute('data-s')); show('camp'); }
+    else if (a === 'buyg') { var rg = CP().buyGear(b.getAttribute('data-id')); toast(rg.ok ? rg.item.name + ' 샀습니다' : rg.why); show('camp'); }
     else if (a === 'unequip') { CP().unequip(b.getAttribute('data-id')); show('camp'); }
     else if (a === 'buy') { var rb = CP().buy(b.getAttribute('data-id')); toast(rb.ok ? rb.item.name + ' 샀습니다' : rb.why); show('camp'); }
     else if (a === 'go') { if (!CP().preDone(cp.ch)) { pre(); } else { CP().setStep('battle'); battle(); } }
