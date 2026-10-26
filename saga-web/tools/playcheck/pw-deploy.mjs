@@ -28,7 +28,7 @@ const localVer = (g) => { const m = /var VERSION = '([^']+)'/.exec(fs.readFileSy
 const inGame = (page) => page.evaluate(() => {
   const g = document.getElementById('boot-guard'), d = document.getElementById('dock');
   const shown = (e) => !!(e && e.getClientRects().length && getComputedStyle(e).visibility !== 'hidden');   // fixed 라 offsetParent 는 늘 null
-  return !document.querySelector('#acc-host.show') && !shown(g) && shown(d);
+  return !document.querySelector('#acc-host.show') && !shown(g) && (shown(d) || shown(document.getElementById('campaign')));   // 5천하 W-0450 장 흐름은 #campaign 이 독을 덮는다
 });
 /** 이야기 장면·안내 카드 걷기(판마다 첫 장면이 다르다) */
 /** 판별 첫 관문 */
