@@ -9,10 +9,10 @@ import { launch, sleep } from './cdp.mjs';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const GAMES = process.argv.slice(2).length ? process.argv.slice(2) : ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm'];
 const OUT = path.join(HERE, 'shots'); fs.mkdirSync(OUT, { recursive: true });
-const ST = `JSON.stringify((function(){ var b = document.getElementById('aq-go'), r = b ? b.getBoundingClientRect() : null, cs = b ? getComputedStyle(b) : null, S = DG.core && DG.core.save, p = null;
+const ST = `JSON.stringify((function(){ var b0 = document.getElementById('aq-go'), b1 = document.getElementById('aq-cp'), b = document.body.classList.contains('cpg-on') && b1 ? b1 : b0, r = b ? b.getBoundingClientRect() : null, cs = b ? getComputedStyle(b) : null, S = DG.core && DG.core.save, p = null;
   var src = [DG.town, DG.village, DG.side, DG.sidescroll].filter(function (o) { return o && o.raw && o.raw() && o.raw().player; })[0]; if (src) { var m = src.raw().player; p = [Math.round(m.x), Math.round(m.y)]; } else if (S && S.player && S.player.pos) { p = [Math.round(S.player.pos.x), Math.round(S.player.pos.y)]; }   // 판 어댑터 pos() 와 같은 곳(1만리만 save.player.pos)
   return { btn: !!b, shown: !!(r && r.width > 0 && cs.display !== 'none' && cs.visibility !== 'hidden' && +cs.opacity > 0), txt: b ? b.textContent.trim().slice(0, 12) : '', title: b ? (b.title || '').slice(0, 40) : '', pos: p,
-    cpg: document.body.classList.contains('cpg-on') }; })())`;
+    cpg: document.body.classList.contains('cpg-on'), ch: DG.campaign && document.body.classList.contains('cpg-on') ? DG.campaign.state().ch + ':' + DG.campaign.state().step + (DG.tacticsView && DG.tacticsView.cur() ? '+전투' : '') : null }; })())`;   // 5천하 장 흐름은 #aq-cp(W-0463)·장 진행
 let port = 8920;
 for (const g of GAMES) {
   const PORT = port++, srv = spawn(process.execPath, [path.join(HERE, '..', 'serve-game.mjs'), String(PORT), path.join(HERE, '..', '..', g)], { stdio: 'ignore' });
@@ -41,9 +41,9 @@ for (const g of GAMES) {
     await sleep(2000);
     const s0 = JSON.parse(await c.ev(ST));
     const sh0 = await c.send('Page.captureScreenshot', { format: 'png' }); fs.writeFileSync(path.join(OUT, 'aq2d-' + g + '-0.png'), Buffer.from(sh0.result.data, 'base64'));
-    await c.ev(`(function(){ var b = document.getElementById('aq-go'); if (b) { b.click(); } })()`);
+    await c.ev(`(function(){ var b = document.body.classList.contains('cpg-on') ? document.getElementById('aq-cp') : document.getElementById('aq-go'); if (b) { b.click(); } })()`);
     const seq = [];
-    for (let i = 0; i < 4; i++) { await sleep(3000); const s = JSON.parse(await c.ev(ST)); seq.push(s.txt + (s.pos ? '@' + s.pos.join(',') : '')); }
+    for (let i = 0; i < (g === 'saga-realm' ? 12 : 4); i++) { await sleep(3000); const s = JSON.parse(await c.ev(ST)); seq.push(s.txt + (s.ch ? '@' + s.ch : s.pos ? '@' + s.pos.join(',') : '')); }
     const sh1 = await c.send('Page.captureScreenshot', { format: 'png' }); fs.writeFileSync(path.join(OUT, 'aq2d-' + g + '-1.png'), Buffer.from(sh1.result.data, 'base64'));
     console.log(g, '처음', JSON.stringify(s0), '| 누른 뒤 3초마다', seq.join(' → '), errs.length ? '| 오류 ' + errs.slice(0, 2).join(' / ') : '');
   } catch (e) { console.log(g, 'ERR', e.message.slice(0, 200)); }

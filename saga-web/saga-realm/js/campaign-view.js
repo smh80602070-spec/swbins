@@ -53,7 +53,7 @@
 
   function top(title, extra) {
     var cp = CP().state(), lord = OFF().lordOf ? OFF().lordOf(global.DG.rtk.me()) : null;
-    return '<div class="cpg-top"><h2>' + esc(title) + '</h2>' + (extra || '') + '<span>' + (lord ? esc(nm(lord)) + ' 군 · ' : '') + '<span class="cpg-gold">💰 ' + cp.gold + '</span></span></div>';
+    return '<div class="cpg-top"><h2>' + esc(title) + '</h2>' + (extra || '') + (global.DG.campaignAuto ? global.DG.campaignAuto.btnHtml() : '') + '<span>' + (lord ? esc(nm(lord)) + ' 군 · ' : '') + '<span class="cpg-gold">💰 ' + cp.gold + '</span></span></div>';
   }
   function show(step) {
     ensure();
@@ -208,6 +208,7 @@
     var b = e.target.closest('[data-cp]');
     if (!b || b.disabled) { return; }
     var a = b.getAttribute('data-cp'), cp = CP().state();
+    if (a === 'auto') { if (global.DG.campaignAuto) { global.DG.campaignAuto.toggle(); } return; }   // W-0463 자동 진행 ▶/⏸
     if (a === 'ch') {
       var no = +b.getAttribute('data-no');
       if (no > cp.ch) { return; }

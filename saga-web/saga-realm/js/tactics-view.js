@@ -476,6 +476,7 @@
     var v = cur;
     if (!v) { return null; }
     if (!v.b.done) { T().autoPlay(v.b); }
+    v.flN = v.b.log.length; v.fl = []; v.ultN = (v.b.ultLog || []).length; v.ultCut = null; v.evN = (v.b.evLog || []).length; v.evCur = null; v.cut = null;   // W-0463 한 번에 끝낸 판 — 밀린 피해 숫자·필살 컷·대사를 결과 위에 겹쳐 띄우지 않는다
     settle();
     render();
     return v.out;

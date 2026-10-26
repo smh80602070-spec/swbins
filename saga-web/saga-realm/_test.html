@@ -139,6 +139,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/tactics-view.js"></script>
 <script src="js/campaign.js"></script>
 <script src="js/campaign-view.js"></script>
+<script src="js/campaign-auto.js"></script>
 <script src="js/hero-skill.js"></script>
 <script src="js/realm-gear.js"></script>
 <script src="js/command.js"></script>
@@ -7707,6 +7708,24 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var it = CP.shop()[0], gb = cp.gold, by = CP.buy(it.id), rt = JSON.parse(JSON.stringify(R.state().campaign)), txt = CP.fillText('{책사}·{이웃}·{맹장}');
       var ok = L.length === 19 && L.filter(function (c) { return c.epi; }).length === 3 && L.every(function (c) { return c.land && c.goal; }) && o.srpg && o.mine.length >= 1 && o.mine.length <= 3 && o.foes.length >= 1 && o.myTroops[0] > 0 && g1 === g0 + 200 && w.win && ch2 === 2 && cp.cleared[1] === 1 && !l.win && cp.ch === 2 && by.ok && cp.gold === gb - CP.price(it) && rt.ch === 2 && rt.bag.indexOf(it.id) >= 0 && txt.indexOf('{') < 0 && (function () { cp.ch = 17; var e1 = CP.choose(17, 'util'); cp.ch = 19; var e3 = CP.choose(19, 'util'); var end = CP.ended(), f0 = CP.battleOpts(1).foeTroops[0], rd = CP.newRound(), f1 = CP.battleOpts(1).foeTroops[0]; return e1.epi && !e1.end && e3.end && end && rd === 1 && cp.ch === 1 && f1 > f0; })();
       return ok || ('실패 ' + JSON.stringify({ n: L.length, mine: o.mine.length, foes: o.foes.length, g0: g0, g1: g1, w: w.win, ch2: ch2, l: l.win, by: by, txt: txt }));
+    });
+    t('W-0463 장 흐름 자동 진행 — ▶ 단추 · 진영 준비(전직 갈래·용병 상성) · 설전·일기토 능력 비교 · 박자를 돌리면 1장 이야기→진영→전투→결과→2장 · 멈춤', function () {
+      fresh('cao'); var CA = DG.campaignAuto, CP = DG.campaign, CV = DG.campaignView; if (!CA || !CV) { return '실패 모듈 없음'; }
+      R.state().campaign = null; var cp = CP.state(), me = CP.party()[0], g = DG.off.grow(me), lv0 = g.lv; g.lv = 5;
+      var did = CA.prep(1), st = DG.off.stats(me), want = st.wisdom >= st.might ? 'tactic' : (st.command > st.might ? 'rider' : 'brave'), cls = CP.clsOf(me) === want; g.lv = lv0;
+      var fm = CP.foeMercs(1), merc = fm.length && CP.party().every(function (id, i) { var f = fm[i % fm.length].arms, m = CP.mercsOf(id); return m[0] === CA.BEAT[f[0]]; });
+      var A = CP.preActors(2), pw = typeof CA.preWin(2) === 'boolean';
+      var c0 = DG.core.tuned; DG.core.tuned = function (k, d) { return k === 'realm.campaignAutoWait' ? 0 : c0.apply(DG.core, arguments); };
+      var run = false, ch2 = false, steps = [];
+      try {
+        R.state().campaign = null; CP.state(); CV.open(); var btn = !!document.querySelector('#campaign [data-cp="auto"]');
+        CA.toggle(); run = CA.running();
+        for (var i = 0; i < 40 && CA.running() && CP.state().ch < 2; i++) { CA.tick(); steps.push(CP.state().step + (DG.tacticsView.cur() ? '+tv' : '')); }
+        ch2 = CP.state().ch >= 2 && !!CP.state().cleared[1];
+        CA.stop(); var stopped = !CA.running();
+      } catch (e) { steps.push('err ' + e.message); } finally { DG.core.tuned = c0; CA.stop(); if (CV.close) { CV.close(); } }
+      var ok = cls && merc && pw && btn && run && ch2 && stopped;
+      return ok || ('실패 ' + JSON.stringify({ did: did, cls: cls, merc: !!merc, pw: pw, btn: btn, run: run, ch2: ch2, steps: steps.slice(-8) }));
     });
     t('W-0460 보조 목표 — 보물 상자(적 쪽 절반·밟으면 열림·진 판도 금) · 마을(가운데·지키는 이 없이 적이 곁이면 약탈) · outcome.side · 장 흐름 금(상자 70·마을 40·다 지키면 120) · 화면 길에도 · 손잡이 0 = 없음', function () {
       fresh('cao'); var T = DG.tactics, SG = DG.sideGoal, CP = DG.campaign; if (!SG) { return '실패 모듈 없음'; }
