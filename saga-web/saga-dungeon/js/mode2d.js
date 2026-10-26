@@ -577,7 +577,28 @@
     return true;
   }
 
+  /* W-0449 남은 것(사용자 10-26 「로딩되어서 생기게 하지 마」) — 들어선 뒤 새로 나타나는 사람·짐승의 2D 그림이 받는 동안 자리표시(옛 도형)였다가 툭 바뀌던 것:
+     풀마다 처음 그린 때를 적고 · 받는 중(zoneCut.netBusy)이면 2.5초까지 아무것도 안 그림(자리표시 대신) · 그림이 250ms 넘어 왔으면 0.4초 서서히 나타남. 손잡이 mode2d.fadeIn(1) */
+  var seenAt = {}, okAt = {};
+  function nowMs() { return global.performance && global.performance.now ? global.performance.now() : Date.now(); }
   function draw(ctx, o) {
+    if (!ctx || !o || !o.pool || !isOn()) { return false; }
+    var c0 = C(), on = !(c0 && c0.tuned) || +c0.tuned('mode2d.fadeIn', 1);
+    if (!on) { return draw0(ctx, o); }
+    var k = o.pool, t = nowMs(), a0 = o.alpha, ok;
+    if (!seenAt[k]) { seenAt[k] = t; }
+    var st = okAt[k];
+    if (!st) {   // 아직 한 번도 못 그림 — 투명으로 그려 보고 되면 그때부터 셈(첫 프레임이 번쩍이지 않게)
+      o.alpha = 0; ok = draw0(ctx, o); o.alpha = a0;
+      if (ok) { okAt[k] = { t: t, late: t - seenAt[k] > 250 }; if (!okAt[k].late) { ok = draw0(ctx, o); } return true; }
+      var Z = global.DG && global.DG.zoneCut;
+      return !!(t > seenAt[k] && t - seenAt[k] < 2500 && Z && Z.netBusy && Z.netBusy());   // 받는 중이면 자리표시를 그리지 않는다(참 = 부른 쪽이 옛 그림 생략) · 첫 부름은 그대로 거짓(없는 풀 계약)
+    }
+    if (st.late && t - st.t < 400) { var q = (t - st.t) / 400; o.alpha = (a0 === undefined ? 1 : a0) * q * q * (3 - 2 * q); }
+    ok = draw0(ctx, o); o.alpha = a0;
+    return ok;
+  }
+  function draw0(ctx, o) {
     if (!ctx || !o || !o.pool || !isOn()) { return false; }
     if (global.DG.cutout2d && global.DG.cutout2d.drawFor(ctx, o, (C().targetH || 62) * (o.scale || 1))) { return true; }   // W-0336 컷아웃 뼈대(손잡이 cutout2d.on, 기본 0 — 그대로)
     var fa = factOf(o.pool); if (fa) { if (fa !== 'wait' && drawFact(ctx, o, fa)) { return true; } return isStill(o.pool) ? drawStill(ctx, o) : false; }   // W-0370 공장 시트 먼저

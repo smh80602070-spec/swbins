@@ -42,6 +42,25 @@
      손잡이 dungeon3d.shapeGhost(0 = 숨김 · 1 = 옛 상자) · dungeon3d.shapeGhostMs. tracked = 화면 안 비율(가림막)·가까운 것 먼저(pump)가 보는 몸 목록 */
   var tracked = [];
   function ghostShape(shell, shape) { if (!shape) { return; } tracked.push(shell); if (tracked.length > 600) { tracked = tracked.filter(function (s) { return !!s.parent && s.userData.assetState === 'shape'; }); } if (tuned('dungeon3d.shapeGhost', 0)) { return; } shape.visible = false; shell.userData.ghost = shape; if (typeof setTimeout !== 'undefined') { setTimeout(function () { if (shell.userData.assetState === 'shape') { shape.visible = true; } }, tuned('dungeon3d.shapeGhostMs', 20000)); } }
+  /* W-0449 남은 것(사용자 10-26 「로딩되어서 생기게 하지 마」) — 들어선 뒤 새로 나타나는 몸(떠돌이 적·손님)이 모델이 오는 순간 툭 생기던 것:
+     껍데기가 생기고 250ms 넘어 온 모델은 0.4초 서서히 나타난다(이 모델 몫 재질만 잠깐 복제해 투명도를 올리고 끝나면 원래 재질로). 손잡이 asset3d.fadeIn(1) */
+  function nowMs() { return global.performance && global.performance.now ? global.performance.now() : Date.now(); }
+  function fadeIn(shell, model) {
+    if (!+tuned('asset3d.fadeIn', 1) || !shell.userData.born || nowMs() - shell.userData.born < 250 || !global.requestAnimationFrame) { return; }
+    var list = [], t0 = nowMs(), MS = 400;
+    model.traverse(function (m) {
+      if (!m.isMesh || !m.material) { return; }
+      var orig = m.material, arr = Array.isArray(orig) ? orig : [orig], cl = arr.map(function (x) { var c = x.clone(); c.onBeforeCompile = x.onBeforeCompile; c.customProgramCacheKey = x.customProgramCacheKey; c.transparent = true; c.opacity = 0; c.userData.fadeBase = x.transparent ? x.opacity : 1; return c; });
+      m.material = Array.isArray(orig) ? cl : cl[0]; list.push({ m: m, orig: orig, cl: cl });
+    });
+    if (!list.length) { return; }
+    (function step() {
+      var k = Math.min(1, (nowMs() - t0) / MS), e = k * k * (3 - 2 * k), i, j;
+      for (i = 0; i < list.length; i++) { for (j = 0; j < list[i].cl.length; j++) { list[i].cl[j].opacity = list[i].cl[j].userData.fadeBase * e; } }
+      if (k < 1) { global.requestAnimationFrame(step); return; }
+      for (i = 0; i < list.length; i++) { if (list[i].m.material === (Array.isArray(list[i].orig) ? list[i].cl : list[i].cl[0])) { list[i].m.material = list[i].orig; } for (j = 0; j < list[i].cl.length; j++) { list[i].cl[j].dispose(); } }
+    })();
+  }
   function failShell(shell) { shell.userData.assetState = 'fail'; if (shell.userData.ghost) { shell.userData.ghost.visible = true; } }
   function noteShell(url, sh) { var A3c = global.DG.assets3d, cu = A3c && A3c.creatureFor ? A3c.creatureFor(url) : null, c = cache[cu || url]; if (c && c.state === 'queued') { (c.shells || (c.shells = [])).push(sh); } }
 
@@ -1175,7 +1194,7 @@
     var shell = new t.Group();
     var shape = makeShape ? makeShape() : null;
     if (shape) { shell.add(shape); }
-    shell.userData.assetState = 'shape';
+    shell.userData.assetState = 'shape'; shell.userData.born = nowMs();
     shell.userData.body = rec ? rec.body : null;          // 재기(어느 몸 파일인가 — 사가나락 Q8 마을·던전 몸 비교)
     if (!GLB_ON() || !rec) { return shell; }
     ghostShape(shell, shape);
@@ -1197,7 +1216,7 @@
       catch (e) { failShell(shell); return; }
       while (shell.children.length) { shell.remove(shell.children[0]); }
       shell.add(model);
-      shell.userData.assetState = 'glb';
+      shell.userData.assetState = 'glb'; fadeIn(shell, model);
       var animC = parts.anim;
       if (own) {
         /* 몸이 조립된 장면에서 실제 뼈를 읽어 그 몸에 맞춰 굽는다 — 몸마다 한 번(캐시). 못 만들면 UAL1 길로 되돌아간다 */
@@ -1255,7 +1274,7 @@
     var shell = new t.Group();
     var shape = makeShape ? makeShape() : null;
     if (shape) { shell.add(shape); }
-    shell.userData.assetState = 'shape';
+    shell.userData.assetState = 'shape'; shell.userData.born = nowMs();
     if (!wants(kind, seed)) { return shell; }
     var url = urlOf(kind, seed);
     ghostShape(shell, shape);
@@ -1271,7 +1290,7 @@
         } catch (e) { failShell(shell); return; }
         while (shell.children.length) { shell.remove(shell.children[0]); }
         shell.add(model);
-        shell.userData.assetState = 'glb';
+        shell.userData.assetState = 'glb'; fadeIn(shell, model);
         if (shell.userData.cast) { model.traverse(function (m) { if (m.isMesh && !(m.material && m.material.side === 1)) { m.castShadow = true; } }); }   // W-0202 부른 쪽이 cast 를 달면(마을 집·우물·표식) 모델도 그림자 — 도형 대역은 이미 드리운다
         if (c.clips && c.clips.length) {
           var mx = new t.AnimationMixer(model);
