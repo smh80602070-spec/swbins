@@ -56,7 +56,7 @@ def grid(src, out):
 # 비율 = sg_zhugeliang 옆모습에 손으로 찍은 값(머리 끝 0 · 발바닥 1) — 사람 손은 덧그린 점 확인판을 보고 틀린 것만 고친다
 BLEED = int(os.environ.get('K188_BLEED', '3'))   # K-0200 이음 겹침 px(0 = 옛 판)
 FAR = 0.6   # 10-26 — 다리·발 캡슐 반지름의 이만큼 밖이면 옷자락(허리에 묶음) · 기본 끔(70명 시험에서 나빠짐 — joints "far_cloth": true 로만)
-CAP = float(os.environ.get('K188_CAP', '1.35'))   # K-0199 무릎·팔꿈치 덧살 배수(두께 기준, 옛 0.9 — 90° 넘게 굽으면 바깥이 벌어짐)
+CAP = float(os.environ.get('K188_CAP', '1.6'))   # K-0201 1.35→1.6(무릎 틈) · K-0199 무릎·팔꿈치 덧살 배수(두께 기준, 옛 0.9 — 90° 넘게 굽으면 바깥이 벌어짐)
 FRONT_CLIPS = {   # K-0198 앞·뒷모습 클립(키 [t, 각, dx, dy] — 엔진 CLIPS 와 같은 꼴, 뼈 단위 몸 100)
     'walk': {'len': 1.0, 'loop': True, 'keys': {
         'hip': [[0, 0, 0, 0], [0.25, 0, 0, -1.2], [0.5, 0, 0, 0], [0.75, 0, 0, -1.2], [1, 0, 0, 0]], 'chest': [[0, 0], [0.25, 1.5], [0.75, -1.5], [1, 0]],
@@ -159,8 +159,10 @@ Z = {'armUL': 1, 'armLL': 2, 'handL': 3, 'legUL': 4, 'legLL': 4, 'footL': 5, 'hi
 FRONT = {'armUR', 'armLR', 'handR', 'legUR', 'legLR', 'footR'}   # 앞(화면 쪽) — 몸통보다 먼저 이긴다
 
 
-def smear_fill(rgb, hole, keep, it=40):
-    """구멍(hole) 을 둘레 keep 픽셀 색으로 번져 채우기 — 가벼운 인페인트 대역."""
+def smear_fill(rgb, hole, keep, it=400, smooth=60):
+    """구멍(hole) 을 둘레 keep 픽셀 색으로 번져 채우기 — 가벼운 인페인트 대역.
+    K-0201: 옛 판은 40px 만 번져 큰 구멍에 원래 팔 색·줄무늬가 남았다 → 끝까지 번지고(it) 구멍 안만 확산으로 매끈하게(smooth)."""
+    from scipy import ndimage as _nd
     a = rgb.astype(np.float32); have = keep.copy()
     for _ in range(it):
         if not (hole & ~have).any():
@@ -171,7 +173,15 @@ def smear_fill(rgb, hole, keep, it=40):
             acc += sa * sh[..., None]; n += sh
         grow = hole & ~have & (n > 0)
         a[grow] = acc[grow] / n[grow][:, None]; have = have | grow
-    return a.astype(np.uint8)
+    ys_, xs_ = np.nonzero(hole)
+    if len(ys_) and smooth:
+        y0, y1, x0, x1 = max(0, ys_.min() - 4), ys_.max() + 5, max(0, xs_.min() - 4), xs_.max() + 5
+        sub, hm = a[y0:y1, x0:x1], hole[y0:y1, x0:x1]
+        for _ in range(smooth):
+            b = _nd.uniform_filter(sub, size=(5, 5, 1))
+            sub[hm] = b[hm]
+        a[y0:y1, x0:x1] = sub
+    return np.clip(a, 0, 255).astype(np.uint8)
 
 
 def cut(src, jp, outdir, far='copy', fill='smear'):
@@ -191,9 +201,10 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
     ys, xs = np.mgrid[0:H, 0:W]
     B = bones_of(j)
     if j.get('hair_poly') and j.get('hair_root'):         # K-0200 — 머리카락·깃털·갓끈 덧뼈(엔진 hair 뼈, 부모 head) — 윤곽 안만, 뿌리 = 도는 자리
-        hr = j['hair_root']; B['hair'] = (hr, hr, 1.0, hr, 'head')
+        hr = j['hair_root']; B['hair'] = (hr, hr, float(j.get('hair_cap', 16)), hr, 'head')   # 반지름 = 뿌리 둘레 덧살(모자·머리 조각을 조금 가져가 숙여도 안 떨어지게)
     names = list(B)
     score = np.full((len(names), H, W), 1e9, np.float32)
+    w_leg = j.get('w', {}).get('leg', 33)
     for k, n in enumerate(names):
         a, b, r, _, _ = B[n]
         d = seg_dist(xs, ys, a, b) - r * (1.15 if n in FRONT else 1.0)
@@ -201,6 +212,9 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             d = np.where(ys > j['skirt'] + 6, 1e9, d)
         if n == 'hair':
             d = np.full_like(d, 1e9)                   # 거리로는 아무것도 안 가져감(윤곽으로만)
+        if n == 'hip' and not j.get('skirt') and j.get('hip_cap', True):   # K-0201 — 바지 인물: 허리가 고관절 아래 허벅지를 가져가면 이음선이 축에서 멀어 다리가 돌 때 크게 벌어졌다(허벅지 중간 틈)
+            hy = max(j['N']['hip'][1], (j.get('F') or j['N'])['hip'][1]) + w_leg * 0.4
+            d = np.where(ys > hy, 1e9, d)
         score[k] = d
     lab = np.argmin(score, 0)
     for k, n in enumerate(names):                      # 10-26 K-0199 떨어짐 검사 — 몸통·팔·손에 간 목 위 픽셀(갓 챙·깃털)은 머리에(머리가 숙이면 남아 떠 있었다)
@@ -244,7 +258,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         m = lab == k
         _, _, r, pv, par = B[n]
         # 관절 덧살 — 제 관절 둘레 원(부모 쪽 그림)을 같이 가져간다
-        cap = (np.hypot(xs - pv[0], ys - pv[1]) < r * (CAP if n[:4] in ('legL', 'armL', 'foot') else 0.9)) & alpha   # K-0199 — 무릎·팔꿈치는 크게 굽어(모캡 동작) 덧살을 키운다
+        cap = (np.hypot(xs - pv[0], ys - pv[1]) < r * (CAP if n[:4] in ('legL', 'armL') else 0.9)) & alpha   # K-0199 — 무릎·팔꿈치는 크게 굽어(모캡 동작) 덧살을 키운다
         if j.get('skirt') and n[:4] in ('legU', 'legL') and pv[1] < j['skirt']:
             cap = cap & False                              # 옷자락 속 관절 — 둘레 원을 가져가면 도포 조각이 떠다닌다
         kin = [k] + ([names.index(par)] if par in names else []) + [names.index(c_) for c_, v_ in B.items() if v_[4] == n and c_ != 'weapon']
@@ -254,19 +268,25 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         # 아이 관절 둘레도 가져간다(아이가 돌면 부모 끝이 납작하게 잘린 게 보이지 않게)
         for c_, (_, _, cr, cpv, cpar) in B.items():
             if cpar == n and c_ != 'weapon' and not (j.get('skirt') and cpv[1] < j['skirt']):
-                m2 = m2 | ((np.hypot(xs - cpv[0], ys - cpv[1]) < cr * (CAP if c_[:4] in ('legL', 'armL', 'foot') else 0.9)) & alpha & np.isin(lab, [k, names.index(c_)]))
+                m2 = m2 | ((np.hypot(xs - cpv[0], ys - cpv[1]) < cr * (CAP if c_[:4] in ('legL', 'armL') else 0.9)) & alpha & np.isin(lab, [k, names.index(c_)]))
         rgb = A[..., :3]                                   # 부위마다 원본에서 — 몸통 채움 색이 뒤 순서 팔·손 조각에 새지 않게(10-24 버그)
         if n in ('chest', 'hip') and fill != 'none':
             # 팔·다리에 가린 몸통·허리 자리(돌리면 드러남) — 제 캡슐 안인데 팔·다리가 가져간 곳을 둘레 색으로 채움
             a, b, rr, _, _ = B[n]
             limbs = [names.index(x) for x in names if x not in ('chest', 'hip', 'head')]
             under = (seg_dist(xs, ys, a, b) < rr) & alpha & np.isin(lab, limbs)
+            if n == 'hip' and not j.get('skirt') and j.get('hip_cap', True):   # K-0201 — 고관절 선 아래 허벅지 자리는 안 채움(다리가 돌면 배경이 보여야 맞고, 채우면 줄무늬 덩어리가 드러났다)
+                under = under & (ys <= max(j['N']['hip'][1], (j.get('F') or j['N'])['hip'][1]) + w_leg * 0.4)
             if under.any():
                 if fill == 'sd' and j.get('fill_img'):     # 로컬 AI 인페인트 판(팔을 지운 몸통 — 같은 사람·같은 빛)에서 그 자리만
                     F_ = np.asarray(Image.open(os.path.join(ROOT, j['fill_img'])).convert('RGB').resize((W, H)))
                     rgb = rgb.copy(); rgb[under] = F_[under]
                 else:
-                    rgb = rgb.copy(); rgb[under] = smear_fill(A[..., :3], under, m)[under]
+                    from scipy import ndimage as _nd2
+                    ring = _nd2.binary_dilation(under, iterations=6) & m & ~under   # K-0201 — 구멍 둘레 6px(팔 윤곽선·주먹 살색)도 같이 채우고 색 재료에서는 뺌(흰·검은 얼룩)
+                    hole_ = under | ring
+                    rgb = rgb.copy(); rgb[hole_] = smear_fill(A[..., :3], hole_, m & ~hole_)[hole_]
+                    rgb[hole_] = (rgb[hole_].astype(np.float32) * j.get('fill_shade', 0.75)).astype(np.uint8)   # 팔 뒤 몸통 = 그늘(밝은 회색 얼룩으로 튀지 않게)
                 m2 = m2 | under
                 UNDER[0] = under if UNDER[0] is None else (UNDER[0] | under)
         if BLEED > 0 and n != 'weapon':                 # K-0200 — 이음 겹침: 몸 안쪽으로 BLEED px 더 가져가 돌 때 흰 실금이 안 비치게(옛 1px)
@@ -294,12 +314,31 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             u = to_u(pv); bones[n] = {'x': round(u[0], 2), 'y': round(u[1], 2), 'rot': 0}
         else:
             bones[n] = {'x': round((pv[0] - piv[par][0]) * S, 2), 'y': round((pv[1] - piv[par][1]) * S, 2), 'rot': 0}
+    # K-0201 쉼 보정 — 팩 동작은 「팔다리 곧게 아래·몸통 곧게 위·발 앞」 기준 각인데 그림은 숙이고 팔을 뒤로 늘어뜨린 채 그려져 있어,
+    # 그대로 더하면 팔이 원본보다 훨씬 뒤로 돌고 몸이 기울어 「뒤로 걷는·팔 거꾸로·젖혀진」 꼴(사용자 10-26). 뼈마다 그려진 각(부모 기준)을 쉼 rot 에서 뺀다.
+    #   joints "rest_fix": {뼈: 0~1} 로 덜 고칠 수 있다(부채 든 손처럼 그림 자세를 살릴 때) · "rest_fix": false 면 끔
+    if j.get('rest_fix', True) is not False:
+        CAN = {'hip': (0, 1), 'chest': (0, -1), 'head': (0, -1), 'foot': (1, 0)}
+        def _cw(n):
+            a, b = B[n][0], B[n][1]
+            dx, dy = b[0] - a[0], b[1] - a[1]
+            c = CAN.get(n, CAN.get(n[:4], (0, 1)))
+            return math.degrees(math.atan2(c[0] * dy - c[1] * dx, c[0] * dx + c[1] * dy))   # 화면(y 아래)에서 시계 = +
+        RW = dict({'hip': 1.0, 'chest': 1.0, 'head': 0.8, 'armU': 1.0, 'armL': 0.7, 'hand': 0.5, 'legU': 1.0, 'legL': 1.0, 'foot': 1.0}, **(j.get('rest_fix') if isinstance(j.get('rest_fix'), dict) else {}))
+        drawn = {n: _cw(n) for n in names if n not in ('weapon', 'hair') and B[n][0] != B[n][1]}
+        for n, th in drawn.items():
+            par = B[n][4]
+            rel = th - (drawn.get(par, 0.0) if par else 0.0)
+            rel = (rel + 180) % 360 - 180
+            w_ = RW.get(n, RW.get(n[:4], 1.0))
+            if n in bones:
+                bones[n]['rot'] = round(-rel * w_, 2)
     if 'armUL' not in B and far in ('copy', 'copyall'):   # K-0200 — copyall 이 조건에서 빠져 먼 다리까지 없어지던 것
         # 안쪽 팔·다리 = 바깥 것을 어둡게 복사(몸 뒤, z 낮게) — 옆모습에서 가려 안 보이는 쪽
         # 팔은 복사하지 않는다 — 인페인트 몸통이 몸에 붙은 팔을 새로 그려 그게 뒤팔 노릇을 한다(K-0188 ② 눈 판정 · 셋째 팔 막기)
         for s in (('armU', 'armL', 'hand', 'legU', 'legL', 'foot') if far == 'copyall' else ('legU', 'legL', 'foot')):
-            src_p = next((p for p in parts if p['bone'] == s + 'R'), None)
-            if not src_p:
+            src_p = next((p for p in parts if p['bone'] == s + 'R' and p['img'] == s + 'R.webp'), None)   # K-0201 — 같은 뼈의 무기 그림을 집으면 없는 파일을 열었다(jp_murasaki)
+            if not src_p or not os.path.exists(os.path.join(outdir, s + 'R.webp')):
                 continue
             q = Image.open(os.path.join(outdir, s + 'R.webp')).convert('RGBA'); qa = np.asarray(q).astype(np.float32)
             qa[..., :3] *= 0.72

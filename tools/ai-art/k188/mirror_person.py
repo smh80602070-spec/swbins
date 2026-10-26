@@ -39,6 +39,7 @@ def main():
         for k, v in j.items():
             out[k] = v if k in ('foot', 'skirt', 'skirt_cut', 'fill_img', 'w') else mx(v, W)
         json.dump(out, open(jp, 'w'))
+        json.dump(out, open(os.path.join(os.path.dirname(os.path.abspath(__file__)), i + '.joints.json'), 'w'))   # K-0201 — 정본 관절도(옛 판은 작업본만 → 정본에서 다시 복사되면 뒤집기가 풀렸다, sg_huangzhong)
         fp = os.path.join(d, 'flip.json')
         fl = json.load(open(fp)).get('flip', False) if os.path.exists(fp) else False
         json.dump({'flip': not fl, 'mirrored': 'K-0188 오른쪽 보기로'}, open(fp, 'w'))

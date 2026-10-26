@@ -7,7 +7,8 @@ O=C:/swbins/tools/char-forge/_out/k199; mkdir -p tools/char-forge/_out/k199
 CV="$B -b --factory-startup -P tools/char-forge/clips_to_cutout.py --"
 "$B" -b --factory-startup -P tools/char-forge/clips_to_cutout.py -- --pack C:/swbins/saga-assets/characters/anim-src/mocap/vroid_mocap_anims.glb --out $O/side_mocap.json --base-out $O/base_side.json </dev/null 2>&1 | grep -a CUTOUT_CLIPS | cut -c1-40
 "$B" -b --factory-startup -P tools/char-forge/clips_to_cutout.py -- --pack C:/swbins/saga-assets/characters/anim-src/mocap/vroid_clips30_anims.glb --out $O/side_c30.json --neutral "" --base-in $O/base_side.json </dev/null 2>&1 | grep -a CUTOUT_CLIPS | cut -c1-40
-"$B" -b --factory-startup -P tools/char-forge/clips_to_cutout.py -- --pack C:/swbins/tools/char-forge/_out/vroid/ac_balgwang/ac_balgwang_anims.glb --out $O/side_hero.json --neutral "" --base-in $O/base_side.json </dev/null 2>&1 | grep -a CUTOUT_CLIPS | cut -c1-40
+# K-0201 — 전투 팩은 손 키프레임(UAL) — 기준 빼기 없이 원값(모캡 서기를 빼면 몸통 ≈20° 쏠림, 제 서기를 빼면 전투 자세라 다리가 비틀림)
+"$B" -b --factory-startup -P tools/char-forge/clips_to_cutout.py -- --pack C:/swbins/tools/char-forge/_out/vroid/ac_balgwang/ac_balgwang_anims.glb --out $O/side_hero.json --neutral "" </dev/null 2>&1 | grep -a CUTOUT_CLIPS | cut -c1-40
 PYTHONIOENCODING=utf-8 py - <<'E'
 import json, os
 O = 'tools/char-forge/_out/k199/'
@@ -44,7 +45,7 @@ for nk in ('walk', 'run', 'k.walk', 'walk~robe', 'run~robe', 'k.walk~robe'):
         for k in ks:
             k[1] = round(m + (k[1] - m) * f, 2)
             if b == 'hip' and nk.startswith('run'):
-                k[1] = round(k[1] - 15, 2)            # 달리기 앞으로 숙임(모캡 변환은 뒤로 젖혀 보였다, − = 앞)
+                k[1] = round(k[1] - 8, 2)             # 달리기 숙임 — 3D 원본 척추 +12° 에 맞춤(옛 −15 는 그림 쉼 자세 탓을 덮던 값, K-0201 쉼 보정 뒤 −8)
             if b == 'hip' and len(k) > 3:
                 k[3] = round(k[3] * 1.6, 3)
     src[nk] = src.get(nk, '') + ' · K-0200 과장'
@@ -57,7 +58,7 @@ def _at(ks, u, j=1):
             w = (u - a[0]) / max(1e-6, b[0] - a[0]); va = a[j] if len(a) > j else 0.0; vb = b[j] if len(b) > j else 0.0
             return va + (vb - va) * w
     return ks[-1][j] if len(ks[-1]) > j else 0.0
-def bake_hair(c, K_=90.0, C_=11.0, VY=1.8, LIM=35.0):
+def bake_hair(c, K_=140.0, C_=14.0, VY=1.4, LIM=24.0):   # K-0201 — 긴 머리가 걷기에서 40° 채찍처럼 뻗어 단단하게(옛 90·11·1.8·35)
     n = max(8, int(round(c['len'] * 30))); dt = c['len'] / n; ks = c['keys']
     head = lambda u: _at(ks.get('hip'), u) + _at(ks.get('chest'), u) + _at(ks.get('head'), u)
     dy = lambda u: _at(ks.get('hip'), u, 3)
