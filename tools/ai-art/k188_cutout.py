@@ -184,6 +184,30 @@ def smear_fill(rgb, hole, keep, it=400, smooth=60):
     return np.clip(a, 0, 255).astype(np.uint8)
 
 
+def flat_fill(rgb, hole, keep, reach=48, vsmooth=21):
+    """K-0201 — 줄마다 평면 색 채움: 같은 줄 구멍 둘레 reach px 의 몸 색 중앙값(윤곽선 검정·금속 반짝임 빼고)을 위아래로만 부드럽게.
+    smear(2D 확산)는 갑옷 주황·윤곽 검정·옷 남색이 섞여 큰 회색 얼룩이 됐고(rf_sunce 10-26) sd 인페인트는 몸통 자리에 팔을 새로 그렸다."""
+    from scipy import ndimage as _nd
+    a = rgb.astype(np.float32); lum = a.mean(2); out = a.copy()
+    ys_ = np.nonzero(hole.any(1))[0]
+    if not len(ys_):
+        return rgb
+    near = _nd.binary_dilation(hole, iterations=reach) & keep & (lum > 40) & (lum < 215)
+    rows = {}
+    for y in ys_:
+        sel = near[y]
+        if sel.sum() >= 4:
+            rows[y] = np.median(a[y][sel], 0)
+    if not rows:
+        return rgb
+    ks = np.array(sorted(rows)); cs = np.array([rows[k] for k in ks])
+    col = np.stack([np.interp(ys_, ks, cs[:, c]) for c in range(3)], 1)   # 빈 줄은 위아래 줄 사이로
+    col = _nd.uniform_filter1d(col, vsmooth, axis=0, mode='nearest')
+    for i, y in enumerate(ys_):
+        out[y][hole[y]] = col[i]
+    return np.clip(out, 0, 255).astype(np.uint8)
+
+
 def cut(src, jp, outdir, far='copy', fill='smear'):
     os.makedirs(outdir, exist_ok=True)
     j = json.load(open(jp, encoding='utf-8'))
@@ -285,7 +309,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
                     from scipy import ndimage as _nd2
                     ring = _nd2.binary_dilation(under, iterations=6) & m & ~under   # K-0201 — 구멍 둘레 6px(팔 윤곽선·주먹 살색)도 같이 채우고 색 재료에서는 뺌(흰·검은 얼룩)
                     hole_ = under | ring
-                    rgb = rgb.copy(); rgb[hole_] = smear_fill(A[..., :3], hole_, m & ~hole_)[hole_]
+                    rgb = rgb.copy(); rgb[hole_] = (flat_fill if j.get('fill_flat', True) else smear_fill)(A[..., :3], hole_, m & ~hole_)[hole_]
                     rgb[hole_] = (rgb[hole_].astype(np.float32) * j.get('fill_shade', 0.75)).astype(np.uint8)   # 팔 뒤 몸통 = 그늘(밝은 회색 얼룩으로 튀지 않게)
                 m2 = m2 | under
                 UNDER[0] = under if UNDER[0] is None else (UNDER[0] | under)
