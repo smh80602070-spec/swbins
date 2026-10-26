@@ -247,6 +247,19 @@
     g[it.slot] = id; save();
     return { ok: true };
   }
+  /** W-0467 좋은 장비 끼우기 — 출진 셋(첫째부터)·칸마다 가방에서 등급이 더 높은 것으로 바꾼다 · 바꾼 수 */
+  function autoEquip() {
+    var cp = state(), n = 0;
+    if (!GR()) { return 0; }
+    party().forEach(function (id) {
+      ['w', 'a', 'c'].forEach(function (sl) {
+        var cur = GR().byId(gearOf(id)[sl]), best = null;
+        cp.gbag.forEach(function (gid) { var it = GR().byId(gid); if (it && it.slot === sl && (!best || it.grade > best.grade)) { best = it; } });
+        if (best && (!cur || best.grade > cur.grade) && equipGear(id, best.id).ok) { n++; }
+      });
+    });
+    return n;
+  }
   function unequipGear(offId, slot) { var cp = state(), g = cp.gear[offId]; if (g && g[slot]) { cp.gbag.push(g[slot]); g[slot] = null; save(); } }
   /** ⑤ 다 끝났나(19장 후일담까지) · 회차 — 1장부터, 장수·금·가방·경험은 그대로, 적은 회차마다 +15% */
   function ended() { var cp = state(); return !!cp.cleared[ALL]; }
@@ -272,5 +285,5 @@
 
   global.DG = global.DG || {};
   global.DG.campaign = { on: on, state: state, chapters: chapters, chapter: chapter, roster: roster, party: party, setParty: setParty, foesFor: foesFor,
-    battleOpts: battleOpts, clsOf: clsOf, classChoices: classChoices, promote: promote, foeCls: foeCls, mercN: mercN, mercsOf: mercsOf, cycleMerc: cycleMerc, foeMercs: foeMercs, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, PREP: PREP, prepHave: prepHave, buyPrep: buyPrep, pairs: pairs, talk: talk, gearShop: gearShop, buyGear: buyGear, gearOf: gearOf, equipGear: equipGear, unequipGear: unequipGear, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
+    battleOpts: battleOpts, autoEquip: autoEquip, clsOf: clsOf, classChoices: classChoices, promote: promote, foeCls: foeCls, mercN: mercN, mercsOf: mercsOf, cycleMerc: cycleMerc, foeMercs: foeMercs, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, PREP: PREP, prepHave: prepHave, buyPrep: buyPrep, pairs: pairs, talk: talk, gearShop: gearShop, buyGear: buyGear, gearOf: gearOf, equipGear: equipGear, unequipGear: unequipGear, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
 })(typeof window !== 'undefined' ? window : this);

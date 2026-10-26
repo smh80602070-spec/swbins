@@ -7709,6 +7709,15 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var ok = L.length === 19 && L.filter(function (c) { return c.epi; }).length === 3 && L.every(function (c) { return c.land && c.goal; }) && o.srpg && o.mine.length >= 1 && o.mine.length <= 3 && o.foes.length >= 1 && o.myTroops[0] > 0 && g1 === g0 + 200 && w.win && ch2 === 2 && cp.cleared[1] === 1 && !l.win && cp.ch === 2 && by.ok && cp.gold === gb - CP.price(it) && rt.ch === 2 && rt.bag.indexOf(it.id) >= 0 && txt.indexOf('{') < 0 && (function () { cp.ch = 17; var e1 = CP.choose(17, 'util'); cp.ch = 19; var e3 = CP.choose(19, 'util'); var end = CP.ended(), f0 = CP.battleOpts(1).foeTroops[0], rd = CP.newRound(), f1 = CP.battleOpts(1).foeTroops[0]; return e1.epi && !e1.end && e3.end && end && rd === 1 && cp.ch === 1 && f1 > f0; })();
       return ok || ('실패 ' + JSON.stringify({ n: L.length, mine: o.mine.length, foes: o.foes.length, g0: g0, g1: g1, w: w.win, ch2: ch2, l: l.win, by: by, txt: txt }));
     });
+    t('W-0467 좋은 장비 끼우기 — 칸마다 가방에서 등급 높은 것으로 · 낮은 것으론 안 바꿈 · 뺀 것은 가방으로 · 자동 진행 준비에 포함', function () {
+      fresh('cao'); var CP = DG.campaign, CA = DG.campaignAuto, GR = DG.realmGear; R.state().campaign = null; var cp = CP.state(), me = CP.party()[0];
+      var w0 = CP.gearOf(me).w; cp.gbag = ['gr_sword_n', 'gr_sword_l', 'gr_spear_u', 'gr_hide_n'];
+      var n1 = CP.autoEquip(), g = CP.gearOf(me), top = GR.byId(g.w) && GR.byId(g.w).id === 'gr_sword_l', n2 = CP.autoEquip(), stay = CP.gearOf(me).w === 'gr_sword_l' && n2 === 0 || n2 >= 0 && CP.gearOf(me).w === 'gr_sword_l';
+      var back = !w0 || cp.gbag.indexOf(w0) >= 0 || CP.party().some(function (id) { return CP.gearOf(id).w === w0; });
+      cp.gbag.push('gr_hide_l'); var did = CA.prep(cp.ch), inPrep = did.some(function (x) { return x.indexOf('장비') === 0; }) && CP.gearOf(me).a === 'gr_hide_l';
+      var ok = n1 >= 1 && top && stay && back && inPrep;
+      return ok || ('실패 ' + JSON.stringify({ n1: n1, g: g, top: top, n2: n2, stay: stay, back: back, did: did, inPrep: inPrep }));
+    });
     t('W-0466 보조 목표·대사 마무리 — 적 부대가 지키는 이 없는 마을로(가장 가까운 하나만·내가 곁이면 안 감) · 상자 셋에 장비 하나 · 이긴 뒤·진 뒤 대사', function () {
       fresh('cao'); var T = DG.tactics, SG = DG.sideGoal, CP = DG.campaign, BS = DG.battleScript;
       var H = Object.values(DG.data.HEROES || DG.data.heroes).map(function (h) { return h.id; });

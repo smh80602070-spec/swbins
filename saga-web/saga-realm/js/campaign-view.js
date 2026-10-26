@@ -132,7 +132,7 @@
   function pickInfo() { if (pick == null) { return null; } var cp = CP().state(), s = String(pick); if (s.indexOf('g:') === 0) { var it = GR() && GR().byId(s.slice(2)); return it ? { g: it } : null; } var t = cp.bag[+s.slice(2)]; return t ? { t: t } : null; }
   function gearTab() {
     var cp = CP().state(), I = global.DG.item, pi = pickInfo(), btn = 'class="cpg-btn ghost" style="margin:2px;padding:5px 9px;min-height:32px"';
-    var html = '<div class="cpg-brief">🎒 장비: ' + (cp.gbag.length ? cp.gbag.map(function (id) { var it = GR().byId(id); return it ? '<button ' + btn.replace('ghost', 'ghost' + (pick === 'g:' + id ? ' on' : '')) + ' data-cp="bag" data-k="g:' + esc(id) + '" title="' + esc(GR().lineOf(it)) + '">' + gname(it) + '</button>' : ''; }).join('') : '없음') +
+    var html = '<div class="cpg-row" style="margin:0 0 6px"><button class="cpg-btn" data-cp="autoeq" title="출진 셋·칸마다 가방에서 등급이 더 높은 장비로">⚡ 좋은 장비 끼우기</button></div><div class="cpg-brief">🎒 장비: ' + (cp.gbag.length ? cp.gbag.map(function (id) { var it = GR().byId(id); return it ? '<button ' + btn.replace('ghost', 'ghost' + (pick === 'g:' + id ? ' on' : '')) + ' data-cp="bag" data-k="g:' + esc(id) + '" title="' + esc(GR().lineOf(it)) + '">' + gname(it) + '</button>' : ''; }).join('') : '없음') +
       '<br>💎 보물: ' + (cp.bag.length ? cp.bag.map(function (id, k) { var it = I.itemById(id); return '<button ' + btn.replace('ghost', 'ghost' + (pick === 't:' + k ? ' on' : '')) + ' data-cp="bag" data-k="t:' + k + '">' + esc(it ? it.emoji + ' ' + it.name : id) + '</button>'; }).join('') : '없음') +
       (pi && pi.g ? '<br><span style="color:#f3d27a">' + esc(GR().SLOT_NAME[pi.g.slot]) + ' — ' + esc(GR().lineOf(pi.g)) + '</span>' : '') + '</div><div class="cpg-grid" style="grid-template-columns:repeat(auto-fill,minmax(250px,1fr))">';
     CP().party().forEach(function (id) {
@@ -227,6 +227,7 @@
       CP().setParty(sel); show('camp');
     }
     else if (a === 'cls') { var rcl = CP().promote(b.getAttribute('data-id'), b.getAttribute('data-k')); toast(rcl.ok ? nm(b.getAttribute('data-id')) + ' — ' + rcl.cls.name + '(으)로 전직!' : rcl.why); show('camp'); }   // W-0457
+    else if (a === 'autoeq') { var ne = CP().autoEquip(); toast(ne ? '장비 ' + ne + '개를 바꿔 끼웠습니다' : '더 좋은 장비가 없습니다'); show('camp'); }   // W-0467
     else if (a === 'merc') { CP().cycleMerc(b.getAttribute('data-id'), +b.getAttribute('data-k')); show('camp'); }
     else if (a === 'bag') { var k = b.getAttribute('data-k'); pick = pick === k ? null : k; show('camp'); }
     else if (a === 'equip') { if (pick != null) { var ps = String(pick), r = ps.indexOf('g:') === 0 ? CP().equipGear(b.getAttribute('data-id'), ps.slice(2)) : CP().equip(b.getAttribute('data-id'), cp.bag[+ps.slice(2)]); if (!r.ok) { toast(r.why); } pick = null; show('camp'); } }
