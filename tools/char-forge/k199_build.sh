@@ -76,6 +76,57 @@ def bake_hair(c, K_=90.0, C_=11.0, VY=1.8, LIM=35.0):
         a, m, b = kept[-1], out[i], out[i + 1]; w = (m[0] - a[0]) / max(1e-6, b[0] - a[0])
         if abs(m[1] - (a[1] + (b[1] - a[1]) * w)) > 0.25: kept.append(m)
     kept.append(out[-1]); c['keys']['hair'] = kept
+# K-0200 공격 과장 — 타격 순간(팔·가슴 각속도 최대)을 찾아 시간을 비튼다: 움츠림은 느리게·1.25배 깊게 → 타격 빠르게 → 끝 0.12 여운(멈춤). 길이 1.1배
+ATK = ('attack', 'axe_1', 'axe_2', 'axe_heavy', 'dagger_1', 'dagger_2', 'dagger_heavy', 'fist_1', 'fist_2', 'fist_heavy', 'kick', 'punch_combo',
+       'shield_bash', 'spear_1', 'spear_2', 'spear_heavy', 'staff_heavy', 'sword_2', 'sword_3', 'sword_heavy', 'plunge', 'throw', 'skill')
+def warp_attack(c):
+    ks = c['keys']; n = max(12, int(round(c['len'] * 30)))
+    sp = []
+    for i in range(n):
+        u0, u1 = i / n, (i + 1) / n
+        sp.append(sum(abs(_at(ks.get(b), u1) - _at(ks.get(b), u0)) for b in ('armUR', 'armLR', 'chest', 'armUL')))
+    up = (sp.index(max(sp)) + 0.5) / n
+    if up < 0.08 or up > 0.92:
+        return False
+    vp = min(0.62, up + 0.14); vh = 0.88
+    def src(v):
+        if v <= vp:
+            return up * (v / vp) ** 1.6
+        if v <= vh:
+            w = (v - vp) / (vh - vp); return up + (1 - up) * (1 - (1 - w) ** 2.2)
+        return 1.0
+    n2 = int(round(c['len'] * 1.1 * 30)); new = {}
+    for b, bk in ks.items():
+        out_k = []
+        for i in range(n2 + 1):
+            v = i / n2; u = src(v)
+            k = [round(v, 3)] + [_at(bk, u, j) for j in range(1, len(bk[0]))]
+            if v <= vp and b != 'hip':           # 움츠림 깊게 — 처음 자세에서 벗어난 만큼 1.25배
+                k[1] = bk[0][1] + (k[1] - bk[0][1]) * 1.25
+            out_k.append([k[0]] + [round(x, 2) for x in k[1:]])
+        kept = [out_k[0]]
+        for i in range(1, len(out_k) - 1):
+            a, m, bb = kept[-1], out_k[i], out_k[i + 1]; w = (m[0] - a[0]) / max(1e-6, bb[0] - a[0])
+            if any(abs(m[j] - (a[j] + (bb[j] - a[j]) * w)) > 0.25 for j in range(1, len(m))): kept.append(m)
+        kept.append(out_k[-1]); new[b] = kept
+    c['keys'] = new; c['len'] = round(c['len'] * 1.1, 3); c['atk'] = round(vp, 3)
+    return True
+_w = 0
+for nk, c in out.items():
+    if nk.split('~')[0] in ATK and warp_attack(c):
+        _w += 1
+print('K200_WARP', _w)
+# K-0200 도포 판 먼 팔 — 넓은 소매 뒷팔이 앞팔만큼 휘두르면 등 뒤에 판자처럼 보인다 → 평균 둘레 0.6배
+for nk, c in out.items():
+    if not nk.endswith('~robe'):
+        continue
+    for b in ('armUL', 'armLL'):
+        ks = c['keys'].get(b)
+        if not ks:
+            continue
+        m = sum(k[1] for k in ks) / len(ks)
+        for k in ks:
+            k[1] = round(m + (k[1] - m) * 0.6, 2)
 # K-0200 도포 판 골반 — 도포 인물은 hip 그림이 발끝까지라 골반이 기울면 도포 통째로 기울어 젖혀 보인다 → 골반 0.3배, 덜 돈 만큼 가슴에 보태 상체 세계각은 그대로
 ROBE_HIP = 0.3
 for nk, c in out.items():
