@@ -145,6 +145,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/ultimate.js"></script>
 <script src="js/realm-class.js"></script>
 <script src="js/battle-event.js"></script>
+<script src="js/data-battle-script.js"></script>
 <script src="js/tactics-view3d.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/scenario.js"></script>
@@ -7705,6 +7706,23 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var it = CP.shop()[0], gb = cp.gold, by = CP.buy(it.id), rt = JSON.parse(JSON.stringify(R.state().campaign)), txt = CP.fillText('{책사}·{이웃}·{맹장}');
       var ok = L.length === 19 && L.filter(function (c) { return c.epi; }).length === 3 && L.every(function (c) { return c.land && c.goal; }) && o.srpg && o.mine.length >= 1 && o.mine.length <= 3 && o.foes.length >= 1 && o.myTroops[0] > 0 && g1 === g0 + 200 && w.win && ch2 === 2 && cp.cleared[1] === 1 && !l.win && cp.ch === 2 && by.ok && cp.gold === gb - CP.price(it) && rt.ch === 2 && rt.bag.indexOf(it.id) >= 0 && txt.indexOf('{') < 0 && (function () { cp.ch = 17; var e1 = CP.choose(17, 'util'); cp.ch = 19; var e3 = CP.choose(19, 'util'); var end = CP.ended(), f0 = CP.battleOpts(1).foeTroops[0], rd = CP.newRound(), f1 = CP.battleOpts(1).foeTroops[0]; return e1.epi && !e1.end && e3.end && end && rd === 1 && cp.ch === 1 && f1 > f0; })();
       return ok || ('실패 ' + JSON.stringify({ n: L.length, mine: o.mine.length, foes: o.foes.length, g0: g0, g1: g1, w: w.win, ch2: ch2, l: l.win, by: by, txt: txt }));
+    });
+    t('W-0459 장별 전투 대본 — 화면 길(tacticsView.open)도 opts 통째(전직·이벤트) · 16장 모두 대본(시작 줄 셋 이상) · 시작 줄이 대본대로(판 밖 사람 줄·적 대장·내 장수 이름 채움) · 그 턴 줄 한 번 · 위기·격파·증원 줄이 대본 · 장 흐름이 대본을 넘김', function () {
+      fresh('cao'); var T = DG.tactics, BE = DG.battleEvent, BS = DG.battleScript, CP = DG.campaign; if (!BS || !BE) { return '실패 모듈 없음'; }
+      var ids = CP.chapters().slice(0, 16).map(function (c) { return c.id; }), all16 = ids.every(function (id) { var x = BS.of(id); return x && x.open && x.open.length >= 3 && x.low && x.down; });
+      var H = Object.values(DG.data.HEROES || DG.data.heroes).map(function (h) { return h.id; }), me = H[0], fo = H[1], rf = H[2], sc = BS.of('r2_plains');
+      var b = T.makeBoardSrpg('w459', 'plain', false, 'rout'); T.unitsOfSrpg(b, [me], [fo], [4000], { events: { script: sc, reinforce: { turn: 3, id: rf, arms: ['cav'], hp: 30 } } }, [4000]);
+      var L = b.evLog || [], fn = DG.off.find(fo).name, mn = DG.off.find(me).name;
+      var open = L.length === sc.open.length && L[0].kind === 'story' && L[0].text.indexOf('강서: ') === 0 && !L[0].who && L[2].text.indexOf(fn + ': ') === 0 && L[3].text.indexOf(mn + ': ') === 0;
+      b.turn = 2; BE.turnStart(b); var t2 = b.evLog.filter(function (e) { return e.text.indexOf('군량고를 쳐라') >= 0; }).length === 1; BE.turnStart(b); var t2once = b.evLog.filter(function (e) { return e.text.indexOf('군량고를 쳐라') >= 0; }).length === 1;
+      b.turn = 3; BE.turnStart(b); var rl = b.evLog.filter(function (e) { return e.kind === 'reinforce'; })[0], reinf = !!rl && rl.text.indexOf(sc.reinf) > 0;
+      var Ld = T.unit(b, 'foe:' + fo); Ld.hp = Math.floor(Ld.max * 0.4); T.outcome(b); var low = b.evLog.some(function (e) { return e.kind === 'low' && e.text === fn + ': ' + sc.low; });
+      Ld.hp = 0; T.outcome(b); var down = b.evLog.some(function (e) { return e.kind === 'leaderDown' && e.text === fn + ': ' + sc.down; });
+      R.state().campaign = null; CP.state(); var camp = CP.battleOpts(1).events.script === BS.of('r1_start') && CP.battleOpts(5).events.script === sc;
+      var host = document.createElement('div'), vw = false; document.body.appendChild(host);   // 화면 길(tacticsView.open)도 opts 를 통째 넘기나 — 골라 넘겨 전직·이벤트가 실제 판에서 빠졌던 것
+      try { var o5 = CP.battleOpts(5); o5.cls = {}; o5.cls[o5.mine[0]] = 'brave'; DG.tacticsView.open(host, o5, function () {}); var vb = DG.tacticsView.cur().b, u0 = T.unit(vb, 'me:' + o5.mine[0]); vw = !!u0 && u0.cls === 'brave' && (vb.evLog || [])[0].kind === 'story' && !!vb.ev && vb.ev.script === sc; DG.tacticsView.quit(); } catch (e) { vw = 'err ' + e.message; } finally { host.remove(); }
+      var ok = all16 && open && t2 && t2once && reinf && low && down && camp && vw === true;
+      return ok || ('실패 ' + JSON.stringify({ vw: vw, all16: all16, open: open, t2: t2, t2once: t2once, reinf: reinf, low: low, down: down, camp: camp, log: L.slice(0, 4).map(function (e) { return e.kind + '|' + e.text.slice(0, 20); }) }));
     });
     t('W-0458 전투 중 이벤트 — 시작 도발 대사 · 증원(그 턴 적장+용병, 오른쪽 끝) · 원군(3턴부터 내 체력 45% 밑 한 번, 왼쪽 끝·바로 움직임) · 대장 절반·격파 대사 한 번씩 · 장 흐름 4·7·10·13·16장 증원 · 손잡이 0 = 없음', function () {
       fresh('cao'); var T = DG.tactics, BE = DG.battleEvent, CP = DG.campaign; if (!BE) { return '실패 모듈 없음'; }

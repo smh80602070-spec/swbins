@@ -103,6 +103,7 @@
       var at = Math.min(all.length - 1, Math.floor(ch.tier * (all.length - 1)));
       if (all.length) { var rid = all[Math.max(0, at)]; out.reinforce = { turn: 3, id: rid, arms: ['cav', 'spear'], hp: Math.max(20, Math.round(18 + foe * 0.15 / 50)), cls: foeCls(no, rid) }; }
     }
+    var BS = global.DG.battleScript; if (BS && BS.of(ch.id)) { out.script = BS.of(ch.id); }   // W-0459 장별 대본
     var pt = party(), spare = roster().filter(function (h) { return pt.indexOf(h.id) < 0; })[0];
     if (spare) { out.ally = { id: spare.id, arms: ['spear', 'bow'], hp: Math.max(20, Math.round(18 + my * 0.15 / 50)), cls: clsOf(spare.id) }; }
     return out;

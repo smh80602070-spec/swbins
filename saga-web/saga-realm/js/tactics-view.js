@@ -516,7 +516,7 @@
     if (!host) { cur = null; if (done) { done(null); } return null; }
     var b = opts.srpg && T().makeBoardSrpg ? T().makeBoardSrpg(opts.seed, opts.land, opts.siege, opts.goal) : T().makeBoard(opts.seed, opts.land, opts.siege);   // W-0401 SRPG 본전투 판
     if (b.srpg && opts.defend && T().mirror) { T().mirror(b); }   // W-0403 방어 판 — 성벽이 내 쪽
-    if (b.srpg) { T().unitsOfSrpg(b, opts.mine, opts.foes, opts.foeTroops, { mercs: opts.mercs, mercMul: opts.mercMul, mercN: opts.mercN }, opts.myTroops || []); } else { T().unitsOf(b, opts.mine, opts.foes, opts.foeTroops); }
+    if (b.srpg) { T().unitsOfSrpg(b, opts.mine, opts.foes, opts.foeTroops, opts, opts.myTroops || []);   /* W-0459 opts 통째(용병·전직 cls·이벤트 events) — 골라 넘기다 전직·증원이 실제 판에서 빠졌다 */ } else { T().unitsOf(b, opts.mine, opts.foes, opts.foeTroops); }
     host.classList.add('show');   // 먼저 보여야 폭을 잰다(display:none 이면 0)
     if (!host.__tvBound) { host.addEventListener('click', onClick); host.__tvBound = true; }
     var wide = host.clientWidth || 0;

@@ -4,6 +4,7 @@
  *   증원   opts.events.reinforce = {turn, id, arms[], hp} — 그 턴이 열릴 때 적장 하나가 용병을 끌고 오른쪽 끝에 선다
  *   원군   opts.events.ally = {id, arms[], hp} — 3턴부터 내 쪽 체력이 45% 밑이면 한 번, 출진 안 한 장수가 왼쪽 끝에 온다
  *   대사   시작(적 대장 도발) · 적 대장 체력 절반 · 장수가 쓰러질 때 · 증원·원군 — b.evLog[{t, kind, who, side, text}]
+ *   대본   opts.events.script(W-0459, data-battle-script.js) — 있으면 시작·턴·위기·격파·증원 줄을 그 장 대본으로(없는 칸은 위 공통 줄)
  * 판 규칙 층(tactics.js)이 한 줄씩 부른다(setup · turnStart · scan). three·DOM 없이 돈다(진단이 본다). 손잡이 rtk.battleEvent(1, 0 = 없음).
  *
  *   DG.battleEvent.setup(b, opts) · turnStart(b) · scan(b) · html(v, art, rerender)
@@ -39,9 +40,18 @@
     b.ev = null;
     if (!on() || !b.srpg) { return; }
     var e = (opts && opts.events) || {};
-    b.ev = { reinforce: e.reinforce || null, ally: e.ally || null, seen: {} };
+    b.ev = { reinforce: e.reinforce || null, ally: e.ally || null, script: e.script || null, seen: {} };
     var f = lead(b, 'foe');
-    if (f && f.id) { say(b, 'start', f, pick(b, 'start')); }
+    if (e.script && e.script.open) { lines(b, e.script.open, 'start'); }
+    else if (f && f.id) { say(b, 'start', f, pick(b, 'start')); }
+  }
+  /** 대본 줄들 — [['f'|'m'|'n', 줄]…] · 'n' 은 줄 앞 「이름: 」 그대로(판 밖 사람, 초상 없음) */
+  function lines(b, list, kind) {
+    (list || []).forEach(function (l) {
+      if (l[0] === 'n') { say(b, 'story', null, l[1]); return; }
+      var u = lead(b, l[0] === 'm' ? 'me' : 'foe');
+      if (u) { say(b, kind, u, (l[0] === 'm' ? '{m}' : '{f}') + ': ' + l[1]); }
+    });
   }
   /** 끝 열에서 빈 칸 — 가운데 줄부터 */
   function edge(b, side) {
@@ -73,13 +83,14 @@
     if (E.reinforce && !E.seen.reinforce && b.turn >= E.reinforce.turn) {
       E.seen.reinforce = 1;
       var r = arrive(b, 'foe', E.reinforce);
-      if (r) { say(b, 'reinforce', r, pick(b, 'reinforce'), { r: nameOf(r.id) }); }
+      if (r) { say(b, 'reinforce', r, E.script && E.script.reinf ? '{r}: ' + E.script.reinf : pick(b, 'reinforce'), { r: nameOf(r.id) }); }
     }
     if (E.ally && !E.seen.ally && b.turn >= ALLY_TURN && frac(b, 'me') < ALLY_HP) {
       E.seen.ally = 1;
       var a = arrive(b, 'me', E.ally);
       if (a) { a.moved = false; a.acted = false; b.units.forEach(function (m) { if (m.cmd === a.uid) { m.moved = false; m.acted = false; } }); say(b, 'ally', a, pick(b, 'ally'), { a: nameOf(a.id) }); }
     }
+    if (E.script && E.script.turns && E.script.turns[b.turn] && !E.seen['t' + b.turn]) { E.seen['t' + b.turn] = 1; lines(b, E.script.turns[b.turn], 'talk'); }   // 그 턴 대본
   }
   /** check 앞 — 대장 절반·장수 쓰러짐 대사(한 번씩) */
   function scan(b) {
@@ -88,8 +99,9 @@
     b.units.forEach(function (u) {
       if (u.kind !== 'officer' || !u.id) { return; }
       var k = u.uid;
-      if (u.hp <= 0 && !E.seen['d' + k]) { E.seen['d' + k] = 1; say(b, u.side === 'me' ? 'myDown' : (u.leader ? 'leaderDown' : 'foeDown'), u, pick(b, u.side === 'me' ? 'myDown' : (u.leader ? 'leaderDown' : 'foeDown'), k)); }
-      else if (u.leader && u.hp > 0 && u.hp < u.max / 2 && !E.seen['l' + k]) { E.seen['l' + k] = 1; say(b, 'low', u, pick(b, 'low')); }
+      var sc = E.script || {};
+      if (u.hp <= 0 && !E.seen['d' + k]) { E.seen['d' + k] = 1; say(b, u.side === 'me' ? 'myDown' : (u.leader ? 'leaderDown' : 'foeDown'), u, u.leader && sc.down ? '{x}: ' + sc.down : pick(b, u.side === 'me' ? 'myDown' : (u.leader ? 'leaderDown' : 'foeDown'), k)); }
+      else if (u.leader && u.hp > 0 && u.hp < u.max / 2 && !E.seen['l' + k]) { E.seen['l' + k] = 1; say(b, 'low', u, sc.low ? '{x}: ' + sc.low : pick(b, 'low')); }
     });
   }
 
