@@ -217,6 +217,8 @@ def lerp_fill(rgb, hole, keep, reach=40, vsmooth=15):
             L = R if L is None else L; R = L if R is None else R
             t = np.linspace(0, 1, x1 - x0 + 1)[:, None]
             out[y, x0:x1 + 1] = L * (1 - t) + R * t
+    bl_ = _nd.gaussian_filter(out, sigma=(7, 4, 0))                # 줄마다 따로 이은 색이 가로 줄무늬로 보여(sunce 10-27) 구멍 안만 흐림
+    out[hole] = bl_[hole]
     return np.clip(out, 0, 255).astype(np.uint8)
 
 
