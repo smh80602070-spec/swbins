@@ -19,8 +19,8 @@
  "ticket": "K-0188",
  "from": "tools/ai-art/_out/k188/p/jp_musashi/side.png",
  "tool": "tools/ai-art/k188_cutout.py cut",
- "far": "copy",
- "fill": "sd",
+ "far": "copyall",
+ "fill": "smear",
  "joints": "tools/ai-art/k188/jp_musashi.joints.json",
  "packed_by": "K-0188 tools/ai-art/k188/person.sh(옆모습 일러스트 → 관절 → 가린 몸통 로컬 SD 인페인트 → k188_cutout.py cut) → publish.py",
  "judge": "○"

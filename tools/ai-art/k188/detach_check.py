@@ -37,7 +37,7 @@ for pid in ids:
     tmp = os.path.join(OUT, '_rig_' + pid + ('_t' if CUT_IN != CUT else ''))
     os.makedirs(tmp, exist_ok=True)
     for f in os.listdir(d):
-        if f.endswith('.webp') and not os.path.exists(os.path.join(tmp, f)):
+        if f.endswith('.webp'):   # K-0201 — 있으면 건너뛰던 것이 옛 그림을 남겨 다시 자른 뒤 숫자가 낡은 그림 기준이었다
             Image.open(os.path.join(d, f)).save(os.path.join(tmp, f))
     rig2 = dict(rig, clips={k: (pack.get(k + '~robe', pack[k]) if robe else pack[k]) for k in names})
     json.dump(rig2, open(os.path.join(tmp, 'rig.json'), 'w', encoding='utf-8'))

@@ -255,7 +255,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             near = best < j.get('w', {}).get('arm', 40) * L_.get('reach', 0.6)   # 윤곽 안이라도 팔 선분 가까이만 — 손 둘레 갑옷·치마는 몸에 남김
             lab = np.where(pm & near, np.array(arm_ids)[sub], np.where(pm & ~near & np.isin(lab, arm_ids), names.index('chest'), lab))
             if j.get('arm_poly_only', True):            # K-0200 — 윤곽 밖인데 거리로 팔·손에 간 픽셀(주먹 앞 바지 등)은 팔 아닌 다음 가까운 부위로(칼날 조각 막기)
-                out_ = ~pm & np.isin(lab, arm_ids)
+                out_ = ~pm & np.isin(lab, [i for i in arm_ids if not ('weapon' in names and names[i] == 'hand' + s_)])   # K-0201 — 무기 든 손은 윤곽 밖이어도 손에 둔다(윤곽이 손가락을 잘라 무기가 떠다녔다 — michelangelo 6→320)
                 if out_.any():
                     sc2 = score.copy(); sc2[arm_ids] = 1e9
                     if 'weapon' in names:
@@ -267,7 +267,8 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             lab = np.where(np.asarray(pm) > 0, names.index(bone), lab)
     if 'weapon' in B:                                      # 무기 선은 몸 위를 가로질러도 무기로(창이 다리·몸통 조각으로 갈라지지 않게)
         a_, b_, r_, _, _ = B['weapon']
-        lab = np.where(seg_dist(xs, ys, a_, b_) < r_, names.index('weapon'), lab)
+        keep_ = [names.index(x + j['weapon'].get('side', 'R')) for x in ('armL', 'hand') if x + j['weapon'].get('side', 'R') in names]   # K-0201 — 쥔 손·아래팔(소매)은 무기선이 지나가도 제 부위에(무기 그림에 손·소매가 딸려 가 떠다녔다 — machao 375)
+        lab = np.where((seg_dist(xs, ys, a_, b_) < r_) & ~np.isin(lab, keep_), names.index('weapon'), lab)
     lab[~alpha] = -1
     foot_y = j.get('foot', int(np.nonzero(alpha.any(1))[0].max()))
     top_y = j['top'][1]
@@ -366,6 +367,12 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
                 continue
             q = Image.open(os.path.join(outdir, s + 'R.webp')).convert('RGBA'); qa = np.asarray(q).astype(np.float32)
             qa[..., :3] *= 0.72
+            if s in ('armU', 'armL', 'hand') and j.get('far_tint', 0.45) and os.path.exists(os.path.join(outdir, 'chest.webp')):   # K-0201 — 먼 팔이 갑옷 주황을 어둡게만 해 갈색 덩어리로 따로 떠 보임(rf_sunce) → 몸통 천 색 쪽으로 섞는다
+                ca = np.asarray(Image.open(os.path.join(outdir, 'chest.webp')).convert('RGBA')).astype(np.float32)
+                ok = (ca[..., 3] > 200) & (ca[..., :3].mean(2) > 50) & (ca[..., :3].mean(2) < 170)
+                if ok.sum() > 50:
+                    t = float(j.get('far_tint', 0.45)); cloth = np.median(ca[..., :3][ok], 0) * 0.8
+                    qa[..., :3] = qa[..., :3] * (1 - t) + cloth * t
             Image.fromarray(qa.astype(np.uint8)).save(os.path.join(outdir, s + 'L.webp'), 'WEBP', quality=90, method=6)
             parts.append(dict(src_p, bone=s + 'L', img=s + 'L.webp', z=Z[s + 'L']))
             bones[s + 'L'] = dict(bones[s + 'R'])
