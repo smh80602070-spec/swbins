@@ -50,11 +50,24 @@
     return host;
   }
   function open() { if (!on()) { return false; } ensure(); var cp = CP().state(); show(cp && cp.step === 'camp' ? 'camp' : 'route'); return true; }
+  /** W-0487 ⑤ 장 흐름에서 3D 지도로 — 장 흐름이 기본이라 지도 3D 를 안 지었고 🧊 도 숨겨져 3D 로 나갈 길이 없었다(사용자 "5천하 왜 3d 지웠지"). 지도 위에 「📜 장 흐름」 돌아오기 단추를 띄운다 */
+  function toMap3d() {
+    var R3 = global.DG.realm3d, cv = doc.getElementById('realm3d'); if (!R3 || !cv || !R3.available()) { return; }
+    close(); R3.init(cv); if (!R3.active()) { R3.toggle(); }
+    var back = doc.getElementById('cpg-back');
+    if (!back) {
+      back = doc.createElement('button'); back.id = 'cpg-back'; back.className = 'cpg-btn'; back.textContent = '📜 장 흐름';
+      back.style.cssText = 'position:fixed;left:12px;top:12px;z-index:40;padding:8px 12px;border-radius:10px';
+      back.addEventListener('click', function () { back.style.display = 'none'; open(); });
+      doc.body.appendChild(back);
+    }
+    back.style.display = '';
+  }
   function close() { if (host) { host.style.display = 'none'; } doc.body.classList.remove('cpg-on'); }
 
   function top(title, extra) {
     var cp = CP().state(), lord = OFF().lordOf ? OFF().lordOf(global.DG.rtk.me()) : null;
-    return '<div class="cpg-top"><h2>' + esc(title) + '</h2>' + (extra || '') + (global.DG.campaignAuto ? global.DG.campaignAuto.btnHtml() : '') + '<span>' + (lord ? esc(nm(lord)) + ' 군 · ' : '') + '<span class="cpg-gold">💰 ' + cp.gold + '</span></span></div>';
+    return '<div class="cpg-top"><h2>' + esc(title) + '</h2>' + (extra || '') + (global.DG.campaignAuto ? global.DG.campaignAuto.btnHtml() : '') + (global.DG.realm3d && global.DG.realm3d.available() ? '<button class="cpg-btn" data-cp="map3d" title="3D 지도로 나가기">🧊 3D 지도</button>' : '') + '<span>' + (lord ? esc(nm(lord)) + ' 군 · ' : '') + '<span class="cpg-gold">💰 ' + cp.gold + '</span></span></div>';
   }
   function show(step) {
     ensure();
@@ -211,6 +224,7 @@
     var b = e.target.closest('[data-cp]');
     if (!b || b.disabled) { return; }
     var a = b.getAttribute('data-cp'), cp = CP().state();
+    if (a === 'map3d') { toMap3d(); return; }
     if (a === 'auto') { if (global.DG.campaignAuto) { global.DG.campaignAuto.toggle(); } return; }   // W-0463 자동 진행 ▶/⏸
     if (a === 'ch') {
       var no = +b.getAttribute('data-no');
