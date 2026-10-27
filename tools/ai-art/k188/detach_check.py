@@ -39,6 +39,8 @@ for pid in ids:
     for f in os.listdir(d):
         if f.endswith('.webp'):   # K-0201 — 있으면 건너뛰던 것이 옛 그림을 남겨 다시 자른 뒤 숫자가 낡은 그림 기준이었다
             Image.open(os.path.join(d, f)).save(os.path.join(tmp, f))
+    if '--noweapon' in sys.argv and os.path.exists(os.path.join(tmp, 'weapon.webp')):   # K-0201 — 가는 무기 줄이 몸과 떨어진 덩어리로 잡혀 숫자를 부풀림 — 무기 빼고 센다
+        w_ = Image.open(os.path.join(tmp, 'weapon.webp')); Image.new('RGBA', w_.size, (0, 0, 0, 0)).save(os.path.join(tmp, 'weapon.webp'))
     rig2 = dict(rig, clips={k: (pack.get(k + '~robe', pack[k]) if robe else pack[k]) for k in names})
     json.dump(rig2, open(os.path.join(tmp, 'rig.json'), 'w', encoding='utf-8'))
     def offs(nm, ph):
