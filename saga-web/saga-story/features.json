@@ -1355,6 +1355,23 @@
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 hunt-pc/phone 「12 콤보 킬」·구슬 Read ○ · 구슬은 떨어진 것 kind exporb."
  }, {
+  "id": "st.pet-fetch",
+  "name": "줍는 펫(W-0478 웹 역이식 — 고돗 G-0407 · 메이플 펫) — 🦊 이 따라다니며 둘레 금·탕약을 주인공 자리로 가져옴(장비·두루마리·콤보 구슬 제외) · 손잡이 story.petFetch",
+  "files": [
+   "js/pet-fetch.js",
+   "js/side-view.js",
+   "src/side/02.js"
+  ],
+  "tests": [
+   "W-0478 줍는 펫"
+  ],
+  "level": "D1",
+  "verified": "",
+  "fun": {},
+  "ticket": "W-0478",
+  "since": "2026-10-27",
+  "note": ""
+}, {
   "id": "st.rune",
   "name": "룬(W-0423 ③ 웹 역이식 — 고돗 G-0382 · 메이플) — 사냥터 90~180초마다 앞 7m 에 룬 · 닿으면 화살표 넷 6초(방향키·WASD·화면 단추) · 맞히면 10분 경험치 ×2(메모리) · 틀리면 흩어짐 · 비경·관문 대장 무대 없음 · 손잡이 story.rune",
   "files": [

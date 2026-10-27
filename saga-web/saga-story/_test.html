@@ -110,6 +110,7 @@ window.DG_NO_TUNE = true;
 <script src="js/sect.js"></script>
 <script src="js/mob-cards.js"></script>
 <script src="js/combo-kill.js"></script>
+<script src="js/pet-fetch.js"></script>
 <script src="js/rune.js"></script>
 <script src="js/field-elite.js"></script>
 <script src="js/hunt-wave.js"></script>
@@ -6497,6 +6498,19 @@ window.DG_NO_TUNE = true;
       C.setTune('story.comboKill', 0); var off = K.onKill(run, fx, e, 20); C.setTune('story.comboKill', 1);
       var ok = r.n === 10 && orb && orb.n === 80 && r.orb === 80 && pops === 8 && cut.n === 1 && K.best(run) === 10 && pulled && got === 7 && run.expGained === 7 && cols.split(',')[0] === '-' && new Set(cols.split(',')).size === 5 && K.orbMul(200) === 8 && off === null;
       return ok ? ('10 콤보 → 구슬 ' + orb.n + '(×' + K.orbMul(10) + ') · 글 ' + pops + ' · 6초 끊김 → ' + cut.n + ' · 최고 ' + K.best(run) + ' · 끌림 ' + Math.round(near.x)) : ('실패 ' + JSON.stringify({ r: r, orb: orb, pops: pops, cut: cut, pulled: pulled, got: got, cols: cols, off: off }));
+    });
+    t('W-0478 줍는 펫 — 곁 gold·potion 을 주인공 자리로 옮김 · gear·scroll·exporb·반경 밖은 그대로 · 따라감 · 손잡이 0 이면 안 움직임', function () {
+      var PF = DG.petFetch, C = DG.core; if (!PF) { return '실패 DG.petFetch 없음'; }
+      var mk = function () { var run = { player: { x: 100, y: 200, facing: 1 }, drops: [] }; run.drops = [{ kind: 'potion', x: 220, y: 240, vy: 0, n: 3 }, { kind: 'gear', x: 160, y: 250, vy: 0 }, { kind: 'exporb', x: 150, y: 250, vy: 0 }, { kind: 'gold', x: 900, y: 250, vy: 0, n: 5 }]; return run; };
+      var run = mk(), i, px = 113, py = 254;
+      for (i = 0; i < 200; i++) { PF.step(run, 0.05); }
+      var pot = run.drops[0], moved = Math.abs(pot.x - px) < 1 && Math.abs(pot.y - py) < 1, kept = run.drops[1].x === 160 && run.drops[2].x === 150 && run.drops[3].x === 900;
+      run.player.x = 500; for (i = 0; i < 100; i++) { PF.step(run, 0.05); } var follow = Math.hypot(run.pet.x - 513, run.pet.y - py) <= 60;
+      var near = PF.pick(mk().drops, 113, 254, 220), none = PF.pick([{ kind: 'gear', x: 120, y: 254 }], 113, 254, 220) === null;
+      C.setTune('story.petFetch', 0); var off = mk(); for (i = 0; i < 100; i++) { PF.step(off, 0.05); } C.setTune('story.petFetch', 1);
+      var offOk = off.drops[0].x === 220 && !off.pet;
+      var ok = moved && kept && follow && near && near.kind === 'potion' && none && offOk;
+      return ok || ('실패 ' + JSON.stringify({ moved: moved, kept: kept, follow: follow, near: near && near.kind, none: none, offOk: offOk, potx: pot.x }));
     });
     t('W-0423 ③ 룬 — 90~180초에 앞 7m 바닥 · 닿으면 화살표 넷 6초 · 다 맞히면 10분 경험치 ×2 · 틀리거나 시간 다하면 흩어짐 · 비경엔 없음 · 손잡이 끔', function () {
       var R = DG.rune, C = DG.core; if (!R) { return '실패 DG.rune 없음'; } R._reset();

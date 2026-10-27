@@ -367,6 +367,7 @@
       ctx.textAlign = 'center';
       (global.DG.mode2d || { mark: function (c, s, x, y) { c.fillText(s, x, y); } }).mark(ctx, def.emoji, d.x - camX, d.y);   // W-0350 떨어진 것
     }
+    if (global.DG.petFetch) { global.DG.petFetch.draw(ctx, camX, run); }   // W-0478 줍는 펫
 
     /* 적 */
     if (!(global.DG.sideView3d && global.DG.sideView3d.ready())) { drawDying(); }
