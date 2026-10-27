@@ -212,7 +212,19 @@
         '팔 때를 고르는 것이 이 놀이입니다.</small></div>';
     }
     html += '</div>';
-    return html;
+    return html + viewMiles();
+  }
+
+  /** W-0476 마을 마일 교환 절 — 모은 마일 + 교환 넷(꺼짐이면 빈 글자) */
+  function viewMiles() {
+    var M = global.DG.miles; if (!M || !M.on()) { return ''; }
+    var html = '<div class="sec"><h4>🎟️ 마일 교환</h4><div class="card"><div class="stat-row"><span>모은 마일</span><b>' + M.pts() + '</b></div>' +
+      '<small class="muted">「오늘」 창 줄을 다 하고 받으면 줄마다 ' + M.PER + ' 마일.</small><div class="bagtools">';
+    M.SHOP.forEach(function (e) {
+      var it = M.itemOf(e.key), can = M.pts() >= e.cost;
+      if (it) { html += '<button class="btn tiny ' + (can ? 'primary' : 'ghost') + '"' + (can ? '' : ' disabled') + ' data-act="v-mbuy" data-key="' + e.key + '">' + it.emoji + ' ' + it.name + ' ×' + e.n + ' (' + e.cost + ')</button>'; }
+    });
+    return html + '</div></div></div>';
   }
 
   api = { setup: setup, viewParcel: viewParcel, parcelChip: parcelChip, viewWear: viewWear, viewMuseum: viewMuseum, viewTurnip: viewTurnip };

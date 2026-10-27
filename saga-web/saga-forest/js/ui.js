@@ -236,6 +236,7 @@
       } else if (act === 'v-repay') {
         var rp = global.DG.home.repay(parseInt(b.getAttribute('data-n'), 10) || 0);
         if (rp) { toast(rp.text); }
+      } else if (act === 'v-mbuy') { var mb = global.DG.miles.buy(b.getAttribute('data-key')); toast(mb.text);
       } else if (act === 'v-tbuy') {
         var tb = global.DG.turnip.buy(parseInt(b.getAttribute('data-n'), 10) || 10);
         if (tb) { toast(tb.text); }

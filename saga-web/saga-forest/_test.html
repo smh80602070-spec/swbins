@@ -144,6 +144,7 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
 <script src="js/animal.js"></script>
 <script src="js/turnip.js"></script>
 <script src="js/fish-derby.js"></script>
+<script src="js/miles.js"></script>
 <script src="js/wear.js"></script>
 <script src="js/terrain.js"></script>
 <script src="js/tool-grade.js"></script>
@@ -5218,6 +5219,22 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         var ok = big === 55 && small === 15 && luck === 70 && off === null && a && a.size >= 55 && c.total >= 150 && gold === 3100 && s.derby.paid === 3 && row && /금상/.test(row.label) && sundayOnly && sun === 1;
         return ok || ('실패 ' + JSON.stringify({ big: big, small: small, luck: luck, off: off, a: a, c: c, gold: gold, row: row, sun: sun }));
       } finally { s.derby = keep; C.save.player.gold = g0; C.setTune('fo.derby', null); }
+    });
+    t('W-0476 마을 마일 — 다 된 줄 +100 한 번씩 · 새 줄 +100 · 다음 날 got 비고 pts 유지 · 능금 ×5=150 · 모자라면 그대로 · 손잡이 0 이면 전부 0 · 어댑터 claim 연결', function () {
+      var M = DG.miles, V = DG.village, C = DG.core; if (!M || !V) { return '실패 DG.miles 없음'; }
+      var s = V.state(), keep = s.miles, keepBag = JSON.stringify(s.bag), keepDay = s.day;
+      try {
+        s.miles = null; C.setTune('fo.miles', 1);
+        var rows = [{ label: 'a', done: true }, { label: 'b', done: true }, { label: 'c', done: false }];
+        var e1 = M.earn(rows), e2 = M.earn(rows); rows[2].done = true; var e3 = M.earn(rows), p3 = M.pts();
+        s.day = keepDay + 1; var cm = M.claimModel(rows), e4 = M.earn([{ label: 'a', done: true }]), p4 = M.pts();
+        var a0 = s.bag.apple || 0; s.miles.pts = 100; var bad = M.buy('apple'); s.miles.pts = 150; var good = M.buy('apple');
+        var okBuy = !bad.ok && good.ok && s.miles.pts === 0 && (s.bag.apple || 0) === a0 + 5;
+        var ad = DG.goalsAdapter.model(), adOk = ad.claim === null || (ad.claim && /마일/.test(ad.claim.label));
+        C.setTune('fo.miles', 0); var off = M.earn([{ label: 'z', done: true }]) === 0 && !M.buy('apple').ok && M.claimModel(rows) === null;
+        var ok = e1 === 200 && e2 === 0 && e3 === 100 && p3 === 300 && cm && cm.state === 'ready' && e4 === 100 && p4 === 400 && okBuy && adOk && off;
+        return ok || ('실패 ' + JSON.stringify({ e1: e1, e2: e2, e3: e3, p3: p3, cm: cm && cm.state, e4: e4, p4: p4, okBuy: okBuy, adOk: adOk, off: off }));
+      } finally { s.miles = keep; s.bag = JSON.parse(keepBag); s.day = keepDay; C.setTune('fo.miles', null); }
     });
     t('W-0388 고정 건물(가게·게시판·집·우편함·침선방·깃대) 칸 위엔 60일 내내 흩뿌림 소품이 안 선다', function () {
       var sv = DG.core.save.village, d0 = sv.day, bad = [], d, keys = /^(shop|board|home|mail|tailor|pole)$/;

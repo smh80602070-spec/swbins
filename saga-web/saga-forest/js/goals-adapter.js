@@ -12,13 +12,15 @@
     var V = global.DG.village;
     if (!V || !V.taskList) { return { today: [], week: [], note: '일과가 아직 없습니다.' }; }
     var w = V.weeklyTaskInfo ? V.weeklyTaskInfo() : null;
-    return {
+    var m = {
       resetIn: null,
       today: V.taskList().map(function (t) { return { label: t.name, icon: '🌿', cur: t.got, max: t.need, done: t.done, go: openTown }; }).concat(global.DG.fishDerby && global.DG.fishDerby.row() ? [global.DG.fishDerby.row()] : []).concat(global.DG.crops && global.DG.crops.row() ? [global.DG.crops.row()] : []).concat(global.DG.birthday && global.DG.birthday.row() ? [global.DG.birthday.row()] : []),   // W-0422 일요일 낚시 대회
       week: w ? [{ label: w.name, icon: '🗓️', cur: w.got, max: w.need, done: w.done, go: openTown }] : [],
       claim: null,
       note: '일과는 하나씩 다 한 자리에서 보상이 들어옵니다 — 자고 일어나면 새 일과.'
     };
+    if (global.DG.miles) { m.claim = global.DG.miles.claimModel(m.today); }   // W-0476 마을 마일 — 다 된 줄 모아 받기
+    return m;
   }
 
   global.DG = global.DG || {};
