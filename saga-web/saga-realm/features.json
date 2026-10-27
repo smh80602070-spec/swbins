@@ -1080,7 +1080,6 @@
   "files": [
    "js/tactics.js",
    "js/tactics-view.js"
-
   ],
   "tests": [
    "W-0485 SRPG 날씨"
