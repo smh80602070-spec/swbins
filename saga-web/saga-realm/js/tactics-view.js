@@ -339,7 +339,7 @@
     if (skin() && art()) { renderSkin(v, b, done); return; }
     v.host.innerHTML = '<div class="tv">' +
       '<div class="tv-head"><b>♟️ 전술판</b> <span class="muted">' + (b.srpg ? b.turn + '턴' : Math.min(b.turn, T().TURNS) + ' / ' + T().TURNS + '턴') + ' · ' + esc(NAME[b.land] || '') +
-        (b.siege ? ' · 공성' : '') + '</span>' + (b.srpg ? ' <span class="tv-goal" style="color:#f3d27a;font-weight:700">🎯 ' + esc(T().goalText(b)) + '</span>' : '') + '</div>' +
+        (b.siege ? ' · 공성' : '') + '</span>' + (b.srpg ? ' <span class="tv-goal" style="color:#f3d27a;font-weight:700">🎯 ' + esc(T().goalText(b)) + '</span>' : '') + (b.srpg && T().weatherText && T().weatherText(b) ? ' <span style="color:#bcd">' + esc(T().weatherText(b)) + '</span>' : '') + '</div>' +
       '<div class="tv-board">' + boardSvg(v) + cutHtml(v) + (global.DG.battleEvent ? global.DG.battleEvent.html(v, function (u) { return cutArt(v, u); }, function () { if (cur === v) { render(); } }) : '') + '</div>' +
       (done ? resultHtml(v) :
         '<div class="tv-info">' + selInfo(v) + '</div>' +
@@ -359,7 +359,7 @@
     if (v.banT !== b.turn) { v.banT = b.turn; v.banAt = Date.now(); }
     var foeB = v.foeBan && Date.now() - v.foeBan < 2400;
     var html = '<div class="tv tvs"><div class="tv-board tvs-board">' + boardSvg(v) + cutHtml(v) + (global.DG.battleEvent ? global.DG.battleEvent.html(v, function (u) { return cutArt(v, u); }, function () { if (cur === v) { render(); } }) : '') + '</div>' +
-      '<div class="tvs-top"><span class="tvs-chip turn me">⚔ ' + esc(turnTxt) + ' · 아군 차례</span>' + (b.srpg ? '<span class="tvs-chip goal tv-goal">🎯 ' + esc(T().goalText(b)) + '</span>' : '') + '<span class="tvs-chip">' + esc(NAME[b.land] || '') + (b.siege ? ' · 공성' : ' · 들판') + '</span>' + (global.DG.sideGoal ? global.DG.sideGoal.chip(b) : '') + '</div>';
+      '<div class="tvs-top"><span class="tvs-chip turn me">⚔ ' + esc(turnTxt) + ' · 아군 차례</span>' + (b.srpg ? '<span class="tvs-chip goal tv-goal">🎯 ' + esc(T().goalText(b)) + '</span>' : '') + (b.srpg && T().weatherText && T().weatherText(b) ? '<span class="tvs-chip goal">' + esc(T().weatherText(b)) + '</span>' : '') + '<span class="tvs-chip">' + esc(NAME[b.land] || '') + (b.siege ? ' · 공성' : ' · 들판') + '</span>' + (global.DG.sideGoal ? global.DG.sideGoal.chip(b) : '') + '</div>';
     /* 다시 그려도(피해 숫자 지우기 등) 띠가 처음부터 다시 돌지 않게 — 지난 시간만큼 animation-delay 를 당긴다 */
     var eF = foeB ? (Date.now() - v.foeBan) / 1000 : 0, eA = (Date.now() - v.banAt) / 1000;
     if (!done && foeB) { html += (eF < 1.3 ? '<div class="tvs-banner foe" style="animation-delay:' + (-eF).toFixed(2) + 's"><span>적군 차례</span></div>' : '') + '<div class="tvs-banner" style="animation-delay:' + (1 - eF).toFixed(2) + 's;animation-fill-mode:both"><span>' + esc(turnTxt) + ' — 아군 차례</span></div>'; }

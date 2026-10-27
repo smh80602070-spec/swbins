@@ -350,7 +350,7 @@
    *           내 전멸 = 패 · SRPG_CAP 턴 넘으면 옛 체력 비율 판정. 대장·성문 = 대승(rout) · 버팀 = 승(win)
    *   책략    한 판 PLOTS 번, 지력 FIRE_WIS 이상 내 장수 — 화계(숲에 불, 번짐·두 턴 탐) · 혼란(적 한 차례 쉼) · 회복
    */
-  var SRPG_SIZE = { plain: [13, 9], river: [14, 9], hill: [14, 10], mount: [15, 11] };   /* 10-27 ��� 5� 2d �t 4 �� D�X$  \ � �1.3 */
+  var SRPG_SIZE = { plain: [13, 9], river: [14, 9], hill: [14, 10], mount: [15, 11] };   /* 10-27 사용자 「5번 2d 맵이 너무 작고 비슷하네」 — 한 변 ×1.3 */
   var HILL_MIX = { plain: 0.08, river: 0.06, hill: 0.25, mount: 0.2 };
   var HEIGHT_HIT = 10, COUNTER_HIT = 20, BACK_HIT = 20;
   var ARMS = ['spear', 'cav', 'bow'], BEATS = { spear: 'cav', cav: 'bow', bow: 'spear' }, ARM_NAME = { spear: '창', cav: '기', bow: '궁' };
@@ -358,6 +358,10 @@
   var HOLD_TURNS = 6, SRPG_CAP = 30, PLOTS = 2;
   var FIRE_WIS = 70, FIRE_RANGE = 3, FIRE_TURNS = 2, FIRE_DMG = 6, FIRE_SPREAD = 0.5, PLOT_RANGE = 3, HEAL_RANGE = 2, HEAL_BASE = 15;
   var PLOT_NAME = { fire: '화계', confuse: '혼란', heal: '회복' };
+  /* W-0485 날씨(조조전식) — 판 씨앗이 정한다. 비 = 화계 칸 없음 · 안개 = 활·혼란·화계 사거리 -1. 손잡이 realm.weather 0 = 늘 맑음 */
+  var WEATHER_NAME = { clear: '맑음', rain: '비', fog: '안개' };
+  function weatherOf(seed) { var C = global.DG.core; if (C && C.tuned && !+C.tuned('realm.weather', 1)) { return 'clear'; } var r = hash(seed, 'wx'); return r < 0.55 ? 'clear' : r < 0.8 ? 'rain' : 'fog'; }
+  function fogCut(b) { return b && b.weather === 'fog' ? 1 : 0; }
 
   function makeBoardSrpg(seed, terrain, siege, goal) {
     var CD = global.DG.cityData, land = terrain;
@@ -376,7 +380,7 @@
       var rx = Math.floor(cols / 2) - 1 + (hash(seed, 'rx') < 0.5 ? 0 : 1), f1 = Math.floor(hash(seed, 'f1') * rows), f2 = (f1 + 2 + Math.floor(hash(seed, 'f2') * (rows - 3))) % rows;
       for (y = 0; y < rows; y++) { cells[y * cols + rx] = (y === f1 || y === f2) ? 'plain' : 'river'; }
     }
-    /* 10-27 ��� �| �t�  (Wt � �2 i�����  X�(ܑ P  H�@ D� T�). X��t| E 4 \� � \ */
+    /* 10-27 장마다 달라 보이게 — 씨앗이 능선·숲 덩어리·폐허 중 하나(시작 두 줄 안쪽은 비워 둔다). 하나뿐이라 땅 꼴 표는 그대로 */
     var fk = Math.floor(hash(seed, 'feat') * 3), fy0 = 1 + Math.floor(hash(seed, 'fy') * Math.max(1, rows - 4)), fx0 = 4 + Math.floor(hash(seed, 'fx') * Math.max(1, cols - 10)), i2;
     for (i2 = 0; i2 < 12; i2++) {
       var ox = i2 % 4, oy = Math.floor(i2 / 4), fx = fx0 + ox + (fk === 0 ? oy : 0), fy = fk === 0 ? fy0 + oy : fy0 + oy;
@@ -395,7 +399,7 @@
       cells[gate[1] * cols + gate[0]] = 'gate';
     }
     return { seed: String(seed), land: key, siege: !!siege, cols: cols, rows: rows, cells: cells, units: [], turn: 1, side: 'me', n: 0, done: null, log: [],
-      srpg: true, goal: g, gate: gate, hold: HOLD_TURNS, plots: PLOTS };
+      srpg: true, goal: g, gate: gate, hold: HOLD_TURNS, plots: PLOTS, weather: weatherOf(seed) };
   }
   /** SRPG 판에 두 편 — unitsOf 그대로 세운 뒤 내 부대(둘까지)·병종·방향·대장을 붙인다 */
   function unitsOfSrpg(b, mine, foes, foeTroops, opts, myTroops) {
@@ -424,7 +428,10 @@
     if (global.DG.realmClass) { global.DG.realmClass.apply(b, opts || {}); }   // W-0457 전직
     if (global.DG.battleEvent) { global.DG.battleEvent.setup(b, opts || {}); }   // W-0458 전투 중 이벤트(시작 대사)
     if (global.DG.sideGoal) { global.DG.sideGoal.setup(b, opts || {}); }   // W-0460 보물 상자·마을
-    return list;
+    var C9 = global.DG.core, bigMul = C9 && C9.tuned ? +C9.tuned('realm.srpgFoeHp', 1.1) : 1.1;   // 10-27 큰 판(13칸+)은 먼저 움직이는 내 쪽이 유리 — 적 체력 덤(자동 대국 57% 근처로)
+    if (b.srpg && b.cols >= 13 && bigMul !== 1) { (b.units || list).forEach(function (u) { if (u.side === 'foe') { u.hp = u.max = Math.round(u.max * bigMul); } }); }
+    if (fogCut(b)) { (b.units || list).forEach(function (u) { if ((u.rng || 1) > 1) { u.rng -= fogCut(b); } }); }   // W-0485 안개 — 지휘·전직이 사거리를 정한 뒤에 깎는다
+    return b.units || list;
   }
   function faceTo(u, x, y) {
     var dx = x - u.x, dy = y - u.y;
@@ -476,8 +483,8 @@
   function burning(b) { if (!b.fire) { b.fire = {}; } return b.fire; }
   function fireCells(b, uid) {
     var out = [], u = unit(b, uid), x, y;
-    if (!canPlot(b, uid)) { return out; }
-    for (y = 0; y < b.rows; y++) { for (x = 0; x < b.cols; x++) { if (cellAt(b, x, y) === 'forest' && Math.abs(x - u.x) + Math.abs(y - u.y) <= FIRE_RANGE && !burning(b)[x + ',' + y]) { out.push({ x: x, y: y }); } } }
+    if (!canPlot(b, uid) || b.weather === 'rain') { return out; }   // W-0485 비 — 불이 안 붙는다
+    for (y = 0; y < b.rows; y++) { for (x = 0; x < b.cols; x++) { if (cellAt(b, x, y) === 'forest' && Math.abs(x - u.x) + Math.abs(y - u.y) <= FIRE_RANGE - fogCut(b) && !burning(b)[x + ',' + y]) { out.push({ x: x, y: y }); } } }
     return out;
   }
   function burnUnits(b, dmg) {
@@ -528,7 +535,7 @@
     if (!canPlot(b, uid)) { return out; }
     alive(b).forEach(function (t) {
       var d = dist(u, t);
-      if (plot === 'confuse' && t.side !== u.side && d <= PLOT_RANGE && !t.confused) { out.push(t.uid); }
+      if (plot === 'confuse' && t.side !== u.side && d <= PLOT_RANGE - fogCut(b) && !t.confused) { out.push(t.uid); }
       else if (plot === 'heal' && t.side === u.side && d <= HEAL_RANGE && t.hp < t.max) { out.push(t.uid); }
     });
     return out;
@@ -589,6 +596,7 @@
   global.DG = global.DG || {};
   global.DG.tactics = {
     COLS: COLS, ROWS: ROWS, TURNS: TURNS, COVER: COVER, OUT: OUT, WOUND_MONTHS: WOUND_MONTHS,
+    WEATHER_NAME: WEATHER_NAME, weatherOf: weatherOf, weatherText: function (b) { var w = b && b.weather; return w && w !== 'clear' ? (w === 'rain' ? '🌧 비 — 화계 불가' : '🌫 안개 — 활·책략 사거리 −1') : ''; },
     hash: hash, makeBoard: makeBoard, cellAt: cellAt, coverAt: coverAt, officerUnit: officerUnit, troopUnit: troopUnit, unitsOf: unitsOf,
     unit: unit, alive: alive, actAuto: actAuto, check: check, moves: moves, move: move, hitChance: hitChance, attack: attack,
     aiTurn: aiTurn, endTurn: endTurn, outcome: outcome, apply: apply, annalize: annalize, autoPlay: autoPlay, autoRound: autoRound, permadeath: permadeath,

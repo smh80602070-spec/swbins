@@ -1075,6 +1075,23 @@
   "note": "문명식(구조만). 장부 tasks/gameplay/realm.md · D2(claude 2026-10-23 R-3 닫기): W-0279 내 성 창 촬영 ○ · qc"
  },
  {
+  "id": "rk.srpg-weather",
+  "name": "SRPG 날씨(W-0485 · 조조전식) — 판마다 맑음·비·안개, 비 = 화계 불가, 안개 = 활·책략 사거리 −1",
+  "files": [
+   "js/tactics.js",
+   "js/tactics-view.js"
+
+  ],
+  "tests": [
+   "W-0485 SRPG 날씨"
+  ],
+  "level": "D1",
+  "verified": "",
+  "fun": {},
+  "ticket": "W-0485",
+  "since": "2026-10-27",
+  "note": ""
+ }, {
   "id": "rk.revolt",
   "name": "민란(W-0479 웹 역이식 — 고돗 G-0410 · 코에이 삼국지 반란) — 치안 20 밑 내 성이 달 끝 30%로 병력 −20%·금 −3/1000·진압 뒤 치안 +15 · 손잡이 rk.revolt.on",
   "files": [

@@ -7625,6 +7625,20 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return (ok1 && ok2 && lead === 1 && ok3 && faced && k1 === 'rout' && k2 === 'rout' && k3 === 'win' && k4 === 'rout' && old === '8x6') ||
         ('실패 판 ' + JSON.stringify(sz) + ' 언덕 ' + hills + ' · 병종 ' + ok2 + '/' + Object.keys(arms) + ' 대장 ' + lead + ' · 덤 ' + nm(m1) + ' | ' + nm(m2) + ' · 방향 ' + faced + ' · 대장 ' + k1 + ' 성문 ' + k2 + ' 버팀 ' + k3 + ' 전멸 ' + k4 + ' · 옛 판 ' + old);
     }));   // W-0455 옛 판(용병 끔) 규칙
+    t('W-0485 SRPG 날씨 — 씨앗이 맑음·비·안개(맑음 40~70%) · 비 = 화계 칸 없음 · 안개 = 활 사거리 1·혼란 사거리 −1 · 손잡이 realm.weather 0 = 늘 맑음', function () {
+      var T = DG.tactics, C = DG.core, n = { clear: 0, rain: 0, fog: 0 }, k, rainB = null, fogB = null, clearB = null;
+      for (k = 0; k < 200; k++) { var b0 = T.makeBoardSrpg('wx' + k, 'mount', false, 'rout'); n[b0.weather]++; if (b0.weather === 'rain' && !rainB) { rainB = b0; } if (b0.weather === 'fog' && !fogB) { fogB = b0; } if (b0.weather === 'clear' && !clearB) { clearB = b0; } }
+      var dist = n.clear >= 80 && n.clear <= 140 && n.rain >= 20 && n.fog >= 20;
+      var st = { s: { might: 40, wisdom: 95, command: 70 }, f: { might: 60, wisdom: 40, command: 60 } };
+      T.unitsOfSrpg(rainB, ['s'], ['f'], [2000], { stats: st }, []); var noFire = T.fireCells(rainB, 'me:s').length === 0;
+      T.unitsOfSrpg(clearB, ['s'], ['f'], [2000], { stats: st }, []); var fireOk = T.fireCells(clearB, 'me:s').length > 0;
+      T.unitsOfSrpg(fogB, ['s'], ['f'], [2000, 2000, 2000], { stats: st }, []);
+      var bows = fogB.units.filter(function (u) { return u.arm === 'bow'; }), bowOk = bows.every(function (u) { return u.rng === 1; });
+      var s1 = T.unit(fogB, 'me:s'), f1 = T.unit(fogB, 'foe:f'); f1.x = s1.x + 3; f1.y = s1.y; var fogConf = T.plotTargets(fogB, 'me:s', 'confuse').indexOf('foe:f') < 0; f1.x = s1.x + 2; var fogNear = T.plotTargets(fogB, 'me:s', 'confuse').indexOf('foe:f') >= 0;
+      C.setTune('realm.weather', 0); var off = T.makeBoardSrpg(rainB.seed, 'mount', false, 'rout').weather === 'clear'; C.setTune('realm.weather', null);
+      var ok = dist && noFire && fireOk && bowOk && fogConf && fogNear && off;
+      return ok || ('실패 ' + JSON.stringify({ n: n, noFire: noFire, fireOk: fireOk, bows: bows.length, bowOk: bowOk, fogConf: fogConf, fogNear: fogNear, off: off }));
+    });
     t('W-0424 인재 천거 — 그 달 해시 12%(240달 중 15~50) · 충성 60↑ 지력 으뜸이 내 성 숨은 재야를 찾아냄(found)·충성 +5 · 안 서는 달·손잡이 0 이면 없음 · 「이번 달」 줄', function () {
       var RC = DG.recommend, R = DG.rtk, O = DG.off, C = DG.core; if (!RC || !R || !O) { return '실패 DG.recommend 없음'; }
       var st = R.state(); if (!st || !R.me()) { return '실패 rtk 판 없음'; }
@@ -7666,11 +7680,11 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         return ok || ('실패 ' + JSON.stringify({ none: none, p3: p3, lvC: lvC, ups: ups.length, mC: mC, mA: mA, mD: mD, swLv: swLv, foLv: foLv, row: row }));
       } finally { st.support = keep; }
     });
-    t('W-0401 SRPG 자동 대국 60판 — 승률 45~72%(10-27 큰 판 ×1.3 이라 57→약 70%) · 평균 턴 ≤ 12 · 목표 넷 다 나옴(고돗 G-0347 과 같은 57%·5.5턴)', cmdOff(function () {
+    t('W-0401 SRPG 자동 대국 60판 — 승률 45~65%(10-27 큰 판 ×1.3 — 적 체력 덤 realm.srpgFoeHp 1.1 로 맞춤) · 평균 턴 ≤ 12 · 목표 넷 다 나옴(고돗 G-0347 과 같은 57%·5.5턴)', cmdOff(function () {
       var wins = 0, turns = 0, by = {}, i;
       for (i = 0; i < 60; i++) { var b = srpgGame(i), o = DG.tactics.autoPlay(b), w = o.kind === 'rout' || o.kind === 'win'; if (w) { wins++; } turns += o.turn; by[b.goal] = (by[b.goal] || 0) + 1; }
       var rate = wins / 60, avg = turns / 60, line = '승률 ' + Math.round(rate * 100) + '% · 평균 ' + avg.toFixed(1) + '턴 · ' + JSON.stringify(by);
-      return (rate >= 0.45 && rate <= 0.72 && avg <= 12 && Object.keys(by).length === 4) || ('실패 ' + line);
+      return (rate >= 0.45 && rate <= 0.65 && avg <= 12 && Object.keys(by).length === 4) || ('실패 ' + line);
     }));   // W-0455 옛 판(용병 끔) 규칙
     t('W-0401 SRPG 책략 — 지력 70 이상 장수만 · 한 판 두 번 · 화계(숲 불·번짐·적 턴 끝 탐·두 턴 꺼짐) · 혼란(한 차례 쉼) · 회복(최대 안 넘음)', function () {
       var T = DG.tactics, b = T.makeBoardSrpg('plot', 'mount', false, 'rout'), st = { s: { might: 40, wisdom: 95, command: 70 }, d: { might: 80, wisdom: 30, command: 70 }, f: { might: 60, wisdom: 40, command: 60 } };
