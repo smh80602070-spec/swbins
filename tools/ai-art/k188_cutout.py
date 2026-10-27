@@ -80,7 +80,7 @@ def row_span(a, y):
     return (xs.min(), xs.max()) if len(xs) else (None, None)
 
 
-def auto(src, out_json, out_jpg, skirt=True):
+def auto(src, out_json, out_jpg, skirt=True, view='side'):
     im = load_rgba(src); a = np.asarray(im)[..., 3] > 40
     rows = np.nonzero(a.any(1))[0]; top, foot = int(rows.min()), int(rows.max())
     Hh = foot - top; Y = lambda f: top + f * Hh
@@ -94,6 +94,21 @@ def auto(src, out_json, out_jpg, skirt=True):
                'hip': [round(cx_t + Hh * 0.01), round(Y(PROP['hip']))], 'kn': [round((cx_t + cx_l) / 2 + Hh * 0.02), round(Y(PROP['kn']))],
                'an': [round(cx_l - Hh * 0.02), round(Y(PROP['an']))], 'toe': [round(cx_l + Hh * 0.08), foot - 5]},
          'w': {'chest': round(Hh * 0.091), 'arm': round(Hh * 0.043), 'leg': round(Hh * 0.031), 'head': round(Hh * 0.05), 'hip': round(Hh * 0.105)}}
+    if view in ('front', 'back'):                       # K-0198 — 정면·뒤: 몸 중심선 cx 양쪽 대칭(좌우 폭은 실루엣 몸통 띠 폭에서)
+        cx = cx_t
+        l, r = [], []
+        for y in range(int(Y(0.22)), int(Y(0.34)), 4):
+            s_ = row_span(a, y)
+            if s_[0] is not None: l.append(s_[0]); r.append(s_[1])
+        half = max(Hh * 0.10, (np.median(r) - np.median(l)) / 2) if l else Hh * 0.12   # 어깨~가슴 띠 반폭 = 팔 끝까지
+        sx = Hh * 0.075; ax = min(half * 0.9, Hh * 0.15)
+        def side(sg):
+            return {'sh': [round(cx + sg * sx), round(Y(0.2))], 'el': [round(cx + sg * ax), round(Y(0.37))],
+                    'wr': [round(cx + sg * ax), round(Y(0.52))], 'tip': [round(cx + sg * (ax + Hh * 0.01)), round(Y(0.57))],
+                    'hip': [round(cx + sg * Hh * 0.035), round(Y(0.45))], 'kn': [round(cx + sg * Hh * 0.04), round(Y(0.70))],
+                    'an': [round(cx + sg * Hh * 0.045), round(Y(0.955))], 'toe': [round(cx + sg * Hh * 0.07), foot - 5]}
+        j['N'], j['F'], j['view'] = side(1), side(-1), view
+        j['pelvis'] = [round(cx), round(Y(0.40))]; j['neck'] = [round(cx), round(Y(0.17))]
     if skirt:
         # 옷자락 끝 = 아래에서 위로 올라가며 실루엣 폭이 처음 다리 폭(머리 키 0.6배)을 넘는 줄
         lw = Hh * 0.075
@@ -105,11 +120,12 @@ def auto(src, out_json, out_jpg, skirt=True):
                     j['skirt'] = y; break
     json.dump(j, open(out_json, 'w'), indent=0)
     bg = Image.new('RGBA', im.size, (235, 235, 235, 255)); bg.alpha_composite(im); d = ImageDraw.Draw(bg)
-    pts = [('top', j['top']), ('neck', j['neck']), ('pelvis', j['pelvis'])] + [(k, v) for k, v in j['N'].items()]
+    pts = [('top', j['top']), ('neck', j['neck']), ('pelvis', j['pelvis'])] + [(k, v) for k, v in j['N'].items()] + [(k + 'F', v) for k, v in j.get('F', {}).items()]
     for k, (x, y) in pts:
         d.ellipse((x - 7, y - 7, x + 7, y + 7), fill=(255, 0, 0, 255)); d.text((x + 9, y - 6), k, fill=(200, 0, 0, 255))
     for a_, b_ in (('sh', 'el'), ('el', 'wr'), ('wr', 'tip'), ('hip', 'kn'), ('kn', 'an'), ('an', 'toe')):
         d.line((*j['N'][a_], *j['N'][b_]), fill=(255, 0, 0, 255), width=3)
+        if j.get('F'): d.line((*j['F'][a_], *j['F'][b_]), fill=(0, 120, 255, 255), width=3)
     if j.get('skirt'):
         d.line((0, j['skirt'], im.width, j['skirt']), fill=(0, 160, 0, 255), width=2)
     for v in range(0, max(im.size), 64):
@@ -546,7 +562,7 @@ if __name__ == '__main__':
     if a[0] == 'grid':
         grid(a[1], a[2])
     elif a[0] == 'auto':
-        auto(a[1], a[2], a[3])
+        auto(a[1], a[2], a[3], view=opt('--view', 'side'))
     elif a[0] == 'cut':
         cut(a[1], a[2], a[3], far=opt('--far', 'copy'), fill=opt('--fill', 'smear'))
     elif a[0] == 'preview':
