@@ -88,6 +88,60 @@ body:not(.stone-off) .st-li::before {
   vertical-align: middle;
 }
 
+/* ── HUD 전체(W-0482 — 사용자 10-27 「2 ui 전체가 변경을 원해」 「2나락만」) — 늘 떠 있는 위 띠·현상금·도구 단추·기술 칸·근처 카드도 같은 돌판 ──
+   자리·크기는 그대로. 모서리 팔각·불투명 돌·새김 글꼴. 창 그림은 ui-kit 가 이미 끼워 둔 9-slice 를 그대로 쓴다 */
+body:not(.stone-off) #profile,
+body:not(.stone-off) #wallet,
+body:not(.stone-off) #goals,
+body:not(.stone-off) #goals-panel,
+body:not(.stone-off) .near-card,
+body:not(.stone-off) #autobar {
+  --stone-cut-hud: 9px;
+  border-radius: 0;
+  clip-path: polygon(var(--stone-cut-hud) 0, calc(100% - var(--stone-cut-hud)) 0, 100% var(--stone-cut-hud), 100% calc(100% - var(--stone-cut-hud)), calc(100% - var(--stone-cut-hud)) 100%, var(--stone-cut-hud) 100%, 0 calc(100% - var(--stone-cut-hud)), 0 var(--stone-cut-hud));
+  background-color: #1d1b19;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+body:not(.stone-off) #goals { border-image: var(--ui-card) 28 fill / 10px stretch; }
+body:not(.stone-off) #goals,
+body:not(.stone-off) #goals *,
+body:not(.stone-off) #profile,
+body:not(.stone-off) #wallet { font-family: var(--stone-head); letter-spacing: .02em; }
+body:not(.stone-off) .icon-btn {
+  --stone-cut-ib: 7px;
+  border-radius: 0;
+  clip-path: polygon(var(--stone-cut-ib) 0, calc(100% - var(--stone-cut-ib)) 0, 100% var(--stone-cut-ib), 100% calc(100% - var(--stone-cut-ib)), calc(100% - var(--stone-cut-ib)) 100%, var(--stone-cut-ib) 100%, 0 calc(100% - var(--stone-cut-ib)), 0 var(--stone-cut-ib));
+  box-shadow: none;
+  color: var(--stone-ink-hi);
+}
+body:not(.stone-off) .icon-btn.on { color: #e9b06a; box-shadow: none; }
+body:not(.stone-off) #sheet-close, body:not(.stone-off) .dt-x, body:not(.stone-off) .mg-x { clip-path: none; }   /* 닫기 ✕ 는 둥근 그대로 */
+body:not(.stone-off) .dg-skill,
+body:not(.stone-off) .d2-cell {
+  border-radius: 0;
+  clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px);
+}
+/* 오른쪽 큰 단추(강공격·회피·무예·무기 바꿔)는 원이라 모서리 깎기만으론 둥근 채 — 둥글기를 0 으로 하고 더 크게 깎는다 */
+body:not(.stone-off) #dg-actions .dg-skill {
+  border-radius: 0 !important;
+  clip-path: polygon(11px 0, calc(100% - 11px) 0, 100% 11px, 100% calc(100% - 11px), calc(100% - 11px) 100%, 11px 100%, 0 calc(100% - 11px), 0 11px);
+  background: #1d1b19 !important;
+  border: 2px solid #6b5836 !important;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 0 3px #3a2a1a;
+}
+/* 이 층 현상금(bounty.js — 인라인 스타일이라 !important) */
+body:not(.stone-off) #dg-bounty {
+  background: #1d1b19 !important;
+  border: 2px solid #6b5836 !important;
+  border-radius: 0 !important;
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+  padding: 8px 12px !important;
+  font-family: var(--stone-head) !important;
+  letter-spacing: .02em;
+}
+body:not(.stone-off) .dg-floor, body:not(.stone-off) .d2-fname, body:not(.stone-off) .dg-room { font-family: var(--stone-head); letter-spacing: .04em; }
+
 /* ── 폰 폭 — 버튼 최소 48px(누르기) ── */
 @media (max-width: 520px) {
   body:not(.stone-off) .btn:not(.tiny) { min-height: 48px; }
