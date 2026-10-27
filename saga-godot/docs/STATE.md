@@ -1,4 +1,4 @@
-<!-- 생성: tools/status.mjs · 2026-10-26 23:26Z — 손으로 고치지 않는다(덮어쓴다) -->
+<!-- 생성: tools/status.mjs · 2026-10-27 03:15Z — 손으로 고치지 않는다(덮어쓴다) -->
 # saga-godot 상태
 
 완성도 = 끝 ÷ 전체(끝 = D2 이상 · 사람 몫 칸은 W-0312 폐지, D3 = QC+Claude 판정) · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1 · 기능 목록 `saga-godot/features.json` · 러너 = `tools/probe_all.sh`(마지막 실행의 통과/실행 probe 수)
