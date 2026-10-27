@@ -1,0 +1,24 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k201_apose_rf_sunce",
+ "note": "K-0201 apose — 팔이 가리던 몸통 자리만 인페인트",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 1152,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, extra arms, extra hands, extra limbs, arm, hand, fist, text, watermark, blurry",
+  "denoise": 0.95
+ },
+ "items": [
+  {
+   "id": "k201_apose_rf_sunce",
+   "seed": 20261027,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k188\\p\\rf_sunce\\apose\\base.png",
+   "mask_image": "C:\\swbins\\tools\\ai-art\\_out\\k188\\p\\rf_sunce\\apose\\mask.png",
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short black pompadour hair, confident smirk, white inner shirt, golden shoulder armor, muscular, dark trousers, boots, adult, tall, realistic body proportions, detailed face, (from side:1.3), (profile:1.2), facing right, side view, standing, arms slightly away from body, feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, torso without arm in front, clothing continues"
+  }
+ ]
+}

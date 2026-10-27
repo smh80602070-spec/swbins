@@ -350,6 +350,8 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
                     hole_ = under | ring
                     rgb = rgb.copy(); rgb[hole_] = (lerp_fill if j.get('fill_lerp') else flat_fill if j.get('fill_flat', True) else smear_fill)(A[..., :3], hole_, m & ~hole_)[hole_]
                     rgb[hole_] = (rgb[hole_].astype(np.float32) * j.get('fill_shade', 0.75)).astype(np.uint8)   # 팔 뒤 몸통 = 그늘(밝은 회색 얼룩으로 튀지 않게)
+                    if os.environ.get('K188_HOLE_MARK'):          # K-0201 apose — 채운 자리를 자홍으로(AI 인페인트 마스크용)
+                        rgb[hole_] = (255, 0, 255)
                 m2 = m2 | under
                 UNDER[0] = under if UNDER[0] is None else (UNDER[0] | under)
         if BLEED > 0 and n != 'weapon':                 # K-0200 — 이음 겹침: 몸 안쪽으로 BLEED px 더 가져가 돌 때 흰 실금이 안 비치게(옛 1px)
