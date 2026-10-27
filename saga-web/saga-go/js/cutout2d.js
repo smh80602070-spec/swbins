@@ -165,6 +165,19 @@
   function has(pool) { var id = rigIdFor(pool); return !!(id && rigOf(id)); }
 
   /* ── 그리기 ── */
+  /* 클립 전환 크로스페이드 — 배우(key)마다 직전 자세를 기억해 blend ms(손잡이 cutout2d.blend, 기본 130) 동안 섞는다. 서기↔걷기↔공격 전환이 끊기던 것을 부드럽게 */
+  var blendS = {};
+  function lerpSmp(a, b, u) { var out = {}, i, n; for (i = 0; i < BONES.length; i++) { n = BONES[i]; out[n] = { rot: a[n].rot + (b[n].rot - a[n].rot) * u, dx: a[n].dx + (b[n].dx - a[n].dx) * u, dy: a[n].dy + (b[n].dy - a[n].dy) * u }; } return out; }
+  /** → 섞은 표본. st 는 배우 상태 { clip, last, from, at } — 순수에 가깝다(now 를 받는다) */
+  function blended(st, rig, clip, ph, now) {
+    var cur = sample(rig, clip, ph), ms = +tuned('cutout2d.blend', 130);
+    if (st.clip !== undefined && st.clip !== clip && ms > 0 && st.last) { st.from = st.last; st.at = now; }
+    st.clip = clip;
+    var out = cur;
+    if (st.from && ms > 0) { var u = (now - st.at) / ms; if (u >= 1) { st.from = null; } else { out = lerpSmp(st.from, cur, ease(Math.max(0, u))); } }
+    st.last = out;
+    return out;
+  }
   var swayS = {};   // 배우 → { x, ms, v, ang }
   function swayAng(key, x, ms, k) {
     var s = swayS[key], now = +ms || 0;
@@ -178,8 +191,8 @@
   function mul(m, n) { return [m[0] * n[0] + m[2] * n[1], m[1] * n[0] + m[3] * n[1], m[0] * n[2] + m[2] * n[3], m[1] * n[2] + m[3] * n[3], m[0] * n[4] + m[2] * n[5] + m[4], m[1] * n[4] + m[3] * n[5] + m[5]]; }
   function tr(x, y, deg) { var a = deg * Math.PI / 180, c = Math.cos(a), s = Math.sin(a); return [c, s, -s, c, x, y]; }
   /** 뼈마다 세계 행렬(뼈 단위, 발 = 0) — 순수 */
-  function pose(rig, name, phase, swayDeg) {
-    var smp = sample(rig, name, phase), bones = (rig && rig.bones) || {}, M = {}, i, b, r, q;
+  function pose(rig, name, phase, swayDeg, smpIn) {
+    var smp = smpIn || sample(rig, name, phase), bones = (rig && rig.bones) || {}, M = {}, i, b, r, q;
     for (i = 0; i < BONES.length; i++) {
       b = BONES[i]; r = bones[b] || REST[b]; q = smp[b];
       var local = tr((r.x || 0) + q.dx, (r.y || 0) + q.dy, (r.rot || 0) + q.rot + (rig && rig.sway && rig.sway[b] ? swayDeg * rig.sway[b] : 0));
@@ -194,7 +207,8 @@
   function drawRig(ctx, R, o) {
     var rig = R.rig, k = (o.h || 62) / (rig.h || 100), left = o.facing === 'left' || (typeof o.facing === 'number' && o.facing < 0);
     var clip = nameOf(rig, o.clip, o.weapon), ph = phaseOf(rig, clip, o.t), now = global.performance ? global.performance.now() : Date.now();   // W-0445 팩 이름 그대로(옛 = CLIP_OF 일곱으로 접기)
-    var M = pose(rig, clip, ph, swayAng(o.key || 'x', o.x, now, 1));
+    var bk = o.key || 'x', st = blendS[bk] || (blendS[bk] = {});
+    var M = pose(rig, clip, ph, swayAng(bk, o.x, now, 1), blended(st, rig, clip, ph, now));
     var parts = (rig.parts || []).slice().sort(function (a, b) { return (a.z || 0) - (b.z || 0); }), i, p, m;
     ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
@@ -280,5 +294,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.cutout2d = { BONES: BONES, PARENT: PARENT, REST: REST, CLIPS: CLIPS, sample: sample, phaseOf: phaseOf, pose: pose, stubRig: stubRig, has: has, drawFor: drawFor, nameOf: nameOf, packClips: packClips, sideView: sideView, WPN_ATK: WPN_ATK, PACK_OK: PACK_OK, demo: demo, bounds: bounds, base: base, rigIdFor: rigIdFor, holdClip: holdClip };
+  global.DG.cutout2d = { BONES: BONES, PARENT: PARENT, REST: REST, CLIPS: CLIPS, sample: sample, phaseOf: phaseOf, pose: pose, stubRig: stubRig, has: has, drawFor: drawFor, nameOf: nameOf, packClips: packClips, sideView: sideView, WPN_ATK: WPN_ATK, PACK_OK: PACK_OK, demo: demo, bounds: bounds, base: base, rigIdFor: rigIdFor, holdClip: holdClip, blended: blended, lerpSmp: lerpSmp };
 })(window);
