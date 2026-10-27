@@ -319,7 +319,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         m = lab == k
         _, _, r, pv, par = B[n]
         # 관절 덧살 — 제 관절 둘레 원(부모 쪽 그림)을 같이 가져간다
-        cap = (np.hypot(xs - pv[0], ys - pv[1]) < r * (CAP if n[:4] in ('legL', 'armL') else 0.9)) & alpha   # K-0199 — 무릎·팔꿈치는 크게 굽어(모캡 동작) 덧살을 키운다
+        cap = (np.hypot(xs - pv[0], ys - pv[1]) < r * (j.get('knee_cap', CAP) if n[:4] in ('legL', 'armL') else j.get('legu_cap', 0.9) if n[:4] == 'legU' else 0.9)) & alpha   # K-0199 — 무릎·팔꿈치는 크게 굽어(모캡 동작) 덧살을 키운다
         if j.get('skirt') and n[:4] in ('legU', 'legL') and pv[1] < j['skirt']:
             cap = cap & False                              # 옷자락 속 관절 — 둘레 원을 가져가면 도포 조각이 떠다닌다
         kin = [k] + ([names.index(par)] if par in names else []) + [names.index(c_) for c_, v_ in B.items() if v_[4] == n and c_ != 'weapon']
@@ -329,13 +329,13 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         # 아이 관절 둘레도 가져간다(아이가 돌면 부모 끝이 납작하게 잘린 게 보이지 않게)
         for c_, (_, _, cr, cpv, cpar) in B.items():
             if cpar == n and c_ != 'weapon' and not (j.get('skirt') and cpv[1] < j['skirt']):
-                m2 = m2 | ((np.hypot(xs - cpv[0], ys - cpv[1]) < cr * (CAP if c_[:4] in ('legL', 'armL') else 0.9)) & alpha & np.isin(lab, [k, names.index(c_)]))
+                m2 = m2 | ((np.hypot(xs - cpv[0], ys - cpv[1]) < cr * (j.get('knee_cap', CAP) if c_[:4] in ('legL', 'armL') else j.get('legu_cap', 0.9) if c_[:4] == 'legU' else 0.9)) & alpha & np.isin(lab, [k, names.index(c_)]))
         rgb = A[..., :3]                                   # 부위마다 원본에서 — 몸통 채움 색이 뒤 순서 팔·손 조각에 새지 않게(10-24 버그)
         if n in ('chest', 'hip') and fill != 'none':
             # 팔·다리에 가린 몸통·허리 자리(돌리면 드러남) — 제 캡슐 안인데 팔·다리가 가져간 곳을 둘레 색으로 채움
             a, b, rr, _, _ = B[n]
             limbs = [names.index(x) for x in names if x not in ('chest', 'hip', 'head')]
-            under = (seg_dist(xs, ys, a, b) < rr) & alpha & np.isin(lab, limbs)
+            under = (seg_dist(xs, ys, a, b) < rr * (j.get('hip_under_r', 1.0) if n == 'hip' else 1.0)) & alpha & np.isin(lab, limbs)   # K-0201 hip_under_r — 허벅지가 돌 때 허리띠 아래 쐐기 빈칸(sunce) — 허리가 채우는 범위를 넓힌다
             if n == 'hip' and not j.get('skirt') and j.get('hip_cap', True):   # K-0201 — 고관절 선 아래 허벅지 자리는 안 채움(다리가 돌면 배경이 보여야 맞고, 채우면 줄무늬 덩어리가 드러났다)
                 under = under & (ys <= max(j['N']['hip'][1], (j.get('F') or j['N'])['hip'][1]) + w_leg * 0.4)
             if under.any():
