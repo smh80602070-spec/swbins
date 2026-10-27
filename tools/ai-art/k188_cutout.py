@@ -184,6 +184,42 @@ def smear_fill(rgb, hole, keep, it=400, smooth=60):
     return np.clip(a, 0, 255).astype(np.uint8)
 
 
+def lerp_fill(rgb, hole, keep, reach=40, vsmooth=15):
+    """K-0201 — 줄마다 구멍 왼쪽·오른쪽 몸 색을 가로로 이어 채움(flat_fill 은 한 줄을 한 색으로 칠해 판때기처럼 보였다 — sunce 몸통·napoleon 가슴).
+    양쪽 색은 위아래로 부드럽게 해 줄무늬가 안 생기게. 한쪽 색만 있으면 그 색."""
+    from scipy import ndimage as _nd
+    a = rgb.astype(np.float32); lum = a.mean(2); ok = keep & (lum > 40) & (lum < 215); out = a.copy()
+    ys_ = np.nonzero(hole.any(1))[0]
+    if not len(ys_):
+        return rgb
+    Ls, Rs, runs = {}, {}, {}
+    for y in ys_:
+        xs_ = np.nonzero(hole[y])[0]
+        cuts = np.nonzero(np.diff(xs_) > 1)[0]
+        st = np.r_[xs_[0], xs_[cuts + 1]]; en = np.r_[xs_[cuts], xs_[-1]]
+        runs[y] = list(zip(st, en))
+        for k, (x0, x1) in enumerate(runs[y]):
+            sl = ok[y, max(0, x0 - reach):x0]; sr = ok[y, x1 + 1:x1 + 1 + reach]
+            Ls[(y, k)] = np.median(a[y, max(0, x0 - reach):x0][sl], 0) if sl.sum() >= 3 else None
+            Rs[(y, k)] = np.median(a[y, x1 + 1:x1 + 1 + reach][sr], 0) if sr.sum() >= 3 else None
+    def smooth(d):                                   # 같은 몇째 구멍끼리 줄 방향으로 평균 — 없는 줄은 건너뜀
+        ks = sorted(d); res = {}
+        for k in ks:
+            v = [d[q] for q in ks if q[1] == k[1] and abs(q[0] - k[0]) <= vsmooth // 2 and d[q] is not None]
+            res[k] = np.mean(v, 0) if v else None
+        return res
+    Ls, Rs = smooth(Ls), smooth(Rs)
+    for y in ys_:
+        for k, (x0, x1) in enumerate(runs[y]):
+            L, R = Ls.get((y, k)), Rs.get((y, k))
+            if L is None and R is None:
+                continue
+            L = R if L is None else L; R = L if R is None else R
+            t = np.linspace(0, 1, x1 - x0 + 1)[:, None]
+            out[y, x0:x1 + 1] = L * (1 - t) + R * t
+    return np.clip(out, 0, 255).astype(np.uint8)
+
+
 def flat_fill(rgb, hole, keep, reach=48, vsmooth=21):
     """K-0201 — 줄마다 평면 색 채움: 같은 줄 구멍 둘레 reach px 의 몸 색 중앙값(윤곽선 검정·금속 반짝임 빼고)을 위아래로만 부드럽게.
     smear(2D 확산)는 갑옷 주황·윤곽 검정·옷 남색이 섞여 큰 회색 얼룩이 됐고(rf_sunce 10-26) sd 인페인트는 몸통 자리에 팔을 새로 그렸다."""
@@ -310,7 +346,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
                     from scipy import ndimage as _nd2
                     ring = _nd2.binary_dilation(under, iterations=6) & m & ~under   # K-0201 — 구멍 둘레 6px(팔 윤곽선·주먹 살색)도 같이 채우고 색 재료에서는 뺌(흰·검은 얼룩)
                     hole_ = under | ring
-                    rgb = rgb.copy(); rgb[hole_] = (flat_fill if j.get('fill_flat', True) else smear_fill)(A[..., :3], hole_, m & ~hole_)[hole_]
+                    rgb = rgb.copy(); rgb[hole_] = (lerp_fill if j.get('fill_lerp') else flat_fill if j.get('fill_flat', True) else smear_fill)(A[..., :3], hole_, m & ~hole_)[hole_]
                     rgb[hole_] = (rgb[hole_].astype(np.float32) * j.get('fill_shade', 0.75)).astype(np.uint8)   # 팔 뒤 몸통 = 그늘(밝은 회색 얼룩으로 튀지 않게)
                 m2 = m2 | under
                 UNDER[0] = under if UNDER[0] is None else (UNDER[0] | under)
