@@ -103,5 +103,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.cam2d = { register: register, get: function (k) { return all[k] || null; }, pinchRatio: pinchRatio, clampSnap: clampSnap };
+  global.DG.cam2d = { register: register, get: function (k) { return all[k] || null; }, pinchRatio: pinchRatio, clampSnap: clampSnap, STD: { def: 0.8, defPhone: 0.6 } };   // W-0487 ③ 다섯 판 기본 멀게 한 벌(사용자 10-27 "카메라 멀게는 다섯 판이 다 같아")
 })(typeof window !== 'undefined' ? window : this);

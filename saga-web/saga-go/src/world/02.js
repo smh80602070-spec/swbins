@@ -3,7 +3,7 @@
    * 오브젝트·판정(onClick 히트 반경)까지 한 번에 늘고 준다. 좌표·거리·
    * 조우 사거리는 그대로다.
    */
-  var ZOOM2_MIN = 0.4, ZOOM2_MAX = 2.2, ZOOM2_DEFAULT = 1;
+  var ZOOM2_MIN = 0.4, ZOOM2_MAX = 2.2, ZOOM2_DEFAULT = (global.DG.cam2d && global.DG.cam2d.STD.def) || 0.8;   // W-0487 ③ 공용 멀게 기본
 
   function camZoom2d() {
     var raw = core.save.settings ? core.save.settings.camZoom2d : undefined;

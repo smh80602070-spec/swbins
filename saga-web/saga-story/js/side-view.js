@@ -82,7 +82,7 @@
   function bindCam2() {
     var C2 = global.DG.cam2d; if (!C2) { return; }
     var ph = global.DG.deviceMode && global.DG.deviceMode.phone ? global.DG.deviceMode.phone() : false;   // 폰: 0.55 밑이면 화면 밖 검은 테·1.8 위면 몸이 화면 1/3 넘음(촬영 10-22) · PC 는 에셋 확인용 0.35~5 그대로
-    cam2 = C2.register('side', { store: 'yeoksa-side/save/cam2d', min: ph ? 0.55 : ZOOM_MIN, max: ph ? 1.8 : ZOOM_MAX, def: 1, defPhone: 0.7,
+    cam2 = C2.register('side', { store: 'yeoksa-side/save/cam2d', min: ph ? 0.55 : ZOOM_MIN, max: ph ? 1.8 : ZOOM_MAX, def: C2.STD.def, defPhone: C2.STD.defPhone,
       onChange: function (v) { if (Math.abs(v - viewZoom) > 0.051) { viewZoom = v; applyZoomTransform(); } } });
     viewZoom = cam2.get(); applyZoomTransform();
     cam2.buttons(document.body);
