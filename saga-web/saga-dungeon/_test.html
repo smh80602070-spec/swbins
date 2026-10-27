@@ -145,6 +145,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/blood-orb.js"></script>
 <script src="js/cursed-chest.js"></script>
 <script src="js/shrine.js"></script>
+<script src="js/thief.js"></script>
 <script src="js/bounty.js"></script>
 <script src="js/dungeon-room.js"></script>
 <script src="js/mount.js"></script>
@@ -4903,6 +4904,26 @@ window.requestAnimationFrame = function () { return 0; };
         var ok = diff && cyc && placed && got && strong && once && off && short === -1;
         return ok || ('실패 ' + JSON.stringify({ diff: diff, cyc: cyc, placed: placed, got: got, strong: strong, once: once, off: off, short: short }));
       } finally { DN.raw = keepRaw; C.setTune('dungeon.shrine', null); }
+    });
+    t('W-0483 보물 도둑 — 내게서 멀어지게 달아남·벽이면 벽 따라 · 싸움 방·안 비운 방·층 한 번만 · 15초면 사라짐 · 쓰러뜨리면 금 60×층 + 전리품 둘 · 손잡이 0 이면 안 움직임', function () {
+      var TH = DG.thief, DN = DG.dungeon, C = DG.core; if (!TH || !DN) { return '실패 DG.thief 없음'; }
+      var keepRaw = DN.raw, keepDi = DN._dropItem, items = 0;
+      DN._dropItem = function () { items++; };
+      try {
+        var f1 = TH.flee(300, 200, 200, 200, 0.1, 700, 440, 20), away = f1.x > 300 && Math.abs(f1.y - 200) < 1;
+        var f2 = TH.flee(660, 200, 600, 200, 0.1, 700, 440, 20), slide = f2.x <= 666 && f2.y !== 200;
+        var mk = function () { return { floor: 4, room: { kind: 'fight', drops: [], enemies: [] }, player: { x: 100, y: 220 } }; };
+        var r = mk(), yes = TH.shouldSpawn(r, 0.05), no = !TH.shouldSpawn(r, 0.5);
+        var rc = mk(); rc.room.cleared = true; var noClr = !TH.shouldSpawn(rc, 0);
+        var rb = mk(); rb.room.kind = 'boss'; var noBoss = !TH.shouldSpawn(rb, 0);
+        DN.raw = function () { return r; }; var e = TH.spawn(r), once = !TH.shouldSpawn(r, 0);
+        var x0 = e.x; TH.step(r, 0.2); var ran = e.x > x0 && e.cd === 99 && e.dmg === 0;
+        C.emit('dungeon:kill', { e: e, floor: 4 }); var gold = r.room.drops.some(function (d) { return d.kind === 'gold' && d.gold === 240; }), loot = items === 2;
+        var r2 = mk(); DN.raw = function () { return r2; }; TH.spawn(r2); TH.step(r2, 16); var gone = r2.room.enemies.length === 0;
+        C.setTune('dungeon.thief', 0); var r3 = mk(); DN.raw = function () { return r3; }; var e3 = TH.spawn(r3), x3 = e3.x; TH.step(r3, 0.5); var off = e3.x === x3;
+        var ok = away && slide && yes && no && noClr && noBoss && once && ran && gold && loot && gone && off;
+        return ok || ('실패 ' + JSON.stringify({ away: away, slide: slide, yes: yes, no: no, noClr: noClr, noBoss: noBoss, once: once, ran: ran, gold: gold, loot: loot, gone: gone, off: off }));
+      } finally { DN.raw = keepRaw; DN._dropItem = keepDi; C.setTune('dungeon.thief', null); }
     });
     t('W-0421 저주받은 상자 — 층마다 셋째·여섯째 방부터 첫 싸움 방에 하나 · 열면 24초 6초마다 둘 · 고리 안 버티면 전리품 셋+금 60×층 · 고리 밖이면 실패·다시 안 섬', function () {
       var CC = DG.cursedChest, DN = DG.dungeon; if (!CC || !DN) { return '실패 DG.cursedChest 없음'; }
