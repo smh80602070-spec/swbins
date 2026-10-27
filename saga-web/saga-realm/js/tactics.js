@@ -350,7 +350,7 @@
    *           내 전멸 = 패 · SRPG_CAP 턴 넘으면 옛 체력 비율 판정. 대장·성문 = 대승(rout) · 버팀 = 승(win)
    *   책략    한 판 PLOTS 번, 지력 FIRE_WIS 이상 내 장수 — 화계(숲에 불, 번짐·두 턴 탐) · 혼란(적 한 차례 쉼) · 회복
    */
-  var SRPG_SIZE = { plain: [10, 8], river: [11, 8], hill: [11, 9], mount: [12, 10] };
+  var SRPG_SIZE = { plain: [13, 9], river: [14, 9], hill: [14, 10], mount: [15, 11] };   /* 10-27 ��� 5� 2d �t 4 �� D�X$  \ � �1.3 */
   var HILL_MIX = { plain: 0.08, river: 0.06, hill: 0.25, mount: 0.2 };
   var HEIGHT_HIT = 10, COUNTER_HIT = 20, BACK_HIT = 20;
   var ARMS = ['spear', 'cav', 'bow'], BEATS = { spear: 'cav', cav: 'bow', bow: 'spear' }, ARM_NAME = { spear: '창', cav: '기', bow: '궁' };
@@ -375,6 +375,17 @@
     if (mx.river) {
       var rx = Math.floor(cols / 2) - 1 + (hash(seed, 'rx') < 0.5 ? 0 : 1), f1 = Math.floor(hash(seed, 'f1') * rows), f2 = (f1 + 2 + Math.floor(hash(seed, 'f2') * (rows - 3))) % rows;
       for (y = 0; y < rows; y++) { cells[y * cols + rx] = (y === f1 || y === f2) ? 'plain' : 'river'; }
+    }
+    /* 10-27 ��� �| �t�  (Wt � �2 i�����  X�(ܑ P  H�@ D� T�). X��t| E 4 \� � \ */
+    var fk = Math.floor(hash(seed, 'feat') * 3), fy0 = 1 + Math.floor(hash(seed, 'fy') * Math.max(1, rows - 4)), fx0 = 4 + Math.floor(hash(seed, 'fx') * Math.max(1, cols - 10)), i2;
+    for (i2 = 0; i2 < 12; i2++) {
+      var ox = i2 % 4, oy = Math.floor(i2 / 4), fx = fx0 + ox + (fk === 0 ? oy : 0), fy = fk === 0 ? fy0 + oy : fy0 + oy;
+      if (fx < 4 || fx > cols - 5 || fy < 0 || fy >= rows) { continue; }
+      var fi = fy * cols + fx, hs = hash(seed, 'fz' + i2);
+      if (cells[fi] === 'river' || cells[fi] === 'gate') { continue; }
+      if (fk === 0 && oy === 0) { cells[fi] = 'hill'; }
+      else if (fk === 1 && hs < 0.8) { cells[fi] = 'forest'; }
+      else if (fk === 2 && hs < 0.3 && mx.rocks === undefined) { cells[fi] = 'wall'; }
     }
     var g = GOALS.indexOf(goal) >= 0 ? goal : 'rout', gate = [-1, -1];
     if (g === 'gate' && !siege) { g = 'rout'; }
