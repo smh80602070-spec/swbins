@@ -123,6 +123,14 @@
   /** 신수가 나올 확률에 더한다 */
   function divineBias() { return current().divine || 0; }
 
+  /** W-0475 날씨 부스트 — 그 날씨에 맞는 원소의 명단 공격 ×1.2(고돗 G-0408 표. 웹 원소엔 암이 없어 흐림=바위·안개=바람). 손잡이 weather.boost 0 이면 끔, 진단이 boostHold 를 걸면 boostWhenForced 가 참일 때만 */
+  var BOOST = { clear: ['fire', 'grass'], cloud: ['rock'], rain: ['water', 'elec'], wind: ['wind'], fog: ['wind'], snow: ['ice'] };
+  var BOOST_ICON = { fire: '🔥', water: '💧', elec: '⚡', wind: '🌪️', ice: '❄️', rock: '🪨', grass: '🌿' };
+  function boostOf(key) { return BOOST[key] || []; }
+  function boostOn() { return !(core.tuned && +core.tuned('weather.boost', 1) === 0) && (!global.DG.weather.boostHold || !!global.DG.weather.boostWhenForced); }   // 진단이 boostHold 로 기본 끔 — 시각 의존 축(PLAN §9), 부스트를 재는 진단만 boostWhenForced 로 켠다
+  function boostMul(el) { return boostOn() && el && boostOf(current().key).indexOf(el) >= 0 ? 1.2 : 1; }
+  function boostIcons() { return boostOn() ? boostOf(current().key).map(function (e) { return BOOST_ICON[e]; }).join('') : ''; }
+
   /** 눈처럼 인적이 드문 날이면 대상 수가 준다 */
   function fewer() { return !!current().fewer; }
 
@@ -133,6 +141,7 @@
     force: force,
     get forced() { return forced; },
     bonus: bonus,
-    heroBias: heroBias, favorTrait: favorTrait, divineBias: divineBias, fewer: fewer
+    heroBias: heroBias, favorTrait: favorTrait, divineBias: divineBias, fewer: fewer,
+    BOOST: BOOST, boostOf: boostOf, boostMul: boostMul, boostIcons: boostIcons
   };
 })(window);

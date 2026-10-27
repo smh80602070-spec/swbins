@@ -508,7 +508,7 @@
         (core.tuneCount() ? '<div class="p-tune" title="어드민에서 잡아 둔 균형 손잡이가 있습니다">🎛️ 손잡이 ' +
           core.tuneCount() + '개' + (global.DG.world.speedMul > 1 ? ' · 걸음 ×' + global.DG.world.speedMul : '') +
           '</div>' : '') +
-        '<div class="p-sub" title="' + esc(wx.text) + '">' + wx.emoji + ' ' + wx.name +
+        '<div class="p-sub" title="' + esc(wx.text) + '">' + wx.emoji + ' ' + wx.name + (global.DG.weather.boostIcons() ? ' ⬆' + global.DG.weather.boostIcons() : '') +
           ' · 📍 ' + esc(w.regionName(rkey)) +
           ' · <b>' + core.fmt(p.distance) + 'm</b> 이동' +
           (net().online() ? ' · <span class="on-dot">🔮</span>' : '') + '</div>' +

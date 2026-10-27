@@ -282,7 +282,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
   setTimeout(function () {
     /* 천후는 세 시간마다 바뀐다 — 진단이 돌리는 시각에 끌려다니지 않도록 하나로 고정한다.
        (씨앗을 고정한 것과 같은 이유다. 게임 코드는 그대로 두고 여기서만 갈아 끼운다) */
-    DG.weather.force('clear');
+    DG.weather.force('clear'); DG.weather.boostHold = true;   // W-0475 날씨 부스트도 진단 안에선 기본 끔(재는 항목만 켠다)
     /* 적도(賊徒)도 같은 이유로 붙들어 둔다 — 칸마다 역참의 두 할이 점거되므로,
        하필 그 칸에 진단을 돌리면 보급 항목이 통째로 깨진다(토벌에서 밟은 함정).
        적도 자신을 재는 아래 항목들만 그 자리에서 잠깐 풀었다 다시 묶는다. */
@@ -1163,6 +1163,26 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       for (var i = 0; i < 21; i++) { FC.step(S, 0.1, { px: 100, py: 0, blocked: false }); }
       return r1.immune && r1.dmg === 0 && r2.dmg === 40 && sh === f.shieldMax - 40 && broke && f.stun <= 0 &&
         ('방패 ' + f.shieldMax + ' · 물리 40 · 수 2.5배로 깨짐');
+    });
+
+    t('W-0475 날씨 부스트 표 — 맑음 fire·grass ×1.2 · 맑음 water ×1 · 비 water·elec · 눈 ice · 진단 기본(boostHold) ×1 · 날씨 줄 아이콘', function () {
+      var W = DG.weather; if (!W || !W.boostMul) { return '실패 boostMul 없음'; }
+      var keep = W.forced ? W.forced.key : null; W.force('clear'); W.boostWhenForced = true;
+      var a = W.boostMul('fire') === 1.2 && W.boostMul('grass') === 1.2 && W.boostMul('water') === 1 && W.boostMul(null) === 1 && W.boostIcons() === '🔥🌿';
+      W.force('rain'); var b = W.boostMul('water') === 1.2 && W.boostMul('elec') === 1.2 && W.boostMul('fire') === 1;
+      W.force('snow'); var c = W.boostMul('ice') === 1.2;
+      W.boostWhenForced = false; var d = W.boostMul('ice') === 1 && W.boostIcons() === '';
+      W.force(keep);
+      return a && b && c && d || ('실패 ' + [a, b, c, d]);
+    });
+
+    t('W-0475 날씨 부스트 연결 — hitFoe 가 날씨 맞는 원소 평타를 ×1.2(진단 기본 ×1) · 안 맞는 원소·출처 test 는 그대로 (field-combat ← weather)', function () {
+      var FC = DG.fieldCombat, W = DG.weather, keep = W.forced ? W.forced.key : null; W.force('clear'); W.boostWhenForced = true;
+      function one(el, src) { var S = fcState(), f = fcFoe(S, 'bear', 30, 0); return FC.hitFoe(S, f, S.party[0], 100, el, src).dmg; }
+      var on = one('fire', 'basic'); W.boostWhenForced = false; var off = one('fire', 'basic'); W.boostWhenForced = true;
+      var other = one('water', 'basic'); W.force('rain'); var wet = one('water', 'basic'); W.boostWhenForced = false; W.force(keep);
+      var ok = off > 0 && Math.abs(on / off - 1.2) < 0.03 && Math.abs(wet / other - 1.2) < 0.03 && Math.abs(one('fire', 'basic') / on - 1) < 0.5;
+      return ok || ('실패 on ' + on + ' off ' + off + ' water(맑음) ' + other + ' water(비) ' + wet);
     });
 
     t('들판 전투 ⑲-1 — 원소 배정: 일곱이 도감에 고루·주인공은 화·같은 id 는 늘 같다', function () {

@@ -739,7 +739,7 @@
     /* ⑲-5 — 피해 보너스(원소/물리 + 무기 효과 + 세트 4, 더하기)·치명타. 출처가 인물의 한 방일 때만 */
     var TLk = global.DG.talent, gk = TLk ? TLk.keyOfSrc(src) : null;
     if (gk && m.dmgB) {
-      raw *= 1 + (m.dmgB[gk] || 0) + ((m.elemB && m.elemB[el || 'phys']) || 0);
+      raw *= (1 + (m.dmgB[gk] || 0) + ((m.elemB && m.elemB[el || 'phys']) || 0)) * (global.DG.weather ? global.DG.weather.boostMul(el) : 1);   // W-0475 날씨 부스트
       if (m.cr > 0 && S.crng && S.crng() < m.cr) { raw *= 1 + (m.cdm || 0); out.crit = true; }
     }
     if (force && !out.crit) { raw *= 1 + (m.cdm || 0.5); out.crit = true; }   // ⑲-22 급소 — 반드시 치명
