@@ -123,6 +123,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/traderoute.js"></script>
 <script src="js/tech.js"></script>
 <script src="js/polity.js"></script>
+<script src="js/revolt.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/war.js"></script>
 <script src="js/journey.js"></script>
@@ -7211,6 +7212,23 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var ok = st.age === 1 && f.gold === 3500 && P.lawSlots() === 2 && Math.abs(SCX.gold(me) / g0 - 1.05) < 0.011 && Math.abs(SCX.food(me) / fd0 - 1.05) < 0.011;
       delete R.state().polity; SCX._reset();
       return ok ? '기틀 · 금 ×' + (SCX.gold(me) ? '1.05' : '?') + ' · 자리 2 · 금 3500' : '실패 age ' + st.age + ' gold ' + f.gold + ' slots ' + P.lawSlots();
+    });
+    t('민란(W-0479) — 치안 20 이상이면 0 · 치안 5 면 120번 중 20~50(같은 인자 같은 값) · 내 성이 민란이면 병력 −20%·금 −3/1000·치안 +15 · 남의 성 그대로 · 손잡이 0 이면 그대로', function () {
+      fresh('cao');
+      var RV = DG.revolt, me = R.me(), f = R.force(me), C = DG.core; if (!RV) { return '실패 DG.revolt 없음'; }
+      var hi = 0, lo = 0, i, same = true;
+      for (i = 0; i < 120; i++) { if (RV.roll('194', 194, 1 + (i % 12), 'c' + i, 25)) { hi++; } if (RV.roll('194', 194, 1 + (i % 12), 'c' + i, 5)) { lo++; } if (RV.roll('194', 194, 1 + (i % 12), 'c' + i, 5) !== RV.roll('194', 194, 1 + (i % 12), 'c' + i, 5)) { same = false; } }
+      var mine = R.citiesOf(me)[0], c = R.city(mine), other = Object.keys(R.state().cities).filter(function (id) { return R.city(id).force !== me && R.city(id).force; })[0], oc = other && R.city(other);
+      var st = R.state(), month0 = st.month, year0 = st.year, hit = -1, m;
+      c.troops = 1000; c.pop = 130000; c.sec = 5; f.gold = 5000; if (oc) { oc.sec = 5; oc.troops = 1000; }
+      for (m = 1; m <= 120 && hit < 0; m++) { if (RV.roll(st.scen || '194', year0, m, mine, 5)) { hit = m; } }
+      if (hit < 0) { return '실패 120달 안에 민란 굴림 없음'; }
+      st.month = hit;
+      C.setTune('rk.revolt.on', 0); RV.monthly(); var offOk = c.troops === 1000 && f.gold === 5000 && c.sec === 5; C.setTune('rk.revolt.on', 1);
+      RV.monthly();
+      var ok = hi === 0 && lo >= 20 && lo <= 50 && same && offOk && c.troops === 800 && f.gold === 5000 - 390 && c.sec === 20 && (!oc || oc.troops === 1000);
+      st.month = month0;
+      return ok || ('실패 ' + JSON.stringify({ hi: hi, lo: lo, same: same, offOk: offOk, troops: c.troops, gold: f.gold, sec: c.sec, other: oc && oc.troops }));
     });
     t('국가 방침(W-0399) — 근본 3달 → 부국 고르면 강병 닫힘 · 달마다 줄어 완수 · 금 +10% 영구', function () {
       fresh('cao');
