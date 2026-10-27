@@ -143,7 +143,7 @@
       else if (k === 'm') { ui.toggleOverworldMap(); }
       else if (k >= '1' && k <= '8') { S.castSkill(parseInt(k, 10) - 1); }
       if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].indexOf(e.key) >= 0) {
-        if (e.target === document.body) { e.preventDefault(); }
+        if (e.target === document.body || (e.key === ' ' && e.target && e.target.tagName === 'BUTTON')) { e.preventDefault(); }   // W-0487 ① 포커스된 모드 단추 + 스페이스 = 클릭 → 2D↔3D 가 뒤집히던 것
       }
     });
     global.addEventListener('keyup', function (e) {
@@ -229,7 +229,7 @@
       btn3d.classList.toggle('on', SV3.active());
       btn3d.addEventListener('click', function () {
         var on = SV3.toggle();
-        btn3d.classList.toggle('on', on);
+        btn3d.classList.toggle('on', on); btn3d.blur();   // W-0487 ① 포커스를 놓아 스페이스가 다시 단추를 누르지 않게
         ui.toast(on ? '🧊 3D 바탕 켜짐 (실험)' : '🧊 3D 바탕 꺼짐');
       });
     }
