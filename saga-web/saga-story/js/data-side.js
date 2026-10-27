@@ -505,6 +505,10 @@
     ['{town} 을(를) 오가는 이가 늘었소.', '그만큼 길이 트였다는 뜻이겠지요.']
   ];
 
+  /* W-0487 ⑦ 오딘스피어식 옆 스크롤 — 메이플식 층 발판·사다리·밧줄을 걷고 한 줄 땅으로. 손잡이 side.flat(기본 1, 0 이면 옛 층 지도 그대로).
+     발판·줄 칸은 빈 배열로 둬서 판정·자동·그리기가 있는 길(plats.length 0)로 간다 */
+  (function () { var C = global.DG.core; if (C && C.tuned && +C.tuned('side.flat', 1) === 0) { return; } STAGES.forEach(function (st) { st.plats = []; st.ropes = []; }); })();
+
   global.DG = global.DG || {};
   global.DG.sideData = {
     STAGES: STAGES, SKILLS: SKILLS, DROPS: DROPS, GATHERS: GATHERS, NPC_TALK: NPC_TALK, GUEST_STORY_GOLD: GUEST_STORY_GOLD, GUEST_STORY_FEAT: GUEST_STORY_FEAT,
