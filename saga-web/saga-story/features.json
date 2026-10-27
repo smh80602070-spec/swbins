@@ -1355,6 +1355,23 @@
   "since": "2026-10-25",
   "note": "D2(오퍼스 10-25): 진단 하나 · 촬영 hunt-pc/phone 「12 콤보 킬」·구슬 Read ○ · 구슬은 떨어진 것 kind exporb."
  }, {
+  "id": "st.burning",
+  "name": "버닝 사냥터(W-0484 · 메이플 버닝 필드 구조) — 오래 안 간 사냥터일수록 경험치 +10%씩(최대 10단계), 40마리마다 1단계 꺼짐",
+  "files": [
+   "js/burning.js",
+   "src/side/02.js",
+   "js/side.js"
+  ],
+  "tests": [
+   "W-0484 버닝 사냥터"
+  ],
+  "level": "D1",
+  "verified": "",
+  "fun": {},
+  "ticket": "W-0484",
+  "since": "2026-10-27",
+  "note": ""
+ }, {
   "id": "st.pet-fetch",
   "name": "줍는 펫(W-0478 웹 역이식 — 고돗 G-0407 · 메이플 펫) — 🦊 이 따라다니며 둘레 금·탕약을 주인공 자리로 가져옴(장비·두루마리·콤보 구슬 제외) · 손잡이 story.petFetch",
   "files": [

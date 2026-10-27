@@ -111,6 +111,7 @@ window.DG_NO_TUNE = true;
 <script src="js/mob-cards.js"></script>
 <script src="js/combo-kill.js"></script>
 <script src="js/pet-fetch.js"></script>
+<script src="js/burning.js"></script>
 <script src="js/rune.js"></script>
 <script src="js/field-elite.js"></script>
 <script src="js/hunt-wave.js"></script>
@@ -6511,6 +6512,21 @@ window.DG_NO_TUNE = true;
       var offOk = off.drops[0].x === 220 && !off.pet;
       var ok = moved && kept && follow && near && near.kind === 'potion' && none && offOk;
       return ok || ('실패 ' + JSON.stringify({ moved: moved, kept: kept, follow: follow, near: near && near.kind, none: none, offOk: offOk, potx: pot.x }));
+    });
+    t('W-0484 버닝 사냥터 — 처음 가는 곳 3단계 · 마지막 들어선 뒤 1시간마다 1단계(최대 10) · 단계마다 경험치 +10% · 40마리마다 1단계 꺼짐 · 다시 들어서면 새로 셈 · 손잡이 0 이면 곱 1', function () {
+      var B = DG.burning, C = DG.core; if (!B) { return '실패 DG.burning 없음'; }
+      var keep = C.save.side && C.save.side.burn ? JSON.parse(JSON.stringify(C.save.side.burn)) : null;
+      try {
+        C.save.side = C.save.side || {}; C.save.side.burn = {};
+        var H = 3600000, st = B.stageAt(0, 5) === 3 && B.stageAt(1000, 1000 + 2.5 * H) === 2 && B.stageAt(1, 1 + 99 * H) === 10;
+        var r = { stage: { key: 'test_field' } }; B.tick(r, 50 * H); var first = r.burn.stage === 3 && C.save.side.burn.test_field === 50 * H;
+        var m1 = B.killMul(r), mulOk = Math.abs(m1 - 1.3) < 1e-9, i; for (i = 1; i < 40; i++) { B.killMul(r); } var down = r.burn.stage === 2 && r.burn.kills === 0;
+        var r2 = { stage: { key: 'test_field' } }; B.tick(r2, 50 * H + 4.5 * H); var again = r2.burn.stage === 4;
+        var r3 = { stage: { key: 'test_field' } }; B.tick(r3, 50 * H + 4.5 * H + 10); var fresh = r3.burn.stage === 0 && B.killMul(r3) === 1;
+        C.setTune('story.burning', 0); var r4 = { stage: { key: 'other' } }; B.tick(r4, 9 * H); var off = r4.burn.stage === 0 && B.killMul(r4) === 1;
+        var ok = st && first && mulOk && down && again && fresh && off;
+        return ok || ('실패 ' + JSON.stringify({ st: st, first: first, m1: m1, down: down, again: again, fresh: fresh, off: off }));
+      } finally { C.setTune('story.burning', null); if (keep) { C.save.side.burn = keep; } else if (C.save.side) { delete C.save.side.burn; } }
     });
     t('W-0423 ③ 룬 — 90~180초에 앞 7m 바닥 · 닿으면 화살표 넷 6초 · 다 맞히면 10분 경험치 ×2 · 틀리거나 시간 다하면 흩어짐 · 비경엔 없음 · 손잡이 끔', function () {
       var R = DG.rune, C = DG.core; if (!R) { return '실패 DG.rune 없음'; } R._reset();
