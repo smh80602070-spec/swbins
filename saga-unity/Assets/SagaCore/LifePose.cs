@@ -51,6 +51,10 @@ namespace Saga.Core
         public bool Breathing { get; set; }
         public const float BreathPeriod = 2.4f;
         private float _breathPhase, _breathWeight;
+        private static readonly int SpeedHash = Animator.StringToHash("Speed");
+        private static readonly string[] ArmSwingBlockedStates = { "Attack", "Attack1", "Attack2", "Attack3", "Heavy", "Hit", "Death", "Jump", "Fall", "Climb", "Swim", "Taunt", "Heal", "Blocked" };
+        private readonly Quaternion[] _armIdleLocal = new Quaternion[2];
+        private bool _armIdleReady, _hasSpeedParam;
 
         // 뼈 — 0 엉덩이 1 허리 2 가슴 3 목 4 머리 5·6 허벅지 L·R 7·8 정강이 9·10 발 11·12 윗팔 13·14 아래팔
         private static readonly HumanBodyBones[] BoneIds =
@@ -110,7 +114,11 @@ namespace Saga.Core
             _animator = GetComponentInChildren<Animator>();
             _bones = null;
             _hands[0] = _hands[1] = null;
+            _armIdleReady = false;
+            _hasSpeedParam = false;
             if (_animator == null || !_animator.isHuman || _animator.avatar == null) return;
+            foreach (var parameter in _animator.parameters)
+                if (parameter.nameHash == SpeedHash && parameter.type == AnimatorControllerParameterType.Float) { _hasSpeedParam = true; break; }
             var b = new Transform[BoneIds.Length];
             for (int i = 0; i < BoneIds.Length; i++)
             {
@@ -224,6 +232,7 @@ namespace Saga.Core
         {
             if (_bones == null) return;
             RestoreUntouched();
+            ApplyArmSwing();
             var body = _animator.transform;
             Vector3 f = Vector3.ProjectOnPlane(body.forward, Vector3.up).normalized;
             if (f.sqrMagnitude < 1e-4f) f = Vector3.forward;
@@ -269,6 +278,36 @@ namespace Saga.Core
                     Turn(BChest, 2f * s, f);
                     break;
                 }
+            }
+        }
+
+        /// <summary>U-0249: 실제 걷기·달리기 블렌드의 윗팔 움직임을 1.3배 키운다. 공격·피격·공중 동작은 애니메이터 원본을 유지한다.</summary>
+        private void ApplyArmSwing()
+        {
+            if (!Breathing || _npc || _bones == null || _animator == null || !_hasSpeedParam || !_animator.isActiveAndEnabled) return;
+            if ((_hold != null && SafeHold()) || SitW > 0.01f || Current != Act.None || _animator.IsInTransition(0)) return;
+            if (Motion30.CurrentOf(_animator) != "") return;
+            var state = _animator.GetCurrentAnimatorStateInfo(0);
+            foreach (var name in ArmSwingBlockedStates) if (state.IsName(name)) return;
+
+            float speed = _animator.GetFloat(SpeedHash);
+            if (speed <= 0.05f)
+            {
+                _armIdleLocal[0] = _bones[BUArm].localRotation;
+                _armIdleLocal[1] = _bones[BUArm + 1].localRotation;
+                _armIdleReady = true;
+                return;
+            }
+            if (!_armIdleReady) return;
+
+            for (int side = 0; side < 2; side++)
+            {
+                var arm = _bones[BUArm + side];
+                Quaternion delta = Quaternion.Inverse(_armIdleLocal[side]) * arm.localRotation;
+                delta.ToAngleAxis(out float angle, out Vector3 axis);
+                if (angle > 180f) angle -= 360f;
+                if (Mathf.Abs(angle) > 0.001f && axis.sqrMagnitude > 0f)
+                    arm.localRotation = _armIdleLocal[side] * Quaternion.AngleAxis(angle * 1.3f, axis);
             }
         }
 
