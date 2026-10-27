@@ -1,0 +1,73 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k201_ai_rf_sunce_walk",
+ "note": "K-0201 시험 — 부위 뼈대 걷기 프레임 img2img 이음새 정리(denoise 0.35)",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 1024,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, bad hands, text, watermark, blurry, extra limbs, multiple views",
+  "denoise": 0.35
+ },
+ "items": [
+  {
+   "id": "rf_sunce_walk_0",
+   "seed": 20261027,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k201_ai\\rf_sunce_walk\\init_0.png",
+   "denoise": 0.35,
+   "prompt": "1boy, solo, full body, side view, walking, slicked-back black pompadour hair with teal highlights, orange shoulder armor, dark navy bodysuit, black boots, flat colors, clean lineart, plain pale green background"
+  },
+  {
+   "id": "rf_sunce_walk_1",
+   "seed": 20261027,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k201_ai\\rf_sunce_walk\\init_1.png",
+   "denoise": 0.35,
+   "prompt": "1boy, solo, full body, side view, walking, slicked-back black pompadour hair with teal highlights, orange shoulder armor, dark navy bodysuit, black boots, flat colors, clean lineart, plain pale green background"
+  },
+  {
+   "id": "rf_sunce_walk_2",
+   "seed": 20261027,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k201_ai\\rf_sunce_walk\\init_2.png",
+   "denoise": 0.35,
+   "prompt": "1boy, solo, full body, side view, walking, slicked-back black pompadour hair with teal highlights, orange shoulder armor, dark navy bodysuit, black boots, flat colors, clean lineart, plain pale green background"
+  },
+  {
+   "id": "rf_sunce_walk_3",
+   "seed": 20261027,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k201_ai\\rf_sunce_walk\\init_3.png",
+   "denoise": 0.35,
+   "prompt": "1boy, solo, full body, side view, walking, slicked-back black pompadour hair with teal highlights, orange shoulder armor, dark navy bodysuit, black boots, flat colors, clean lineart, plain pale green background"
+  },
+  {
+   "id": "rf_sunce_walk_4",
+   "seed": 20261027,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k201_ai\\rf_sunce_walk\\init_4.png",
+   "denoise": 0.35,
+   "prompt": "1boy, solo, full body, side view, walking, slicked-back black pompadour hair with teal highlights, orange shoulder armor, dark navy bodysuit, black boots, flat colors, clean lineart, plain pale green background"
+  },
+  {
+   "id": "rf_sunce_walk_5",
+   "seed": 20261027,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k201_ai\\rf_sunce_walk\\init_5.png",
+   "denoise": 0.35,
+   "prompt": "1boy, solo, full body, side view, walking, slicked-back black pompadour hair with teal highlights, orange shoulder armor, dark navy bodysuit, black boots, flat colors, clean lineart, plain pale green background"
+  },
+  {
+   "id": "rf_sunce_walk_6",
+   "seed": 20261027,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k201_ai\\rf_sunce_walk\\init_6.png",
+   "denoise": 0.35,
+   "prompt": "1boy, solo, full body, side view, walking, slicked-back black pompadour hair with teal highlights, orange shoulder armor, dark navy bodysuit, black boots, flat colors, clean lineart, plain pale green background"
+  },
+  {
+   "id": "rf_sunce_walk_7",
+   "seed": 20261027,
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\k201_ai\\rf_sunce_walk\\init_7.png",
+   "denoise": 0.35,
+   "prompt": "1boy, solo, full body, side view, walking, slicked-back black pompadour hair with teal highlights, orange shoulder armor, dark navy bodysuit, black boots, flat colors, clean lineart, plain pale green background"
+  }
+ ]
+}
