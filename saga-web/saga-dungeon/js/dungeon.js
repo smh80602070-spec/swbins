@@ -2802,7 +2802,7 @@
   function update(dt) {
     if (!run || run.choice || run.merchantChoice) { return; }  // 고르는 동안에는 멈춘다
     dt = Math.min(dt, 0.05);
-    var p = run.player, room = run.room, i; if (global.DG.stepsSfx) { var MT2 = global.DG.mount, cu2 = MT2 && MT2.active && MT2.active() ? MT2.current() : null; global.DG.stepsSfx.tick('me', dt, { moving: !!p.walking, sps: 2.4, surface: run.town ? 'dirt' : 'stone', mount: cu2 ? (MT2.flying() ? (/dragon/.test(cu2.id) ? 'flyHeavy' : 'fly') : 'ground') : null, flying: !!(cu2 && MT2.flying()) }); }   /* W-0442 발소리 */ if (global.DG.bloodOrb) { global.DG.bloodOrb.step(run, dt); } if (global.DG.cursedChest) { global.DG.cursedChest.step(run, dt); } if (global.DG.bounty) { global.DG.bounty.step(run, dt); }   // W-0421 피 구슬·저주받은 상자 · W-0428 현상금
+    var p = run.player, room = run.room, i; if (global.DG.stepsSfx) { var MT2 = global.DG.mount, cu2 = MT2 && MT2.active && MT2.active() ? MT2.current() : null; global.DG.stepsSfx.tick('me', dt, { moving: !!p.walking, sps: 2.4, surface: run.town ? 'dirt' : 'stone', mount: cu2 ? (MT2.flying() ? (/dragon/.test(cu2.id) ? 'flyHeavy' : 'fly') : 'ground') : null, flying: !!(cu2 && MT2.flying()) }); }   /* W-0442 발소리 */ if (global.DG.bloodOrb) { global.DG.bloodOrb.step(run, dt); } if (global.DG.cursedChest) { global.DG.cursedChest.step(run, dt); } if (global.DG.shrine) { global.DG.shrine.step(run, dt); } if (global.DG.bounty) { global.DG.bounty.step(run, dt); }   // W-0421 피 구슬·저주받은 상자 · W-0428 현상금
 
     /* 타격 정지(hitstop) — 한 대 맞은 순간 몇 프레임 시간을 확 늦춘다(멈추지는
        않는다 — dt를 0으로 주면 몇몇 카운트다운이 얼어붙은 티가 난다). 2026-09-10

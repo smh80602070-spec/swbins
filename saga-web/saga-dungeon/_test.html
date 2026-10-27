@@ -144,6 +144,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/dungeon.js"></script>
 <script src="js/blood-orb.js"></script>
 <script src="js/cursed-chest.js"></script>
+<script src="js/shrine.js"></script>
 <script src="js/bounty.js"></script>
 <script src="js/dungeon-room.js"></script>
 <script src="js/mount.js"></script>
@@ -4884,6 +4885,24 @@ window.requestAnimationFrame = function () { return 0; };
         var ok = a === 1 && b === 0 && c === 3 && d === 1 && orbs0 === 5 && healed === 62 && left === 4 && stay && gone;
         return ok || ('실패 ' + JSON.stringify({ a: a, b: b, c: c, d: d, orbs0: orbs0, healed: healed, left: left, stay: stay, gone: gone }));
       } finally { DN.raw = keepRaw; BO._rng(null); }
+    });
+    t('W-0477 성소 — 층마다 한 곳 · 두 성소는 종류가 다르고 넷이 한 바퀴 · 가까이 가면 30초 버프 한 번만(분노 atkPct 40) · 센 쪽이 남음 · 손잡이 0 이면 안 섬', function () {
+      var SH = DG.shrine, DN = DG.dungeon, C = DG.core; if (!SH || !DN) { return '실패 DG.shrine 없음'; }
+      var keepRaw = DN.raw;
+      try {
+        var k0 = SH.kindFor(3, 0), k1 = SH.kindFor(3, 1), diff = k0.key !== k1.key, cyc = SH.kindFor(3, 4).key === k0.key;
+        var mk = function (fl) { return { floor: fl, roomTotal: 8, roomIdx: SH.roomFor(fl, 8), room: { kind: 'fight', drops: [], enemies: [], cleared: true }, player: { x: 0, y: 0 }, hp: 100, hpMax: 100 }; };
+        var r = mk(3); DN.raw = function () { return r; }; SH.step(r, 0.1); var s = r.room.shrine, placed = !!s && !s.used;
+        var want = SH.kindFor(3, 0); r.player.x = s.x; r.player.y = s.y; SH.step(r, 0.1);
+        var b = r.buffs && r.buffs[want.eff], got = !!b && b.v === want.v && b.t === 30 && s.used && r.shrine.done;
+        r.buffs[want.eff] = { v: 999, t: 5 }; r.room.shrine = { x: s.x, y: s.y, kind: want.key, used: false }; r.shrine.done = false; SH.step(r, 0.1);
+        var strong = r.buffs[want.eff].v === 999 && r.buffs[want.eff].t === 30;
+        var r2 = mk(3); r2.shrine = { floor: 3, idx: SH.roomFor(3, 8), done: true, n: 1, placed: true }; r2.room = { kind: 'fight', drops: [], enemies: [] }; SH.step(r2, 0.1); var once = !r2.room.shrine;
+        C.setTune('dungeon.shrine', 0); var r3 = mk(5); SH.step(r3, 0.1); var off = !r3.room.shrine;
+        var short = SH.roomFor(9, 2);
+        var ok = diff && cyc && placed && got && strong && once && off && short === -1;
+        return ok || ('실패 ' + JSON.stringify({ diff: diff, cyc: cyc, placed: placed, got: got, strong: strong, once: once, off: off, short: short }));
+      } finally { DN.raw = keepRaw; C.setTune('dungeon.shrine', null); }
     });
     t('W-0421 저주받은 상자 — 층마다 셋째·여섯째 방부터 첫 싸움 방에 하나 · 열면 24초 6초마다 둘 · 고리 안 버티면 전리품 셋+금 60×층 · 고리 밖이면 실패·다시 안 섬', function () {
       var CC = DG.cursedChest, DN = DG.dungeon; if (!CC || !DN) { return '실패 DG.cursedChest 없음'; }

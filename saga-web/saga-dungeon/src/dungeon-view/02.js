@@ -262,7 +262,7 @@
     if (BT && m.town) { BT.fieldItems(m).forEach(function (fp) { items.push({ z: 0, kind: 'fp', o: fp }); }); } items.sort(m.belt ? function (a, b) { return ((a.o && a.o.y) || 0) - ((b.o && b.o.y) || 0); } : function (a, b) { return a.z - b.z; });   // W-0128 — 벨트는 깊이(y) 순
 
     /* 바닥에 떨어진 것 (이름표는 조명 뒤에 다시 그린다) */
-    var plates = []; if (global.DG.cursedChest) { global.DG.cursedChest.draw2d(ctx, m, proj, isoEllipse, now); } if (global.DG.bounty && global.DG.bounty.draw2d) { global.DG.bounty.draw2d(ctx, m, proj); } if (global.DG.bloodOrb) { global.DG.bloodOrb.draw2d(ctx, m, proj, isoEllipse, now); }   // W-0421
+    var plates = []; if (global.DG.cursedChest) { global.DG.cursedChest.draw2d(ctx, m, proj, isoEllipse, now); } if (global.DG.shrine) { global.DG.shrine.draw2d(ctx, m, proj, isoEllipse, now); } if (global.DG.bounty && global.DG.bounty.draw2d) { global.DG.bounty.draw2d(ctx, m, proj); } if (global.DG.bloodOrb) { global.DG.bloodOrb.draw2d(ctx, m, proj, isoEllipse, now); }   // W-0421
     for (i = 0; i < run.room.drops.length; i++) {
       var dp = run.room.drops[i]; if (global.DG.lootFilter && global.DG.lootFilter.hidden(dp)) { continue; }   // W-0287 전리품 거르기
       var bob = Math.sin((now + i * 300) / 320) * 2;
