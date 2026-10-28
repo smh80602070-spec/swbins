@@ -409,7 +409,7 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
             dx, dy = b[0] - a[0], b[1] - a[1]
             c = CAN.get(n, CAN.get(n[:4], (0, 1)))
             return math.degrees(math.atan2(c[0] * dy - c[1] * dx, c[0] * dx + c[1] * dy))   # 화면(y 아래)에서 시계 = +
-        RW = dict({'hip': 1.0, 'chest': 1.0, 'head': 0.8, 'armU': 1.0, 'armL': 0.7, 'hand': 0.0, 'legU': 1.0, 'legL': 1.0, 'foot': 0.0 if j.get('view') in ('front', 'back') else 1.0}, **(j.get('rest_fix') if isinstance(j.get('rest_fix'), dict) else {}))
+        RW = dict({'hip': 1.0, 'chest': 1.0, 'head': 0.8, 'armU': 1.0, 'armL': 0.7, 'hand': 0.0, 'legU': 1.0, 'legL': 1.0, 'foot': 1.0}, **(j.get('rest_fix') if isinstance(j.get('rest_fix'), dict) else {}))
         drawn = {n: _cw(n) for n in names if n not in ('weapon', 'hair') and B[n][0] != B[n][1]}
         for n, th in drawn.items():
             par = B[n][4]
