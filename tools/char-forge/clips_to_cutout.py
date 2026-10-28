@@ -1,6 +1,6 @@
 """K-0199 — 3D 동작(VRoid 뼈 J_Bip 팩 GLB)을 2D 컷아웃 뼈 16 의 클립 키로 옮긴다(옆모습 — 오른쪽을 본다).
 
-  blender -b --factory-startup -P tools/char-forge/clips_to_cutout.py -- --pack <팩 .glb(절대)> --out <클립 .json(절대)> [--only walk,run] [--rename walk=walk_m] [--step 1] [--tol 0.25] [--view side|front] [--neutral idle] [--robe 0.35]
+  blender -b --factory-startup -P tools/char-forge/clips_to_cutout.py -- --pack <팩 .glb(절대)> --out <클립 .json(절대)> [--only walk,run] [--rename walk=walk_m] [--step 1] [--tol 0.25] [--view side|front|back] [--neutral idle] [--robe 0.35]
 
 규약(엔진 saga-web/shared/js/cutout2d.js 와 같음): 화면 x 앞(오른쪽) · y 아래 · 각 양수 = 시계 방향(늘어진 팔이 뒤로 감) · 키 [t(0~1), 각(도), dx, dy] 는
 그림 쉼 자세에 더하는 차 — 여기서는 「반듯한 쉼」(팔·다리 곧게 아래 · 몸통·머리 곧게 위 · 발 앞) 기준 차로 낸다(손그림 쉼 자세가 거의 그 꼴).
@@ -41,14 +41,16 @@ for s, S in (('R', 'R'), ('L', 'L')):
         f'armU{s}': (f'J_Bip_{S}_UpperArm', f'J_Bip_{S}_LowerArm', DOWN), f'armL{s}': (f'J_Bip_{S}_LowerArm', f'J_Bip_{S}_Hand', DOWN),
         f'hand{s}': (f'J_Bip_{S}_Hand', f'J_Bip_{S}_Middle1', DOWN),
         f'legU{s}': (f'J_Bip_{S}_UpperLeg', f'J_Bip_{S}_LowerLeg', DOWN), f'legL{s}': (f'J_Bip_{S}_LowerLeg', f'J_Bip_{S}_Foot', DOWN),
-        f'foot{s}': (f'J_Bip_{S}_Foot', f'J_Bip_{S}_ToeBase', FWD)})
+        f'foot{s}': (f'J_Bip_{S}_Foot', f'J_Bip_{S}_ToeBase', FWD if VIEW == 'side' else DOWN)})
 PARENT = {'hip': None, 'chest': 'hip', 'head': 'chest', 'armUL': 'chest', 'armLL': 'armUL', 'handL': 'armLL', 'armUR': 'chest', 'armLR': 'armUR', 'handR': 'armLR',
           'legUL': 'hip', 'legLL': 'legUL', 'footL': 'legLL', 'legUR': 'hip', 'legLR': 'legUR', 'footR': 'legLR'}
 
 
 def scr(v):
-    """세계 점 → 화면(x, y) — 옆: x = 앞(−Y), y = −Z · 앞: x = −X(캐릭터 오른쪽이 화면 왼쪽), y = −Z."""
-    return (-v.y, -v.z) if VIEW == 'side' else (-v.x, -v.z)
+    """세계 점 → 화면(x, y) — 옆: x = 앞(−Y) · 앞: x = −X · 뒤: x = +X, 공통 y = −Z."""
+    if VIEW == 'side':
+        return (-v.y, -v.z)
+    return (-v.x, -v.z) if VIEW == 'front' else (v.x, -v.z)
 
 
 def ang(d):
@@ -66,6 +68,7 @@ def main():
     pb = arm.pose.bones
     H = (arm.matrix_world @ pb['J_Bip_C_Head'].head).z or 1.4      # 쉼 머리 높이 ≈ 몸 100 의 0.86 — 아래서 다시 잼
     arm.animation_data_create()
+    REST_FOOT = {s: (arm.matrix_world @ pb[f'J_Bip_{s}_Foot'].bone.head_local).z for s in ('L', 'R')}
     out = {}
     for act in bpy.data.actions:
         name = act.name.split('|')[-1]
@@ -100,6 +103,11 @@ def main():
                 k = [round(t01, 3), round(rel, 1)]
                 if b == 'hip':
                     k += [0.0 if not ROOTX else round((hp[0] - hip0[0]) / body * 100, 2), round((hp[1] - hip0[1]) / body * 100, 2)]   # 앞뒤 이동은 기본 뺌(제자리 — 게임이 옮긴다)
+                elif VIEW != 'side' and b[:4] == 'legU':
+                    s = b[-1]
+                    lift = max(0.0, W[f'J_Bip_{s}_Foot'].z - REST_FOOT[s]) / body * 100
+                    cap = 10.0 if name in ('run', 'sprint') else 6.0 if name in ('walk', 'march') else 12.0
+                    k += [0.0, round(-min(cap, lift), 2)]   # 정면·후면은 앞뒤 보폭이 화면 각으로 안 보이니 발 들림을 다리 전체 dy 로
                 keys[b].append(k)
         # 거의 안 바뀌는 키 줄이기(직선 보간으로 1° 안이면 가운데 키 뺌)
         for b, ks in keys.items():

@@ -116,7 +116,7 @@ def auto(src, out_json, out_jpg, skirt=True, view='side'):
             l, r = row_span(a, y)
             if l is not None and r - l > lw * 2.2:
                 l2, r2 = row_span(a, int(y - Hh * 0.06))   # 10-26 — 앞꿈치·장화 발등 폭을 옷자락으로 잡던 것(바지 9명 다리가 허리에 박힘): 정강이 높이도 넓어야 옷자락
-                if l2 is not None and r2 - l2 > lw * 2.2:
+                if l2 is not None and r2 - l2 > lw * 2.2 and y < Y(0.92):
                     j['skirt'] = y; break
     json.dump(j, open(out_json, 'w'), indent=0)
     bg = Image.new('RGBA', im.size, (235, 235, 235, 255)); bg.alpha_composite(im); d = ImageDraw.Draw(bg)
@@ -315,9 +315,11 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
                     if 'weapon' in names:
                         sc2[names.index('weapon')] = 1e9
                     lab = np.where(out_, np.argmin(sc2, 0), lab)
+    pinned = np.zeros((H, W), bool)
     for key, bone in (('chest_poly', 'chest'), ('hip_poly', 'hip')) + ((('hair_poly', 'hair'),) if 'hair' in B else ()):   # 망토·앞자락처럼 몸통·허리에 묶을 영역(팔·다리 거리로 가면 떠다닌다)
         for poly in j.get(key, []):
             pm = Image.new('L', (W, H), 0); ImageDraw.Draw(pm).polygon([tuple(q) for q in poly], fill=255)
+            pinned |= np.asarray(pm) > 0
             lab = np.where(np.asarray(pm) > 0, names.index(bone), lab)
     if 'weapon' in B:                                      # 무기 선은 몸 위를 가로질러도 무기로(창이 다리·몸통 조각으로 갈라지지 않게)
         a_, b_, r_, _, _ = B['weapon']
@@ -341,13 +343,13 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
         if j.get('skirt') and n[:4] in ('legU', 'legL') and pv[1] < j['skirt']:
             cap = cap & False                              # 옷자락 속 관절 — 둘레 원을 가져가면 도포 조각이 떠다닌다
         kin = [k] + ([names.index(par)] if par in names else []) + [names.index(c_) for c_, v_ in B.items() if v_[4] == n and c_ != 'weapon']
-        m2 = m | (cap & np.isin(lab, kin))                 # 덧살은 이웃 부위 픽셀만 — 손 둘레 갑옷·치마를 끌고 가지 않게
+        m2 = m | (cap & np.isin(lab, kin) & ~pinned)       # 덧살은 이웃 부위 픽셀만 — 몸통에 고정한 망토는 관절 덧살로 다시 가져오지 않게
         if not m2.any():
             continue
         # 아이 관절 둘레도 가져간다(아이가 돌면 부모 끝이 납작하게 잘린 게 보이지 않게)
         for c_, (_, _, cr, cpv, cpar) in B.items():
             if cpar == n and c_ != 'weapon' and not (j.get('skirt') and cpv[1] < j['skirt']):
-                m2 = m2 | ((np.hypot(xs - cpv[0], ys - cpv[1]) < cr * (j.get('knee_cap', CAP) if c_[:4] in ('legL', 'armL') else j.get('legu_cap', 0.9) if c_[:4] == 'legU' else 0.9)) & alpha & np.isin(lab, [k, names.index(c_)]))
+                m2 = m2 | ((np.hypot(xs - cpv[0], ys - cpv[1]) < cr * (j.get('knee_cap', CAP) if c_[:4] in ('legL', 'armL') else j.get('legu_cap', 0.9) if c_[:4] == 'legU' else 0.9)) & alpha & np.isin(lab, [k, names.index(c_)]) & ~pinned)
         rgb = A[..., :3]                                   # 부위마다 원본에서 — 몸통 채움 색이 뒤 순서 팔·손 조각에 새지 않게(10-24 버그)
         if n in ('chest', 'hip') and fill != 'none':
             # 팔·다리에 가린 몸통·허리 자리(돌리면 드러남) — 제 캡슐 안인데 팔·다리가 가져간 곳을 둘레 색으로 채움
@@ -370,6 +372,8 @@ def cut(src, jp, outdir, far='copy', fill='smear'):
                         rgb[hole_] = (255, 0, 255)
                 m2 = m2 | under
                 UNDER[0] = under if UNDER[0] is None else (UNDER[0] | under)
+        if n not in ('hip', 'chest', 'hair'):
+            m2 = m2 & ~pinned
         if BLEED > 0 and n != 'weapon':                 # K-0200 — 이음 겹침: 몸 안쪽으로 BLEED px 더 가져가 돌 때 흰 실금이 안 비치게(옛 1px)
             from scipy import ndimage as _nd
             m2 = m2 | (_nd.binary_dilation(m2, iterations=BLEED) & alpha)
