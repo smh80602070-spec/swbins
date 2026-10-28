@@ -4881,6 +4881,18 @@ window.requestAnimationFrame = function () { return 0; };
         return (z && f2 && off) || ('실패 ' + JSON.stringify({ z: z, f2: f2, off: off }));
       } finally { C.setTune('dungeon.bounty', keepTune); }
     });
+    t('W-0493 들판 지역 경계 — region:enter 가 구역 막을 한 번 덮음 · 손잡이 dungeon.zoneCut 0 이면 안 덮음', function () {
+      var V = DG.loadVeil, C = DG.core; if (!V || !V.cut || !V.cutShown) { return '실패 loadVeil 없음'; }
+      var keepNd = window.DG_NO_DRAW, keepTune = C.tuned('dungeon.zoneCut', 1);
+      try {
+        window.DG_NO_DRAW = false; try { V.step(); } catch (e) {}   // hook() 을 걸어 둔다
+        var el = document.getElementById('zone-cut'); if (el) { el.style.opacity = '0'; }
+        C.emit('region:enter', 'x'); var on = V.cutShown();
+        el = document.getElementById('zone-cut'); if (el) { el.style.opacity = '0'; }
+        C.setTune('dungeon.zoneCut', 0); C.emit('region:enter', 'x'); var off = !V.cutShown();
+        return (on && off) || ('실패 ' + JSON.stringify({ on: on, off: off }));
+      } finally { window.DG_NO_DRAW = keepNd; C.setTune('dungeon.zoneCut', keepTune); var e2 = document.getElementById('zone-cut'); if (e2) { e2.style.opacity = '0'; } }
+    });
     t('W-0421 피 구슬 — 잡졸 22%·정예 1·우두머리 3 · 60 안이면 끌려와 닿으면 최대 체력 12% · 가득이면 안 끌림 · 25초 뒤 사라짐', function () {
       var BO = DG.bloodOrb, DN = DG.dungeon; if (!BO || !DN) { return '실패 DG.bloodOrb 없음'; }
       var keepRaw = DN.raw, run = { room: { drops: [], enemies: [] }, player: { x: 100, y: 100 }, hp: 50, hpMax: 100, kills: 0 };

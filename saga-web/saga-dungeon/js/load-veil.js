@@ -83,7 +83,8 @@
     if (ms < 180 || (ms < tuned('loadVeil.cutMax', 12000) && ((d3 && cutBusy()) || pending() > 0))) { return; }   // W-0449 상한 1.6 → 12초 · 2D 도 받는 중인 그림을 기다림
     cutEl.style.transition = 'opacity .3s ease-out'; cutEl.style.opacity = '0';
   }
-  function hook() { var C = global.DG && global.DG.core; if (hooked || !C || !C.on) { return; } hooked = true; ['dungeon:room', 'dungeon:floor', 'dungeon:enter', 'dungeon:end'].forEach(function (e) { C.on(e, function () { cut(); }); }); }
+  function hook() { var C = global.DG && global.DG.core; if (hooked || !C || !C.on) { return; } hooked = true; ['dungeon:room', 'dungeon:floor', 'dungeon:enter', 'dungeon:end'].forEach(function (e) { C.on(e, function () { cut(); }); });
+    C.on('region:enter', function () { if (+tuned('dungeon.zoneCut', 1)) { cut(); } }); }   // W-0493 들판 지역 경계(걸어서 넘음, 1.2초 머문 뒤)도 같은 막 — 손잡이 dungeon.zoneCut 0 = 옛 그대로
   function step() {
     hook(); cutStep();
     if (!tuned('loadVeil.on', 1)) { if (el) { hide(); } return; }
