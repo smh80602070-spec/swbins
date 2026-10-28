@@ -22,7 +22,8 @@
     { id: 'hard', name: '정예·우두머리 방 비우기', goal: 1 }
   ];
   var PICK = 3, GOLD_PER_FLOOR = 20, BOX_N = 2, BOX_BIAS = 25;
-  var hooked = false, box = null;
+  var hooked = false, box = null, tally = { done: 0, total: 0 };   // W-0492 한 판 누적(층이 바뀌어도) — 입장 때 비움, 세이브 안 함
+  var RUN_GOLD = 150;   // W-0492 판 끝 덤: 채운 수 × 150 × 급
 
   function core() { return global.DG.core; }
   function on() { var C = core(); return !(C && C.tuned && !+C.tuned('dungeon.bounty', 1)); }
@@ -39,6 +40,7 @@
   function fresh(run) {
     if (!run.bountySeed) { run.bountySeed = Date.now() % 100000; }
     run.bounty = { floor: run.floor, list: pick(run.floor, run.bountySeed).map(function (id) { return { id: id, n: 0, done: false }; }), all: false, hurt: false };
+    tally.total += run.bounty.list.length;
     return run.bounty;
   }
   function state(run) {
@@ -56,7 +58,7 @@
       if (q.id !== id || q.done) { return; }
       var row = rowOf(id); q.n = Math.min(row.goal, q.n + (n || 1));
       if (q.n >= row.goal) {
-        q.done = true; got = true;
+        q.done = true; got = true; tally.done++;
         var g = GOLD_PER_FLOOR * Math.max(1, run.floor || 1), p = run.player || { x: 350, y: 220 };
         if (run.room && run.room.drops) { run.room.drops.push({ kind: 'gold', gold: g, x: p.x + 14, y: p.y + 6 }); }
         toast('📜 현상금 — ' + row.name + ' · 금 ' + g);
@@ -78,6 +80,7 @@
     C.on('dungeon:hurt', function () { var run = runOf(), b = state(run); if (b) { b.hurt = true; } });
     C.on('dungeon:room', function (room) { var run = runOf(), b = state(run); if (!b || !room) { return; } b.hurt = false; if (room.kind === 'well' || room.kind === 'shrine') { add(run, 'rest', 1); } if (room.kind === 'trove') { add(run, 'trove', 1); } });
     C.on('dungeon:clear', function (room) { var run = runOf(), b = state(run); if (!b || !room) { return; } add(run, 'clears', 1); if (!b.hurt) { add(run, 'nohit', 1); } if (room.kind === 'elite' || room.kind === 'miniboss') { add(run, 'hard', 1); } });
+    C.on('dungeon:enter', function () { tally.done = 0; tally.total = 0; });
     C.on('dungeon:end', function () { if (box) { box.style.display = 'none'; } });
     C.on('dungeon:skill', function (k) { var run = runOf(); if (!run || /^(set|sig|ally):/.test(String(k))) { return; } add(run, 'skill', 1); });
   }
@@ -106,5 +109,8 @@
     var p = proj(m, b.boxAt.x, b.boxAt.y), s = Math.max(0.7, m.s), M = global.DG.mode2d;
     if (M && M.drawSprite) { M.drawSprite(ctx, { id: 'chest_bounty_01', x: p.x, y: p.y + 2 * s, h: 30 * s, alpha: Math.min(1, a * 1.5) }); }
   }
-  global.DG.bounty = { TABLE: TABLE, PICK: PICK, GOLD_PER_FLOOR: GOLD_PER_FLOOR, BOX_N: BOX_N, pick: pick, state: state, add: add, step: step, paint: paint, boxLeft: boxLeft, draw2d: draw2d };
+  /** W-0492 판 끝 덤 — 살아 나온 판만. 채운 수 × 150 × 급(tier), 손잡이 dungeon.bounty 0 이면 없음. 순수(진단) */
+  function runBonus(done, tier) { return on() ? Math.max(0, done | 0) * RUN_GOLD * Math.max(1, tier | 0) : 0; }
+  function tallyNow() { return { done: tally.done, total: tally.total }; }
+  global.DG.bounty = { runBonus: runBonus, tally: tallyNow, RUN_GOLD: RUN_GOLD, TABLE: TABLE, PICK: PICK, GOLD_PER_FLOOR: GOLD_PER_FLOOR, BOX_N: BOX_N, pick: pick, state: state, add: add, step: step, paint: paint, boxLeft: boxLeft, draw2d: draw2d };
 })(window);

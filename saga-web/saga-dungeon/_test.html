@@ -4871,6 +4871,16 @@ window.requestAnimationFrame = function () { return 0; };
         return ok || ('실패 ' + JSON.stringify({ a: a, c: c, k14: k14, gold0: gold0, killsDone: killsDone, gold1: gold1, hurtNo: hurtNo, all: b0.all, items: items, renew: renew }));
       } finally { DN.raw = keepRaw; DN._dropItem = keepDi; }
     });
+    t('W-0492 현상금 판 끝 덤 — 채운 수 × 150 × 급 · 층이 바뀌어도 누적 · 손잡이 dungeon.bounty 0 이면 0 · 입장하면 비움', function () {
+      var BN = DG.bounty, C = DG.core; if (!BN || !BN.runBonus || !BN.tally) { return '실패 runBonus·tally 없음'; }
+      var keepTune = C.tuned('dungeon.bounty', 1);
+      try {
+        C.emit('dungeon:enter', {}); var t0 = BN.tally(), z = t0.done === 0 && t0.total === 0;
+        var f2 = BN.runBonus(2, 3) === 900 && BN.runBonus(0, 5) === 0 && BN.runBonus(1, 0) === 150;
+        C.setTune('dungeon.bounty', 0); var off = BN.runBonus(3, 2) === 0; C.setTune('dungeon.bounty', 1);
+        return (z && f2 && off) || ('실패 ' + JSON.stringify({ z: z, f2: f2, off: off }));
+      } finally { C.setTune('dungeon.bounty', keepTune); }
+    });
     t('W-0421 피 구슬 — 잡졸 22%·정예 1·우두머리 3 · 60 안이면 끌려와 닿으면 최대 체력 12% · 가득이면 안 끌림 · 25초 뒤 사라짐', function () {
       var BO = DG.bloodOrb, DN = DG.dungeon; if (!BO || !DN) { return '실패 DG.bloodOrb 없음'; }
       var keepRaw = DN.raw, run = { room: { drops: [], enemies: [] }, player: { x: 100, y: 100 }, hp: 50, hpMax: 100, kills: 0 };

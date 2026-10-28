@@ -28,13 +28,20 @@
   }
   var R = K.make({ tierOf: tierOf, bestMap: bestMap, bestKey: bestKey, payGold: function (n) { core.save.player.gold += n; }, payS: payS });
 
+  /** W-0492 현상금 판 끝 덤 — 살아 나온 판만(등급 덤 식은 그대로, 줄만 더함) */
+  function payBounty(r) {
+    var B = global.DG.bounty; if (!r || !B || !B.tally) { return; }
+    var t = B.tally(), g = B.runBonus(t.done, r.tier);
+    r.bounty = { done: t.done, total: t.total, gold: g };
+    if (g > 0) { core.save.player.gold += g; }
+  }
   core.on('dungeon:enter', function () { R.start(); });
   core.on('dungeon:kill', R.onKill);
   core.on('dungeon:hit', R.onHit);
   core.on('dungeon:hurt', R.onHurt);
   core.on('dungeon:end', function (e) {
     if (!e) { return; }
-    if (e.reason === 'leave' && e.floor > 0) { e.rank = R.finish(e.floor, e.loot ? e.loot.gold : 0, false); }
+    if (e.reason === 'leave' && e.floor > 0) { e.rank = R.finish(e.floor, e.loot ? e.loot.gold : 0, false); payBounty(e.rank); }
     else if (e.reason === 'dead' && e.floor > 0) { e.rank = R.finish(e.floor, 0, true); }
     else { R.finish(null, 0, true); }   // 시련·부적·난입 — 세던 것만 버린다(등급·기록 없음)
   });
@@ -44,7 +51,8 @@
     if (!r) { return ''; }
     var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
     var l2 = R.line2(r);
-    return '<div class="dg-rank"><b>' + esc(R.line(r)) + '</b></div>' + (l2 ? '<div class="dg-rank-2 muted">' + esc(l2) + '</div>' : '');
+    var bl = r.bounty && r.bounty.total > 0 ? '<div class="dg-rank-2 muted">📜 현상금 ' + r.bounty.done + '/' + r.bounty.total + (r.bounty.gold > 0 ? ' · 금 +' + r.bounty.gold : '') + '</div>' : '';
+    return '<div class="dg-rank"><b>' + esc(R.line(r)) + '</b></div>' + bl + (l2 ? '<div class="dg-rank-2 muted">' + esc(l2) + '</div>' : '');
   }
 
   global.DG = global.DG || {};
