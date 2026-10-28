@@ -520,15 +520,8 @@
     ctx.fill(); var Co = global.DG.core; if (!(Co && Co.tuned && !+Co.tuned('mode2d.shadow2', 1))) { ctx.beginPath(); ctx.ellipse(x, y, rx * 0.5, Math.max(1, ry * 0.45), 0, 0, Math.PI * 2); ctx.fillStyle = 'rgba(20,26,16,0.30)'; ctx.fill(); }   /* W-0368 발 닿는 진한 핵 */
   }
 
-  /** 건물 발치 마름모 접지 그림자 — 그림 폭 w ≈ 높이 bh, 마름모 아랫 꼭지 (x, y) · 왼쪽 위로 빛이 와 그림자는 오른쪽 아래로 살짝 */
-  function groundDiamond(x, y, bh) {
-    var w = bh * 0.97, hw = w * 0.52, dl = w * 0.29, dr = w * 0.26, g, i;
-    for (i = 0; i < 2; i++) {
-      var e = i ? 0 : w * 0.07, ox = w * 0.035 + e * 0.3, oy = w * 0.012 + e * 0.5;
-      ctx.beginPath(); ctx.moveTo(x + ox, y + oy + e * 0.6); ctx.lineTo(x - hw - e + ox, y - dl + oy); ctx.lineTo(x + ox, y - dl - dr + oy - e * 0.2); ctx.lineTo(x + hw + e + ox, y - dr + oy); ctx.closePath();
-      ctx.fillStyle = i ? 'rgba(14,18,10,0.30)' : 'rgba(20,26,16,0.14)'; ctx.fill();
-    }
-  }
+  /** 건물 발치 마름모 접지 그림자(그림 폭 w ≈ 높이 bh, 아랫 꼭지 (x, y), 오른쪽 아래로 살짝) */
+  function groundDiamond(x, y, bh) { var w = bh * 0.97, hw = w * 0.52, dl = w * 0.29, dr = w * 0.26, i, e, ox, oy; for (i = 0; i < 2; i++) { e = i ? 0 : w * 0.07; ox = w * 0.035 + e * 0.3; oy = w * 0.012 + e * 0.5; ctx.beginPath(); ctx.moveTo(x + ox, y + oy + e * 0.6); ctx.lineTo(x - hw - e + ox, y - dl + oy); ctx.lineTo(x + ox, y - dl - dr + oy - e * 0.2); ctx.lineTo(x + hw + e + ox, y - dr + oy); ctx.closePath(); ctx.fillStyle = i ? 'rgba(14,18,10,0.30)' : 'rgba(20,26,16,0.14)'; ctx.fill(); } }
   function drawProp(prop, f, se, now) {
     var def = VD.PROPS[prop.kind]; var PR = PROPS2D();   // R-4 옛 소품 그림(village-props2d.js)
     if (!def) { return; }
