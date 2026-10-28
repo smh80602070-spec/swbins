@@ -2317,8 +2317,8 @@
   function fieldEnemyCount(ctx) {
     var es = ctx ? ctx.room.enemies : (run && run.room.enemies);
     if (!es) { return 0; }
-    var n = 0, i;
-    for (i = 0; i < es.length; i++) { if (es[i].field && es[i].hp > 0) { n++; } }
+    var n = 0, i, pl = ctx ? ctx.player : (run && run.player), cr = +core.tuned('dg.fieldCapR', 2000);   /* W-0494 Á\@ ´ X H ¹Ì <ä  @¬ Pà ( ¹t Á\D DÌ  ” 8Ð È 4¬  H “tX ƒ(0 =  ´ H) */
+    for (i = 0; i < es.length; i++) { if (es[i].field && es[i].hp > 0 && !(cr > 0 && pl && Math.hypot(es[i].x - pl.x, es[i].y - pl.y) > cr)) { n++; } }
     return n;
   }
 
