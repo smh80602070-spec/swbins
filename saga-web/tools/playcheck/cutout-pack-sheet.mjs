@@ -13,7 +13,7 @@ try {
     const C = DG.cutout2d, cv = document.createElement('canvas'), W = 1500, H = 140 * clips.length + 40; cv.width = W; cv.height = H;
     cv.style.cssText = 'position:fixed;inset:0;z-index:99999;background:#e9e2d4'; document.body.appendChild(cv);
     const g = cv.getContext('2d'); g.fillStyle = '#e9e2d4'; g.fillRect(0, 0, W, H); g.font = '600 13px sans-serif'; g.fillStyle = '#333';
-    const used = [];
+    const used = []; DG.core.setTune('cutout2d.blend', 0);   // 같은 key 로 연달아 그려 크로스페이드가 직전 자세에 붙는다 — 시트는 끈다
     clips.forEach((cw, row) => {
       const [clip, wpn] = cw.split(':'), y0 = 30 + row * 140;
       g.fillStyle = '#333'; g.fillText(cw, 8, y0 + 14);
