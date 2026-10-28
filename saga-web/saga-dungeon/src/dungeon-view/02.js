@@ -345,7 +345,7 @@
     for (i = 0; i < items.length; i++) {
       var it = items[i];
       if (it.kind === 'jar') { drawJar(m, it.o, now); }
-      else if (it.kind === 'pillar') { drawPillar(m, it.o, theme, wh); } else if (it.kind === 'prop2d') { var bp = proj(m, it.o.x, it.o.y), bcv = m.belt && it.o.y > m.py && Math.abs(it.o.x - m.px) < it.o.h * 0.7 && it.o.y - m.py < it.o.h * 1.4; if (bcv) { ctx.save(); ctx.globalAlpha = 0.4; } global.DG.mode2d.drawKind(ctx, it.o.t, bp.x, bp.y, it.o.h * m.s, it.o.seed || (it.o.x + ',' + it.o.y)); if (bcv) { ctx.restore(); } }   // W-0131 — 벨트에서 나를 가리는 건물은 비친다
+      else if (it.kind === 'pillar') { drawPillar(m, it.o, theme, wh); } else if (it.kind === 'prop2d') { var bp = proj(m, it.o.x, it.o.y), bcv = m.belt && it.o.y > m.py && Math.abs(it.o.x - m.px) < it.o.h * 0.7 && it.o.y - m.py < it.o.h * 1.4; if (bcv) { ctx.save(); ctx.globalAlpha = 0.4; } global.DG.mode2d.drawKind(ctx, it.o.t, bp.x, bp.y, it.o.h * (m.sAt ? m.sAt(it.o.y) : m.s), it.o.seed || (it.o.x + ',' + it.o.y)); if (bcv) { ctx.restore(); } }   // W-0131 — 벨트에서 나를 가리는 건물은 비친다
       else if (it.kind === 'thing') { drawThing(m, it.o, it.icon, now); }
       else if (it.kind === 'foe') { var svA = it.o.bornAt && global.DG.spawnView ? global.DG.spawnView.appearK(it.o, global.DG.spawnView.now()) : 1; if (svA < 1) { ctx.save(); ctx.globalAlpha = svA; } drawFoe(m, it.o, now, bars); if (svA < 1) { ctx.restore(); } }   // W-0327 등장 연출
       else if (it.kind === 'npc') { drawNpc(m, it.o, now, plates, it.near); }
@@ -519,7 +519,7 @@
    */
   function drawNpc(m, o, now, plates, near) {
     var p = proj(m, o.x, o.y);
-    var sf = m.s * 1.12;
+    var sf = (m.sAt ? m.sAt(o.y) : m.s) * 1.12;
     var z = Math.max(0.7, m.s);
     ctx.save();
     ctx.globalAlpha = 0.45;
@@ -658,7 +658,7 @@
   function drawFoe(m, e, now, bars) {
     var ref = e.ref;
     var p = proj(m, e.x, e.y);
-    var sf = m.s * 1.12;
+    var sf = (m.sAt ? m.sAt(e.y) : m.s) * 1.12;
     /* 원작에서 인물은 화면에 꽤 크게 선다 — 작게 두면 아이소 지도처럼 보인다 */
     var s = (e.boss ? 1.12 : 0.76) * sf;
     var isHuman = ref.kind !== 'beast';
@@ -730,7 +730,7 @@
     var lead = core.save.party.length ? global.DG.data.find(core.save.party[0]) : null;
     var pl = run.player;
     var p = proj(m, pl.x, pl.y);
-    var sf = m.s * 1.12;
+    var sf = (m.sAt ? m.sAt(pl.y) : m.s) * 1.12;
 
     /* 발밑 그림자 (적과 같은 이유) */
     ctx.save();
@@ -787,7 +787,7 @@
     var ref = global.DG.data.find(c.id);
     if (!ref) { return; }
     var p = proj(m, c.x, c.y);
-    var sf = m.s * 1.12;
+    var sf = (m.sAt ? m.sAt(c.y) : m.s) * 1.12;
 
     ctx.save();
     ctx.globalAlpha = 0.45;

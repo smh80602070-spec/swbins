@@ -57,9 +57,13 @@
       : layout(cv.clientWidth || 1, cv.clientHeight || 1, W, H, run && run.player ? run.player.x : W / 2, zoom, padBot);
     var y0 = L.y0 || 0;
     var m = { s: L.s, k: L.k, ox: 0, oy: 0, cw: L.cw, ch: L.ch, top: L.top, bot: L.bot, camX: L.camX, y0: y0, town: !!town, px: run && run.player ? run.player.x : 0, py: run && run.player ? run.player.y : 0, W: W, H: H };
-    m.belt = function (x, y) { return { x: L.cw / 2 + (x - L.camX) * L.s, y: L.top + (y - y0) * L.k }; };
-    m.unbelt = function (px, py) { return { x: L.camX + (px - L.cw / 2) / L.s, y: y0 + (py - L.top) / L.k }; };
-    m.ellipse = function (c, x, y, r) { var p = m.belt(x, y); c.ellipse(p.x, p.y, r * L.s, r * L.k, 0, 0, Math.PI * 2); return p; };
+    /* 깊이 원근(사용자 10-29 "3마을처럼") — 마을·들판만. 화면 깊이 d(위 0·아래 1)마다 배율 f = 1 + 손잡이 dg.beltDepth × (d − 0.5): 멀수록 작고 가운데로 모인다. 0(기본) = 옛 그대로 */
+    var BD = town ? +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('dg.beltDepth', 0) : 0) || 0 : 0;
+    function fAt(sy) { return BD > 0 ? 1 + BD * (Math.max(0, Math.min(1, (sy - L.top) / Math.max(1, L.bot - L.top))) - 0.5) : 1; }
+    m.sAt = function (y) { return L.s * fAt(L.top + (y - y0) * L.k); };
+    m.belt = function (x, y) { var sy = L.top + (y - y0) * L.k; return { x: L.cw / 2 + (x - L.camX) * L.s * fAt(sy), y: sy }; };
+    m.unbelt = function (px, py) { return { x: L.camX + (px - L.cw / 2) / (L.s * fAt(py)), y: y0 + (py - L.top) / L.k }; };
+    m.ellipse = function (c, x, y, r) { var p = m.belt(x, y); c.ellipse(p.x, p.y, r * m.sAt(y), r * L.k, 0, 0, Math.PI * 2); return p; };
     return m;
   }
 
