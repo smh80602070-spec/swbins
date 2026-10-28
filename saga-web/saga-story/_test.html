@@ -910,7 +910,7 @@ window.DG_NO_TUNE = true;
 
     t('화살은 사거리 끝이나 수명이 다하면 사라진다', function () {
       var run = S.raw(), p = run.player;
-      calm(run);
+      calm(run); var keepE = run.enemies; run.enemies = [];   // 적 사격이 새 탄을 얹지 않게(난수 흐름에 따라 사거리 안 적이 생긴다)
       p.climb = null; p.x = 900; p.y = run.stage.floor - S.P_H; p.onGround = true;
       run.eshots = [
         { x: 40, y: 200, dir: -1, spd: 700, dmg: 1, kind: 'bow', life: 9 },   // 벽 밖으로
@@ -918,7 +918,7 @@ window.DG_NO_TUNE = true;
       ];
       for (var i = 0; i < 6; i++) { S.update(0.03); }
       var gone = run.eshots.length === 0;
-      run.eshots = []; p.invuln = 0;
+      run.eshots = []; p.invuln = 0; run.enemies = keepE;
       return gone && '벽 밖·수명 둘 다 걷힘';
     });
 

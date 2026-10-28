@@ -833,11 +833,6 @@
        건드리지 않는다. 안 그러면 45% 확률로 엉뚱한 발판에 떨어져 "그 자리 근처에
        나타난다" 는 약속이 깨진다 */
     var y = stg.floor;
-    if (atX === undefined && Math.random() < 0.45 && stg.plats.length) {
-      var pl = core.pick(stg.plats);
-      x = pl[0] + Math.random() * pl[2];
-      y = pl[1];
-    }
     var hp = Math.max(1, Math.round(baseHpOf(lv) * E_HP * RF()));
     var rw = SD.rangedOf(ref);              // 활·조총을 들었으면 멀리서 쏜다
     var role = enemyRole(ref);
@@ -855,7 +850,7 @@
     if (rare) { hp = Math.round(hp * RARE_HP_MUL); dmgMul *= RARE_DMG_MUL; }
     if (boost) { hp = Math.round(hp * boost.hp); dmgMul *= boost.dmg; }
     var e = {
-      ref: ref, x: x, y: y - 22, w: 34, h: 34, pi: pl && y === pl[1] ? stg.plats.indexOf(pl) : -1,   // 선 발판(-1 = 바닥) — 끝에서 돌아선다
+      ref: ref, x: x, y: y - 22, w: 34, h: 34, pi: -1,
       hp: hp, hpMax: hp, dmg: Math.round((4 + lv * 1.6) * dmgMul * E_DMG * RF()),
       dir: Math.random() < 0.5 ? -1 : 1,
       spd: spd, phase: Math.random() * 6.28, hurt: 0, cd: 0,
@@ -1661,16 +1656,6 @@
 
       if (bottom >= stg.floor) {
         p.y = stg.floor - P_H; p.vy = 0; p.onGround = true;
-      } else if (p.vy > 0 && p.dropThru <= 0) {
-        /* 위에서 내려올 때만 발판에 선다 (↓+점프로 빠져나가는 동안은 통과) */
-        for (i = 0; i < stg.plats.length; i++) {
-          var pl = stg.plats[i];
-          if (p.x + P_W > pl[0] && p.x < pl[0] + pl[2] &&
-              prevBottom <= pl[1] + 2 && bottom >= pl[1]) {
-            p.y = pl[1] - P_H; p.vy = 0; p.onGround = true;
-            break;
-          }
-        }
       }
       if (p.onGround && wasFalling) {
         sfx('land');
@@ -1919,7 +1904,7 @@
         if (Math.abs(e.kx) < 4) { e.kx = 0; }
       }
       if (e.x < 20) { e.x = 20; e.dir = 1; e.kx = 0; }
-      if (e.x > stg.width - 40) { e.x = stg.width - 40; e.dir = -1; e.kx = 0; } var epl = e.pi >= 0 && !e.air && +core.tuned('side.platEdge', 1) === 1 ? stg.plats[e.pi] : null; if (epl && (Math.abs(e.y + e.h - 12 - epl[1]) > 3 || e.x < epl[0] - 40 || e.x + e.w > epl[0] + epl[2] + 40)) { e.pi = -1; epl = null; }   /* 다른 데로 옮겨진 적(습격·진단)은 발판 기억을 버린다 */ if (epl) { if (e.x < epl[0]) { e.x = epl[0]; if (!near) { e.dir = 1; } e.kx = 0; } else if (e.x + e.w > epl[0] + epl[2]) { e.x = epl[0] + epl[2] - e.w; if (!near) { e.dir = -1; } e.kx = 0; } }   /* 쫓는 중엔 끝에서 서서 나를 본다(매 프레임 뒤집기 깜빡임 — 리뷰) */   /* 발판 위 적은 끝에서 돌아선다 — 허공으로 걸어 나가 그 높이에 떠 있었다(10-25 촬영: 발판 없는 x 에 발 높이 482·312) */
+      if (e.x > stg.width - 40) { e.x = stg.width - 40; e.dir = -1; e.kx = 0; }
       e.cd -= dt;
       if (overlap({ x: p.x, y: p.y, w: P_W, h: P_H }, e) && e.cd <= 0 && !e.air) {   // W-0345 뜬 적은 몸으로 못 친다
         e.cd = 1.0;

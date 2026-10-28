@@ -833,11 +833,6 @@
        건드리지 않는다. 안 그러면 45% 확률로 엉뚱한 발판에 떨어져 "그 자리 근처에
        나타난다" 는 약속이 깨진다 */
     var y = stg.floor;
-    if (atX === undefined && Math.random() < 0.45 && stg.plats.length) {
-      var pl = core.pick(stg.plats);
-      x = pl[0] + Math.random() * pl[2];
-      y = pl[1];
-    }
     var hp = Math.max(1, Math.round(baseHpOf(lv) * E_HP * RF()));
     var rw = SD.rangedOf(ref);              // 활·조총을 들었으면 멀리서 쏜다
     var role = enemyRole(ref);
@@ -855,7 +850,7 @@
     if (rare) { hp = Math.round(hp * RARE_HP_MUL); dmgMul *= RARE_DMG_MUL; }
     if (boost) { hp = Math.round(hp * boost.hp); dmgMul *= boost.dmg; }
     var e = {
-      ref: ref, x: x, y: y - 22, w: 34, h: 34, pi: pl && y === pl[1] ? stg.plats.indexOf(pl) : -1,   // 선 발판(-1 = 바닥) — 끝에서 돌아선다
+      ref: ref, x: x, y: y - 22, w: 34, h: 34, pi: -1,
       hp: hp, hpMax: hp, dmg: Math.round((4 + lv * 1.6) * dmgMul * E_DMG * RF()),
       dir: Math.random() < 0.5 ? -1 : 1,
       spd: spd, phase: Math.random() * 6.28, hurt: 0, cd: 0,
