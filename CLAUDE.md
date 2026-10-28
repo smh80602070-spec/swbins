@@ -2,6 +2,8 @@
 
 개인 취미 저장소. 회사 일은 `C:\link` 세션. 이 파일은 **길잡이**다.
 
+- **작업 전 `SAGA_AI_COMMON.md` 를 먼저 읽는다**(AI·머신 역할, 에셋 재사용, 2D 모션 품질 기준)
+
 - **다음 일 = `tasks/QUEUE.md` 의 갈래(웹·고돗·유니티·자체툴) 큐 맨 위 티켓**(절차 `tasks/README.md` · 체제 `SAGA-ARCH.md` · 중간 지시 `tasks/INTAKE.md`). "<갈래> 이어해" = 이것
 - 공통 설계: `SAGA-DESIGN.md`(일곱 PLAN 의 상위) · 다섯 판 이야기 정본: `scenario/`
 - 웹 다섯 판: `saga-web/<폴더>/PLAN.md` 가 정본, 이력은 `archive/web/`
