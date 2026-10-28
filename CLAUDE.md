@@ -2,7 +2,7 @@
 
 개인 취미 저장소. 회사 일은 `C:\link` 세션. 이 파일은 **길잡이**다.
 
-- **작업 전 `SAGA_AI_COMMON.md` 를 먼저 읽는다.** 핵심: Claude=오케스트레이터·Codex=개발자·Kimi=미확정 /
+- **작업 전 `SAGA_AI_COMMON.md` 를 먼저 읽는다.** 핵심: Claude=오케스트레이터·Codex=개발자·Kimi=보조(터미널 `kimi`) /
   iMac=웹·Godot, Win PC(RX7600)=Unity·2D/3D 생성, GeForce 보류 / 기존 에셋 재사용 먼저·GPU 재생성·원본 덮어쓰기 금지 /
   2D 모션은 GIF 프리뷰·발 접지·대표 1명 검증 뒤 확장
 
