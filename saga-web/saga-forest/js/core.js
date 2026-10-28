@@ -442,9 +442,9 @@
     tileBase: 'assets/web2d/tile/',
     /** 마을 건물·지물 2D 스프라이트(K-0017 `world2d`, 3D 와 같은 id) — 종류 → { id, h(px, 확대 1) }. 못 받으면 옛 도형 */
     /*  night = 밤 변종(K-0092, 같은 크기·알파 — cozy2d 가 밤에만 바꿔 그린다) · lantern = 마을 석등(옛 🏮) */
-    prop2d: { home: { id: 'forest_cottage_01', night: 'forest_cottage_01_night', h: 74 }, shop: { id: 'inn_01', night: 'inn_01_night', h: 90 },
+    prop2d: { home: { id: 'forest_cottage_01', night: 'forest_cottage_01_night', h: 104 }, shop: { id: 'inn_01', night: 'inn_01_night', h: 126 },
       /* W-0218 서당·사고·침선방(K-0111 — 옛 drawHanok 도형 셋) · h 는 집 74·가게 90 사이, 옛 비율 사고 > 서당 > 침선방 · top = 그림 위 빈 줄(256px 중, W-0220 이름표 높이) */
-      school: { id: 'hanok_01', night: 'hanok_01_night', h: 80, top: 90 }, museum: { id: 'chinese_hall_01', night: 'chinese_hall_01_night', h: 86, top: 93 }, tailor: { id: 'jp_minka_01', night: 'jp_minka_01_night', h: 76, top: 101 },
+      school: { id: 'hanok_01', night: 'hanok_01_night', h: 112, top: 90 }, museum: { id: 'chinese_hall_01', night: 'chinese_hall_01_night', h: 120, top: 93 }, tailor: { id: 'jp_minka_01', night: 'jp_minka_01_night', h: 106, top: 101 },
       mail: { id: 'mailbox_01', h: 30 }, lantern: { id: 'stone_lantern_01', h: 40 } },
     /** 밤 불빛 자리(W-0142) — 소품 그림(256px) 픽셀 [x, y, 반지름], K-0092 tools/ai-art/data/night_lights.json 에서 옮김 */
     lit: {

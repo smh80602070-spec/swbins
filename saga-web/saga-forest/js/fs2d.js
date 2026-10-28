@@ -11,7 +11,7 @@
 (function (global) {
   'use strict';
 
-  var H = { tree: 58, pine: 92, rock_small_01: 22, rock_large_01: 34, rock_moss_01: 28 };
+  var H = { tree: 80, pine: 92, rock_small_01: 22, rock_large_01: 34, rock_moss_01: 28 };
   var ROCKS = ['rock_small_01', 'rock_large_01', 'rock_moss_01'];
   var cache = {};
 

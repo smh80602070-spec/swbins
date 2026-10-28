@@ -520,6 +520,15 @@
     ctx.fill(); var Co = global.DG.core; if (!(Co && Co.tuned && !+Co.tuned('mode2d.shadow2', 1))) { ctx.beginPath(); ctx.ellipse(x, y, rx * 0.5, Math.max(1, ry * 0.45), 0, 0, Math.PI * 2); ctx.fillStyle = 'rgba(20,26,16,0.30)'; ctx.fill(); }   /* W-0368 발 닿는 진한 핵 */
   }
 
+  /** 건물 발치 마름모 접지 그림자 — 그림 폭 w ≈ 높이 bh, 마름모 아랫 꼭지 (x, y) · 왼쪽 위로 빛이 와 그림자는 오른쪽 아래로 살짝 */
+  function groundDiamond(x, y, bh) {
+    var w = bh * 0.97, hw = w * 0.52, dl = w * 0.29, dr = w * 0.26, g, i;
+    for (i = 0; i < 2; i++) {
+      var e = i ? 0 : w * 0.07, ox = w * 0.035 + e * 0.3, oy = w * 0.012 + e * 0.5;
+      ctx.beginPath(); ctx.moveTo(x + ox, y + oy + e * 0.6); ctx.lineTo(x - hw - e + ox, y - dl + oy); ctx.lineTo(x + ox, y - dl - dr + oy - e * 0.2); ctx.lineTo(x + hw + e + ox, y - dr + oy); ctx.closePath();
+      ctx.fillStyle = i ? 'rgba(14,18,10,0.30)' : 'rgba(20,26,16,0.14)'; ctx.fill();
+    }
+  }
   function drawProp(prop, f, se, now) {
     var def = VD.PROPS[prop.kind]; var PR = PROPS2D();   // R-4 옛 소품 그림(village-props2d.js)
     if (!def) { return; }
@@ -537,7 +546,8 @@
     if (prop.kind === 'home' && global.DG.livestock) { global.DG.livestock.draw2d(ctx, p.x + 84 * k, p.y + 22 * k, k, now); } if (prop.kind === 'plot' && global.DG.crops && global.DG.crops.draw2d(ctx, prop, p.x, p.y, k, now)) { return; }   // W-0299 집 곁 우리 · W-0431 밭
     ctx.save();
     ctx.globalAlpha = spent && !big ? 0.62 : 1;
-    if (!(global.DG.mode2d && global.DG.mode2d.drawKind(ctx, prop.kind, p.x, p.y, kindK(prop.kind, k)) && kindOver(prop.kind, p.x, p.y, k, now))) switch (prop.kind) {   // 2D 모드 통일 스프라이트(W-0019) 먼저 — W-0124 가게·집 크기 성장·우체통 깃발은 그 위에도
+    var gy = 0, gnd = t2 && global.DG.mode2d.spriteReady(t2.id) && +global.DG.core.tuned('fs.ground2d', 1) > 0, bh = gnd ? (t2.h || 74) * kindK(prop.kind, k) : 0; if (gnd) { gy = bh * 0.03; groundDiamond(p.x, p.y + gy, bh); }   /* 집이 떠 보인다(사용자 10-29) — 건물 그림은 마름모 발치라 둥근 타원 그림자 대신 마름모 접지 그림자, 그림을 3% 가라앉힌다(fs.ground2d 0 = 옛) */
+    if (!(global.DG.mode2d && (gnd ? global.DG.mode2d.drawSprite(ctx, { id: t2.id, x: p.x, y: p.y + gy, h: bh, shadow: false }) : global.DG.mode2d.drawKind(ctx, prop.kind, p.x, p.y, kindK(prop.kind, k))) && kindOver(prop.kind, p.x, p.y, k, now))) switch (prop.kind) {   // 2D 모드 통일 스프라이트(W-0019) 먼저 — W-0124 가게·집 크기 성장·우체통 깃발은 그 위에도
       case 'tree':    PR.drawTree(p.x, p.y, k, sway, se, !spent); break;
       case 'pine':    PR.drawPine(p.x, p.y, k, sway, se); break;
       case 'rock':    PR.drawRock(p.x, p.y, k, se); break;
