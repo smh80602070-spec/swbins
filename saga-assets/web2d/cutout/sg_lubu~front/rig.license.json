@@ -1,0 +1,15 @@
+{
+ "ticket": "K-0198",
+ "from": "saga-assets/illust/shared/sg_lubu/stand.webp",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "tool": "tools/ai-art/k188_cutout.py cut",
+ "far": "copy",
+ "fill": "smear",
+ "id": "cutout_sg_lubu_front",
+ "generator": "tools/ai-art/k163_illust.py + gen.py (ComfyUI, Kaggle 원격)",
+ "commercial_use": true,
+ "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상 보고 적은 묘사)",
+ "note": "AI 생성 — 저작권 보호가 약하다. 표시 이름은 가명.",
+ "packed_by": "K-0198 tools/ai-art/k198_front.sh + k198_pack.py"
+}
