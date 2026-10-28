@@ -146,3 +146,29 @@ body:not(.stone-off) .dg-floor, body:not(.stone-off) .d2-fname, body:not(.stone-
 @media (max-width: 520px) {
   body:not(.stone-off) .btn:not(.tiny) { min-height: 48px; }
 }
+
+/* ── 아래 구슬·미니맵·아래 띠(W-0486 ⑤) — 돌 테두리 + 안쪽 그늘 + 유리 빛. 자리·크기 그대로, 그림 새로 안 만듦 ── */
+body:not(.stone-off) .dg-orb {
+  border: 4px solid #4a4038;
+  background: radial-gradient(circle at 35% 30%, #1f1d1b, #090807 70%);
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 0 3px #7a6642, inset 0 4px 12px rgba(0, 0, 0, .8),
+              0 0 0 2px #1d1b19, 0 0 0 3px #6b5836, 0 4px 10px rgba(0, 0, 0, .6);
+}
+body:not(.stone-off) .dg-orb::after {
+  content: ''; position: absolute; left: 14%; top: 8%; width: 52%; height: 30%; border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .28), rgba(255, 255, 255, 0));
+  z-index: 3; pointer-events: none;
+}
+body:not(.stone-off) .dg-orb .dg-orb-v { font-family: var(--stone-head); color: var(--stone-ink-hi); }
+body:not(.stone-off) #dg-minimap {
+  border: 3px solid #4a4038;
+  background: #0d0c0b;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 0 2px #7a6642, 0 0 0 2px #1d1b19, 0 0 0 3px #6b5836, 0 4px 10px rgba(0, 0, 0, .6);
+}
+body:not(.stone-off) #dg-minimap .mm-tag {
+  --stone-cut-tag: 4px;
+  border-radius: 0; background: #1d1b19; border: 1px solid #6b5836;
+  clip-path: polygon(var(--stone-cut-tag) 0, calc(100% - var(--stone-cut-tag)) 0, 100% var(--stone-cut-tag), 100% calc(100% - var(--stone-cut-tag)), calc(100% - var(--stone-cut-tag)) 100%, var(--stone-cut-tag) 100%, 0 calc(100% - var(--stone-cut-tag)), 0 var(--stone-cut-tag));
+  font-family: var(--stone-head); color: var(--stone-ink-hi);
+}
+/* #dg-bottom 은 diablo.css 의 판 몸통 그대로(여기서 덮지 않는다) */
