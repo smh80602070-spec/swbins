@@ -70,7 +70,7 @@
     /* W-0365 2D 카메라 배율(공용 cam2d) — 휠·두 손가락·＋/－, 폰·PC 따로 기억. 폰 기본 0.7(사용자 10-22 "3번은 화면이 넘 가까워") */
     var C2 = global.DG.cam2d;
     if (C2) {
-      cam2 = C2.register('village', { store: 'yeoksa-village/save/cam2d', min: 0.5, max: 1.6, def: 1, defPhone: 0.7, onChange: function () { resize(); } });
+      cam2 = C2.register('village', { store: 'yeoksa-village/save/cam2d', min: 0.5, max: 1.6, def: 0.7, defPhone: 0.5, onChange: function () { resize(); } });
       cam2.attach(cv, { onPinchStart: function () { dragging = false; var pl = V.raw().player; V.walkTo(pl.x, pl.y); } });   // 두 번째 손가락이 닿으면 첫 손가락의 걷기 목표를 제자리로
       camBtns = cam2.buttons(document.body);
       global.setInterval(function () { if (camBtns) { camBtns.style.display = getComputedStyle(cv).display === 'none' ? 'none' : ''; } }, 500);   // 3D 마을이면 감춤
