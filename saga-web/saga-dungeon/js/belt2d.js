@@ -224,14 +224,14 @@
   /** 던전 방 — 깊이 원근이 켜지면(dg.beltDepthRoom) 평평한 방 그림을 가로줄 띠마다 배율 f 로 좁혀 붙인다(벽·바닥·기둥·문이 한꺼번에 사다리꼴로) */
   function stage(ctx, m, run, theme, now, gore, icons) {
     if (!(m.depth > 0) || m.town || !m.flatBelt) { return stageFlat(ctx, m, run, theme, now, gore, icons); }
-    var cw = m.cw, wd = 2, kk = (ctx.getTransform && ctx.getTransform().a) || 1, ow = Math.ceil(cw * wd * kk), oh = Math.ceil(m.ch * kk), sh = (wd - 1) * cw / 2, sy;
+    var cw = m.cw, wd = Math.min(2, 1 / Math.max(0.5, 1 - m.depth / 2) + 0.04), kk = (ctx.getTransform && ctx.getTransform().a) || 1, ow = Math.ceil(cw * wd * kk), oh = Math.ceil(m.ch * kk), sh = (wd - 1) * cw / 2, sy;
     var oc = gRC || (gRC = document.createElement('canvas')); if (oc.width !== ow || oc.height !== oh) { oc.width = ow; oc.height = oh; }
     var tx = oc.getContext('2d'); tx.setTransform(1, 0, 0, 1, 0, 0); tx.clearRect(0, 0, ow, oh); tx.setTransform(kk, 0, 0, kk, 0, 0);
     var m2 = Object.create(m); m2.cw = cw * wd;
     m2.belt = function (x, y) { var p = m.flatBelt(x, y); return { x: p.x + sh, y: p.y }; };
     m2.ellipse = function (c, x, y, r) { var p = m2.belt(x, y); c.ellipse(p.x, p.y, r * m.s, r * m.k, 0, 0, Math.PI * 2); return p; };
     stageFlat(tx, m2, run, theme, now, gore, icons);
-    for (sy = 0; sy < m.ch; sy += 3) { var sw = cw / m.fAt(sy + 1.5); ctx.drawImage(oc, (ow / kk - sw) / 2 * kk, sy * kk, sw * kk, 3 * kk, 0, sy, cw, 3); }
+    for (sy = 0; sy < m.ch; sy += 4) { var sw = cw / m.fAt(sy + 2); ctx.drawImage(oc, (ow / kk - sw) / 2 * kk, sy * kk, sw * kk, 4 * kk, 0, sy, cw, 4); }
   }
 
   global.DG.belt2d = { on: on, want: want, layout: layout, layoutTown: layoutTown, HWIN: HWIN, ridge: ridge, PIECE: PIECE, fieldItems: fieldItems, drawPiece: drawPiece, metrics: metrics, stage: stage };
