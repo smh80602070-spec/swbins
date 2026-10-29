@@ -1164,7 +1164,7 @@
     ctx.fillStyle = '#000';
     ctx.fill(); isoCore(ctx, m, o.x, o.y, 12);
     ctx.restore();
-    if (!(global.DG.actor2d && global.DG.actor2d.draw(ctx, 'npc', o.ref, p.x, p.y, 0.86 * sf, { facing: o.facing, walking: false, now: now, phase: o.phase, wx: (o.x - o.y) * IX, wy: (o.x + o.y) * IY, ppu: m.s, pk: 'npc:' + (o.id || ((o.ref && o.ref.id) || '') + ':' + o.phase) }))) global.DG.sprite.stamp(ctx, {
+    if (!(global.DG.actor2d && global.DG.actor2d.draw(ctx, 'npc', o.ref, p.x, p.y, 0.86 * sf, { facing: o.facing, walking: false, now: now, phase: o.phase, wx: (o.x - o.y) * IX, wy: (o.x + o.y) * IY, ppu: (m.sAt ? m.sAt(o.y) : m.s), pk: 'npc:' + (o.id || ((o.ref && o.ref.id) || '') + ':' + o.phase) }))) global.DG.sprite.stamp(ctx, {
       kind: 'human', ref: o.ref,
       x: p.x, y: p.y, s: 0.86 * sf, facing: o.facing,
       phase: o.phase, walking: false,
@@ -1403,7 +1403,7 @@
     if (pl.dash) { ctx.globalAlpha = 0.85; }
     if (lead) {
       var fac = global.DG.data.faction(lead.faction);
-      if (!(global.DG.actor2d && global.DG.actor2d.draw(ctx, 'me', lead, p.x, p.y, 0.88 * sf, { facing: pl.facing, dirX: pl.dirX, dirY: pl.dirY, atk: pl.atkAnim, cast: pl.castAnim, hurt: pl.hurt, walking: pl.walking || pl.atkAnim > 0, now: now, phase: pl.phase, wx: (pl.x - pl.y) * IX, wy: (pl.x + pl.y) * IY, ppu: m.s, pk: 'me' }))) global.DG.sprite.stamp(ctx, {
+      if (!(global.DG.actor2d && global.DG.actor2d.draw(ctx, 'me', lead, p.x, p.y, 0.88 * sf, { facing: pl.facing, dirX: pl.dirX, dirY: pl.dirY, atk: pl.atkAnim, cast: pl.castAnim, hurt: pl.hurt, walking: pl.walking || pl.atkAnim > 0, now: now, phase: pl.phase, wx: (pl.x - pl.y) * IX, wy: (pl.x + pl.y) * IY, ppu: (m.sAt ? m.sAt(pl.y) : m.s), pk: 'me' }))) global.DG.sprite.stamp(ctx, {
         kind: 'human', ref: lead,
         x: p.x, y: p.y, s: 0.88 * sf, facing: pl.facing,
         phase: pl.phase, walking: pl.walking || pl.atkAnim > 0,
@@ -1434,7 +1434,7 @@
     ctx.restore();
 
     var fac = global.DG.data.faction(ref.faction);
-    if (!(global.DG.actor2d && global.DG.actor2d.draw(ctx, 'ally', ref, p.x, p.y, 0.84 * sf, { facing: c.facing, dirX: c.dirX, dirY: c.dirY, atk: c.atkAnim, cast: c.castAnim, hurt: c.hurt, walking: c.walking || c.atkAnim > 0, now: now, phase: c.phase, wx: (c.x - c.y) * IX, wy: (c.x + c.y) * IY, ppu: m.s, pk: 'ally:' + (c.id || ref.id) }))) global.DG.sprite.stamp(ctx, {
+    if (!(global.DG.actor2d && global.DG.actor2d.draw(ctx, 'ally', ref, p.x, p.y, 0.84 * sf, { facing: c.facing, dirX: c.dirX, dirY: c.dirY, atk: c.atkAnim, cast: c.castAnim, hurt: c.hurt, walking: c.walking || c.atkAnim > 0, now: now, phase: c.phase, wx: (c.x - c.y) * IX, wy: (c.x + c.y) * IY, ppu: (m.sAt ? m.sAt(c.y) : m.s), pk: 'ally:' + (c.id || ref.id) }))) global.DG.sprite.stamp(ctx, {
       kind: 'human', ref: ref,
       x: p.x, y: p.y, s: 0.84 * sf, facing: c.facing,
       phase: c.phase, walking: c.walking || c.atkAnim > 0,
