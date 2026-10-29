@@ -266,7 +266,9 @@ const STATIONS := {
 	## 55-3 37장 — 나래는 기관 불을 되살리러 간 뒤(3~, 뒤에도) 멈춘 기관차 서쪽 끝(지키기 자리 곁).
 	"narae": [{"ch": 36, "from": 3, "to": 999, "region": "fork", "cell": Vector2(6.0, 3.1)},
 		{"ch": 37, "ch_to": 999, "from": 0, "to": 999, "region": "fork", "cell": Vector2(6.0, 3.1)}],
-	"chorong": [{"ch": 30, "from": 1, "to": 4, "region": "amber", "cell": Vector2(1.9, 3.8)},
+	"chorong": [{"ch": 29, "from": 1, "to": 4, "region": "amber", "cell": Vector2(1.9, 3.8)},
+		## 53-3 31장 — 장터 석등을 풀러 장터 앞으로.
+		{"ch": 30, "from": 0, "to": 4, "region": "amber", "cell": Vector2(1.9, 3.8)},
 		## 53-4 32장 — 거북을 쓰러뜨린 뒤(5) 탑 밑 광장으로 달려와 있다.
 		{"ch": 31, "from": 5, "to": 5, "region": "amber", "cell": Vector2(4.55, 1.75)}],
 	## 106장 ㊺ 10장 — 하람은 따라가기(5) 뒤 비행선 곁(6), 산성 둘러보기(7~8) 동안 산성 터 문루 안쪽.

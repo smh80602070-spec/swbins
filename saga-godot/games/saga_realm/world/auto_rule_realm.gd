@@ -14,6 +14,7 @@ const RealmOrders := preload("res://games/saga_realm/data/realm_orders.gd")
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
 const RealmTech := preload("res://games/saga_realm/data/realm_tech.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
+const RealmCampaign := preload("res://games/saga_realm/data/realm_campaign.gd")
 const GOALS := [
 	{"key": "dev", "emoji": "🌾", "name": "개발"},
 	{"key": "draft", "emoji": "🛡️", "name": "징병"},
@@ -98,6 +99,12 @@ func _refresh() -> void:
 			var cur := String(g.key) == goal_key
 			b.set_pressed_no_signal(cur)
 			b.text = ("%s %s" % [g.emoji, g.name]) if cur else String(g.emoji)
+
+
+func _process(delta: float) -> void:
+	visible = not RealmCampaign.enabled()
+	if visible:
+		super._process(delta)
 
 
 func toggle() -> bool:

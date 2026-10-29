@@ -48,6 +48,9 @@ func _ready() -> void:
 	if not StorySaveState.last_run.is_empty():
 		Toast.show(self, StorySaveState.run_text(StorySaveState.last_run), 4.0)
 	_begin_run()
+	var guide_walk := preload("res://saga_core/world/first_run_walk_observer.gd").new()
+	guide_walk.setup(Callable(StorySaveState, "tutorial_action"))
+	add_child(guide_walk)
 	add_child(preload("res://games/saga_story/ui/skill_offer_prompt.gd").new())
 	## G-0087 이야기 엔진(세이브를 읽은 뒤 — 장면마다 새로, 진행은 StorySaveState.scenario).
 	var runner: Node = preload("res://games/saga_story/world/scenario_runner.gd").new()
@@ -56,6 +59,10 @@ func _ready() -> void:
 	preload("res://games/saga_story/world/auto_quest_st.gd").attach_st(self)   # G-0299 자동 퀘스트 ▶
 	preload("res://games/saga_story/world/story_map_piece.gd").attach(self)   # G-0309 지도 조각(세이브를 읽은 뒤)
 	preload("res://games/saga_story/world/story_hidden_clue.gd").attach(self)   # G-0319 숨은 우두머리 옛 비문
+	if OS.get_environment("SAGA_TUTORIAL_PROBE") == "1":
+		var probe := preload("res://tools/probe_tutorial.gd").new()
+		add_child(probe)
+		probe.setup("story")
 
 
 ## G-0245 — 사냥터 key·급(맵 enemy_lv)을 실어 판 셈 시작. 지도는 EnemySpawner 의 map_path(없으면 field_map — TestField 와 같은 기본)

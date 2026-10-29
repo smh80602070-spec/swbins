@@ -10,6 +10,6 @@ const Base := preload("res://tools/probe_save_base.gd")
 func _initialize() -> void:  # autoload 이름은 _init 뒤에야 등록된다
 	await process_frame
 	var rt := {"tree": self, "autoload": "DungeonSaveState", "fields": {
-		"rooms_cleared": [[true, false, true], [false]], "hero_resolved": [[true, true], [false]], "scenario": [{"next": 2, "done": ["a1_x"]}, {}]}}
+		"rooms_cleared": [[true, false, true], [false]], "hero_resolved": [[true, true], [false]], "scenario": [{"next": 2, "done": ["a1_x"]}, {}], "bounty_pending_gold": [425, 0]}}
 	var fails: int = Base.run("dungeon", "res://games/saga_dungeon/data/dungeon_save_state.gd", {"room_cleared": true}, func(d: Dictionary) -> bool: return d.get("rooms_cleared") == [true] and not d.has("room_cleared"), rt)
 	quit(1 if fails > 0 else 0)

@@ -4,7 +4,7 @@ extends SceneTree
 ##   godot --headless --path saga-godot --script res://tools/probe_goals_panel.gd   → "PROBE goals_panel OK" / "FAIL n"
 ## 네 판(1만리·2나락·3마을·4종횡) 씬마다: ① ☰ 메뉴에 goals 칸 ② 칸 → 창(group goals_panel·ui_modal)·멈춤
 ## ③ rows 줄 수 = 판 기존 값(1만리 오늘 의뢰 넷·주간 다섯 · 2나락 시즌 둘 · 3마을 오늘 둘 · 4종횡 오늘 둘·주간 하나)
-## ④ 1만리 받기: 주간 도전 하나를 끝낸 상태로 만들면 받기 단추가 켜지고, 누르면 claimed 에 들어감(메모리에서만)
+## ④ 1만리 주간 받기·2나락 현상금·4종횡 일일 사명: 받을 단추가 켜지고, 누르면 한 번 지급(임시 저장만)
 ## ⑤ Esc → 창 닫힘·멈춤 풀림 ⑥ 줄 글 함수(line_text·left_text). SAGA_GOALS_GAME=<판> 이면 그 판만. 5천하는 G-0364 「이번 달」(게임 달 — 시계 없음).
 
 const MenuScreen := preload("res://saga_core/ui/menu_screen.gd")
@@ -85,6 +85,8 @@ func _one() -> void:
 		_fail("③ 줄 수 오늘 %d·주간 %d != %s" % [nt, nw, WANT[game]])
 	if game == "go":
 		await _claim_go(panel)
+	elif game == "dungeon" or game == "story":
+		await _claim_manual(panel)
 	panel = get_first_node_in_group(GoalsPanel.GROUP)
 	if panel != null:
 		var ev := InputEventAction.new()
@@ -124,6 +126,56 @@ func _claim_go(panel: Node) -> void:
 	if not bool(Weekly.call("claimed", id)):
 		_fail("④ 받기 눌렀는데 %s 안 받음" % id)
 	print("GOALS go 받기 %s → %s" % [id, Weekly.call("claimed", id)])
+
+
+## G-0414 — 2나락 현상금·4종횡 일일 보상은 실제 공용 받기 단추로 한 번만 수령.
+func _claim_manual(panel: Node) -> void:
+	panel.call("close_panel")
+	await process_frame
+	var path := "user://probe_g0414_%s.json" % game
+	var save: Node
+	var saved: Dictionary = {}
+	var expected_gold := 0
+	if game == "dungeon":
+		save = root.get_node("DungeonSaveState")
+		var wallet: Node = root.get_node("DungeonGoldState")
+		saved = {"pending": save.bounty_pending_gold, "gold": wallet.gold, "path": save.path_override, "pos": save.player_pos}
+		save.path_override = path
+		save.bounty_pending_gold = 73
+		expected_gold = int(wallet.gold) + 73
+	else:
+		save = root.get_node("StorySaveState")
+		saved = {"pending": save.daily_pending.duplicate(true), "path": save.path_override}
+		save.path_override = path
+		save.daily_pending = {"probe": {"name": "점검 보상", "exp": 0, "gold": 0, "scroll": ""}}
+	var adapter := "res://games/saga_dungeon/ui/goals_adapter.gd" if game == "dungeon" else "res://games/saga_story/ui/goals_adapter.gd"
+	GoalsPanel.open_for(current_scene, game, adapter)
+	await process_frame
+	panel = get_first_node_in_group(GoalsPanel.GROUP)
+	var take := panel.find_child("GoalsClaim", true, false) as Button if panel != null else null
+	if take == null or take.disabled:
+		_fail("G-0414 받기 단추가 활성 상태로 안 보임")
+	else:
+		take.pressed.emit()
+		await process_frame
+		var remaining: int = int(save.bounty_pending_gold) if game == "dungeon" else (save.daily_pending as Dictionary).size()
+		var saved_file := FileAccess.file_exists(ProjectSettings.globalize_path(path))
+		if remaining != 0 or not saved_file:
+			_fail("G-0414 누른 뒤 남은 대기=%d · 임시 저장=%s" % [remaining, saved_file])
+		if game == "dungeon" and int(root.get_node("DungeonGoldState").gold) != expected_gold:
+			_fail("G-0414 2나락 금 보상 한 번 지급 안 됨")
+	var wallet: Node = root.get_node("DungeonGoldState") if game == "dungeon" else null
+	if game == "dungeon":
+		wallet.restore(int(saved.gold))
+		save.bounty_pending_gold = int(saved.pending)
+		save.player_pos = saved.pos
+	else:
+		save.daily_pending = saved.pending
+	save.path_override = String(saved.path)
+	for suffix in ["", ".bak", ".tmp"]:
+		var test_path := ProjectSettings.globalize_path(path + suffix)
+		if FileAccess.file_exists(test_path):
+			DirAccess.remove_absolute(test_path)
 
 
 func _drop(sc: Node) -> void:

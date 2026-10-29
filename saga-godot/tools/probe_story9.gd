@@ -39,6 +39,7 @@ var _step := 0
 var _fails := 0
 var _v: Variant = null
 var _saved := {}
+var _level_up_callback := Callable()
 
 func _ready() -> void:
 	Weather.force("clear")
@@ -56,8 +57,13 @@ func _physics_process(_delta: float) -> void:
 	match _step:
 		0: # 준비 — 30장 처음, 모험 등급 67
 			_saved = {"story": PartyState.story.duplicate(true), "members": PartyState.members.duplicate(), "exp": PartyState.exp, "level": PartyState.level,
+				"perks": PartyState.perks.duplicate(),
 				"bag": PartyState.bag.duplicate(true), "ar_paid": PartyState.ar_paid, "resolved": EventState.resolved.duplicate(), "pos": _p.global_position,
 				"wq": PartyState.world_quests.duplicate(true), "party_size": PartyState.party_size}
+			var scene := get_tree().current_scene
+			_level_up_callback = Callable(scene, "_on_party_level_up")
+			if _level_up_callback.is_valid() and PartyState.level_up.is_connected(_level_up_callback):
+				PartyState.level_up.disconnect(_level_up_callback) # 전투 보상으로 자동 승급 선택창이 뜨지 않게 격리한다.
 			PartyState.exp = maxf(PartyState.exp, 66.0 * PartyState.EXP_PER_LEVEL)
 			PartyState.level = maxi(PartyState.level, 66)
 			PartyState.ar_paid = maxi(PartyState.ar_paid, PartyState.level + 1)
@@ -329,6 +335,7 @@ func _physics_process(_delta: float) -> void:
 		24: # [24] 초롱(광장) → 32장 끝·동료 초롱
 			if _frame == 1:
 				_v = {"mora": PartyState.count("mora"), "plaza": _flat(_sq.call("npc_pos", "chorong"), _cell("amber", Vector2(4.55, 1.75))) < 0.5}
+				_v["chorong_pos"] = _sq.call("npc_pos", "chorong")
 				_near_npc("chorong")
 			if _frame == 10:
 				_sq.call("interact")
@@ -343,7 +350,7 @@ func _physics_process(_delta: float) -> void:
 			_sq.call("toggle_journal")
 			var ok: bool = int(_sq.call("ch")) == CH32 + 1 and jt.contains("✔ 제32장") and PartyState.count("mora") >= int(_v.mora) + 160000 \
 				and bool(_v.plaza) and PartyState.members.has("story_chorong") and bool(_sq.call("npc_visible", "chorong"))
-			_check("chapter32", ok, "ch=%d mora +%d plaza=%s joined=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), _v.plaza, PartyState.members.has("story_chorong")])
+			_check("chapter32", ok, "ch=%d mora +%d plaza=%s pos=%s joined=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), _v.plaza, _v.chorong_pos, PartyState.members.has("story_chorong")])
 			_next()
 		25:
 			_finish()
@@ -368,11 +375,14 @@ func _finish() -> void:
 	PartyState.party_size = int(_saved.party_size)
 	PartyState.exp = _saved.exp
 	PartyState.level = _saved.level
+	PartyState.perks.assign(_saved.perks)
 	PartyState.bag = _saved.bag
 	PartyState.ar_paid = _saved.ar_paid
 	EventState.resolved.assign(_saved.resolved)
 	PartyState.world_quests = _saved.wq
 	_p.global_position = _saved.pos
+	if _level_up_callback.is_valid() and not PartyState.level_up.is_connected(_level_up_callback):
+		PartyState.level_up.connect(_level_up_callback)
 	print("STORY9_PROBE_DONE fails=%d" % _fails)
 	get_tree().quit()
 
@@ -380,11 +390,16 @@ func _talk(npc: String, want_st: int, name: String, next_region: String, next_ce
 	if _frame == 2 + from * 2:
 		_near_npc(npc)
 	if _frame == 10 + from * 2:
+		_dismiss_prompts() # 이동 뒤 주민 접촉으로 새로 열린 무관한 선택 창도 걷어낸다.
 		_sq.call("interact")
 		_drain()
 	if _frame == 14 + from * 2:
 		var tgt_ok := _flat(_target(), TestMap.world_pos(next_cell.x, next_cell.y, next_region)) < 0.5
-		_check(name, int(_sq.call("st")) == want_st and tgt_ok and extra_ok, "st=%d target=%s %s" % [_sq.call("st"), _target(), extra])
+		var passed := int(_sq.call("st")) == want_st and tgt_ok and extra_ok
+		_check(name, passed, "st=%d target=%s %s" % [_sq.call("st"), _target(), extra])
+		if not passed:
+			_finish()
+			return
 		_next()
 
 ## 그 자리 1.6m 위 반지름 1.2 에 걸리는 충돌(집·탑·명소) — probe_amber 와 같다.
@@ -412,6 +427,7 @@ func _cell(region: String, cell: Vector2) -> Vector3:
 var _pressed: Array = []
 
 func _dismiss_prompts() -> void:
+	_pressed.clear() # 이동 뒤 같은 선택 패널이 다시 떠도 새로 닫을 수 있다.
 	for n in get_tree().get_nodes_in_group("ui_modal"):
 		if n == _sq or n.get("visible") == false or _pressed.has(n):
 			continue

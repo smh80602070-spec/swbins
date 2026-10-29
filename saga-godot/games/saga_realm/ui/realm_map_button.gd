@@ -13,3 +13,7 @@ func _ready() -> void:
 
 func _on_pressed() -> void:
 	RealmSaveState.viewing_map = not RealmSaveState.viewing_map
+	if RealmSaveState.viewing_map:
+		RealmSaveState.tutorial_action("map")
+	if RealmSaveState.viewing_map:
+		RealmSaveState.tutorial_action("map")

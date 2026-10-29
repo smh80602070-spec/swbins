@@ -11,3 +11,4 @@
 1987 saga-web/saga-forest/js/village-view3d.js
 1921 saga-web/saga-go/js/world.js
 1607 saga-godot/tools/probe_story.gd
+1576 saga-godot/games/saga_realm/world/realm_tactics_view.gd

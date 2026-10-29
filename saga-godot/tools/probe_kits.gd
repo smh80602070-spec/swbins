@@ -27,6 +27,7 @@ const Characters := preload("res://saga_core/data/characters.gd")
 const Elements := preload("res://games/saga_go/combat/elements.gd")
 const Weapons := preload("res://games/saga_go/data/weapons.gd")
 const Story := preload("res://games/saga_go/data/story.gd")
+const CombatMotion := preload("res://games/saga_go/combat/combat_motion.gd")
 
 var _p: CharacterBody3D
 var _fc: Node
@@ -93,15 +94,14 @@ func _physics_process(_delta: float) -> void:
 				_a.call("set_aura", "")
 				_fc.set("_attack_t", 0.0)
 				var hit: bool = _fc.call("attack")
-				_v = [burst_ok, _fc.call("infusion_of", "self"), hit, _a.get("aura")]
+				_v = [burst_ok, _fc.call("infusion_of", "self"), hit]
 			if _frame == 50:
+				_v.append(String(_a.get("aura")))
 				_fc.get("_infuse")["self"].left = 0.0
 				_a.call("set_aura", "")
 				_fc.set("_attack_t", 0.0)
 				_fc.call("attack")
-				var ok: bool = bool(_v[0]) and _v[1] == "fire" and bool(_v[2]) and _v[3] == "fire" and _a.get("aura") == "" and _fc.call("infusion_of", "self") == ""
-				_check("self_infuse", ok, "burst=%s inf=%s aura=%s after=%s" % [_v[0], _v[1], _v[3], _a.get("aura")])
-				_next()
+				get_tree().create_timer(_attack_delay()).timeout.connect(_finish_self_infuse)
 		4: # ④ 현책 E 팔괘진 — 바꿔도 남는다
 			if _frame == 1:
 				_use(1)
@@ -292,12 +292,10 @@ func _physics_process(_delta: float) -> void:
 				var e0 := float(_fc.call("energy_of", "self"))
 				_a.call("set_aura", "")
 				_fc.set("_attack_t", 0.0)
-				_fc.call("attack")
-				var ok: bool = ok_b and _fc.call("infusion_of", id) == "thunder" and _a.get("aura") == "thunder" \
-					and is_equal_approx(e2, 10.0) and is_equal_approx(e0, 10.0)
-				_check("thunder_infuse", ok, "%s inf=%s aura=%s e2=%.1f self=%.1f" % [id, _fc.call("infusion_of", id), _a.get("aura"), e2, e0])
-				_fc.get("_infuse").erase(id)
-				_next()
+				var did: bool = _fc.call("attack")
+				_v = [id, ok_b, e2, e0, did]
+				get_tree().create_timer(_attack_delay()).timeout.connect(_finish_thunder_infuse)
+				return
 		18: # ⑱ 인덕 방패 20% · 덩굴 군기 13초
 			var vid := _hero("virtue", "fire")
 			var cid := _hero("command", "grass")
@@ -455,16 +453,7 @@ func _physics_process(_delta: float) -> void:
 				_fc.set("_rain_cd", 0.0)
 				_v.a2 = float(_a.get("hp"))
 				_v.hit = bool(_fc.call("attack"))
-				_v.cd = float(_fc.get("_rain_cd"))
-				_v.again = int(_fc.call("_rain_follow")) # 쉬는 틈 — 안 나감
-				_fc.set("_rain_cd", 0.0)
-				_v.follow = int(_fc.call("_rain_follow")) # a·b 둘 다 8m 안
-				var ok: bool = bool(_v.skill) and float(_v.a1) < float(_v.a) and float(_v.fwd) > 0.9 and String(_v.aura) == "water" and bool(_v.burst) \
-					and absf(float(_fc.get("_rain_t")) - 15.0) < 0.3 and String(_v.bt).contains("뱃노래") and bool(_v.hit) and float(_v.cd) > 0.9 \
-					and int(_v.again) == 0 and int(_v.follow) == 2 and float(_a.get("hp")) < float(_v.a2)
-				_check("ferryman_rain", ok, "a %.0f→%.0f push·dot=%.2f aura=%s rain=%.1f buff='%s' hit=%s cd=%.2f again=%d follow=%d" % [_v.a, _v.a1, _v.fwd, _v.aura, _fc.get("_rain_t"), _v.bt, _v.hit, _v.cd, _v.again, _v.follow])
-				_fc.set("_rain_t", 0.0)
-				_next()
+				get_tree().create_timer(_attack_delay()).timeout.connect(_finish_ferryman_rain)
 		26: # ㉖ 편성 여러 벌
 			if _frame == 1:
 				_v = {"presets": PartyState.presets.duplicate(true), "pi": PartyState.preset_i, "size": PartyState.party_size}
@@ -534,6 +523,38 @@ func _use(index: int) -> void:
 	_fc.set("active", index)
 	(_fc.get("_skill_cd") as Dictionary).clear()
 	(_fc.get("_effects") as Array).clear()
+
+func _attack_delay() -> float:
+	var seconds := {"sword": 0.32, "claymore": 0.55, "polearm": 0.26, "catalyst": 0.34, "bow": 0.30}
+	var id: String = _fc.call("active_id")
+	var ap := _p.get("_anim") as AnimationPlayer
+	return CombatMotion.strike_delay(_p, ap.current_animation, float(seconds[Weapons.type_of(id)])) + 0.08
+
+func _finish_self_infuse() -> void:
+	var ok: bool = bool(_v[0]) and _v[1] == "fire" and bool(_v[2]) and _v[3] == "fire" \
+		and _a.get("aura") == "" and _fc.call("infusion_of", "self") == ""
+	_check("self_infuse", ok, "burst=%s inf=%s aura=%s after=%s" % [_v[0], _v[1], _v[3], _a.get("aura")])
+	_next()
+
+func _finish_thunder_infuse() -> void:
+	var id: String = _v[0]
+	var ok: bool = bool(_v[1]) and bool(_v[4]) and _fc.call("infusion_of", id) == "thunder" and _a.get("aura") == "thunder" \
+		and is_equal_approx(float(_v[2]), 10.0) and is_equal_approx(float(_v[3]), 10.0)
+	_check("thunder_infuse", ok, "%s inf=%s aura=%s e2=%.1f self=%.1f" % [id, _fc.call("infusion_of", id), _a.get("aura"), _v[2], _v[3]])
+	_fc.get("_infuse").erase(id)
+	_next()
+
+func _finish_ferryman_rain() -> void:
+	_v.cd = float(_fc.get("_rain_cd"))
+	_v.again = int(_fc.call("_rain_follow"))
+	_fc.set("_rain_cd", 0.0)
+	_v.follow = int(_fc.call("_rain_follow"))
+	var ok: bool = bool(_v.skill) and float(_v.a1) < float(_v.a) and float(_v.fwd) > 0.9 and String(_v.aura) == "water" and bool(_v.burst) \
+		and absf(float(_fc.get("_rain_t")) - 15.0) < 0.3 and String(_v.bt).contains("뱃노래") and bool(_v.hit) and float(_v.cd) > 0.9 \
+		and int(_v.again) == 0 and int(_v.follow) == 2 and float(_a.get("hp")) < float(_v.a2)
+	_check("ferryman_rain", ok, "a %.0f→%.0f push·dot=%.2f aura=%s rain=%.1f buff='%s' hit=%s cd=%.2f again=%d follow=%d" % [_v.a, _v.a1, _v.fwd, _v.aura, _fc.get("_rain_t"), _v.bt, _v.hit, _v.cd, _v.again, _v.follow])
+	_fc.set("_rain_t", 0.0)
+	_next()
 
 ## trait·원소가 맞는 첫 도감 인물(고유 다섯은 뺀다).
 func _hero(trait_id: String, el: String) -> String:

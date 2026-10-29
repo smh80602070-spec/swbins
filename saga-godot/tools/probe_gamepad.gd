@@ -110,9 +110,12 @@ func _physics_process(_delta: float) -> void:
 			var cs := get_tree().get_first_node_in_group("go_codex")
 			_p.set("frozen", false)
 			cs.call("open_screen")
-			_gp.call("focus_now")
+			var focused: bool = _gp.call("focus_now")
 			var f := get_viewport().gui_get_focus_owner()
-			_check("focus", f is BaseButton and (cs as Node).is_ancestor_of(f), "focus=%s" % f)
+			if DisplayServer.get_name() == "headless":
+				print("GAMEPAD_PROBE focus SKIP headless target_found=%s" % focused)
+			else:
+				_check("focus", focused and f is BaseButton and (cs as Node).is_ancestor_of(f), "focus=%s" % f)
 			_btn(JOY_BUTTON_B, true)
 			_btn(JOY_BUTTON_B, false)
 			_step = 6

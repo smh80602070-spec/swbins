@@ -5,7 +5,11 @@ extends RealmRulesMonth
 const SAVE_PATH := "user://save_realm.json"
 const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
-const SAVE_VERSION := 31  # 30→31(포로: captives, G-0375) · 29→30(국가 방침: focus, G-0336) · 28→29(혼인 동맹: marriages, G-0332) · 27→28(국세: age, G-0329) · 26→27(법령: laws, G-0321) · 25→26(장수 관계망: rel_master, G-0316) · 24→25(교역로: trade, G-0310) · 23→24(불가사의: wonders, G-0243) · 22→23(진·보급선: camps, G-0239) · 21→22(기술 나무: tech, G-0234) · 20→21(AI 세력 경륜도: ai_passive, G-0219) · 19→20(경륜도: passive, G-0216) · 18→19(영내 소식: news, G-0194) · 17→18(격자 전술: officer_hurt/annals, G-0182) · 16→17(이야기 카드: story, G-0088) · 1(성 하나) → 2(성 여러 곳) → 3(officer_city) → 4(enemies) → 5(diplomacy) → 6(정복 성 편입) → 7(충성·계략) → 8(문답) → 9(이간·매수) → 10(인구 증감+재해: cities[].disaster/d_left) → 11(승진/관직: officer_growth) → 12(승패 판정: result) → 13(시나리오: scenario_id) → 14(특성·야망: officer_ambition/enemies_subverted, PLAN 101-2 REALM ③) → 15(이벤트 체인: active_events/events_done, PLAN 101-2 REALM ⑤) → 16(계승: lord_succession_enabled/current_lord_id/heir_id/_succession_shock_until, PLAN 101-2 REALM ⑥)
+const SAVE_VERSION := 32  # 31→32(조조전식 장 흐름 campaign, G-0413) · 30→31(포로: captives, G-0375) · 29→30(국가 방침: focus, G-0336) · 28→29(혼인 동맹: marriages, G-0332) · 27→28(국세: age, G-0329) · 26→27(법령: laws, G-0321) · 25→26(장수 관계망: rel_master, G-0316) · 24→25(교역로: trade, G-0310) · 23→24(불가사의: wonders, G-0243) · 22→23(진·보급선: camps, G-0239) · 21→22(기술 나무: tech, G-0234) · 20→21(AI 세력 경륜도: ai_passive, G-0219) · 19→20(경륜도: passive, G-0216) · 18→19(영내 소식: news, G-0194) · 17→18(격자 전술: officer_hurt/annals, G-0182) · 16→17(이야기 카드: story, G-0088) · 1(성 하나) → 2(성 여러 곳) → 3(officer_city) → 4(enemies) → 5(diplomacy) → 6(정복 성 편입) → 7(충성·계략) → 8(문답) → 9(이간·매수) → 10(인구 증감+재해: cities[].disaster/d_left) → 11(승진/관직: officer_growth) → 12(승패 판정: result) → 13(시나리오: scenario_id) → 14(특성·야망: officer_ambition/enemies_subverted, PLAN 101-2 REALM ③) → 15(이벤트 체인: active_events/events_done, PLAN 101-2 REALM ⑤) → 16(계승: lord_succession_enabled/current_lord_id/heir_id/_succession_shock_until, PLAN 101-2 REALM ⑥)
+var tutorial_done: Array[String] = [] # G-0426 첫 실행 안내. 옛 세이브는 전부 완료.
+
+func tutorial_action(id: String) -> void:
+	preload("res://games/saga_realm/data/tutorial.gd").complete(tutorial_done, id)
 
 
 func save_version() -> int:
@@ -17,6 +21,7 @@ func save_path() -> String:
 
 
 func save() -> bool:
+	tutorial_action("save")
 	var data := {
 		"version": SAVE_VERSION,
 		"scenario_id": scenario_id,
@@ -53,6 +58,7 @@ func save() -> bool:
 		"active_events": active_events,
 		"events_done": events_done,
 		"story": story,   # G-0088
+		"campaign": campaign,   # G-0413
 		"lord_succession_enabled": lord_succession_enabled,
 		"current_lord_id": current_lord_id,
 		"heir_id": heir_id,
@@ -61,6 +67,7 @@ func save() -> bool:
 		"annals": annals,
 		"news": news,   # G-0194
 		"view_region": view_region,   # G-0347 지역 단위 지도 — 순수 추가(버전 그대로)
+		"tutorial_done": tutorial_done,
 	}
 	return SafeFile.write_text(save_path(), JSON.stringify(data))
 
@@ -73,6 +80,7 @@ func try_load() -> bool:
 	if migrated == null:
 		return false
 	var data: Dictionary = migrated
+	tutorial_done = preload("res://saga_core/data/first_run_guide.gd").restore(preload("res://games/saga_realm/data/tutorial.gd").MISSIONS, data.get("tutorial_done", null))
 
 	scenario_id = String(data.get("scenario_id", "194"))
 	if not RealmCities.SCENARIO_CAO_CITIES.has(scenario_id):
@@ -156,6 +164,10 @@ func try_load() -> bool:
 	events_done = loaded_events_done if typeof(loaded_events_done) == TYPE_DICTIONARY else {}
 	var loaded_story: Variant = data.get("story", {})   # G-0088 — 없으면(옛 세이브) 1막 첫 카드부터, 지난 달만큼 밀린 카드가 하나씩
 	story = (loaded_story as Dictionary).duplicate(true) if typeof(loaded_story) == TYPE_DICTIONARY else {}
+	var loaded_campaign: Variant = data.get("campaign", {})
+	campaign = (loaded_campaign as Dictionary).duplicate(true) if typeof(loaded_campaign) == TYPE_DICTIONARY else {"ch": 1, "step": "route", "party": [], "gold": 300, "bag": [], "cleared": {}, "bonus": {}, "tries": 0, "round": 0}
+	if campaign.is_empty():
+		campaign = {"ch": 1, "step": "route", "party": [], "gold": 300, "bag": [], "cleared": {}, "bonus": {}, "tries": 0, "round": 0}
 	lord_succession_enabled = bool(data.get("lord_succession_enabled", false))
 	current_lord_id = String(data.get("current_lord_id", RealmDiplo.LORD_ID))
 	heir_id = String(data.get("heir_id", ""))

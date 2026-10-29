@@ -144,9 +144,18 @@ func _physics_process(_delta: float) -> void:
 ## 보이는 창이 떠 있는가(숨겨 둔 선택지 창은 그룹에 남아 있다 — camera_rig._modal_open 과 같게). 자기 자신은 뺀다.
 func _modal_open() -> bool:
 	for n in get_tree().get_nodes_in_group("ui_modal"):
-		if n != self and n.get("visible") != false:
+		if n != self and _node_is_visible(n):
 			return true
 	return false
+
+func _node_is_visible(node: Node) -> bool:
+	if node is CanvasItem:
+		return (node as CanvasItem).is_visible_in_tree()
+	if node is CanvasLayer:
+		return (node as CanvasLayer).visible
+	if node is Window:
+		return (node as Window).visible
+	return true
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("go_domain"):

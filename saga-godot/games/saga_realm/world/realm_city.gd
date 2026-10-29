@@ -30,6 +30,8 @@ extends Node3D
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
+const RealmCampaign := preload("res://games/saga_realm/data/realm_campaign.gd")
+const RealmCampaignView := preload("res://games/saga_realm/ui/realm_campaign_view.gd")
 
 const COLOR_BASE := Color(0.56, 0.5, 0.4)     # 흙빛 기단
 const COLOR_TOWER := Color(0.68, 0.6, 0.46)   # 누각(망루)
@@ -71,9 +73,12 @@ func _ready() -> void:
 	preload("res://saga_core/audio/bgm_picker.gd").attach(self, func() -> String: return "realm-field" if RealmSaveState.viewing_map else "realm-town")  # 배경음(G-0013) — 지도 화면이면 들판, 성이면 마을
 	## 자동 저장(saga_core/world/autosave_timer.gd) — 60초마다·앱 멈춤 때. 시나리오를 고르는 중에는 안 한다.
 	preload("res://saga_core/world/autosave_timer.gd").attach(self, RealmSaveState.save, func() -> bool: return RealmSaveState.scenario_ready)
-	if not RealmSaveState.try_load():
+	var loaded := RealmSaveState.try_load()
+	if not loaded:
 		RealmSaveState.scenario_ready = false
 		_show_scenario_picker()
+	elif RealmCampaign.enabled():
+		RealmCampaignView.attach(self)
 	RealmSaveState.begin_session()
 	## G-0088 이야기 카드 엔진(scenario_runner.gd) — 시나리오를 고른 뒤·다른 창이 없을 때 뜬다.
 	_scenario = preload("res://games/saga_realm/world/scenario_runner.gd").new()
@@ -92,6 +97,10 @@ func _ready() -> void:
 	_workers = preload("res://games/saga_realm/world/realm_city_workers.gd").new()
 	_workers.name = "Workers"
 	add_child(_workers)
+	if OS.get_environment("SAGA_TUTORIAL_PROBE") == "1":
+		var probe := preload("res://tools/probe_tutorial.gd").new()
+		add_child(probe)
+		probe.setup("realm")
 
 
 func _show_scenario_picker() -> void:
@@ -110,16 +119,19 @@ func _show_scenario_picker() -> void:
 func _pick_scenario(id: String, layer_box: Dictionary) -> void:
 	(layer_box["layer"] as CanvasLayer).queue_free()
 	RealmSaveState.start_scenario(id)
+	if RealmCampaign.enabled():
+		RealmCampaignView.attach(self)
 
 
 ## **2026-09-12 추가 — 월드맵과 화면을 나눠 쓴다.** RealmSaveState.
 ## viewing_map이 켜지면(realm_map_button.gd) 이 디오라마를 숨기고 리빌드도
 ## 건너뛴다 — realm_worldmap.gd가 대신 보인다.
 func _process(_delta: float) -> void:
-	visible = not RealmSaveState.viewing_map
+	visible = not RealmSaveState.viewing_map and not RealmCampaign.enabled()
 	if visible:
 		_rebuild_if_changed()
-	_refresh_goal_board()
+	if not RealmCampaign.enabled():
+		_refresh_goal_board()
 
 
 ## saga_core/ui/goal_board.gd는 RealmSaveState·RealmCities를 모른다(GO
@@ -144,6 +156,9 @@ func _refresh_goal_board() -> void:
 	var story: String = _scenario.call("objective") if _scenario != null else ""
 	if story != "":
 		now = story + " · " + now   # G-0088 이야기 다음 카드 먼저
+	var guide_line: String = preload("res://games/saga_realm/data/tutorial.gd").line(RealmSaveState.tutorial_done)
+	if guide_line != "":
+		now = guide_line
 	var week := _closest_victory_progress()
 	board.set_goals(now, session, week)
 

@@ -77,6 +77,11 @@ func _run_order(key: String, name_: String, debate_mul: float = 1.0, debate_corr
 	if not r.get("ok", false):
 		Toast.show(self, "%s — %s" % [name_, r.get("why", "실패")], TOAST_SEC)
 		return
+	if key == "hire":
+		if not String(r.get("hired", "")).is_empty():
+			RealmSaveState.tutorial_action("hire")
+	elif key != "search":
+		RealmSaveState.tutorial_action("order")
 
 	var prefix := "🗣️ 설전 %d/3 정답 — " % debate_correct if debate_correct >= 0 else ""
 	var msg: String

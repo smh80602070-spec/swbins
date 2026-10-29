@@ -33,6 +33,7 @@ const Weapons := preload("res://games/saga_go/data/weapons.gd")
 const Kits := preload("res://games/saga_go/data/kits.gd")
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const AimedShot := preload("res://games/saga_go/combat/aimed_shot.gd")
+const CombatMotion := preload("res://games/saga_go/combat/combat_motion.gd")
 const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 const GoStarchart := preload("res://games/saga_go/data/go_starchart.gd")   # G-0215 성도
 const FieldAssist := preload("res://games/saga_go/combat/field_assist.gd")
@@ -571,44 +572,24 @@ func attack() -> bool:
 	var step := _combo
 	_combo = (_combo + 1) % (kit.mul as Array).size()
 	_combo_link = COMBO_LINK_SEC
-	_attack_t = kit.sec[step]
-	FeelTuning.kind = "finisher" if step > 0 and step == (kit.mul as Array).size() - 1 else "normal"
 	_aim_at_nearest()
-	_player.call("play_action", "attack", kit.sec[step], 0.25)
+	var weapon_type := Weapons.type_of(active_id())
+	var clip := CombatMotion.combo_animation(weapon_type, step)
+	_player.call("play_action", clip, kit.sec[step], 0.25)
+	_attack_t = maxf(kit.sec[step], float(_player.get("_action_t")))
 	Voice.say("shout", active_id())   # G-0111 — 가끔(확률·간격은 voice.gd)
 	var amount: float = _normal_atk() * float(kit.mul[step])
-	var hits := 0
-	_crit_id = active_id()
-	if kit.has("range"):
-		## 법구·활 — 멀리 있는 적 하나. 법구는 인물 원소로 친다(원신 법구 기본 공격 문법).
-		var target := _nearest(_player.global_position, float(kit.range), 1)
-		if not target.is_empty():
-			var e: Node3D = target[0]
-			_player.call("face_toward", e.global_position)
-			var el := active_element() if kit.get("elemental", false) else _normal_el()
-			_shot_fx(e.global_position, Elements.color_of(el) if el != "" else Color(0.95, 0.9, 0.7))
-			_deal(e, amount, el, e.global_position - _player.global_position)
-			hits = 1
-		else:
-			## 106장 ㊵ — 둘레에 적이 없으면 사거리 안 가장 가까운 과녁을 친다(과녁 퍼즐을 법구로도).
-			var t := nearest_target(float(kit.range))
-			if t:
-				_player.call("face_toward", t.global_position)
-				var tel := active_element() if kit.get("elemental", false) else _normal_el()
-				_shot_fx(t.call("center") - Vector3.UP * 0.8, Elements.color_of(tel) if tel != "" else Color(0.95, 0.9, 0.7))
-				t.call("strike", tel)
-	else:
-		_heavy = kit.get("heavy", false)
-		## 09-28 베기 궤적(combat_fx.gd) — 원소가 붙은 공격이면 그 원소 색.
-		var nel := _normal_el()
-		CombatFx.slash(_player, _player.call("facing"), float(kit.reach), Elements.color_of(nel) if nel != "" else CombatFx.PHYSICAL, step, _heavy)
-		hits = _hit_front(float(kit.reach), float(kit.arc), amount, nel)
-		_heavy = false
-	_crit_id = ""
-	if hits > 0:
-		_gain_energy(ENERGY_PER_HIT * hits)
-		_rain_follow()
+	var attacker_id := active_id()
+	var element := active_element() if kit.get("elemental", false) else _normal_el()
+	var delay := CombatMotion.strike_delay(_player, clip, kit.sec[step])
+	get_tree().create_timer(delay).timeout.connect(_resolve_normal_attack.bind(step, amount, attacker_id, element, kit.duplicate()))
 	return true
+
+## G-0412 — 피해·궤적·히트스톱이 모캡 팔 각속도 피크 메타데이터 시각에 맞는다.
+func _resolve_normal_attack(step: int, amount: float, attacker_id: String, element: String, kit: Dictionary) -> void:
+	if not is_instance_valid(_player):
+		return
+	CombatMotion.resolve_attack(self, _player, step, amount, attacker_id, element, kit, ENERGY_PER_HIT)
 
 ## 강공격 — 기본 공격 단추를 CHARGE_SEC 넘게 누르고 있으면. 앞쪽 넓게 한 번, 스태미나를 쓴다.
 func charged_attack() -> bool:
@@ -617,9 +598,9 @@ func charged_attack() -> bool:
 	FeelTuning.kind = "heavy"   # G-0118 — 실패하면 안 바꾼다(남으면 그 프레임 다른 타격이 강공격 손맛으로 나감)
 	_player.call("_spend", CHARGE_COST)
 	_combo = 0
-	_attack_t = 0.5
 	_aim_at_nearest()
-	_player.call("play_action", "strong", 0.5, 0.0)   # G-0284 강공격 = 모캡 내리찍기(없으면 play_action 이 attack 으로)
+	_player.call("play_action", CombatMotion.combo_animation(Weapons.type_of(active_id()), 0, true), 0.5, 0.0) # G-0412 무기 강공 모캡
+	_attack_t = maxf(0.5, float(_player.get("_action_t")))
 	_ring_fx(_player.global_position + _player.call("facing") * 1.2, 1.8, Color(0.95, 0.95, 0.85), 0.3)
 	_heavy = true
 	_crit_id = active_id()

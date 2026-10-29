@@ -28,6 +28,8 @@ func _initialize() -> void:
 	var GA: GDScript = load("res://games/saga_dungeon/ui/goals_adapter.gd")
 	var G: Node = root.get_node("DungeonGoldState")
 	var gold0: int = G.gold
+	var Save: Node = root.get_node("DungeonSaveState")
+	var pending0: int = Save.bounty_pending_gold
 
 	# ① pick
 	var seen := {}
@@ -81,10 +83,16 @@ func _initialize() -> void:
 	var act: Array = B.get("active")
 	(act[0] as Dictionary).done = true   # 하나는 채운 셈
 	var g1: int = G.gold
+	var pending_before: int = Save.bounty_pending_gold
 	var fin: Dictionary = DR.finish(false)
 	var got_gold: int = G.gold - g1
+	var pending_added: int = int(Save.bounty_pending_gold) - pending_before
 	var tx: String = DR.text(fin) if not fin.is_empty() else ""
-	check(act.size() == 3 and got_gold >= B.GOLD_PER and (fin.is_empty() or tx.contains("📜 현상금")), "④ 고리: begin 셋·finish 덤 금 +%d·글 %s" % [got_gold, tx.contains("📜")])
+	var claimed: int = Save.claim_bounty_gold()
+	var duplicate_claim: int = Save.claim_bounty_gold()
+	var rank_bonus := int(fin.get("bonus_gold", 0))
+	var bounty_text: String = B.text({"done": 1, "of": 3, "gold": 450})
+	check(act.size() == 3 and got_gold == rank_bonus and pending_added >= B.GOLD_PER and claimed == pending_added and duplicate_claim == 0 and G.gold - g1 == rank_bonus + claimed and (fin.is_empty() or tx.contains("📜 현상금")) and bounty_text.contains("받을 금 +450"), "④ 고리: 현상금 미수령(+%d) · 등급 덤 +%d 유지 · 한 번 받음(+%d) · 중복 0 · 결과 문구 받기" % [pending_added, rank_bonus, claimed])
 
 	# ⑤ 어댑터
 	B.begin(1, 3)
@@ -92,6 +100,12 @@ func _initialize() -> void:
 	root.add_child(hud)
 	var m: Dictionary = GA.model(hud)
 	check((m.today as Array).size() == 3 and String(m.title).begins_with("이번 판 현상금"), "⑤ 「오늘」 위 칸 현상금 셋(%d)" % (m.today as Array).size())
+	Save.bounty_pending_gold = 75
+	m = GA.model(hud)
+	var claim: Dictionary = m.get("claim", {})
+	if claim.get("take", Callable()).is_valid():
+		claim.take.call()
+	check(bool(claim.get("ready", false)) and G.gold == gold0 + claimed + 75 and Save.bounty_pending_gold == 0, "⑤ 받기 단추가 미수령 금을 한 번 지급")
 	hud.queue_free()
 
 	# ⑥ 손잡이
@@ -99,5 +113,6 @@ func _initialize() -> void:
 
 	B.set("active", [])
 	G.set("gold", gold0)
+	Save.bounty_pending_gold = pending0
 	print("PROBE dungeon_bounty ", "OK" if fails == 0 else "FAIL %d" % fails)
 	quit(1 if fails > 0 else 0)

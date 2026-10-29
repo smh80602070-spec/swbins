@@ -14,6 +14,8 @@ extends Node
 const Elements := preload("res://games/saga_go/combat/elements.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
+const Weapons := preload("res://games/saga_go/data/weapons.gd")
+const CombatMotion := preload("res://games/saga_go/combat/combat_motion.gd")
 
 var _p: CharacterBody3D
 var _fc: Node
@@ -23,11 +25,22 @@ var _fails := 0
 var _target: Node = null
 var _exp0 := 0.0
 var _hp0 := 0.0
+var _motion_hp_before := 0.0
+var _motion_hitstop_before := 0
+var _motion_hitstop_count := 0
+var _motion_hitstop_scale := 1.0
+var _motion_phase := 0
+var _motion_base_frame := 0
 var _members0: Array[String] = []
 
 func _ready() -> void:
 	Weather.force("clear")
 	_p = get_tree().get_first_node_in_group("player")
+	CombatFeel.hitstop_triggered.connect(_on_motion_hitstop)
+
+func _on_motion_hitstop(_dur_ms: int) -> void:
+	_motion_hitstop_count += 1
+	_motion_hitstop_scale = Engine.time_scale
 
 func _physics_process(_delta: float) -> void:
 	_frame += 1
@@ -77,13 +90,13 @@ func _physics_process(_delta: float) -> void:
 			_fc.call("_deal", e, 20.0, "fire", Vector3.FORWARD)
 			_check("overload", _fc.get("last_reaction") == "overload" and float(o.get("hp")) < hp_before, "other %.1f→%.1f" % [hp_before, float(o.get("hp"))])
 			_next()
-		4: # ⑥ 감전 — 2초 동안 체력이 계속 준다
+		4: # ⑥ 감전 — 히트스톱이 섞인 앞선 검사 뒤에도 전기 틱 네 번이 지나도록 기다린다
 			if _frame == 1:
 				_target = _enemy_near(TestMap.world_pos(9, 5))
 				_target.call("set_aura", "water")
 				_fc.call("_deal", _target, 10.0, "thunder", Vector3.FORWARD)
 				_hp0 = _target.get("hp")
-			if _frame == 150:
+			if _frame == 210:
 				var hp: float = _target.get("hp")
 				_check("electro_dot", _hp0 - hp > 10.0, "hp %.1f→%.1f" % [_hp0, hp])
 				_next()
@@ -257,6 +270,97 @@ func _physics_process(_delta: float) -> void:
 				_fc.call("revive_all")
 				_next()
 		17:
+			if _frame == 1:
+				# G-0412 재현: 공격 대상 하나만 지정해 놓고 HP를 확인했던 이전 점검을
+				# 자동 조준과 분리한다. 다른 적은 모두 멀리 옮겨 선택 혼선을 없앤다.
+				## G-0412 — 이 검사에서는 G-0343 대치의 평타 가로채기를 끈다.
+				## 대치 자체는 별도 probe_standoff 에서 검사한다.
+				var standoff := _fc.get_node_or_null("FieldStandoff")
+				if standoff != null:
+					standoff.call("_end", false)
+					standoff.set_physics_process(false)
+				# 적 WINDUP 과 겹치면 패리가 attack() 을 소비하므로 이 격리 시나리오에서 제거.
+				var parry := _fc.get_node_or_null("FieldParry")
+				if parry != null:
+					parry.get_parent().remove_child(parry)
+					parry.queue_free()
+				var pole := ""
+				for h in Characters.HEROES:
+					if Weapons.type_of(h.id) == "polearm":
+						pole = h.id
+						break
+				_members0 = PartyState.members.duplicate()
+				PartyState.members.assign([pole])
+				PartyState.add_weapon("w_polearm_4")
+				PartyState.equip_weapon(pole, "w_polearm_4")
+				_fc.set("active", 0)
+				_fc.call("switch_to", 1, true) # 실제 몸도 장병기 인물로 바꿔 애니메이션 라이브러리를 확인
+				_motion_phase = 0
+				_motion_base_frame = _frame
+				_fc.set("_attack_t", 0.0)
+				var ap := _p.get("_anim") as AnimationPlayer
+				_check("combat_lib_attached", ap.has_animation("combat/spear_1"), "libs=%s" % [ap.get_animation_library_list()])
+				var fc_player := _fc.get("_player") as Node
+				_check("combat_actor_match", fc_player.get_instance_id() == _p.get_instance_id(), "mapping=%s body=%s" % [CombatMotion.combo_animation(Weapons.type_of(_fc.call("active_id")), 0), _p.get("_body_id")])
+				_target = _plain_enemies(1)[0]
+				for e in get_tree().get_nodes_in_group("field_enemy"):
+					if e != _target and not e.call("is_dead"):
+						(e as Node3D).global_position += Vector3(1000.0, 0.0, 0.0)
+				# 기본 방향(+Z) 앞에 둬 회전 보간 상태와 타격 판정을 섞지 않는다.
+				(_target as Node3D).global_position = _p.global_position + Vector3(0.0, 0.0, 2.0)
+				_target.set("max_hp", 99999.0)
+				_target.set("hp", 99999.0)
+				_target.call("unfreeze")
+				_target.set_physics_process(false)
+				_p.call("face_toward", (_target as Node3D).global_position)
+				_fc.set("_combo", 0)
+			var clips := {30: "combat/spear_1", 70: "combat/spear_2", 110: "combat/spear_heavy"}
+			var combo_prefix := "polearm"
+			if _motion_phase == 1:
+				clips = {30: "combat/attack", 70: "combat/sword_2", 110: "combat/sword_3"}
+				combo_prefix = "companion_sword"
+			elif _motion_phase == 2:
+				clips = {30: "combat/attack", 70: "combat/sword_2", 110: "combat/sword_3"}
+				combo_prefix = "self_sword"
+			var offset := _frame - _motion_base_frame
+			if clips.has(offset):
+				_motion_hp_before = float(_target.get("hp"))
+				var combo_index := clips.keys().find(offset)
+				_motion_hitstop_before = _motion_hitstop_count
+				var accepted: bool = _fc.call("attack")
+				var played := String((_p.get("_anim") as AnimationPlayer).current_animation)
+				_check("%s_combo_%d" % [combo_prefix, combo_index + 1], accepted and played == clips[offset],
+					"accepted=%s anim=%s want=%s actor=%s available=%s" % [accepted, played, clips[offset], _fc.call("active_id"), (_p.get("_anim") as AnimationPlayer).has_animation(clips[offset])])
+				_check("%s_delay_%d" % [combo_prefix, combo_index + 1], is_equal_approx(float(_target.get("hp")), _motion_hp_before), "impact deferred until strike frame")
+			var impacts := {57: 1, 97: 2, 137: 3}
+			if impacts.has(offset):
+				var after := float(_target.get("hp"))
+				_check("%s_impact_%d" % [combo_prefix, impacts[offset]], after < _motion_hp_before,
+					"hp=%.1f->%.1f" % [_motion_hp_before, after])
+				_check("%s_hitstop_%d" % [combo_prefix, impacts[offset]], _motion_hitstop_count > _motion_hitstop_before and is_equal_approx(_motion_hitstop_scale, 0.05),
+					"signals=%d scale=%.2f" % [_motion_hitstop_count - _motion_hitstop_before, _motion_hitstop_scale])
+			if offset == 138:
+				if _motion_phase == 0:
+					_motion_phase = 1
+					_motion_base_frame = _frame
+					PartyState.members.assign(["sg_xiahoudun"])
+					PartyState.add_weapon("w_sword_0")
+					PartyState.equip_weapon("sg_xiahoudun", "w_sword_0")
+					_fc.call("switch_to", 0, true)
+					_fc.call("switch_to", 1, true)
+					_fc.set("_combo", 0)
+					_fc.set("_attack_t", 0.0)
+				elif _motion_phase == 1:
+					_motion_phase = 2
+					_motion_base_frame = _frame
+					_fc.call("switch_to", 0, true)
+					_fc.set("_combo", 0)
+					_fc.set("_attack_t", 0.0)
+				else:
+					PartyState.members.assign(_members0)
+					_fc.set("active", 0)
+					_next()
+		18:
 			print("COMBAT_PROBE_DONE fails=%d" % _fails)
 			get_tree().quit()
 

@@ -224,6 +224,7 @@ func _on_body_exited(body: Node3D, v: Dictionary) -> void:
 ## 매긴다(어느 분기로 빠지든 하루에 한 번). 세배·부탁 완수 분기는 §5.4가
 ## 딸린 값(+2 각각)을 그대로 더한다.
 func _talk(v: Dictionary) -> void:
+	ForestSaveState.tutorial_action("talk")
 	Voice.say("greet", String(v.id))   # G-0111 — 주민 인사 한 마디
 	_gesture(v)
 	if not ForestSaveState.talked_today(v.id):

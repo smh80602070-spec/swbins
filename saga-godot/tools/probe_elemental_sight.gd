@@ -22,6 +22,16 @@ var _n0 := 0
 
 func _ready() -> void:
 	Weather.force("clear")
+	_hide_probe_modals()
+
+## 세이브의 주민 퀘스트 창이 원소 시야 측정을 가리지 않게 숨긴다.
+## ui_modal 등록은 남겨 숨은 모달 차단 판정도 함께 검증한다.
+func _hide_probe_modals() -> void:
+	for modal in get_tree().get_nodes_in_group("ui_modal"):
+		if modal is CanvasLayer:
+			(modal as CanvasLayer).hide()
+		elif modal is CanvasItem:
+			(modal as CanvasItem).hide()
 
 func _physics_process(_delta: float) -> void:
 	_frame += 1
@@ -29,6 +39,8 @@ func _physics_process(_delta: float) -> void:
 		_p = get_tree().get_first_node_in_group("player")
 		_s = get_tree().get_first_node_in_group("go_elemental_sight")
 		return
+	if _step == 1:
+		_hide_probe_modals() # 상자 위치로 이동하며 NPC가 연 선택 창도 측정 동안 닫아 둔다.
 	match _step:
 		0: # ① 입력
 			var keys := false

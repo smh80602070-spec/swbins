@@ -15,6 +15,7 @@ const Elements := preload("res://games/saga_go/combat/elements.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
+const CombatMotion := preload("res://games/saga_go/combat/combat_motion.gd")
 
 var _p: CharacterBody3D
 var _fc: Node
@@ -26,6 +27,9 @@ var _e: Node = null
 var _kit_i := 0
 var _kit_ok := true
 var _kit_detail := ""
+var _kit_waiting := false
+var _kit_setup_needed := true
+var _player_was_frozen := false
 
 func _ready() -> void:
 	Weather.force("clear")
@@ -33,6 +37,11 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	_frame += 1
+	if _step == 5 and _p != null:
+		_p.velocity = Vector3.ZERO
+		_p.set("auto_dir", Vector3.ZERO)
+		for joystick in get_tree().get_nodes_in_group("virtual_joystick"):
+			joystick.set("value", Vector2.ZERO)
 	if _fc == null:
 		_fc = get_tree().get_first_node_in_group("go_field_combat")
 		if _fc:
@@ -98,36 +107,46 @@ func _physics_process(_delta: float) -> void:
 			if _frame == 1:
 				_kit_i = 0
 				_e = _plain_enemy()
+				_player_was_frozen = bool(_p.get("frozen"))
+				for action in ["move_left", "move_right", "move_forward", "move_back", "run"]:
+					Input.action_release(action)
 				## 둘레에 다른 적이 없는 포구 모래밭으로 옮긴다(활·법구가 더 가까운 무리 동료를 겨누지 않게).
 				var spot := TestMap.world_pos(3, 4, "coast")
 				spot.y = TerrainBuilder.height_at("coast", spot) + 0.3
 				(_e as Node3D).global_position = spot
 				_e.set("home", spot)
+				for other in get_tree().get_nodes_in_group("field_enemy"):
+					if other != _e and not other.call("is_dead"):
+						(other as Node3D).global_position += Vector3(1000.0, 0.0, 0.0)
+						other.set_physics_process(false)
 			if _kit_i < cases.size():
 				var c: Array = cases[_kit_i]
-				if _frame % 12 == 1:
-					var need_el := "attach" if c[0] == "catalyst" else ""
-					PartyState.members.assign([_hero_of_type(c[0], need_el)])
-					_fc.set("active", 0)
-					_fc.call("switch_to", 1, true)
-					_prep(_e)
-					var ep: Vector3 = (_e as Node3D).global_position
-					_p.global_position = ep + Vector3(0, 0.3, float(c[1]))
-					_p.velocity = Vector3.ZERO
-					_p.call("face_toward", ep)
-				if _frame % 12 == 9:
-					_fc.set("_attack_t", 0.0)
-					var hp0 := float(_e.get("hp"))
-					_fc.call("attack")
-					var hit := float(_e.get("hp")) < hp0
-					var aura_ok := true
-					if c[0] == "catalyst":
-						aura_ok = _e.get("aura") == _fc.call("active_element")
-					if hit != bool(c[2]) or not aura_ok:
-						_kit_ok = false
-						_kit_detail += "%s@%.1f hit=%s aura=%s " % [c[0], c[1], hit, _e.get("aura")]
-					_kit_i += 1
+				if not _kit_waiting:
+					if _kit_setup_needed:
+						_p.set("frozen", false)
+						var need_el := "attach" if c[0] == "catalyst" else ""
+						PartyState.members.assign([_hero_of_type(c[0], need_el)])
+						_fc.set("active", 0)
+						_fc.call("switch_to", 1, true)
+						_prep(_e)
+						var ep: Vector3 = (_e as Node3D).global_position
+						_p.global_position = ep + Vector3(0, 0.3, float(c[1]))
+						_p.velocity = Vector3.ZERO
+						_p.call("face_toward", ep)
+						_p.set("frozen", true)
+						_kit_setup_needed = false
+					else:
+						_fc.set("_attack_t", 0.0)
+						var hp0 := float(_e.get("hp"))
+						var start_gap := _p.global_position.distance_to((_e as Node3D).global_position)
+						var accepted: bool = _fc.call("attack")
+						var delays := {"sword": 0.32, "claymore": 0.55, "polearm": 0.26, "catalyst": 0.34, "bow": 0.30}
+						var ap := _p.get("_anim") as AnimationPlayer
+						var delay := CombatMotion.strike_delay(_p, ap.current_animation, float(delays[c[0]]))
+						_kit_waiting = true
+						get_tree().create_timer(delay + 0.05).timeout.connect(_finish_weapon_kit_case.bind(c, hp0, accepted, start_gap))
 			else:
+				_p.set("frozen", _player_was_frozen)
 				_check("weapon_kits", _kit_ok, _kit_detail)
 				_next()
 		6: # ⑦ 치명타
@@ -228,6 +247,18 @@ func _prep(e: Node) -> void:
 	e.set("hp", 99999.0)
 	e.call("set_aura", "")
 	e.call("unfreeze")
+	e.set_physics_process(false)
+
+func _finish_weapon_kit_case(c: Array, hp0: float, accepted: bool, start_gap: float) -> void:
+	var hit := float(_e.get("hp")) < hp0
+	var aura_ok: bool = c[0] != "catalyst" or _e.get("aura") == _fc.call("active_element")
+	if not accepted or hit != bool(c[2]) or not aura_ok:
+		_kit_ok = false
+		var gap := _p.global_position.distance_to((_e as Node3D).global_position)
+		_kit_detail += "%s@%.1f accepted=%s hit=%s aura=%s hp=%.1f→%.1f gap=%.2f→%.2f anim=%s " % [c[0], c[1], accepted, hit, _e.get("aura"), hp0, _e.get("hp"), start_gap, gap, (_p.get("_anim") as AnimationPlayer).current_animation]
+	_kit_i += 1
+	_kit_waiting = false
+	_kit_setup_needed = true
 
 func _check(name: String, ok: bool, detail: String) -> void:
 	if not ok:

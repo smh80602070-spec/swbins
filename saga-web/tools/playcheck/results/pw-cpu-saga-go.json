@@ -1,191 +1,191 @@
 {
  "game": "saga-go",
- "at": "2026-10-23T20:25:31.723Z",
+ "at": "2026-10-27T08:44:56.771Z",
  "gpu": "ANGLE (AMD, Radeon Pro 570X (0x000067DF) Direct3D11 vs_5_0 ps_5_0, D3D11)",
  "throttle": 4,
  "sec": 4,
  "scene": 1,
  "runs": 1,
- "totalMs": 7600,
+ "totalMs": 5458,
  "rows": [
   {
    "key": "(program) @",
    "fn": "(program) @ [:-1:-1]",
-   "ms": 3480,
-   "pct": 45.8
+   "ms": 2465,
+   "pct": 45.2
   },
   {
    "key": "getImageData @",
    "fn": "getImageData @ [:-1:-1]",
-   "ms": 723,
-   "pct": 9.5
+   "ms": 620,
+   "pct": 11.4
   },
   {
    "key": "restore @",
    "fn": "restore @ [:-1:-1]",
-   "ms": 267,
-   "pct": 3.5
+   "ms": 242,
+   "pct": 4.4
   },
   {
    "key": "drawImage @",
    "fn": "drawImage @ [:-1:-1]",
-   "ms": 237,
-   "pct": 3.1
-  },
-  {
-   "key": "ge @js/mode2d.js",
-   "fn": "ge @js/mode2d.js [app.js:58:9393]",
-   "ms": 224,
-   "pct": 2.9
-  },
-  {
-   "key": "copy @js/vendor/three.iife.js",
-   "fn": "copy @js/vendor/three.iife.js [app.js:195:84461]",
-   "ms": 133,
-   "pct": 1.8
-  },
-  {
-   "key": "toJSON @js/vendor/three.iife.js",
-   "fn": "toJSON @js/vendor/three.iife.js [app.js:195:123410]",
-   "ms": 126,
-   "pct": 1.7
-  },
-  {
-   "key": "We @js/mode2d.js",
-   "fn": "We @js/mode2d.js [app.js:58:3131]",
-   "ms": 110,
-   "pct": 1.5
-  },
-  {
-   "key": "fill @",
-   "fn": "fill @ [:-1:-1]",
-   "ms": 98,
-   "pct": 1.3
-  },
-  {
-   "key": "on @js/core.js",
-   "fn": "on @js/core.js [app.js:64:6720]",
-   "ms": 91,
-   "pct": 1.2
-  },
-  {
-   "key": "qe @js/mode2d.js",
-   "fn": "qe @js/mode2d.js [app.js:58:8801]",
-   "ms": 87,
-   "pct": 1.2
-  },
-  {
-   "key": "S @js/toon3d.js",
-   "fn": "S @js/toon3d.js [app.js:4111:250]",
-   "ms": 93,
-   "pct": 1.2
-  },
-  {
-   "key": "(garbage collector) @",
-   "fn": "(garbage collector) @ [:-1:-1]",
-   "ms": 76,
-   "pct": 1
-  },
-  {
-   "key": "applyBoneTransform @js/vendor/three.iife.js",
-   "fn": "applyBoneTransform @js/vendor/three.iife.js [app.js:4029:62729]",
-   "ms": 79,
-   "pct": 1
+   "ms": 234,
+   "pct": 4.3
   },
   {
    "key": "getBoundingClientRect @",
    "fn": "getBoundingClientRect @ [:-1:-1]",
-   "ms": 61,
-   "pct": 0.8
+   "ms": 143,
+   "pct": 2.6
   },
   {
-   "key": "x @js/sprite.js",
-   "fn": "x @js/sprite.js [app.js:52:26763]",
-   "ms": 63,
-   "pct": 0.8
-  },
-  {
-   "key": "save @",
-   "fn": "save @ [:-1:-1]",
-   "ms": 61,
-   "pct": 0.8
-  },
-  {
-   "key": "ellipse @",
-   "fn": "ellipse @ [:-1:-1]",
-   "ms": 62,
-   "pct": 0.8
-  },
-  {
-   "key": "multiplyMatrices @js/vendor/three.iife.js",
-   "fn": "multiplyMatrices @js/vendor/three.iife.js [app.js:195:66021]",
-   "ms": 64,
-   "pct": 0.8
-  },
-  {
-   "key": "fromBufferAttribute @js/vendor/three.iife.js",
-   "fn": "fromBufferAttribute @js/vendor/three.iife.js [app.js:195:36569]",
-   "ms": 63,
-   "pct": 0.8
-  },
-  {
-   "key": "getX @js/vendor/three.iife.js",
-   "fn": "getX @js/vendor/three.iife.js [app.js:4029:54114]",
-   "ms": 48,
-   "pct": 0.6
-  },
-  {
-   "key": "Mr @js/mode2d.js",
-   "fn": "Mr @js/mode2d.js [app.js:58:25224]",
-   "ms": 36,
-   "pct": 0.5
-  },
-  {
-   "key": "getY @js/vendor/three.iife.js",
-   "fn": "getY @js/vendor/three.iife.js [app.js:4029:54223]",
-   "ms": 39,
-   "pct": 0.5
-  },
-  {
-   "key": "Zt @js/world.js",
-   "fn": "Zt @js/world.js [app.js:4077:22445]",
-   "ms": 30,
-   "pct": 0.4
-  },
-  {
-   "key": "N @js/mode2d.js",
-   "fn": "N @js/mode2d.js [app.js:58:11420]",
-   "ms": 27,
-   "pct": 0.4
+   "key": "Ce @js/mode2d.js",
+   "fn": "Ce @js/mode2d.js [app.js:58:9405]",
+   "ms": 141,
+   "pct": 2.6
   },
   {
    "key": "v @js/world-terrain.js",
-   "fn": "v @js/world-terrain.js [app.js:4071:622]",
-   "ms": 31,
-   "pct": 0.4
+   "fn": "v @js/world-terrain.js [app.js:4083:622]",
+   "ms": 51,
+   "pct": 0.9
+  },
+  {
+   "key": "on @js/core.js",
+   "fn": "on @js/core.js [app.js:64:6732]",
+   "ms": 51,
+   "pct": 0.9
+  },
+  {
+   "key": "b @js/field-combat.js",
+   "fn": "b @js/field-combat.js [app.js:4392:67832]",
+   "ms": 44,
+   "pct": 0.8
+  },
+  {
+   "key": "(idle) @",
+   "fn": "(idle) @ [:-1:-1]",
+   "ms": 41,
+   "pct": 0.8
+  },
+  {
+   "key": "h @js/world-terrain.js",
+   "fn": "h @js/world-terrain.js [app.js:4083:878]",
+   "ms": 44,
+   "pct": 0.8
+  },
+  {
+   "key": "qr @js/world.js",
+   "fn": "qr @js/world.js [app.js:4089:24229]",
+   "ms": 37,
+   "pct": 0.7
   },
   {
    "key": "set innerHTML @",
    "fn": "set innerHTML @ [:-1:-1]",
-   "ms": 27,
-   "pct": 0.4
+   "ms": 40,
+   "pct": 0.7
   },
   {
-   "key": "T @js/toon3d.js",
-   "fn": "T @js/toon3d.js [app.js:4111:874]",
+   "key": "save @",
+   "fn": "save @ [:-1:-1]",
+   "ms": 34,
+   "pct": 0.6
+  },
+  {
+   "key": "$e @js/mode2d.js",
+   "fn": "$e @js/mode2d.js [app.js:58:3138]",
+   "ms": 35,
+   "pct": 0.6
+  },
+  {
+   "key": "na @js/world.js",
+   "fn": "na @js/world.js [app.js:4089:30060]",
+   "ms": 26,
+   "pct": 0.5
+  },
+  {
+   "key": "draw @js/world.js",
+   "fn": "draw @js/world.js [app.js:4089:25890]",
+   "ms": 27,
+   "pct": 0.5
+  },
+  {
+   "key": "fill @",
+   "fn": "fill @ [:-1:-1]",
    "ms": 30,
+   "pct": 0.5
+  },
+  {
+   "key": "(garbage collector) @",
+   "fn": "(garbage collector) @ [:-1:-1]",
+   "ms": 29,
+   "pct": 0.5
+  },
+  {
+   "key": "K @js/core.js",
+   "fn": "K @js/core.js [app.js:64:986]",
+   "ms": 20,
    "pct": 0.4
   },
   {
    "key": "getItem @",
    "fn": "getItem @ [:-1:-1]",
+   "ms": 20,
+   "pct": 0.4
+  },
+  {
+   "key": "ellipse @",
+   "fn": "ellipse @ [:-1:-1]",
    "ms": 22,
+   "pct": 0.4
+  },
+  {
+   "key": "de @js/mode2d.js",
+   "fn": "de @js/mode2d.js [app.js:58:20029]",
+   "ms": 21,
+   "pct": 0.4
+  },
+  {
+   "key": "at @js/mode2d.js",
+   "fn": "at @js/mode2d.js [app.js:58:12442]",
+   "ms": 20,
+   "pct": 0.4
+  },
+  {
+   "key": "putImageData @",
+   "fn": "putImageData @ [:-1:-1]",
+   "ms": 24,
+   "pct": 0.4
+  },
+  {
+   "key": "bt @js/ui.js",
+   "fn": "bt @js/ui.js [app.js:4491:31703]",
+   "ms": 22,
+   "pct": 0.4
+  },
+  {
+   "key": "x @js/sprite.js",
+   "fn": "x @js/sprite.js [app.js:52:27212]",
+   "ms": 20,
+   "pct": 0.4
+  },
+  {
+   "key": "fillRect @",
+   "fn": "fillRect @ [:-1:-1]",
+   "ms": 15,
    "pct": 0.3
   },
   {
-   "key": "draw @js/world.js",
-   "fn": "draw @js/world.js [app.js:4077:25229]",
-   "ms": 25,
+   "key": "ut @js/world.js",
+   "fn": "ut @js/world.js [app.js:4089:7159]",
+   "ms": 14,
+   "pct": 0.3
+  },
+  {
+   "key": "br @js/world.js",
+   "fn": "br @js/world.js [app.js:4089:21694]",
+   "ms": 17,
    "pct": 0.3
   }
  ]

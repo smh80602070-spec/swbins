@@ -95,6 +95,7 @@ static func spark(host: Node, pos: Vector3, color: Color, big := false, scale_mu
 	fm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	fm.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
 	fm.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+	fm.billboard_keep_scale = true   # Mobile 에서 BILLBOARD_ENABLED 는 기본으로 MeshInstance 크기를 버려 warm 의 작은 별빛이 화면을 덮는다.
 	fm.albedo_color = color.lerp(Color.WHITE, 0.5)
 	fm.albedo_texture = _star_tex()
 	fm.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA

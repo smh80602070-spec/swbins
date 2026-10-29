@@ -306,6 +306,7 @@ func _enemies_in_radius(radius: float) -> Array:
 
 ## dungeon.js strike() 그대로(옛 사본 _strike_<이름>() 아홉 벌이 같던 식) — 공격력×배수×무예 배율, 치명, 원소 저항, 최소 1.
 func _strike(enemy: Node, sk: Dictionary, mult: float) -> void:
+	DungeonSaveState.tutorial_action("skill")
 	var pct_mult: float = DungeonRunState.atk_mult() + DungeonEquipmentState.atk_pct_bonus() / 100.0
 	var base: float = MeleeAttack.ATK_DAMAGE * pct_mult + DungeonEquipmentState.atk_flat_bonus()
 	var dmg: float = base * mult * DungeonRunState.skill_mul() * float(sk.get("tree_dmg", 1.0))   # G-0241 나무 위력

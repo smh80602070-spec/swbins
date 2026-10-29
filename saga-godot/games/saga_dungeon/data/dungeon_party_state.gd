@@ -23,6 +23,7 @@ var members: Array[String] = []
 
 func recruit(id: String) -> void:
 	members.append(id)
+	DungeonSaveState.tutorial_action("recruit")
 	party_changed.emit()
 
 

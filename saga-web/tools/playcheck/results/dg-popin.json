@@ -1,12 +1,12 @@
 {
- "at": "2026-10-24T15:53:55.573Z",
+ "at": "2026-10-28T07:37:19.113Z",
  "phone": false,
  "sec": 60,
- "samples": 280,
- "seen": 58,
+ "samples": 284,
+ "seen": 49,
  "popin": 0,
  "appear": 0,
- "offscreen": 58,
+ "offscreen": 49,
  "list": [],
  "probe": {
   "mode": "3d",

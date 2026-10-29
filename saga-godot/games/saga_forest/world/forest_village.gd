@@ -32,6 +32,9 @@ func _ready() -> void:
 	preload("res://saga_core/audio/bgm.gd").play(self, "forest-town")  # 배경음(G-0011) — 곡 없으면 조용
 	WorldCurveMaterial.ensure_global_registered()
 	ForestSaveState.try_load()
+	var guide_walk := preload("res://saga_core/world/first_run_walk_observer.gd").new()
+	guide_walk.setup(Callable(ForestSaveState, "tutorial_action"))
+	add_child(guide_walk)
 	ForestSaveState.begin_session()
 	## 자동 저장(saga_core/world/autosave_timer.gd) — 60초마다·앱 멈춤 때.
 	preload("res://saga_core/world/autosave_timer.gd").attach(self, ForestSaveState.save, func() -> bool: return get_tree().get_first_node_in_group("player") != null)
@@ -48,6 +51,10 @@ func _ready() -> void:
 	var pm: Dictionary = preload("res://games/saga_forest/data/forest_partner.gd").on_new_day()   # G-0232 동반자 아침 한 가지
 	if not pm.is_empty():
 		Toast.show(self, String(pm.text), 4.0)
+	if OS.get_environment("SAGA_TUTORIAL_PROBE") == "1":
+		var probe := preload("res://tools/probe_tutorial.gd").new()
+		add_child(probe)
+		probe.setup("forest")
 	var lm: Dictionary = preload("res://games/saga_forest/data/forest_lots.gd").on_new_day(ForestSaveState)   # G-0237 빈 집 입주(하루 한 명)
 	if not lm.is_empty():
 		Toast.show(self, String(lm.text), 4.0)
@@ -90,6 +97,9 @@ func _refresh_goal_board() -> void:
 	var story: String = _scenario.call("objective") if _scenario != null else ""
 	if story != "":
 		now = story + " · " + now   # G-0086 이야기 목표 먼저
+	var guide_line: String = preload("res://games/saga_forest/data/tutorial.gd").line(ForestSaveState.tutorial_done)
+	if guide_line != "":
+		now = guide_line
 	var session := "골드 +%d · 채집 +%d" % [
 		ForestSaveState.session_gold_gained(), ForestSaveState.session_items_gathered()]
 	board.set_goals(now, session, "—")

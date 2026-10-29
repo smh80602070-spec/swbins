@@ -1,13 +1,13 @@
 {
- "base": "https://smh80602070-spec.github.io/swbins/saga-web/",
- "at": "2026-10-22T00:25:47.511Z",
+ "base": "http://127.0.0.1:10173/",
+ "at": "2026-10-27T07:36:40.471Z",
  "play": 20,
  "note": "이 PC WebKit·크롬은 GPU 메모리 한도가 없다 — 죽음 0 ≠ 폰 안 죽음",
  "runs": [
   {
-   "game": "saga-realm",
-   "device": "iphone",
-   "engine": "webkit",
+   "game": "saga-go",
+   "device": "android",
+   "engine": "chromium",
    "crash": 0,
    "errors": [],
    "failed": [],
@@ -15,7 +15,7 @@
     {
      "name": "들어감",
      "ok": true,
-     "detail": "20800ms"
+     "detail": "13595ms"
     },
     {
      "name": "세로로 돌아와 넘침 없음",
@@ -24,20 +24,20 @@
     }
    ],
    "shots": [
-    "shots/mobile_saga-realm_iphone_title.png",
-    "shots/mobile_saga-realm_iphone_game.png",
-    "shots/mobile_saga-realm_iphone_play.png",
-    "shots/mobile_saga-realm_iphone_land.png"
+    "shots/mobile_saga-go_android_title.png",
+    "shots/mobile_saga-go_android_game.png",
+    "shots/mobile_saga-go_android_play.png",
+    "shots/mobile_saga-go_android_land.png"
    ],
    "title": {
-    "W": 402,
-    "H": 874,
+    "W": 412,
+    "H": 839,
     "art": [
      {
       "el": "acc-host",
       "v": true,
-      "w": 402,
-      "h": 874,
+      "w": 412,
+      "h": 839,
       "fit": "auto, cover"
      }
     ],
@@ -46,126 +46,797 @@
      "kakao": "카카오톡"
     }
    },
-   "bootMs": 20800,
+   "bootMs": 13595,
    "portrait": {
-    "W": 402,
-    "H": 874,
-    "taps": 18,
-    "smallTaps": 5,
+    "W": 412,
+    "H": 839,
+    "taps": 15,
+    "smallTaps": 2,
     "smallEx": [
-     "span.rlg.me 47×18",
-     "#aq-go 42×42",
-     "button.btn.ghost 36×44",
-     "button.btn.ghost 35×44",
-     "button.btn.ghost 35×44"
+     "button.near-more 77×40",
+     "#aq-go 36×36"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 38,
+    "texts": 16,
     "tiny": 0,
     "tinyEx": [],
-    "judged": 36,
-    "lowC": 0,
-    "lowCEx": [],
-    "canvasMP": 0.4,
-    "mb": 0.4,
-    "resN": 68,
-    "heapMB": null,
+    "judged": 16,
+    "lowC": 5,
+    "lowCEx": [
+     "div.p-title 1.9",
+     "div.coin 1.9",
+     "div.coin.hi 1.9",
+     "b 1.9",
+     "button.btn.ghost 1.9"
+    ],
+    "canvasMP": 3.59,
+    "mb": 10.9,
+    "resN": 180,
+    "heapMB": 28.9,
     "inappBand": false
    },
    "fps": {
-    "min": 35,
-    "avg": 35,
-    "n": 1
+    "min": 59,
+    "avg": 60,
+    "n": 3
    },
    "afterPlay": {
-    "W": 402,
-    "H": 874,
-    "taps": 18,
-    "smallTaps": 5,
+    "W": 412,
+    "H": 839,
+    "taps": 16,
+    "smallTaps": 2,
     "smallEx": [
-     "span.rlg.me 47×18",
-     "#aq-go 42×42",
-     "button.btn.ghost 36×44",
-     "button.btn.ghost 35×44",
-     "button.btn.ghost 35×44"
+     "button.near-more 77×40",
+     "#aq-go 36×36"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 38,
+    "texts": 22,
     "tiny": 0,
     "tinyEx": [],
-    "judged": 36,
-    "lowC": 0,
-    "lowCEx": [],
-    "canvasMP": 0.4,
-    "mb": 0.4,
-    "resN": 68,
-    "heapMB": null,
+    "judged": 20,
+    "lowC": 6,
+    "lowCEx": [
+     "div.p-title 1.9",
+     "div.coin 1.9",
+     "div.coin.hi 1.9",
+     "button.btn.tiny 1.9",
+     "b 1.9",
+     "button.btn.ghost 1.9"
+    ],
+    "canvasMP": 3.59,
+    "mb": 13,
+    "resN": 240,
+    "heapMB": 32.3,
     "inappBand": false
    },
    "landscape": {
-    "W": 874,
-    "H": 402,
-    "taps": 19,
-    "smallTaps": 5,
+    "W": 839,
+    "H": 412,
+    "taps": 21,
+    "smallTaps": 3,
     "smallEx": [
-     "span.rlg.me 47×18",
-     "#aq-go 42×42",
-     "button.btn.ghost 36×44",
-     "button.btn.ghost 35×44",
-     "button.btn.ghost 35×44"
+     "div.p-goal 211×15",
+     "div.p-goal 211×15",
+     "#aq-go 42×42"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 49,
+    "texts": 39,
     "tiny": 0,
     "tinyEx": [],
-    "judged": 47,
-    "lowC": 0,
-    "lowCEx": [],
-    "canvasMP": 0.4,
-    "mb": 0.4,
-    "resN": 68,
-    "heapMB": null,
+    "judged": 35,
+    "lowC": 15,
+    "lowCEx": [
+     "div.p-title 1.9",
+     "div.p-sub 3.1",
+     "b 1.9",
+     "div.p-goal.now 1.9",
+     "small 1.9",
+     "div.p-goal 1.9"
+    ],
+    "canvasMP": 3.61,
+    "mb": 13.2,
+    "resN": 250,
+    "heapMB": 35.6,
     "inappBand": false
    },
    "back": {
-    "W": 402,
-    "H": 874,
-    "taps": 18,
-    "smallTaps": 5,
+    "W": 412,
+    "H": 839,
+    "taps": 12,
+    "smallTaps": 0,
+    "smallEx": [],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 23,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 19,
+    "lowC": 1,
+    "lowCEx": [
+     "div.p-title 1.9"
+    ],
+    "canvasMP": 3.59,
+    "mb": 13.2,
+    "resN": 250,
+    "heapMB": 33.6,
+    "inappBand": false
+   },
+   "ok": true
+  },
+  {
+   "game": "saga-dungeon",
+   "device": "android",
+   "engine": "chromium",
+   "crash": 0,
+   "errors": [],
+   "failed": [],
+   "steps": [
+    {
+     "name": "들어감",
+     "ok": true,
+     "detail": "17048ms"
+    },
+    {
+     "name": "세로로 돌아와 넘침 없음",
+     "ok": true,
+     "detail": "넘침 0px"
+    }
+   ],
+   "shots": [
+    "shots/mobile_saga-dungeon_android_title.png",
+    "shots/mobile_saga-dungeon_android_game.png",
+    "shots/mobile_saga-dungeon_android_play.png",
+    "shots/mobile_saga-dungeon_android_land.png"
+   ],
+   "title": {
+    "W": 412,
+    "H": 839,
+    "art": [
+     {
+      "el": "acc-host",
+      "v": true,
+      "w": 412,
+      "h": 839,
+      "fit": "auto, cover"
+     }
+    ],
+    "inapp": {
+     "name": null,
+     "kakao": "카카오톡"
+    }
+   },
+   "bootMs": 17048,
+   "portrait": {
+    "W": 412,
+    "H": 839,
+    "taps": 10,
+    "smallTaps": 1,
     "smallEx": [
-     "span.rlg.me 47×18",
-     "#aq-go 42×42",
-     "button.btn.ghost 36×44",
-     "button.btn.ghost 35×44",
-     "button.btn.ghost 35×44"
+     "#aq-go 42×42"
     ],
     "overflowX": 0,
     "cut": [],
     "cutN": 0,
     "overlap": [],
     "overlapN": 0,
-    "texts": 38,
+    "texts": 7,
     "tiny": 0,
     "tinyEx": [],
-    "judged": 36,
+    "judged": 2,
     "lowC": 0,
     "lowCEx": [],
-    "canvasMP": 0.4,
-    "mb": 0.4,
-    "resN": 68,
-    "heapMB": null,
+    "canvasMP": 1.42,
+    "mb": 5.2,
+    "resN": 133,
+    "heapMB": 24.5,
+    "inappBand": false
+   },
+   "fps": {
+    "min": 60,
+    "avg": 60,
+    "n": 3
+   },
+   "afterPlay": {
+    "W": 412,
+    "H": 839,
+    "taps": 11,
+    "smallTaps": 1,
+    "smallEx": [
+     "#aq-go 42×42"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [
+     "button.goal-hide↔#autobar"
+    ],
+    "overlapN": 1,
+    "texts": 10,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 5,
+    "lowC": 0,
+    "lowCEx": [],
+    "canvasMP": 1.42,
+    "mb": 7.3,
+    "resN": 165,
+    "heapMB": 28.9,
+    "inappBand": false
+   },
+   "landscape": {
+    "W": 839,
+    "H": 412,
+    "taps": 15,
+    "smallTaps": 1,
+    "smallEx": [
+     "#aq-go 42×42"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 16,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 2,
+    "lowC": 0,
+    "lowCEx": [],
+    "canvasMP": 1.31,
+    "mb": 7.3,
+    "resN": 168,
+    "heapMB": 28.2,
+    "inappBand": false
+   },
+   "back": {
+    "W": 412,
+    "H": 839,
+    "taps": 10,
+    "smallTaps": 1,
+    "smallEx": [
+     "#aq-go 42×42"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 7,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 2,
+    "lowC": 0,
+    "lowCEx": [],
+    "canvasMP": 1.42,
+    "mb": 7.3,
+    "resN": 169,
+    "heapMB": 30.8,
+    "inappBand": false
+   },
+   "ok": true
+  },
+  {
+   "game": "saga-forest",
+   "device": "android",
+   "engine": "chromium",
+   "crash": 0,
+   "errors": [],
+   "failed": [],
+   "steps": [
+    {
+     "name": "들어감",
+     "ok": true,
+     "detail": "13295ms"
+    },
+    {
+     "name": "세로로 돌아와 넘침 없음",
+     "ok": true,
+     "detail": "넘침 0px"
+    }
+   ],
+   "shots": [
+    "shots/mobile_saga-forest_android_title.png",
+    "shots/mobile_saga-forest_android_game.png",
+    "shots/mobile_saga-forest_android_play.png",
+    "shots/mobile_saga-forest_android_land.png"
+   ],
+   "title": {
+    "W": 412,
+    "H": 839,
+    "art": [
+     {
+      "el": "acc-host",
+      "v": true,
+      "w": 412,
+      "h": 839,
+      "fit": "auto, cover"
+     }
+    ],
+    "inapp": {
+     "name": null,
+     "kakao": "카카오톡"
+    }
+   },
+   "bootMs": 13295,
+   "portrait": {
+    "W": 412,
+    "H": 839,
+    "taps": 9,
+    "smallTaps": 1,
+    "smallEx": [
+     "#aq-go 42×42"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 13,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 13,
+    "lowC": 5,
+    "lowCEx": [
+     "div.p-title 1.3",
+     "div.p-goal.scn-goal 1.3",
+     "b 1.3",
+     "div.coin 1.3",
+     "div.coin.hi 1.3"
+    ],
+    "canvasMP": 2.2,
+    "mb": 6.3,
+    "resN": 63,
+    "heapMB": 27.7,
+    "inappBand": false
+   },
+   "fps": {
+    "min": 61,
+    "avg": 61,
+    "n": 3
+   },
+   "afterPlay": {
+    "W": 412,
+    "H": 839,
+    "taps": 10,
+    "smallTaps": 2,
+    "smallEx": [
+     "button.btn.tiny 41×44",
+     "#aq-go 42×42"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [
+     "#autobar↔#aq-go"
+    ],
+    "overlapN": 1,
+    "texts": 16,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 16,
+    "lowC": 5,
+    "lowCEx": [
+     "div.p-title 1.3",
+     "div.p-goal.scn-goal 1.3",
+     "b 1.3",
+     "div.coin 1.3",
+     "div.coin.hi 1.3"
+    ],
+    "canvasMP": 2.2,
+    "mb": 8.8,
+    "resN": 109,
+    "heapMB": 32,
+    "inappBand": false
+   },
+   "landscape": {
+    "W": 839,
+    "H": 412,
+    "taps": 8,
+    "smallTaps": 2,
+    "smallEx": [
+     "div.p-goal 336×15",
+     "#aq-go 42×42"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 23,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 23,
+    "lowC": 14,
+    "lowCEx": [
+     "div.p-title 1.3",
+     "div.p-sub 1.3",
+     "b 1.3",
+     "div.p-goal.scn-goal 1.3",
+     "b 1.3",
+     "div.p-goal.tut-goal 1.3"
+    ],
+    "canvasMP": 2.23,
+    "mb": 8.9,
+    "resN": 115,
+    "heapMB": 27.9,
+    "inappBand": false
+   },
+   "back": {
+    "W": 412,
+    "H": 839,
+    "taps": 9,
+    "smallTaps": 1,
+    "smallEx": [
+     "#aq-go 42×42"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 13,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 13,
+    "lowC": 5,
+    "lowCEx": [
+     "div.p-title 1.3",
+     "div.p-goal.scn-goal 1.3",
+     "b 1.3",
+     "div.coin 1.3",
+     "div.coin.hi 1.3"
+    ],
+    "canvasMP": 2.2,
+    "mb": 8.9,
+    "resN": 115,
+    "heapMB": 34.6,
+    "inappBand": false
+   },
+   "ok": true
+  },
+  {
+   "game": "saga-story",
+   "device": "android",
+   "engine": "chromium",
+   "crash": 0,
+   "errors": [],
+   "failed": [],
+   "steps": [
+    {
+     "name": "들어감",
+     "ok": true,
+     "detail": "16341ms"
+    },
+    {
+     "name": "세로로 돌아와 넘침 없음",
+     "ok": true,
+     "detail": "넘침 0px"
+    }
+   ],
+   "shots": [
+    "shots/mobile_saga-story_android_title.png",
+    "shots/mobile_saga-story_android_game.png",
+    "shots/mobile_saga-story_android_play.png",
+    "shots/mobile_saga-story_android_land.png"
+   ],
+   "title": {
+    "W": 412,
+    "H": 839,
+    "art": [
+     {
+      "el": "acc-host",
+      "v": true,
+      "w": 412,
+      "h": 839,
+      "fit": "auto, cover"
+     }
+    ],
+    "inapp": {
+     "name": null,
+     "kakao": "카카오톡"
+    }
+   },
+   "bootMs": 16341,
+   "portrait": {
+    "W": 412,
+    "H": 839,
+    "taps": 20,
+    "smallTaps": 1,
+    "smallEx": [
+     "#aq-go 42×42"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 11,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 11,
+    "lowC": 2,
+    "lowCEx": [
+     "div.p-title 1.7",
+     "button.btn.tiny 1.7"
+    ],
+    "canvasMP": 2.44,
+    "mb": 4.5,
+    "resN": 89,
+    "heapMB": 10.8,
+    "inappBand": false
+   },
+   "fps": {
+    "min": 59,
+    "avg": 59,
+    "n": 3
+   },
+   "afterPlay": {
+    "W": 412,
+    "H": 839,
+    "taps": 21,
+    "smallTaps": 1,
+    "smallEx": [
+     "#aq-go 42×42"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 10,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 10,
+    "lowC": 2,
+    "lowCEx": [
+     "div.p-title 1.7",
+     "button.btn.tiny 1.7"
+    ],
+    "canvasMP": 2.44,
+    "mb": 6.8,
+    "resN": 130,
+    "heapMB": 12.2,
+    "inappBand": false
+   },
+   "landscape": {
+    "W": 839,
+    "H": 412,
+    "taps": 25,
+    "smallTaps": 1,
+    "smallEx": [
+     "#aq-go 42×42"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 25,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 25,
+    "lowC": 8,
+    "lowCEx": [
+     "div.p-title 1.7",
+     "div.p-sub 2.7",
+     "div.coin 1.7",
+     "div.coin 1.7",
+     "div.coin.hi 1.7",
+     "div.coin 1.7"
+    ],
+    "canvasMP": 2.44,
+    "mb": 6.8,
+    "resN": 133,
+    "heapMB": 12.6,
+    "inappBand": false
+   },
+   "back": {
+    "W": 412,
+    "H": 839,
+    "taps": 21,
+    "smallTaps": 1,
+    "smallEx": [
+     "#aq-go 42×42"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 11,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 11,
+    "lowC": 2,
+    "lowCEx": [
+     "div.p-title 1.7",
+     "button.btn.tiny 1.7"
+    ],
+    "canvasMP": 2.44,
+    "mb": 6.8,
+    "resN": 133,
+    "heapMB": 12.1,
+    "inappBand": false
+   },
+   "ok": true
+  },
+  {
+   "game": "saga-realm",
+   "device": "android",
+   "engine": "chromium",
+   "crash": 0,
+   "errors": [],
+   "failed": [],
+   "steps": [
+    {
+     "name": "들어감",
+     "ok": true,
+     "detail": "18624ms"
+    },
+    {
+     "name": "세로로 돌아와 넘침 없음",
+     "ok": true,
+     "detail": "넘침 0px"
+    }
+   ],
+   "shots": [
+    "shots/mobile_saga-realm_android_title.png",
+    "shots/mobile_saga-realm_android_game.png",
+    "shots/mobile_saga-realm_android_play.png",
+    "shots/mobile_saga-realm_android_land.png"
+   ],
+   "title": {
+    "W": 412,
+    "H": 839,
+    "art": [
+     {
+      "el": "acc-host",
+      "v": true,
+      "w": 412,
+      "h": 839,
+      "fit": "auto, cover"
+     }
+    ],
+    "inapp": {
+     "name": null,
+     "kakao": "카카오톡"
+    }
+   },
+   "bootMs": 18624,
+   "portrait": {
+    "W": 412,
+    "H": 839,
+    "taps": 20,
+    "smallTaps": 5,
+    "smallEx": [
+     "span.rlg.me 47×18",
+     "button.btn.ghost 36×44",
+     "button.btn.ghost 35×44",
+     "button.btn.ghost 35×44",
+     "#aq-cp 44×40"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 60,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 54,
+    "lowC": 0,
+    "lowCEx": [],
+    "canvasMP": 0.09,
+    "mb": 4,
+    "resN": 69,
+    "heapMB": 18.2,
+    "inappBand": false
+   },
+   "fps": {
+    "min": 60,
+    "avg": 61,
+    "n": 3
+   },
+   "afterPlay": {
+    "W": 412,
+    "H": 839,
+    "taps": 20,
+    "smallTaps": 5,
+    "smallEx": [
+     "span.rlg.me 47×18",
+     "button.btn.ghost 36×44",
+     "button.btn.ghost 35×44",
+     "button.btn.ghost 35×44",
+     "#aq-cp 44×40"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 60,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 54,
+    "lowC": 0,
+    "lowCEx": [],
+    "canvasMP": 0.09,
+    "mb": 4,
+    "resN": 69,
+    "heapMB": 8.9,
+    "inappBand": false
+   },
+   "landscape": {
+    "W": 839,
+    "H": 412,
+    "taps": 20,
+    "smallTaps": 5,
+    "smallEx": [
+     "span.rlg.me 47×18",
+     "button.btn.ghost 36×44",
+     "button.btn.ghost 35×44",
+     "button.btn.ghost 35×44",
+     "#aq-cp 44×40"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 51,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 45,
+    "lowC": 0,
+    "lowCEx": [],
+    "canvasMP": 0.09,
+    "mb": 4,
+    "resN": 69,
+    "heapMB": 9.3,
+    "inappBand": false
+   },
+   "back": {
+    "W": 412,
+    "H": 839,
+    "taps": 20,
+    "smallTaps": 5,
+    "smallEx": [
+     "span.rlg.me 47×18",
+     "button.btn.ghost 36×44",
+     "button.btn.ghost 35×44",
+     "button.btn.ghost 35×44",
+     "#aq-cp 44×40"
+    ],
+    "overflowX": 0,
+    "cut": [],
+    "cutN": 0,
+    "overlap": [],
+    "overlapN": 0,
+    "texts": 60,
+    "tiny": 0,
+    "tinyEx": [],
+    "judged": 54,
+    "lowC": 0,
+    "lowCEx": [],
+    "canvasMP": 0.09,
+    "mb": 4,
+    "resN": 69,
+    "heapMB": 8.7,
     "inappBand": false
    },
    "ok": true

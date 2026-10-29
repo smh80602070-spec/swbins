@@ -141,11 +141,20 @@ func _blocked() -> bool:
 	if get_tree().get_nodes_in_group("duel_active").size() > 0:
 		return true
 	for n in get_tree().get_nodes_in_group("ui_modal"):
-		if n.get("visible") != false: # 숨겨 둔 선택지 창은 그룹에 남아 있다(camera_rig._modal_open 과 같게)
+		if _node_is_visible(n):
 			return true
 	if _player == null:
 		_player = get_tree().get_first_node_in_group("player")
 	return _player == null or bool(_player.get("frozen"))
+
+func _node_is_visible(node: Node) -> bool:
+	if node is CanvasItem:
+		return (node as CanvasItem).is_visible_in_tree()
+	if node is CanvasLayer:
+		return (node as CanvasLayer).visible
+	if node is Window:
+		return (node as Window).visible
+	return true
 
 func _process(delta: float) -> void:
 	_time += delta

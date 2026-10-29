@@ -17,35 +17,20 @@
 
 **공통(saga_core)**: `data/characters.gd`(인물 105, id 불변)·`data/pets.gd`(신수 11) · `ui/toast.gd`·`ui/virtual_joystick.gd`·`ui/goal_board.gd`+`ui/session_card.gd`(101-4, 목표판 3줄·마무리 카드, 다섯 판 전부 붙음)·`ui/duel_hud.gd` · `combat_feel.gd`(101-3, 다섯 판 끝, 09-20㉒ 타격음 배선, 09-21 UI 사운드(`ui()`) 신설+`session_card.gd` "닫기" 배선) · `world/world_curve_material.gd`+`shaders/curved_*`(FOREST 구면) · `world/density_report.gd`(104-5, 발견 밀도, FOREST는 반경 10m) · `shaders/cel_toon.gdshader`+`cel_shader_apply.gd`(66-2/102-3, hit_flash+아웃라인 next_pass 자동) · `world/glb_utils.gd::fit_height()`(102-1, 여전히 미호출). 렌더러 Forward+/Mobile 이중(66-1, `env_pc.tres`·`env_mobile.tres`, 102-2 값).
 
-## 현재 작업 — 중단 지점(2026-10-25)
+## 현재 작업 — 2026-10-29
 
-- 닫은 티켓 줄거리는 `tasks/godot/done/` 티켓 메모가 정본. 10-25: R-5 G-0347(성문 걸음 판정) · G-0349 1만리 비·눈 입자 · G-0350 2나락 벨트 줌 초점 · G-0351 「오늘」 창(네 판, 5천하 ✗) · G-0352 **Forward+ MSAA 끔(검은 네모 깨짐)** · G-0353 4종횡 하늘 안개·앞 풀 역광 · G-0354·0356·0357 점검 고침(traversal cast·kits 착지·story_golden 다시 잼·nature 사실판 길) · G-0355 윈도 10 이모지 · G-0358 3마을 집 안 Forward+ 천장 빛 · G-0359~0363 날씨 그림(땅 젖음·웅덩이 물결·바람 날 풀 눕힘 — 셈은 공용 weather_visual, 5천하 땅도 곡면 셰이더라 젖음) · G-0364 5천하 「이번 달」 창 · G-0365·0366 3마을·4종횡 풀 흔들림(바람 배율) · G-0367 빗소리·바람 소리(코드 생성, D1 — 사람 귀 판정 대기) · G-0368 1만리 젖은 발소리 · G-0369 2나락·3마을·4종횡 발소리(공용 step_sounds) · G-0370 점프·착지 소리(같은 step_sounds — 점프는 4종횡만). · **사용자 "게임성 더 추가 — 세 트랙 다"** → 장부 다섯 줄(세 트랙 칸 열어 둠) + 고돗 G-0371 1만리 종 연구 과제(사냥 기록 과제 넷) · G-0372 2나락 현상금 게시판(한 판 셋) · G-0373 3마을 낚시 대회(일요일 큰 셋 합) · G-0374 4종횡 괴물 카드 도감(40종·공격 곱) · G-0375 5천하 포로 처리(등용·풀어 줌·몸값). · G-0376 3마을 집 안 저장 불러오기 · G-0377 shot_scene 대기(600 프레임+5초, 단계는 찍기 90 프레임 전) · G-0378 2나락 앞벽 걷어내기 · 2차 G-0380 2나락 저주받은 상자 · G-0383 5천하 인재 천거 · **진행중(큐) G-0379 핏빛 달·G-0381 별똥별·G-0382 룬 — 코드·자체 점검 OK, 묶음 점검만 남음**.
-- 큐 빔·장부 고돗 칸 빈 줄 없음(10-25 새 다섯 줄도 고돗 끝 — 웹·유니티 칸은 없음/부분으로 열림). 전체 probe_all(273) 10-25: 남은 FAIL = go_cave(cave_hole_01 에셋 없음 — K) 뿐, 흔들림 = weapon·path_action·story talk_face(혼자 돌리면 OK).
-- 이 PC: Godot = WinGet Packages `Godot_v4.7.2-stable_win64_console.exe` · GPU Radeon Pro 570X · `.import` 부작용(로컬 uid)은 커밋 안 함.
-- 함정: **촬영(shot_scene) 기본 `--rendering-method mobile` 은 Forward+ 깨짐을 못 본다** — 그래픽 고친 뒤 플래그 없이 한 장 · SceneTree 점검 `_init` 에서 root.add_child 뒤 한 프레임 기다려야 뷰포트 · probe_all 은 다른 Godot 과 같이 돌리면 시간 점검이 흔들림 · 헤드리스는 실시간보다 빨리 돎 · creatures 몸은 스킨 바인드 포즈 배율 · 셰이더 그림 uniform 은 `albedo_texture` · 장부 `tasks/gameplay/`
-
-## 다음 작업 (우선순위)
-
-1. 큐·장부 빔 → RECURRING(R-3 남은 D1 다섯 — gfx-baseline 은 기준 PNG 사용자 승인, player-face 는 K 모프, shake-spec·rise-in 은 영상 몫) 또는 장부에 새 줄.
-2. 후보: 「오늘」 창 받기 단추를 2나락·4종횡에도(지금은 판이 저절로 줌).
-3. 에셋(K): 3마을 닭·염소 GLB 놓기(INBOX) · cave_hole_01 · 옛 rock_moss_01.glb 키(비교 모드만) · 1만리 괴물 남은 몸.
-4. 10-25 Forward+ 훑기: 1만리 probe_shots 146장 정상 · 네 판 shot_scene 풍경 컷은 두 렌더러 똑같이 검붉음·가까운 도형(씬 서기 전 찍힘 — 컷 자리 손보기가 후보) · Forward+ 만의 경고 = curved_textured_cutout 이 법선 맵 없어도 NORMAL_MAP 을 써 탄젠트 없는 dex 몸에 경고(그림 영향 없음).
-5. 모바일 렌더러 3마을 집 안 흰 십자 번짐(G-0358 메모) — 고돗 폰 빌드 전엔 낮음.
-
-## 알려진 오류
-
-- 사람 몸(공방): 입은 살갗 덧그림(㉞, 머리 UV 두 배치만). (가로 UI 56%: saga_core/ui/orientation_scale.gd 로 다섯 판 고침.)
-
-- 인물 몸 설치(`characters_dex`, PC 마다): **500벌**(G-0302 — 웹 characters3d 와 같음, 해시 NPC 몸 풀 500). 다른 PC 는 `tools/char-forge/_out/engine_characters/` 의 바뀐 id(주역 10·sg_liubei 10-22)를 지우고 `engine_characters.sh --install godot` → 임포트 뒤 .import 부작용 되돌림. _out 이 옛 변환이면(gltf primitive targets 0 — 표정·깜박임 안 움직임) 그 id 를 지우고 다시(G-0287). 지금 500 전부 모프 있음.
-
-## 테스트 상태
-
-- `godot_regress.sh` REGRESS OK(10-04, G-0021 뒤) · `probe_all` 해당 5개 fails=0.
-- GO 그리기 부담 `SAGA_PERF_PROBE=1`(창 모드·모바일 렌더러, PLAN 104-7 예산 draw call ≤260·삼각형 평균 ≤35만) — 10-10(G-0153, 그래픽 묶음 뒤) draw 평균/삼각형 평균: 마을 251/25.9만·포구 199/17.2만·폐허 218/16.9만·역 233/21.1만, 전부 예산 안. GO 자동 점검 마흔여섯은 `tools/probe_*.gd`(`SAGA_<이름>_PROBE=1`, 이름은 파일명) — 전부 fails=0.
-- 화면 촬영 `SAGA_SHOT_PROBE=1 SAGA_SHOT_DIR=<경로>`(창 모드·화면 밖, `tools/probe_shots.gd`) — 09-26 땅 뒷면·눈·안개 발견.
-- 새 스크립트는 `--check-only --script res://…` 로 먼저 문법만(자동 로드 이름 오류는 정상) — 문법 오류 판은 씬이 안 떠 timeout 까지 멈춘다.
-- 셰이더(물·하늘)는 창 모드 콘솔 exe 를 화면 밖에서 300프레임 돌려 Forward+·Mobile 오류 0(헤드리스는 셰이더를 컴파일 안 함). 미니맵 원형 셰이더(⑨)·원소 시야 막(⑬)도 창 모드 두 렌더러 오류 0(09-24).
-
+- G-0412~G-0419 완료; 티켓별 상세와 검증 근거는 `tasks/godot/done/`.
+- G-0420/W-0458 완료: 캠페인 증원·45% 원군·seed 대사, 2초 순차 상자, 기존 지휘/전직 적용. battle_event 16/16, campaign 43/43, class 18/18, command 15/15, ultimate 13/13, tactics·SRPG·save 통과. Forward+ 대사 캡처 `tools/_out/realm_battle_event_g0420/`.
+- 이 PC: Godot 4.7.2 · Radeon Pro 570X. `.import`·`project.godot` 변경 없음; 에디터 스캔이 만든 미추적 `.uid` 정리.
+- G-0421/W-0459 완료: 16장 대본, 턴·위기·격파·증원 연동. battle_event/script 20/20, campaign 47/47, class 18/18, command 15/15, ultimate 13/13, tactics·SRPG·save 통과; Forward+ 가로·세로 캡처 `tools/_out/realm_battle_script_g0421/`.
+- G-0422/W-0460 완료: 캠페인 상자·마을 목표, 보상·적 턴 약탈, 3D 표식/HUD·결과 요약. side_goal 8/8, campaign 51/51, battle_event 20/20. Forward+ 3장 상자·마을 캡처 `tools/_out/realm_side_goal_g0422/`.
+- G-0423/W-0466 완료: 가장 가까운 적 용병의 마을 유인, 3개 중 1개꼴 상자 장비, 승패 장수 대사. side_goal 16/16, campaign 59/59. Forward+ 전투·결과 캡처 `tools/_out/realm_side_goal_g0423/`.
+- G-0424/W-0467 완료: 출진 셋·장비 칸별 최고 등급을 자동 장착하고 기존 장비는 가방에 반환. 진영 버튼과 출진 전 자동 연결. campaign 60/60; Forward+ 캡처 `tools/_out/realm_auto_equip_g0424/`.
+- G-0425/W-0485 완료: 씨앗별 맑음 55%·비 25%·안개 20%, 비 화계 차단, 안개 활·화계·혼란 사거리 감소와 날씨 칩. weather 10/10, campaign 61/61. Forward+ 캡처 `tools/_out/realm_weather_g0425/`.
+- G-0426 완료: 네 판 첫 실행 5단계 목표판 안내, 실제 이동·전투·채집·대화·경영 행동 배선, 저장 ID·구 세이브 완료 처리. 네 scene probe 모두 `fails=0`; 세이브 왕복과 목표판 복귀 확인. 상세: `tasks/godot/done/G-0426.md`.
+- `tools/precheck.sh saga-godot` — JS/shared/manifest/features schema 통과. 전체는 기존 루트 `CLAUDE.md` 6527B·`tasks/godot/QUEUE.md` 크기 상한·5천하 전술 뷰 1576줄과 타 갈래 문서로 실패; Git Bash `sed` 오류도 출력. Python 미설치로 asset quick check 생략.
+- 새 세션은 `tasks/godot/QUEUE.md` 맨 위 미완료 티켓을 실행한다. 티켓·큐와 다른 갈래의 미커밋 변경이 많으니 경로를 확인해 보존한다.
+- 함정: 화면 촬영은 Forward+로 확인; probe_all 전체 실행은 별도 요청·범위 검토 없이 하지 않는다. 헤드리스는 실시간 타이머보다 빨리 돈다.
 ## 실기 확인 대기
 
 - **GO 폰 발열(104-7)** — 실제 폰 발열·프레임, 먼 나무 LOD.
@@ -53,3 +38,7 @@
 - **GO 106장 ㊺~55-1 이야기 2~11부**(09-25~27) — 지역마다 땅 빛깔·명소, 장마다 장치·보스 크기·동료 모습. 볼 것은 HISTORY 각 절 끝 "실기 확인 전"(9부 신호등·10부 드론 쫓기 길·11부 알갱이·하늘 틈·멈춘 별까마귀·장막 등).
 - **GO 106장 ①~㊹**(09-23~25) — 이동~탐사 파견. HISTORY 각 절 끝 "실기 확인 전". 실제 세이브는 모험 등급 3.
 - GO 마을 식생·FOREST 플레이어·식생·LayoutWalk·STORY 사제 유대 — HISTORY 09-23.
+
+## 2026-10-28 — G-0413 5천하 장 진행
+
+캠페인 장 흐름·세이브 v32 구현, 표적 probe 17/17·저장 probe 8/8·probe_all target 2/2, 범위 precheck 통과. Forward+ 가로·세로 8장 확인. 전체 313 probe는 초반 3개 뒤 중단, 합계 미검증. 구 지도는 `SAGA_REALM_CAMPAIGN=0`.

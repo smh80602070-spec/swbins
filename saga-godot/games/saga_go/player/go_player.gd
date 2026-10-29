@@ -725,6 +725,8 @@ func _pose(anim_name: String, fallback: String) -> void:
 	_play_anim(anim_name if _anim != null and _anim.has_animation(anim_name) else fallback)
 
 func play_action(anim_name: String, dur: float, move_scale: float) -> void:
+	if anim_name.begins_with("combat/") and (_anim == null or not _anim.has_animation(anim_name)):
+		anim_name = "attack"
 	if anim_name == "skill" and _anim != null and _anim.has_animation("cast") and OS.get_environment("SAGA_ACTION_MOCAP") != "0":
 		anim_name = "cast"   # G-0284 무예 시전 = 모캡 손 뻗기(옛 UAL skill 0.53초 대신)
 	if anim_name == "strong" and (_anim == null or not _anim.has_animation("strong") or OS.get_environment("SAGA_ACTION_MOCAP") == "0"):
@@ -742,9 +744,29 @@ func play_action(anim_name: String, dur: float, move_scale: float) -> void:
 			start = float(w[0])
 			_anim.speed_scale = (float(w[1]) - float(w[0])) / dur
 			_action_scaled = true
+		elif anim_name.begins_with("combat/") and dur > 0.0:
+			var combat_anim := _anim.get_animation(anim_name)
+			var base_speed := combat_anim.length / dur
+			var strike_time := float(combat_anim.get_meta("strike_time", combat_anim.length * 0.5))
+			var windup := strike_time / maxf(base_speed * 0.7, 0.001)
+			var recovery := (combat_anim.length - strike_time) / maxf(base_speed * 1.6, 0.001)
+			_action_t = windup + recovery + 0.12
+			_anim.speed_scale = base_speed * 0.7
+			_action_scaled = true
+			if is_inside_tree():
+				get_tree().create_timer(windup).timeout.connect(_set_combat_speed.bind(anim_name, base_speed * 1.6))
+				get_tree().create_timer(windup + recovery).timeout.connect(_hold_combat_pose.bind(anim_name))
 		_anim.play(anim_name, _motion_blend(anim_name))
 		_anim.seek(start, true)
 		_current_anim = anim_name
+
+func _set_combat_speed(anim_name: String, speed: float) -> void:
+	if _anim != null and _anim.current_animation == anim_name:
+		_anim.speed_scale = speed
+
+func _hold_combat_pose(anim_name: String) -> void:
+	if _anim != null and _anim.current_animation == anim_name:
+		_anim.speed_scale = 0.0
 
 ## G-0264 — 발 잠금은 땅에서만(활공·오르기·수영·짚고 넘기·날기·동작 중엔 끔).
 func foot_lock_allowed() -> bool:

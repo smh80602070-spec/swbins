@@ -28,6 +28,7 @@ var _frozen := false
 var _t := 0.0
 var _t1 := 0.0
 var _prev_at := 0.0
+var _attack_duration := 0.0
 var _atk_count := 0
 var _late_ok := false
 var _phase := 0
@@ -148,10 +149,12 @@ func _physics_process(delta: float) -> void:
 						_fc.call("_act", "combat_quick", false) # 탭: 바로 뗀다(안 떼면 강공격 충전이 저절로 완료돼 측정이 틀어진다)
 						_atk_count = 0
 						_prev_at = float(_fc.get("_attack_t")) # 방금 낸 첫 공격은 세지 않는다
+						_attack_duration = _prev_at
 						_t1 = _t
 						_phase = 1
 				1:
-					if _t >= _t1 + 0.20: # 후딜 끝 0.12초 전
+					var late_at := _t1 + maxf(_attack_duration - FeelTuning.input_buffer_sec() * 0.5, 0.05)
+					if _t >= late_at: # 가변 모션 길이에 맞춰 입력 버퍼 안쪽에서 누른다
 						_fc.call("_act", "combat_quick", true)
 						_fc.call("_act", "combat_quick", false) # 탭: 바로 뗀다(안 떼면 강공격 충전이 저절로 완료돼 측정이 틀어진다)
 						_phase = 2

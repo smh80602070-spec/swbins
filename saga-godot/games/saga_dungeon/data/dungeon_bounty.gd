@@ -3,7 +3,7 @@ extends RefCounted
 ## G-0372 현상금 게시판(디아블로 3·4 — 판마다 걸린 의뢰를 같이 쫓는다). 한 판(dungeon_rank 와 같은 begin~finish) 앞에 POOL 다섯 중 셋을 건다:
 ##   정예 쓰러뜨리기 · 적 쓰러뜨리기 · 통·항아리 부수기(셈) / 적게 맞고 깨기 · 빨리 깨기(마지막 방에서 등급 결과로 판정)
 ##   셈은 dungeon_rank 고리(kill·finish)와 dungeon_breakables.break_prop 이 부른다. 살아 나온 판만 채운 현상금마다 금 GOLD_PER × 급(난도·부적).
-##   쓰러지면 덤 없음(현상금은 은총 자리 새 판에서 다시 건다). 「오늘」 창(goals_adapter)에 "이번 판 현상금" 줄. SAGA_BOUNTY=0 이면 안 건다.
+##   쓰러지면 덤 없음(현상금은 은총 자리 새 판에서 다시 건다). 살아 나온 판의 금은 세이브에 미수령으로 쌓고 「오늘」 창(goals_adapter)에서 받는다. SAGA_BOUNTY=0 이면 안 건다.
 
 const POOL := [
 	{"id": "elite", "name": "정예 쓰러뜨리기", "n": 2, "live": true},
@@ -104,7 +104,7 @@ static func text(res: Dictionary) -> String:
 	if res.is_empty():
 		return ""
 	if int(res.gold) > 0:
-		return "📜 현상금 %d/%d — 금 +%d" % [int(res.done), int(res.of), int(res.gold)]
+		return "📜 현상금 %d/%d — 받을 금 +%d" % [int(res.done), int(res.of), int(res.gold)]
 	return "📜 현상금 %d/%d — 덤 없음" % [int(res.done), int(res.of)]
 
 

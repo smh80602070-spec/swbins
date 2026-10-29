@@ -275,6 +275,9 @@ func _ready() -> void:
 	preload("res://games/saga_dungeon/world/auto_quest_dg.gd").attach_dg(self)   # G-0299 자동 퀘스트 ▶
 
 	_session_start_cleared = DungeonSaveState.rooms_cleared.count(true)
+	var guide_walk := preload("res://saga_core/world/first_run_walk_observer.gd").new()
+	guide_walk.setup(Callable(DungeonSaveState, "tutorial_action"))
+	add_child(guide_walk)
 	DungeonGoldState.begin_session()
 	DungeonGoldState.gold_changed.connect(_refresh_goal_board)
 	DungeonHordeState.horde_changed.connect(_refresh_goal_board)
@@ -282,6 +285,10 @@ func _ready() -> void:
 	DungeonSigilState.sigil_changed.connect(_maybe_spawn_sigil_pack)   # G-0247 부적을 켜면 마지막 방에 정예 무리
 	_maybe_spawn_sigil_pack()
 	_refresh_goal_board()
+	if OS.get_environment("SAGA_TUTORIAL_PROBE") == "1":
+		var probe := preload("res://tools/probe_tutorial.gd").new()
+		add_child(probe)
+		probe.setup("dungeon")
 
 	## 101-3 G "동행 실루엣" — GO test_village.gd와 같은 배선(등용 인원 수만큼
 	## Player 뒤를 따르는 실루엣, 전투·충돌 없음).
@@ -317,6 +324,9 @@ func _refresh_goal_board() -> void:
 		var story: String = _scenario.call("objective") if _scenario != null else ""
 		if story != "":
 			now = story + " · " + now   # G-0085 이야기 목표 먼저
+	var guide_line: String = preload("res://games/saga_dungeon/data/tutorial.gd").line(DungeonSaveState.tutorial_done)
+	if guide_line != "":
+		now = guide_line
 	var md: Dictionary = DungeonMode.mode()
 	if String(md.key) != "normal":
 		now += " · ⚖️%s" % String(md.name)   # G-0247 난도(평이면 안 붙임)

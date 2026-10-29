@@ -191,6 +191,8 @@ var active_events: Array = []  # [{id, officer, due_month, due_year}]
 var events_done: Dictionary = {}  # id(String) -> count(int)
 ## G-0088 이야기(사건 카드) 진행 — data/scenario.gd fresh() 모양(다음 카드·끝낸 카드·고른 답·설전 맞힌 수). start_scenario 가 비운다.
 var story: Dictionary = {}
+## G-0413 조조전식 장 흐름 — 옛 지역 지도 세이브와 별도 진행 상태.
+var campaign: Dictionary = {"ch": 1, "step": "route", "party": [], "gold": 300, "bag": [], "cleared": {}, "bonus": {}, "tries": 0, "round": 0}
 
 ## **2026-09-18 추가 — PLAN 101-2 REALM ⑥후보(웹판 §5-2, 정확히는 §5-8
 ## "군주 사망·계승").** 웹판은 "군주를 노쇠·죽음에서 빼 둔 구멍을 닫는다"고
@@ -431,6 +433,7 @@ func start_scenario(id: String) -> void:
 	year = int(id)
 	month = 1
 	story = {}   # G-0088 새 판은 1막 첫 카드부터
+	campaign = {"ch": 1, "step": "route", "party": [], "gold": 300, "bag": [], "cleared": {}, "bonus": {}, "tries": 0, "round": 0}
 	result = ""
 	roster = [RealmOfficerPool.STARTING_OFFICER]
 	found = []

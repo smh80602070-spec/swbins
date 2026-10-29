@@ -11,7 +11,7 @@ extends SceneTree
 
 const Combat := preload("res://games/saga_story/data/story_combat.gd")
 
-const SAVED_VARS := ["level", "exp", "kills", "stage_kills", "visited_stages", "talks", "bosses", "feat", "achievements", "quests_done", "repeat_progress", "daily_done_day", "mats",
+const SAVED_VARS := ["level", "exp", "kills", "stage_kills", "visited_stages", "talks", "bosses", "feat", "achievements", "quests_done", "repeat_progress", "daily_done_day", "daily_pending", "mats",
 	"equipped", "gold", "job", "scroll_bonus", "scroll_left", "skills", "weekly_champion_week", "memory_fragments", "memory_tier", "mentor_bond", "sp_cut_lv", "sp_bonus", "skill_offers", "skill_free"]
 const HUNT_MAPS := ["field", "forest", "cave", "gorge"]
 const TOWN_MAPS := ["heodo", "gangneungjin", "gisanchae", "namjeongseong", "sinya"]
@@ -44,6 +44,7 @@ func _fresh(S: Node, lv: int = 1, done: bool = true) -> void:
 	S.quests_done = {}
 	S.repeat_progress = {}
 	S.daily_done_day = {}
+	S.daily_pending = {}
 	S.mats = {}
 	S.equipped = {}
 	S.gold = 0
@@ -328,13 +329,18 @@ func _initialize() -> void:
 	for i in 60:
 		S.add_kill()
 	var today := int(Time.get_unix_time_from_system() / 86400.0)
-	check(S.gold == 1500 + 900 + 900 and S.repeat_progress.d_hunt == 20 and S.daily_done_day.d_hunt == today and S.repeat_progress.r_hunt == 60, "반복·일일: 일일 토벌은 20킬에 하루 한 번(금 1500) · 토벌령은 30킬마다(30·60 에서 금 900 두 번)")
+	check(S.gold == 900 + 900 and S.repeat_progress.d_hunt == 20 and S.daily_done_day.d_hunt == today and S.repeat_progress.r_hunt == 60 and S.daily_pending.size() == 1, "반복·일일: 일일 토벌은 20킬에 수령 대기 · 토벌령은 30킬마다(30·60 에서 금 900 두 번)")
+	var daily_adapter: GDScript = load("res://games/saga_story/ui/goals_adapter.gd")
+	var daily_model: Dictionary = daily_adapter.call("model", Node.new())
+	var daily_claim: Dictionary = daily_model.get("claim", {})
+	var daily_claims: int = S.claim_daily_rewards()
+	check(bool(daily_claim.get("ready", false)) and daily_claims == 1 and S.gold == 1500 + 900 + 900 and S.daily_pending.is_empty() and S.claim_daily_rewards() == 0, "일일 받기: 어댑터 버튼 연결 · 금 1500 한 번 · 중복 수령 0")
 	_fresh(S, 3)
 	_all_quests_done(S)
 	S.daily_done_day["d_hunt"] = today - 1
 	for i in 20:
 		S.add_kill()
-	check(S.daily_done_day.d_hunt == today and S.gold >= 1500, "다음 날이면 일일 사명이 다시 열림")
+	check(S.daily_done_day.d_hunt == today and S.gold == 0 and S.daily_pending.size() == 1 and S.claim_daily_rewards() == 1 and S.gold == 1500, "다음 날이면 일일 사명이 다시 열리고 수령 보상 지급")
 	# 전직
 	_fresh(S, 9)
 	check(not S.can_change_job() and not S.choose_job("warrior"), "9레벨에는 전직 못 함")

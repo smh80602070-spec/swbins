@@ -1,0 +1,330 @@
+{
+ "at": "2026-10-25T22:40:02.506Z",
+ "secs": 16,
+ "rows": [
+  {
+   "game": "saga-go",
+   "mode": "2d",
+   "veil": [
+    [
+     53,
+     "zone-cut2"
+    ],
+    [
+     1255,
+     ""
+    ]
+   ],
+   "lastOff": 1255,
+   "anyVeil": true,
+   "total": 9,
+   "late": 3,
+   "lateList": [
+    "1667ms /127.0.0.1:8871/shared/assets/characters2d8/rf_jianyong/walk.webp",
+    "1667ms /127.0.0.1:8871/shared/assets/characters2d/rf_jianyong/walk.webp",
+    "12825ms /127.0.0.1:8871/shared/assets/portraits/pet/pt_panda_s.webp"
+   ],
+   "where": {
+    "town": false,
+    "dungeon": false,
+    "floor": null
+   },
+   "is3d": false,
+   "errors": []
+  },
+  {
+   "game": "saga-go",
+   "mode": "3d",
+   "veil": [
+    [
+     1823,
+     ""
+    ],
+    [
+     4268,
+     "zone-cut2"
+    ],
+    [
+     4507,
+     ""
+    ]
+   ],
+   "lastOff": 4507,
+   "anyVeil": true,
+   "total": 1,
+   "late": 0,
+   "lateList": [],
+   "where": {
+    "town": false,
+    "dungeon": false,
+    "floor": null
+   },
+   "is3d": true,
+   "errors": []
+  },
+  {
+   "game": "saga-dungeon",
+   "mode": "2d",
+   "veil": [
+    [
+     59,
+     "zone-cut2"
+    ],
+    [
+     559,
+     ""
+    ],
+    [
+     2204,
+     "veil"
+    ],
+    [
+     2656,
+     ""
+    ]
+   ],
+   "lastOff": 2656,
+   "anyVeil": true,
+   "total": 56,
+   "late": 8,
+   "lateList": [
+    "6157ms /127.0.0.1:8871/saga-dungeon/assets/sprites2d/mon_beast_boar.webp",
+    "6157ms /127.0.0.1:8871/shared/assets/web2d/moving/beast_big/side.webp",
+    "6166ms /127.0.0.1:8871/saga-dungeon/assets/sprites2d/mon_wasp.webp",
+    "6215ms /127.0.0.1:8871/saga-dungeon/assets/sprites2d_sheets/beast_big/idle.webp",
+    "12154ms /127.0.0.1:8871/saga-dungeon/assets/sprites2d/people/f_b713bcc3.webp",
+    "12154ms /127.0.0.1:8871/saga-dungeon/assets/sprites2d/human_05.png",
+    "12188ms /127.0.0.1:8871/saga-dungeon/assets/sprites2d_sheets/pool_d_goblin_118/idle.webp",
+    "15159ms /127.0.0.1:8871/saga-dungeon/assets/sprites2d/mon_era_drone.webp"
+   ],
+   "where": {
+    "town": true,
+    "dungeon": false,
+    "floor": null
+   },
+   "is3d": false,
+   "errors": []
+  },
+  {
+   "game": "saga-dungeon",
+   "mode": "3d",
+   "veil": [
+    [
+     52,
+     "zone-cut2"
+    ],
+    [
+     557,
+     ""
+    ],
+    [
+     3407,
+     "veil"
+    ],
+    [
+     9972,
+     ""
+    ]
+   ],
+   "lastOff": 9972,
+   "anyVeil": true,
+   "total": 199,
+   "late": 19,
+   "lateList": [
+    "10799ms /127.0.0.1:8871/shared/assets/creatures3d/robot_drone.glb",
+    "14117ms /127.0.0.1:8871/shared/assets/characters3d/rf_yanliang.glb",
+    "14116ms /127.0.0.1:8871/shared/assets/world3d/wpn_club_01.glb",
+    "14132ms /127.0.0.1:8871/shared/assets/characters3d/tex/807f183eea1192af.webp",
+    "14132ms /127.0.0.1:8871/shared/assets/characters3d/tex/af615ff5992dd594.webp",
+    "14134ms /127.0.0.1:8871/shared/assets/characters3d/tex/d28ef48b641d6f81.webp",
+    "14134ms /127.0.0.1:8871/shared/assets/characters3d/tex/939bce76eb07e6ab.webp",
+    "14134ms /127.0.0.1:8871/shared/assets/characters3d/tex/6c0871c0d4587819.webp",
+    "14134ms /127.0.0.1:8871/shared/assets/characters3d/tex/29bf0d16699eaaa5.webp",
+    "14135ms /127.0.0.1:8871/shared/assets/characters3d/tex/81726dc3c7cc81aa.webp",
+    "14136ms /127.0.0.1:8871/shared/assets/characters3d/tex/03179035297bb1ea.webp",
+    "14136ms /127.0.0.1:8871/shared/assets/characters3d/tex/10c8d609d08740af.webp"
+   ],
+   "where": {
+    "town": true,
+    "dungeon": false,
+    "floor": null
+   },
+   "is3d": true,
+   "errors": []
+  },
+  {
+   "game": "saga-forest",
+   "mode": "2d",
+   "veil": [
+    [
+     52,
+     "zone-cut2"
+    ],
+    [
+     557,
+     ""
+    ]
+   ],
+   "lastOff": 557,
+   "anyVeil": true,
+   "total": 0,
+   "late": 0,
+   "lateList": [],
+   "where": {
+    "town": false,
+    "dungeon": false,
+    "floor": null
+   },
+   "is3d": false,
+   "errors": []
+  },
+  {
+   "game": "saga-forest",
+   "mode": "3d",
+   "veil": [
+    [
+     97,
+     "zone-cut2"
+    ],
+    [
+     2053,
+     ""
+    ]
+   ],
+   "lastOff": 2053,
+   "anyVeil": true,
+   "total": 6,
+   "late": 1,
+   "lateList": [
+    "2582ms /127.0.0.1:8871/shared/assets/creatures3d/fox.glb"
+   ],
+   "where": {
+    "town": false,
+    "dungeon": false,
+    "floor": null
+   },
+   "is3d": true,
+   "errors": []
+  },
+  {
+   "game": "saga-story",
+   "mode": "2d",
+   "veil": [
+    [
+     51,
+     "zone-cut2"
+    ],
+    [
+     557,
+     ""
+    ]
+   ],
+   "lastOff": 557,
+   "anyVeil": true,
+   "total": 0,
+   "late": 0,
+   "lateList": [],
+   "where": {
+    "town": false,
+    "dungeon": false,
+    "floor": null
+   },
+   "is3d": false,
+   "errors": []
+  },
+  {
+   "game": "saga-story",
+   "mode": "3d",
+   "veil": [
+    [
+     60,
+     "zone-cut2"
+    ],
+    [
+     1981,
+     ""
+    ]
+   ],
+   "lastOff": 1981,
+   "anyVeil": true,
+   "total": 0,
+   "late": 0,
+   "lateList": [],
+   "where": {
+    "town": false,
+    "dungeon": false,
+    "floor": null
+   },
+   "is3d": true,
+   "errors": []
+  },
+  {
+   "game": "saga-realm",
+   "mode": "2d",
+   "veil": [
+    [
+     53,
+     "zone-cut2"
+    ],
+    [
+     552,
+     ""
+    ],
+    [
+     2537,
+     "zone-cut2"
+    ],
+    [
+     3315,
+     ""
+    ]
+   ],
+   "lastOff": 3315,
+   "anyVeil": true,
+   "total": 36,
+   "late": 0,
+   "lateList": [],
+   "where": {
+    "town": false,
+    "dungeon": false,
+    "floor": null
+   },
+   "is3d": false,
+   "errors": []
+  },
+  {
+   "game": "saga-realm",
+   "mode": "3d",
+   "veil": [
+    [
+     52,
+     "zone-cut2"
+    ],
+    [
+     557,
+     ""
+    ],
+    [
+     2455,
+     "zone-cut2"
+    ],
+    [
+     10625,
+     ""
+    ]
+   ],
+   "lastOff": 10625,
+   "anyVeil": true,
+   "total": 494,
+   "late": 0,
+   "lateList": [],
+   "where": {
+    "town": false,
+    "dungeon": false,
+    "floor": null
+   },
+   "is3d": true,
+   "errors": []
+  }
+ ]
+}

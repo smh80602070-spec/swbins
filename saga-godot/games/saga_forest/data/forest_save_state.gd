@@ -50,6 +50,10 @@ var met: Dictionary = {}          # npc_id(String) -> true(만난 적 있음)
 var quests_done: Dictionary = {}  # npc_id(String) -> true(부탁을 마침)
 var gifted: Dictionary = {}       # npc_id(String) -> day_key(마지막으로 선물한 날)
 var affinity: Dictionary = {}     # npc_id(String) -> int(친밀도 = "하트" 0~10)
+var tutorial_done: Array[String] = [] # G-0426 첫 실행 안내. 옛 세이브는 전부 완료.
+
+func tutorial_action(id: String) -> void:
+	preload("res://games/saga_forest/data/tutorial.gd").complete(tutorial_done, id)
 
 ## PLAN.md 101-2 FOREST ②후보 "관계 하트"(웹판 saga-forest/PLAN.md §5.4) —
 ## 순수 추가. 웹 스펙(하트 0~10, 대화·선물·부탁·세배 상승, 하루 상한 +4,
@@ -219,6 +223,8 @@ func mark_gathered(prop_id: String) -> void:
 
 func add_item(item_label: String, amount: int) -> void:
 	items[item_label] = int(items.get(item_label, 0)) + amount
+	if amount > 0:
+		tutorial_action("gather")
 
 
 func item_count(item_label: String) -> int:
@@ -246,6 +252,7 @@ func is_quest_done(npc_id: String) -> bool:
 
 func mark_quest_done(npc_id: String) -> void:
 	quests_done[npc_id] = true
+	tutorial_action("quest")
 
 
 func add_gold(amount: int) -> void:
@@ -270,6 +277,7 @@ func talked_today(npc_id: String) -> bool:
 
 func mark_talked(npc_id: String) -> void:
 	talked[npc_id] = ForestDay.today_key()
+	tutorial_action("talk")
 
 
 ## 웹판 §5.4 "하루 상승 상한 +4" — 그 날 이미 얻은 만큼만 빼고 남는 몫을
@@ -462,6 +470,7 @@ func save() -> bool:
 	var player := _find_player()
 	if player == null:
 		return false
+	tutorial_action("save")
 	var data := {
 		"version": SAVE_VERSION,
 		"player_pos": [player.global_position.x, player.global_position.y, player.global_position.z],
@@ -510,6 +519,7 @@ func save() -> bool:
 		"home_debt": home_debt,
 		"scenario": scenario,   # G-0086
 		"passive": passive,   # G-0218 솜씨도
+		"tutorial_done": tutorial_done,
 	}
 	return SafeFile.write_text(save_path(), JSON.stringify(data))
 
@@ -522,6 +532,7 @@ func try_load() -> bool:
 	if migrated == null:
 		return false
 	var data: Dictionary = migrated
+	tutorial_done = preload("res://saga_core/data/first_run_guide.gd").restore(preload("res://games/saga_forest/data/tutorial.gd").MISSIONS, data.get("tutorial_done", null))
 
 	var loaded_items: Variant = data.get("items", {})
 	items = loaded_items if typeof(loaded_items) == TYPE_DICTIONARY else {}

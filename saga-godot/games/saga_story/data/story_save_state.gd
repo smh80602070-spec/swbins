@@ -45,6 +45,8 @@ var achievements: Dictionary = {}  # key(String) -> true, achieve.js st() 그대
 var quests_done: Dictionary = {}  # key(String) -> true, quest.js 완료 기록의 이 포트 버전(전부 repeat:false 8개뿐이라 achievements와 같은 모양)
 var repeat_progress: Dictionary = {}  # REPEAT_QUESTS key(String) -> float, 마지막 완수 시점의 _quest_value() 스냅샷(그 이후 늘어난 만큼만 다음 판 진행도로 본다)
 var daily_done_day: Dictionary = {}  # REPEAT_QUESTS(daily:true) key(String) -> int(day index), 오늘 이미 완수했으면 다음 날까지 다시 안 된다
+var daily_pending: Dictionary = {}  # G-0414 일일 사명 보상 대기 — 키는 일자·사명, 보상은 지급 당시 배율 적용값
+var tutorial_done: Array[String] = [] # G-0426 첫 실행 안내. 옛 세이브는 전부 완료.
 var _checking_quests := false  # check_quests()가 보상으로 add_gold()를 부르고, add_gold()가 다시 check_quests()를 부르는 되먹임을 막는 잠금
 var mats: Dictionary = {}  # side.js s.mats[kind] 그대로 — 필드 채집(들꽃 등) 누적
 var equipped: Dictionary = {}  # slot(String) -> gear key(String), StoryCombat.item_def() 참고(밑감·고유 둘 다)
@@ -148,6 +150,7 @@ func consume_pending_spawn() -> float:
 ## (q_field/q_forest/q_cave). 빈 문자열이면 원래대로 전체 킬만 센다.
 func add_kill(stage_key: String = "") -> void:
 	kills += 1
+	tutorial_action("fight")
 	if not stage_key.is_empty():
 		stage_kills[stage_key] = int(stage_kills.get(stage_key, 0)) + 1
 	if Monthly.on_kill(monthly, stage_key, Monthly.now_key()):   # G-0296 — 채운 순간 한 번
@@ -254,6 +257,7 @@ func visit_stage(stage_key: String) -> void:
 ## 걸 때마다 부른다(방문과 달리 같은 NPC라도 매번 는다).
 func add_talk() -> void:
 	talks += 1
+	tutorial_action("talk")
 	check_quests()
 
 
@@ -268,7 +272,13 @@ func add_life_xp(k: String, n: int = 1) -> int:
 
 func add_mat(kind: String, amount: int = 1) -> void:
 	mats[kind] = int(mats.get(kind, 0)) + amount
+	if amount > 0:
+		tutorial_action("gather")
 	check_quests()
+
+
+func tutorial_action(id: String) -> void:
+	preload("res://games/saga_story/data/tutorial.gd").complete(tutorial_done, id)
 
 
 ## data-quest.js q_gather1("약초 캐기", goal.type:'gather', n:15)의 진행도.
@@ -302,6 +312,10 @@ func add_gold(n: int) -> void:
 		return
 	if n > 0:
 		n = roundi(float(n) * preload("res://games/saga_story/data/story_guild.gd").mul(self, "gold"))   # G-0333 상단
+	_add_gold_exact(n)
+
+
+func _add_gold_exact(n: int) -> void:
 	gold = maxi(0, gold + n)
 	check_achievements()
 	check_quests()
@@ -407,6 +421,12 @@ func add_exp(amount: int) -> void:
 	amount = roundi(amount * preload("res://games/saga_story/data/story_guild.gd").mul(self, "exp"))   # G-0333 서원
 	if amount <= 0:
 		return
+	_add_exp_exact(amount)
+
+
+func _add_exp_exact(amount: int) -> void:
+	if amount <= 0:
+		return
 	exp += amount
 	var need := StoryCombat.exp_need(level)
 	var lv0 := level
@@ -495,6 +515,7 @@ func check_quests() -> void:
 ## add_exp()/add_gold()가 다시 check_quests()를 불러도 잠금에 막힌다).
 func _check_repeat_quests() -> void:
 	var today := int(Time.get_unix_time_from_system() / 86400.0)
+	var added_daily := false
 	for key: String in StoryCombat.REPEAT_QUESTS:
 		var q: Dictionary = StoryCombat.REPEAT_QUESTS[key]
 		if level < int(q.need):
@@ -508,6 +529,14 @@ func _check_repeat_quests() -> void:
 		repeat_progress[key] = current
 		if bool(q.get("daily", false)):
 			daily_done_day[key] = today
+			var pending_key := "%s:%d" % [key, today]
+			var guild_script := preload("res://games/saga_story/data/story_guild.gd")
+			var reward_exp := roundi(roundi(int(q.get("exp", 0)) * float(passive_fx("exp"))) * float(guild_script.mul(self, "exp")))
+			var reward_gold := roundi(int(q.get("gold", 0)) * float(guild_script.mul(self, "gold")))
+			daily_pending[pending_key] = {"name": String(q.name), "exp": reward_exp, "gold": reward_gold, "scroll": String(q.get("scroll", ""))}
+			added_daily = true
+			Toast.show(self, "📜 %s 완수 — 오늘 창에서 보상 받기" % String(q.name), 3.0)
+			continue
 		var exp_reward := int(q.get("exp", 0))
 		if exp_reward > 0:
 			add_exp(exp_reward)
@@ -518,6 +547,28 @@ func _check_repeat_quests() -> void:
 		if not scroll_key.is_empty():
 			_grant_quest_scroll(scroll_key)
 		Toast.show(self, "📜 %s 완수(다시 쌓이면 또)" % String(q.name), 3.0)
+	if added_daily:
+		save()
+
+
+## G-0414 — 오늘·지난날 대기 중인 일일 사명 보상을 한 번에 수령한다.
+func claim_daily_rewards() -> int:
+	if daily_pending.is_empty() or _checking_quests:
+		return 0
+	var pending := daily_pending.duplicate(true)
+	daily_pending.clear()
+	_checking_quests = true
+	for key: Variant in pending:
+		var reward: Dictionary = pending[key]
+		_add_exp_exact(int(reward.get("exp", 0)))
+		_add_gold_exact(int(reward.get("gold", 0)))
+		var scroll := String(reward.get("scroll", ""))
+		if not scroll.is_empty():
+			_grant_quest_scroll(scroll)
+	_checking_quests = false
+	check_quests()
+	save()
+	return pending.size()
 
 
 ## quest.js look()의 이 포트 버전 — goal.type마다 다른 누적값을 본다.
@@ -913,6 +964,7 @@ func save() -> bool:
 	var player := _find_player()
 	if player == null:
 		return false
+	tutorial_action("save")
 	var data := {
 		"version": SAVE_VERSION,
 		"player_pos": [player.global_position.x, player.global_position.y, player.global_position.z],
@@ -928,6 +980,8 @@ func save() -> bool:
 		"quests_done": quests_done,
 		"repeat_progress": repeat_progress,
 		"daily_done_day": daily_done_day,
+		"daily_pending": daily_pending,   # G-0414 — 미수령 일일 보상, 구 세이브는 빈 칸
+		"tutorial_done": tutorial_done,
 		"weekly_champion_week": weekly_champion_week,
 		"memory_fragments": memory_fragments,
 		"memory_tier": memory_tier,
@@ -965,6 +1019,7 @@ func try_load() -> bool:
 	if migrated == null:
 		return false
 	var data: Dictionary = migrated
+	tutorial_done = preload("res://saga_core/data/first_run_guide.gd").restore(preload("res://games/saga_story/data/tutorial.gd").MISSIONS, data.get("tutorial_done", null))
 
 	merchant_until_ms = 0   # G-0212 리뷰 — 할인은 세이브 밖이라 다른 진행을 불러오면 끊는다
 	level = int(data.get("level", 1))
@@ -985,6 +1040,8 @@ func try_load() -> bool:
 	repeat_progress = loaded_repeat_progress if typeof(loaded_repeat_progress) == TYPE_DICTIONARY else {}
 	var loaded_daily_done_day: Variant = data.get("daily_done_day", {})
 	daily_done_day = loaded_daily_done_day if typeof(loaded_daily_done_day) == TYPE_DICTIONARY else {}
+	var loaded_daily_pending: Variant = data.get("daily_pending", {})
+	daily_pending = (loaded_daily_pending as Dictionary).duplicate(true) if typeof(loaded_daily_pending) == TYPE_DICTIONARY else {}
 	var loaded_weekly_champion_week: Variant = data.get("weekly_champion_week", {})
 	weekly_champion_week = loaded_weekly_champion_week if typeof(loaded_weekly_champion_week) == TYPE_DICTIONARY else {}
 	memory_fragments = int(data.get("memory_fragments", 0))

@@ -28,6 +28,16 @@ var _v: Variant = null
 
 func _ready() -> void:
 	Weather.force("clear")
+	_hide_probe_modals()
+
+## 세이브의 주민 퀘스트 창이 측정 대상과 무관하게 보상 단추를 가리는 일을 막는다.
+## 노드는 ui_modal 그룹에 둔 채 숨겨, 숨은 창이 입력/버튼을 막지 않는 동작은 그대로 검사한다.
+func _hide_probe_modals() -> void:
+	for modal in get_tree().get_nodes_in_group("ui_modal"):
+		if modal is CanvasLayer:
+			(modal as CanvasLayer).hide()
+		elif modal is CanvasItem:
+			(modal as CanvasItem).hide()
 	_p = get_tree().get_first_node_in_group("player")
 
 func _physics_process(_delta: float) -> void:
@@ -36,6 +46,8 @@ func _physics_process(_delta: float) -> void:
 		_fb = get_tree().get_first_node_in_group("go_field_bosses")
 		_fc = get_tree().get_first_node_in_group("go_field_combat")
 		return
+	if _step == 6:
+		_hide_probe_modals() # 장면 이동 중 NPC가 새 선택 창을 열면 매 틱 숨겨 측정 조건을 유지한다.
 	match _step:
 		0: # ① 표
 			var c0 := Growth.ascend_cost("self", 0)

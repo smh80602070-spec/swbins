@@ -47,7 +47,16 @@ var _passive_apis: Dictionary = {}
 ## G-0231 전리품 거르기 — {"rules": [...], "hinted": bool}(data/loot_filter.gd). 순수 추가 필드, 버전 안 올림 — 없으면 기본 셋.
 var loot_filter: Dictionary = {}
 var bond: Dictionary = {}   # G-0341 부대 우정 {id: 점수, "_knot": [...]} — 셈은 data/dungeon_bond.gd
+var bounty_pending_gold := 0   # G-0414 살아 나온 현상금, 오늘 창에서 받을 금
+var tutorial_done: Array[String] = [] # G-0426 첫 실행 안내. 옛 세이브는 전부 완료.
 const Meridian := preload("res://games/saga_dungeon/data/dungeon_meridian.gd")
+
+func tutorial_action(id: String) -> void:
+	var accepted: bool = preload("res://games/saga_dungeon/data/tutorial.gd").complete(tutorial_done, id)
+	if accepted:
+		var tree := Engine.get_main_loop() as SceneTree
+		if tree != null and tree.current_scene != null and tree.current_scene.has_method("_refresh_goal_board"):
+			tree.current_scene.call_deferred("_refresh_goal_board")
 
 
 ## 그 직업(빈 칸이면 지금 낀 무기)의 경락도 규칙 층 — 세이브 칸이 바뀌면(불러오기) 새로 만든다. 찍으면 boons_changed(체력·이동 다시 셈).
@@ -72,6 +81,7 @@ func mark_room_cleared(index: int) -> void:
 	while rooms_cleared.size() <= index:
 		rooms_cleared.append(false)
 	rooms_cleared[index] = true
+	tutorial_action("fight")
 
 
 func is_hero_resolved(index: int) -> bool:
@@ -85,6 +95,7 @@ func mark_hero_resolved(index: int) -> void:
 
 
 func save(player: Node3D) -> void:
+	tutorial_action("save")
 	player_pos = player.global_position
 	var data := {
 		"version": SAVE_VERSION,
@@ -158,6 +169,8 @@ func save(player: Node3D) -> void:
 		"passive": passive,   # G-0217 경락도
 		"loot_filter": loot_filter,   # G-0231 전리품 거르기
 		"bond": bond,   # G-0341 부대 우정 — 순수 추가(버전 그대로)
+		"bounty_pending_gold": bounty_pending_gold,   # G-0414 미수령 현상금 — 순수 추가
+		"tutorial_done": tutorial_done,
 		"mode": DungeonMode.chosen,   # G-0247 고른 난도 — 순수 추가(버전 그대로), 없으면 "normal"
 		"season": preload("res://games/saga_dungeon/data/dungeon_season.gd").dump(),   # G-0334 로컬 시즌·래더 — 순수 추가(버전 그대로)
 		"rank_best": preload("res://games/saga_dungeon/data/dungeon_rank.gd").best,   # G-0312 난도별 최고 등급 — 순수 추가(버전 그대로)
@@ -175,6 +188,7 @@ func try_load() -> bool:
 	if migrated == null:
 		return false
 	var data: Dictionary = migrated
+	tutorial_done = preload("res://saga_core/data/first_run_guide.gd").restore(preload("res://games/saga_dungeon/data/tutorial.gd").MISSIONS, data.get("tutorial_done", null))
 
 	var rc: Variant = data.get("rooms_cleared", [])
 	rooms_cleared.clear()
@@ -227,6 +241,7 @@ func try_load() -> bool:
 		jewels if jewels is Array else [])
 	var gold: Variant = data.get("gold", 0)
 	DungeonGoldState.restore(int(gold) if (typeof(gold) == TYPE_INT or typeof(gold) == TYPE_FLOAT) else 0)
+	bounty_pending_gold = maxi(0, int(data.get("bounty_pending_gold", 0)))   # G-0414 — 옛 저장은 받을 금 없음
 	var belt: Variant = data.get("belt", [])
 	DungeonPotionState.restore(belt if belt is Array else [])
 	var party_members: Variant = data.get("party_members", [])
@@ -267,6 +282,16 @@ func try_load() -> bool:
 	DungeonWorldBossState.restore(
 		int(worldboss_last_slot) if (typeof(worldboss_last_slot) == TYPE_INT or typeof(worldboss_last_slot) == TYPE_FLOAT) else -1)
 	return true
+
+
+## G-0414 — 성공적으로 끝난 현상금 금은 한 번만 받는다. 호출자는 잔액을 저장한다.
+func claim_bounty_gold() -> int:
+	var amount := bounty_pending_gold
+	if amount <= 0:
+		return 0
+	bounty_pending_gold = 0
+	DungeonGoldState.add(amount)
+	return amount
 
 
 func _migrate_step(from_version: int, data: Dictionary) -> Variant:

@@ -11,6 +11,7 @@ extends Node
 ##   · 카드·설전이 끝날 때마다 저장(RealmSaveState.save — 플레이어 노드 필요 없음). 목표판 글은 objective().
 
 const Scenario := preload("res://games/saga_realm/data/scenario.gd")
+const RealmCampaign := preload("res://games/saga_realm/data/realm_campaign.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const TalkBox := preload("res://saga_core/ui/talk_box.gd")
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
@@ -48,7 +49,7 @@ func _process(delta: float) -> void:
 
 
 func tick() -> void:
-	if _busy or get_tree().paused or not RealmSaveState.scenario_ready:
+	if RealmCampaign.enabled() or _busy or get_tree().paused or not RealmSaveState.scenario_ready:
 		return
 	if RealmSaveState.story != st:   # 새 시나리오(start_scenario 가 story 를 비움)·불러오기
 		st = Scenario.normalize(RealmSaveState.story)

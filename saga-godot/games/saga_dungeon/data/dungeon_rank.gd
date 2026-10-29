@@ -55,7 +55,7 @@ static func finish(dead: bool = false) -> Dictionary:
 	var r: Dictionary = counter.call("finish", DungeonGoldState.gold, dead)
 	var br := Bounty.finish(r, dead)   # G-0372 끝 판정 현상금·덤 금(쓰러지면 0)
 	if int(br.get("gold", 0)) > 0:
-		DungeonGoldState.add(int(br.gold))
+		DungeonSaveState.bounty_pending_gold += int(br.gold)   # G-0414 오늘 창에서 직접 받기
 	if r.is_empty():
 		last = {}
 		return {}

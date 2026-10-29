@@ -58,6 +58,7 @@ extends Node3D
 ## annexed()`) 이 실루엣을 지우고 원래 깃발로 되돌린다(이제 우리 성이니).
 
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
+const RealmCampaign := preload("res://games/saga_realm/data/realm_campaign.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
@@ -183,7 +184,7 @@ func _build_all_markers() -> void:
 func _process(_delta: float) -> void:
 	## G-0259 — 보이기·안개 사본 토글은 시나리오 확정 전에도 한다(전엔 아래 return 이 먼저라 세이브 없는 첫 판에선
 	## 지도가 성 화면에서도 보인 채였고, 지도를 켜도 안개 사본이 안 걸려 rk_map_wide 컷이 안개에 먹혔다 — probe_realm_map_fog).
-	visible = RealmSaveState.viewing_map
+	visible = RealmSaveState.viewing_map and not RealmCampaign.enabled()
 	if visible != _last_visible:
 		_last_visible = visible
 		_apply_fog_override(visible)

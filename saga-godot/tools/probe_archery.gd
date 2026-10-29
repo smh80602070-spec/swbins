@@ -15,6 +15,7 @@ const Characters := preload("res://saga_core/data/characters.gd")
 const Weapons := preload("res://games/saga_go/data/weapons.gd")
 const Elements := preload("res://games/saga_go/combat/elements.gd")
 const AimedShot := preload("res://games/saga_go/combat/aimed_shot.gd")
+const CombatMotion := preload("res://games/saga_go/combat/combat_motion.gd")
 
 var _p: CharacterBody3D
 var _fc: Node
@@ -149,8 +150,9 @@ func _physics_process(_delta: float) -> void:
 				var near: Node = _fc.call("nearest_target", 7.0)
 				_fc.set("_attack_t", 0.0)
 				var did: bool = _fc.call("attack")
-				_check("catalyst_hits_target", did and near == t0 and bool(t0.call("is_lit")), "did=%s near=%s lit=%s" % [did, near == t0, t0.call("is_lit")])
-				_next()
+				var ap := _p.get("_anim") as AnimationPlayer
+				var delay := CombatMotion.strike_delay(_p, ap.current_animation, 0.34)
+				get_tree().create_timer(delay + 0.05).timeout.connect(_check_catalyst_target.bind(did, near == t0, t0))
 		7: # ⑨ 급소 — 적 하나를 활 인물 앞 12m 에 세워 얼린다
 			if _frame == 1:
 				PartyState.members.assign([_bow])
@@ -286,6 +288,10 @@ func _prep(e: Node) -> void:
 	e.set("max_hp", 99999.0)
 	e.set("hp", 99999.0)
 	e.call("set_aura", "")
+
+func _check_catalyst_target(did: bool, near: bool, target: Node) -> void:
+	_check("catalyst_hits_target", did and near and bool(target.call("is_lit")), "did=%s near=%s lit=%s" % [did, near, target.call("is_lit")])
+	_next()
 
 func _check(name: String, ok: bool, detail: String) -> void:
 	if not ok:

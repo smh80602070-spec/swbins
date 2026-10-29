@@ -11,6 +11,12 @@ extends Node3D
 ##   끝      결과 넷(대승·승·무승부·패)을 띄우고 1.4초 뒤 닫으며 done(apply 보정값)을 부른다. 물러나기(Esc)면 done({}) — 보정 없이 그냥 출진.
 
 const RealmTactics := preload("res://games/saga_realm/data/realm_tactics.gd")
+const CampaignCommand := preload("res://games/saga_realm/data/realm_commander.gd")
+const CampaignUltimate := preload("res://games/saga_realm/data/realm_ultimate.gd")
+const CampaignClass := preload("res://games/saga_realm/data/realm_class.gd")
+const BattleEvent := preload("res://games/saga_realm/data/realm_battle_event.gd")
+const SideGoal := preload("res://games/saga_realm/data/realm_side_goal.gd")
+const LivePortrait := preload("res://saga_core/ui/live_portrait.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
@@ -34,6 +40,7 @@ const COL := {"plain": Color("c8b47a"), "forest": Color("5f8446"), "river": Colo
 const HI_MOVE := Color(0.5, 0.82, 1.0, 0.42)
 const HI_ATTACK := Color(1.0, 0.36, 0.3, 0.5)
 const HI_SEL := Color(1.0, 0.88, 0.54, 0.85)
+const HI_COMMAND := Color(1.0, 0.78, 0.24, 0.2)
 const HI_CURSOR := Color(1.0, 1.0, 1.0, 0.5)
 const HI_FIRE := Color(1.0, 0.55, 0.12, 0.6)   # G-0347 화계 놓을 칸
 const SIDE_COL := {"me": Color(0.35, 0.62, 1.0), "foe": Color(0.95, 0.35, 0.3)}
@@ -61,6 +68,7 @@ var _hud_hidden: Array = []
 var _paused_cams: Array = []   # 성 카메라(realm_camera.gd)는 매 프레임 current 를 다시 잡는다 — 판이 열린 동안 멈춘다
 var _ui: CanvasLayer
 var _title: Label
+var _weather_status: Label
 var _hint: Label
 var _buttons: Array = []
 var _sel := ""
@@ -88,8 +96,22 @@ const PLOT_ICON := {"fire": "🔥", "confuse": "🌀", "heal": "💚"}
 const HI_HEAL := Color(0.4, 1.0, 0.55, 0.55)
 var _fire_btn: Button = null
 var _cmd := ""   # G-0347 ⑤-c "duel" | "debate" — 상대 장수를 고르는 중
+var _ult_mode := false
+var _ult_btn: Button
+var _ult_gauge: ProgressBar
+var _ult_seen := 0
 var _duel_btn: Button = null
 var _debate_btn: Button = null
+var _event_panel: PanelContainer
+var _event_portrait: Control
+var _event_tag: Label
+var _event_line: Label
+var _event_seen := 0
+var _event_queue: Array = []
+var _event_elapsed := 0.0
+var _event_current: Dictionary = {}
+var _side_status: Label
+var _side_marks: Dictionary = {}
 const HI_DUEL := Color(1.0, 0.85, 0.2, 0.6)
 var _flames := {}   # "x,y" → 불 표식 노드
 var _swing_n := 0          # G-0253 — 뷰 안 연타 셈(궤적 기울기 차례)
@@ -133,6 +155,7 @@ func _ready() -> void:
 	_idle_rng.seed = 20260824   # G-0266 대기 몸짓 차례(그림만)
 	_build_ground()
 	_build_cells()
+	_build_side_markers()
 	_build_units()
 	_build_camera()
 	_fit_labels()   # G-0348 카메라가 멀어지면 이름 글도 줄인다
@@ -251,9 +274,46 @@ func _build_cells() -> void:
 			_hi["%d,%d" % [x, y]] = hi
 
 
+func _build_side_markers() -> void:
+	var cells := SideGoal.cells(board)
+	for key: String in cells:
+		var parts := key.split(",")
+		var x := int(parts[0]); var y := int(parts[1])
+		var kind := String(cells[key])
+		var marker := Label3D.new()
+		marker.name = "SideGoal_%s_%d_%d" % [kind, x, y]
+		marker.text = String(SideGoal.ICON.get(kind, ""))
+		marker.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		marker.no_depth_test = true
+		marker.fixed_size = true
+		marker.pixel_size = 0.0012
+		marker.font_size = 48
+		marker.outline_size = 8
+		marker.position = cell_center(x, y) + Vector3(0, float(TOP.get(RealmTactics.cell_at(board, x, y), 0.2)) + 1.35, 0)
+		add_child(marker)
+		_side_marks[key] = marker
+
+
+func _refresh_side_goals() -> void:
+	var result := SideGoal.result(board)
+	_side_status.visible = not result.is_empty()
+	if not result.is_empty():
+		var goals: Array[String] = []
+		if int(result.get("chests", 0)) > 0: goals.append("📦 보물 %d/%d" % [int(result.loot), int(result.chests)])
+		if int(result.get("total", 0)) > 0: goals.append("🏘️ 마을 %d/%d" % [int(result.kept), int(result.total)])
+		_side_status.text = " · ".join(goals)
+	var cells := SideGoal.cells(board)
+	for key: String in _side_marks:
+		if cells.has(key): (_side_marks[key] as Label3D).text = String(SideGoal.ICON.get(String(cells[key]), ""))
+
+
 func _unit_name(u: Dictionary) -> String:
 	if String(u.kind) == "troop":
-		return "부대" if String(u.get("arm", "")) == "" else "%s병" % String(RealmTactics.ARM_NAME[u.arm])   # G-0347 ③ 병종
+		var arm := "부대" if String(u.get("arm", "")) == "" else "%s병" % String(RealmTactics.ARM_NAME[u.arm])
+		if bool(u.get("merc", false)):
+			var boss := CampaignCommand.commander(board, u)
+			if not boss.is_empty(): return "%s 휘하 %s" % [_officer_name(String(boss.id)), arm]
+		return arm
 	if bool(u.get("leader", false)):
 		var hl = Characters.find(String(u.id))
 		return "👑 " + (String(hl.name) if hl != null else String(u.id))
@@ -261,8 +321,15 @@ func _unit_name(u: Dictionary) -> String:
 	return String(h.name) if h != null else String(u.id)
 
 
+func _officer_name(id: String) -> String:
+	var h = Characters.find(id)
+	return String(h.get("name", id)) if h is Dictionary else id
+
+
 func _build_units() -> void:
 	for u: Dictionary in board.units:
+		if _units.has(String(u.uid)):
+			continue
 		var root := Node3D.new()
 		root.name = String(u.uid).replace(":", "_")
 		add_child(root)
@@ -294,11 +361,12 @@ func _build_units() -> void:
 		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 		label.no_depth_test = true
 		label.fixed_size = true
-		label.pixel_size = 0.0011
-		label.font_size = 24
+		label.pixel_size = 0.00075
+		label.font_size = 18
 		label.outline_size = 7
 		label.modulate = SIDE_COL[u.side].lightened(0.35)
-		label.position = Vector3(0, 2.15 if String(u.kind) == "officer" else 1.75, 0)
+		var label_stagger := float((int(u.x) + int(u.y)) % 3) * 0.6
+		label.position = Vector3(0, (2.15 if String(u.kind) == "officer" else 1.75) + label_stagger, 0)
 		root.add_child(label)
 		var aps := body.find_children("*", "AnimationPlayer", true, false)
 		_units[String(u.uid)] = {"node": root, "label": label, "ap": aps[0] if not aps.is_empty() else null, "hp": float(u.hp),
@@ -306,6 +374,11 @@ func _build_units() -> void:
 		_place(String(u.uid), int(u.x), int(u.y))
 		_face(String(u.uid), Vector3(1, 0, 0) if u.side == "me" else Vector3(-1, 0, 0))
 		_set_label(String(u.uid))
+
+
+func _sync_units() -> void:
+	_build_units()
+	_fit_labels()
 
 
 func _build_camera() -> void:
@@ -334,7 +407,7 @@ func _fit_labels() -> void:
 	for uid in _units:
 		var l: Label3D = _units[uid].get("label")
 		if l != null:
-			l.pixel_size = 0.0011 * k
+			l.pixel_size = 0.00075 * k
 
 
 ## 판 전체가 들어오는 거리 — 가로 시야(fov 50 세로 기준)로 판 너비(+여유), 세로로 깊이. 옛 8×6 가로 화면은 CAM_DIST 그대로(그보다 가깝게 안 함)
@@ -370,11 +443,37 @@ func _build_ui() -> void:
 	_title.add_theme_font_size_override("font_size", 26)
 	_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	col.add_child(_title)
+	_weather_status = Label.new()
+	_weather_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_weather_status.add_theme_font_size_override("font_size", 16)
+	_weather_status.add_theme_color_override("font_color", Color("a9d8ff"))
+	_weather_status.visible = false
+	col.add_child(_weather_status)
 	_hint = Label.new()
 	_hint.add_theme_font_size_override("font_size", 20)
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	col.add_child(_hint)
+	_side_status = Label.new()
+	_side_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_side_status.add_theme_font_size_override("font_size", 16)
+	_side_status.add_theme_color_override("font_color", Color("ffe29a"))
+	_side_status.visible = false
+	col.add_child(_side_status)
+	_ult_gauge = ProgressBar.new()
+	_ult_gauge.custom_minimum_size = Vector2(280, 14)
+	_ult_gauge.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_ult_gauge.show_percentage = true
+	_ult_gauge.visible = false
+	var gauge_bg := StyleBoxFlat.new()
+	gauge_bg.bg_color = Color("20242b")
+	gauge_bg.set_corner_radius_all(5)
+	var gauge_fill := StyleBoxFlat.new()
+	gauge_fill.bg_color = Color("f2a93b")
+	gauge_fill.set_corner_radius_all(5)
+	_ult_gauge.add_theme_stylebox_override("background", gauge_bg)
+	_ult_gauge.add_theme_stylebox_override("fill", gauge_fill)
+	col.add_child(_ult_gauge)
 	var row := HBoxContainer.new()
 	row.anchor_left = 0.0
 	row.anchor_right = 1.0
@@ -402,6 +501,13 @@ func _build_ui() -> void:
 	_fire_btn.visible = false
 	_fire_btn.pressed.connect(_on_fire_toggle)
 	row.add_child(_fire_btn)
+	_ult_btn = Button.new()
+	_ult_btn.text = "💥 필살"
+	_ult_btn.custom_minimum_size = Vector2(170, 64)
+	_ult_btn.add_theme_font_size_override("font_size", 22)
+	_ult_btn.visible = false
+	_ult_btn.pressed.connect(_on_ultimate)
+	row.add_child(_ult_btn)
 	for spec: Array in [["duel", "⚔️ 일기토"], ["debate", "🗣️ 설전"]]:   # G-0347 ⑤-c 이웃 적 장수에게 거는 명령 — 걸 수 있을 때만 보인다
 		var cb := Button.new()
 		cb.text = spec[1]
@@ -414,6 +520,45 @@ func _build_ui() -> void:
 			_duel_btn = cb
 		else:
 			_debate_btn = cb
+	_event_panel = PanelContainer.new()
+	_event_panel.anchor_left = 0.5
+	_event_panel.anchor_right = 0.5
+	_event_panel.anchor_top = 1.0
+	_event_panel.anchor_bottom = 1.0
+	_event_panel.offset_left = -310
+	_event_panel.offset_right = 310
+	_event_panel.offset_top = -190
+	_event_panel.offset_bottom = -96
+	_event_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_event_panel.visible = false
+	var event_style := StyleBoxFlat.new()
+	event_style.bg_color = Color("17130df2")
+	event_style.border_color = Color("c9a35a")
+	event_style.set_border_width_all(2)
+	event_style.set_corner_radius_all(12)
+	event_style.content_margin_left = 12
+	event_style.content_margin_right = 16
+	event_style.content_margin_top = 8
+	event_style.content_margin_bottom = 8
+	_event_panel.add_theme_stylebox_override("panel", event_style)
+	_ui.add_child(_event_panel)
+	var event_row := HBoxContainer.new()
+	event_row.add_theme_constant_override("separation", 12)
+	_event_panel.add_child(event_row)
+	_event_portrait = LivePortrait.new()
+	_event_portrait.custom_minimum_size = Vector2(64, 64)
+	event_row.add_child(_event_portrait)
+	var event_copy := VBoxContainer.new()
+	event_copy.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	event_row.add_child(event_copy)
+	_event_tag = Label.new()
+	_event_tag.add_theme_font_size_override("font_size", 16)
+	_event_tag.add_theme_color_override("font_color", Color("ffe27a"))
+	event_copy.add_child(_event_tag)
+	_event_line = Label.new()
+	_event_line.add_theme_font_size_override("font_size", 18)
+	_event_line.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	event_copy.add_child(_event_line)
 
 
 func _hide_hud(hide: bool) -> void:
@@ -447,8 +592,10 @@ func _face(uid: String, dir: Vector3) -> void:
 func _set_label(uid: String) -> void:
 	var u := RealmTactics.unit(board, uid)
 	var shown: float = _units[uid].hp
-	(_units[uid].label as Label3D).text = "%s%s
-%d/%d" % ["🌀" if bool(u.get("confused", false)) else "", _unit_name(u), int(ceil(shown)), int(u.max)]   # 🌀 혼란(G-0347 ⑤)
+	var short_name := _unit_name(u)
+	if bool(u.get("merc", false)):
+		short_name = "%s병" % String(RealmTactics.ARM_NAME.get(String(u.get("arm", "")), "용병"))
+	(_units[uid].label as Label3D).text = "%s%s %d/%d" % ["🌀" if bool(u.get("confused", false)) else "", short_name, int(ceil(shown)), int(u.max)]
 	(_units[uid].label as Label3D).visible = shown > 0.0
 
 
@@ -536,6 +683,31 @@ func _show_hi(x: int, y: int, c: Color) -> void:
 	mi.visible = true
 
 
+func _tick_battle_events(delta: float) -> void:
+	var log: Array = board.get("evLog", [])
+	while _event_seen < log.size():
+		_event_queue.append((log[_event_seen] as Dictionary).duplicate(true))
+		_event_seen += 1
+	if _event_current.is_empty() or _event_elapsed >= BattleEvent.SHOW_SECONDS:
+		_event_current = _event_queue.pop_front() if not _event_queue.is_empty() else {}
+		_event_elapsed = 0.0
+		if _event_current.is_empty():
+			_event_panel.visible = false
+			return
+		var tags := {"start":"⚔ 전투 개시", "story":"📖 장면 대사", "talk":"📖 전장 대화", "loot":"📦 보물 상자", "burn":"🔥 마을 습격", "reinforce":"⚠ 적 증원!", "ally":"🚩 원군 도착!", "low":"⚠ 적 대장 위기", "leaderDown":"👑 적 대장 격파", "foeDown":"적 장수 쓰러짐", "myDown":"아군 장수 쓰러짐"}
+		_event_tag.text = "%s · %s" % [String(tags.get(String(_event_current.get("kind", "")), "전투 소식")), String(_event_current.get("speaker", ""))]
+		var text := String(_event_current.get("text", ""))
+		var colon := text.find(": ")
+		_event_line.text = text.substr(colon + 2) if colon >= 0 else text
+		var actor := RealmTactics.unit(board, String(_event_current.get("who", "")))
+		_event_portrait.visible = not actor.is_empty() and String(actor.get("id", "")) != ""
+		if _event_portrait.visible:
+			_event_portrait.visible = bool(_event_portrait.call("setup", String(actor.id)))
+		_event_panel.visible = true
+	else:
+		_event_elapsed += delta
+
+
 func _targets_of(uid: String) -> Array:
 	var u := RealmTactics.unit(board, uid)
 	var out: Array = []
@@ -548,13 +720,24 @@ func _targets_of(uid: String) -> Array:
 
 
 func _refresh() -> void:
+	_sync_units()
+	_refresh_side_goals()
+	for uid: String in _units:
+		_set_label(uid)
 	_clear_hi()
 	var turn := mini(int(board.turn), RealmTactics.TURNS)
 	_title.text = "♟ 전술판 — %d/%d턴 · %s" % [turn, RealmTactics.TURNS, "적 차례" if _foe_turn else "내 차례"]
 	if bool(board.get("srpg", false)):   # G-0347 ④ 턴 상한 없음 — 목표가 제목
 		_title.text = "♟ 전장 — 목표: %s · %d턴 · %s" % [RealmTactics.goal_text(board), int(board.turn), "적 차례" if _foe_turn else "내 차례"]
+	_weather_status.text = RealmTactics.weather_text(board)
+	_weather_status.visible = _weather_status.text != ""
+	_ult_gauge.visible = false
 	if _sel != "":
 		var u := RealmTactics.unit(board, _sel)
+		if bool(board.get("command", false)):
+			for cell_key: String in CampaignCommand.range(board, _sel):
+				var parts := cell_key.split(",")
+				_show_hi(int(parts[0]), int(parts[1]), HI_COMMAND)
 		_show_hi(int(u.x), int(u.y), HI_SEL)
 		if not bool(u.moved):
 			for c: Dictionary in RealmTactics.moves(board, _sel):
@@ -570,7 +753,27 @@ func _refresh() -> void:
 			for m: Array in RealmTactics.hit_mods(board, u, t):   # G-0347 ③ 높이·상성·뒤
 				mods += " %s%+d" % [m[0], m[1]]
 			tips.append("%s %d%%%s%s" % [_unit_name(t), RealmTactics.hit_chance_b(board, u, t), (" 엄폐 −%d" % cv) if cv > 0 else "", mods])
-		_hint.text = "%s — 파란 칸으로 옮기고 붉은 칸을 친다%s" % [_unit_name(u), ("  (명중 " + " · ".join(tips) + ")") if not tips.is_empty() else ""]
+		var command_hint := ""
+		if String(u.get("kind", "")) == "officer" and u.has("cmdR"):
+			command_hint = " · 금빛 칸 = 지휘 %d칸, 용병 명중 ±%d%%p" % [int(u.cmdR), int(u.cmdA)]
+		elif bool(u.get("merc", false)):
+			var boss := CampaignCommand.commander(board, u)
+			if not boss.is_empty(): command_hint = " · 지휘권 %s, 명중 ±%d%%p" % ["안" if CampaignCommand.in_command(board, u) else "밖", int(boss.cmdA)]
+		if bool(board.get("campaign", false)) and String(u.get("kind", "")) == "officer":
+			var class_key := String(u.get("cls", ""))
+			if class_key != "": command_hint += " · " + CampaignClass.line(class_key)
+			var gauge := CampaignUltimate.gauge(u)
+			_ult_gauge.visible = true
+			_ult_gauge.value = gauge
+			var kind := CampaignUltimate.kind_of(u)
+			command_hint += " · %s %d%%" % [String(CampaignUltimate.KIND_NAME[kind]), gauge]
+			if gauge >= CampaignUltimate.FULL and not bool(u.get("acted", false)):
+				command_hint += " — 💥 필살 단추 사용 가능"
+			if _ult_mode:
+				for cell: Vector2i in CampaignUltimate.cells(board, _sel): _show_hi(cell.x, cell.y, HI_FIRE)
+				_hint.text = "%s — %s 필살: 주황 칸을 고르세요" % [_unit_name(u), String(CampaignUltimate.KIND_NAME[kind])]
+			else:
+				_hint.text = "%s — 파란 칸으로 옮기고 붉은 칸을 친다%s%s" % [_unit_name(u), command_hint, ("  (명중 " + " · ".join(tips) + ")") if not tips.is_empty() else ""]
 		if _fire_mode:
 			_clear_hi()
 			_show_hi(int(u.x), int(u.y), HI_SEL)
@@ -593,6 +796,7 @@ func _refresh() -> void:
 						_show_hi(int(t3.x), int(t3.y), HI_HEAL)
 					_hint.text = "%s — 💚 회복: 초록 칸 아군 체력 +%d · 책략 %d번 남음" % [_unit_name(u), RealmTactics.heal_amount(u), left]
 	else:
+		_ult_gauge.visible = false
 		_hint.text = "내 장수를 고르세요 · 숲은 명중 −30% · 성벽은 −50% · 3턴 안에 적을 무너뜨리면 대승"
 		if bool(board.get("srpg", false)):
 			_hint.text = "내 장수를 고르세요 · 숲 −30% · 성벽 −50% · 언덕 위 +10% · 창>기>궁>창 ±20% · 뒤 +20% · 👑 대장"
@@ -620,6 +824,12 @@ func _refresh() -> void:
 		_fire_btn.visible = _sel != "" and RealmTactics.can_fire(board, _sel)
 		_fire_btn.disabled = _busy
 		_fire_btn.text = ("%s %s ▸" % [PLOT_ICON[_plot], RealmTactics.PLOT_NAME[_plot]]) if _fire_mode else "📜 책략"
+	if _ult_btn != null:
+		var selected := RealmTactics.unit(board, _sel) if _sel != "" else {}
+		var can_ult := not selected.is_empty() and CampaignUltimate.ready(board, _sel)
+		_ult_btn.visible = can_ult or _ult_mode
+		_ult_btn.disabled = _busy
+		_ult_btn.text = "✋ 필살 취소" if _ult_mode else ("💥 %s" % String(CampaignUltimate.KIND_NAME[CampaignUltimate.kind_of(selected)]) if can_ult else "💥 필살")
 	_sync_flames()
 
 
@@ -659,6 +869,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		if _sel != "":
+			_ult_mode = false
 			_sel = ""
 			_refresh()
 		else:
@@ -682,6 +893,13 @@ func pick_cell(x: int, y: int) -> void:
 			_select(String(there.uid))
 		return
 	var u := RealmTactics.unit(board, _sel)
+	if _ult_mode:
+		_ult_mode = false
+		if CampaignUltimate.cells(board, _sel).has(Vector2i(x, y)):
+			await _perform_ultimate(Vector2i(x, y))
+		else:
+			_refresh()
+		return
 	if _cmd != "":   # G-0347 ⑤-c 일기토·설전 — 노란 칸 적 장수면 건다, 아니면 그만
 		var cmd := _cmd
 		_cmd = ""
@@ -739,6 +957,45 @@ func _select(uid: String) -> void:
 	_refresh()
 
 
+func _on_ultimate() -> void:
+	if _busy or _sel == "": return
+	if _ult_mode:
+		_ult_mode = false
+		_refresh()
+		return
+	var u := RealmTactics.unit(board, _sel)
+	if not CampaignUltimate.ready(board, _sel): return
+	_fire_mode = false
+	_cmd = ""
+	if CampaignUltimate.kind_of(u) == "chonggong":
+		await _perform_ultimate(Vector2i(int(u.x), int(u.y)))
+	else:
+		_ult_mode = true
+		_refresh()
+
+
+func _perform_ultimate(cell: Vector2i) -> void:
+	if _busy or _sel == "": return
+	_busy = true
+	var log0 := (board.log as Array).size()
+	var result := CampaignUltimate.use(board, _sel, cell)
+	if bool(result.get("ok", false)):
+		RealmTactics.check(board)
+		var history: Array = board.get("ultLog", [])
+		if not history.is_empty():
+			_show_ultimate_cut(history[-1])
+			_ult_seen = history.size()
+		for i in range(log0, (board.log as Array).size()):
+			await _anim_hit((board.log as Array)[i])
+		for unit: Dictionary in board.units:
+			if _units.has(String(unit.uid)):
+				_units[String(unit.uid)].hp = float(unit.hp)
+		_sel = ""
+	_busy = false
+	_refresh()
+	_after_action()
+
+
 # ── 대기 몸짓(G-0266) ──────────────────────────────────
 
 func _hold(uid: String, on: bool) -> void:
@@ -749,7 +1006,10 @@ func _hold(uid: String, on: bool) -> void:
 
 ## 타이머 하나 — 0.5초에 한 번 판 위 장수(보이는 전원)를 훑어, 차례가 된 쉬는 장수에게 둘러보기·체중(4~6초마다).
 func _process(delta: float) -> void:
-	if instant or _closed:
+	if _closed:
+		return
+	_tick_battle_events(delta)
+	if instant:
 		return
 	_idle_t += delta
 	if _idle_t < IDLE_CHECK:
@@ -810,11 +1070,74 @@ func _float_text(at: Vector3, text: String, c: Color) -> void:
 	tw.tween_callback(l.queue_free)
 
 
+func _show_ultimate_cut(record: Dictionary) -> void:
+	var actor := RealmTactics.unit(board, String(record.get("a", "")))
+	var kind := String(record.get("kind", ""))
+	if actor.is_empty() or not CampaignUltimate.KIND_NAME.has(kind): return
+	var previous := _ui.get_node_or_null("UltimateCutin")
+	if previous != null: previous.free()
+	var overlay := Control.new()
+	overlay.name = "UltimateCutin"
+	overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_ui.add_child(overlay)
+	var shade := ColorRect.new()
+	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	shade.color = Color(0.0, 0.0, 0.0, 0.52)
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	overlay.add_child(shade)
+	var band := PanelContainer.new()
+	band.anchor_left = 0.07
+	band.anchor_right = 0.93
+	band.anchor_top = 0.29
+	band.anchor_bottom = 0.71
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("182a50") if String(actor.side) == "foe" else Color("6e2015")
+	style.border_color = Color("f3d27a")
+	style.set_border_width_all(4)
+	band.add_theme_stylebox_override("panel", style)
+	overlay.add_child(band)
+	var row := HBoxContainer.new()
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_theme_constant_override("separation", 28)
+	band.add_child(row)
+	var portrait := LivePortrait.new()
+	portrait.custom_minimum_size = Vector2(180, 220)
+	portrait.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	row.add_child(portrait)
+	if not portrait.setup(String(actor.get("id", ""))): portrait.visible = false
+	var column := VBoxContainer.new()
+	column.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_child(column)
+	var title := Label.new()
+	title.text = "%s %s!" % [String(CampaignUltimate.KIND_ICON[kind]), String(CampaignUltimate.KIND_NAME[kind])]
+	title.add_theme_font_size_override("font_size", 48)
+	title.add_theme_color_override("font_color", Color("ffe9a0"))
+	column.add_child(title)
+	var detail := Label.new()
+	var hit_count := (record.get("hits", []) as Array).filter(func(h: Dictionary) -> bool: return int(h.get("dmg", 0)) > 0).size()
+	detail.text = "%s  ·  %s" % [_officer_name(String(actor.get("id", ""))), ("용병 %d · 회복 %d · 명중 +25%%p" % [(record.get("hits", []) as Array).size(), int(record.get("heal", 0))]) if kind == "chonggong" else "타격 %d" % hit_count]
+	detail.add_theme_font_size_override("font_size", 24)
+	detail.add_theme_color_override("font_color", Color.WHITE)
+	column.add_child(detail)
+	var tw := create_tween()
+	tw.tween_interval(1.35)
+	tw.tween_property(overlay, "modulate:a", 0.0, 0.25)
+	tw.tween_callback(overlay.queue_free)
+
+
 func _anim_hit(entry: Dictionary) -> void:
 	var a := String(entry.a)
 	var t := String(entry.to)
 	var an: Node3D = _units[a].node
 	var tn: Node3D = _units[t].node
+	if entry.has("ult"):
+		_float_text(tn.position, "%s %d" % [String(CampaignUltimate.KIND_NAME.get(String(entry.ult), "필살")), int(entry.get("dmg", 0))], Color(1.0, 0.84, 0.3))
+	var shown_skills: Array = entry.get("skills", [])
+	if bool(entry.get("counter", false)):
+		_float_text(an.position, "↩ 반격", Color(1.0, 0.7, 0.35))
+	if shown_skills.is_empty() and String(entry.get("skill", "")) != "": shown_skills.append(String(entry.skill))
+	if not shown_skills.is_empty(): _float_text(an.position, "✦ " + " · ".join(shown_skills), Color(1.0, 0.78, 0.3))
 	_hold(t, true)   # G-0266 — 맞는 동안 몸짓 0
 	_face(a, tn.position - an.position)
 	var cut := cut_cam and not instant and not _auto_mode
@@ -915,9 +1238,22 @@ func _do_attack(uid: String, tuid: String) -> void:
 
 ## 규칙을 이미 돌린 뒤 — 전 상태(snap)와 지금 판의 차이를 차례대로 연출(유닛마다 옮김 → 그 유닛의 공격)
 func _play_diff(snap: Dictionary, log0: int) -> void:
+	var ult_history: Array = board.get("ultLog", [])
+	for i in range(_ult_seen, ult_history.size()):
+		_show_ultimate_cut(ult_history[i])
+	_ult_seen = ult_history.size()
 	var moved := {}
 	var logs: Array = (board.log as Array).slice(log0)
 	for e: Dictionary in logs:
+		if bool(e.get("fled", false)):
+			var fled_uid := String(e.get("to", ""))
+			if _units.has(fled_uid):
+				var root: Node3D = _units[fled_uid].node
+				_float_text(root.position, "궤주", Color(1.0, 0.75, 0.35))
+				_units[fled_uid].hp = 0.0
+				_set_label(fled_uid)
+				root.visible = false
+			continue
 		var a := String(e.a)
 		if not moved.has(a):
 			moved[a] = true

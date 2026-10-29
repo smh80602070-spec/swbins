@@ -36,6 +36,7 @@ func _on_pressed() -> void:
 	var before_gold := RealmSaveState.gold
 	var before_food := int(RealmSaveState.cities[city_id].food)
 	RealmSaveState.next_month()
+	RealmSaveState.tutorial_action("month")
 
 	var gold_diff := RealmSaveState.gold - before_gold
 	var food_diff := int(RealmSaveState.cities[city_id].food) - before_food

@@ -13,6 +13,8 @@ extends Node
 
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 
+func _ready() -> void:
+	add_to_group("story_goal_feed")
 
 func _process(_delta: float) -> void:
 	var board := get_tree().get_first_node_in_group("goal_board")
@@ -23,6 +25,9 @@ func _process(_delta: float) -> void:
 	var story: String = runner.call("objective") if runner != null else ""
 	if story != "":
 		now = story + " · " + now
+	var guide_line: String = preload("res://games/saga_story/data/tutorial.gd").line(StorySaveState.tutorial_done)
+	if guide_line != "":
+		now = guide_line
 	var session := "처치 +%d · 골드 +%d" % [
 		StorySaveState.session_kills_gained(), StorySaveState.session_gold_gained()]
 	board.set_goals(now, session, "—")

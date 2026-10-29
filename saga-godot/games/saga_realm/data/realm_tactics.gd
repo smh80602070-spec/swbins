@@ -1,5 +1,13 @@
 extends RefCounted
 
+const CampaignSkills := preload("res://games/saga_realm/data/realm_hero_skills.gd")
+const CampaignGear := preload("res://games/saga_realm/data/realm_campaign_gear.gd")
+const CampaignCommand := preload("res://games/saga_realm/data/realm_commander.gd")
+const CampaignUltimate := preload("res://games/saga_realm/data/realm_ultimate.gd")
+const CampaignClass := preload("res://games/saga_realm/data/realm_class.gd")
+const BattleEvent := preload("res://games/saga_realm/data/realm_battle_event.gd")
+const SideGoal := preload("res://games/saga_realm/data/realm_side_goal.gd")
+
 ## G-0182 — 사가천하 격자 전술 규칙 층. 웹 `saga-web/saga-realm/js/tactics.js`(W-0107) 를 화면 없이 그대로 옮겼다(함수 이름은 snake_case).
 ## "전투가 구경이다"를 깨는 소수 장수 격자 전술 — 화면은 G-0183(realm_tactics_view.gd), 결과 적용은 realm_rules_war.gd attack() 셋째 인자.
 ##
@@ -260,13 +268,25 @@ static func attack(b: Dictionary, uid: String, tuid: String) -> Dictionary:
 	var dmg := 0
 	if hit:
 		dmg = maxi(1, js_round(float(a.atk) * dmg_mul * (0.8 + roll(b, "d") * 0.4)))
+		if bool(b.get("campaign", false)):
+			dmg = CampaignSkills.damage(b, a, t, dmg)
 		t.hp = maxf(0.0, float(t.hp) - float(dmg))
 	a.acted = true
 	a.moved = true
 	_sup_note(b, a)   # G-0390 지원 — 이웃 쌍을 이 판에 적는다(b.sup 없으면 아무것도 안 함)
 	(b.log as Array).append({"t": b.turn, "a": uid, "to": tuid, "hit": hit, "dmg": dmg, "ch": ch})
+	var primary_log := (b.log as Array).size() - 1
+	var skills: Array = []
+	if bool(b.get("campaign", false)):
+		skills = CampaignSkills.after(b, a, t, hit, dmg)
+		if not skills.is_empty(): (b.log as Array)[primary_log]["skills"] = skills
+		CampaignUltimate.on_attack(b, a, t, hit)
+	var counter: Dictionary = {}
+	if bool(b.get("command", false)):
+		counter = CampaignCommand.counter(b, a, t, hit_chance_b(b, t, a), dmg_mul)
+		CampaignCommand.sweep(b)
 	check(b)
-	return {"ok": true, "hit": hit, "dmg": dmg, "killed": float(t.hp) <= 0.0, "chance": ch}
+	return {"ok": true, "hit": hit, "dmg": dmg, "killed": float(t.hp) <= 0.0, "chance": ch, "skills": skills, "counter": counter}
 
 
 # ── AI(같은 규칙을 양쪽이 쓴다) ──
@@ -277,6 +297,7 @@ static func _best_target(b: Dictionary, u: Dictionary, foes: Array) -> Dictionar
 	for t: Dictionary in foes:
 		if float(t.hp) > 0.0 and in_range(u, t):
 			var c := hit_chance_b(b, u, t)
+			if bool(b.get("command", false)) and String(t.get("kind", "")) == "officer": c += 10
 			if c > bc:
 				bc = c
 				best = t
@@ -291,6 +312,9 @@ static func act_auto(b: Dictionary, u: Dictionary) -> void:
 		u.moved = true
 		u.acted = true
 		return
+	if bool(b.get("campaign", false)) and CampaignUltimate.ai(b, u):
+		check(b)
+		return
 	var foes := alive(b, "foe" if String(u.side) == "me" else "me")
 	if foes.is_empty():
 		return
@@ -302,6 +326,9 @@ static func act_auto(b: Dictionary, u: Dictionary) -> void:
 			var dq := dist(u, q)
 			return dp < dq or (dp == dq and String(p.uid) < String(q.uid)))
 		var near: Dictionary = sorted[0]
+		if bool(b.get("campaign", false)):
+			var lure := SideGoal.lure(b, u)
+			if not lure.is_empty(): near = lure
 		var pick := {}
 		var pd := 1 << 30
 		var pc := -1
@@ -338,7 +365,12 @@ static func auto_side(b: Dictionary, side: String) -> void:
 static func ai_turn(b: Dictionary) -> String:
 	if String(b.done) != "":
 		return b.done
+	if bool(b.get("command", false)) and String(b.side) == "me":
+		for merc: Dictionary in CampaignCommand.unacted_mercs(b):
+			act_auto(b, merc)
+			if String(b.done) != "": return b.done
 	auto_side(b, "foe")
+	if bool(b.get("campaign", false)): SideGoal.foe_turn_end(b)
 	if String(b.done) != "":
 		return b.done
 	burn_tick(b)   # G-0347 화계 — 불 없으면 아무것도 안 함(웹 맞춤 그대로)
@@ -349,6 +381,13 @@ static func ai_turn(b: Dictionary) -> String:
 		u.moved = false
 		u.acted = false
 	b.side = "me"
+	if bool(b.get("campaign", false)):
+		CampaignSkills.turn_start(b)
+	if bool(b.get("command", false)):
+		CampaignCommand.turn_start(b)
+	if bool(b.get("campaign", false)):
+		CampaignClass.turn_start(b)
+		BattleEvent.turn_start(b)
 	check(b)
 	return b.done
 
@@ -372,6 +411,9 @@ static func hp_frac(b: Dictionary, side: String) -> float:
 static func check(b: Dictionary) -> String:
 	if String(b.done) != "":
 		return b.done
+	if bool(b.get("campaign", false)):
+		BattleEvent.scan(b)
+		SideGoal.scan(b)
 	if bool(b.get("srpg", false)):
 		return check_srpg(b)
 	if alive(b, "foe").is_empty():
@@ -403,6 +445,8 @@ static func outcome(b: Dictionary) -> Dictionary:
 		"fallen": down if permadeath else [], "wounded": [] if permadeath else down, "foeDown": foe_down}
 	if not (b.get("sup_pairs", {}) as Dictionary).is_empty():
 		res["supPairs"] = (b.sup_pairs as Dictionary).keys()   # G-0390 함께 싸운 쌍(있을 때만 — 없으면 옛 결과와 같다)
+	var side_result := SideGoal.result(b)
+	if not side_result.is_empty(): res["side"] = side_result
 	return res
 
 
@@ -417,6 +461,8 @@ static func apply(out: Dictionary, where: String = "") -> Dictionary:
 		"fallen": (out.fallen as Array).duplicate(), "wounded": wounded, "where": where}
 	if out.has("supPairs"):
 		grid["sup"] = (out.supPairs as Array).duplicate()   # G-0390 attack() 이 RealmSupport.on_end 로 센다
+	if out.has("side"):
+		grid["side"] = (out.side as Dictionary).duplicate(true)
 	return grid
 
 
@@ -465,12 +511,13 @@ static func burning(b: Dictionary) -> Dictionary:
 ## 불 놓을 수 있는 칸 [{x, y}]
 static func fire_cells(b: Dictionary, uid: String) -> Array:
 	var out: Array = []
-	if not can_fire(b, uid):
+	if not can_fire(b, uid) or String(b.get("weather", "clear")) == "rain":
 		return out
 	var u := unit(b, uid)
+	var range := FIRE_RANGE - fog_cut(b)
 	for y in int(b.rows):
 		for x in int(b.cols):
-			if cell_at(b, x, y) == "forest" and absi(x - int(u.x)) + absi(y - int(u.y)) <= FIRE_RANGE and not burning(b).has("%d,%d" % [x, y]):
+			if cell_at(b, x, y) == "forest" and absi(x - int(u.x)) + absi(y - int(u.y)) <= range and not burning(b).has("%d,%d" % [x, y]):
 				out.append({"x": x, "y": y})
 	return out
 
@@ -557,6 +604,22 @@ const GOAL_NAME := {"rout": "적 전멸", "leader": "적 대장 격파", "gate":
 const HOLD_TURNS := 6
 const SRPG_CAP := 30
 const PLOTS := 2
+## G-0425/W-0485 tuning switch. Disabled forces clear weather for baseline probes.
+static var weather_enabled := true
+
+static func weather_of(seed: String) -> String:
+	if not weather_enabled: return "clear"
+	var roll := hash01(seed, "wx")
+	return "clear" if roll < 0.55 else "rain" if roll < 0.8 else "fog"
+
+static func fog_cut(b: Dictionary) -> int:
+	return 1 if String(b.get("weather", "clear")) == "fog" else 0
+
+static func weather_text(b: Dictionary) -> String:
+	match String(b.get("weather", "clear")):
+		"rain": return "🌧️ 비 · 화계 불가"
+		"fog": return "🌫️ 안개 · 활·책략 사거리 −1"
+	return ""
 
 
 static func make_board_srpg(seed: String, land: String, siege: bool, goal: String) -> Dictionary:
@@ -594,7 +657,7 @@ static func make_board_srpg(seed: String, land: String, siege: bool, goal: Strin
 				cells[y * cols + (cols - 3)] = "wall"
 		gate = Vector2i(cols - 3, rows / 2)
 		cells[gate.y * cols + gate.x] = "gate"
-	return {"seed": seed, "land": key, "siege": siege, "cols": cols, "rows": rows, "cells": cells, "units": [], "turn": 1, "side": "me", "n": 0, "done": "", "log": [],
+	return {"seed": seed, "land": key, "siege": siege, "cols": cols, "rows": rows, "cells": cells, "units": [], "turn": 1, "side": "me", "n": 0, "done": "", "log": [], "weather": weather_of(seed),
 		"srpg": true, "goal": g, "gate": [gate.x, gate.y], "hold": HOLD_TURNS, "plots": PLOTS}
 
 
@@ -636,6 +699,20 @@ static func units_of_srpg(b: Dictionary, mine: Array, foes: Array, foe_troops: A
 		if String(u.side) == "foe" and String(u.kind) == "officer":
 			u.leader = true
 			break
+	if bool(b.get("campaign", false)):
+		for u: Dictionary in list:
+			if String(u.kind) == "officer":
+				CampaignSkills.attach(u)
+				CampaignGear.apply(u)
+		b.plots = int(b.get("plots", PLOTS)) + CampaignSkills.plots_bonus(b)
+		if bool(b.get("command", false)):
+			CampaignCommand.setup(b, stats, my_troops, foe_troops, {"mercs": b.get("mercs", {})}, int(b.get("merc_n", 2)), float(b.get("merc_mul", 1.2)))
+		CampaignClass.apply(b, b.get("classes", {}))
+		BattleEvent.setup(b, b.get("events", {}))
+		SideGoal.setup(b, b.get("events", {}))
+	if fog_cut(b) > 0:
+		for u: Dictionary in list:
+			if int(u.get("rng", 1)) > 1: u.rng = int(u.rng) - 1
 	return list
 
 
@@ -678,6 +755,13 @@ static func hit_mods(b: Dictionary, att: Dictionary, tgt: Dictionary) -> Array:
 			out.append(["상성", -COUNTER_HIT])
 	if is_back(att, tgt):
 		out.append(["뒤", BACK_HIT])
+	if bool(b.get("campaign", false)):
+		CampaignSkills.mods(b, att, tgt, out)
+	if bool(b.get("command", false)):
+		CampaignCommand.hit_mods(b, att, tgt, out)
+	if bool(b.get("campaign", false)):
+		CampaignUltimate.mods(b, att, tgt, out)
+		CampaignClass.mods(b, att, tgt, out)
 	return out
 
 
@@ -743,6 +827,8 @@ static func goal_text(b: Dictionary) -> String:
 
 
 static func check_srpg(b: Dictionary) -> String:
+	if bool(b.get("command", false)):
+		CampaignCommand.sweep(b)
 	if alive(b, "foe").is_empty():
 		b.done = "rout"
 	elif alive(b, "me").is_empty():
@@ -784,7 +870,7 @@ static func confuse_chance(u: Dictionary, t: Dictionary) -> int:
 
 
 static func heal_amount(u: Dictionary) -> int:
-	return js_round(HEAL_BASE + float(u.get("wis", 0.0)) / 5.0)
+	return js_round((HEAL_BASE + float(u.get("wis", 0.0)) / 5.0) * float(u.get("healMul", 1.0)))
 
 
 ## 책략을 걸 수 있는 대상 [uid…] — plot = confuse | heal
@@ -795,7 +881,7 @@ static func plot_targets(b: Dictionary, uid: String, plot: String) -> Array:
 	var u := unit(b, uid)
 	for t: Dictionary in alive(b):
 		var d := dist(u, t)
-		if plot == "confuse" and String(t.side) != String(u.side) and d <= PLOT_RANGE and not bool(t.get("confused", false)):
+		if plot == "confuse" and String(t.side) != String(u.side) and d <= PLOT_RANGE - fog_cut(b) and not bool(t.get("confused", false)):
 			out.append(String(t.uid))
 		elif plot == "heal" and String(t.side) == String(u.side) and d <= HEAL_RANGE and float(t.hp) < float(t.max):
 			out.append(String(t.uid))

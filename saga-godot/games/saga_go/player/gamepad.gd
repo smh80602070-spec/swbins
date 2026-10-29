@@ -101,9 +101,18 @@ func _add(action: String, spec: Array) -> void:
 ## 보이는 창(ui_modal) 하나 — 없으면 null.
 func _open_modal() -> Node:
 	for n in get_tree().get_nodes_in_group("ui_modal"):
-		if n.get("visible") != false:
+		if _node_is_visible(n):
 			return n
 	return null
+
+func _node_is_visible(node: Node) -> bool:
+	if node is CanvasItem:
+		return (node as CanvasItem).is_visible_in_tree()
+	if node is CanvasLayer:
+		return (node as CanvasLayer).visible
+	if node is Window:
+		return (node as Window).visible
+	return true
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventJoypadMotion and triggers.has(int((event as InputEventJoypadMotion).axis)):
@@ -128,16 +137,28 @@ func _input(event: InputEvent) -> void:
 			Input.parse_input_event(k)
 
 ## 창이 열렸는데 초점이 없으면 그 창의 첫 단추에 — 십자키(ui_up/down)·A(ui_accept)로 고른다.
-func _focus_modal() -> void:
+func _focus_modal() -> bool:
 	var m := _open_modal()
-	if m == null or get_viewport().gui_get_focus_owner() != null:
-		return
-	for b in m.find_children("*", "BaseButton", true, false):
-		var bb := b as BaseButton
-		if bb.is_visible_in_tree() and not bb.disabled and bb.focus_mode != Control.FOCUS_NONE:
-			bb.grab_focus()
-			return
+	if m == null:
+		return false
+	var focus: Node = get_viewport().gui_get_focus_owner()
+	while focus != null:
+		if focus == m:
+			return true
+		focus = focus.get_parent()
+	return _focus_first_button(m)
+
+func _focus_first_button(root: Node) -> bool:
+	for child in root.get_children():
+		if child is BaseButton:
+			var button := child as BaseButton
+			if button.is_visible_in_tree() and not button.disabled and button.focus_mode != Control.FOCUS_NONE:
+				button.grab_focus()
+				return true
+		if _focus_first_button(child):
+			return true
+	return false
 
 ## 점검용 — 초점 맞추기를 패드 없이도 한 번.
-func focus_now() -> void:
-	_focus_modal()
+func focus_now() -> bool:
+	return _focus_modal()

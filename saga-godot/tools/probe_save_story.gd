@@ -10,6 +10,6 @@ const Base := preload("res://tools/probe_save_base.gd")
 func _initialize() -> void:  # autoload 이름은 _init 뒤에야 등록된다
 	await process_frame
 	var rt := {"tree": self, "autoload": "StorySaveState", "fields": {
-		"level": [7, 1], "exp": [123, 0], "gold": [456, 0], "quests_done": [{"q_first": true}, {}]}}
+		"level": [7, 1], "exp": [123, 0], "gold": [456, 0], "quests_done": [{"q_first": true}, {}], "daily_pending": [{"d_hunt:20660": {"name": "일일 토벌", "exp": 500, "gold": 1500, "scroll": ""}}, {}]}}
 	var fails: int = Base.run("story", "res://games/saga_story/data/story_save_state.gd", {}, Callable(), rt)
 	quit(1 if fails > 0 else 0)
