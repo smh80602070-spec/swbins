@@ -58,9 +58,9 @@
     var y0 = L.y0 || 0;
     var m = { s: L.s, k: L.k, ox: 0, oy: 0, cw: L.cw, ch: L.ch, top: L.top, bot: L.bot, camX: L.camX, y0: y0, town: !!town, px: run && run.player ? run.player.x : 0, py: run && run.player ? run.player.y : 0, W: W, H: H };
     /* 깊이 원근(사용자 10-29 "3마을처럼") — 마을·들판만. 화면 깊이 d(위 0·아래 1)마다 배율 f = 1 + 손잡이 dg.beltDepth × (d − 0.5): 멀수록 작고 가운데로 모인다. 0(기본) = 옛 그대로 */
-    var BD = town ? +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('dg.beltDepth', 1) : 0) || 0 : 0;
+    var BD = +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned(town ? 'dg.beltDepth' : 'dg.beltDepthRoom', town ? 1 : 0.8) : 0) || 0;
     function fAt(sy) { return BD > 0 ? 1 + BD * (Math.max(0, Math.min(1, (sy - L.top) / Math.max(1, L.bot - L.top))) - 0.5) : 1; }
-    m.sAt = function (y) { return L.s * fAt(L.top + (y - y0) * L.k); }; m.fAt = fAt; m.depth = BD;
+    m.sAt = function (y) { return L.s * fAt(L.top + (y - y0) * L.k); }; m.fAt = fAt; m.depth = BD; m.flatBelt = function (x, y) { return { x: L.cw / 2 + (x - L.camX) * L.s, y: L.top + (y - y0) * L.k }; };
     m.belt = function (x, y) { var sy = L.top + (y - y0) * L.k; return { x: L.cw / 2 + (x - L.camX) * L.s * fAt(sy), y: sy }; };
     m.unbelt = function (px, py) { return { x: L.camX + (px - L.cw / 2) / (L.s * fAt(py)), y: y0 + (py - L.top) / L.k }; };
     m.ellipse = function (c, x, y, r) { var p = m.belt(x, y); c.ellipse(p.x, p.y, r * m.sAt(y), r * L.k, 0, 0, Math.PI * 2); return p; };
@@ -132,7 +132,7 @@
   }
 
   /** 무대 — 뒷벽·바닥 띠·좌우 벽·핏자국·문. icons = 문 종류 → 그림 글자(dungeon-view DOOR_ICON) */
-  function stage(ctx, m, run, theme, now, gore, icons) {
+  function stageFlat(ctx, m, run, theme, now, gore, icons) {
     if (m.town) { return townStage(ctx, m, run, theme); }
     var M = global.DG.mode2d, cfg = (global.DG.cfg && global.DG.cfg.mode2d) || {};
     var W = m.W, H = m.H, cw = m.cw, s = m.s, i;
@@ -218,6 +218,20 @@
       if (dr.title) { ctx.font = '700 ' + Math.round(8 * s * 0.8 + 7) + 'px "Malgun Gothic", system-ui'; ctx.fillStyle = '#f0d9a0'; ctx.fillText(dr.title, gx + dw / 2, gy - 8); }
       ctx.globalAlpha = 1;
     }
+  }
+
+  var gRC = null;   // 방 깊이 원근 — 평평한 방을 두 배 폭으로 한 번 그려 두는 화면 밖 캔버스
+  /** 던전 방 — 깊이 원근이 켜지면(dg.beltDepthRoom) 평평한 방 그림을 가로줄 띠마다 배율 f 로 좁혀 붙인다(벽·바닥·기둥·문이 한꺼번에 사다리꼴로) */
+  function stage(ctx, m, run, theme, now, gore, icons) {
+    if (!(m.depth > 0) || m.town || !m.flatBelt) { return stageFlat(ctx, m, run, theme, now, gore, icons); }
+    var cw = m.cw, wd = 2, kk = (ctx.getTransform && ctx.getTransform().a) || 1, ow = Math.ceil(cw * wd * kk), oh = Math.ceil(m.ch * kk), sh = (wd - 1) * cw / 2, sy;
+    var oc = gRC || (gRC = document.createElement('canvas')); if (oc.width !== ow || oc.height !== oh) { oc.width = ow; oc.height = oh; }
+    var tx = oc.getContext('2d'); tx.setTransform(1, 0, 0, 1, 0, 0); tx.clearRect(0, 0, ow, oh); tx.setTransform(kk, 0, 0, kk, 0, 0);
+    var m2 = Object.create(m); m2.cw = cw * wd;
+    m2.belt = function (x, y) { var p = m.flatBelt(x, y); return { x: p.x + sh, y: p.y }; };
+    m2.ellipse = function (c, x, y, r) { var p = m2.belt(x, y); c.ellipse(p.x, p.y, r * m.s, r * m.k, 0, 0, Math.PI * 2); return p; };
+    stageFlat(tx, m2, run, theme, now, gore, icons);
+    for (sy = 0; sy < m.ch; sy += 3) { var sw = cw / m.fAt(sy + 1.5); ctx.drawImage(oc, (ow / kk - sw) / 2 * kk, sy * kk, sw * kk, 3 * kk, 0, sy, cw, 3); }
   }
 
   global.DG.belt2d = { on: on, want: want, layout: layout, layoutTown: layoutTown, HWIN: HWIN, ridge: ridge, PIECE: PIECE, fieldItems: fieldItems, drawPiece: drawPiece, metrics: metrics, stage: stage };
