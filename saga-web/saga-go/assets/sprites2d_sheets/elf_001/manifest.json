@@ -1,0 +1,170 @@
+{
+ "id": "elf_001",
+ "px": 192,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "dir_names": [
+  "front",
+  "front_side",
+  "side",
+  "back_side",
+  "back"
+ ],
+ "ndir": 8,
+ "mirror": true,
+ "side_faces": "right",
+ "layout": "가로 = 프레임, 세로 = 방향(dirs 순서)",
+ "clips": {
+  "idle": {
+   "frames": 8,
+   "fps": 6,
+   "loop": true,
+   "file": "idle.webp"
+  },
+  "walk": {
+   "frames": 8,
+   "fps": 10,
+   "loop": true,
+   "file": "walk.webp"
+  },
+  "run": {
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "file": "run.webp"
+  },
+  "attack": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false,
+   "file": "attack.webp"
+  },
+  "attack2": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "file": "attack2.webp"
+  },
+  "cast": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "file": "cast.webp"
+  },
+  "death": {
+   "frames": 8,
+   "fps": 8,
+   "loop": false,
+   "file": "death.webp"
+  },
+  "knockdown": {
+   "frames": 8,
+   "fps": 10,
+   "loop": false,
+   "file": "knockdown.webp"
+  },
+  "sit": {
+   "frames": 8,
+   "fps": 8,
+   "loop": false,
+   "file": "sit.webp"
+  },
+  "talk": {
+   "frames": 8,
+   "fps": 6,
+   "loop": true,
+   "file": "talk.webp"
+  },
+  "block": {
+   "frames": 8,
+   "fps": 10,
+   "loop": false,
+   "file": "block.webp"
+  },
+  "hit": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "file": "hit.webp"
+  },
+  "heavy": {
+   "frames": 8,
+   "fps": 11,
+   "loop": false,
+   "file": "heavy.webp"
+  },
+  "attack_shield": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false,
+   "file": "attack_shield.webp"
+  },
+  "attack_dagger": {
+   "frames": 8,
+   "fps": 16,
+   "loop": false,
+   "file": "attack_dagger.webp"
+  },
+  "attack_dagger2": {
+   "frames": 8,
+   "fps": 16,
+   "loop": false,
+   "file": "attack_dagger2.webp"
+  },
+  "attack_fist": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false,
+   "file": "attack_fist.webp"
+  },
+  "attack_kick": {
+   "frames": 8,
+   "fps": 14,
+   "loop": false,
+   "file": "attack_kick.webp"
+  },
+  "attack_staff": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "file": "attack_staff.webp"
+  },
+  "attack_gun": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "file": "attack_gun.webp"
+  },
+  "attack_gun2": {
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "file": "attack_gun2.webp"
+  }
+ },
+ "missing": [],
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "kind": "human",
+ "ortho_m": 2.9333,
+ "px_per_m": 87.27,
+ "body": "tools/ai-art/_out/k205 (사용자 제공 일러스트 시트, 5방향 × 11모션)",
+ "gear": "k159_companion_warrior",
+ "source": "tools/char-forge/factory.py → bake_sprite_batch.py/gear_sprites.py (Blender) → style_pass.py",
+ "anchor_x_px": {
+  "attack": {
+   "1": 122.2
+  },
+  "death": {
+   "2": 153.0
+  }
+ },
+ "license": "VRoid Studio 공식 샘플 이용 조건(상업 사용·개작본 재배포 허용, 크레딧 불필요 — 옷 이식 몸 K-0024) + 동작 CC0 UAL(bake_for_rig)·CMU 모캡(K-0139·K-0148, saga-assets/characters/anim-src/mocap/vroid_mocap_anims.license.json) — 상업 사용 가능",
+ "weapon": "sword",
+ "note": "K-0205 시험 풀 — 무기별 공격(attack_*)은 게임이 아직 안 읽음(attack·attack2·heavy 만 읽는다)"
+}

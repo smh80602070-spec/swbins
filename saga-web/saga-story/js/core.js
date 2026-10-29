@@ -488,14 +488,14 @@
     targetH: 62,                                 // 화면에 보일 보통 적 몸 높이(px) — 코드 스탬프 s 0.8 과 비슷하게
     vwScale: 1,                                // W-0402 ② 큰 몸 카메라 배율 — 4종횡은 1(사용자 10-25 「화면이 넘 가까워」로 1.6 되돌림)
     foot: 0.87,                                  // 시트에서 발 위치(프레임 높이 비율)
-    poolH: { pool_e_goblin_126: 50, pool_g_orc_141: 102, pool_basef_undead_111: 85, pool_f_demon_136: 97 },   // 프레임 안 몸 높이(px, 옆모습 알파 범위로 잼)
+    poolH: { elf_001: 150, pool_e_goblin_126: 50, pool_g_orc_141: 102, pool_basef_undead_111: 85, pool_f_demon_136: 97 },   // 프레임 안 몸 높이(px, 옆모습 알파 범위로 잼)
     /** 2D 모드인가 — 3D 바탕이 안 서 있을 때(= 2D 그림) */
     on: function () { var V = global.DG.sideView3d; return !(V && V.ready && V.ready()); },
-    vroid2d: { kinds: ['me'], h: 85, foot: 0.89 },   // 사람은 VRoid 2D 시트(W-0074, 사용자 10-06 "인물은 모두 VRoid") — 몸 높이 68~91px 평균·발 y≈114/128 실측. 없으면 아래 옛 풀
+    vroid2d: { kinds: [], h: 85, foot: 0.89 },   // 사람은 VRoid 2D 시트(W-0074, 사용자 10-06 "인물은 모두 VRoid") — 몸 높이 68~91px 평균·발 y≈114/128 실측. 없으면 아래 옛 풀
     still: { hero_m: 1, hero_f: 1, beast_dog: 1, beast_wolf: 1 },   // 한 장 모드 풀(W-0041, K-0056 정면·옆·뒤 3장) — 주인공 + 짐승 몸(W-0051)
     beast: { '들개': ['beast_dog', 0.8], '굶주린 승냥이': ['beast_wolf', 0.9], '산짐승 무리': ['beast_wolf', 0.9] },   // 짐승형 적 → 몸·배수(어울리는 것만)
     pools: {
-      me: ['hero_m', 'hero_f'],
+      me: ['elf_001'],
       t1: ['pool_e_goblin_126'],
       t2: ['pool_g_orc_141', 'pool_e_goblin_126'],
       t3: ['pool_basef_undead_111', 'pool_g_orc_141'],
