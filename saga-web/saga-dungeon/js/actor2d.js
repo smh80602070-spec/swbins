@@ -13,7 +13,7 @@
     if (!M) { return false; }
     var pool = M.pick(role, (ref && (ref.id || ref.name)) || role);
     if (!pool) { return false; }
-    o = o || {};
+    o = o || {}; if (+(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned("dg.footSink", 1) : 1) > 0) { y += 2.4 * s; }   // 10-29 발이 그림자 위로 떠 보인다(사용자) — 발 밑 가운데 기준을 몸 높이 5% 아래로(dg.footSink 0 = 옛)
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
     var key = role + ':' + ((ref && (ref.id || ref.name)) || ''), ht = M.actT ? M.actT(key + ':hit', o.hurt) : null, at = M.actT ? M.actT(key + ':atk', o.atk) : null;   // W-0073 단계 4
     var ai = at !== null && M.actInfo ? M.actInfo(key + ':atk') : null, atkClip = (o.cast || (ai && ai.dur >= 0.3)) ? 'heavy' : (ai && ai.n % 2 === 0 ? 'attack2' : 'attack');   // 강공격 0.38초·스킬 = heavy, 평타는 연타 번갈아
