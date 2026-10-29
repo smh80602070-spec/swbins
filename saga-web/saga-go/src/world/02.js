@@ -698,6 +698,7 @@
   function drawStation(st, u, v, now, pos) { return SI().drawStation(st, u, v, now, pos); }
 
   /** W-0204 2D 몸 배율 — 확대(camZoom2d, 2D 들판 확대 포함)를 몸도 따른다(옛: 땅만 커지고 사람은 60px 그대로), 1~2.5 */
+  /** xL �0� 8\ U�  2D Jt 0�0�  D� 1xt Tt� \ ��x�(0.8 H). xL ��t ��| h| �tX �D ޘ� */ function strideVK() { var a = project(0, 0), b = project(0, -10); return geom.tilt ? Math.max(0.3, Math.min(1, Math.abs(a.y - b.y) / 10)) : 1; }
   function bodyK() { return core.clamp(camZoom2d(), 1, 2.5); }
   function drawSpawn(s, u, v, now, pos, wsc) {   // wsc = 세계 배율(W-0203 보폭 — 안의 scale 은 지역 숫자라 scale() 을 못 부른다)
     var p = project(u, v);
@@ -733,7 +734,7 @@
     ctx.fillStyle = 'rgba(0,0,0,0.22)';
     if (!(global.DG.mode2d && global.DG.mode2d.scaleOn && global.DG.mode2d.scaleOn())) { ctx.fill(); } else if (global.DG.mode2d.shadow) { global.DG.mode2d.shadow(ctx, p.x, p.y, bodyH * 0.62, { a: 0.3 }); }   /* W-0368 발 닿는 두 겹 그림자 */   // W-0349 몸 뒤 검은 타원(종이 오린 듯한 테두리) — 새 표에선 발밑 고리만
 
-    if (!(isHero && global.DG.actor2d && global.DG.actor2d.human(ctx, s.ref, null, p.x, p.y, scale, { facing: s.facing, dirX: s.dirX, dirY: s.dirY, moving: s.moving, phase: s.phase, now: now, wx: s.x, wy: s.y, ppu: (wsc || 1) * p.s, pk: 'sp:' + (s.id || (s.ref && s.ref.id) + ':' + s.bornAt) }))) sp.stamp(ctx, {
+    if (!(isHero && global.DG.actor2d && global.DG.actor2d.human(ctx, s.ref, null, p.x, p.y, scale, { facing: s.facing, dirX: s.dirX, dirY: s.dirY, moving: s.moving, phase: s.phase, now: now, wx: s.x, wy: s.y * strideVK(), ppu: (wsc || 1) * p.s, pk: 'sp:' + (s.id || (s.ref && s.ref.id) + ':' + s.bornAt) }))) sp.stamp(ctx, {
       kind: isHero ? 'human' : 'beast', ref: s.ref, bk: bk,
       x: p.x, y: p.y, s: scale, facing: s.facing, phase: s.phase, walking: s.moving,
       color: isHero ? data.faction(s.ref.faction).color : sp.beastColorOf(s.ref),
@@ -767,7 +768,7 @@
     ctx.fillStyle = 'rgba(0,0,0,0.30)';
     if (global.DG.mode2d && global.DG.mode2d.shadow) { global.DG.mode2d.shadow(ctx, p.x, p.y, 22 * z, { a: 0.3 }); } else { ctx.fill(); }   /* W-0368 두 겹 */
 
-    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, n.p, null, p.x, p.y, z * 1.05, { facing: n.x < 0 ? -1 : 1, moving: n.walking, phase: n.phase, now: now, wx: n.x, wy: n.y, ppu: scale() * p.s, pk: 'npc:' + (n.id || ((n.p && n.p.id) || '') + ':' + n.phase) }))) sp.stamp(ctx, {
+    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, n.p, null, p.x, p.y, z * 1.05, { facing: n.x < 0 ? -1 : 1, moving: n.walking, phase: n.phase, now: now, wx: n.x, wy: n.y * strideVK(), ppu: scale() * p.s, pk: 'npc:' + (n.id || ((n.p && n.p.id) || '') + ':' + n.phase) }))) sp.stamp(ctx, {
       kind: 'human', ref: n.p,
       x: p.x, y: p.y, s: z * 1.05, facing: n.x < 0 ? -1 : 1,
       phase: n.phase, walking: n.walking,
@@ -882,7 +883,7 @@
     ctx.lineWidth = 2;
     ctx.stroke(); meArrow(X, Y - 62 * bodyK(), now);
 
-    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, lead, 'player', X, Y, (geom.mode === 2 ? 1.5 : 1.25) * bodyK(), { facing: player.facing, dirX: player.dirX, dirY: player.dirY, moving: moving, phase: player.phase, now: now, wx: core.save.player.pos.x, wy: core.save.player.pos.y, ppu: sc || scale() }))) sp.stamp(ctx, {
+    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, lead, 'player', X, Y, (geom.mode === 2 ? 1.5 : 1.25) * bodyK(), { facing: player.facing, dirX: player.dirX, dirY: player.dirY, moving: moving, phase: player.phase, now: now, wx: core.save.player.pos.x, wy: core.save.player.pos.y * strideVK(), ppu: sc || scale() }))) sp.stamp(ctx, {
       kind: 'human', ref: lead, key: lead ? null : 'player',
       // 3D 는 카메라가 낮아 캐릭터를 조금 더 크게 (원작 느낌)
       x: X, y: Y, s: (geom.mode === 2 ? 1.5 : 1.25) * bodyK(),
