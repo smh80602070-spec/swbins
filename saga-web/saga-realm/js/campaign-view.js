@@ -54,6 +54,10 @@
   function toMap3d() {
     var R3 = global.DG.realm3d, cv = doc.getElementById('realm3d'); if (!R3 || !cv || !R3.available()) { return; }
     close(); R3.init(cv); if (!R3.active()) { R3.toggle(); }
+    backBtn();
+  }
+  /** 지도 위에 띄우는 「📜 장 흐름」 돌아오기 단추(2D·3D 지도 둘이 같이 쓴다) */
+  function backBtn() {
     var back = doc.getElementById('cpg-back');
     if (!back) {
       back = doc.createElement('button'); back.id = 'cpg-back'; back.className = 'cpg-btn'; back.textContent = '📜 장 흐름';
@@ -63,11 +67,17 @@
     }
     back.style.display = '';
   }
+  /** 장 흐름에서 2D 지도로 — 3D 지도가 켜져 있으면 끄고(지도는 2D 그림으로 돌아온다), 같은 돌아오기 단추를 띄운다(사용자 10-29 "5는 왜 2d 모드가 없어짐") */
+  function toMap2d() {
+    var R3 = global.DG.realm3d; close(); if (R3 && R3.active && R3.active()) { R3.toggle(); }
+    if (global.DG.core && global.DG.core.emit) { global.DG.core.emit('changed'); }
+    backBtn();
+  }
   function close() { if (host) { host.style.display = 'none'; } doc.body.classList.remove('cpg-on'); }
 
   function top(title, extra) {
     var cp = CP().state(), lord = OFF().lordOf ? OFF().lordOf(global.DG.rtk.me()) : null;
-    return '<div class="cpg-top"><h2>' + esc(title) + '</h2>' + (extra || '') + (global.DG.campaignAuto ? global.DG.campaignAuto.btnHtml() : '') + (global.DG.realm3d && global.DG.realm3d.available() ? '<button class="cpg-btn" data-cp="map3d" title="3D 지도로 나가기">🧊 3D 지도</button>' : '') + '<span>' + (lord ? esc(nm(lord)) + ' 군 · ' : '') + '<span class="cpg-gold">💰 ' + cp.gold + '</span></span></div>';
+    return '<div class="cpg-top"><h2>' + esc(title) + '</h2>' + (extra || '') + (global.DG.campaignAuto ? global.DG.campaignAuto.btnHtml() : '') + '<button class="cpg-btn" data-cp="map2d" title="2D 지도로 나가기">🗺 2D 지도</button>' + (global.DG.realm3d && global.DG.realm3d.available() ? '<button class="cpg-btn" data-cp="map3d" title="3D 지도로 나가기">🧊 3D 지도</button>' : '') + '<span>' + (lord ? esc(nm(lord)) + ' 군 · ' : '') + '<span class="cpg-gold">💰 ' + cp.gold + '</span></span></div>';
   }
   function show(step) {
     ensure();
@@ -225,6 +235,7 @@
     if (!b || b.disabled) { return; }
     var a = b.getAttribute('data-cp'), cp = CP().state();
     if (a === 'map3d') { toMap3d(); return; }
+    if (a === 'map2d') { toMap2d(); return; }
     if (a === 'auto') { if (global.DG.campaignAuto) { global.DG.campaignAuto.toggle(); } return; }   // W-0463 자동 진행 ▶/⏸
     if (a === 'ch') {
       var no = +b.getAttribute('data-no');

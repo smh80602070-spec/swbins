@@ -649,12 +649,12 @@
     return pool.length ? core.pick(pool) : core.pick(data.pets);
   }
 
-  var spawnSeq = 0;
+  var spawnSeq = 0; function vSpawnMin() { var k = +core.tuned('go.spawnOutView', 1), W3 = global.DG.world3d, F2 = global.DG.field2d; if (!(k > 0) || !geom || !(F2 && F2.on && F2.on()) || (W3 && W3.active && W3.active())) { return SPAWN_MIN; } var rm = Math.hypot(geom.W, geom.H) / 2 / scale() * (geom.tilt ? 1.2 : 1) * k; return Math.max(SPAWN_MIN, Math.min(rm, SPAWN_RADIUS * 0.85)); }   /* 10-29 2D 는 화면 밖 고리에서만 스폰(사용자 "몬스터 개체수 아직 많아 2처럼") — 2나락 W-0327 과 같은 결, go.spawnOutView 0 = 옛 */
 
   function makeSpawn() {
     var pos = core.save.player.pos;
     var ang = Math.random() * Math.PI * 2;
-    var dist = Math.sqrt(SPAWN_MIN * SPAWN_MIN + Math.random() * (SPAWN_RADIUS * SPAWN_RADIUS - SPAWN_MIN * SPAWN_MIN));   // W-0174 70 → 25 — 기본 확대에서 하나쯤은 보이게 · W-0369 반경 고르게 → 넓이 고르게(예전엔 가운데가 r 에 반비례로 빽빽 — 첫 화면에 짐승·사람이 몰렸다)
+    var sMin = vSpawnMin(), dist = Math.sqrt(sMin * sMin + Math.random() * (SPAWN_RADIUS * SPAWN_RADIUS - sMin * sMin));   // W-0174 70 → 25 — 기본 확대에서 하나쯤은 보이게 · W-0369 반경 고르게 → 넓이 고르게(예전엔 가운데가 r 에 반비례로 빽빽 — 첫 화면에 짐승·사람이 몰렸다)
     /* 비 오는 날은 짐승이, 바람 부는 날은 사람이 더 많다 */
     var wb = global.DG.weather ? global.DG.weather.heroBias() : 0;
     var isHero = Math.random() < core.clamp(0.42 + wb, 0.08, 0.9);

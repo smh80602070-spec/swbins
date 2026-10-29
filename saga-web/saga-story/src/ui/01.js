@@ -94,7 +94,7 @@
      'sheet', 'sheet-title', 'sheet-body', 'sheet-close', 'scrim', 'toast'].forEach(function (id) {
       els[id] = $(id);
     });
-    var drw = $('tools-drawer'), mapB = $('btn-map'); if (drw && mapB && global.innerWidth <= 520) { drw.insertBefore(mapB, drw.firstChild); }   // W-0364 폰: 🗺️ 는 ⋯ 서랍 안으로(M 키·손잡이 그대로)
+    var drw = $('tools-drawer'), mapB = $('btn-map'); if (drw && mapB && global.innerWidth <= 520) { drw.insertBefore(mapB, drw.firstChild); var b3 = $('btn-3d'), mo3 = $('btn-more'); if (b3 && mo3 && mo3.parentNode) { mo3.parentNode.insertBefore(b3, mo3); } }   /* 10-29 폰에서도 🧊 는 위 줄에(서랍 안에 숨어 「3d 버튼이 없어졌다」) */ // W-0364 폰: 🗺️ 는 ⋯ 서랍 안으로(M 키·손잡이 그대로)
     document.body.classList.add('hud-diet'); [els.profile, els.wallet, els.goalboard].forEach(function (el) { if (el) { el.addEventListener('click', function () { if (!hudFold(el)) { el.classList.remove('hud-open'); } }); } });   // W-0364 폰 세로 HUD 접기(공용 ui-kit.css) — 윗 카드·지갑·목표판 탭 = 펼침, 다시 탭 = 접음
 
     els.dock.addEventListener('click', function (e) {

@@ -20,7 +20,7 @@
     if (!M) { return false; }
     var pool = M.pick(role, seedOf(role, ref, key));
     if (!pool) { return false; }
-    o = o || {};
+    o = o || {}; if (+(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned("fs.footSink", 1) : 1) > 0) { y += 2.4 * s; }   // 10-29 발이 그림자 위로 떠 보인다(사용자 "3은 걷는게 떠있는것") — 발 밑 기준을 몸 높이 5% 아래로(fs.footSink 0 = 옛)
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40, P3 = global.DG.pose3d, V = global.DG.village;
     var pose = role === 'me' && P3 ? ((V && V.fishState && V.fishState()) ? 'Pose_fish' : P3.life(P3.st2d || (P3.st2d = {}), (o.now || Date.now()) / 1000, !o.moving)) : null;   // W-0303 2D 대역 — 낚시 대기·쉬기
     return M.draw(ctx, { pool: pool, clip: o.moving ? 'walk' : 'idle', pose: pose, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH, town: true, stride: (o.wx != null && M.pace) ? M.pace(o.pk || key || role + ':' + seedOf(role, ref, key), o.wx, o.wy, o.ppu, s * 48, o.now || Date.now()) : null });   // W-0138 — 마을은 싸움이 없다: 맨손 서기·걷기 시트
