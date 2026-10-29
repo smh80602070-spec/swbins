@@ -12,7 +12,7 @@
  */
 
 <<<<<<< HEAD
-var VERSION = 'dungeon-v0.199.306';
+var VERSION = 'dungeon-v0.199.307';
 =======
 var VERSION = 'dungeon-v0.199.305';
 >>>>>>> 75fee659f02f58c2748487dd511b33ec5c71386e
