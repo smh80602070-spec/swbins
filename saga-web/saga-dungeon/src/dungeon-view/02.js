@@ -266,7 +266,7 @@
     for (i = 0; i < run.room.drops.length; i++) {
       var dp = run.room.drops[i]; if (global.DG.lootFilter && global.DG.lootFilter.hidden(dp)) { continue; }   // W-0287 전리품 거르기
       var bob = Math.sin((now + i * 300) / 320) * 2;
-      p = proj(m, dp.x, dp.y);
+      p = proj(m, dp.x, dp.y); if (m.town && p.y < m.top) { continue; }
       ctx.beginPath();
       isoEllipse(ctx, m, dp.x, dp.y, 6);
       ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.fill();
@@ -518,7 +518,7 @@
    * 어둠에 먹히지 않는다(바닥에 떨어진 물건 이름과 같은 처리다).
    */
   function drawNpc(m, o, now, plates, near) {
-    var p = proj(m, o.x, o.y);
+    var p = proj(m, o.x, o.y); if (m.town && p.y < m.top) { return; }   /* 지평선 위는 하늘 — 땅 깊이 창 밖 마을 사람은 안 그린다(사용자 10-29 "하늘에 떠 있는 npc") */
     var sf = (m.sAt ? m.sAt(o.y) : m.s) * 1.12;
     var z = Math.max(0.7, m.sAt ? m.sAt(o.y) : m.s);
     ctx.save();
@@ -657,7 +657,7 @@
 
   function drawFoe(m, e, now, bars) {
     var ref = e.ref;
-    var p = proj(m, e.x, e.y);
+    var p = proj(m, e.x, e.y); if (m.town && p.y < m.top) { return; }   /* 들판 몹도 같은 이유로 */
     var sf = (m.sAt ? m.sAt(e.y) : m.s) * 1.12;
     /* 원작에서 인물은 화면에 꽤 크게 선다 — 작게 두면 아이소 지도처럼 보인다 */
     var s = (e.boss ? 1.12 : 0.76) * sf;
