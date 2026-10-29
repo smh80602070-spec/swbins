@@ -908,12 +908,12 @@
       ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.fill();
       if (dp.kind === 'gold') {
         ctx.beginPath();
-        ctx.arc(p.x, p.y - 5 + bob, 5.5 * Math.max(0.7, m.s), 0, Math.PI * 2);
+        ctx.arc(p.x, p.y - 5 + bob, 5.5 * Math.max(0.7, m.sAt ? m.sAt(dp.y) : m.s), 0, Math.PI * 2);
         ctx.fillStyle = '#f0c45a'; ctx.fill();
         ctx.strokeStyle = 'rgba(0,0,0,0.35)'; ctx.lineWidth = 1; ctx.stroke();
       } else if (dp.kind === 'scroll') {
         /* 감정서 — 말린 두루마리 */
-        var sz = Math.max(0.7, m.s);
+        var sz = Math.max(0.7, m.sAt ? m.sAt(dp.y) : m.s);
         ctx.fillStyle = '#d8ceb0';
         ctx.fillRect(p.x - 6 * sz, p.y - 10 * sz + bob, 12 * sz, 5 * sz);
         ctx.strokeStyle = 'rgba(0,0,0,0.5)';
@@ -923,7 +923,7 @@
       } else if (dp.kind === 'potion') {
         /* 단약 — 작은 병. 이름표는 등급색 대신 그 물약의 색이다 */
         var P2 = global.DG.potion;
-        var pz = Math.max(0.7, m.s);
+        var pz = Math.max(0.7, m.sAt ? m.sAt(dp.y) : m.s);
         var pk = P2.kindOf(dp.p.kind), pg = P2.gradeOf(dp.p.g);
         ctx.beginPath();
         ctx.ellipse(p.x, p.y - 6 * pz + bob, 4 * pz, 5.5 * pz, 0, 0, Math.PI * 2);
@@ -939,7 +939,7 @@
       } else if (dp.kind === 'mat') {
         /* 세공 재료 — 보석은 둥글게, 부문(符文)은 글자로 */
         var GD = global.DG.gemData;
-        var mz = Math.max(0.7, m.s);
+        var mz = Math.max(0.7, m.sAt ? m.sAt(dp.y) : m.s);
         var mm = dp.mat;
         if (mm.kind === 'rune') {
           var rd = GD.runeByKey(mm.key);
@@ -961,7 +961,7 @@
         }
       } else {
         var t = global.DG.item.tierOf(dp.item);
-        var dz = Math.max(0.7, m.s);
+        var dz = Math.max(0.7, m.sAt ? m.sAt(dp.y) : m.s);
         if (global.DG.vfx2d && t.key >= 2) { global.DG.vfx2d.aura(ctx, global.DG.vfx2d.rarOfTier(t.key), p.x, p.y - 8 + bob, (t.key >= 4 ? 108 : 76) * dz, now); }   // W-0057 명품 이상 장비 후광(K-0048) — 전설은 더 크게
         ctx.fillStyle = t.color;
         ctx.beginPath();
@@ -1156,7 +1156,7 @@
   function drawNpc(m, o, now, plates, near) {
     var p = proj(m, o.x, o.y);
     var sf = (m.sAt ? m.sAt(o.y) : m.s) * 1.12;
-    var z = Math.max(0.7, m.s);
+    var z = Math.max(0.7, m.sAt ? m.sAt(o.y) : m.s);
     ctx.save();
     ctx.globalAlpha = 0.45;
     ctx.beginPath();
@@ -1191,7 +1191,7 @@
    */
   function drawMark(m, o, now, plates, near) {
     var p = proj(m, o.x, o.y);
-    var z = Math.max(0.7, m.s);
+    var z = Math.max(0.7, m.sAt ? m.sAt(o.y) : m.s);
     var puls = 0.5 + Math.sin(now / 420) * 0.5;
     ctx.save();
     ctx.beginPath();
@@ -1216,7 +1216,7 @@
   /** 벽에 걸린 횃불 하나 — 받침과 흔들리는 불꽃 */
   function drawTorch(m, o, now) {
     var p = proj(m, o.x, o.y);
-    var z = Math.max(0.8, m.s);
+    var z = Math.max(0.8, m.sAt ? m.sAt(o.y) : m.s);
     var base = p.y - 22 * z;
     /* 받침 */
     ctx.fillStyle = '#2b2018';
@@ -1242,7 +1242,7 @@
   /** 항아리 — 성한 것은 배가 부르고, 깨진 것은 조각만 남는다 */
   function drawJar(m, o, now) {
     var p = proj(m, o.x, o.y);
-    var z = Math.max(0.7, m.s);
+    var z = Math.max(0.7, m.sAt ? m.sAt(o.y) : m.s);
     ctx.save();
     ctx.globalAlpha = 0.4;
     ctx.beginPath();
@@ -1353,7 +1353,7 @@
     if (e.hp < e.hpMax) {
       bars.push({
         x: p.x, y: p.y - bodyH - 10,
-        w: (e.boss ? 52 : (el ? 36 : 26)) * Math.max(0.8, m.s),
+        w: (e.boss ? 52 : (el ? 36 : 26)) * Math.max(0.8, m.sAt ? m.sAt(e.y) : m.s),
         p: core.clamp(e.hp / e.hpMax, 0, 1),
         boss: e.boss,
         name: null,
@@ -1440,7 +1440,7 @@
       phase: c.phase, walking: c.walking || c.atkAnim > 0,
       color: fac.color, look: global.DG.sprite.lookOf(ref), t: now
     });
-    if (plates) { gesturePlate(plates, 'ally', p.x, p.y - 44 * Math.max(0.7, m.s), false); }
+    if (plates) { gesturePlate(plates, 'ally', p.x, p.y - 44 * Math.max(0.7, m.sAt ? m.sAt(c.y) : m.s), false); }
   }
 
   /* ── 조명 레이어·연출 — js/dungeon-view-fx.js(R-4). 같은 이름 한 줄 넘김 ───────────── */

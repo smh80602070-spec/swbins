@@ -60,13 +60,14 @@
     /* 깊이 원근(사용자 10-29 "3마을처럼") — 마을·들판만. 화면 깊이 d(위 0·아래 1)마다 배율 f = 1 + 손잡이 dg.beltDepth × (d − 0.5): 멀수록 작고 가운데로 모인다. 0(기본) = 옛 그대로 */
     var BD = town ? +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('dg.beltDepth', 1) : 0) || 0 : 0;
     function fAt(sy) { return BD > 0 ? 1 + BD * (Math.max(0, Math.min(1, (sy - L.top) / Math.max(1, L.bot - L.top))) - 0.5) : 1; }
-    m.sAt = function (y) { return L.s * fAt(L.top + (y - y0) * L.k); };
+    m.sAt = function (y) { return L.s * fAt(L.top + (y - y0) * L.k); }; m.fAt = fAt; m.depth = BD;
     m.belt = function (x, y) { var sy = L.top + (y - y0) * L.k; return { x: L.cw / 2 + (x - L.camX) * L.s * fAt(sy), y: sy }; };
     m.unbelt = function (px, py) { return { x: L.camX + (px - L.cw / 2) / (L.s * fAt(py)), y: y0 + (py - L.top) / L.k }; };
     m.ellipse = function (c, x, y, r) { var p = m.belt(x, y); c.ellipse(p.x, p.y, r * m.sAt(y), r * L.k, 0, 0, Math.PI * 2); return p; };
     return m;
   }
 
+  var gOC = null;   // 깊이 원근 땅 — 평평한 땅을 한 번 그려 두는 화면 밖 캔버스
   function shade(hex, amt) {
     var h = String(hex || '#555').replace('#', ''), n = parseInt(h.length === 3 ? h.replace(/./g, '$&$&') : h, 16);
     var r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255, t = amt < 0 ? 0 : 255, f = Math.abs(amt);
@@ -91,10 +92,12 @@
     gr.addColorStop(0, shade(theme.floor, -0.42)); gr.addColorStop(0.35, shade(theme.floor, -0.1)); gr.addColorStop(1, shade(theme.floor, 0.06));
     ctx.fillStyle = gr; ctx.fillRect(-10, m.top, cw + 20, m.ch - m.top + 10);
     if (M && M.fillIso) {
-      ctx.save(); ctx.beginPath(); ctx.rect(-10, m.top, cw + 20, m.ch - m.top + 10); ctx.clip();   // 땅 타일이 하늘을 덮지 않게
-      var U = 220, wx0 = Math.floor((m.camX - cw / (2 * s)) / U) * U - U, wy0 = Math.floor((m.y0 - 40) / U) * U, ww = cw / s + U * 3, hh = (m.ch - m.top) / m.k + U * 3;
-      M.fillIso(ctx, { id: (cfg.tile || {})[theme.name] || 'dungeon_grass', a: s, b: 0, c: 0, d: m.k, e: cw / 2 + (wx0 - m.camX) * s, f: m.top + (wy0 - m.y0) * m.k, W: ww, H: hh, tint: theme.floor, tintAlpha: 0.8, unit: U });   // 무늬는 옅게(이끼 돌 결이 시끄러웠다)
-      ctx.restore();
+      var dep = m.depth > 0, wd = dep ? 2 : 1, tx = ctx, oc = null, kk = 1;   // 깊이 원근 — 평평한 땅을 두 배 폭으로 한 번 그린 뒤 가로줄 띠마다 배율(f)로 좁혀 붙인다(위로 갈수록 좁아짐)
+      if (dep) { kk = (ctx.getTransform && ctx.getTransform().a) || 1; oc = gOC || (gOC = document.createElement('canvas')); var ow = Math.ceil(cw * wd * kk), oh = Math.ceil((m.ch - m.top + 10) * kk); if (oc.width !== ow || oc.height !== oh) { oc.width = ow; oc.height = oh; } tx = oc.getContext('2d'); tx.setTransform(1, 0, 0, 1, 0, 0); tx.clearRect(0, 0, ow, oh); tx.save(); tx.setTransform(kk, 0, 0, kk, 0, 0); tx.translate(cw * (wd - 1) / 2, -m.top); }
+      else { ctx.save(); ctx.beginPath(); ctx.rect(-10, m.top, cw + 20, m.ch - m.top + 10); ctx.clip(); }   // 땅 타일이 하늘을 덮지 않게
+      var U = 220, wx0 = Math.floor((m.camX - wd * cw / (2 * s)) / U) * U - U, wy0 = Math.floor((m.y0 - 40) / U) * U, ww = wd * cw / s + U * 3, hh = (m.ch - m.top) / m.k + U * 3;
+      M.fillIso(tx, { id: (cfg.tile || {})[theme.name] || 'dungeon_grass', a: s, b: 0, c: 0, d: m.k, e: cw / 2 + (wx0 - m.camX) * s, f: m.top + (wy0 - m.y0) * m.k, W: ww, H: hh, tint: theme.floor, tintAlpha: 0.8, unit: U });   // 무늬는 옅게(이끼 돌 결이 시끄러웠다)
+      if (dep) { tx.restore(); ctx.save(); ctx.beginPath(); ctx.rect(-10, m.top, cw + 20, m.ch - m.top + 10); ctx.clip(); for (var sy = Math.floor(m.top); sy < m.ch + 10; sy += 3) { var ff = m.fAt(sy + 1.5), sw = cw / ff; ctx.drawImage(oc, (oc.width / kk - sw) / 2 * kk, (sy - m.top) * kk, sw * kk, 3 * kk, 0, sy, cw, 3); } ctx.restore(); } else { ctx.restore(); }
     }
     var hz = ctx.createLinearGradient(0, m.top - 6, 0, m.top + (m.bot - m.top) * 0.3);
     hz.addColorStop(0, 'rgba(20,24,34,0.75)'); hz.addColorStop(1, 'rgba(20,24,34,0)');
