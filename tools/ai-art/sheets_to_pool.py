@@ -163,24 +163,16 @@ def register(pid, pool_dir, games):
         print('  등록', g)
 
 
-def main():
+def build_one(a):
     try:
         sys.stdout.reconfigure(encoding='utf-8')
     except Exception:
         pass
-    ap = argparse.ArgumentParser()
-    ap.add_argument('--id', required=True)
-    ap.add_argument('--src', required=True)
-    ap.add_argument('--out')
-    ap.add_argument('--games', default='')
-    ap.add_argument('--dry', action='store_true')
-    ap.add_argument('--procs', type=int, default=4)
-    a = ap.parse_args()
     t0 = time.time()
     src = unzip(a.src) if a.src.lower().endswith('.zip') else a.src
     pre = find_prefix(src)
     if pre is None:
-        print('서있기 그림을 못 찾았다(`…서있기_8프레임.png`) — 멈춤'); return 1
+        print('서있기 그림을 못 찾았다(`…서있기_8프레임.png`) — 멈춤'); return None
     print('접두사', repr(pre))
     plan, missing = {}, []
     for m, clip, fps, loop in MOTIONS:
@@ -192,7 +184,7 @@ def main():
         if not have:
             missing.append(clip)
     if ('idle', 2) not in plan:
-        print('옆모습 서있기가 없다 — 키·발 기준을 못 정해 멈춤'); return 1
+        print('옆모습 서있기가 없다 — 키·발 기준을 못 정해 멈춤'); return None
     print('시트', len(plan), '장 · 없는 동작', missing or '없음')
     if a.dry:
         return 0
@@ -253,6 +245,56 @@ def main():
         register(a.id, out, games)
     print('끝 — 미리보기', prev)
     return 0
+
+
+
+
+def ascii_id(name):
+    s = re.sub(r'[^a-z0-9]+', '_', os.path.splitext(name)[0].lower()).strip('_')
+    return s or None
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--id')
+    ap.add_argument('--src')
+    ap.add_argument('--batch', help='상위 폴더 — 안의 하위 폴더·zip 하나가 인물 한 명(이름 순). id 는 --ids 순서대로, 없으면 이름의 영문·숫자')
+    ap.add_argument('--ids', default='', help='--batch 용 id 목록(쉼표, 하위 항목 이름순과 같은 순서)')
+    ap.add_argument('--out', help='풀 폴더(--batch 일 땐 상위 폴더 — 그 안에 id 별로)')
+    ap.add_argument('--games', default='')
+    ap.add_argument('--dry', action='store_true')
+    ap.add_argument('--procs', type=int, default=4)
+    a = ap.parse_args()
+    if a.batch:
+        items = sorted(os.path.join(a.batch, n) for n in os.listdir(a.batch)
+                       if os.path.isdir(os.path.join(a.batch, n)) or n.lower().endswith('.zip'))
+        ids = [x for x in a.ids.split(',') if x]
+        if ids and len(ids) != len(items):
+            print('--ids %d 개 ≠ 하위 항목 %d 개 — 멈춤: %s' % (len(ids), len(items), [os.path.basename(x) for x in items])); return 1
+        rows = []
+        for n, it in enumerate(items):
+            pid = ids[n] if ids else ascii_id(os.path.basename(it))
+            if not pid:
+                print('id 를 못 정함(--ids 로 주세요):', os.path.basename(it)); return 1
+            rows.append((pid, it))
+        if len({r[0] for r in rows}) != len(rows):
+            print('id 가 겹친다 — --ids 로 주세요'); return 1
+        res = []
+        for pid, it in rows:
+            print('=== %s ← %s' % (pid, os.path.basename(it)), flush=True)
+            b = argparse.Namespace(id=pid, src=it, out=os.path.join(a.out, pid) if a.out else None, games=a.games, dry=a.dry, procs=a.procs)
+            try:
+                r = build_one(b)
+            except Exception as e:   # 한 명이 깨져도 나머지는 돈다
+                print('  실패:', e); r = None
+            res.append((pid, r == 0))
+        print('--- 요약: 성공 %d · 실패 %d' % (sum(1 for _, ok in res if ok), sum(1 for _, ok in res if not ok)))
+        for pid, ok in res:
+            print('  ', 'ok  ' if ok else 'FAIL', pid)
+        return 0 if all(ok for _, ok in res) else 1
+    if not (a.id and a.src):
+        ap.error('--id 와 --src 를, 또는 --batch 를 주세요')
+    return 0 if build_one(a) == 0 else 1
 
 
 if __name__ == '__main__':
