@@ -547,6 +547,14 @@
     fr = Math.floor(Math.max(0, +o.ms || 0) / 1000 * ((c && c.fps) || 8));
     return c && c.loop === false ? Math.min(n - 1, fr) : fr % n;
   }
+  /** 걷기·달리기 프레임 사이 섞기용 — 같은 걸음 위상에서 소수 부분(0~1)과 다음 칸. 8프레임뿐이라 칸이 뚝뚝 바뀌던 것(사용자 10-29)을 다음 칸을 겹쳐 부드럽게. 손잡이 mode2d.frameBlend 0 = 옛 */
+  function factBlend(c, role, o) {
+    var n = (c && c.frames) || 8, u;
+    if (!((role === 'walk' || role === 'run') && n > 1) || (o.t !== undefined && o.t !== null) || !(+tuneOf('mode2d.frameBlend', 1))) { return null; }
+    if (o.stride !== undefined && o.stride !== null) { u = (((+o.stride % 1) + 1) % 1) * n; }
+    else { u = Math.max(0, +o.ms || 0) / 1000 * ((c && c.fps) || 8); }
+    u = u % n; return { a: (u - Math.floor(u)), nx: (Math.floor(u) + 1) % n };
+  }
   /** idle 옆 칸(2행 첫 프레임) 알파 상자 높이(px) — 한 번 재 둔다. 못 재면 칸의 0.75 */
   function factBody(f, img, P) {
     if (f.bh) { return f.bh; }
@@ -573,6 +581,8 @@
     ctx.imageSmoothingEnabled = true; hq(ctx); applyTone(ctx);
     if (d.flip && m.mirror !== false) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
     ctx.drawImage(e.img, fr * P, row * P, P, P, o.x - w / 2, o.y - h * foot, w, h);
+    var bl = factBlend(c, role, o);
+    if (bl && bl.a > 0.04) { var ga = ctx.globalAlpha; ctx.globalAlpha = ga * bl.a; ctx.drawImage(e.img, bl.nx * P, row * P, P, P, o.x - w / 2, o.y - h * foot, w, h); ctx.globalAlpha = ga; }
     ctx.restore();
     return true;
   }
