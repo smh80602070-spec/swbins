@@ -3,7 +3,7 @@
 개인 취미 저장소. 회사 일은 `C:\link` 세션. 이 파일은 **길잡이**다.
 
 - **작업 전 `SAGA_AI_COMMON.md` 를 먼저 읽는다.** 핵심: Claude=오케스트레이터·Codex=개발자 /
-  iMac=웹·Godot, Win PC(RX7600)=Unity·2D/3D 생성, GeForce 보류 / 기존 에셋 재사용 먼저·GPU 재생성·원본 덮어쓰기 금지 /
+  iMac=웹·Godot, Win PC(RX7600)=Unity·2D/3D 생성, GeForce 병행 / 기존 에셋 재사용 먼저·GPU 재생성·원본 덮어쓰기 금지 /
   2D 모션은 GIF 프리뷰·발 접지·대표 1명 검증 뒤 확장
 
 - **다음 일 = `tasks/QUEUE.md` 의 갈래(웹·고돗·유니티·자체툴) 큐 맨 위 티켓**(절차 `tasks/README.md` · 체제 `SAGA-ARCH.md` · 중간 지시 `tasks/INTAKE.md`). "<갈래> 이어해" = 이것
