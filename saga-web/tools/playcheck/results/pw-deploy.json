@@ -1,6 +1,6 @@
 {
  "base": "https://smh80602070-spec.github.io/swbins/saga-web/",
- "at": "2026-10-29T09:34:54.846Z",
+ "at": "2026-10-29T21:04:47.927Z",
  "games": [
   {
    "game": "saga-go",
@@ -9,39 +9,39 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 8050,
+     "ms": 8447,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 4153,
+     "ms": 4052,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 3547,
+     "ms": 6955,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 3821,
+     "ms": 8534,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 21143,
+     "ms": 18703,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "go-v6.72.329",
+   "deployed": "go-v6.72.330",
    "local": "go-v6.72.330",
-   "sameVersion": false,
+   "sameVersion": true,
    "covered": []
   },
   {
@@ -51,39 +51,39 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 9156,
+     "ms": 8151,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3614,
+     "ms": 3609,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 8690,
+     "ms": 8507,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 4211,
+     "ms": 4015,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 15062,
+     "ms": 14910,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "dungeon-v0.199.317",
+   "deployed": "dungeon-v0.199.318",
    "local": "dungeon-v0.199.318",
-   "sameVersion": false,
+   "sameVersion": true,
    "covered": []
   },
   {
@@ -93,31 +93,31 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 7947,
+     "ms": 8061,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3769,
+     "ms": 3839,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 5071,
+     "ms": 7648,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 7913,
+     "ms": 7078,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 23862,
+     "ms": 19229,
      "why": ""
     }
    ],
@@ -135,38 +135,38 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 7656,
+     "ms": 7761,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3918,
+     "ms": 3758,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 7750,
+     "ms": 8975,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 3670,
+     "ms": 2976,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 17973,
+     "ms": 15276,
      "why": ""
     }
    ],
    "errors": [],
    "bad": [],
-   "deployed": "side-v0.118.270",
-   "local": "side-v0.118.270",
+   "deployed": "side-v0.118.271",
+   "local": "side-v0.118.271",
    "sameVersion": true,
    "covered": []
   },
@@ -177,31 +177,31 @@
     {
      "name": "첫 방문",
      "ok": true,
-     "ms": 8184,
+     "ms": 7922,
      "why": ""
     },
     {
      "name": "가입",
      "ok": true,
-     "ms": 3602,
+     "ms": 3597,
      "why": ""
     },
     {
      "name": "첫 관문",
      "ok": true,
-     "ms": 6982,
+     "ms": 7369,
      "why": ""
     },
     {
      "name": "☰ 메뉴 → 창",
      "ok": true,
-     "ms": 1227,
+     "ms": 1221,
      "why": ""
     },
     {
      "name": "새로 고침 → 이어하기",
      "ok": true,
-     "ms": 11041,
+     "ms": 11073,
      "why": ""
     }
    ],
