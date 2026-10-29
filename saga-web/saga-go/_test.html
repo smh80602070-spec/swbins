@@ -3081,12 +3081,19 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     });
 
     t('2D 로 되돌리면 투영은 항등', function () {
-      C.save.settings.tilt = 0; W.resize();
+      C.save.settings.tilt = 0; C.setTune("go.depth2d", 0); W.resize();   // 10-29 2D 기본이 깊이 원근이라 항등은 손잡이 0 에서
       var pr = W.project(50, -80);
       var back = W.unproject(pr.x, pr.y);
       var ok = Math.abs(back.u - 50) < 0.001 && Math.abs(back.v + 80) < 0.001 && pr.s === 1;
-      C.save.settings.tilt = 1; W.resize();
+      C.setTune("go.depth2d", null); C.save.settings.tilt = 1; W.resize();
       return ok && '항등 확인';
+    });
+    t('2D 깊이 원근(go.depth2d) — 먼 쪽이 작고 클릭 되짚기가 맞는다', function () {
+      C.save.settings.tilt = 0; W.resize();
+      var a = W.project(0, -200), b = W.project(0, 200), bk = W.unproject(a.x, a.y);
+      var ok = a.s < 1 && b.s > 1 && Math.abs(bk.u) < 0.01 && Math.abs(bk.v + 200) < 0.01;
+      C.save.settings.tilt = 1; W.resize();
+      return ok && ('s ' + a.s.toFixed(2) + ' ~ ' + b.s.toFixed(2));
     });
 
     t('시점 3모드 순환 — 2D→2.5D→3D→2D', function () {

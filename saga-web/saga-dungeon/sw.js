@@ -11,11 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-<<<<<<< HEAD
-var VERSION = 'dungeon-v0.199.307';
-=======
-var VERSION = 'dungeon-v0.199.305';
->>>>>>> 75fee659f02f58c2748487dd511b33ec5c71386e
+var VERSION = 'dungeon-v0.199.308';
 var APP_CACHE = 'yd-app-' + VERSION;
 
 /* index.html 이 부르는 스크립트가 여기 다 있어야 오프라인에서 게임이 돈다.

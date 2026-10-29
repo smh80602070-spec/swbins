@@ -863,7 +863,7 @@
   }
   function tiltOn() { return tiltMode() > 0; }
   /** 2D 깊이 원근(사용자 10-29 "3마을처럼" W-0495) — 손잡이 go.depth2d = 땅을 눕히는 각도(0 = 평평한 옛 2D 그대로). 3D 는 안 켠다(settings.tilt 는 그대로 0) */
-  function depth2dDeg() { var d = +core.tuned('go.depth2d', 0), W3 = global.DG.world3d; return d > 0 && global.DG.field2d && global.DG.field2d.on() && !(W3 && W3.active && W3.active()) ? d : 0; }
+  function depth2dDeg() { var d = +core.tuned('go.depth2d', 34), W3 = global.DG.world3d; return d > 0 && global.DG.field2d && global.DG.field2d.on() && !(W3 && W3.active && W3.active()) ? d : 0; }
 
   function initCanvas(objEl, groundEl) {
     canvas = objEl; ctx = canvas.getContext('2d');
