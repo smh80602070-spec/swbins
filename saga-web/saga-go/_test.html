@@ -3110,7 +3110,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 
     t('2D·2.5D 줌 — scale() 에 곱해 들어간다', function () {
       C.save.settings.tilt = 0; W.resize();
-      var s0 = W.scale();
+      W.setCamZoom2d(1); var s0 = W.scale();   // 10-29 기본 줌이 멀어져(0.65) 1 로 맞춘 뒤 잰다
       W.setCamZoom2d(2);
       var s2 = W.scale();
       var s2ok = Math.abs(s2 / s0 - 2) < 1e-6;
