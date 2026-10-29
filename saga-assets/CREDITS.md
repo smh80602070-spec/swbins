@@ -41,12 +41,12 @@
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
 | remote3d | microsoft/TRELLIS-image-large | MIT | 531 |
-| 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용) | 3 |
-| 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음) | 2 |
+| 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용) | 10 |
+| 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음) | 3 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
 | gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 2105 |
 | make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |
-| k163_illust.py + gen.py (ComfyUI, Kaggle 원격) | animagine-xl-4.0-opt | saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상  | 500 |
+| k163_illust.py + gen.py (ComfyUI, Kaggle 원격) | animagine-xl-4.0-opt | saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상  | 560 |
 | gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 141 |
 | make_map.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 195 |
 | build_monster.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 346 |
@@ -92,6 +92,8 @@
 | k130_unity_pbr.py | - | self-pbr: grass (자체 생성 PBR — Z-Image-Turbo Apache-2.0 견본 → pbr_from_albedo.py, 남의 사진 0) | 1 |
 | vfxgen.py | - | CC0-1.0 (코드 생성 — 외부 입력 없음) | 120 |
 | voiceplan.py | Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign · Qwen/Qwen3-TTS-12Hz-1.7B-Base | Apache-2.0 (모델·코드) — 목소리는 글 설명으로 만든 것, 실존 인물·배우 목소리 모사 없음 | 2356 |
+| clips_to_cutout.py (Blender — 3D 동작 → 컷아웃 뼈 16 back 2D 각도, 기준 = 모캡 서기 평균, 골반 앞뒤 이동 뺌, 무릎·팔꿈치 사람 범위, ~robe = 다리 0.35배) · k199_build.sh | - | CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함) · 자체 키프레임(tools/char-for | 2 |
+| clips_to_cutout.py (Blender — 3D 동작 → 컷아웃 뼈 16 front 2D 각도, 기준 = 모캡 서기 평균, 골반 앞뒤 이동 뺌, 무릎·팔꿈치 사람 범위, ~robe = 다리 0.35배) · k199_build.sh | - | CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함) · 자체 키프레임(tools/char-for | 2 |
 | clips_to_cutout.py (Blender — 3D 동작 → 컷아웃 뼈 16 옆 2D 각도, 기준 = 모캡 서기 평균, 골반 앞뒤 이동 뺌, 무릎·팔꿈치 사람 범위, ~robe = 다리 0.35배) · k199_build.sh | - | CMU Graphics Lab Motion Capture Database — 복사·수정·재배포 허가 불요(상업 포함) · 자체 키프레임(tools/char-for | 2 |
 | make_realm_ui.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 12 |
 | make_realm_ui.py | - | CC0-1.0 코드 배치 + 글꼴 SIL OFL-1.1 (Nanum Brush Script·Noto Serif KR) | 56 |

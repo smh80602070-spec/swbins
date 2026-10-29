@@ -530,9 +530,10 @@
     return f.fail ? null : (f.m ? f : 'wait');
   }
   /** 동작 이름 → 그 시트에 있는 동작(순수) — 없으면 가까운 것, 끝내 idle */
-  function factRole(m, clip) {
+  function factRole(m, clip, wpn) {
     var cl = (m && m.clips) || {}, a;
     clip = clip || 'idle';
+    if (wpn && /^attack2?$/.test(clip)) { a = 'attack_' + wpn + (clip === 'attack2' ? '2' : ''); if (cl[a]) { return a; } if (cl['attack_' + wpn]) { return 'attack_' + wpn; } }   // K-0205 든 무기별 공격 시트 — 시트에 있을 때만, 없으면 아래 옛 길
     if (cl[clip]) { return clip; }
     a = FALIAS[clip]; if (a && cl[a]) { return a; }
     if (/^attack/.test(clip) && cl.attack) { return 'attack'; }
@@ -569,7 +570,7 @@
     return f.bh;
   }
   function drawFact(ctx, o, f) {
-    var m = f.m, role = factRole(m, o.clip), e = getImg(o.pool, role), ei = role === 'idle' ? e : getImg(o.pool, 'idle');
+    var m = f.m, role = factRole(m, o.clip, o.wpn), e = getImg(o.pool, role), ei = role === 'idle' ? e : getImg(o.pool, 'idle');
     if (!ei.ok) { return false; }
     if (!e.ok) { e = ei; role = 'idle'; }
     var c = m.clips[role] || m.clips.idle, n = (c && c.frames) || 8, P = (e.img.naturalWidth || 0) / n || m.px || 192;
