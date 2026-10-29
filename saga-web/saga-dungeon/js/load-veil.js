@@ -84,7 +84,7 @@
     cutEl.style.transition = 'opacity .3s ease-out'; cutEl.style.opacity = '0';
   }
   function hook() { var C = global.DG && global.DG.core; if (hooked || !C || !C.on) { return; } hooked = true; ['dungeon:room', 'dungeon:floor', 'dungeon:enter', 'dungeon:end'].forEach(function (e) { C.on(e, function () { cut(); }); });
-    C.on('region:enter', function () { if (+tuned('dungeon.zoneCut', 1)) { cut(); } }); }   // W-0493 들판 지역 경계(걸어서 넘음, 1.2초 머문 뒤)도 같은 막 — 손잡이 dungeon.zoneCut 0 = 옛 그대로
+    C.on('region:enter', function () { var D3 = global.DG.dungeon3d; if (+tuned('dungeon.zoneCut', 1) && ((D3 && D3.active && D3.active()) || +tuned('dungeon.zoneCut2d', 0))) { cut(); } }); }   // W-0493 들판 지역 경계(걸어서 넘음, 1.2초 머문 뒤)도 같은 막 — 손잡이 dungeon.zoneCut 0 = 옛 그대로 · 10-29 2D 는 안 덮음(3D 가 솟는 것만 가린다, 사용자 「조금 걸었는데 불러오기」) dungeon.zoneCut2d 1 = 2D 도 덮음
   function step() {
     hook(); cutStep();
     if (!tuned('loadVeil.on', 1)) { if (el) { hide(); } return; }

@@ -4892,7 +4892,8 @@ window.requestAnimationFrame = function () { return 0; };
       try {
         window.DG_NO_DRAW = false; try { V.step(); } catch (e) {}   // hook() 을 걸어 둔다
         var el = document.getElementById('zone-cut'); if (el) { el.style.opacity = '0'; }
-        C.emit('region:enter', 'x'); var on = V.cutShown();
+        C.emit('region:enter', 'x'); var on2d = !V.cutShown();   // 10-29 2D � H nL
+        C.setTune('dungeon.zoneCut2d', 1); C.emit('region:enter', 'x'); var on = V.cutShown(); C.setTune('dungeon.zoneCut2d', null);
         el = document.getElementById('zone-cut'); if (el) { el.style.opacity = '0'; }
         C.setTune('dungeon.zoneCut', 0); C.emit('region:enter', 'x'); var off = !V.cutShown();
         return (on && off) || ('실패 ' + JSON.stringify({ on: on, off: off }));
