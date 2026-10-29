@@ -67,6 +67,8 @@
   /** 숲 칸은 나무 둘, 나머지는 하나까지 */
   var PER_CELL = { forest: 2, mount: 1, grass: 1, farm: 1, town: 1 };
 
+  /** 10-29 3마을처럼 듬성듬성(사용자) — 소품 확률 배율. 숲 칸이 100% 나무라 빽빽했다. 손잡이 go.propDens(기본 0.45, 1 = 옛) */
+  function propDens() { var C = core(); return C && C.tuned ? Math.max(0, +C.tuned('go.propDens', 0.45)) : 1; }
   /** 이 칸에 세울 소품 [{ id, dx, dy(칸 안 0..1), k }] — 순수 */
   function propsAt(kind, tx, ty) {
     var L = PROPS[kind], out = [], n = PER_CELL[kind] || 0, i, r, p;
@@ -74,7 +76,7 @@
     for (i = 0; i < n; i++) {
       p = L[Math.floor(h01(tx, ty, 11 + i) * L.length)];
       r = h01(tx, ty, 23 + i);
-      if (r > p[2]) { continue; }
+      if (r > p[2] * propDens()) { continue; }
       out.push({ id: p[0], dx: 0.15 + 0.7 * h01(tx, ty, 37 + i), dy: 0.2 + 0.7 * h01(tx, ty, 41 + i), k: p[1] * (0.85 + 0.3 * h01(tx, ty, 53 + i)) });
     }
     return out;
