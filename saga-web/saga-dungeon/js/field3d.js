@@ -320,6 +320,8 @@
     var kind = kindOf(cx, cz, seed, ring, theme);
     var ox = cx * CHUNK, oz = cz * CHUNK;
     var d = dens === undefined ? 1 : dens;
+    /* 10-29 3마을식 큰 셀(사용자) — 3x3 청크 셀의 40% 는 빈 터(나무·바위 ×0.2). 숲은 덩어리로 남는다. 순수(씨앗 해시) */
+    if ((kind === 'forest' || kind === 'rock') && mix(Math.floor(cx / 3) * 53 + seed, Math.floor(cz / 3) * 37 - seed) < 0.4) { d *= 0.2; }
 
     function spot(k) {
       return {

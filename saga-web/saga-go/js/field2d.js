@@ -69,14 +69,17 @@
 
   /** 10-29 3마을처럼 듬성듬성(사용자) — 소품 확률 배율. 숲 칸이 100% 나무라 빽빽했다. 손잡이 go.propDens(기본 0.45, 1 = 옛) */
   function propDens() { var C = core(); return C && C.tuned ? Math.max(0, +C.tuned('go.propDens', 0.45)) : 1; }
+  /** 10-29 3마을식 큰 셀(사용자 「전부 3마을식」) — 5x5 칸(240m) 셀 가운데 go.glade(기본 0.4) 몫은 빈 풀밭(소품 ×0.15), 나머지는 그대로라 숲이 덩어리로 남는다. 마을·논밭은 그대로. 0 = 옛 */
+  function glade(kind, tx, ty) { if (kind === 'town' || kind === 'farm') { return 1; } var C = core(), g = C && C.tuned ? +C.tuned('go.glade', 0.4) : 0; return g > 0 && h01(Math.floor(tx / 5), Math.floor(ty / 5), 97) < g ? 0.15 : 1; }
   /** 이 칸에 세울 소품 [{ id, dx, dy(칸 안 0..1), k }] — 순수 */
   function propsAt(kind, tx, ty) {
     var L = PROPS[kind], out = [], n = PER_CELL[kind] || 0, i, r, p;
     if (!L) { return out; }
+    var gl = glade(kind, tx, ty);
     for (i = 0; i < n; i++) {
       p = L[Math.floor(h01(tx, ty, 11 + i) * L.length)];
       r = h01(tx, ty, 23 + i);
-      if (r > p[2] * propDens()) { continue; }
+      if (r > p[2] * propDens() * gl) { continue; }
       out.push({ id: p[0], dx: 0.15 + 0.7 * h01(tx, ty, 37 + i), dy: 0.2 + 0.7 * h01(tx, ty, 41 + i), k: p[1] * (0.85 + 0.3 * h01(tx, ty, 53 + i)) });
     }
     return out;
