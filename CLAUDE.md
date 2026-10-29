@@ -10,10 +10,10 @@
 - 공통 설계: `SAGA-DESIGN.md`(일곱 PLAN 의 상위) · 다섯 판 이야기 정본: `scenario/`
 - 웹 다섯 판: `saga-web/<폴더>/PLAN.md` 가 정본, 이력은 `archive/web/`
 - 3D 두 트랙(코드 공유 없음): `saga-godot/`(Godot 4)·`saga-unity/`(Unity 6) — 각 폴더 `CLAUDE.md` 부터
-- 규칙·방향·함정: `SAGA-HANDOFF.md`(≤80KB) · 이력: `archive/SAGA-HISTORY.md`(grep 으로만, "토큰" 절)
+- 규칙·방향·함정: `SAGA-HANDOFF.md`(≤80KB) · 이력: `archive/SAGA-HISTORY.md`(grep 으로만)
 - 도구: `tools/README.md` · `git commit` 때 훅이 `tools/precheck.sh` 를 돌린다(막히면 원인을 고친다)
 
-## 다섯 판 — 별개 프로젝트 (부르는 이름 = **번호+두 글자** 1만리·2나락·3마을·4종횡·5천하, 10-10 — 폴더·세이브 키·id 그대로, 옛 글 안 고침)
+## 다섯 판 — 별개 프로젝트 (부르는 이름 = **번호+두 글자** 1만리·2나락·3마을·4종횡·5천하, 폴더·세이브 키·id 그대로, 옛 글 안 고침)
 
 | 게임 | 폴더 | 포트 | 원작 | 세이브 키 |
 |---|---|---|---|---|
@@ -28,8 +28,7 @@
 
 ## 어디서 도는가
 
-- 로컬: 각 폴더 `run.bat`(브라우저 열림) · `start_server.bat`(허브) · 1만리 폰 `run-phone.bat`(HTTPS)
-- 제작 도구: `saga-web/tools/run-tools.bat`(편집기·엔진 :8799~8801)
+- 로컬: 각 폴더 `run.bat`·허브 `start_server.bat`·1만리 폰 `run-phone.bat`(HTTPS)·제작 도구 `saga-web/tools/run-tools.bat`(:8799~8801)
 - 공개: <https://smh80602070-spec.github.io/swbins/saga-web/saga-go/> 식 하위 경로(GitHub Pages)
 
 ## git
@@ -37,7 +36,7 @@
 `origin` = <https://github.com/smh80602070-spec/swbins> (**공개**, 옛 계정 정지 중 임시 — 풀리면 `py tools/switch-origin.py old`).
 
 - `saga-web/saga-go/server/certs/` 절대 커밋 금지(자체 서명 CA 개인키). `.gitignore` 풀지 말 것
-- `.nojekyll` 지우지 말 것(`_test.html`·`js/_expansion/` 등 `_` 파일이 Pages 에서 빠진다)
+- `.nojekyll` 지우지 말 것(`_` 로 시작하는 파일이 Pages 에서 빠진다)
 - 새 파일에 키·토큰·회사 도메인·PC 이름·개인 경로 금지. 푸시 전 한 번 훑는다
 - **다른 세션이 같은 트리에서 동시에 돈다.** `git add` 해 두고 뜸 들이지 말고
   `git commit -F <메시지파일> -- <손댄 경로>` 로 곧바로 커밋한다(경로는 글자 그대로 — 훅이 그 경로만 검사). "커밋해" = 푸시까지
@@ -51,7 +50,7 @@
 - 원작 개체값(IV)·CP 도입 — 이 판의 펫은 개체가 아니라 **종**
 - 경영·문답을 `saga-realm` 밖으로 퍼뜨리기
 - 3마을 구면 투영을 평평한 탑다운으로 되돌리기(집 안만 안 휜다)
-- 원작사의 실제 에셋(그림·소리·데이터) 넣기 — 문법만 따른다. 그림은 CC0·코드·상업 허용 로컬 AI(`tools/ai-art`, §7.4)
+- 원작사의 실제 에셋(그림·소리·데이터) 넣기 — 문법만 따른다. 그림은 CC0·코드·상업 허용 로컬 AI(`tools/ai-art`)
 
 ## 검증
 
@@ -59,17 +58,17 @@
 구문        node -c <파일>
 진단        node tools/test-web.mjs <판> [--runs=3]   → RESULT n/n (DIFF 없음)
 QC          node tools/qc.mjs [--game <판>|--branch <갈래>]  → 실기 확인 대신 자동(tools/_out/qc-last.md)
-어드민      _admin.html  (세이브·균형 손잡이·QA 프리셋)  /  데모  _demo.html#<장면>
+어드민      _admin.html  /  데모  _demo.html#<장면>
 ```
 
 - **작업 중 스크린샷(헤드리스·CDP) 금지** — QC·사용자 요청 때만(3D 는 `--use-angle=swiftshader
-  --enable-unsafe-swiftshader --disable-gpu-sandbox`). 실기기 대신 QC 가 돈다(PNG 는 세션이 본다).
+  --enable-unsafe-swiftshader --disable-gpu-sandbox`).
 - 헤드리스 크롬은 전용 `--user-data-dir` 로 띄우고 그 turn 안에 **그 PID 만** `taskkill //F //T //PID`.
   `//IM chrome.exe`(사용자 크롬)·`//IM node.exe`(다른 세션 서버) 금지.
 - 진단 씨앗은 mulberry32(20260824) 고정. 시각 의존 축(날씨·떠돌이 등)은 진단에서 붙든다 — 방법은 그 판 PLAN §9.
 - 서버(`run.bat` 등)는 사용자가 실기 테스트를 요청할 때만 띄운다.
 - 큰 파일은 **Write 툴**로 쓴다. 파이썬은 `py`(`python` 은 스토어 껍데기). 치환은 바이너리(`'rb'`/`'wb'`) — 텍스트 모드는 CRLF 로 뒤집힌다.
-  긴 치환은 heredoc 말고 스크래치패드 `.py` 로(셸이 따옴표·백슬래시를 깬다).
+  긴 치환은 heredoc 말고 스크래치패드 `.py` 로.
 - 한글 `.ps1` 은 UTF-8 BOM 필수.
 
 ## 토큰
@@ -78,6 +77,5 @@ QC          node tools/qc.mjs [--game <판>|--branch <갈래>]  → 실기 확�
   목차(`grep -n "^## \|^### "`)·날짜·게임명 grep 으로 필요한 절만 `sed -n`.
 - `sprite.js`(100KB)·`data.js`(75KB) 도 전체 Read 금지 — 세레나 `find_symbol`·id grep 으로 그 자리만 읽는다.
 - 진단 출력은 `grep -o "RESULT [0-9/]*"`·실패 줄만(`--dump-dom` 통째 금지).
-- **문서 3층**(`SAGA-DESIGN.md` §9): 규칙(CLAUDE.md ≤6KB) / 설계(PLAN ≤70KB, 날짜 세션 기록 금지) / 이력(HANDOFF·HISTORY, append-only, grep 으로만).
-  상태(3D `docs/PROJECT_STATE.md`·루트 README "현재" 절)는 **덮어쓴다**. 세션 기록은 HANDOFF·HISTORY 에만.
-- 이 파일엔 **규칙만**(이력 문장 금지).
+- **문서 3층**(`SAGA-DESIGN.md` §9): 규칙(CLAUDE.md ≤6KB, 규칙만) / 설계(PLAN ≤70KB, 세션 기록 금지) / 이력(HANDOFF·HISTORY, append-only, grep 으로만).
+  상태(`docs/PROJECT_STATE.md`·루트 README "현재" 절)는 **덮어쓴다**.
