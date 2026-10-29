@@ -862,6 +862,8 @@
     return t === 2 ? 2 : (t ? 1 : 0);
   }
   function tiltOn() { return tiltMode() > 0; }
+  /** 2D 깊이 원근(사용자 10-29 "3마을처럼" W-0495) — 손잡이 go.depth2d = 땅을 눕히는 각도(0 = 평평한 옛 2D 그대로). 3D 는 안 켠다(settings.tilt 는 그대로 0) */
+  function depth2dDeg() { var d = +core.tuned('go.depth2d', 0), W3 = global.DG.world3d; return d > 0 && global.DG.field2d && global.DG.field2d.on() && !(W3 && W3.active && W3.active()) ? d : 0; }
 
   function initCanvas(objEl, groundEl) {
     canvas = objEl; ctx = canvas.getContext('2d');
@@ -1012,14 +1014,14 @@
   function computeGeom() {
     var r = canvas.getBoundingClientRect();
     var W = Math.max(1, r.width), H = Math.max(1, r.height);
-    var md = tiltMode();
+    var md = tiltMode() || (depth2dDeg() ? 3 : 0);
     if (!md) {
       return { W: W, H: H, GW: W, GH: H, ox: W / 2, oy: H / 2,
                cx: W / 2, cy: H / 2, tilt: 0, sin: 0, cos: 1, persp: PERSP, mode: 0 };
     }
-    var tiltDeg = md === 2 ? TILT3_DEG : TILT_DEG;
-    var persp = md === 2 ? PERSP3 : PERSP;
-    var cy = md === 2 ? H * ANCHOR3 : H / 2;      // 플레이어가 서는 화면 세로 위치
+    var tiltDeg = md === 3 ? depth2dDeg() : (md === 2 ? TILT3_DEG : TILT_DEG);
+    var persp = md === 3 ? 1500 : (md === 2 ? PERSP3 : PERSP);
+    var cy = md === 3 ? H * 0.6 : (md === 2 ? H * ANCHOR3 : H / 2);      // 플레이어가 서는 화면 세로 위치
     var th = tiltDeg * Math.PI / 180, sin = Math.sin(th), cos = Math.cos(th);
     var upH = cy, downH = H - cy, pad = 80;
     // 화면 위쪽은 멀어져 축소되므로 지면이 훨씬 많이 필요하다 (지평선 근처는 상한을 둔다)
