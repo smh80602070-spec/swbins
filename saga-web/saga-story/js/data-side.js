@@ -4,8 +4,6 @@
  * 원작식 2D 사이드스크롤 게임의 뼈대 데이터.
  * 스테이지를 하나 늘리려면 STAGES 에 한 줄만 넣으면 된다.
  *
- * 발판  plats   [x, y, w]        y 는 발판 윗면
- * 줄    ropes   [x, top, bottom, kind]   kind: 'rope'(밧줄) | 'ladder'(사다리)
  *               top 은 위쪽 끝(대개 발판 윗면) · bottom 은 아래 끝(대개 바닥)
  * 문    portals [x, toKey]       ↑ 를 누르면 그 사냥터로 걸어 넘어간다
  *               도착 자리는 방향에서 나온다 — 오른쪽 문으로 나가면 다음 맵의 왼쪽 끝
@@ -36,7 +34,6 @@
     {
       key: 'sinya', name: '신야성', need: 1, sky: ['#f2d9a0', '#f7ecc9'], mood: 'sky',
       ground: '#8a6b3a', width: 1200, floor: 560, town: true,
-      plats: [], ropes: [],
       portals: [[1130, 'heodo']],
       npcs: [[220, 'elder'], [620, 'guard'], [800, 'merchant'], [980, 'wanderer'], [420, 'courier'], [710, 'timetraveler']],
       enemyLv: 1, spawn: 0,
@@ -45,7 +42,6 @@
     {
       key: 'heodo', name: '허도', need: 1, sky: ['#e8c15a', '#f5e2a0'], mood: 'sky',
       ground: '#7a5a30', width: 1400, floor: 560, town: true,
-      plats: [], ropes: [],
       portals: [[70, 'sinya'], [1330, 'field']],
       npcs: [[220, 'merchant'], [620, 'healer'], [980, 'guard'], [1100, 'wanderer'], [420, 'tourist'], [800, 'explorer']],
       enemyLv: 1, spawn: 0,
@@ -54,7 +50,6 @@
     {
       key: 'field', name: '허창 들판', need: 1, sky: ['#79c3e8', '#c6e6f2'], mood: 'sky',
       ground: '#6faf55', width: 2200, floor: 560,
-      plats: [], ropes: [],
       portals: [[70, 'heodo'], [2130, 'gangneungjin']],
       secret: { x: 1740, y: 215, reward: { gold: 80 } }, relics: [280, 770, 1400],   // W-0176 숨은 자리(밧줄 꼭대기 발판에서만 닿는 끝 발판)·옛 조각 셋
       gathers: [[480, 'herb'], [1050, 'herb'], [1750, 'herb']],
@@ -66,7 +61,6 @@
     {
       key: 'gangneungjin', name: '강릉진', need: 5, sky: ['#4f8fa8', '#a8d8e0'], mood: 'sky',
       ground: '#33586a', width: 1300, floor: 560, town: true,
-      plats: [], ropes: [],
       portals: [[70, 'field'], [1230, 'forest']],
       npcs: [[220, 'guard'], [620, 'elder'], [980, 'merchant'], [420, 'courier'], [800, 'explorer']],
       enemyLv: 5, spawn: 0,
@@ -75,7 +69,6 @@
     {
       key: 'forest', name: '오림 숲', need: 5, sky: ['#5fa06a', '#a8d49a'], mood: 'forest',
       ground: '#417a3f', width: 2600, floor: 560,
-      plats: [], ropes: [],
       portals: [[70, 'gangneungjin'], [2530, 'namjeongseong']],
       secret: { x: 1090, y: 155, reward: { gold: 180 } }, relics: [750, 1440, 2060],   // W-0176 숨은 자리(밧줄 꼭대기 발판에서만 닿는 끝 발판)·옛 조각 셋
       gathers: [[420, 'berry'], [1080, 'berry'], [1780, 'berry'], [2340, 'berry']],
@@ -85,7 +78,6 @@
     {
       key: 'namjeongseong', name: '남정성', need: 12, sky: ['#6b6b78', '#a9a9b8'], mood: 'sky',
       ground: '#4a4a56', width: 1300, floor: 560, town: true,
-      plats: [], ropes: [],
       portals: [[70, 'forest'], [1230, 'cave']],
       npcs: [[220, 'guard'], [620, 'healer'], [800, 'merchant'], [980, 'wanderer'], [420, 'tourist'], [710, 'timetraveler']],
       enemyLv: 12, spawn: 0,
@@ -94,7 +86,6 @@
     {
       key: 'cave', name: '한중 굴혈', need: 12, sky: ['#2b2436', '#4a3d58'], mood: 'cave',
       ground: '#3c3145', width: 3000, floor: 560,
-      plats: [], ropes: [],
       portals: [[70, 'namjeongseong'], [2930, 'gisanchae']],
       secret: { x: 1200, y: 175, reward: { gold: 340 } }, relics: [850, 1750, 2000],   // W-0176 숨은 자리(밧줄 꼭대기 발판에서만 닿는 끝 발판)·옛 조각 셋
       gathers: [[500, 'ore'], [1500, 'ore'], [2500, 'ore']],
@@ -104,7 +95,6 @@
     {
       key: 'gisanchae', name: '기산채', need: 25, sky: ['#5a2c1e', '#a85c3a'], mood: 'sky',
       ground: '#3a2015', width: 1300, floor: 560, town: true,
-      plats: [], ropes: [],
       portals: [[70, 'cave'], [1230, 'gorge']],
       npcs: [[220, 'wanderer'], [620, 'guard'], [980, 'merchant'], [420, 'courier'], [800, 'timetraveler']],
       enemyLv: 25, spawn: 0,
@@ -121,7 +111,6 @@
          골짜기라 오래 서 있을 자리를 주지 않는 것이 이 사냥터의 성격이다. */
       key: 'gorge', name: '호로곡(葫蘆谷)', need: 25, sky: ['#3a1410', '#8f3a1c'], mood: 'fire',
       ground: '#4a2a20', width: 3400, floor: 560,
-      plats: [], ropes: [],
       portals: [[70, 'gisanchae'], [3330, 'ruin']],
       secret: { x: 2090, y: 125, reward: { gold: 580 } }, relics: [390, 1250, 2500],   // W-0176 숨은 자리(밧줄 꼭대기 발판에서만 닿는 끝 발판)·옛 조각 셋
       gathers: [[700, 'cinder'], [1800, 'cinder'], [2900, 'cinder']],
@@ -141,7 +130,6 @@
          올리면(45·70) 수십~수천 배가 되어 아무도 못 잡는다. */
       key: 'ruin', name: '낙양 옛터(洛陽 舊址)', need: 45, sky: ['#2e2a28', '#6e5a4a'], mood: 'fire',
       ground: '#3a302a', width: 3600, floor: 560,
-      plats: [], ropes: [],
       portals: [[70, 'gorge'], [3530, 'deepcave']],
       secret: { x: 2160, y: 115, reward: { gold: 660 } }, relics: [440, 1350, 2580],   // W-0176 숨은 자리(밧줄 꼭대기 발판에서만 닿는 끝 발판)·옛 조각 셋
       gathers: [[800, 'cinder'], [1900, 'ore'], [3000, 'cinder']],
@@ -153,7 +141,6 @@
          바닥 폭이 가장 넓다(오래 걸어 들어가는 곳). 캐는 것은 광물뿐 */
       key: 'deepcave', name: '검각 암굴(劍閣 巖窟)', need: 70, sky: ['#141220', '#2c2640'], mood: 'cave',
       ground: '#262036', width: 3800, floor: 560,
-      plats: [], ropes: [],
       portals: [[70, 'ruin'], [3730, 'beyond_past']],
       secret: { x: 1450, y: 105, reward: { gold: 740 } }, relics: [1080, 2100, 3000],   // W-0176 숨은 자리(밧줄 꼭대기 발판에서만 닿는 끝 발판)·옛 조각 셋
       gathers: [[700, 'ore'], [1600, 'ore'], [2600, 'ore'], [3400, 'ore']],
@@ -166,7 +153,6 @@
     {
       key: 'beyond_past', name: '문 너머 · 옛 전장(門外 古戰場)', need: 72, sky: ['#3a2a1e', '#a8703a'], mood: 'fire',
       ground: '#4a3626', width: 3800, floor: 560,
-      plats: [], ropes: [],
       portals: [[70, 'deepcave'], [3730, 'beyond_now']],
       secret: { x: 2160, y: 125, reward: { gold: 780 } }, relics: [390, 1200, 3050],   // W-0176 숨은 자리(밧줄 꼭대기 발판에서만 닿는 끝 발판)·옛 조각 셋
       gathers: [[700, 'cinder'], [1700, 'ore'], [2700, 'cinder'], [3400, 'ore']],
@@ -176,7 +162,6 @@
     {
       key: 'beyond_now', name: '문 너머 · 무너진 도심(門外 廢都心)', need: 74, sky: ['#20262e', '#5a6672'], mood: 'sky',
       ground: '#3a3d42', width: 3900, floor: 560,
-      plats: [], ropes: [],
       portals: [[70, 'beyond_past'], [3830, 'beyond_future']],
       secret: { x: 1430, y: 105, reward: { gold: 820 } }, relics: [440, 2300, 3150],   // W-0176 숨은 자리(밧줄 꼭대기 발판에서만 닿는 끝 발판)·옛 조각 셋
       gathers: [[800, 'ore'], [1800, 'cinder'], [2800, 'ore'], [3500, 'cinder']],
@@ -186,7 +171,6 @@
     {
       key: 'beyond_future', name: '문 너머 · 궤도 기지(門外 軌道基地)', need: 76, sky: ['#0a1226', '#1c2e5a'], mood: 'cave',
       ground: '#1e2a44', width: 4000, floor: 560,
-      plats: [], ropes: [],
       portals: [[70, 'beyond_now']],
       secret: { x: 1450, y: 105, reward: { gold: 860 } }, relics: [1080, 2100, 3000],   // W-0176 숨은 자리(밧줄 꼭대기 발판에서만 닿는 끝 발판)·옛 조각 셋
       gathers: [[700, 'ore'], [1600, 'ore'], [2600, 'ore'], [3400, 'ore']],

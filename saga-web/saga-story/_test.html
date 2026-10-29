@@ -191,7 +191,6 @@ window.DG_NO_TUNE = true;
   window.addEventListener('error', function (e) { errors.push(e.message); });
 
   /* W-0125 — "실패 …" 로 시작하는 설명 글은 실패다(다섯 판 같은 규칙) */
-  function tp(name, fn) { var SD = window.DG && DG.sideData; if (SD && SD.STAGES.every(function (s) { return !s.plats.length; })) { return; } t(name, fn); }   /* W-0487 ⑦ 한 줄 땅(side.flat)이면 발판·줄 메커니즘 시험은 건너뛴다 */
   function t(name, fn) {
     try {
       var r = fn(), ok = !!r && !(typeof r === 'string' && /^실패 /.test(r));
@@ -354,13 +353,12 @@ window.DG_NO_TUNE = true;
       return ok === false && !S.active() && '거절됨';
     });
 
-    t('진입 — 발판·적·체력이 준비된다 (보스가 있으면 한 마리 더)', function () {
+    t('진입 — 적·체력이 준비된다 (보스가 있으면 한 마리 더)', function () {
       var ok = S.enter('field');
       var st = S.status();
       var want = st.stage.spawn + (st.boss ? 1 : 0);
       return ok && st.active && st.hpMax > 0 && st.enemies === want &&
-        true &&
-        ('체력 ' + st.hpMax + ' · 적 ' + st.enemies + ' · 발판 ' + st.stage.plats.length +
+        ('체력 ' + st.hpMax + ' · 적 ' + st.enemies +
          (st.boss ? ' · 보스 ' + st.boss.name : ''));
     });
 
@@ -378,21 +376,6 @@ window.DG_NO_TUNE = true;
       var a = S.jump();
       var b = S.jump();          // 공중에서는 안 된다
       return a === true && b === false && ('속도 ' + Math.round(p.vy));
-    });
-
-    tp('발판은 위에서만 밟힌다', function () {
-      var run = S.raw(), p = run.player;
-      var pl = run.stage.plats[0];
-      p.x = pl[0] + 20;
-      p.y = pl[1] - S.P_H - 30; p.vy = 200; p.onGround = false;
-      for (var i = 0; i < 12; i++) { S.update(0.03); }
-      var landed = p.onGround && Math.abs((p.y + S.P_H) - pl[1]) < 3;
-      /* 아래에서 위로 지날 때는 통과해야 한다 */
-      p.y = pl[1] + 40; p.vy = -400; p.onGround = false;
-      var before = p.y;
-      for (i = 0; i < 6; i++) { S.update(0.03); }
-      var passed = p.y < before;
-      return landed && passed && '착지 O · 아래에서 통과 O';
     });
 
     /* ── 이동 손맛(§5-5) — 코요테 타임·점프 버퍼·벽 차기·착지 롤. 판정을
@@ -429,18 +412,6 @@ window.DG_NO_TUNE = true;
       return r && ('착지하자마자 다시 뜀, vy=' + Math.round(p.vy));
     });
 
-    tp('벽 차기 — 발판 옆면에 붙어 공중 점프하면 반대쪽으로 튄다', function () {
-      var run = S.raw(), p = run.player;
-      var pl = run.stage.plats[0], right = pl[0] + pl[2];
-      p.climb = null; p.onGround = false; p.coyoteT = 0; p.jumpBufferT = 0;
-      p.x = right + 2; p.y = pl[1] + 20;  // 발판 오른쪽 옆면, 표면 바로 아래
-      p.facing = -1;
-      var ok = S.jump();
-      var r = ok && p.wallKickDir === 1 && p.vy < 0 && p.facing === 1;
-      p.wallKickT = 0;
-      return r && ('오른쪽으로 튐 · vy=' + Math.round(p.vy));
-    });
-
     t('착지 롤 — 낙하 속도가 크면 착지 뒤 잠깐 입력 없이도 밀린다', function () {
       var run = S.raw(), p = run.player;
       p.climb = null; p.onGround = false; p.wallKickT = 0; p.jumpBufferT = 0;
@@ -471,95 +442,14 @@ window.DG_NO_TUNE = true;
       S.setInput('jump', false);
     }
 
-    t('사냥터마다 줄과 문이 놓여 있다', function () {
-      var bad = [], rn = [], gn = [];
+    t('사냥터마다 문이 놓여 있다', function () {
+      var bad = [], gn = [];
       for (var i = 0; i < SD.STAGES.length; i++) {
         var s = SD.STAGES[i];
-        rn.push((s.ropes || []).length);
         gn.push((s.portals || []).length);
-        var np = s.plats.filter(function (pl) { return !(s.secret && pl[1] === s.secret.y); }).length;   // W-0176 숨은 자리 발판은 일부러 줄이 없다
-        if (!s.ropes || s.ropes.length < np) { bad.push(s.key + ' 줄'); }
         if (!s.portals || !s.portals.length) { bad.push(s.key + ' 문'); }
       }
-      return bad.length === 0 && ('줄 ' + rn.join('·') + ' · 문 ' + gn.join('·'));
-    });
-
-    tp('↑ — 줄을 잡고 오르면 발판 위에 올라선다', function () {
-      var run = S.raw(), p = run.player, stg = run.stage;
-      var r = stg.ropes[0];
-      calm(run);
-      p.climb = null; p.x = r[0] - S.P_W / 2; p.y = stg.floor - S.P_H;
-      p.vy = 0; p.onGround = true;
-      S.setInput('up', true);
-      var grabbed = !!p.climb;
-      for (var i = 0; i < 200 && p.climb; i++) { S.update(0.03); }
-      restInput();
-      var landed = p.onGround && Math.abs((p.y + S.P_H) - r[1]) < 2;
-      p.invuln = 0;
-      return grabbed && landed && ('바닥 ' + stg.floor + ' → 발판 ' + r[1]);
-    });
-
-    tp('줄에 매달린 동안은 중력도 좌우 이동도 없다', function () {
-      var run = S.raw(), p = run.player, stg = run.stage;
-      var r = stg.ropes[0];
-      calm(run);
-      p.climb = null; p.x = r[0] - S.P_W / 2; p.y = stg.floor - S.P_H - 60;
-      p.vy = 0; p.onGround = false;
-      S.setInput('up', true);
-      var y0 = p.y, x0 = p.x;
-      S.setInput('up', false);               // 잡기만 하고 손은 멈춘다
-      var held = !!p.climb;
-      S.setInput('left', true);
-      for (var i = 0; i < 20; i++) { S.update(0.03); }
-      restInput();
-      var still = Math.abs(p.y - y0) < 0.5 && Math.abs(p.x - x0) < 0.5;
-      var out = '매달림 ' + (held ? 'O' : 'X') + ' · 20프레임 뒤 제자리 ' + (still ? 'O' : 'X');
-      p.climb = null; p.invuln = 0;
-      return held && still && out;
-    });
-
-    tp('줄 위에서 점프하면 손을 떼고 튄다', function () {
-      var run = S.raw(), p = run.player, stg = run.stage;
-      var r = stg.ropes[0];
-      calm(run);
-      p.climb = null; p.x = r[0] - S.P_W / 2; p.y = stg.floor - S.P_H - 60;
-      p.vy = 0; p.onGround = false;
-      S.setInput('up', true); S.setInput('up', false);
-      var held = !!p.climb;
-      S.setInput('left', true);                 // 방향키와 함께 눌러야 그쪽으로 튄다
-      S.jump();
-      var freed = !p.climb && p.vy < 0 && p.facing === -1;
-      var vy = Math.round(p.vy);
-      /* 방향키 없이 누르면 그 자리에서 손만 뗀다 — 원작도 그렇다 */
-      S.setInput('left', false);
-      p.y = stg.floor - S.P_H - 60; p.vy = 0; p.onGround = false;
-      S.setInput('up', true); S.setInput('up', false);
-      var held2 = !!p.climb;
-      S.jump();
-      var dropped = !p.climb && p.vy >= 0;
-      restInput();
-      p.climb = null; p.vy = 0; p.invuln = 0;
-      return held && freed && held2 && dropped &&
-        ('← 와 함께면 속도 ' + vy + ' · 방향키 없이면 그대로 떨어짐');
-    });
-
-    tp('↓ + 점프 — 밟고 선 발판을 빠져나간다 (바닥에서는 안 된다)', function () {
-      var run = S.raw(), p = run.player, stg = run.stage;
-      var pl = stg.plats[0];
-      calm(run);
-      p.climb = null; p.x = pl[0] + 40; p.y = pl[1] - S.P_H;
-      p.vy = 0; p.onGround = true;
-      S.setInput('down', true);
-      S.setInput('jump', true);
-      for (var i = 0; i < 14; i++) { S.update(0.03); }
-      var fellThrough = p.y + S.P_H > pl[1] + 10;
-      /* 바닥에서는 빠져나갈 곳이 없다 */
-      p.y = stg.floor - S.P_H; p.vy = 0; p.onGround = true;
-      var atFloor = S.dropThrough() === false;
-      restInput();
-      p.invuln = 0;
-      return fellThrough && atFloor &&
-        ('발판 ' + pl[1] + ' → 발밑 ' + Math.round(p.y + S.P_H) + ' · 바닥에서는 거절');
+      return bad.length === 0 && ('문 ' + gn.join('·'));
     });
 
     t('문 — ↑ 로 옆 사냥터로 넘어가고 몸과 벌이는 이어진다', function () {
@@ -1324,64 +1214,6 @@ window.DG_NO_TUNE = true;
       var e2 = AU._nearestEnemy(S.raw());
       return e && e2 && ('처음 거리 ' + Math.round(d0) + ' → 지금 ' +
         Math.round(Math.abs((e2.x + e2.w / 2) - (S.raw().player.x + S.P_W / 2))));
-    });
-
-    tp('자동 — 한 층 위의 적에게는 줄을 타고 간다', function () {
-      /* **무대를 스스로 만든다** — 앞 항목이 어느 사냥터에 있었느냐에 따라
-         발판·줄 좌표가 달라지면 이 항목이 애먼 자리를 짚는다 */
-      if (S.active()) { S.leave(); }
-      S.enter('field');
-      var run = S.raw(), p = run.player, stg = run.stage;
-      var keep = run.enemies.slice();
-      var r = stg.ropes[0], pl = stg.plats[0];
-      var e = keep[0], hp0 = e.hp, ex0 = e.x, ey0 = e.y;
-      run.enemies = [e];                        // 목표를 하나로 좁힌다
-      e.x = pl[0] + 130; e.y = pl[1] - e.h; e.hp = e.hpMax = 99999;
-      run.hp = run.hpMax; p.invuln = 999;
-      p.climb = null; p.x = r[0] + 260; p.y = stg.floor - S.P_H;
-      p.vy = 0; p.onGround = true;
-      var climbed = false, onPlat = false, i;
-      for (i = 0; i < 400 && !onPlat; i++) {
-        AU._tickHunt(0.05); S.update(0.05);
-        if (p.climb) { climbed = true; }
-        if (climbed) { onPlat = p.onGround && Math.abs((p.y + S.P_H) - pl[1]) < 3; }
-      }
-      /* 치운다 — 남기면 다음 항목이 이 상태를 딛는다 */
-      restInput();
-      e.x = ex0; e.y = ey0; e.hp = e.hpMax = hp0;
-      run.enemies = keep;
-      p.invuln = 0; p.climb = null;
-      p.x = 80; p.y = stg.floor - S.P_H; p.vy = 0; p.onGround = true;
-      return climbed && onPlat && ('줄을 잡고 발판 ' + pl[1] + ' 까지 · ' + i + '프레임');
-    });
-
-    tp('W-0384 자동 — 발판에 12 파묻혀 선 적(발치가 줄 꼭대기보다 아래로 잡힘)에게도 줄 끝까지 올라 발판에 선다', function () {
-      /* **무대를 스스로 만든다** — 앞 항목이 어느 사냥터에 있었느냐에 따라
-         발판·줄 좌표가 달라지면 이 항목이 애먼 자리를 짚는다 */
-      if (S.active()) { S.leave(); }
-      S.enter('field');
-      var run = S.raw(), p = run.player, stg = run.stage;
-      var keep = run.enemies.slice();
-      var r = stg.ropes[0], pl = stg.plats[0];
-      var e = keep[0], hp0 = e.hp, ex0 = e.x, ey0 = e.y;
-      run.enemies = [e];                        // 목표를 하나로 좁힌다
-      e.x = pl[0] + 130; e.y = pl[1] - e.h + 12; e.hp = e.hpMax = 99999;
-      run.hp = run.hpMax; p.invuln = 999;
-      p.climb = null; p.x = r[0] + 260; p.y = stg.floor - S.P_H;
-      p.vy = 0; p.onGround = true;
-      var climbed = false, onPlat = false, i;
-      for (i = 0; i < 400 && !onPlat; i++) {
-        AU._tickHunt(0.05); S.update(0.05);
-        if (p.climb) { climbed = true; }
-        if (climbed) { onPlat = p.onGround && Math.abs((p.y + S.P_H) - pl[1]) < 3; }
-      }
-      /* 치운다 — 남기면 다음 항목이 이 상태를 딛는다 */
-      restInput();
-      e.x = ex0; e.y = ey0; e.hp = e.hpMax = hp0;
-      run.enemies = keep;
-      p.invuln = 0; p.climb = null;
-      p.x = 80; p.y = stg.floor - S.P_H; p.vy = 0; p.onGround = true;
-      return climbed && onPlat && ('줄을 잡고 발판 ' + pl[1] + ' 까지 · ' + i + '프레임');
     });
 
     t('자동 — 5분치를 굴리면 실제로 잡힌다', function () {
@@ -3758,8 +3590,8 @@ window.DG_NO_TUNE = true;
       /* 규칙 값은 모듈이 **켜질 때 한 번** 손잡이를 읽는다. 진단은 손잡이를 안 읽으므로
          여기서 보이는 수는 늘 코드의 기본값이어야 한다 — 이 못이 풀리면 위 수치들이
          잡아 둔 손잡이에 따라 흔들린다. */
-      return S.GRAV === 1900 && S.SPEED === 270 && S.CLIMB === 168 && DG.gear.BAG === 24 &&
-        ('중력 ' + S.GRAV + ' · 달리기 ' + S.SPEED + ' · 줄 ' + S.CLIMB + ' · 가방 ' + DG.gear.BAG);
+      return S.GRAV === 1900 && S.SPEED === 270 && DG.gear.BAG === 24 &&
+        ('중력 ' + S.GRAV + ' · 달리기 ' + S.SPEED + ' · 가방 ' + DG.gear.BAG);
     });
 
     t('필드 채집물을 지나가면 줍고, 그 자리는 잠깐 비운다', function () {
@@ -6881,27 +6713,6 @@ window.DG_NO_TUNE = true;
         }
         var full = peak(false), tap = peak(true);
         return full > 0 && tap / full <= 0.6 && ('끝까지 ' + Math.round(full) + ' · 짧게 ' + Math.round(tap) + '(' + Math.round(tap / full * 100) + '%) · 손잡이 side.jumpCut ' + DG.sideHand.JUMP_CUT()) || ('실패 full=' + full + ' tap=' + tap);
-      });
-    });
-    tp('st.relics ① 옛 조각·숨은 자리(W-0176) — 사냥터 아홉마다 조각 셋·숨은 자리 하나, 닿으면 줍고(세이브 비트) 숨은 상자는 그 발판 위에서만 열린다', function () {
-      return shSeed(function () {
-        var H = DG.sideHand, SD = DG.sideData, keep = JSON.stringify(C.save.relics || null), hunts = SD.STAGES.filter(function (s) { return s.relics; });
-        try {
-          C.save.relics = {};
-          var run = shField(), p = run.player, stg = run.stage;
-          p.x = stg.relics[0] - S.P_W / 2; p.y = stg.floor - S.P_H; p.onGround = true;
-          var g1 = H.check();
-          p.x = stg.secret.x - S.P_W / 2; p.y = stg.floor - S.P_H;
-          var g2 = H.check();                                   // 바닥(숨은 자리 아래)에선 안 열린다
-          p.y = stg.secret.y - S.P_H; p.onGround = true; var gold0 = C.save.player.gold;
-          var g3 = H.check();
-          var info = H.stageInfo(stg);
-          S.leave();
-          var shape = hunts.length === 9 && hunts.every(function (s) { return s.relics.length === 3 && s.secret && s.plats.some(function (pl) { return pl[1] === s.secret.y && s.secret.x >= pl[0] && s.secret.x <= pl[0] + pl[2]; }); });
-          return shape && g1.join() === 'relic0' && g2.length === 0 && g3.join() === 'secret' && info.relics === 1 && info.secret && C.save.player.gold > gold0 &&
-            ('사냥터 9 × 조각 3 · 숨은 발판 · 조각 줍기 ○ · 바닥에선 안 열림 · 발판 위 상자 금 +' + (C.save.player.gold - gold0) + '(바로 지갑) · 지도 "' + H.mapTag(stg) + '"') ||
-            ('실패 shape=' + shape + ' g=' + [g1, g2, g3].join('|'));
-        } finally { C.save.relics = JSON.parse(keep) || undefined; }
       });
     });
     t('재미표준 E 사냥터 발견(측정) — 사냥터 아홉 폭을 800 구간으로 나눠 적 아닌 상호작용(채집·조각·숨은 자리·문)이 없는 구간 ≤10%(W-0176)', function () {

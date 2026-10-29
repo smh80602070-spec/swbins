@@ -27,7 +27,7 @@
       key: 'gate-' + town.key, name: '⚔️ ' + town.name + ' 관문 앞', need: town.need,
       sky: ['#5a4038', '#a87a58'], mood: town.mood, ground: town.ground,
       width: WIDTH, floor: town.floor, town: false, gateArena: true, gateOf: town.key,
-      plats: [], ropes: [], portals: [[60, town.key]], npcs: [], gathers: [],
+      portals: [[60, town.key]], npcs: [], gathers: [],
       enemyLv: town.enemyLv, spawn: 0, boss: null, gateBoss: town.gateBoss
     };
   }

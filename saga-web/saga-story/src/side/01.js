@@ -28,13 +28,10 @@
   var MP_MAX = 100, MP_REGEN = core.tuned('side.mpRegen', 8);
   var BRACE_SEC = 8;
   var HIT_COOL = 0.7;           // 맞고 나서 무적
-  var CLIMB = core.tuned('side.climb', 168);    // 줄을 오르내리는 속도
-  var GRAB = 18;                // 줄에 붙는 좌우 여유 (중심에서)
   var PORTAL_R = 46;            // 문 앞으로 치는 좌우 여유
   var TALK_R = 90;              // 마을 사람 앞으로 치는 좌우 여유 — 화면(side-view3d)에서
                                  // 앵커 둘레 ±55 로 서성이므로 그 폭을 감싸도록 넉넉히 잡았다
   var TALK_LEAVE_R = 160;       // 대화창을 연 채 이만큼 멀어지면 저절로 닫는다
-  var DROP_THRU = 0.26;         // ↓+점프로 발판을 빠져나가는 동안
 
   var E_HP = core.tuned('enemy.hpMul', 1);      // 적 체력 배수 (보스도 같이 탄다)
   /* 2026-09-28 실기 Q10 "사가종횡 전투 손보기" — 적 체력은 Lv 마다 ×1.22 인데 내 공격력은 레벨로 안 오른다(인물 능력치 ~100 + 장비·직업).
@@ -196,8 +193,6 @@
      안 흔들고(방향·타이밍만 너그럽게 받아 준다) "손에 붙는" 감각만 더한다. */
   var COYOTE_TIME = 0.1;      // 발판을 막 떠난 뒤에도 이만큼은 점프를 받아 준다
   var JUMP_BUFFER = 0.12;     // 착지 직전 눌러 둔 점프를 이만큼 기억한다
-  var WALL_TOL = 10;          // 발판 옆면 판정 여유(px) — 전용 walls 배열이 없어 발판 자체로 판정
-  var WALL_KICK_VX = 320, WALL_KICK_VY = 620, WALL_KICK_DUR = 0.22;
   var ROLL_SPEED = 1200;      // 이 낙하 속도를 넘겨 착지하면 경직 대신 구른다
   var ROLL_DUR = 0.15, ROLL_MUL = 1.4;
   /* 고유 조작(§5-1) — 회피를 **길게 누르면** 나온다. 수치(창·배율·발수 등)는
@@ -334,9 +329,9 @@
       player: { x: Math.max(80, global.DG.sideView && global.DG.sideView.startClearX ? global.DG.sideView.startClearX() : 0), y: stg.floor - P_H, vx: 0, vy: 0, facing: 1,   // W-0155 폰 가로는 조작판 뒤
                 onGround: true, phase: 0, atkCd: 0, hurt: 0, invuln: 0,
                 cds: [0, 0, 0, 0, 0, 0], buff: null,
-                climb: null, dropThru: 0, resting: 0, dodgeCd: 0,
+                resting: 0, dodgeCd: 0,
                 dodgeAnim: 0, drinkAnim: 0,
-                coyoteT: 0, jumpBufferT: 0, rollT: 0, wallKickT: 0, wallKickDir: 0,
+                coyoteT: 0, jumpBufferT: 0, rollT: 0,
                 /* 고유 조작(§5-1) — holding/holdT 는 "회피를 누르고 있다"는 입력
                    상태, 나머지는 갈래별로 하나씩만 쓴다(무사=parry, 궁수=archer,
                    협객=shadow, 방사=elem — 서로 겹쳐 켜질 일이 없다) */
@@ -411,20 +406,6 @@
    * 규칙은 여기(side.js)에만 있다 — 화면은 좌표를 읽어 그리기만 한다.
    */
 
-  /** 이 자리에서 붙을 수 있는 줄 (없으면 null) */
-  function ropeAt(cx, footY) {
-    if (!run) { return null; }
-    var list = run.stage.ropes || [], i;
-    for (i = 0; i < list.length; i++) {
-      var r = list[i];
-      if (Math.abs(cx - r[0]) > GRAB) { continue; }
-      /* 위쪽 끝보다 조금 높은 데까지 쳐 준다 — 발판 위에 서서 ↓ 로 타고 내려갈 수 있게 */
-      if (footY < r[1] - 6 || footY > r[2] + 4) { continue; }
-      return { x: r[0], top: r[1], bottom: r[2], kind: r[3] || 'rope' };
-    }
-    return null;
-  }
-
   /** 이 자리에서 들어갈 수 있는 문 (없으면 null) */
   function portalAt(cx) {
     if (!run) { return null; }
@@ -483,77 +464,18 @@
     return true;
   }
 
-  /** 줄에 붙는다 */
-  function grab(rope) {
-    var p = run.player;
-    sfx('grab');
-    p.climb = rope;
-    p.x = rope.x - P_W / 2;
-    p.vx = 0; p.vy = 0;
-    p.onGround = false;
-    p.dropThru = 0;
-    return true;
-  }
-
-  /** 줄에서 손을 뗀다 (kick 은 튀는 방향 — 좌우 속도는 다음 프레임에 입력이 다시 정한다) */
-  function letGo(kick) {
-    var p = run.player;
-    if (!p.climb) { return false; }
-    p.climb = null;
-    if (kick) { p.vy = -JUMP * 0.72; p.vx = kick; p.facing = kick > 0 ? 1 : -1; }
-    return true;
-  }
-
-  /** 줄에만 붙는다 — 자동이 쓴다. **문은 건드리지 않는다**(자동이 사냥터를 넘어가 버린다) */
-  function grabRope() {
-    if (!run) { return false; }
-    var p = run.player;
-    if (p.climb) { return true; }
-    var r = ropeAt(p.x + P_W / 2, p.y + P_H);
-    return r ? grab(r) : false;
-  }
-
-  /** ↑ 를 눌렀을 때 — 대화창이 열려 있으면 닫고, 아니면 줄 → 문 → 마을 사람 순.
+  /** ↑ 를 눌렀을 때 — 대화창이 열려 있으면 닫고, 아니면 문 → 마을 사람 순.
    *  **문이 마을 사람보다 앞선다** — 사냥터를 넘나드는 길은 데이터를 어떻게
    *  두든 절대 막히면 안 되니, 둘이 겹치는 자리가 생겨도 문이 이긴다. */
   function useUp() {
     if (!run) { return false; }
     if (run.talk) { return closeTalk(); }
     var p = run.player;
-    if (p.climb) { return true; }
-    var r = ropeAt(p.x + P_W / 2, p.y + P_H);
-    if (r) { return grab(r); }
     var g = portalAt(p.x + P_W / 2);
     if (g && p.onGround) { return travel(g.to); }
     var n = npcAt(p.x + P_W / 2);
     if (n && p.onGround) { return talk(n); }
     return false;
-  }
-
-  /** ↓ 를 눌렀을 때 — 발판 위에서 그 아래로 뻗은 줄이 있으면 타고 내려간다 */
-  function useDown() {
-    if (!run) { return false; }
-    var p = run.player;
-    if (p.climb) { return true; }
-    if (!p.onGround) { return false; }
-    var r = ropeAt(p.x + P_W / 2, p.y + P_H + 8);
-    if (!r || p.y + P_H + 8 > r.bottom) { return false; }
-    grab(r);
-    p.y += 6;
-    return true;
-  }
-
-  /** ↓ + 점프 — 밟고 선 발판을 빠져나간다 (바닥에서는 안 된다) */
-  function dropThrough() {
-    if (!run) { return false; }
-    var p = run.player;
-    if (!p.onGround || p.climb) { return false; }
-    if (p.y + P_H >= run.stage.floor - 1) { return false; }
-    p.dropThru = DROP_THRU;
-    p.onGround = false;
-    p.y += 3;
-    p.vy = 30;
-    return true;
   }
 
   /** 문으로 다음 사냥터에 걸어 넘어간다 — 몸(체력·기력)과 벌이(금·마릿수)는 그대로 이어진다 */
@@ -580,7 +502,7 @@
     if (run.pty && stg.town && global.DG.party) { global.DG.party.restore(); }   // 마을 — 쓰러진 동료가 일어선다(§5-8)
     run.player.x = goingRight ? 130 : stg.width - 160;
     run.player.y = stg.floor - P_H;
-    run.player.vx = 0; run.player.vy = 0; run.player.climb = null;
+    run.player.vx = 0; run.player.vy = 0;
     run.player.onGround = true;
     run.player.facing = goingRight ? 1 : -1;
     st().stage = stg.key;
@@ -606,7 +528,7 @@
     run.npcs = buildNpcs(stg); run.talk = null;
     run.riftTick = false;
     run.player.x = 130; run.player.y = stg.floor - P_H;
-    run.player.vx = 0; run.player.vy = 0; run.player.climb = null;
+    run.player.vx = 0; run.player.vy = 0;
     run.player.onGround = true; run.player.facing = 1;
     fx.push({ t: 'fade', life: FADE_DUR });
     core.emit('side:travel', run);
@@ -871,37 +793,15 @@
     if (k in input) { input[k] = !!v; }
     if (k === 'jump' && v) { jump(); }
     if (k === 'up' && v) { useUp(); }
-    if (k === 'down' && v) { useDown(); }
   }
 
-  /** 벽 차기(§5-5) 판정 — 공중에서 발판 옆면에 붙어 있으면 반대쪽으로 튈 방향을
-   *  돌려준다(0 이면 벽이 아니다). 전용 `walls` 배열이 없어 발판(`stg.plats`)
-   *  자체의 옆면(표면부터 바닥까지)을 벽으로 삼는다(PLAN §5-5 대안 그대로). */
-  function wallSide(p) {
-    var stg = run.stage;
-    for (var i = 0; i < stg.plats.length; i++) {
-      var pl = stg.plats[i], top = pl[1], left = pl[0], right = pl[0] + pl[2];
-      if (p.y >= stg.floor || p.y + P_H <= top) { continue; }
-      if (Math.abs((p.x + P_W) - left) < WALL_TOL) { return -1; }  // 발판 왼쪽 옆면 → 왼쪽으로 튄다
-      if (Math.abs(p.x - right) < WALL_TOL) { return 1; }          // 발판 오른쪽 옆면 → 오른쪽으로 튄다
-    }
-    return 0;
-  }
-
-  /** 점프 — 줄에 매달렸으면 손을 떼고 튀고, ↓ 를 누른 채면 발판을 빠져나간다.
-   *  땅이 아니어도 코요테 창(§5-5) 안이면 그대로 받고, 벽 옆이면 차고 튄다,
-   *  둘 다 아니면 점프 버퍼(§5-5)에 담아 착지하는 순간 이어 쓴다. */
+  /** 점프 — 땅이 아니어도 코요테 창(§5-5) 안이면 그대로 받고, 아니면
+   *  점프 버퍼(§5-5)에 담아 착지하는 순간 이어 쓴다. */
   function jump() {
     if (!run) { return false; }
     var p = run.player;
-    if (p.climb) {
-      /* 줄에서 손 떼며 점프 — 수평 가속 +30%(§5-5, 예전엔 그냥 0.8배였다) */
-      letGo(input.left ? -SPEED * 0.8 * 1.3 : (input.right ? SPEED * 0.8 * 1.3 : 0));
-      return true;
-    }
     if (p.onGround || p.coyoteT > 0) {
       p.coyoteT = 0;
-      if (input.down && dropThrough()) { return true; }
       p.vy = -JUMP * (global.DG.mount ? global.DG.mount.jumpMul() : 1) * (global.DG.constellation ? global.DG.constellation.jump() : 1);
       p.onGround = false;
       sfx('jump');
@@ -909,34 +809,21 @@
     }
     var MTj = global.DG.mount;
     if (MTj && MTj.flying && MTj.flying()) { return MTj.flap(p, JUMP); }      // 날개 탈것 — 공중에서 점프 = 날갯짓
-    var w = wallSide(p);
-    if (w) {
-      /* 좌우 이동은 매 프레임 입력으로 다시 정해지므로(아래 update()), 킥 방향은
-         wallKickT 동안만 그 값을 강제로 덮어써 살려 둔다(착지 롤과 같은 요령) */
-      p.wallKickT = WALL_KICK_DUR; p.wallKickDir = w;
-      p.vy = -WALL_KICK_VY; p.facing = w;
-      p.x += w * 2;   // 옆면에서 살짝 떼어 놓는다 — 안 그러면 같은 프레임에 다시 걸린다
-      fx.push({ t: 'dust', x: p.x + (w > 0 ? 0 : P_W), y: p.y + P_H * 0.6, life: 0.28 });
-      sfx('jump');
-      return true;
-    }
     if (global.DG.constellation && global.DG.constellation.blink(p, run.stage.width)) { fx.push({ t: 'dash', x: p.x - 20, y: p.y, w: P_W + 40, h: P_H, life: 0.18 }); sfx('dodge'); return true; } p.jumpBufferT = JUMP_BUFFER;   // 비연(성좌도) — 공중 점프 = 순간 이동
     return false;
   }
 
   /** 회피(PLAN 12절) — 보고 있는 쪽(←→ 를 누르고 있으면 그쪽, 아니면 바라보는
-   *  쪽)으로 짧게 미끄러지며 잠깐 무적이 된다. 줄에 매달렸을 때는 안 나간다
-   *  (letGo() 몫과 겹친다 — 손을 뗀 채 미끄러지면 자리가 어긋난다). */
+   *  쪽)으로 짧게 미끄러지며 잠깐 무적이 된다. */
   function dodge() {
     if (!run) { return false; }
     var p = run.player;
-    if (p.climb || p.dodgeCd > 0) { return false; }
+    if (p.dodgeCd > 0) { return false; }
     /* 유파(§5-2) — 띠에 dash 계열 유파 세트(2 이상)가 있으면 회피가 더 자주 돈다 */
     var J = global.DG.job;
     p.dodgeCd = DODGE_COOL * (J ? J.dodgeCdMul() : 1) * (run.rm ? 1 - run.rm.dodge : 1) * (global.DG.constellation ? global.DG.constellation.dodgeCd() : 1);
     var from = p.x, dir = input.left ? -1 : (input.right ? 1 : p.facing);
     p.x = core.clamp(p.x + DODGE_DIST * dir, 0, run.stage.width - P_W);
-    p.dropThru = 0;
     p.invuln = Math.max(p.invuln, DODGE_INVULN);
     p.dodgeAnim = DODGE_INVULN;
     var lo = Math.min(from, p.x) - 10, hi = Math.max(from, p.x) + P_W + 10;
@@ -953,7 +840,7 @@
   function holdStart() {
     if (!run) { return; }
     var p = run.player;
-    if (p.climb || p.holding) { return; }
+    if (p.holding) { return; }
     p.holding = true; p.holdT = 0; p.holdArmed = false; p.sigNone = false;
   }
 

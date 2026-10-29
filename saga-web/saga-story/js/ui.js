@@ -821,12 +821,11 @@
       var msg = '';
       /* 폰에는 ↑ 도 Space 도 없다 — 손가락뿐인 기기에는 누를 자리를 알려 준다.
          키보드가 있으면 예전 문구 그대로다(진단 출력도 그래서 안 바뀐다) */
-      var UP = core.upHint(), ACT = core.actHint();
-      if (st.climbing) { msg = UP + ' ' + core.downHint() + ' 오르내리기 · ' + ACT + ' 손 떼기'; }
-      else if (st.talk) { msg = UP + ' 대화를 닫는다'; }
+      var UP = core.upHint();
+      if (st.talk) { msg = UP + ' 대화를 닫는다'; }
       else if (st.gate) {
         msg = st.gate.open ? (UP + ' → ' + st.gate.name) : ('🔒 ' + st.gate.name + ' — Lv.' + st.gate.need + ' 부터');
-      } else if (st.rope) { msg = UP + ' 줄을 탄다'; }
+      }
       else if (st.npc) { msg = UP + ' ' + esc(st.npc.name) + '에게 말을 건다'; }
       hint.textContent = msg;
       hint.classList.toggle('show', !!msg);

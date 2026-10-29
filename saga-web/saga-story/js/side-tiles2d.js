@@ -58,40 +58,6 @@
     return o;
   }
 
-  /** 발판 한 장 — (x, y) = 화면 왼끝·윗면(판정 윗면 그대로) */
-  function drawPlat(ctx, region, x, y, w) {
-    var t = set(region, 'plat');
-    if (!t || !ctx) { return false; }
-    var segs = platSegs(w), i, s, im, sw;
-    x = Math.round(x); y = Math.round(y);
-    ctx.save();
-    ctx.imageSmoothingEnabled = false;
-    ctx.fillStyle = 'rgba(0,0,0,0.20)';      // 아래 그늘(옛 발판과 같은 자리)
-    ctx.beginPath(); ctx.ellipse(x + w / 2, y + PLAT_H + 8, w * 0.46, 6, 0, 0, Math.PI * 2); ctx.fill();
-    for (i = 0; i < segs.length; i++) {
-      s = segs[i]; im = t[s.part]; sw = im.naturalWidth || UNIT;
-      if (s.part === 'plat_r' && s.w < UNIT) { ctx.drawImage(im, sw - s.w * sw / UNIT, 0, s.w * sw / UNIT, im.naturalHeight || PLAT_H, x + s.x, y, s.w, PLAT_H); }
-      else { ctx.drawImage(im, 0, 0, s.w * sw / UNIT, im.naturalHeight || PLAT_H, x + s.x, y, s.w, PLAT_H); }
-    }
-    ctx.restore();
-    return true;
-  }
-
-  /** 밧줄·사다리 — x = 화면 가운데, top~bot 세로로 이어 붙인다 */
-  function drawRope(ctx, region, x, top, bot, ladder) {
-    var k = ladder ? 'ladder' : 'rope', t = set(region, k);
-    if (!t || !ctx) { return false; }
-    var im = t[k], h = UNIT, y, sh = im.naturalHeight || UNIT;
-    x = Math.round(x - UNIT / 2); top = Math.round(top); bot = Math.round(bot);
-    ctx.save(); ctx.imageSmoothingEnabled = false;
-    for (y = top; y < bot; y += h) {
-      var dh = Math.min(h, bot - y);
-      ctx.drawImage(im, 0, 0, im.naturalWidth || UNIT, sh * dh / h, x, y, UNIT, dh);
-    }
-    ctx.restore();
-    return true;
-  }
-
   /** 바닥 — 땅 선(floor)부터 아래로. 윗줄은 ground_top(풀 테), 그 아래는 ground 반복. camX 로 흐른다 */
   function drawGround(ctx, region, camX, W, H, floor) {
     var t = set(region, 'ground');
@@ -114,6 +80,6 @@
   global.DG.sideTiles2d = {
     UNIT: UNIT, PLAT_H: PLAT_H,
     platSegs: platSegs, partsOf: partsOf, fileOf: fileOf,
-    drawPlat: drawPlat, drawRope: drawRope, drawGround: drawGround, ready: function (region, kind) { return !!set(region, kind); }, stats: stats
+    drawGround: drawGround, ready: function (region, kind) { return !!set(region, kind); }, stats: stats
   };
 })(window);

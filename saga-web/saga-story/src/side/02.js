@@ -382,7 +382,6 @@
       /* 밀고 나간다 — 지나간 자리의 적을 벤다. 은신보는 잠깐 맞지 않는다 */
       var from = p.x, dist = (sk.dist || 200) * p.facing;
       p.x = core.clamp(p.x + dist, 0, run.stage.width - P_W);
-      p.climb = null;
       if (sk.invuln) { p.invuln = Math.max(p.invuln, sk.invuln); }
       var lo = Math.min(from, p.x) - 10, hi = Math.max(from, p.x) + P_W + 10;
       fx.push({ t: 'dash', x: lo, y: p.y, w: hi - lo, h: P_H, life: 0.22 });
@@ -510,7 +509,6 @@
     if (p.coyoteT > 0) { p.coyoteT -= dt; }
     if (p.jumpBufferT > 0) { p.jumpBufferT -= dt; }
     if (p.rollT > 0) { p.rollT -= dt; }
-    if (p.wallKickT > 0) { p.wallKickT -= dt; }
     /* 고유 조작(§5-1) — 회피를 누르고 있는 동안만 holdT 가 쌓이고, 임계
        (job.js JD.SIGNATURE_HOLD)를 넘는 순간 딱 한 번 armSignature() 가 돈다.
        그 뒤(홀드 도중)에는 다시 안 불린다 — holdArmed 가 막는다. */
@@ -532,36 +530,16 @@
     if (p.invuln > 0) { p.invuln -= dt; }
     if (p.hurt > 0) { p.hurt -= dt; }
 
-    if (p.dropThru > 0) { p.dropThru -= dt; }
-
     /* 궁수 당기기(§5-1) — 힘을 모으는 동안 이동이 느려진다(누른 시간이 곧
        위력이니 "가만히 서서 당긴다"는 선택을 만든다) */
     var mul = (bf ? bf.speed : 1) * (p.archerCharging ? p.archerMoveMul : 1) * (MTs ? MTs.speedMul() : 1);   // 탈것 이동 배율(mount.js)
 
-    if (p.climb) {
-      /* 줄에 매달린 동안은 **중력도 좌우 이동도 없다** — ↑↓ 로만 오르내린다.
-         원작의 밧줄·사다리가 그렇다. 뛰면(점프) 손을 떼고 그 방향으로 튄다. */
-      p.vy = 0;
-      var mv = input.up ? -CLIMB * dt : (input.down ? CLIMB * dt : 0);
-      p.y += mv;
-      if (mv) { p.phase += dt * 7; sfx('climb'); }
-      p.x = p.climb.x - P_W / 2;
-      var foot = p.y + P_H;
-      /* **움직인 방향으로만** 끝을 판정한다 — 아래 끝(바닥)에서 막 잡은 줄이
-         그 프레임에 곧바로 풀려 버리던 결함이 여기 있었다 */
-      if (mv < 0 && foot <= p.climb.top) {    // 꼭대기를 넘어섰다 — 발판 위에 올라선다
-        p.y = p.climb.top - P_H; p.climb = null; p.onGround = true;
-      } else if (mv > 0 && foot >= p.climb.bottom) {   // 끝까지 내려왔다
-        p.y = p.climb.bottom - P_H; p.climb = null; p.onGround = true;
-      }
-    } else {
+    {
       /* 좌우 — 착지 롤·벽 차기 동안은 입력과 무관하게 그 방향으로 밀린다
          (§5-5, 둘 다 "손 놓아도 몸이 이어서 움직인다"는 짧은 창) */
       var wasGround = p.onGround;
       if (p.rollT > 0) {
         p.vx = p.facing;
-      } else if (p.wallKickT > 0) {
-        p.vx = p.wallKickDir;
       } else if (p.shadowT > 0) {
         /* 그림자 걷기(협객, §5-1) — dash 처럼 한 프레임에 튀는 게 아니라
            밀고 가는 "이동"이라, 벽 차기·착지 롤과 같은 요령으로 입력을
@@ -572,7 +550,7 @@
         if (p.vx) { p.facing = p.vx > 0 ? 1 : -1; }
       }
       var moveMul = p.rollT > 0 ? ROLL_MUL :
-        (p.wallKickT > 0 ? (WALL_KICK_VX / SPEED) : (p.shadowT > 0 ? SIG_SHADOW_MUL : 1));
+        (p.shadowT > 0 ? SIG_SHADOW_MUL : 1);
       p.x = core.clamp(p.x + p.vx * SPEED * mul * moveMul * (run.rm ? 1 + run.rm.speed : 1) * (global.DG.constellation ? global.DG.constellation.move() : 1) * dt, 0, stg.width - P_W);
       if (p.vx) { p.phase += dt * 9; }
 
@@ -615,11 +593,6 @@
         p.coyoteT = COYOTE_TIME;
       }
 
-      /* 떨어지다가 줄에 닿았을 때 ↑ 를 누르고 있으면 그대로 매달린다 */
-      if (!p.onGround) {                      // W-0176 ↑ 를 누른 채 닿거나, 닿은 뒤 0.15초 안에 ↑ 를 눌러도 붙잡는다
-        var rr = ropeAt(p.x + P_W / 2, p.y + P_H); p.ropeT = rr ? 0.15 : Math.max(0, (p.ropeT || 0) - dt); if (rr) { p.ropeLast = rr; }
-        if (input.up && (rr || (p.ropeT > 0 && p.ropeLast))) { grab(rr || p.ropeLast); }
-      }
     }
 
     /* 앉아 쉰다 — 원작에서 의자에 앉아 체력·기력을 채우던 그 자리다.
@@ -631,7 +604,7 @@
       if (Math.abs((fe.x + fe.w / 2) - (p.x + P_W / 2)) < 190 &&
           Math.abs((fe.y + fe.h) - (p.y + P_H)) < 80) { foeNear = true; break; }
     }
-    var canRest = input.down && p.onGround && !p.climb && !input.left && !input.right && !foeNear;
+    var canRest = input.down && p.onGround && !input.left && !input.right && !foeNear;
     if (canRest) {
       var wasUp = p.resting <= 0.4;
       p.resting += dt;
@@ -1048,7 +1021,7 @@
       bosses: s.bosses || 0,
       stages: stages(), skills: [],
       /* 사냥 중이 아니어도 같은 칸을 준다 — 한쪽에만 있는 칸을 두면 시트가 죽는다 */
-      boss: null, climbing: false, rope: false, gate: null, npc: null, talk: null,
+      boss: null, gate: null, npc: null, talk: null,
       def: 0, resting: false
     };
     if (!run) {
@@ -1101,9 +1074,7 @@
       sigReady: (run.player.sigCd || 0) <= 0 && run.mp >= (sig1 ? sig1.cost : 1e9)
     };
     /* 줄·문·마을 사람 — 조작 띠가 '↑' 를 언제 띄울지 이 넷으로 정한다 */
-    base.climbing = !!run.player.climb;
     base.resting = run.player.resting > 0.4;
-    base.rope = !!ropeAt(run.player.x + P_W / 2, run.player.y + P_H);
     var g = portalAt(run.player.x + P_W / 2);
     base.gate = g ? { to: g.to, name: g.ref.name, open: unlocked(g.to), need: g.ref.need } : null;
     var n = npcAt(run.player.x + P_W / 2);
@@ -1143,13 +1114,12 @@
 
   global.DG = global.DG || {};
   global.DG.side = {
-    GRAV: GRAV, SPEED: SPEED, P_W: P_W, P_H: P_H, REACH: REACH, CLIMB: CLIMB, _strike: function (e, m, el) { return strike(e, m, false, el); },
+    GRAV: GRAV, SPEED: SPEED, P_W: P_W, P_H: P_H, REACH: REACH, _strike: function (e, m, el) { return strike(e, m, false, el); },
     enter: enter, leave: leave, resume: resume, active: active, update: update, spawnBoss: spawnBoss, _run: function () { return run; },   // W-0398 ②
     setInput: setInput, jump: jump, dodge: dodge, castSkill: castSkill, drink: drink,
     holdStart: holdStart, holdEnd: holdEnd, cancelHold: cancelHold,
-    travel: travel, useUp: useUp, useDown: useDown, dropThrough: dropThrough,
-    grabRope: grabRope,
-    ropeAt: ropeAt, portalAt: portalAt, npcAt: npcAt, talk: talk, closeTalk: closeTalk, letGo: letGo,
+    travel: travel, useUp: useUp,
+    portalAt: portalAt, npcAt: npcAt, talk: talk, closeTalk: closeTalk,
     power: power, unlocked: unlocked, stages: stages, barSkills: barSkills, attackIndexOf: attackIndexOf,
     bossReady: bossReady, bossLeft: bossLeft,
     gateInfo: gateInfo, challengeGate: challengeGate,

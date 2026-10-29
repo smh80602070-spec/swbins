@@ -23,9 +23,8 @@
 
   var DEFAULTS = { on: false, hunt: true, potion: true, retry: true };
 
-  var acc = { retry: 0, jump: 0, climb: 0 };
+  var acc = { retry: 0, jump: 0 };
   var doing = '';
-  var climbTarget = null;       // 줄을 타는 동안 붙들어 두는 목표 (아래 설명)
 
   function st() {
     var s = core.save, k;
@@ -95,66 +94,6 @@
     return best;
   }
 
-  /**
-   * 줄을 써서 적의 높이로 간다 — 점프로만 오르던 시절에는 한 층 위의 적을
-   * 못 따라가 아래에서 오락가락했다(사가마을에서 도구 없는 사물을 목표로 잡던 것과 같은 결).
-   * 붙을 줄이 없으면 false 를 돌려주고, 부르는 쪽이 점프로 되돌아간다.
-   */
-  function tickClimb(S, run, e) {
-    var p = run.player;
-    var foot = p.y + S.P_H, cx = p.x + S.P_W / 2;
-    var eFoot = e.y + e.h;
-    var dy = eFoot - foot;                      // 음수면 적이 위에 있다
-
-    if (p.climb) {
-      /* 여유를 크게 잡으면 발판 코앞에서 손을 떼 버린다 — 줄은 **끝까지** 탄다.
-         꼭대기·아래 끝에 닿으면 side.js 가 알아서 발판(또는 바닥)에 세워 준다. */
-      /* 적은 발판에 12쯤 파묻혀 선다 — 꼭대기 발판의 적 발치(362)가 줄 꼭대기 직전 내 발(358)보다 "아래" 로 잡혀
-         ±1 로 견주면 꼭대기 코앞에서 오르락내리락만 하다 6초 뒤 손을 놓았다(W-0384 첫 10분). 적이 줄 끝 발판에 있으면 그 끝까지 */
-      var rc = p.climb, END2 = 18;
-      if (rc && rc.top != null && Math.abs(eFoot - rc.top) <= END2) { S.setInput('down', false); S.setInput('up', true); }
-      else if (rc && rc.bottom != null && Math.abs(eFoot - rc.bottom) <= END2) { S.setInput('up', false); S.setInput('down', true); }
-      else if (dy < -END2) { S.setInput('down', false); S.setInput('up', true); }
-      else if (dy > END2) { S.setInput('up', false); S.setInput('down', true); }
-      else {
-        /* 높이가 맞았다 — 손을 떼고 적 쪽으로 뛴다 */
-        S.setInput('up', false); S.setInput('down', false);
-        S.letGo((e.x + e.w / 2) > cx ? 1 : -1);
-      }
-      return true;
-    }
-
-    /* 쓸모 있는 줄은 **적이 선 자리로 이어지는 줄**뿐이다.
-       적의 높이를 '지나가기만' 하는 줄을 고르면 중간에 내릴 데가 없어,
-       꼭대기 발판까지 올라갔다가 도로 내려오기를 되풀이한다. 그래서
-       올라갈 때는 줄의 **꼭대기**가, 내려갈 때는 줄의 **아래 끝**이
-       적의 발치여야 한다. (적은 발판에 12쯤 파묻혀 서므로 여유를 18로 둔다) */
-    var ropes = run.stage.ropes || [], best = null, bd = 1e9;
-    var END = 18;
-    for (var i = 0; i < ropes.length; i++) {
-      var r = ropes[i];
-      var lands = dy < 0 ? Math.abs(r[1] - eFoot) <= END : Math.abs(r[2] - eFoot) <= END;
-      if (!lands) { continue; }
-      if (foot < r[1] - END || foot > r[2] + END) { continue; }   // 내 발도 그 줄에 걸쳐야
-      var d = Math.abs(cx - r[0]);
-      if (d < bd) { bd = d; best = r; }
-    }
-    if (!best || bd > 420) { return false; }
-
-    if (bd > 12) {
-      S.setInput('right', best[0] > cx);
-      S.setInput('left', best[0] < cx);
-      S.setInput('up', false);
-      /* 한 틱에 달리는 거리가 줄에 붙는 여유보다 넓다 — 걷는 동안 매 틱 잡아 본다.
-         그러지 않으면 줄 앞을 오갈 뿐 영영 못 붙는다. */
-      if (bd < 40) { S.grabRope(); }
-      return true;
-    }
-    S.setInput('left', false); S.setInput('right', false);
-    S.grabRope();                               // 줄 앞에 섰다 — 잡는다 (문은 안 건드린다)
-    return true;
-  }
-
   function tickHunt(dt) {
     var S = global.DG.side;
     var run = S.raw();
@@ -176,34 +115,13 @@
 
     if (!on('hunt')) { stopMoving(); doing = '⏸️ 사냥 꺼짐'; return; }
 
-    /* **줄을 타는 동안에는 목표를 바꾸지 않는다.** 가장 가까운 적은 높이 차를 싫어하는
-       점수라, 오르내리는 사이에 다른 적이 1등이 된다. 목표가 흔들리면 위아래 부호도
-       흔들려 자동이 줄에서 오르락내리락만 하다 한 마리도 못 잡는다. */
-    var e;
-    if (p.climb && climbTarget && run.enemies.indexOf(climbTarget) >= 0) {
-      e = climbTarget;
-      acc.climb += dt;
-      if (acc.climb > 6) { S.letGo(0); climbTarget = null; acc.climb = 0; }  // 오래 붙어 있지 않는다
-    } else {
-      e = nearestEnemy(run);
-      if (!p.climb) { climbTarget = null; acc.climb = 0; }
-    }
+    var e = nearestEnemy(run);
     if (!e) { stopMoving(); doing = '👀 적을 찾는 중'; return; }
 
     var ex = e.x + e.w / 2, px = p.x + S.P_W / 2;
     var dx = ex - px;
     var dy = (e.y + e.h) - (p.y + S.P_H);
 
-    /* 한 층 넘게 차이가 나면 줄을 먼저 본다 (없으면 아래 점프로 되돌아간다).
-       **이미 매달렸으면 높이 차와 무관하게 줄 쪽을 계속 본다** — 안 그러면
-       올라가다 말고 손을 떼 바닥에서 오르내리기를 되풀이한다. */
-    if (p.climb || Math.abs(dy) > 70) {
-      if (tickClimb(S, run, e)) {
-        if (p.climb) { climbTarget = e; }
-        doing = '🪜 줄을 타고 ' + (dy < 0 ? '올라간다' : '내려간다');
-        return;
-      }
-    }
     S.setInput('up', false); S.setInput('down', false);
 
     /* 붙는다 — 사거리 안이면 멈춰서 벤다 */
@@ -307,6 +225,6 @@
     update: update, status: status,
     /** 자가진단용 */
     _tickHunt: tickHunt, _tickRest: tickRest, _tickSkillsOnly: tickSkillsOnly,
-    _nearestEnemy: nearestEnemy, _tickClimb: tickClimb
+    _nearestEnemy: nearestEnemy
   };
 })(window);

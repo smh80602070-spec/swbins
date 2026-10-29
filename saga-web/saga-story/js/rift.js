@@ -48,7 +48,7 @@
   var HUB = {
     key: 'rift', name: '🌀 비경 · 갈림길', need: 1, sky: ['#2a1f4a', '#5a3f7a'], mood: 'cave',
     ground: '#2c2440', width: 900, floor: 560, town: true, rift: true,
-    plats: [], ropes: [], portals: [], npcs: [], gathers: [], enemyLv: 1, spawn: 0
+    portals: [], npcs: [], gathers: [], enemyLv: 1, spawn: 0
   };
 
   /* ── 지도 ──────────────────────────────────────────── */

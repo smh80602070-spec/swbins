@@ -58,14 +58,13 @@
   function run() { var S = SD(); return S && S.active && S.active() ? S.raw() : null; }
   function bossHere() { var r = run(); return !!(r && (r.boss || (r.enemies || []).some(function (e) { return e.boss; }))); }
   /** 지금 나는 중인가 — 날개 탈것이고, 보스가 없고, 줄에 안 매달렸다 */
-  function flying() { var r = run(); return !!riding && isFly(riding) && !!r && !r.player.climb && !bossHere(); }
+  function flying() { var r = run(); return !!riding && isFly(riding) && !!r && !bossHere(); }
   function canRide() {
     var r = run();
     if (!on()) { return { ok: false, why: '탈것이 꺼져 있다' }; }
     if (!selected()) { return { ok: false, why: '아직 탈것이 없다 — 레벨 ' + MOUNTS[0].lv + ' 에 첫 말이 열린다' }; }
     if (!r) { return { ok: false, why: '사냥터·마을 안에서만 탈 수 있다' }; }
     if (r.talk) { return { ok: false, why: '대화 중엔 못 탄다' }; }
-    if (r.player.climb) { return { ok: false, why: '줄에 매달린 채로는 못 탄다' }; }
     var A = global.DG.auto;
     if (A && A.active && A.active()) { return { ok: false, why: '자동 사냥 중엔 못 탄다' }; }
     return { ok: true };
@@ -125,7 +124,6 @@
     if (r.talk) { dismount('내렸다'); return; }
     var A = global.DG.auto;
     if (A && A.active && A.active()) { dismount('자동 사냥이라 내렸다'); return; }
-    if (r.player.climb && !isFly(riding)) { dismount('줄을 잡아 내렸다'); return; }
     if (!isUnlocked(riding)) { dismount(null); }
   }
 

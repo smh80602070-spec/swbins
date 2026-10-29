@@ -38,7 +38,7 @@
     var run = S() && S().raw();
     if (!run || !run.player) { return false; }
     var p = run.player;
-    if (p.climb || p.onGround || !(p.vy < 0)) { return false; }
+    if (p.onGround || !(p.vy < 0)) { return false; }
     p.vy *= JUMP_CUT();
     return true;
   }

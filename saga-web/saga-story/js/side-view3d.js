@@ -22,64 +22,6 @@
    *  대역. `world3d.toon`(기본 1)이 켜져 있으면 `toon3d.lambertLike()`가
    *  같은 옵션으로 3단 램프 MeshToonMaterial 을 만든다. `toon3d.js` 가 아직
    *  없거나(옛 캐시) three 가 없으면(자가진단) 예전 그대로 Lambert. */
-  /** W-0166 발판 한 장 — 2D drawPlat(메이플 문법)과 같은 모양: 윗면 평평·아래로 둥글게 좁아지는 흙덩이(두께 26) + 윗면 풀 띠(7).
-   *  자리·폭은 판정 그대로(윗면 = py). 손잡이 story3d.platShape 0 = 옛 상자 */
-  function platMesh(Tc, pw, dirtMat, stg, cx, py) {
-    var g = new Tc.Group(), SVp = global.DG.sideView, T = 26, r = Math.min(9, pw / 4), sh, m;
-    if (!(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('story3d.platShape', 1) : 1) || !Tc.Shape || !Tc.ExtrudeGeometry) {
-      m = new Tc.Mesh(new Tc.BoxGeometry(pw, 16, 46), dirtMat); m.position.set(cx, py - 8, 0); m.receiveShadow = true; g.add(m); return g;
-    }
-    var hw = pw / 2;
-    sh = new Tc.Shape();
-    sh.moveTo(-hw + r, 0); sh.lineTo(hw - r, 0); sh.quadraticCurveTo(hw, 0, hw - 2, -T * 0.55);
-    sh.quadraticCurveTo(hw - 10, -T, 0, -T); sh.quadraticCurveTo(-hw + 10, -T, -hw + 2, -T * 0.55); sh.quadraticCurveTo(-hw, 0, -hw + r, 0);
-    var geo = new Tc.ExtrudeGeometry(sh, { depth: 46, bevelEnabled: false, curveSegments: 6 });
-    geo.translate(0, 0, -23);
-    var dirt = SVp && SVp._dirt ? SVp._dirt(stg) : stg.ground, grass = SVp && SVp._grass ? SVp._grass(stg) : '#6f9f48';
-    m = new Tc.Mesh(geo, pbrGround(LM({ color: dirt, map: dirtMat.map || null }), PBR_SET[stg.mood] || 'dirt', pw, 46)); m.position.set(cx, py, 0); m.receiveShadow = true; g.add(m);
-    var top = new Tc.Mesh(new Tc.BoxGeometry(pw - 4, 7, 48), pbrGround(LM({ color: grass }), 'grass', pw, 48)); top.position.set(cx, py - 3, 0); top.receiveShadow = true; g.add(top);
-    return g;
-  }
-
-  /** W-0415 — K-0193 발판 키트: 도형 발판(platMesh)을 먼저 세우고, 가운데 1.0m 마디(폭에 맞춰 늘임) + 양끝 0.5m(왼끝 x 거울) GLB 가
-   *  다 오면 갈아 끼운다. 굴·불 = 돌, 나머지 = 나무. 자리·폭·윗면(py)은 판정 그대로. 손잡이 story3d.platKit 0 = 도형 */
-  var KIT_PXM = 55, KIT = { wood: { mid: 0.18, end: 0.2 }, stone: { mid: 0.67, end: 0.67 } };
-  function platKit(holder, pw, stg, cx, py, gen) {
-    var A = global.DG.asset3d, C = global.DG.core;
-    if (!A || !A.build || (C && C.tuned && !C.tuned('story3d.platKit', 1))) { return; }
-    var mat = (stg.mood === 'cave' || stg.mood === 'fire') ? 'stone' : 'wood', k = KIT[mat], endW = 0.5 * KIT_PXM;
-    var midW = Math.max(0, pw - endW * 2), n = midW > 0 ? Math.max(1, Math.round(midW / KIT_PXM)) : 0, parts = [], wait = n + 2, bad = false;
-    function put(i, kind, x, sx, thick) {
-      A.build(kind, kind + ':' + cx + ':' + i, thick * KIT_PXM, function (m) {
-        if (!m) { bad = true; } else { m.position.set(x, py - thick * KIT_PXM, 0); m.scale.x = sx; m.traverse(function (o) { if (o.isMesh) { o.receiveShadow = true; } }); parts.push(m); }
-        if (--wait > 0) { return; }
-        if (bad || gen !== stageGen) { for (var j = 0; j < parts.length; j++) { disposeDeep(parts[j]); } return; }
-        while (holder.children.length) { var c = holder.children[0]; disposeDeep(c); holder.remove(c); }
-        for (j = 0; j < parts.length; j++) { holder.add(parts[j]); }
-      });
-    }
-    var sMid = n ? midW / (n * KIT_PXM) : 1, sEnd = n ? 1 : pw / (endW * 2), x0 = cx - pw / 2, i;
-    put(-1, 'plat:' + mat + '_end', x0 + endW * sEnd / 2, -sEnd, k.end);
-    for (i = 0; i < n; i++) { put(i, 'plat:' + mat + '_mid', x0 + endW + (i + 0.5) * KIT_PXM * sMid, sMid, k.mid); }
-    put(n, 'plat:' + mat + '_end', cx + pw / 2 - endW * sEnd / 2, sEnd, k.end);
-  }
-  /** W-0415 — 사다리(ropes 의 'ladder')를 ladder_01 1.0m 마디로 위에서 바닥까지 쌓는다(3D 엔 도형 사다리가 없었다 — 판정 무관 겉모습만). 밧줄은 그대로 없음 */
-  var laddersUp = 0;   // 이번 무대에 3D 사다리가 섰나 — 섰으면 2D 덧그림 사다리(side-view drawRopes)를 건너뛴다
-  function buildLadders(stg) {
-    var A = global.DG.asset3d, C = global.DG.core, R = stg.ropes || [], i, j, gen = stageGen;
-    laddersUp = 0;
-    if (!A || !A.build || (C && C.tuned && !C.tuned('story3d.platKit', 1))) { return; }
-    for (i = 0; i < R.length; i++) {
-      if (R[i][3] !== 'ladder') { continue; }
-      var top = stg.floor - R[i][1], bot = Math.max(0, stg.floor - R[i][2]), cnt = Math.max(1, Math.round((top - bot) / KIT_PXM)), seg = (top - bot) / cnt;
-      for (j = 0; j < cnt; j++) {
-        (function (x, y) {
-          A.build('ladder', 'ladder:' + x, seg, function (m) { if (!m || gen !== stageGen) { if (m) { disposeDeep(m); } return; } m.position.set(x, y, -8); worldGroup.add(m); laddersUp++; });
-        })(R[i][0], bot + j * seg);
-      }
-    }
-  }
-
   /** W-0172 — 주인공 공격 몸짓을 무기 생김새(look.weapon)·연속 횟수로(anim-own Wpn_ 15). 몸짓이 없으면 null → 옛 'attack' */
   function wpnAtk(p) {
     var OA = global.DG.ownAnim, S2 = global.DG.side;
@@ -651,17 +593,6 @@
     worldGroup.add(ground);
 
     var i, pl;
-    for (i = 0; i < stg.plats.length; i++) {
-      pl = stg.plats[i];
-      var pw = pl[2], py = stg.floor - pl[1];
-      var platMat = LM({
-        color: stg.ground,
-        map: groundTexture(stg.mood, Math.max(1, pw / TILE_WORLD), 46 / TILE_WORLD)
-      });
-      var platG = platMesh(Tc, pw, platMat, stg, pl[0] + pw / 2, py); worldGroup.add(platG);   // W-0166 상자 → 흙덩이 + 풀 띠
-      platKit(platG, pw, stg, pl[0] + pw / 2, py, stageGen);   // W-0415 → K-0193 나무·돌 발판 키트
-    }
-    buildLadders(stg);
 
     buildScenery(Tc, stg);
     buildLayers(Tc, stg);
@@ -1159,8 +1090,7 @@
   global.DG = global.DG || {};
   global.DG.sideView3d = {
     init: init, draw: draw, resize: resize, ready: ready_,
-    laddersUp: function () { return laddersUp > 0 && active(); },   // W-0415
-    _zoomPR: zoomPR, _platMesh: platMesh, _me: function () { return playerMesh; }, _wpnAtk: wpnAtk,   // W-0166·W-0172 진단
+    _zoomPR: zoomPR, _me: function () { return playerMesh; }, _wpnAtk: wpnAtk,   // W-0166·W-0172 진단
     _tierDeco: tierDeco,   // W-0246 진단
     available: available, active: active, toggle: toggle,
     quality: quality, setQuality: setQuality,

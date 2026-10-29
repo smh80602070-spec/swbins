@@ -149,7 +149,7 @@
           held = true;
           if (dir === 'up') {
             var s = S.status();
-            if (s.climbing || s.rope || s.gate || s.npc || s.talk) { S.setInput('up', true); }
+            if (s.gate || s.npc || s.talk) { S.setInput('up', true); }
             else { S.setInput('jump', true); }
           } else {
             S.setInput(dir, true);
@@ -229,7 +229,7 @@
     if (z === 'up') {
       var s = S.status();
       /* 줄·문 앞이면 오르기·들어가기, 아니면 점프. 점프는 누르는 순간 한 번이다 */
-      if (s.climbing || s.rope || s.gate || s.npc || s.talk) { S.setInput('up', true); }
+      if (s.gate || s.npc || s.talk) { S.setInput('up', true); }
       else { S.setInput('jump', true); }
     } else {
       S.setInput('up', false);
@@ -270,7 +270,7 @@
     /* 끌어서 위로 올라가는 것은 점프로 읽지 않는다 — 걷다가 뛰어 버린다 */
     if (z === 'up' && zone !== 'up') {
       var s = S.status();
-      if (!(s.climbing || s.rope || s.gate || s.npc || s.talk)) { return; }
+      if (!(s.gate || s.npc || s.talk)) { return; }
     }
     zone = z;
     apply(zone);
@@ -347,18 +347,11 @@
       }
 
       if (W < H && +(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitGroundShade', 0.55) : 0.55) > 0) { var gsh = ctx.createLinearGradient(0, stg.floor + 30, 0, H); gsh.addColorStop(0, 'rgba(18,24,16,0)'); gsh.addColorStop(1, 'rgba(18,24,16,' + (+(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned('side.portraitGroundShade', 0.55) : 0.55)).toFixed(2) + ')'); ctx.fillStyle = gsh; ctx.fillRect(0, stg.floor + 30, W, H - stg.floor - 30); }   /* W-0366 세로 폰 — 바닥 띠가 넓어 48px 꽃 타일 반복이 어지러웠다 → 아래로 갈수록 어둡게(깊이·HUD 자리) */
-      /* 발판 */
-      for (var i = 0; i < stg.plats.length; i++) {
-        var pl = stg.plats[i];
-        var x = pl[0] - camX;
-        if (x + pl[2] < -40 || x > W + 40) { continue; }
-        if (!(T2 && T2.drawPlat(ctx, rg, x, pl[1], pl[2]))) { drawPlat(x, pl[1], pl[2], stg, pl[0]); }   // W-0296 타일 조각(왼끝·가운데·오른끝) · 없으면 W-0132 흙덩이
-      }
     }
 
-    var S3l = global.DG.sideView3d; drawRopes(stg, use3d ? null : rg, use3d && S3l && S3l.laddersUp && S3l.laddersUp());   // W-0415 3D 사다리가 섰으면 2D 사다리는 안 그린다(밧줄은 그대로)
     drawPortals(stg); if (global.DG.rune) { global.DG.rune.draw(ctx, camX, run); }   // W-0423 룬
 
+    var i;
     /* 떨어진 것 */
     for (i = 0; i < run.drops.length; i++) {
       var d = run.drops[i];
@@ -811,23 +804,10 @@
     ctx.fillStyle = 'rgba(20,23,30,0.82)';
     ctx.fillRect(cx - rad, cy - rad, rad * 2, rad * 2);
 
-    /* 바닥과 발판 */
+    /* 바닥 */
     ctx.fillStyle = 'rgba(200,205,220,0.4)';
     ctx.fillRect(cx - rad, my(stg.floor), rad * 2, 1.5);
     var i;
-    for (i = 0; i < stg.plats.length; i++) {
-      var pl = stg.plats[i];
-      ctx.fillRect(mx(pl[0]), my(pl[1]), pl[2] * scale, 1.5);
-    }
-    /* 줄 */
-    ctx.strokeStyle = 'rgba(150,110,60,0.55)';
-    for (i = 0; i < (stg.ropes || []).length; i++) {
-      var r = stg.ropes[i];
-      ctx.beginPath();
-      ctx.moveTo(mx(r[0]), my(r[1]));
-      ctx.lineTo(mx(r[0]), my(r[2]));
-      ctx.stroke();
-    }
     /* 문 */
     for (i = 0; i < (stg.portals || []).length; i++) {
       var g = stg.portals[i];
@@ -879,27 +859,6 @@
   function dirtOf(stg) { var n = parseInt(String(stg.ground || '#6faf55').replace('#', ''), 16); return ((n >> 8) & 255) > ((n >> 16) & 255) ? '#8a6640' : stg.ground; }
   function grassOf(stg) { var n = parseInt(String(stg.ground || '#6faf55').replace('#', ''), 16); return ((n >> 8) & 255) > ((n >> 16) & 255) ? stg.ground : '#6f9f48'; }
 
-  /** 발판 한 장(W-0132, 메이플 문법) — 둥근 끝 흙덩이(두께 26) · 윗면 풀 띠 · 늘어진 풀 · 아래 그늘. 자리·폭은 판정 그대로(윗면 y) */
-  function drawPlat(x, y, w, stg, wx) {
-    var T = 26, r = 9, dirt = dirtOf(stg), grass = grassOf(stg), i, gx;
-    ctx.fillStyle = 'rgba(0,0,0,0.22)';
-    ctx.beginPath(); ctx.ellipse(x + w / 2, y + T + 10, w * 0.46, 7, 0, 0, Math.PI * 2); ctx.fill();
-    var g = ctx.createLinearGradient(0, y, 0, y + T);
-    g.addColorStop(0, mixHex(dirt, 0.08)); g.addColorStop(1, mixHex(dirt, -0.45));
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w - 2, y + T * 0.55);
-    ctx.quadraticCurveTo(x + w - 10, y + T, x + w * 0.5, y + T); ctx.quadraticCurveTo(x + 10, y + T, x + 2, y + T * 0.55); ctx.quadraticCurveTo(x, y, x + r, y); ctx.fill();
-    ctx.fillStyle = 'rgba(0,0,0,0.18)';   // 흙 속 돌
-    for (i = 0; i < Math.max(2, w / 40); i++) { gx = x + 12 + hs1(wx + i, 7) * (w - 24); ctx.beginPath(); ctx.ellipse(gx, y + 11 + hs1(wx, i) * 9, 3 + hs1(i, wx) * 3, 2, 0, 0, Math.PI * 2); ctx.fill(); }
-    ctx.fillStyle = grass;   // 윗면 풀 띠
-    ctx.beginPath(); ctx.moveTo(x + 2, y + 1); ctx.lineTo(x + w - 2, y + 1); ctx.lineTo(x + w - 2, y + 7);
-    for (gx = x + w - 4; gx > x + 4; gx -= 7) { ctx.lineTo(gx, y + 7 + (hs1(wx + gx, 3) > 0.6 ? 6 : 2)); }
-    ctx.lineTo(x + 2, y + 7); ctx.closePath(); ctx.fill();
-    ctx.fillStyle = 'rgba(255,255,255,0.28)'; ctx.fillRect(x + 4, y, w - 8, 2);   // 윗면 빛
-    ctx.strokeStyle = mixHex(grass, -0.35); ctx.lineWidth = 1.5;   // 늘어진 풀 몇 가닥
-    for (i = 0; i < w / 60; i++) { gx = x + 10 + hs1(wx, i + 20) * (w - 20); ctx.beginPath(); ctx.moveTo(gx, y + 6); ctx.quadraticCurveTo(gx + 3, y + 14, gx - 1, y + 20 + hs1(i, 9) * 8); ctx.stroke(); }
-  }
-
   /** 바닥 꾸밈(W-0132) — 타일 결을 땅색으로 누르고, 윗면 풀 가장자리·흙 단면 그늘 */
   function groundDress(stg) {
     var fl = stg.floor, grass = grassOf(stg), gx;
@@ -912,39 +871,6 @@
     for (gx = -((camX * 1) % 7); gx < W + 7; gx += 7) { ctx.lineTo(gx, fl + 7 + (hs1(Math.round(gx + camX), 5) > 0.55 ? 7 : 2)); }
     ctx.lineTo(W, fl + 6); ctx.closePath(); ctx.fill();
     ctx.fillStyle = 'rgba(255,255,255,0.22)'; ctx.fillRect(0, fl - 2, W, 2);
-  }
-
-  function drawRopes(stg, rg, noLad) {
-    var list = stg.ropes || [], T2 = global.DG.sideTiles2d;
-    for (var i = 0; i < list.length; i++) {
-      var r = list[i], x = r[0] - camX;
-      if (x < -30 || x > W + 30) { continue; }
-      var top = r[1], bot = r[2], ladder = r[3] === 'ladder';
-      if (ladder && noLad) { continue; }
-      if (rg && T2 && T2.drawRope(ctx, rg, x, top, bot, ladder)) { continue; }   // W-0296 세로 이음 타일(K-0135)
-      if (ladder) {
-        ctx.strokeStyle = 'rgba(190,160,110,0.85)';
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.moveTo(x - 9, top); ctx.lineTo(x - 9, bot);
-        ctx.moveTo(x + 9, top); ctx.lineTo(x + 9, bot);
-        ctx.stroke();
-        ctx.lineWidth = 2.5;
-        for (var y = top + 12; y < bot; y += 22) {
-          ctx.beginPath(); ctx.moveTo(x - 9, y); ctx.lineTo(x + 9, y); ctx.stroke();
-        }
-      } else {
-        ctx.strokeStyle = 'rgba(205,175,120,0.85)';
-        ctx.lineWidth = 4;
-        ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bot); ctx.stroke();
-        /* 매듭 — 밧줄로 보이게 */
-        ctx.fillStyle = 'rgba(160,130,85,0.9)';
-        for (var k = top + 16; k < bot; k += 26) { ctx.fillRect(x - 3, k, 6, 3); }
-      }
-      /* 위쪽 고리 */
-      ctx.fillStyle = 'rgba(120,95,60,0.9)';
-      ctx.fillRect(x - 12, top - 4, 24, 5);
-    }
   }
 
   /** 문(포탈) — 원작처럼 **↑ 를 누르면** 다음 맵으로 넘어간다. 그 자리를 빛으로 알린다 */
@@ -1154,7 +1080,7 @@
       ctx.fillText(mtd.emoji, x, y + 4);
       y -= 20;
     }
-    if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && p.onGround && global.DG.mode2d && global.DG.mode2d.shadow) { global.DG.mode2d.shadow(ctx, x, y, S.P_W * 1.1, { a: 0.3 }); }   /* W-0368 땅에 선 나 */ if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && !(global.DG.actor2d && global.DG.actor2d.me(ctx, ref, x, y, S.P_H * 1.12, { facing: p.facing, walking: !!p.vx && p.onGround, atk: p.atkCd, hurt: p.hurt, wx: p.x, wy: p.y, ppu: 1, air: !p.onGround && !p.climb, vy: p.vy }))) {
+    if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && p.onGround && global.DG.mode2d && global.DG.mode2d.shadow) { global.DG.mode2d.shadow(ctx, x, y, S.P_W * 1.1, { a: 0.3 }); }   /* W-0368 땅에 선 나 */ if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && !(global.DG.actor2d && global.DG.actor2d.me(ctx, ref, x, y, S.P_H * 1.12, { facing: p.facing, walking: !!p.vx && p.onGround, atk: p.atkCd, hurt: p.hurt, wx: p.x, wy: p.y, ppu: 1, air: !p.onGround, vy: p.vy }))) {
       global.DG.sprite.stamp(ctx, {
         kind: 'human', ref: ref, x: x, y: y, s: 1.05,
         facing: p.facing, phase: p.phase, walking: !!p.vx && p.onGround,
