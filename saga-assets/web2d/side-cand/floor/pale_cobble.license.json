@@ -1,0 +1,19 @@
+{
+ "id": "st_brick_g_v01",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (large rounded gray cobblestones, tightly packed, clear dark gaps between stones:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+ "seed": 2942190407,
+ "steps": 28,
+ "cfg_scale": 5.0,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 194.2,
+ "date": "2026-10-30",
+ "note": "K-0193 4종횡 바닥 벽돌 변주 2차 - make_seamless.py 512px, 이음 차 <= 1.5, 결 약함(△)"
+}
