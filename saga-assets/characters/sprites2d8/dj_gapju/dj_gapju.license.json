@@ -14,5 +14,5 @@
   "bottom": "z",
   "shoes": "z"
  },
- "note": "옷·몸 조각을 샘플 25벌 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02). 8방향 무기 시트: 무기 sword(절차 생성 모형, 자체)·동작 attack, death, guard, hit, knockdown, sword_2, sword_heavy, walk(CC0 UAL + 자체 CF_*)."
+ "note": "옷·몸 조각을 샘플 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02). 8방향 무기 시트: 무기 sword(절차 생성 모형, 자체)·동작 attack, death, guard, hit, knockdown, sword_2, sword_heavy, walk(CC0 UAL + 자체 CF_*)."
 }
