@@ -1112,6 +1112,15 @@
    ]
   },
   {
+   "tool": "go_stone_var.py",
+   "model": "",
+   "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+   "count": 3,
+   "where": [
+    "saga-assets/web2d/tile"
+   ]
+  },
+  {
    "tool": "retile_uv.py --unit 4.4 (K-0089)",
    "model": "",
    "license": "CC0-1.0 (Kenney Modular Cave Kit gate.glb 모양 그대로 + 자체 상자 투영 UV)",

@@ -108,6 +108,7 @@
 | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | - | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 10 |
 | ground_tile.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 22 |
 | water_tile.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 4 |
+| go_stone_var.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 3 |
 | retile_uv.py --unit 4.4 (K-0089) | - | CC0-1.0 (Kenney Modular Cave Kit gate.glb 모양 그대로 + 자체 상자 투영 UV) | 2 |
 | foliage_atlas.py | - | 자체 생성(Z-Image-Turbo Apache-2.0 출력, 상업 허용) — 남의 사진·스캔 0 | 1 |
 | build_foliage.py | - | 자체 생성 — 형태는 전부 코드, 결은 자체 아틀라스(Z-Image-Turbo 출력 · foliage_atlas.py) | 17 |

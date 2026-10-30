@@ -1,0 +1,11 @@
+{
+ "id": "go_stone_c",
+ "generator": "tools/ai-art/go_stone_var.py",
+ "model": "",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "derived": "ground_tile.stone(감싼 보로노이 판석) + 주기 잡음 이끼·주기 걷기 금 — 256 주기 이음매 없음",
+ "note": "1만리 돌바닥 변주 — 금 간 판석",
+ "px": 256,
+ "date": "2026-10-30",
+ "ticket": "K-0193"
+}
