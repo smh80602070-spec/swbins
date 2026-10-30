@@ -1,0 +1,14 @@
+{
+ "id": "ridge_go_band",
+ "generator": "tools/ai-art/far_ridge_band.py",
+ "model": "",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "derived": "정수 주파수 사인 합 능선 4겹 + 줄무늬 결 + 안개색 섞임 — 가로 2048 주기 이음매 없음",
+ "note": "1만리 3D 먼 산 띠(K-0193)",
+ "px": [
+  2048,
+  256
+ ],
+ "date": "2026-10-30",
+ "ticket": "K-0193"
+}

@@ -39,14 +39,14 @@
 |  에서 옮긴 같은 파일(K-0078, 유니티 vroid-bodies 원본 자리) | - | VRoid Studio 로 만든 VRM — 출처·조건은 고돗 원 자리와 같다(K-0018 배치, saga-assets/CREDITS.md VRoid 절) | 2 |
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M — 상업 사용 가능(저자 HF 토론 2025-04, 2026-10-07 확인), 폐쇄 파생 모델 수익화만 금지 | 589 |
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
-| gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1699 |
+| gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1709 |
 | remote3d | microsoft/TRELLIS-image-large | MIT | 531 |
 | 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용) | 10 |
 | 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음) | 3 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
 | gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 2115 |
 | make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |
-| k163_illust.py + gen.py (ComfyUI, Kaggle 원격) | animagine-xl-4.0-opt | saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상  | 587 |
+| k163_illust.py + gen.py (ComfyUI, Kaggle 원격) | animagine-xl-4.0-opt | saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상  | 614 |
 | gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 141 |
 | make_map.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 195 |
 | build_monster.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 346 |
@@ -70,6 +70,7 @@
 | k117_audio.py | - | CC0-1.0 (자체 — 코드 합성 천둥, 외부 입력 없음) | 1 |
 | make_sky.py | - | CC0-1.0 (코드 생성 — 외부 입력 없음) | 30 |
 | make_ibl.py | Illustrious-XL-v2.0 | 자체 하늘 그림(saga-assets/sky/sky_noon_present.webp)에서 코드로 — 그 그림의 라이선스를 따른다 | 3 |
+| far_ridge_band.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 1 |
 | beast2d_rebake.py --sheets (Blender render_sheet.py, Idle·Run 4컷) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 11 |
 | beast2d_rebake.py (Blender render_sprite.py) | - | CC0-1.0 (자체 3D 몸 렌더 — 외부 입력 없음, 몸 출처는 creatures3d license) | 103 |
 | pet2d_k120.py (Blender render_sprite.py 옆모습, K-0114 맞춤) | - | CC0-1.0 (자체 3D 몸 렌더 — 몸 출처는 pets3d license) | 17 |
@@ -108,7 +109,7 @@
 | edge_tiles.py --pairs (코드 합성 — 새 그림 없음, GPU 안 씀) | - | 원본 두 장의 라이선스를 따른다(자체 AI 생성 — 상업 허용 모델) · 합성 코드는 이 저장소 것 | 10 |
 | ground_tile.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 22 |
 | water_tile.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 4 |
-| go_stone_var.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 3 |
+| go_stone_var.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 6 |
 | retile_uv.py --unit 4.4 (K-0089) | - | CC0-1.0 (Kenney Modular Cave Kit gate.glb 모양 그대로 + 자체 상자 투영 UV) | 2 |
 | foliage_atlas.py | - | 자체 생성(Z-Image-Turbo Apache-2.0 출력, 상업 허용) — 남의 사진·스캔 0 | 1 |
 | build_foliage.py | - | 자체 생성 — 형태는 전부 코드, 결은 자체 아틀라스(Z-Image-Turbo 출력 · foliage_atlas.py) | 17 |
