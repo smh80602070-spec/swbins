@@ -17,9 +17,11 @@ powershell -ExecutionPolicy Bypass -File tools\ai-art\stop_sd.ps1      # 끝나�
 - `/object_info`에서 `gen.py`가 지정한 세 모델과 부속 파일이 모두 인식된다: `z-image-turbo-Q6_K.gguf`, `Qwen3-4B-Q8_0.gguf`, `ae.safetensors`, `animagine-xl-4.0-opt.safetensors`, `Illustrious-XL-v2.0.safetensors`, `sdxl-vae-fp16-fix.safetensors`. 파일 해시·생성 품질 검증을 뜻하지 않는다. 추가 조회에서 `SagaSeamlessTiling`, `ModelSamplingAuraFlow`, `EmptySD3LatentImage`, GGUF 로더, `CheckpointLoaderSimple`, `VAELoader`, `KSampler`, `SaveImage` 등록도 확인했다. 노드 등록만으로 그래프 실행 호환성을 통과 처리하지 않는다.
 - 실제 실행 옵션은 `--listen 127.0.0.1 --port 8188 --disable-auto-launch --use-pytorch-cross-attention --output-directory <ComfyUI 출력 폴더>`다. API는 `gen.py` 기본값 `http://127.0.0.1:8188`과 일치한다.
 - **상단 `start_sd.ps1` 안내와 아래 ROCm 최적화 기록은 RX 7600 기준이다.** 이 스크립트는 ROCm 환경 변수와 lowvram·fp32 VAE 옵션을 고정하며 현재 GeForce 실행 옵션과 다르다. GeForce 자동 감지·최적화가 구현된 것으로 간주하지 않는다. 실행 중 서버에 생성 작업을 추가하기 전 아래 단일 세션 소유권을 확인하고, 재기동이 필요하면 해당 PC의 기존 CUDA 실행 절차·인터프리터를 확인한다. 이번 점검에서는 소스·실행 설정을 바꾸지 않았다.
+- **이 PC 로컬 실행기(git 제외, `.git/info/exclude`)**: ComfyUI 는 `powershell -ExecutionPolicy Bypass -File tools\ai-art\start_sd.geforce.ps1`(ROCm 변수·lowvram·fp32 VAE 를 뺀 사본, PID 파일이 같아 끄기는 `stop_sd.ps1` 그대로). 음성·효과음은 `C:\swbins3\voice-gen\{qwen3_trial,asr_check}.geforce.py`·`sfx-gen\moss_trial.geforce.py`(cudnn 켬·AOTriton 뺌). `saga_voice_batch.py` 는 사본이 없어 cudnn 이 꺼진 채 돈다. 사본이 없는 PC 에서 원본 `start_sd.ps1` 로 켜도 돌지만 느리다.
 - 생성은 기존 한도(순차 1장, 기본 최대 24항목, 1.1MP, 시작 여유 RAM은 실행기 8GB/생성기 6GB)를 지킨다. Radeon 측정 시간을 GeForce 예상 시간으로 쓰거나 8GB GPU를 16GB 원격 GPU처럼 취급하지 않는다. GPU 작업·Unity·Blender 배치를 중복 기동하지 않는다.
 - 서버의 소유 세션과 실행 상태를 확인한다. 다른 세션이 사용하는 ComfyUI에 중단·종료 명령을 보내지 않는다. 이번에는 이미 GPU 작업이 진행 중이어서 추가 생성·재시작·종료를 하지 않았다.
 - 판정: **CUDA 연결·등록 모델 확인 완료 / 세 모델별 생성·속도·메모리 안정성·시각 품질은 이번 점검에서 미검증**. 다음 생성 티켓에서 필요한 모델의 대표 자산부터 검증한다. CUDA가 있다는 이유로 새 모델·원격 서비스·동결된 3D 인체 생성을 도입하거나 재개하지 않는다.
+- 10-31 실측(서버 로그, 10-30 10:19~23:37): SDXL 계열 28단계 1,043회, 장당 중앙값 14.3초·p90 18.2초, OOM·오류 0. **Z-Image 는 이 PC 에서 아직 안 돌렸다**(Lumina2 적재 0) — 처음 쓸 때 대표 몇 장으로 시간·최대 메모리부터. Blender 는 5.2.3 LTS(라데온 산출은 5.2.1).
 
 ### GeForce 세션 시작 전 확인
 
