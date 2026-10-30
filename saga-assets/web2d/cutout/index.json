@@ -1,5 +1,6 @@
 {
  "pools": {
+  "dg_undead": "dg_undead",
   "eu_alexander": "eu_alexander",
   "eu_augustus": "eu_augustus",
   "eu_aurelius": "eu_aurelius",
@@ -70,6 +71,7 @@
   "kr_yii": "kr_yii",
   "kr_yisunsin": "kr_yisunsin",
   "kr_yugwansun": "kr_yugwansun",
+  "pool_g_undead_143": "dg_undead",
   "rf_gongsunzan": "rf_gongsunzan",
   "rf_kongrong": "rf_kongrong",
   "rf_lijue": "rf_lijue",

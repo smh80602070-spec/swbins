@@ -1,0 +1,27 @@
+{
+ "id": "cutout_dg_undead",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, monster, no humans, undead skeleton soldier, bony humanoid, glowing blue eye sockets, cracked rusty breastplate, torn cloth, bare bony empty hands, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, (standing upright:1.3), straight spine, head up, chin level, neck straight, looking forward, straight legs, one foot slightly forward, (arms hanging down at sides:1.2), (normal human proportions:1.3), two arms two legs, (bipedal humanoid:1.2), feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow",
+ "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot, (hunched:1.4), (crouching:1.3), bent over, bent knees, arms raised, arms spread, leaning forward, head down, tail, serpent, snake body, scorpion, tentacles, extra limbs, long limbs, elongated body, spider, weapon, sword, axe, club, staff, spear, dagger, wrench, bat, holding weapon, holding object, shield",
+ "seed": 2026108514,
+ "steps": 30,
+ "cfg_scale": 6.0,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  640,
+  1152
+ ],
+ "seconds": 16.2,
+ "date": "2026-10-30",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "ticket": "K-0188",
+ "from": "tools/ai-art/_out/k188/p/dg_undead/side.png",
+ "tool": "tools/ai-art/k188_cutout.py cut",
+ "far": "copy",
+ "fill": "sd",
+ "joints": "tools/ai-art/k188/dg_undead.joints.json",
+ "packed_by": "K-0188 tools/ai-art/k188/person.sh(옆모습 일러스트 → 관절 → 가린 몸통 로컬 SD 인페인트 → k188_cutout.py cut) → publish.py",
+ "judge": "○"
+}

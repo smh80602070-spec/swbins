@@ -1,5 +1,6 @@
 {
  "pools": {
+  "dg_undead": "dg_undead",
   "eu_alexander": "eu_alexander",
   "eu_augustus": "eu_augustus",
   "eu_aurelius": "eu_aurelius",
@@ -70,6 +71,7 @@
   "kr_yii": "kr_yii",
   "kr_yisunsin": "kr_yisunsin",
   "kr_yugwansun": "kr_yugwansun",
+  "pool_g_undead_143": "dg_undead",
   "rf_gongsunzan": "rf_gongsunzan",
   "rf_kongrong": "rf_kongrong",
   "rf_lijue": "rf_lijue",
@@ -116,5 +118,127 @@
   "wd_saladin": "wd_saladin",
   "wd_shaka": "wd_shaka",
   "wd_suleiman": "wd_suleiman"
+ },
+ "dirs": {
+  "eu_davinci": [
+   "side",
+   "front"
+  ],
+  "eu_leonidas": [
+   "side",
+   "front"
+  ],
+  "fu_jongwang": [
+   "side",
+   "front"
+  ],
+  "hl_mukhyang": [
+   "side",
+   "front"
+  ],
+  "jp_hanzo": [
+   "side",
+   "front"
+  ],
+  "jp_himiko": [
+   "side",
+   "front"
+  ],
+  "jp_musashi": [
+   "side",
+   "front"
+  ],
+  "jp_tomoegozen": [
+   "side",
+   "front"
+  ],
+  "jp_yoshitsune": [
+   "side",
+   "front"
+  ],
+  "kr_gyebaek": [
+   "side",
+   "front"
+  ],
+  "rf_gongsunzan": [
+   "side",
+   "front"
+  ],
+  "rf_kongrong": [
+   "side",
+   "front"
+  ],
+  "rf_lijue": [
+   "side",
+   "front"
+  ],
+  "rf_liubiao": [
+   "side",
+   "front"
+  ],
+  "rf_sunce": [
+   "side",
+   "front"
+  ],
+  "rf_yuanshao": [
+   "side",
+   "front"
+  ],
+  "rf_yuanshu": [
+   "side",
+   "front"
+  ],
+  "ru_geohae": [
+   "side",
+   "front"
+  ],
+  "sg_caocao": [
+   "side",
+   "front"
+  ],
+  "sg_ganning": [
+   "side",
+   "front"
+  ],
+  "sg_huangzhong": [
+   "side",
+   "front"
+  ],
+  "sg_liubei": [
+   "side",
+   "front"
+  ],
+  "sg_lubu": [
+   "side",
+   "front"
+  ],
+  "sg_sunquan": [
+   "side",
+   "front"
+  ],
+  "sg_taishici": [
+   "side",
+   "front"
+  ],
+  "sg_zhugeliang": [
+   "side",
+   "front"
+  ],
+  "tb_baekgi": [
+   "side",
+   "front"
+  ],
+  "wd_genghis": [
+   "side",
+   "front"
+  ],
+  "wd_ibnsina": [
+   "side",
+   "front"
+  ],
+  "wd_shaka": [
+   "side",
+   "front"
+  ]
  }
 }
