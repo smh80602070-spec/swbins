@@ -61,9 +61,15 @@
   "cyclops",
   "cthulhu",
   "dino_tri",
-  "dino_apato"
+  "dino_apato",
+  "mt_brown",
+  "mt_farm",
+  "mt_white",
+  "mt_crane",
+  "mt_dragon",
+  "armabee"
  ],
- "factory_spec": "K-0158 공장 규격: 192px(긴 무기 풀은 manifest px 가 더 큼 — px_per_m 같음) · 방향 5(0 정면·1 앞대각·2 옆·3 뒤대각·4 뒤, 반대쪽은 뒤집기) · 동작 idle/walk/run/attack/attack2/cast/hit/death/sit/talk(없는 것은 manifest missing) · 8프레임(death·hit 6) · 발 = 위에서 0.88 · 그림체 C-toon-1",
+ "factory_spec": "K-0158 공장 규격: 192px(긴 무기 풀은 manifest px 가 더 큼 — px_per_m 같음) · 방향 5(0 정면·1 앞대각·2 옆·3 뒤대각·4 뒤, 반대쪽은 뒤집기) · 동작 idle/walk/run/attack/hit/death(없는 것은 manifest missing) · 8프레임(death·hit 6) · 발 = 위에서 0.88 · 그림체 C-toon-1",
  "factory_alias": {
   "beast_boar": "beast_Boar",
   "beast_tiger": "beast_Tiger",

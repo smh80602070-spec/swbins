@@ -1,0 +1,36 @@
+{
+ "ndir": 8,
+ "dirs": [0, 1, 2, 3, 4],
+ "dir_names": ["front", "front_side", "side", "back_side", "back"],
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "canon": "saga-assets/sprites2d_factory",
+ "creature": {
+  "act": {"idle": "Idle", "walk": "Walk", "run": "Run", "attack": "Attack", "hit": "Hit", "death": "Death"},
+  "auto_side": true
+ },
+ "px": 192,
+ "ortho": 1.25,
+ "clips": {
+  "idle": {"frames": 8, "fps": 6, "loop": true},
+  "walk": {"frames": 8, "fps": 10, "loop": true},
+  "run": {"frames": 8, "fps": 12, "loop": true},
+  "attack": {"frames": 8, "fps": 14, "loop": false},
+  "hit": {"frames": 6, "fps": 12, "loop": false},
+  "death": {"frames": 8, "fps": 8, "loop": false}
+ },
+ "style_ref": "saga-web/saga-dungeon/assets/web2d/bg",
+ "note": "K-0206 — 탈것 2D 시트(W-0497). 몸 = 자체 TRELLIS 말 3·학·푸른 용(creatures3d). 학·용은 비행 동작이 없어 걷기·달리기 대용.",
+ "ticket": "K-0206",
+ "game": "saga-dungeon",
+ "aliases": {},
+ "missing": [],
+ "deploy": {"saga-web/saga-dungeon/assets/sprites2d_sheets": null},
+ "pools": [
+  {"id": "mt_brown", "type": "creature", "glb": "saga-assets/creatures3d/horse.glb", "license_json": "saga-assets/creatures3d/horse.license.json"},
+  {"id": "mt_farm", "type": "creature", "glb": "saga-assets/creatures3d/horse_farm.glb", "license_json": "saga-assets/creatures3d/horse_farm.license.json"},
+  {"id": "mt_white", "type": "creature", "glb": "saga-assets/creatures3d/horse_white.glb", "license_json": "saga-assets/creatures3d/horse_white.license.json"},
+  {"id": "mt_crane", "type": "creature", "glb": "saga-assets/creatures3d/crane.glb", "license_json": "saga-assets/creatures3d/crane.license.json"},
+  {"id": "mt_dragon", "type": "creature", "glb": "saga-assets/creatures3d/dragon.glb", "license_json": "saga-assets/creatures3d/dragon.license.json"}
+ ]
+}

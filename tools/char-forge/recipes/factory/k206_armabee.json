@@ -1,0 +1,31 @@
+{
+ "ndir": 8,
+ "dirs": [0, 1, 2, 3, 4],
+ "dir_names": ["front", "front_side", "side", "back_side", "back"],
+ "foot": 0.88,
+ "style": "C-toon-1",
+ "canon": "saga-assets/sprites2d_factory",
+ "creature": {
+  "act": {"idle": "Flying_Idle", "walk": "Fast_Flying", "run": "Fast_Flying", "attack": "Headbutt", "hit": "HitReact", "death": "Death"}
+ },
+ "px": 192,
+ "ortho": 1.25,
+ "clips": {
+  "idle": {"frames": 8, "fps": 6, "loop": true},
+  "walk": {"frames": 8, "fps": 10, "loop": true},
+  "run": {"frames": 8, "fps": 12, "loop": true},
+  "attack": {"frames": 8, "fps": 14, "loop": false},
+  "hit": {"frames": 6, "fps": 12, "loop": false},
+  "death": {"frames": 8, "fps": 8, "loop": false}
+ },
+ "style_ref": "saga-web/saga-dungeon/assets/web2d/bg",
+ "note": "K-0206 — 꿀벌 몬스터 2D 시트(W-0498). 몸 = Quaternius Armabee(CC0) 비행 동작.",
+ "ticket": "K-0206",
+ "game": "saga-dungeon",
+ "aliases": {},
+ "missing": [],
+ "deploy": {"saga-web/saga-dungeon/assets/sprites2d_sheets": null},
+ "pools": [
+  {"id": "armabee", "type": "creature", "glb": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Armabee_de63aaf6.glb", "source_license": "Quaternius Ultimate Monsters, CC0 (saga-assets/CREDITS.md)"}
+ ]
+}
