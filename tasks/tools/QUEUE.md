@@ -1,5 +1,7 @@
 # 자체툴 갈래 큐 — "사가자체툴 이어해"
 
+**툴 강화 기획 참조**: 그래픽·에셋 생성 도구를 설계하거나 관련 티켓을 실행하기 전 [핵심 기획](../gameplay/asset-tool-strengthening.md)과 [확장·검증 기준](../gameplay/asset-tool-validation.md)을 읽는다. 티켓에 적용 절·기존 도구 재사용 경로·대표 자산·실패 검출 사례·검증 증거를 명시한다. 기획만으로 완료 처리하거나 큐 순서를 바꾸지 않는다.
+
 경로: `tools/char-forge·world-forge·ai-art·asset-forge·glb-compress·asset-audit` · `archive/` · `data/`·`tools/gen/` · `scenario/README.md` · `C:\swbins3`. 인간형 몸·VFX 는 안 한다(ARCH §4.5) — **전투 모션은 사용자 해제(10-06, K-0029)**.
 
 **10-05**: 그림체 = **C**(사용자 거부권) → K-0068 배치 끝. 새 배치는 `prompt_kit build` → `gen.py --variants 4 --judge` → `judge.sh pick` 만. "판정 대기"는 판정기가 닫는다(K-0069 단계 5). 새 K 발행 동결 ~10-19 → **10-13 사용자 해제**(K-0099~0102).
