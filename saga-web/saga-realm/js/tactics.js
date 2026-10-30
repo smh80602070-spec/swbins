@@ -421,11 +421,13 @@
       if (!reach) { for (ci = 0; ci < ponds.length; ci++) { cells[ponds[ci]] = 'plain'; } }
     }
     var g = GOALS.indexOf(goal) >= 0 ? goal : 'rout', gate = [-1, -1];
-    if (g === 'gate' && !siege) { g = 'rout'; }
     if (siege) {
       for (y = 0; y < rows; y++) { if (y % 2 === 0) { cells[y * cols + (cols - 3)] = 'wall'; } }
       gate = [cols - 3, Math.floor(rows / 2)];
       cells[gate[1] * cols + gate[0]] = 'gate';
+    }
+    if (g === 'gate' && !siege) {   // 10-30 들판의 거점 점령 — 오른쪽 가운데 봉화대 칸에 닿으면 이긴다
+      gate = [cols - 3, Math.floor(rows / 2)]; cells[gate[1] * cols + gate[0]] = 'gate';
     }
     return { seed: String(seed), land: key, siege: !!siege, cols: cols, rows: rows, cells: cells, units: [], turn: 1, side: 'me', n: 0, done: null, log: [],
       srpg: true, goal: g, gate: gate, hold: HOLD_TURNS, plots: PLOTS, weather: weatherOf(seed) };
@@ -490,7 +492,7 @@
     mods.forEach(function (m) { add += m[1]; });
     return Math.max(HIT_MIN, Math.min(HIT_MAX, base + add));
   }
-  function goalText(b) { var g = b.goal || 'rout'; return g === 'hold' ? GOAL_NAME.hold.replace('%d', b.hold) : GOAL_NAME[g]; }
+  function goalText(b) { var g = b.goal || 'rout'; return g === 'hold' ? GOAL_NAME.hold.replace('%d', b.hold) : (g === 'gate' && !b.siege ? '봉화대 점령' : GOAL_NAME[g]); }
   function checkSrpg(b) {
     if (!alive(b, 'foe').length) { b.done = 'rout'; }
     else if (!alive(b, 'me').length) { b.done = 'lose'; }

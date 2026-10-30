@@ -23,11 +23,11 @@
 
   /* 장마다 싸움 — [땅, 공성, 승리 조건, 적 세기 단계 0~1]. 카드 이야기에 맞춘 자리(관도 = 평야 결전 · 적벽 = 강 · 균열의 왕 = 공성 …) */
   var BATTLE = {
-    r1_start: ['plain', false, 'rout', 0.00], r1_rift_sign: ['hill', false, 'leader', 0.06], r1_first_ally: ['plain', false, 'rout', 0.12],
-    r2_fallen: ['hill', false, 'leader', 0.18], r2_plains: ['plain', false, 'rout', 0.26], r2_debate: ['plain', true, 'gate', 0.32],
-    r3_navigator: ['river', false, 'leader', 0.38], r3_river: ['river', false, 'leader', 0.46], r3_duel: ['mount', false, 'leader', 0.52],
+    r1_start: ['plain', false, 'rout', 0.00], r1_rift_sign: ['hill', false, 'leader', 0.06], r1_first_ally: ['plain', false, 'hold', 0.12],
+    r2_fallen: ['hill', false, 'leader', 0.18], r2_plains: ['plain', false, 'gate', 0.26], r2_debate: ['plain', true, 'gate', 0.32],
+    r3_navigator: ['river', false, 'leader', 0.38], r3_river: ['river', false, 'gate', 0.46], r3_duel: ['mount', false, 'leader', 0.52],
     r4_rift: ['mount', true, 'gate', 0.58], r4_plague: ['hill', true, 'hold', 0.64], r4_tomb: ['mount', false, 'leader', 0.70],
-    r5_silk: ['plain', false, 'rout', 0.76], r5_west: ['plain', true, 'gate', 0.82], r5_south: ['river', false, 'leader', 0.88],
+    r5_silk: ['plain', false, 'hold', 0.76], r5_west: ['plain', true, 'gate', 0.82], r5_south: ['river', false, 'leader', 0.88],
     r6_end: ['plain', true, 'rout', 1.00]
   };
   var MAIN = 16, ALL = 19, cache = null;   // ⑤ 17~19 = 7막 후일담(이야기만, 싸움 없음)

@@ -7633,7 +7633,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       ['plain', 'river', 'hill', 'mount'].forEach(function (l) { var b = T.makeBoardSrpg('size', l, false, 'rout'); sz[l] = b.cols + 'x' + b.rows; });
       var hills = T.makeBoardSrpg('hills', 'hill', false, 'rout').cells.filter(function (c) { return c === 'hill'; }).length;
       var sb = T.makeBoardSrpg('siege', 'plain', true, 'gate'), fb = T.makeBoardSrpg('nogate', 'plain', false, 'gate');
-      var ok1 = JSON.stringify(sz) === '{"plain":"16x10","river":"17x10","hill":"17x11","mount":"18x12"}' && hills > 3 && T.cellAt(sb, sb.gate[0], sb.gate[1]) === 'gate' && fb.goal === 'rout';
+      var ok1 = JSON.stringify(sz) === '{"plain":"16x10","river":"17x10","hill":"17x11","mount":"18x12"}' && hills > 3 && T.cellAt(sb, sb.gate[0], sb.gate[1]) === 'gate' && fb.goal === 'gate' && T.cellAt(fb, fb.gate[0], fb.gate[1]) === 'gate' && !fb.siege;
       var b2 = srpgGame(0), lead = 0, ok2 = true, arms = {};
       b2.units.forEach(function (u) { if (u.leader) { lead++; } if (u.kind === 'troop') { arms[u.arm] = 1; if ((u.arm === 'cav' && u.mov !== 3) || (u.arm === 'bow' && u.rng !== 2) || (u.arm === 'spear' && u.def !== 4)) { ok2 = false; } } });
       var b3 = T.makeBoardSrpg('mods', 'plain', false, 'rout'); b3.cells[2 * b3.cols + 2] = 'hill';
