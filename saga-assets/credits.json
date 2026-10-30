@@ -438,6 +438,15 @@
    ]
   },
   {
+   "tool": "setmark.py",
+   "model": "",
+   "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+   "count": 10,
+   "where": [
+    "saga-assets/icons/setmark"
+   ]
+  },
+  {
    "tool": "k163_illust.py + gen.py (ComfyUI, Kaggle 원격)",
    "model": "animagine-xl-4.0-opt",
    "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상 보고 적은 묘사)",
@@ -725,9 +734,11 @@
    "tool": "far_ridge_band.py",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
-   "count": 1,
+   "count": 3,
    "where": [
-    "saga-assets/sky"
+    "saga-assets/sky",
+    "saga-godot/assets/sky",
+    "saga-web/shared/assets/sky"
    ]
   },
   {
