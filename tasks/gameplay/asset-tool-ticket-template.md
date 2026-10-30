@@ -2,6 +2,8 @@
 
 [핵심 기획](asset-tool-strengthening.md) · [검증 기준](asset-tool-validation.md)을 읽은 뒤 사용한다. 아래 빈칸을 채우기 전에는 상태를 `작성됨`으로 바꾸지 않는다. 이 문서 자체는 실행 티켓이 아니다.
 
+생성·판정 관련 티켓은 [입력 규격과 후보 선택](asset-tool-input-profiles.md)의 종류별 계약·규격 대응표도 명시한다.
+
 ## 복사할 틀
 
 ```text
