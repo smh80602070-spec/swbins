@@ -377,6 +377,18 @@
   {
    "tool": "미상",
    "model": "",
+   "license": "SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음)",
+   "count": 4,
+   "where": [
+    "saga-assets/fonts/blackhansans",
+    "saga-assets/fonts/hahmlet",
+    "saga-web/saga-dungeon/assets/fonts",
+    "saga-web/shared/assets/fonts"
+   ]
+  },
+  {
+   "tool": "미상",
+   "model": "",
    "license": "SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용)",
    "count": 10,
    "where": [
@@ -386,17 +398,6 @@
     "saga-web/saga-forest/assets/fonts",
     "saga-web/saga-go/assets/fonts",
     "saga-web/saga-realm/assets/fonts"
-   ]
-  },
-  {
-   "tool": "미상",
-   "model": "",
-   "license": "SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음)",
-   "count": 3,
-   "where": [
-    "saga-assets/fonts/hahmlet",
-    "saga-web/saga-dungeon/assets/fonts",
-    "saga-web/shared/assets/fonts"
    ]
   },
   {
