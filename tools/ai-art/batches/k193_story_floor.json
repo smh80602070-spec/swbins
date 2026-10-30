@@ -1,0 +1,50 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k193_story_floor",
+ "kit": {
+  "spec": "tile",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective",
+  "variants": 4,
+  "tiling": true
+ },
+ "items": [
+  {
+   "id": "st_brick_a",
+   "seed": 3488046489,
+   "prompt": "(running bond red brick pavement, individual bricks clearly visible, thin mortar lines, slight color variation per brick:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 벽돌 바닥 변주 a"
+  },
+  {
+   "id": "st_brick_b",
+   "seed": 4206750954,
+   "prompt": "(herringbone gray brick pavement, individual bricks clearly visible, worn edges, small chips:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 벽돌 바닥 변주 b"
+  },
+  {
+   "id": "st_brick_c",
+   "seed": 2521223177,
+   "prompt": "(old brick floor with moss in the mortar gaps, mixed brown and ochre bricks, individual bricks visible:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 벽돌 바닥 변주 c"
+  },
+  {
+   "id": "st_brick_d",
+   "seed": 2334777145,
+   "prompt": "(dusty brick road, bricks of uneven size, scattered dirt and small pebbles between bricks, individual bricks visible:1.15), no humans, seamless texture, tileable, top-down, flat even lighting, no cast shadow, uniform density, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 벽돌 바닥 변주 d"
+  }
+ ]
+}

@@ -1,0 +1,94 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k193_story_plat",
+ "kit": {
+  "spec": "tile",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, blurry, lowres, worst quality, low quality, border, frame, object, character, vignette, perspective",
+  "variants": 3,
+  "tiling": true
+ },
+ "items": [
+  {
+   "id": "st_wood_plat_b",
+   "seed": 382793950,
+   "prompt": "(long weathered wooden plank, visible wood grain, rounded corners, two iron nails at each end:1.15), side view, horizontal, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 wood 발판 변주 b",
+   "width": 1152,
+   "height": 384,
+   "tiling": false,
+   "steps": 28,
+   "cfg": 5.5
+  },
+  {
+   "id": "st_wood_plat_c",
+   "seed": 1971264656,
+   "prompt": "(thick wooden beam platform, deep grain lines, knots, chamfered corners, rope lashing at the ends:1.15), side view, horizontal, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 wood 발판 변주 c",
+   "width": 1152,
+   "height": 384,
+   "tiling": false,
+   "steps": 28,
+   "cfg": 5.5
+  },
+  {
+   "id": "st_wood_plat_d",
+   "seed": 107529159,
+   "prompt": "(short stack of three wooden planks bound together, visible grain, worn edges:1.15), side view, horizontal, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 wood 발판 변주 d",
+   "width": 1152,
+   "height": 384,
+   "tiling": false,
+   "steps": 28,
+   "cfg": 5.5
+  },
+  {
+   "id": "st_stone_plat_b",
+   "seed": 2565246107,
+   "prompt": "(long flat stone slab ledge, chiseled top edge, cracks, small moss patches, rounded ends:1.15), side view, horizontal, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 stone 발판 변주 b",
+   "width": 1152,
+   "height": 384,
+   "tiling": false,
+   "steps": 28,
+   "cfg": 5.5
+  },
+  {
+   "id": "st_stone_plat_c",
+   "seed": 4256904461,
+   "prompt": "(thick carved stone block platform, brick-like cut lines, worn corners:1.15), side view, horizontal, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 stone 발판 변주 c",
+   "width": 1152,
+   "height": 384,
+   "tiling": false,
+   "steps": 28,
+   "cfg": 5.5
+  },
+  {
+   "id": "st_stone_plat_d",
+   "seed": 3099975586,
+   "prompt": "(natural flat rock ledge, layered strata, soft rounded ends, a little grass on top:1.15), side view, horizontal, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "subject_ko": "4종횡 stone 발판 변주 d",
+   "width": 1152,
+   "height": 384,
+   "tiling": false,
+   "steps": 28,
+   "cfg": 5.5
+  }
+ ]
+}
