@@ -16,6 +16,8 @@
 import argparse
 import ctypes
 import datetime
+import hashlib
+import io
 import json
 import os
 import re
@@ -24,6 +26,7 @@ import time
 import urllib.error
 import urllib.request
 import uuid
+from contextlib import contextmanager
 from urllib.parse import urlencode
 
 API = os.environ.get('AI_ART_API', 'http://127.0.0.1:8188')
@@ -108,6 +111,8 @@ def workflow(item, model, d, seed, dry=False):
     """배치 항목 하나 → ComfyUI API 그래프. 돌려주는 settings 는 license.json 에 적는다. dry 면 밑그림을 올리지 않는다."""
     m = MODELS[model]
     w, h = int(item.get('width', d.get('width', 1024))), int(item.get('height', d.get('height', 1024)))
+    if w <= 0 or h <= 0:
+        raise ValueError(f'{item["id"]}: 크기는 양수여야 함')
     if w * h > MAX_PIXELS:
         raise ValueError(f'{item["id"]}: {w}x{h} 는 픽셀 한도({MAX_PIXELS}) 초과')
     if w % 16 or h % 16:
@@ -223,15 +228,122 @@ def generate(item, model, d):
 COMFY_OUT = os.environ.get('AI_ART_COMFY_OUT', r'C:\swbins3\comfyui\output')
 
 
-def main():
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def request_hash(item, model, defaults):
+    """경로 대신 입력 바이트를 사용해 원격/로컬의 같은 요청을 비교한다."""
+    used = item.get('model', model)
+    if used not in MODELS:
+        raise ValueError(f'허용 목록 밖 모델: {used}')
+    graph, _ = workflow(item, used, defaults, 0, dry=True)
+    inputs = {}
+    for key in ('init_image', 'mask_image'):
+        if item.get(key):
+            with open(item[key], 'rb') as f:
+                inputs[key] = digest(f.read())
+    request = {'version': 1, 'graph': graph, 'inputs': inputs,
+               'seed': int(item.get('seed', defaults.get('seed', -1))), 'meta': item.get('meta')}
+    return digest(json.dumps(request, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8'))
+
+
+def verify_png(data):
+    # Pillow는 기존 이미지 파이프라인 의존성. GPU·ComfyUI 없이 무결성/디코드 검사.
+    from PIL import Image
+    with Image.open(io.BytesIO(data)) as im:
+        if im.format != 'PNG':
+            raise ValueError('PNG 형식이 아님')
+        im.verify()
+    with Image.open(io.BytesIO(data)) as im:
+        im.load()
+
+
+def existing_output(path, expected_hash):
+    """missing / reused / legacy. 불완전한 쌍은 원본을 보존하고 실패한다."""
+    license_path = os.path.splitext(path)[0] + '.license.json'
+    if not os.path.lexists(path) and not os.path.lexists(license_path):
+        return 'missing'
+    if not os.path.isfile(path) or not os.path.isfile(license_path):
+        raise ValueError('PNG/출처 JSON 쌍 누락 — 원본 보존, 별도 출력 경로로 복구 필요')
+    with open(path, 'rb') as f:
+        png = f.read()
+    verify_png(png)
+    with open(license_path, encoding='utf-8') as f:
+        lic = json.load(f)
+    if not isinstance(lic, dict) or not all(lic.get(k) for k in ('id', 'model', 'model_license')):
+        raise ValueError('출처 JSON 필수 항목 누락')
+    if lic['id'] != os.path.splitext(os.path.basename(path))[0]:
+        raise ValueError('출처 id 불일치')
+    recorded = lic.get('request_sha256')
+    output_hash = lic.get('output_sha256')
+    if recorded is None and output_hash is None:
+        return 'legacy'
+    if recorded != expected_hash:
+        raise ValueError('입력 해시 누락/변경 — 기존 출력 보존, 새 버전 경로 필요')
+    if output_hash != digest(png):
+        raise ValueError('출력 해시 누락/불일치 — 기존 출력 보존')
+    return 'reused'
+
+
+@contextmanager
+def output_lock(path):
+    """동일 id를 다른 실행이 생성하지 못하게 한다. 죽은 실행의 잠금은 자동 해제하지 않는다."""
+    lock = path + '.lock'
+    with open(lock, 'x', encoding='utf-8') as f:
+        f.write(json.dumps({'pid': os.getpid(), 'created': datetime.datetime.now().isoformat()}))
+    try:
+        yield
+    finally:
+        os.remove(lock)
+
+
+def save_output(path, png, lic):
+    """두 내용을 먼저 검증·직렬화. 배타적 생성으로 기존 파일은 절대로 덮지 않는다.
+
+    두 파일은 트랜잭션이 아니다. 중단되어 한쪽만 남으면 다음 재개 검사가 차단한다.
+    """
+    verify_png(png)
+    content = json.dumps(lic, ensure_ascii=False, indent=1).encode('utf-8')
+    license_path = os.path.splitext(path)[0] + '.license.json'
+    if os.path.lexists(path) or os.path.lexists(license_path):
+        raise FileExistsError('출력 경로가 이미 있음 — 덮어쓰기 거부')
+    with open(license_path, 'xb') as f:
+        f.write(content)
+    with open(path, 'xb') as f:
+        f.write(png)
+
+
+def make_license(it, png, settings, used, secs, fingerprint):
+    s = settings
+    lic = {'id': it['id'], 'generator': 'tools/ai-art/gen.py (ComfyUI)', 'model': used, 'model_license': MODELS[used]['license'],
+           'prompt': s['prompt'], 'negative_prompt': s['negative_prompt'], 'seed': s['seed'],
+           'steps': s['steps'], 'cfg_scale': s['cfg_scale'], 'sampler': s['sampler'], 'size': s['size'],
+           'seconds': round(secs, 1), 'date': datetime.date.today().isoformat(),
+           'note': 'AI 생성 — 사람의 선택·수정 및 모델 라이선스 허용 범위 확인 필요.'}
+    if it.get('init_image'):
+        if it.get('meta'):
+            lic.update({'mode': 'img2img', 'init_image': os.path.basename(it['init_image']), 'denoise': s['denoise']})
+            lic.update(it['meta'])
+        else:
+            from i2i_meta import base_meta
+            lic.update(base_meta(it['init_image'], s['denoise']))
+    # meta가 무결성 필드를 덮지 못하게 마지막에 기록.
+    lic.update(id=it['id'], model=used, model_license=MODELS[used]['license'],
+               request_sha256=fingerprint, output_sha256=digest(png))
+    return lic
+
+
+def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument('batch')
     ap.add_argument('--dry', action='store_true')
     ap.add_argument('--only', default='')
     ap.add_argument('--variants', type=int, default=0, help='항목마다 후보 N장(id_v01…, 씨앗 +k). 0 이면 배치 defaults.variants(없으면 1)')
     ap.add_argument('--judge', action='store_true', help='끝나면 판정기(tools/asset-audit/judge)로 묶음마다 1장만 남긴 보고를 만든다(K-0069)')
-    a = ap.parse_args()
-    b = json.load(open(a.batch, encoding='utf-8'))
+    a = ap.parse_args(argv)
+    with open(a.batch, encoding='utf-8') as f:
+        b = json.load(f)
     model = b['model']
     if model not in MODELS:
         sys.exit(f'모델 {model} — 상업 허용 확인 목록(MODELS)에 없다: {", ".join(MODELS)}')
@@ -241,66 +353,114 @@ def main():
     src = [i for i in b['items'] if not a.only or i['id'] in a.only.split(',')]
     if nv > 1:    # 100장 뽑아 1장 고르기(K-0069): 후보 N장을 id_v01… 로, 씨앗은 +k. 판정기가 묶음(id) 안에서 1등만 남긴다
         src = [dict(i, id=f"{i['id']}_v{k + 1:02d}", seed=(int(i['seed']) + k) if 'seed' in i else -1) for i in src for k in range(nv)]
-    items = [i for i in src if not os.path.exists(os.path.join(out_dir, i['id'] + '.png'))][:MAX_ITEMS]   # 있는 그림은 셈에서 뺀다
-    for i in items:
-        txt = i['prompt'] + ' ' + d.get('prompt_prefix', '')
-        m = BLOCK.search(txt)
-        if m:
-            sys.exit(f'{i["id"]}: 프롬프트에 금지어 "{m.group(0)}" — 원작·실존 인물·작가 이름은 쓰지 않는다')
-    print(f'배치 {os.path.basename(a.batch)} · 모델 {model} · {len(items)}장 · 여유 RAM {free_gb():.1f}GB')
-    if a.dry:
-        for i in items[:3]:
-            workflow(i, i.get('model', model), d, 0, dry=True)       # 크기·모델 검사만
-        return
-    if free_gb() < MIN_FREE_GB:
-        sys.exit(f'여유 RAM {free_gb():.1f}GB < {MIN_FREE_GB}GB — 다른 무거운 일을 끄고 다시')
-    if not up():
-        sys.exit('ComfyUI 가 안 떠 있다 — powershell -ExecutionPolicy Bypass -File tools/ai-art/start_sd.ps1')
-    os.makedirs(out_dir, exist_ok=True)
-    try:    # 배치 시작마다 앞 배치의 모델을 RAM·VRAM 에서 내린다 — 두 계열(SDXL 6.6GB + Z-Image 10GB)이 RAM 에 같이 남으면 페이지 파일로 밀려 48s/it 까지 떨어졌다(10-07)
-        call('/free', {'unload_models': True, 'free_memory': True}, timeout=30)
-    except Exception:
-        pass
-    fails = 0
-    for n, it in enumerate(items):
-        p = os.path.join(out_dir, it['id'] + '.png')
-        if os.path.exists(p):
-            print('건너뜀(있음)', it['id'])
-            continue
-        if free_gb() < MIN_FREE_GB:
-            print('여유 RAM 부족 — 중단'); break
+    result = dict(requested=len(src), checked=0, generated=0, reused=0, legacy=0, failed=0, pending=0, judge='not_run')
+
+    def finish(status, code):
+        result['status'] = status
+        print('GEN_RESULT ' + json.dumps(result, ensure_ascii=False, sort_keys=True))
+        return code
+
+    if MAX_ITEMS < 1 or nv < 1:
+        print('실패 설정: 후보 수·AI_ART_MAX는 양수여야 함')
+        return finish('failed', 1)
+    pending = []
+    seen = set()
+    for it in src:
         try:
-            png, s, used, secs = generate(it, model, d)
-        except Exception as e:      # noqa
-            fails += 1
-            print('실패', it['id'], e)
-            if fails >= 2:
-                print('연속 실패 2번 — 통째로 멈춘다'); break
-            continue
-        fails = 0
-        open(p, 'wb').write(png)
-        lic = {'id': it['id'], 'generator': 'tools/ai-art/gen.py (ComfyUI)', 'model': used, 'model_license': MODELS[used]['license'],
-               'prompt': s['prompt'], 'negative_prompt': s['negative_prompt'], 'seed': s['seed'],
-               'steps': s['steps'], 'cfg_scale': s['cfg_scale'], 'sampler': s['sampler'], 'size': s['size'],
-               'seconds': round(secs, 1), 'date': datetime.date.today().isoformat(),
-               'note': 'AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.'}
-        if it.get('init_image'):
-            if it.get('meta'):        # 펫 등 공방 몸이 아닌 밑그림 — 배치가 출처(meta)를 직접 준다
-                lic.update({'mode': 'img2img', 'init_image': os.path.basename(it['init_image']), 'denoise': s['denoise']})
-                lic.update(it['meta'])
+            ident = it['id']
+            if not isinstance(ident, str) or not ident or ident in ('.', '..') or re.search(r'[\\/:\x00]', ident):
+                raise ValueError('id는 파일 이름이어야 함')
+            if ident.casefold() in seen:
+                raise ValueError('중복 id')
+            seen.add(ident.casefold())
+            m = BLOCK.search(it['prompt'] + ' ' + d.get('prompt_prefix', ''))
+            if m:
+                raise ValueError(f'프롬프트 금지어: {m.group(0)}')
+            fingerprint = request_hash(it, model, d)
+            path = os.path.join(out_dir, ident + '.png')
+            if os.path.lexists(path + '.lock'):
+                raise ValueError('출력 잠금 존재 — 소유 실행 확인 필요')
+            state = existing_output(path, fingerprint)
+            result['checked'] += 1
+            if state == 'missing':
+                pending.append((it, fingerprint))
             else:
-                from i2i_meta import base_meta
-                lic.update(base_meta(it['init_image'], s['denoise']))
-        json.dump(lic, open(os.path.splitext(p)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-        print(f'ok {it["id"]} {secs:.0f}s seed {lic["seed"]}')
+                result[state] += 1
+                if state == 'legacy':
+                    print('경고 기존 출력 해시 미검증(보존)', ident)
+        except Exception as e:
+            result['failed'] += 1
+            print('실패', it.get('id', '?'), e)
+    result['pending'] = len(pending)
+    print(f'배치 {os.path.basename(a.batch)} · 모델 {model} · 생성 대기 {len(pending)}장')
+    if result['failed']:
+        return finish('failed', 1)
+    if a.dry:
+        return finish('dry', 0)
+    if not src:
+        return finish('empty', 0)
+    items = pending[:MAX_ITEMS]
+    if items:
+        if free_gb() < MIN_FREE_GB:
+            print('실패 여유 RAM 부족 — 중단')
+            return finish('blocked', 1)
+        if not up():
+            print('실패 ComfyUI 응답 없음 — 담당 PC 실행 절차 확인')
+            return finish('blocked', 1)
+        os.makedirs(out_dir, exist_ok=True)
+        try:
+            call('/free', {'unload_models': True, 'free_memory': True}, timeout=30)
+        except Exception:
+            pass
+    consecutive = 0
+    blocked = False
+    for n, (it, fingerprint) in enumerate(items):
+        if free_gb() < MIN_FREE_GB:
+            print('실패 여유 RAM 부족 — 중단')
+            blocked = True
+            break
+        path = os.path.join(out_dir, it['id'] + '.png')
+        try:
+            with output_lock(path):
+                state = existing_output(path, fingerprint)
+                if state != 'missing':
+                    result[state] += 1
+                else:
+                    png, s, used, secs = generate(it, model, d)
+                    if request_hash(it, model, d) != fingerprint:
+                        raise ValueError('생성 중 입력 변경 — 저장 거부')
+                    lic = make_license(it, png, s, used, secs, fingerprint)
+                    save_output(path, png, lic)
+                    result['generated'] += 1
+                    print(f'ok {it["id"]} {secs:.0f}s seed {lic["seed"]}')
+            consecutive = 0
+        except Exception as e:
+            result['failed'] += 1
+            consecutive += 1
+            print('실패', it['id'], e)
+        result['pending'] -= 1
+        if consecutive >= 2:
+            print('연속 실패 2번 — 통째로 멈춘다')
+            break
         if n < len(items) - 1:
             time.sleep(PAUSE)
-    if a.judge:
+    if result['failed'] or blocked:
+        return finish('failed' if result['failed'] else 'blocked', 1)
+    # 일부만 생성된 묶음을 최종 판정하지 않는다. 다음 호출이 남은 항목을 잇는다.
+    if a.judge and not result['pending']:
         import subprocess
         judge = os.path.join(HERE, '..', 'asset-audit', 'judge', 'judge.sh')
         print('== 판정기', out_dir)
-        subprocess.call(['bash', judge, 'score', out_dir, '--per-group', '1'])
+        try:
+            code = subprocess.call(['bash', judge, 'score', out_dir, '--per-group', '1'])
+        except OSError as e:
+            print('실패 판정기', e)
+            code = 1
+        result['judge'] = 'failed' if code else 'passed'
+        if code:
+            return finish('failed', 1)
+    return finish('partial' if result['pending'] else 'complete', 0)
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

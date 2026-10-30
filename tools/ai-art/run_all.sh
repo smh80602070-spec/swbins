@@ -17,15 +17,26 @@ WAS_UP=0; up && WAS_UP=1
 sd_rss_gb() {   # ComfyUI 파이썬(main.py)의 작업 집합, GB (정수)
   powershell -NoProfile -Command "\$m=0; Get-CimInstance Win32_Process -Filter \"name='python.exe'\" | Where-Object { \$_.CommandLine -like '*main.py*' } | ForEach-Object { \$w=(Get-Process -Id \$_.ProcessId -ErrorAction SilentlyContinue).WorkingSet64; if (\$w -gt \$m) { \$m=\$w } }; [math]::Floor(\$m/1GB)" 2>/dev/null | tr -d '\r'
 }
+RUN_EXIT=1  # 반복 한도까지 완료되지 않으면 성공으로 기록하지 않는다.
 for i in $(seq 1 48); do
-  [ -f tools/ai-art/_out/STOP ] && { echo "STOP 파일 — 멈춤" >> "$S"; break; }
+  [ -f tools/ai-art/_out/STOP ] && { echo "STOP 파일 — 멈춤" >> "$S"; RUN_EXIT=130; break; }
   if ! up; then
     powershell -NoProfile -ExecutionPolicy Bypass -File tools/ai-art/start_sd.ps1 >> "$S" 2>&1
     if ! up; then echo "ComfyUI 안 뜸 — 멈춤" >> "$S"; break; fi
   fi
   PYTHONIOENCODING=utf-8 py tools/ai-art/gen.py "$B" > tools/ai-art/_out/run_$i.log 2>&1
+  GEN_EXIT=$?
   echo "chunk $i: $(grep -c '^ok ' tools/ai-art/_out/run_$i.log) ok, $(grep -c '^실패' tools/ai-art/_out/run_$i.log) fail" >> "$S"
-  if ! grep -q "^ok " tools/ai-art/_out/run_$i.log; then break; fi
+  grep '^GEN_RESULT ' tools/ai-art/_out/run_$i.log >> "$S"
+  if [ "$GEN_EXIT" -ne 0 ]; then
+    echo "생성기 실패(exit $GEN_EXIT) — 멈춤" >> "$S"; RUN_EXIT=$GEN_EXIT; break
+  fi
+  if grep -q '^GEN_RESULT .*"status": "\(complete\|empty\)"' tools/ai-art/_out/run_$i.log; then
+    RUN_EXIT=0; break
+  fi
+  if ! grep -q "^ok " tools/ai-art/_out/run_$i.log; then
+    echo "진행 없음 — 완료 확인 불가" >> "$S"; break
+  fi
   if [ $WAS_UP = 0 ]; then
     R=$(sd_rss_gb); R=${R:-0}
     if [ "$R" -ge "$RSS_LIMIT_GB" ]; then
@@ -38,4 +49,5 @@ for i in $(seq 1 48); do
 done
 # 내가 띄운 것만 끝에 끈다(사용 중이던 것은 그대로)
 if [ $WAS_UP = 0 ]; then powershell -NoProfile -ExecutionPolicy Bypass -File tools/ai-art/stop_sd.ps1 >> "$S" 2>&1; fi
-echo done >> "$S"
+if [ "$RUN_EXIT" -eq 0 ]; then echo done >> "$S"; else echo "failed (exit $RUN_EXIT)" >> "$S"; fi
+exit "$RUN_EXIT"
