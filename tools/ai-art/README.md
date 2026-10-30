@@ -14,9 +14,9 @@ powershell -ExecutionPolicy Bypass -File tools\ai-art\stop_sd.ps1      # 끝나�
 이 절은 **NVIDIA GeForce RTX 4060 8GB PC 전용**이다. Radeon은 다른 PC에서 작업하며 기존 Radeon 설정·실행 안내는 그대로 유지한다. 두 PC는 공통 지침과 `tasks/tools/QUEUE.md`의 분담에 따라 자체툴 생성을 병행한다. 같은 티켓·배치를 두 PC에서 동시에 실행하지 않는다.
 
 - 읽기 전용 확인: `nvidia-smi`에서 RTX 4060·8188MiB·드라이버 610.88, 실행 중 ComfyUI `/system_stats`에서 0.43.0·PyTorch `2.11.0+cu128`·장치 `cuda:0 NVIDIA GeForce RTX 4060`을 확인했다. CUDA 백엔드 인식은 정상이다.
-- `/object_info`에서 `gen.py`가 지정한 세 모델과 부속 파일이 모두 인식된다: `z-image-turbo-Q6_K.gguf`, `Qwen3-4B-Q8_0.gguf`, `ae.safetensors`, `animagine-xl-4.0-opt.safetensors`, `Illustrious-XL-v2.0.safetensors`, `sdxl-vae-fp16-fix.safetensors`. 파일 해시·생성 품질 검증을 뜻하지 않는다.
+- `/object_info`에서 `gen.py`가 지정한 세 모델과 부속 파일이 모두 인식된다: `z-image-turbo-Q6_K.gguf`, `Qwen3-4B-Q8_0.gguf`, `ae.safetensors`, `animagine-xl-4.0-opt.safetensors`, `Illustrious-XL-v2.0.safetensors`, `sdxl-vae-fp16-fix.safetensors`. 파일 해시·생성 품질 검증을 뜻하지 않는다. 추가 조회에서 `SagaSeamlessTiling`, `ModelSamplingAuraFlow`, `EmptySD3LatentImage`, GGUF 로더, `CheckpointLoaderSimple`, `VAELoader`, `KSampler`, `SaveImage` 등록도 확인했다. 노드 등록만으로 그래프 실행 호환성을 통과 처리하지 않는다.
 - 실제 실행 옵션은 `--listen 127.0.0.1 --port 8188 --disable-auto-launch --use-pytorch-cross-attention --output-directory <ComfyUI 출력 폴더>`다. API는 `gen.py` 기본값 `http://127.0.0.1:8188`과 일치한다.
-- **상단 `start_sd.ps1` 안내와 아래 ROCm 최적화 기록은 RX 7600 기준이다.** 이 스크립트는 ROCm 환경 변수와 lowvram·fp32 VAE 옵션을 고정하며 현재 GeForce 실행 옵션과 다르다. GeForce 자동 감지·최적화가 구현된 것으로 간주하지 않는다. 실행 중 서버는 그대로 재사용하고, 재기동이 필요하면 해당 PC의 기존 CUDA 실행 절차·인터프리터를 확인한다. 이번 점검에서는 소스·실행 설정을 바꾸지 않았다.
+- **상단 `start_sd.ps1` 안내와 아래 ROCm 최적화 기록은 RX 7600 기준이다.** 이 스크립트는 ROCm 환경 변수와 lowvram·fp32 VAE 옵션을 고정하며 현재 GeForce 실행 옵션과 다르다. GeForce 자동 감지·최적화가 구현된 것으로 간주하지 않는다. 실행 중 서버에 생성 작업을 추가하기 전 아래 단일 세션 소유권을 확인하고, 재기동이 필요하면 해당 PC의 기존 CUDA 실행 절차·인터프리터를 확인한다. 이번 점검에서는 소스·실행 설정을 바꾸지 않았다.
 - 생성은 기존 한도(순차 1장, 기본 최대 24항목, 1.1MP, 시작 여유 RAM은 실행기 8GB/생성기 6GB)를 지킨다. Radeon 측정 시간을 GeForce 예상 시간으로 쓰거나 8GB GPU를 16GB 원격 GPU처럼 취급하지 않는다. GPU 작업·Unity·Blender 배치를 중복 기동하지 않는다.
 - 서버의 소유 세션과 실행 상태를 확인한다. 다른 세션이 사용하는 ComfyUI에 중단·종료 명령을 보내지 않는다. 이번에는 이미 GPU 작업이 진행 중이어서 추가 생성·재시작·종료를 하지 않았다.
 - 판정: **CUDA 연결·등록 모델 확인 완료 / 세 모델별 생성·속도·메모리 안정성·시각 품질은 이번 점검에서 미검증**. 다음 생성 티켓에서 필요한 모델의 대표 자산부터 검증한다. CUDA가 있다는 이유로 새 모델·원격 서비스·동결된 3D 인체 생성을 도입하거나 재개하지 않는다.
@@ -37,9 +37,10 @@ $assetQueue = Invoke-RestMethod "$assetApi/queue" -TimeoutSec 10
 
 1. 장치가 해당 GeForce이고 백엔드가 `cuda`인지 확인한다. `AI_ART_API`가 지정돼 있으면 기본 로컬 주소를 검사한 결과로 대신하지 않는다.
 2. API 연결 실패는 생성 불가 상태로 기록하고 기존 실행 절차부터 확인한다. 다른 세션의 서버를 재시작하거나 새 서버를 중복 실행하지 않는다.
-3. 실행·대기 작업이 있으면 소유 티켓을 먼저 확인한다. 큐가 비었다는 사실만으로 GPU가 비었거나 다른 PC의 티켓을 가져와도 된다고 판단하지 않는다.
-4. 큐의 담당 PC, 기존 출력·라이선스, 배치의 모델·해상도·입력 경로를 확인한다. `gen.py <배치.json> --dry --only <id>`는 그래프 사전 검사이며 실제 추론·메모리·화질 검증이 아니다. 이미 출력이 있는 항목은 검사 대상에서 빠질 수 있으므로 대상 수 0건을 통과로 기록하지 않는다.
-5. 다음 생성 작업의 증거는 [GeForce 검증 기록](../../tasks/gameplay/asset-tool-validation.md#8-geforce-실행-검증-기록)을 사용한다. 이번 문서 점검을 근거로 대량 생성을 시작하지 않는다.
+3. **ComfyUI 인스턴스마다 생성 세션 하나만** 사용한다. 실행·대기 작업과 해당 서버를 쓰는 사슬·세션의 소유 티켓을 확인하고, 기존 소유 세션의 종료 또는 인계를 확인한 뒤 실행한다. `gen.py`는 시작 시 서버에 `/free`를 보내고 시간 초과 시 전역 `/interrupt`를 보내므로 다른 세션과 함께 실행하면 그 작업에 영향을 줄 수 있다. 현재 자동 잠금이 보장된 것으로 취급하지 않는다. 큐가 잠깐 비었어도 사슬의 장 사이 대기일 수 있다.
+4. 큐의 담당 PC, 기존 출력·라이선스, 배치의 모델·해상도·입력 경로를 확인한다. `gen.py <배치.json> --dry --only <id>`는 원본 id 선택 → variants 후보 확장 → 기존 PNG 제외 → `AI_ART_MAX` 제한 후 **앞의 최대 3개 후보만** 그래프를 구성한다. 출력의 “N장”은 실제 그래프 검사 수가 아니다. 후보 id별 검사 범위를 기록하고 미포함 후보·0건은 미검증으로 남긴다. 입력 이미지·마스크는 dry에서 업로드하지 않아 파일 유효성 검증을 대신하지 못한다. 서버 노드 호환성·실제 추론·메모리·화질도 별도 검증한다. 검사 수를 늘리려고 기존 PNG를 지우거나 옮기지 않는다.
+5. `AI_ART_API`·`AI_ART_COMFY_OUT`·`AI_ART_MAX`·`AI_ART_MAX_PIXELS`·`GEN_TIMEOUT`에 기존 세션의 override가 있는지 확인하고 적용값을 기록한다. `AI_ART_COMFY_OUT`은 생성기가 결과를 받은 뒤 복사본을 지우는 서버 출력 경로이므로 실제 접속 인스턴스와 일치해야 한다. 이 점검에서 환경 변수나 실행 설정을 변경하지 않는다.
+6. 다음 생성 작업의 증거는 [GeForce 검증 기록](../../tasks/gameplay/asset-tool-validation.md#8-geforce-실행-검증-기록)을 사용한다. 이번 문서 점검을 근거로 대량 생성을 시작하지 않는다.
 
 ## 원격 GPU(Kaggle) — K-0140 (2026-10-18)
 
