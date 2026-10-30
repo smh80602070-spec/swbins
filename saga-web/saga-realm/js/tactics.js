@@ -25,7 +25,7 @@
 
   var core = global.DG.core;
   var COLS = 8, ROWS = 6, TURNS = 3, MOV = 3, MOV_TROOP = 2;
-  var COVER = { plain: 0, forest: 30, river: 0, wall: 50 };
+  var COVER = { plain: 0, forest: 30, river: 0, wall: 50, hill: 15 };
   var HIT_MIN = 10, HIT_MAX = 95, HIT_BASE = 65;
   var OUT = {
     rout: { kind: 'rout', name: '대승', winPct: 25, lossMul: 0.7 },
@@ -109,9 +109,12 @@
     while (fo.length + tr.length < 3) { tr.push(3000); }
     tr.forEach(function (t, k) { list.push(troopUnit(k, 'foe', t)); });
     var slots = { me: [], foe: [] }, y, x;
+    /* 10-30 적 시작 — 0 맞은편 줄 · 1 앞 진지(들판만, 길이 짧다) · 2 위아래 집게. 같은 씨앗 = 같은 배치 */
+    var dep = b.srpg ? Math.floor(hash(b.seed, 'dep') * 3) : 0; if (dep === 1 && b.siege) { dep = 0; }
+    var fx0 = dep === 1 ? b.cols - 5 : b.cols - 2, pinc = dep === 2;
     for (y = 0; y < b.rows; y++) {
       for (x = 1; x <= 2; x++) { slots.me.push([x, (y * 2 + 1) % b.rows]); }
-      for (x = b.cols - 2; x >= b.cols - 3; x--) { slots.foe.push([x, (y * 2 + 1) % b.rows]); }
+      for (x = fx0; x >= fx0 - 1; x--) { slots.foe.push([x, pinc ? (y % 2 ? b.rows - 1 - (y >> 1) : y >> 1) : (y * 2 + 1) % b.rows]); }
     }
     var used = {};
     list.forEach(function (u) {
@@ -131,19 +134,28 @@
   function dist(a, b2) { return Math.abs(a.x - b2.x) + Math.abs(a.y - b2.y); }
 
   /** 갈 수 있는 칸들(제자리 포함) — 상하좌우 mov 걸음, 강·남이 선 칸은 못 지난다 */
+  /** 적 바로 곁(상하좌우) 칸인가 — SRPG 판의 ZOC. 들어서면 거기서 멈춘다(떠나는 건 자유) */
+  function nearFoe(b, u, x, y) {
+    return b.units.some(function (o) { return o.hp > 0 && o.side !== u.side && Math.abs(o.x - x) + Math.abs(o.y - y) === 1; });
+  }
   function moves(b, uid) {
     var u = unit(b, uid);
     if (!u || u.hp <= 0 || u.moved) { return u && u.hp > 0 ? [{ x: u.x, y: u.y }] : []; }
-    var seen = {}, out = [], q = [[u.x, u.y, 0]], k = u.x + ',' + u.y;
-    seen[k] = 1;
+    var srpg = !!b.srpg, best = {}, out = [], q = [[u.x, u.y, 0]];
+    best[u.x + ',' + u.y] = 0;
     while (q.length) {
+      q.sort(function (p, r) { return p[2] - r[2]; });
       var c = q.shift();
+      if (c[2] > best[c[0] + ',' + c[1]]) { continue; }
       out.push({ x: c[0], y: c[1] });
       if (c[2] >= u.mov) { continue; }
-      [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) {
-        var nx = c[0] + d[0], ny = c[1] + d[1], kk = nx + ',' + ny, t = cellAt(b, nx, ny);
-        if (seen[kk] || !t || t === 'river' || occupied(b, nx, ny)) { return; }
-        seen[kk] = 1; q.push([nx, ny, c[2] + 1]);
+      if (srpg && c[2] > 0 && nearFoe(b, u, c[0], c[1])) { continue; }   // 10-30 ZOC — 적 곁에 닿으면 더 못 간다
+      [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (dd) {
+        var nx = c[0] + dd[0], ny = c[1] + dd[1], kk = nx + ',' + ny, t = cellAt(b, nx, ny);
+        if (!t || t === 'river' || occupied(b, nx, ny)) { return; }
+        var nc = c[2] + (srpg && t === 'forest' ? 2 : 1);   // 10-30 숲은 걸음이 두 배
+        if (nc > u.mov || (best[kk] != null && best[kk] <= nc)) { return; }
+        best[kk] = nc; q.push([nx, ny, nc]);
       });
     }
     return out;
@@ -350,7 +362,7 @@
    *           내 전멸 = 패 · SRPG_CAP 턴 넘으면 옛 체력 비율 판정. 대장·성문 = 대승(rout) · 버팀 = 승(win)
    *   책략    한 판 PLOTS 번, 지력 FIRE_WIS 이상 내 장수 — 화계(숲에 불, 번짐·두 턴 탐) · 혼란(적 한 차례 쉼) · 회복
    */
-  var SRPG_SIZE = { plain: [13, 9], river: [14, 9], hill: [14, 10], mount: [15, 11] };   /* 10-27 사용자 「5번 2d 맵이 너무 작고 비슷하네」 — 한 변 ×1.3 */
+  var SRPG_SIZE = { plain: [16, 10], river: [17, 10], hill: [17, 11], mount: [18, 12] };   /* 10-30 사용자 「5번 맵이 작고 일방적」 — 한 변 ×1.2 더 */   /* 10-27 사용자 「5번 2d 맵이 너무 작고 비슷하네」 — 한 변 ×1.3 */
   var HILL_MIX = { plain: 0.08, river: 0.06, hill: 0.25, mount: 0.2 };
   var HEIGHT_HIT = 10, COUNTER_HIT = 20, BACK_HIT = 20;
   var ARMS = ['spear', 'cav', 'bow'], BEATS = { spear: 'cav', cav: 'bow', bow: 'spear' }, ARM_NAME = { spear: '창', cav: '기', bow: '궁' };
@@ -380,16 +392,33 @@
       var rx = Math.floor(cols / 2) - 1 + (hash(seed, 'rx') < 0.5 ? 0 : 1), f1 = Math.floor(hash(seed, 'f1') * rows), f2 = (f1 + 2 + Math.floor(hash(seed, 'f2') * (rows - 3))) % rows;
       for (y = 0; y < rows; y++) { cells[y * cols + rx] = (y === f1 || y === f2) ? 'plain' : 'river'; }
     }
-    /* 10-27 장마다 달라 보이게 — 씨앗이 능선·숲 덩어리·폐허 중 하나(시작 두 줄 안쪽은 비워 둔다). 하나뿐이라 땅 꼴 표는 그대로 */
-    var fk = Math.floor(hash(seed, 'feat') * 3), fy0 = 1 + Math.floor(hash(seed, 'fy') * Math.max(1, rows - 4)), fx0 = 4 + Math.floor(hash(seed, 'fx') * Math.max(1, cols - 10)), i2;
-    for (i2 = 0; i2 < 12; i2++) {
-      var ox = i2 % 4, oy = Math.floor(i2 / 4), fx = fx0 + ox + (fk === 0 ? oy : 0), fy = fk === 0 ? fy0 + oy : fy0 + oy;
-      if (fx < 4 || fx > cols - 5 || fy < 0 || fy >= rows) { continue; }
-      var fi = fy * cols + fx, hs = hash(seed, 'fz' + i2);
-      if (cells[fi] === 'river' || cells[fi] === 'gate') { continue; }
-      if (fk === 0 && oy === 0) { cells[fi] = 'hill'; }
-      else if (fk === 1 && hs < 0.8) { cells[fi] = 'forest'; }
-      else if (fk === 2 && hs < 0.3 && mx.rocks === undefined) { cells[fi] = 'wall'; }
+    /* 10-30 장마다 달라 보이게 — 씨앗이 조각 셋(능선·숲 덩어리·폐허·못·쌍언덕)을 가운데 띠에 놓는다(시작 두 줄 안쪽은 비워 둔다) */
+    var ponds = [], np;
+    function put(px, py, t) {
+      if (px < 4 || px > cols - 5 || py < 0 || py >= rows) { return; }
+      var pi = py * cols + px; if (cells[pi] === 'river' || cells[pi] === 'gate') { return; }
+      cells[pi] = t; if (t === 'river') { ponds.push(pi); }
+    }
+    for (np = 0; np < 3; np++) {
+      var kind = Math.floor(hash(seed, 'feat' + np) * 5), px0 = 4 + Math.floor(hash(seed, 'fx' + np) * Math.max(1, cols - 11)), py0 = Math.floor(hash(seed, 'fy' + np) * Math.max(1, rows - 3)), a, b2;
+      if (kind === 0) { for (a = 0; a < 6; a++) { put(px0 + a, py0, 'hill'); if (a % 2) { put(px0 + a, py0 + 1, 'hill'); } } }                       // 능선
+      else if (kind === 1) { for (a = 0; a < 4; a++) { for (b2 = 0; b2 < 3; b2++) { if (hash(seed, 'fz' + np + a + b2) < 0.8) { put(px0 + a, py0 + b2, 'forest'); } } } }   // 숲 덩어리
+      else if (kind === 2) { for (a = 0; a < 3; a++) { for (b2 = 0; b2 < 2; b2++) { if (hash(seed, 'fz' + np + a + b2) < 0.6) { put(px0 + a, py0 + b2, 'wall'); } } } }      // 폐허
+      else if (kind === 3) { for (a = 0; a < 2; a++) { for (b2 = 0; b2 < 2; b2++) { put(px0 + a, py0 + b2, 'river'); } } }                                                   // 못
+      else { for (a = 0; a < 2; a++) { for (b2 = 0; b2 < 2; b2++) { put(px0 + a, py0 + b2, 'hill'); put(px0 + a + 2, Math.min(rows - 1, py0 + b2 + 3), 'hill'); } } }          // 쌍언덕
+    }
+    if (ponds.length) {   // 못이 길을 막으면 도로 메운다 — 왼쪽 끝에서 오른쪽 끝으로 걸어 닿아야 한다
+      var seen = {}, qq = [], reach = false, ci;
+      for (y = 0; y < rows; y++) { if (cells[y * cols] !== 'river') { qq.push([0, y]); seen['0,' + y] = 1; } }
+      while (qq.length && !reach) {
+        var cc = qq.pop(); if (cc[0] === cols - 1) { reach = true; break; }
+        [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (dd) {
+          var nx = cc[0] + dd[0], ny = cc[1] + dd[1], kk = nx + ',' + ny;
+          if (nx < 0 || ny < 0 || nx >= cols || ny >= rows || seen[kk] || cells[ny * cols + nx] === 'river') { return; }
+          seen[kk] = 1; qq.push([nx, ny]);
+        });
+      }
+      if (!reach) { for (ci = 0; ci < ponds.length; ci++) { cells[ponds[ci]] = 'plain'; } }
     }
     var g = GOALS.indexOf(goal) >= 0 ? goal : 'rout', gate = [-1, -1];
     if (g === 'gate' && !siege) { g = 'rout'; }
