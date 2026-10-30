@@ -73,7 +73,7 @@ def arm_chains(i, img_path, dy=0):
     fg = maximum_filter(np.abs(a - np.array(BG)).sum(2) > 45, size=5)    # 가는 팔이 점에서 조금 벗어나도 팔로 읽게
     L0 = 0.30 * H
     ok = lambda x, y: 0 <= x < W and 0 <= y < IH and fg[y, x]
-    res = {}
+    res = {}; found = {}
     for side, sgn in (('N', 1), ('F', -1)):                              # N = 화면 오른쪽(원본 관절 규약)
         sh = T(j[side]['sh'])
         if (sh[0] - T(j['pelvis'])[0]) * sgn < 0:
@@ -83,6 +83,7 @@ def arm_chains(i, img_path, dy=0):
             r = math.radians(ang); d = (sgn * math.sin(r), math.cos(r))
             cov[ang] = sum(ok(int(sh[0] + d[0] * L0 * f), int(sh[1] + d[1] * L0 * f)) for f in np.linspace(0.3, 1.0, 8)) / 8
         top = max(cov.values())
+        found[side] = top >= 0.5
         ang = float(np.mean([k for k, v in cov.items() if v >= top - 0.05])) if top >= 0.5 else 0.0
         r = math.radians(ang); d = (sgn * math.sin(r), math.cos(r))
         miss = 0; end = 0.3
@@ -95,8 +96,14 @@ def arm_chains(i, img_path, dy=0):
                     break
         Ln = max(0.55, min(1.3, end)) * L0
         pt = lambda f: [sh[0] + d[0] * Ln * f, sh[1] + d[1] * Ln * f]
-        res[side] = (ang, [sh, pt(0.5), pt(0.92), pt(1.0)])
-    return res
+        res[side] = (ang, [sh, pt(0.5), pt(0.92), pt(1.0)], Ln, sgn, sh)
+    for side, other in (('N', 'F'), ('F', 'N')):                         # 한쪽 팔을 못 찾았으면(옷에 가렸거나 어깨 위치가 어긋남) 반대쪽 각도·길이를 대칭으로 쓴다
+        if not found[side] and found[other]:
+            ang, _, Ln, sgn, sh = res[side][0], None, res[other][2], res[side][3], res[side][4]
+            r = math.radians(ang_o := res[other][0]); d = (sgn * math.sin(r), math.cos(r))
+            pt = lambda f, d=d, sh=sh, Ln=Ln: [sh[0] + d[0] * Ln * f, sh[1] + d[1] * Ln * f]
+            res[side] = (ang_o, [sh, pt(0.5), pt(0.92), pt(1.0)], Ln, sgn, sh)
+    return {k: (v[0], v[1]) for k, v in res.items()}
 
 
 def patch_joints(i, v):
