@@ -1,0 +1,16 @@
+{
+ "size": 32,
+ "note": "K-0196 ④ 세트 문양 32px — 웹 배선은 웹 몫",
+ "marks": {
+  "biyeong": "mark32/set_biyeong.png",
+  "cheolong": "mark32/set_cheolong.png",
+  "cheongnang": "mark32/set_cheongnang.png",
+  "chungmu": "mark32/set_chungmu.png",
+  "eunha": "mark32/set_eunha.png",
+  "horang": "mark32/set_horang.png",
+  "hyeonhak": "mark32/set_hyeonhak.png",
+  "maenghon": "mark32/set_maenghon.png",
+  "paewang": "mark32/set_paewang.png",
+  "waryong": "mark32/set_waryong.png"
+ }
+}
