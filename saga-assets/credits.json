@@ -415,7 +415,7 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 2105,
+   "count": 2115,
    "where": [
     "saga-assets/icons/license",
     "saga-assets/portraits-expr",
@@ -441,7 +441,7 @@
    "tool": "k163_illust.py + gen.py (ComfyUI, Kaggle 원격)",
    "model": "animagine-xl-4.0-opt",
    "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상 보고 적은 묘사)",
-   "count": 560,
+   "count": 587,
    "where": [
     "saga-assets/illust/shared/ac_balgwang",
     "saga-assets/illust/shared/ac_choeumpa",
@@ -752,7 +752,7 @@
    "tool": "factory.py (K-0158 2D 공장, Blender + style_pass)",
    "model": "-",
    "license": "MIT(TRELLIS)·자체 뼈대 동작 — 자체 렌더",
-   "count": 169,
+   "count": 175,
    "where": [
     "saga-assets/sprites2d_factory"
    ]

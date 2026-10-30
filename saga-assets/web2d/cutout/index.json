@@ -122,27 +122,33 @@
  "dirs": {
   "eu_davinci": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "eu_leonidas": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "fu_jongwang": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "hl_mukhyang": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "jp_hanzo": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "jp_himiko": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "jp_musashi": [
    "side",
@@ -150,63 +156,78 @@
   ],
   "jp_tomoegozen": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "jp_yoshitsune": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "kr_gyebaek": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "rf_gongsunzan": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "rf_kongrong": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "rf_lijue": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "rf_liubiao": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "rf_sunce": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "rf_yuanshao": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "rf_yuanshu": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "ru_geohae": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "sg_caocao": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "sg_ganning": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "sg_huangzhong": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "sg_liubei": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "sg_lubu": [
    "side",
@@ -214,27 +235,33 @@
   ],
   "sg_sunquan": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "sg_taishici": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "sg_zhugeliang": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "tb_baekgi": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "wd_genghis": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "wd_ibnsina": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "wd_shaka": [
    "side",
