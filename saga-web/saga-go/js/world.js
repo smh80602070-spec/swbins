@@ -680,10 +680,10 @@
   }
 
   /** 지금 깔아 둘 대상 수 — 향(🕯️)을 피우면 늘어난다 */
-  var NEAR_R = 120; function nearCap() { var c = +core.tuned('go.nearCap', 4), DM = global.DG.deviceMode; if (DM && DM.want3d && !DM.want3d() && !global.DG_NO_DRAW) { c = Math.min(c, +core.tuned('go.nearCap2d', 2)); } /* W-0468 2D 는 화면이 내 둘레를 거의 다 담아 들짐승이 몰려 보인다 — 2D 둘레 상한 2 */ return Math.max(0, c); } function nearCount(pos, kind) { var n = 0; for (var i = 0; i < spawns.length; i++) { if (spawns[i].kind === kind && Math.hypot(spawns[i].x - pos.x, spawns[i].y - pos.y) < NEAR_R) { n++; } } return n; }   /* W-0369 */ function maxSpawns() {
+  var NEAR_R = 120; function nearCap() { var c = +core.tuned('go.nearCap', 4), DM = global.DG.deviceMode; if (DM && DM.want3d && !DM.want3d() && !global.DG_NO_DRAW) { c = Math.min(c, +core.tuned('go.nearCap2d', 1)); } /* W-0468 2D 는 화면이 내 둘레를 거의 다 담아 들짐승이 몰려 보인다 — 2D 둘레 상한 2 */ return Math.max(0, c); } function nearCount(pos, kind) { var n = 0; for (var i = 0; i < spawns.length; i++) { if (spawns[i].kind === kind && Math.hypot(spawns[i].x - pos.x, spawns[i].y - pos.y) < NEAR_R) { n++; } } return n; }   /* W-0369 */ function maxSpawns() {
     var lure = global.DG.bag && global.DG.bag.lured();
     var few = global.DG.weather && global.DG.weather.fewer();
-    return Math.round(Math.max(4, Math.round(MAX_SPAWNS * (global.DG.field2d && global.DG.field2d.on && global.DG.field2d.on() ? +core.tuned('go.spawnDens2d', 0.65) : 1)) + (lure ? 6 : 0) - (few ? 3 : 0)) * (global.DG.starchart ? global.DG.starchart.spawn() : 1));   // 10-29 2D 는 3마을처럼 듬성듬성(사용자) — 야생 상한 14 → 9, go.spawnDens2d 1 = 옛   // 큰 그물(성도 규칙) 두 배
+    return Math.round(Math.max(few ? 2 : 4, Math.round(MAX_SPAWNS * (global.DG.field2d && global.DG.field2d.on && global.DG.field2d.on() ? +core.tuned('go.spawnDens2d', 0.3) : 1)) + (lure ? 6 : 0) - (few ? 3 : 0)) * (global.DG.starchart ? global.DG.starchart.spawn() : 1));   // 10-30 또 많다(사용자 「2d 몹 개체수 많이 줄여줘」) 0.65→0.3(≈4마리, 하한 4) · 10-29 2D 는 3마을처럼 듬성듬성(사용자) — 야생 상한 14 → 9, go.spawnDens2d 1 = 옛   // 큰 그물(성도 규칙) 두 배
   }
 
   function tickSpawns() {

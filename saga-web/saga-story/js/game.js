@@ -75,11 +75,13 @@
    *  **booted 가 아직 false 면 아무 것도 안 한다** — start() 가 곧 스스로
    *  init() 을 부를 것이므로, 여기서 먼저 불렀다간 캔버스 하나에 WebGLRenderer
    *  가 두 번 물려 컨텍스트가 샌다 */
+  var sync3dBtn = function () {};   // 🧊 단추 표시를 3D 준비 상태에 맞춘다(start 가 단추를 이을 때 채운다)
   function retry3d() {
     if (!booted) { return; }
     if (global.DG.sideView3d && !global.DG.sideView3d.available()) {
       global.DG.sideView3d.init(document.getElementById('stage3d'));
     }
+    sync3dBtn();
   }
 
   /* 2026-09-09 — "키세팅이 있어야겠지"(사가나락·사가마을과 같은 요청).
@@ -225,7 +227,9 @@
     var btn3d = document.getElementById('btn-3d');
     if (btn3d && global.DG.sideView3d) {
       var SV3 = global.DG.sideView3d;
-      if (!SV3.available()) { btn3d.style.display = 'none'; }
+      /* three.js 는 async 로 늦게 온다 — 이 시점에 준비 안 됐다고 숨기면 영영 안 나타났다(사용자 10-30 "3D 버튼이 없어"). retry3d 가 init 뒤에 다시 맞춘다 */
+      sync3dBtn = function () { btn3d.style.display = (SV3.available() || !global.THREE) ? '' : 'none'; };
+      sync3dBtn();
       btn3d.classList.toggle('on', SV3.active());
       btn3d.addEventListener('click', function () {
         var on = SV3.toggle();
