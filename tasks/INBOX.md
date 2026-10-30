@@ -4,7 +4,7 @@
 - [ ] 10-25 · (K-0195) GLB `world/` 같은 이름 열(바람개비 등) · 고돗 G-0387 배선 끝, **고돗 .import 필요(자체툴)** · 유니티 U-0242 끝
 - [ ] 10-25 · "다섯 판 장비·세트·고유·스킬 다양성(디아블로·PoE 결)·군단" · 웹 W-0435(하위 W-0436~0440)·고돗 G-0398~0402·유니티 U-0244~0246 끝(U-0247·0248 은 유니티 큐)
 - [ ] 10-25 · (W-0435) 다섯 판 장비·세트·고유·스킬 이름·수치 표 생성기(판별 목표 수는 보관본) · JSON 산출, 실명·원작 수치 금지 · 자체툴
-- [ ] 10-25 · (W-0441) 옛 CC-BY 파일 지우기 + `credits.py` 로 필수 표기 0 확인 · 웹 배선은 끝 · py 있는 PC · 자체툴
+- [ ] 10-30 · (W-0441) 옛 CC-BY 파일 지우기 — 자체툴이 확인: `credits.py` 는 돌려 OK 지만 **파일을 지우면 404** — 아직 웹 목록이 가리킨다(dungeon `asset3d.js` gear:cape·`asset3d-people.js` pphazmat_man·Soldier2, realm `asset3d.js` gear/helmet·viking_helmet·weapons/brush, 네 판 `assets3d.js` standin/Wizard, go `asset3d.js` Crow·quaternius_rpg/Wizard). 웹이 이 목록 줄을 빼고 `ASSET_LICENSES.md` 해당 절을 고친 뒤 파일 삭제 · 웹
 - [ ] 10-25 · (K-0193) 옆보기 발판 키트 GLB → 4종횡 발판·사다리 · 고돗 G-0403 끝(.import 필요, 자체툴)
 - [ ] 10-25 · (K-0193) 땅 섞음 결 셋(mud_gravel·path_grass·field_mix)·도형 소품 갈기 · 유니티 U-0241 끝, 웹·고돗 기록 없음
 - [ ] 10-25 · "앞모습 됫모습이 있어야지" · 컷아웃이 위아래 걸어도 옆모습 · 웹 임시 W-0446 끝(위아래·대각은 옛 시트), 앞·뒤 rig 는 K-0198
