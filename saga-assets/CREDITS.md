@@ -43,7 +43,7 @@
 | remote3d | microsoft/TRELLIS-image-large | MIT | 531 |
 | 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음) | 6 |
 | 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용) | 10 |
-| gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 201 |
+| gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 261 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
 | gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 2414 |
 | make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |

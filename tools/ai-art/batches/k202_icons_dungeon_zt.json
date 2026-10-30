@@ -1,0 +1,47 @@
+{
+ "model": "z-image-turbo",
+ "out": "k202_icons_dungeon_zt",
+ "defaults": {
+  "width": 768,
+  "height": 768,
+  "variants": 1
+ },
+ "items": [
+  {
+   "id": "ic_dungeon_scroll",
+   "seed": 502097120,
+   "prompt": "A flat vector game icon of rolled paper scroll tied with a ribbon. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(📜·79)"
+  },
+  {
+   "id": "ic_dungeon_swords",
+   "seed": 849032370,
+   "prompt": "A flat vector game icon of two crossed swords. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(⚔·64)"
+  },
+  {
+   "id": "ic_dungeon_skull_bones",
+   "seed": 3805856420,
+   "prompt": "A flat vector game icon of skull and crossbones. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(☠·46)"
+  },
+  {
+   "id": "ic_dungeon_skull",
+   "seed": 2731435229,
+   "prompt": "A flat vector game icon of skull. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(💀·39)"
+  },
+  {
+   "id": "ic_dungeon_map",
+   "seed": 3069717458,
+   "prompt": "A flat vector game icon of folded paper map. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🗺·36)"
+  },
+  {
+   "id": "ic_dungeon_star",
+   "seed": 679881814,
+   "prompt": "A flat vector game icon of five pointed star. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(★·34)"
+  }
+ ]
+}

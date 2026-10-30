@@ -1,0 +1,131 @@
+{
+ "model": "z-image-turbo",
+ "out": "k202_icons_dungeon_z1",
+ "defaults": {
+  "width": 768,
+  "height": 768,
+  "variants": 1
+ },
+ "items": [
+  {
+   "id": "ic_dungeon_scroll",
+   "seed": 502097120,
+   "prompt": "A flat vector game icon of rolled paper scroll tied with a ribbon. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(📜·79)"
+  },
+  {
+   "id": "ic_dungeon_swords",
+   "seed": 849032370,
+   "prompt": "A flat vector game icon of two crossed swords. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(⚔·64)"
+  },
+  {
+   "id": "ic_dungeon_skull_bones",
+   "seed": 3805856420,
+   "prompt": "A flat vector game icon of skull and crossbones. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(☠·46)"
+  },
+  {
+   "id": "ic_dungeon_skull",
+   "seed": 2731435229,
+   "prompt": "A flat vector game icon of skull. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(💀·39)"
+  },
+  {
+   "id": "ic_dungeon_map",
+   "seed": 3069717458,
+   "prompt": "A flat vector game icon of folded paper map. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🗺·36)"
+  },
+  {
+   "id": "ic_dungeon_star",
+   "seed": 679881814,
+   "prompt": "A flat vector game icon of five pointed star. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(★·34)"
+  },
+  {
+   "id": "ic_dungeon_coin",
+   "seed": 2800233071,
+   "prompt": "A flat vector game icon of round coin with a square hole. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🪙·33)"
+  },
+  {
+   "id": "ic_dungeon_trophy",
+   "seed": 2855836457,
+   "prompt": "A flat vector game icon of golden trophy cup. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🏆·33)"
+  },
+  {
+   "id": "ic_dungeon_book",
+   "seed": 2601269786,
+   "prompt": "A flat vector game icon of open book. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(📖·30)"
+  },
+  {
+   "id": "ic_dungeon_flame",
+   "seed": 2595397070,
+   "prompt": "A flat vector game icon of campfire flame. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🔥·30)"
+  },
+  {
+   "id": "ic_dungeon_hole",
+   "seed": 3328269451,
+   "prompt": "A flat vector game icon of dark pit hole in the ground. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🕳·27)"
+  },
+  {
+   "id": "ic_dungeon_horse",
+   "seed": 3472768361,
+   "prompt": "A flat vector game icon of horse head, side view. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🐎·27)"
+  },
+  {
+   "id": "ic_dungeon_basket",
+   "seed": 675445851,
+   "prompt": "A flat vector game icon of woven basket. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🧺·27)"
+  },
+  {
+   "id": "ic_dungeon_bow",
+   "seed": 133627475,
+   "prompt": "A flat vector game icon of wooden archery bow with an arrow. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🏹·25)"
+  },
+  {
+   "id": "ic_dungeon_person",
+   "seed": 2833725797,
+   "prompt": "A flat vector game icon of person bust silhouette, head and shoulders. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(👤·24)"
+  },
+  {
+   "id": "ic_dungeon_robot",
+   "seed": 3755642458,
+   "prompt": "A flat vector game icon of cute round robot head with two big circle eyes, a small antenna and a grille mouth, front view. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🤖·24)"
+  },
+  {
+   "id": "ic_dungeon_dagger",
+   "seed": 312651695,
+   "prompt": "A flat vector game icon of short dagger. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🗡·24)"
+  },
+  {
+   "id": "ic_dungeon_shield",
+   "seed": 1220641111,
+   "prompt": "A flat vector game icon of round shield with metal rim. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🛡·23)"
+  },
+  {
+   "id": "ic_dungeon_flag_red",
+   "seed": 83273570,
+   "prompt": "A flat vector game icon of red flag on a pole. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(🚩·21)"
+  },
+  {
+   "id": "ic_dungeon_sparkle",
+   "seed": 1205019327,
+   "prompt": "A flat vector game icon of three sparkles. Thick near-black outline, dark steel gray and charcoal fills with glowing red-orange accents, worn iron look, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "dungeon 아이콘(✨·21)"
+  }
+ ]
+}

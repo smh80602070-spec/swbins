@@ -405,14 +405,14 @@
    "tool": "gen.py (ComfyUI)",
    "model": "z-image-turbo",
    "license": "Apache-2.0",
-   "count": 201,
+   "count": 261,
    "where": [
+    "saga-assets/icons/glyph/dungeon",
     "saga-assets/icons/glyph/go",
     "saga-assets/land-go",
     "saga-assets/textures_real/brick",
     "saga-assets/textures_real/concrete",
-    "saga-assets/textures_real/corrugated",
-    "saga-assets/textures_real/dirt"
+    "saga-assets/textures_real/corrugated"
    ]
   },
   {
