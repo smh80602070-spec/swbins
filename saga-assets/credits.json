@@ -835,7 +835,7 @@
    ]
   },
   {
-   "tool": "uigen_stone.py (K-0202 乙 새긴 돌판)",
+   "tool": "uigen_k202b.py (K-0202 2차 A 철판 + 룬 홈)",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
    "count": 38,
@@ -845,7 +845,7 @@
    ]
   },
   {
-   "tool": "uigen_styles.py (K-0202 1번 나무 판자)",
+   "tool": "uigen_k202b.py (K-0202 2차 A 천 조각 패치워크)",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
    "count": 38,
@@ -855,7 +855,7 @@
    ]
   },
   {
-   "tool": "uigen_styles.py (K-0202 1번 지도 앱 알약)",
+   "tool": "uigen_k202b.py (K-0202 2차 A 등고선 지도판)",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
    "count": 38,
@@ -865,7 +865,7 @@
    ]
   },
   {
-   "tool": "uigen_styles.py (K-0202 1번 비단 족자)",
+   "tool": "uigen_k202b.py (K-0202 2차 A 목판 인쇄 문서)",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
    "count": 38,
@@ -875,7 +875,7 @@
    ]
   },
   {
-   "tool": "uigen_styles.py (K-0202 1번 통통 게임창)",
+   "tool": "uigen_k202b.py (K-0202 2차 A 만화 컷)",
    "model": "",
    "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
    "count": 38,

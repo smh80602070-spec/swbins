@@ -1,6 +1,6 @@
 {
  "id": "realm/grade_2",
- "generator": "tools/asset-forge/uigen_styles.py (K-0202 1번 비단 족자)",
+ "generator": "tools/asset-forge/uigen_k202b.py (K-0202 2차 A 목판 인쇄 문서)",
  "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
  "theme": "realm",
  "game": "saga-realm",

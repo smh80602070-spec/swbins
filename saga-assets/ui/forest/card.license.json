@@ -1,6 +1,6 @@
 {
  "id": "forest/card",
- "generator": "tools/asset-forge/uigen_styles.py (K-0202 1번 나무 판자)",
+ "generator": "tools/asset-forge/uigen_k202b.py (K-0202 2차 A 천 조각 패치워크)",
  "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
  "theme": "forest",
  "game": "saga-forest",

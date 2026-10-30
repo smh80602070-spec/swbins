@@ -1,6 +1,6 @@
 {
  "id": "go/gauge_fill_hp",
- "generator": "tools/asset-forge/uigen_styles.py (K-0202 1번 지도 앱 알약)",
+ "generator": "tools/asset-forge/uigen_k202b.py (K-0202 2차 A 등고선 지도판)",
  "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
  "theme": "go",
  "game": "saga-go",
