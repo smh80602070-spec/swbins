@@ -7604,6 +7604,17 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return b;
     }
     function cmdOff(fn) { return function () { var c0 = DG.core.tuned; DG.core.tuned = function (k, d) { return k === 'rtk.command' || k === 'rtk.ultimate' || k === 'rtk.class' || k === 'rtk.battleEvent' || k === 'rtk.sideGoal' ? 0 : c0.apply(DG.core, arguments); }; try { return fn(); } finally { DG.core.tuned = c0; } }; }   // W-0455·0456 — W-0401 덩어리 부대 판을 그대로 잰다(용병·필살 끔)
+    t('W-0487 ⑤ 전투 전 용병 고용 — 금을 내면 그 장수 용병이 ×1.35 · 다시 누르면 환불 · 금 모자라면 거절 · 장이 바뀌면 초기화', cmdOff(function () {
+      fresh('cao'); var CP = DG.campaign, R = DG.rtk, T = DG.tactics; R.state().campaign = null; var cp = CP.state(), id = CP.party()[0], cost = CP.hireCost(cp.ch);
+      cp.gold = cost + 5; var g0 = cp.gold, r1 = CP.hire(id), g1 = cp.gold;
+      var o = CP.battleOpts(cp.ch), hm = o.hire && o.hire[id] === 1.35;
+      var b = T.makeBoardSrpg('hire', 'plain', false, 'rout'); T.unitsOfSrpg(b, o.mine, o.foes, o.foeTroops, o, o.myTroops);
+      var hpOf = function (sq) { var m = b.units.filter(function (u) { return u.side === 'me' && u.kind !== 'officer' && u.squad === sq; })[0]; return m ? m.max : 0; };
+      var sqs = b.units.filter(function (u) { return u.side === 'me' && u.kind === 'officer'; }).map(function (u) { return u.squad; }), strong = hpOf(sqs[0]) > hpOf(sqs[1]);
+      var r2 = CP.hire(id), g2 = cp.gold; cp.gold = 0; var r3 = CP.hire(id);
+      cp.ch = cp.ch + 1; var gone = !CP.hired(id);
+      return (r1.ok && r1.on && g1 === g0 - cost && hm && strong && r2.ok && !r2.on && g2 === g0 && !r3.ok && gone) || 'ok ' + r1.ok + ' 금 ' + g1 + '/' + (g0 - cost) + ' 맵 ' + hm + ' 튼튼 ' + strong + ' 환불 ' + g2 + ' 거절 ' + r3.ok + ' 초기화 ' + gone;
+    }));
     t('W-0487 ⑤ 5천하 판 다양성 — 씨앗마다 다른 판 · 시작 배치 셋 · 숲은 걸음 두 배 · 적 곁 ZOC · 못이 길을 안 막음', cmdOff(function () {
       var T = DG.tactics, sig = {}, i, dep = {}, blocked = 0;
       for (i = 0; i < 30; i++) {

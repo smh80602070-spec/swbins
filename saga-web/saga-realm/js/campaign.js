@@ -91,7 +91,7 @@
     var pp = cp.prep && cp.prep.ch === no ? cp.prep : {};   // W-0451 준비물 — 군량 보급 내 병력 +10% · 척후 적 −5%
     var my = Math.round((2400 + 520 * no) * (b.k === 'atk' ? 1.15 : 1) * (pp.food ? 1.1 : 1)), foe = Math.round((2000 + 640 * no) * (b.k === 'def' ? 0.9 : 1) * pre * rd * (pp.scout ? 0.95 : 1) * (no === MAIN ? 1.2 : 1));   // W-0454 균형 — 마지막 장은 적 +20%(14·15장보다 쉬웠다)
     return { seed: 'cp|' + ch.id + '|' + (cp.tries || 0), land: ch.land, siege: ch.siege, srpg: true, goal: ch.goal,
-      mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no, mercs: mercsAll(no), mercMul: 1.2, mercN: mercN(no), cls: clsMap(no, ch), events: eventsFor(no, ch, foe, my), side: { chests: no % 2 ? 1 : 2, villages: VILL[no] || 0 } };
+      mine: party(), foes: foesFor(ch), foeTroops: [foe], myTroops: [my], where: ch.title, campaign: no, mercs: mercsAll(no), mercMul: 1.2, mercN: mercN(no), hire: hireMap(), cls: clsMap(no, ch), events: eventsFor(no, ch, foe, my), side: { chests: no % 2 ? 1 : 2, villages: VILL[no] || 0 } };
   }
   /* W-0458 전투 중 이벤트 — 증원(4·7·10·13·16장 3턴, 적 줄에서 다음 장수) · 원군(출진 안 한 가장 센 장수, 질 때 한 번) */
   var REINF = { 4: 1, 7: 1, 10: 1, 13: 1, 16: 1 };
@@ -123,6 +123,19 @@
   function mercFull(id) { var cp = state(), i = Math.max(0, party().indexOf(id)), d = [MA[i % 3], MA[(i + 1) % 3], MA[(i + 2) % 3]], m = ((cp.mercs = cp.mercs || {})[id] || []).slice(0, 3); while (m.length < 3) { m.push(d[m.length]); } return m; }
   function mercsOf(id) { return mercFull(id).slice(0, mercN(state().ch)); }
   function mercsAll(no) { var o = {}; party().forEach(function (id) { o[id] = mercFull(id).slice(0, mercN(no)); }); return o; }
+  /* 10-30 전투 전 용병 고용 — 금을 내면 그 장수의 용병이 이번 장에서 더 튼튼하다(다시 누르면 환불). 장(ch)별로만 유효, 졌다 다시 해도 유지 */
+  var HIRE_MUL = 1.35;
+  function hireCost(no) { return 60 + 20 * no; }
+  function hiredOf() { var cp = state(); if (!cp.hire || cp.hire.ch !== cp.ch) { cp.hire = { ch: cp.ch, ids: {} }; } return cp.hire.ids; }
+  function hired(id) { return !!hiredOf()[id]; }
+  function hire(id) {
+    var cp = state(), h = hiredOf(), c = hireCost(cp.ch);
+    if (party().indexOf(id) < 0) { return { ok: false, why: '출진하지 않는 장수' }; }
+    if (h[id]) { delete h[id]; cp.gold += c; save(); return { ok: true, on: false, gold: cp.gold }; }
+    if (cp.gold < c) { return { ok: false, why: '금이 모자랍니다' }; }
+    cp.gold -= c; h[id] = 1; save(); return { ok: true, on: true, gold: cp.gold };
+  }
+  function hireMap() { var o = {}, h = hiredOf(); party().forEach(function (id) { if (h[id]) { o[id] = HIRE_MUL; } }); return o; }
   function cycleMerc(id, k) { var cp = state(), m = mercFull(id); m[k] = MA[(MA.indexOf(m[k]) + 1) % 3]; cp.mercs[id] = m; save(); return m.slice(0, mercN(cp.ch)); }
   /** 적 편성 미리 보기 — [{id, arms:[a,a]}] (판의 command.setup 과 같은 씨앗·같은 셈) */
   function foeMercs(no) { var o = battleOpts(no), CM = global.DG.command; if (!o || !CM) { return []; } var fa = CM.foeArms(o.seed, o.foes); return o.foes.map(function (id, i) { return { id: id, arms: fa[i], cls: foeCls(no, id) }; }); }
@@ -285,5 +298,5 @@
 
   global.DG = global.DG || {};
   global.DG.campaign = { on: on, state: state, chapters: chapters, chapter: chapter, roster: roster, party: party, setParty: setParty, foesFor: foesFor,
-    battleOpts: battleOpts, autoEquip: autoEquip, clsOf: clsOf, classChoices: classChoices, promote: promote, foeCls: foeCls, mercN: mercN, mercsOf: mercsOf, cycleMerc: cycleMerc, foeMercs: foeMercs, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, PREP: PREP, prepHave: prepHave, buyPrep: buyPrep, pairs: pairs, talk: talk, gearShop: gearShop, buyGear: buyGear, gearOf: gearOf, equipGear: equipGear, unequipGear: unequipGear, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
+    battleOpts: battleOpts, autoEquip: autoEquip, clsOf: clsOf, classChoices: classChoices, promote: promote, foeCls: foeCls, mercN: mercN, mercsOf: mercsOf, cycleMerc: cycleMerc, hire: hire, hired: hired, hireCost: hireCost, foeMercs: foeMercs, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, PREP: PREP, prepHave: prepHave, buyPrep: buyPrep, pairs: pairs, talk: talk, gearShop: gearShop, buyGear: buyGear, gearOf: gearOf, equipGear: equipGear, unequipGear: unequipGear, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
 })(typeof window !== 'undefined' ? window : this);

@@ -70,7 +70,8 @@
         var c = cmdOf(o.id, st);
         o.cmdR = 2 + Math.floor(c / 45); o.cmdA = Math.round(6 + c / 10); o.squad = i + 1;
         var arms = sd === 'me' ? ((opts.mercs || {})[o.id] || [ARMS[i % 3], ARMS[(i + 1) % 3], ARMS[(i + 2) % 3]]) : fa[i];
-        for (var k = 0; k < (sd === 'me' && opts.mercN ? opts.mercN : PER); k++) { var m = merc(b, o, k, ARMS.indexOf(arms[k]) >= 0 ? arms[k] : 'spear', hp); if (m) { m.squad = o.squad; b.units.push(m); } }
+        var hh = sd === 'me' && opts.hire && opts.hire[o.id] ? Math.round(hp * opts.hire[o.id]) : hp;   // 10-30 고용한 장수 용병은 더 튼튼
+        for (var k = 0; k < (sd === 'me' && opts.mercN ? opts.mercN : PER); k++) { var m = merc(b, o, k, ARMS.indexOf(arms[k]) >= 0 ? arms[k] : 'spear', hh); if (m) { m.squad = o.squad; b.units.push(m); } }
       });
     });
     b.command = true;
