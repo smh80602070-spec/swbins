@@ -1,0 +1,19 @@
+{
+ "id": "st_stone_plat_c_v01",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (thick carved stone block platform, brick-like cut lines, worn corners:1.15), side view, horizontal, no humans, isolated, front view, facing viewer, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+ "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+ "seed": 4256904461,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  1152,
+  384
+ ],
+ "seconds": 154.2,
+ "date": "2026-10-30",
+ "note": "K-0193 4종횡 발판 후보 배경 제거(plat_cut.py tol=26 grow=6) 높이 128"
+}
