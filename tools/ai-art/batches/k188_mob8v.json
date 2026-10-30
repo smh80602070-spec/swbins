@@ -1,0 +1,57 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k188/mob_side_v",
+ "kit": {
+  "spec": "character_tall",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 1152,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes",
+  "variants": 6
+ },
+ "note": "K-0188 ④ 괴물 — 악마·4종횡 4종 사람 비율판(10-30)",
+ "items": [
+  {
+   "id": "dg_demon_side",
+   "pool": "pool_basem_demon_104",
+   "seed": 2026107521,
+   "prompt": "monster, no humans, (muscular humanoid demon man:1.3), red-skinned, tall bipedal demon warrior, curved black horns, small bat wings folded, spiked dark armor, clawed hands, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, (standing upright:1.3), straight spine, straight legs, one foot slightly forward, (arms hanging down at sides:1.2), (normal human proportions:1.3), two arms two legs, (bipedal humanoid:1.2), feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot, (hunched:1.4), (crouching:1.3), bent over, bent knees, arms raised, arms spread, leaning forward, tail, serpent, snake body, scorpion, tentacles, extra limbs, long limbs, elongated body, spider"
+  },
+  {
+   "id": "st_goblin_side",
+   "pool": "pool_e_goblin_126",
+   "seed": 2026107528,
+   "prompt": "monster, no humans, goblin scavenger, small green humanoid monster, goggles on head, patched modern jacket, scrap-metal wrench, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, (standing upright:1.3), straight spine, straight legs, one foot slightly forward, (arms hanging down at sides:1.2), (normal human proportions:1.3), two arms two legs, (bipedal humanoid:1.2), feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot, (hunched:1.4), (crouching:1.3), bent over, bent knees, arms raised, arms spread, leaning forward, tail, serpent, snake body, scorpion, tentacles, extra limbs, long limbs, elongated body, spider"
+  },
+  {
+   "id": "st_orc_side",
+   "pool": "pool_g_orc_141",
+   "seed": 2026107535,
+   "prompt": "monster, no humans, orc brute, big green humanoid monster with tusks, mixed armor of ancient leather and modern riot gear, iron club, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, (standing upright:1.3), straight spine, straight legs, one foot slightly forward, (arms hanging down at sides:1.2), (normal human proportions:1.3), two arms two legs, (bipedal humanoid:1.2), feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot, (hunched:1.4), (crouching:1.3), bent over, bent knees, arms raised, arms spread, leaning forward, tail, serpent, snake body, scorpion, tentacles, extra limbs, long limbs, elongated body, spider"
+  },
+  {
+   "id": "st_undead_side",
+   "pool": "pool_basef_undead_111",
+   "seed": 2026107542,
+   "prompt": "monster, no humans, undead knight, skeletal humanoid in dented samurai-style armor with glowing teal cracks, broken katana, tattered banner on back, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, (standing upright:1.3), straight spine, straight legs, one foot slightly forward, (arms hanging down at sides:1.2), (normal human proportions:1.3), two arms two legs, (bipedal humanoid:1.2), feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot, (hunched:1.4), (crouching:1.3), bent over, bent knees, arms raised, arms spread, leaning forward, tail, serpent, snake body, scorpion, tentacles, extra limbs, long limbs, elongated body, spider"
+  },
+  {
+   "id": "st_demon_side",
+   "pool": "pool_f_demon_136",
+   "seed": 2026107549,
+   "prompt": "monster, no humans, cyber demon, horned humanoid monster, dark purple skin, glowing circuit lines on horns, sleek black futuristic armor, energy claws, adult size, full body, detailed face, (from side:1.3), (profile:1.2), facing right, side view, (standing upright:1.3), straight spine, straight legs, one foot slightly forward, (arms hanging down at sides:1.2), (normal human proportions:1.3), two arms two legs, (bipedal humanoid:1.2), feet visible, solo, full body, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, chibi, child, big head, short legs, petite, super deformed, faceless, blank face, featureless face, silhouette, high heels, gown, halo, platform, pedestal, cleavage, revealing clothes, harsh outline, dark palette, gritty, photorealistic, neon, front view, facing viewer, looking at viewer, back view, cute, mascot, (hunched:1.4), (crouching:1.3), bent over, bent knees, arms raised, arms spread, leaning forward, tail, serpent, snake body, scorpion, tentacles, extra limbs, long limbs, elongated body, spider"
+  }
+ ]
+}
