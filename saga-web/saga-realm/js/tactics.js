@@ -400,7 +400,7 @@
       cells[pi] = t; if (t === 'river') { ponds.push(pi); }
     }
     for (np = 0; np < 3; np++) {
-      var kind = Math.floor(hash(seed, 'feat' + np) * 5), px0 = 4 + Math.floor(hash(seed, 'fx' + np) * Math.max(1, cols - 11)), py0 = Math.floor(hash(seed, 'fy' + np) * Math.max(1, rows - 3)), a, b2;
+      var kind = Math.floor(hash(seed, 'feat' + np) * 5), px0 = 4 + Math.floor(hash(seed, 'fx' + np) * Math.max(1, cols - 11)), py0 = Math.min(rows - 2, Math.floor((np + hash(seed, 'fy' + np)) * rows / 3))   /* 조각마다 세로 띠 하나 — 한쪽에 몰려 아래가 비던 것 */, a, b2;
       if (kind === 0) { for (a = 0; a < 6; a++) { put(px0 + a, py0, 'hill'); if (a % 2) { put(px0 + a, py0 + 1, 'hill'); } } }                       // 능선
       else if (kind === 1) { for (a = 0; a < 4; a++) { for (b2 = 0; b2 < 3; b2++) { if (hash(seed, 'fz' + np + a + b2) < 0.8) { put(px0 + a, py0 + b2, 'forest'); } } } }   // 숲 덩어리
       else if (kind === 2) { for (a = 0; a < 3; a++) { for (b2 = 0; b2 < 2; b2++) { if (hash(seed, 'fz' + np + a + b2) < 0.6) { put(px0 + a, py0 + b2, 'wall'); } } } }      // 폐허
@@ -459,7 +459,7 @@
     if (global.DG.realmClass) { global.DG.realmClass.apply(b, opts || {}); }   // W-0457 전직
     if (global.DG.battleEvent) { global.DG.battleEvent.setup(b, opts || {}); }   // W-0458 전투 중 이벤트(시작 대사)
     if (global.DG.sideGoal) { global.DG.sideGoal.setup(b, opts || {}); }   // W-0460 보물 상자·마을
-    var C9 = global.DG.core, bigMul = C9 && C9.tuned ? +C9.tuned('realm.srpgFoeHp', 1.1) : 1.1;   // 10-27 큰 판(13칸+)은 먼저 움직이는 내 쪽이 유리 — 적 체력 덤(자동 대국 57% 근처로)
+    var C9 = global.DG.core, bigMul = C9 && C9.tuned ? +C9.tuned('realm.srpgFoeHp', 1.18) : 1.18;   // 10-27 큰 판(13칸+)은 먼저 움직이는 내 쪽이 유리 — 적 체력 덤(자동 대국 57% 근처로)
     if (b.srpg && b.cols >= 13 && bigMul !== 1) { (b.units || list).forEach(function (u) { if (u.side === 'foe') { u.hp = u.max = Math.round(u.max * bigMul); } }); }
     if (fogCut(b)) { (b.units || list).forEach(function (u) { if ((u.rng || 1) > 1) { u.rng -= fogCut(b); } }); }   // W-0485 안개 — 지휘·전직이 사거리를 정한 뒤에 깎는다
     return b.units || list;
