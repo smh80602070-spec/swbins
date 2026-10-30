@@ -14,13 +14,15 @@ import urllib.request
 import zipfile
 
 W = '/kaggle/working'
-os.environ['NO_PROXY'] = os.environ['no_proxy'] = '127.0.0.1,localhost'   # ComfyUI API 는 로컬 — 프록시 거치지 않게
 T = '/tmp'
 COMFY = T + '/comfyui'
-LOG = open(W + '/run.log', 'a', encoding='utf-8')
+LOG = None
 
 
 def log(*a):
+    global LOG
+    if LOG is None:
+        LOG = open(W + '/run.log', 'a', encoding='utf-8')
     s = time.strftime('%H:%M:%S ') + ' '.join(str(x) for x in a)
     print(s, flush=True)
     LOG.write(s + '\n'); LOG.flush()
@@ -76,7 +78,69 @@ def up(port=8188):
         return False
 
 
+def run_chunks(parts, generator, variants, base, max_chunks=199):
+    """GEN_RESULT와 종료 코드가 모두 정상일 때만 완료. 부분 산출물은 보존한다."""
+    t0 = time.time()
+    n_ok = n_fail = 0
+    status = 'failed'
+    for chunk in range(1, max_chunks + 1):
+        procs = []
+        launch_failed = False
+        for g, bp in parts:
+            env = dict(os.environ, AI_ART_API='http://127.0.0.1:%d' % (8188 + g),
+                       AI_ART_COMFY_OUT=T + '/comfy_out%d' % g, AI_ART_MAX='24', PYTHONIOENCODING='utf-8')
+            cmd = [sys.executable, generator, bp] + (['--variants', str(variants)] if variants else [])
+            try:
+                procs.append(subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, env=env))
+            except OSError as e:
+                log('생성기 시작 실패', e)
+                launch_failed = True
+                break
+        ok, fail = 0, int(launch_failed)
+        complete = not launch_failed
+        for proc in procs:
+            out = proc.communicate()[0]
+            try:
+                lines = [line[len('GEN_RESULT '):] for line in out.splitlines() if line.startswith('GEN_RESULT ')]
+                if len(lines) != 1:
+                    raise ValueError('GEN_RESULT 누락/중복')
+                result = json.loads(lines[0])
+                generated, failed, pending = (result[k] for k in ('generated', 'failed', 'pending'))
+                if any(type(n) is not int or n < 0 for n in (generated, failed, pending)):
+                    raise ValueError('결과 수량 오류')
+                ok += generated
+                if proc.returncode or failed or result['status'] not in ('complete', 'empty', 'partial'):
+                    fail += max(1, failed)
+                elif result['status'] in ('complete', 'empty') and pending:
+                    fail += 1
+                complete = complete and result['status'] in ('complete', 'empty') and pending == 0
+            except (KeyError, TypeError, ValueError) as e:
+                log('생성 결과 오류', e)
+                fail += 1
+                complete = False
+            if fail:
+                log(out[-1500:])
+        n_ok += ok
+        n_fail += fail
+        log('%s chunk %d: %d ok, %d fail' % (base, chunk, ok, fail))
+        if fail:
+            break
+        if complete:
+            status = 'complete'
+            break
+        if not ok:
+            log('미완료 상태에서 진행 없음')
+            break
+    if status != 'complete' and not n_fail:
+        n_fail = 1
+    sec = time.time() - t0
+    return {'ok': n_ok, 'fail': n_fail, 'status': status, 'sec': round(sec), 'gpus': len(parts),
+            'sec_per_image': round(sec / max(1, n_ok), 1),
+            'gpu_sec_per_image': round(sec * len(parts) / max(1, n_ok), 1)}
+
+
 def main():
+    os.environ['NO_PROXY'] = os.environ['no_proxy'] = '127.0.0.1,localhost'
     t_all = time.time()
     job_p = glob.glob('/kaggle/input/**/job.json', recursive=True)
     if not job_p:
@@ -124,10 +188,10 @@ def main():
         if all(up(8188 + g) or s_.poll() is not None for g, s_ in enumerate(srvs)):
             break
         time.sleep(2)
-    srvs = [s_ for g, s_ in enumerate(srvs) if s_.poll() is None and up(8188 + g)]
-    if not srvs:
+    active = [(g, s_) for g, s_ in enumerate(srvs) if s_.poll() is None and up(8188 + g)]
+    if not active:
         raise SystemExit('ComfyUI 안 뜸 — comfy0.log')
-    ngpu = len(srvs)
+    ngpu = len(active)
     log('ComfyUI 뜸 ×%d' % ngpu)
     # 4 같은 gen.py — 배치 json 의 init/… 를 데이터셋 절대 경로로, 항목을 GPU 수만큼 나눈 조각 배치로(같은 out)
     A = W + '/ai-art'
@@ -143,38 +207,14 @@ def main():
                     it[k] = os.path.join(IN, it[k])
         base = os.path.splitext(os.path.basename(b['file']))[0]
         parts = []
-        for g in range(ngpu):
-            dg = dict(d, items=d['items'][g::ngpu])
+        for index, (g, _) in enumerate(active):
+            dg = dict(d, items=d['items'][index::ngpu])
             if not dg['items']:
                 continue
             bp = os.path.join(A, 'batches', '%s__g%d.json' % (base, g))
             json.dump(dg, open(bp, 'w', encoding='utf-8'), ensure_ascii=False)
             parts.append((g, bp))
-        t0 = time.time()
-        n_ok = n_fail = 0
-        for chunk in range(1, 200):
-            procs = []
-            for g, bp in parts:
-                env = dict(os.environ, AI_ART_API='http://127.0.0.1:%d' % (8188 + g), AI_ART_COMFY_OUT=T + '/comfy_out%d' % g,
-                           AI_ART_MAX='24', PYTHONIOENCODING='utf-8')
-                cmd = [sys.executable, A + '/gen.py', bp] + (['--variants', str(b['variants'])] if b.get('variants') else [])
-                procs.append(subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, env=env))
-            ok = fail = 0
-            for p_ in procs:
-                out = p_.communicate()[0]
-                o, f_ = out.count(chr(10) + 'ok ') + out.startswith('ok '), out.count('실패 ')
-                ok += o
-                fail += f_
-                if not o and (f_ or 'Traceback' in out):
-                    log(out[-1500:])
-            n_ok += ok
-            n_fail += fail
-            log('%s chunk %d: %d ok, %d fail' % (base, chunk, ok, fail))
-            if not ok:
-                break
-        sec = time.time() - t0
-        per[base + '.json'] = {'ok': n_ok, 'fail': n_fail, 'sec': round(sec), 'gpus': ngpu,
-                               'sec_per_image': round(sec / max(1, n_ok), 1), 'gpu_sec_per_image': round(sec * ngpu / max(1, n_ok), 1)}
+        per[base + '.json'] = run_chunks(parts, A + '/gen.py', b.get('variants'), base)
     for s_ in srvs:
         s_.terminate()
     # 5 결과
@@ -183,10 +223,12 @@ def main():
             if os.path.isfile(p):
                 z.write(p, os.path.relpath(p, A + '/_out'))
     shutil.rmtree(A)
-    json.dump({'gguf_sha': gguf_used, 'comfy_sha': job['comfy_sha'], 'install_sec': round(t_install), 'models_sec': round(t_models), 'total_sec': round(time.time() - t_all), 'batches': per,
+    complete = bool(per) and all(r['status'] == 'complete' for r in per.values())
+    json.dump({'status': 'complete' if complete else 'failed', 'gguf_sha': gguf_used, 'comfy_sha': job['comfy_sha'], 'install_sec': round(t_install), 'models_sec': round(t_models), 'total_sec': round(time.time() - t_all), 'batches': per,
                'gpu': sh('nvidia-smi --query-gpu=name --format=csv,noheader', check=False).strip()}, open(W + '/times.json', 'w'), indent=1)
-    log('K140_DONE', json.dumps(per, ensure_ascii=False))
+    log('K140_DONE' if complete else 'K140_FAILED', json.dumps(per, ensure_ascii=False))
+    return 0 if complete else 1
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

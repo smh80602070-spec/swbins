@@ -53,10 +53,16 @@ $assetQueue = Invoke-RestMethod "$assetApi/queue" -TimeoutSec 10
 - PNG 검증과 출처 직렬화 뒤 새 파일만 생성한다. 두 파일 저장은 트랜잭션이 아니며 중간 종료로 한쪽만 남으면 재개 검사가 차단한다.
 - 마지막 `GEN_RESULT`는 `requested/checked/generated/reused/legacy/failed/pending/judge/status`를 JSON으로 출력한다. `pending`은 이번에 시도하지 않은 생성 대상 수, `failed`는 검사 또는 생성 실패 항목 수다. 서버/RAM 중단과 판정기 실패는 `status`·`judge` 및 종료 코드로 확인한다.
 - `partial`은 `AI_ART_MAX` 한도 때문에 다음 묶음이 남은 정상 종료(0), `complete`는 선택한 생성 작업을 마친 상태다. 모두 시각 품질 승인과 다르다. `dry`·`empty`도 0으로 끝나지만 생성 통과가 아니다. 실패·RAM 중단·판정기 실패는 비영(1) 종료한다. `--judge`는 남은 생성과 실패가 없을 때만 실행한다.
-- 로컬 `run_all.sh`는 실패·정지·반복 한도 소진 시 `failed`와 비영 종료를 남긴다. **원격 `push_batch.py`·`sd_kaggle.py`의 완료 판단은 이번 변경 범위 밖**이며 원격 완료를 이 계약으로 보장하지 않는다.
+- 로컬 `run_all.sh`는 실패·정지·반복 한도 소진 시 `failed`와 비영 종료를 남긴다. 원격은 아래 K-0214 계약을 따른다.
 - 검사: `py -X utf8 -m unittest discover -s tools/ai-art -p test_gen.py -v` — 임시 파일·모의 API/러너만 사용. Pillow는 기존 파이프라인 의존성이며 Git Bash가 없으면 러너 검사는 SKIP이다.
 
 ## 원격 GPU(Kaggle) — K-0140 (2026-10-18)
+
+**K-0214 완료 계약**: 원격 워커는 `GEN_RESULT`와 종료 코드를 함께 검사한다. 실패·요약 누락·진행 없음·반복 한도 초과는 `K140_FAILED`와 비영 종료로 보고한다. 수신기는 현재 다운로드의 `times.json`, 커널 상태, 기대 PNG/출처 쌍을 확인한 뒤에만 `done`·`K140_PUSH_DONE`을 남긴다. 과거 로컬 `times.json`으로 누락을 보충하지 않는다.
+
+업로드 전 기존 쌍도 K-0213 검사로 확인한다. 새로 받은 결과는 요청/출력 해시가 있어야 배치하며, 옛 해시 없는 원격 결과는 검증 불가로 실패한다. 기존 로컬 정상 legacy는 경고와 함께 보존한다. 실패한 원격 작업의 검증 가능한 부분 결과는 보존·배치할 수 있지만 작업 전체는 실패로 기록한다. 새 모델·원격 작업을 자동으로 추가하지 않는다. 이 경로는 임시 파일·모의 프로세스로 검증했으며 실제 Kaggle 추론은 별도 검증이다.
+
+회귀: `py -X utf8 -m unittest discover -s tools/ai-art -p "test_*.py" -v`.
 
 로컬 AMD 8GB 사슬(장당 84~112초)이 막힐 때 같은 배치를 Kaggle 무료 GPU(T4 ×2)로 돌린다. 결과는 로컬과 같은 `_out/<배치 out>/`.
 
