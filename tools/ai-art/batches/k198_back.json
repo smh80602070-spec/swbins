@@ -1,0 +1,261 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k198/back",
+ "kit": {
+  "spec": "character_tall",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "note": "K-0198 뒷모습 — 정면 stand 를 80% 로 줄여 밝은 바탕 가운데 얹은 img2img denoise 0.76(여백을 둬 머리·발이 안 잘리게)",
+ "defaults": {
+  "width": 640,
+  "height": 1152,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "lowres, worst quality, bad anatomy, extra limbs, multiple people, frame, border, chibi",
+  "variants": 2
+ },
+ "items": [
+  {
+   "id": "eu_davinci_back",
+   "init_image": "_out/k198/back_src/eu_davinci.png",
+   "denoise": 0.76,
+   "seed": 2026110817,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short blonde hair, calm face, white hooded linen robe with dark blue trim, long tunic, brown belt, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "eu_leonidas_back",
+   "init_image": "_out/k198/back_src/eu_leonidas.png",
+   "denoise": 0.76,
+   "seed": 2026109607,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short blonde hair, stern face, small pointed bronze helmet, red cloak wrapped over the shoulders, bronze cuirass, leather skirt, sandals, round red and white shield, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "fu_jongwang_back",
+   "init_image": "_out/k198/back_src/fu_jongwang.png",
+   "denoise": 0.76,
+   "seed": 2026111928,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), young adult woman, long straight blonde hair, glowing purple mark on the forehead, earrings, white and light blue futuristic robe with silver patterns, blue gem brooch, long flowing skirt, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "hl_mukhyang_back",
+   "init_image": "_out/k198/back_src/hl_mukhyang.png",
+   "denoise": 0.76,
+   "seed": 2026109200,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, short dark brown hair with a small top bun, grey eyes, calm clever face, long white mandarin-collar scholar robe with frog buttons, blue sash, cloth shoes, holding a scroll, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "jp_hanzo_back",
+   "init_image": "_out/k198/back_src/jp_hanzo.png",
+   "denoise": 0.76,
+   "seed": 2026110109,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black hair, sharp calm eyes, black hood, black shinobi garb, black cloak, dark arm wraps, dark leg wraps, tabi, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "jp_himiko_back",
+   "init_image": "_out/k198/back_src/jp_himiko.png",
+   "denoise": 0.76,
+   "seed": 2026110515,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), young adult woman, black hair in an updo, red eyes, golden spiked crown, deep red robe with gold pattern, white high collar, red gem pendant, long red skirt, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "jp_musashi_back",
+   "init_image": "_out/k198/back_src/jp_musashi.png",
+   "denoise": 0.76,
+   "seed": 2026109505,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, long black hair tied in a low ponytail, calm face, cream white kimono with dark undercollar, dark gray hakama, straw sandals, two swords at the waist, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "jp_tomoegozen_back",
+   "init_image": "_out/k198/back_src/jp_tomoegozen.png",
+   "denoise": 0.76,
+   "seed": 2026110313,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), young adult woman, long black hair tied back, red lips, determined face, dark navy kimono with small white pattern, white undercollar, silver shoulder armor, dark hakama, katana, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "jp_yoshitsune_back",
+   "init_image": "_out/k198/back_src/jp_yoshitsune.png",
+   "denoise": 0.76,
+   "seed": 2026109910,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black hair, calm face, dark navy samurai helmet with golden crescent horns and silver neck guard, dark samurai armor with white trim, hakama, katana at the waist, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "kr_gyebaek_back",
+   "init_image": "_out/k198/back_src/kr_gyebaek.png",
+   "denoise": 0.76,
+   "seed": 2026109405,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, short black hair, big confident grin, round silver steel helmet with wide brim, dark navy and purple armored robe, ancient korean warrior, lamellar armor, leather boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "rf_gongsunzan_back",
+   "init_image": "_out/k198/back_src/rf_gongsunzan.png",
+   "denoise": 0.76,
+   "seed": 2026111120,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black hair, slight smile, silver steel helmet with wide brim and orange-red pointed top, white robe, white armor, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "rf_kongrong_back",
+   "init_image": "_out/k198/back_src/rf_kongrong.png",
+   "denoise": 0.76,
+   "seed": 2026111220,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), young adult woman, black bob hair covering one eye, gentle smile, white scholar robe with silver brocade, long white skirt, cloth shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "rf_lijue_back",
+   "init_image": "_out/k198/back_src/rf_lijue.png",
+   "denoise": 0.76,
+   "seed": 2026111725,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, black hair in a small bun, sly smile, white and silver plate armor, white robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "rf_liubiao_back",
+   "init_image": "_out/k198/back_src/rf_liubiao.png",
+   "denoise": 0.76,
+   "seed": 2026111626,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, long black hair loose to the shoulders, gentle smile, cream white robe with beige shoulder armor, long robe, cloth shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "rf_sunce_back",
+   "init_image": "_out/k198/back_src/rf_sunce.png",
+   "denoise": 0.76,
+   "seed": 2026111524,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short black pompadour hair, confident smirk, white inner shirt, golden shoulder armor, muscular, dark trousers, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "rf_yuanshao_back",
+   "init_image": "_out/k198/back_src/rf_yuanshao.png",
+   "denoise": 0.76,
+   "seed": 2026111018,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, messy black hair with long bangs, low ponytail, calm face, ornate gold and white armor, white robe, long robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "rf_yuanshu_back",
+   "init_image": "_out/k198/back_src/rf_yuanshu.png",
+   "denoise": 0.76,
+   "seed": 2026111422,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, short dark brown hair, stern face, white collar, black armor with shoulder plates, dark robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "ru_geohae_back",
+   "init_image": "_out/k198/back_src/ru_geohae.png",
+   "denoise": 0.76,
+   "seed": 2026112031,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black hair with long bangs covering one eye, blue eyes, sly smile, bare muscular shoulders, dark green fur mantle, leather straps, fur trousers, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "sg_caocao_back",
+   "init_image": "_out/k198/back_src/sg_caocao.png",
+   "denoise": 0.76,
+   "seed": 2026110917,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, short black hair, stern face, golden crown with vertical bars, royal blue robe with gold shoulder ornaments, long robe, black boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "sg_ganning_back",
+   "init_image": "_out/k198/back_src/sg_ganning.png",
+   "denoise": 0.76,
+   "seed": 2026110211,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, black hair in a small topknot, confident smirk, red brocade robe with gold embroidery, wide sleeves, sash belt, dark trousers, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "sg_huangzhong_back",
+   "init_image": "_out/k198/back_src/sg_huangzhong.png",
+   "denoise": 0.76,
+   "seed": 2026109705,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, middle-aged veteran, short black hair with gray temples, gray mustache, broad grin, green armored vest over a white robe, dark trousers, boots, holding a bow, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "sg_liubei_back",
+   "init_image": "_out/k198/back_src/sg_liubei.png",
+   "denoise": 0.76,
+   "seed": 2026109391,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, short dark hair, calm face, black and gold crown with vertical gold bars, green robe with gold shoulder trim, long robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "sg_lubu_back",
+   "init_image": "_out/k198/back_src/sg_lubu.png",
+   "denoise": 0.76,
+   "seed": 2026109302,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, black hair, confident grin, silver steel helmet with wide round brim and red pointed top, dark lamellar armor over a red robe, armored boots, holding a long polearm, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "sg_sunquan_back",
+   "init_image": "_out/k198/back_src/sg_sunquan.png",
+   "denoise": 0.76,
+   "seed": 2026109494,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short black hair, stern face, black square official cap with gold pattern, red orange robe with black collar, gold shoulder ornaments, long robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "sg_taishici_back",
+   "init_image": "_out/k198/back_src/sg_taishici.png",
+   "denoise": 0.76,
+   "seed": 2026109807,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black hair, smiling, silver steel helmet with wide brim and red pointed crest, red and dark brown armored robe, lamellar armor, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "sg_zhugeliang_back",
+   "init_image": "_out/k198/back_src/sg_zhugeliang.png",
+   "denoise": 0.76,
+   "seed": 2026109292,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short dark hair, gentle smile, black square scholar cap, long green robe over white inner robe, holding a round feather hand fan, cloth shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "tb_baekgi_back",
+   "init_image": "_out/k198/back_src/tb_baekgi.png",
+   "denoise": 0.76,
+   "seed": 2026112129,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black bob hair covering one eye, blue eye, smirk, golden round shoulder armor, blue cloak, blue armored robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "wd_genghis_back",
+   "init_image": "_out/k198/back_src/wd_genghis.png",
+   "denoise": 0.76,
+   "seed": 2026110009,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, long light brown hair, brown fur hat, mustard yellow scarf, blue silk deel robe with yellow sash, leather riding boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "wd_ibnsina_back",
+   "init_image": "_out/k198/back_src/wd_ibnsina.png",
+   "denoise": 0.76,
+   "seed": 2026110717,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, middle-aged man, dark hair, kind stern face, dark brown turban cap, mustard yellow shawl over the shoulders, long deep blue robe with gold pattern, leather shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.5), (back view:1.5), facing away from viewer, rear view, back of head, hands empty, (full body from head to toe:1.3), whole body visible, head visible",
+   "negative": "face, looking at viewer, front view, polearm, spear, weapon, black background, text, watermark"
+  },
+  {
+   "id": "wd_shaka_back",
+   "init_image": "_out/k198/back_src/wd_shaka.png",
+   "denoise": 0.78,
+   "seed": 2026111412,
+   "prompt": "masterpiece, high score, great score, absurdres, 1boy, male focus, adult man, dark skin, short curly dark hair, black headband, short beard, bare muscular shoulders, fur cloak over one shoulder, leather straps, hide skirt, holding an oval cowhide shield and a short spear, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.3), (back view:1.3), facing away from viewer, rear view, seen from the back, back of head, hands empty, full body",
+   "negative": "front view, looking at viewer, face, chest, abs, text, watermark, black background, lowres"
+  }
+ ]
+}
