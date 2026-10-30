@@ -210,7 +210,8 @@
   /* ── ⑤ 결말 · 회차 ── */
   function ending() {
     var cp = CP().state();
-    host.innerHTML = '<div class="cpg-result"><h3>👑 천하 평정</h3><p>' + (cp.round ? (cp.round + 1) + '회차 ' : '') + '열아홉 장을 모두 지났다.<br>같은 장수·보물로 처음부터 — 적은 더 강해진다(회차마다 +15%).</p><div class="cpg-row" style="justify-content:center"><button class="cpg-btn ghost" data-cp="route">노선도</button><button class="cpg-btn" data-cp="round">회차 ▶ ' + ((cp.round || 0) + 2) + '회차</button></div></div>';
+    var E = CP().endingOf(), ET = { bond: ['🤝 한 솥밥', '곁을 지킨 이들이 끝까지 한 자리에 앉았다. 맺은 인연(' + E.pairs.join(' · ') + ')이 천하보다 먼저 사람들의 입에 오른다.'], peace: ['👑 천하 평정', '길은 열렸고 이름들이 남았다. 몇몇 인연이 이어졌으나 아직 못다 한 말이 있다.'], lone: ['🌙 외로운 왕', '천하는 평정됐으나 곁에 남은 이는 적다. 다음엔 지원 대화로 누군가와 마음을 나눠 보라.'] }[E.key];
+    host.innerHTML = '<div class="cpg-result"><h3>' + ET[0] + '</h3><p style="color:#f3d27a">' + ET[1] + '</p><p>' + (cp.round ? (cp.round + 1) + '회차 ' : '') + '열아홉 장을 모두 지났다.<br>같은 장수·보물로 처음부터 — 적은 더 강해진다(회차마다 +15%).</p><div class="cpg-row" style="justify-content:center"><button class="cpg-btn ghost" data-cp="route">노선도</button><button class="cpg-btn" data-cp="round">회차 ▶ ' + ((cp.round || 0) + 2) + '회차</button></div></div>';
   }
   /* ── 전투 ── */
   function battle() {

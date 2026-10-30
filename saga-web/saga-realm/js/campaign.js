@@ -123,6 +123,13 @@
   function mercFull(id) { var cp = state(), i = Math.max(0, party().indexOf(id)), d = [MA[i % 3], MA[(i + 1) % 3], MA[(i + 2) % 3]], m = ((cp.mercs = cp.mercs || {})[id] || []).slice(0, 3); while (m.length < 3) { m.push(d[m.length]); } return m; }
   function mercsOf(id) { return mercFull(id).slice(0, mercN(state().ch)); }
   function mercsAll(no) { var o = {}; party().forEach(function (id) { o[id] = mercFull(id).slice(0, mercN(no)); }); return o; }
+  /* 10-30 엔딩 갈래 — 쌓은 지원 대화(호감)가 마지막 장의 맺음을 정한다. 한 쌍이라도 A 단계가 둘 이상이면 「한 솥밥」, 인연이 B 단계 이상 하나도 없으면 「외로운 왕」, 그 사이는 「평정」 */
+  function endingOf() {
+    var S = global.DG.support, R = global.DG.rtk, sv = R && R.state ? (R.state().support || {}) : {}, tops = [], mids = 0;
+    Object.keys(sv).forEach(function (k) { var ab = k.split('|'), lv = S ? S.level(ab[0], ab[1]) : 0; if (lv >= 3) { tops.push(ab); } else if (lv >= 2) { mids++; } });
+    var nmOf = function (id) { var h = OFF().find(id); return h ? h.name : id; };
+    return { key: tops.length >= 2 ? 'bond' : (tops.length + mids === 0 ? 'lone' : 'peace'), tops: tops.length, mids: mids, pairs: tops.slice(0, 3).map(function (ab) { return nmOf(ab[0]) + '·' + nmOf(ab[1]); }) };
+  }
   /* 10-30 전투 전 용병 고용 — 금을 내면 그 장수의 용병이 이번 장에서 더 튼튼하다(다시 누르면 환불). 장(ch)별로만 유효, 졌다 다시 해도 유지 */
   var HIRE_MUL = 1.35;
   function hireCost(no) { return 60 + 20 * no; }
@@ -298,5 +305,5 @@
 
   global.DG = global.DG || {};
   global.DG.campaign = { on: on, state: state, chapters: chapters, chapter: chapter, roster: roster, party: party, setParty: setParty, foesFor: foesFor,
-    battleOpts: battleOpts, autoEquip: autoEquip, clsOf: clsOf, classChoices: classChoices, promote: promote, foeCls: foeCls, mercN: mercN, mercsOf: mercsOf, cycleMerc: cycleMerc, hire: hire, hired: hired, hireCost: hireCost, foeMercs: foeMercs, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, PREP: PREP, prepHave: prepHave, buyPrep: buyPrep, pairs: pairs, talk: talk, gearShop: gearShop, buyGear: buyGear, gearOf: gearOf, equipGear: equipGear, unequipGear: unequipGear, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
+    battleOpts: battleOpts, autoEquip: autoEquip, clsOf: clsOf, classChoices: classChoices, promote: promote, foeCls: foeCls, mercN: mercN, mercsOf: mercsOf, cycleMerc: cycleMerc, endingOf: endingOf, hire: hire, hired: hired, hireCost: hireCost, foeMercs: foeMercs, choose: choose, won: won, reward: reward, price: price, shop: shop, buy: buy, equip: equip, unequip: unequip, setStep: setStep, fillText: fillText, PREP: PREP, prepHave: prepHave, buyPrep: buyPrep, pairs: pairs, talk: talk, gearShop: gearShop, buyGear: buyGear, gearOf: gearOf, equipGear: equipGear, unequipGear: unequipGear, ended: ended, newRound: newRound, ALL: ALL, stageOf: stageOf, preDone: preDone, preResult: preResult, preActors: preActors, power: power, MAIN: MAIN, BATTLE: BATTLE };
 })(typeof window !== 'undefined' ? window : this);
