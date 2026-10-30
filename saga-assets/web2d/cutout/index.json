@@ -152,7 +152,8 @@
   ],
   "jp_musashi": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "jp_tomoegozen": [
    "side",
@@ -231,7 +232,8 @@
   ],
   "sg_lubu": [
    "side",
-   "front"
+   "front",
+   "back"
   ],
   "sg_sunquan": [
    "side",
@@ -265,7 +267,8 @@
   ],
   "wd_shaka": [
    "side",
-   "front"
+   "front",
+   "back"
   ]
  }
 }

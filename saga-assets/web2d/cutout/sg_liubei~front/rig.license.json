@@ -1,6 +1,6 @@
 {
  "ticket": "K-0198",
- "from": "saga-assets/illust/shared/sg_liubei/stand.webp",
+ "from": "tools/ai-art/_out/k198/sg_liubei_front/front.png (K-0198 A자세 정면 — saga-assets/illust/shared/sg_liubei/stand.webp 에서 팔만 인페인트, k198_apose.py)",
  "model": "animagine-xl-4.0-opt",
  "model_license": "CreativeML OpenRAIL++-M",
  "tool": "tools/ai-art/k188_cutout.py cut",

@@ -41,13 +41,13 @@
 | competitiongen.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 21 |
 | gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 1709 |
 | remote3d | microsoft/TRELLIS-image-large | MIT | 531 |
-| 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음) | 4 |
+| 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음) | 6 |
 | 미상 | - | SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용) | 10 |
 | icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 76 |
 | gen.py (ComfyUI) | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 2119 |
 | make_ui_icons.py | none | CC0-1.0 (코드 생성 — 24격자 기하 도형, 외부 그림·Lucide 경로 없음) | 112 |
 | setmark.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 10 |
-| k163_illust.py + gen.py (ComfyUI, Kaggle 원격) | animagine-xl-4.0-opt | saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상  | 614 |
+| k163_illust.py + gen.py (ComfyUI, Kaggle 원격) | animagine-xl-4.0-opt | saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상  | 617 |
 | gen.py (ComfyUI) | z-image-turbo | Apache-2.0 | 141 |
 | make_map.py | - | CC0-1.0 (코드로 그린 그림 — 외부 입력 없음) | 195 |
 | build_monster.py | - | CC0-1.0 (재질 전부 자체 PBR(K-0093·K-0113, 남의 사진 0), 형태는 전부 코드) | 346 |

@@ -1,0 +1,291 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k198/apose",
+ "kit": {
+  "spec": "character_tall",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "note": "K-0198 A자세 정면 — 팔만 인페인트",
+ "defaults": {
+  "width": 640,
+  "height": 1024,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "lowres, worst quality, bad anatomy, extra limbs, multiple people, frame, border, chibi",
+  "variants": 2
+ },
+ "items": [
+  {
+   "id": "eu_davinci_apose",
+   "init_image": "_out/k198/apose_src/eu_davinci.png",
+   "mask_image": "_out/k198/apose_src/eu_davinci_mask.png",
+   "denoise": 0.92,
+   "seed": 2026112817,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short blonde hair, calm face, white hooded linen robe with dark blue trim, long tunic, brown belt, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "eu_leonidas_apose",
+   "init_image": "_out/k198/apose_src/eu_leonidas.png",
+   "mask_image": "_out/k198/apose_src/eu_leonidas_mask.png",
+   "denoise": 0.92,
+   "seed": 2026111607,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short blonde hair, stern face, small pointed bronze helmet, red cloak wrapped over the shoulders, bronze cuirass, leather skirt, sandals, round red and white shield, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "fu_jongwang_apose",
+   "init_image": "_out/k198/apose_src/fu_jongwang.png",
+   "mask_image": "_out/k198/apose_src/fu_jongwang_mask.png",
+   "denoise": 0.92,
+   "seed": 2026113928,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), young adult woman, long straight blonde hair, glowing purple mark on the forehead, earrings, white and light blue futuristic robe with silver patterns, blue gem brooch, long flowing skirt, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "hl_mukhyang_apose",
+   "init_image": "_out/k198/apose_src/hl_mukhyang.png",
+   "mask_image": "_out/k198/apose_src/hl_mukhyang_mask.png",
+   "denoise": 0.92,
+   "seed": 2026111200,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, short dark brown hair with a small top bun, grey eyes, calm clever face, long white mandarin-collar scholar robe with frog buttons, blue sash, cloth shoes, holding a scroll, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "jp_hanzo_apose",
+   "init_image": "_out/k198/apose_src/jp_hanzo.png",
+   "mask_image": "_out/k198/apose_src/jp_hanzo_mask.png",
+   "denoise": 0.92,
+   "seed": 2026112109,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black hair, sharp calm eyes, black hood, black shinobi garb, black cloak, dark arm wraps, dark leg wraps, tabi, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "jp_himiko_apose",
+   "init_image": "_out/k198/apose_src/jp_himiko.png",
+   "mask_image": "_out/k198/apose_src/jp_himiko_mask.png",
+   "denoise": 0.92,
+   "seed": 2026112515,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), young adult woman, black hair in an updo, red eyes, golden spiked crown, deep red robe with gold pattern, white high collar, red gem pendant, long red skirt, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "jp_musashi_apose",
+   "init_image": "_out/k198/apose_src/jp_musashi.png",
+   "mask_image": "_out/k198/apose_src/jp_musashi_mask.png",
+   "denoise": 0.92,
+   "seed": 2026111505,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, long black hair tied in a low ponytail, calm face, cream white kimono with dark undercollar, dark gray hakama, straw sandals, two swords at the waist, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "jp_tomoegozen_apose",
+   "init_image": "_out/k198/apose_src/jp_tomoegozen.png",
+   "mask_image": "_out/k198/apose_src/jp_tomoegozen_mask.png",
+   "denoise": 0.92,
+   "seed": 2026112313,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), young adult woman, long black hair tied back, red lips, determined face, dark navy kimono with small white pattern, white undercollar, silver shoulder armor, dark hakama, katana, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "jp_yoshitsune_apose",
+   "init_image": "_out/k198/apose_src/jp_yoshitsune.png",
+   "mask_image": "_out/k198/apose_src/jp_yoshitsune_mask.png",
+   "denoise": 0.92,
+   "seed": 2026111910,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black hair, calm face, dark navy samurai helmet with golden crescent horns and silver neck guard, dark samurai armor with white trim, hakama, katana at the waist, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "kr_gyebaek_apose",
+   "init_image": "_out/k198/apose_src/kr_gyebaek.png",
+   "mask_image": "_out/k198/apose_src/kr_gyebaek_mask.png",
+   "denoise": 0.92,
+   "seed": 2026111405,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, short black hair, big confident grin, round silver steel helmet with wide brim, dark navy and purple armored robe, ancient korean warrior, lamellar armor, leather boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "rf_gongsunzan_apose",
+   "init_image": "_out/k198/apose_src/rf_gongsunzan.png",
+   "mask_image": "_out/k198/apose_src/rf_gongsunzan_mask.png",
+   "denoise": 0.92,
+   "seed": 2026113120,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black hair, slight smile, silver steel helmet with wide brim and orange-red pointed top, white robe, white armor, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "rf_kongrong_apose",
+   "init_image": "_out/k198/apose_src/rf_kongrong.png",
+   "mask_image": "_out/k198/apose_src/rf_kongrong_mask.png",
+   "denoise": 0.92,
+   "seed": 2026113220,
+   "prompt": "masterpiece, high score, great score, absurdres, (1girl:1.15), young adult woman, black bob hair covering one eye, gentle smile, white scholar robe with silver brocade, long white skirt, cloth shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "rf_lijue_apose",
+   "init_image": "_out/k198/apose_src/rf_lijue.png",
+   "mask_image": "_out/k198/apose_src/rf_lijue_mask.png",
+   "denoise": 0.92,
+   "seed": 2026113725,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, black hair in a small bun, sly smile, white and silver plate armor, white robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "rf_liubiao_apose",
+   "init_image": "_out/k198/apose_src/rf_liubiao.png",
+   "mask_image": "_out/k198/apose_src/rf_liubiao_mask.png",
+   "denoise": 0.92,
+   "seed": 2026113626,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, long black hair loose to the shoulders, gentle smile, cream white robe with beige shoulder armor, long robe, cloth shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "rf_sunce_apose",
+   "init_image": "_out/k198/apose_src/rf_sunce.png",
+   "mask_image": "_out/k198/apose_src/rf_sunce_mask.png",
+   "denoise": 0.92,
+   "seed": 2026113524,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short black pompadour hair, confident smirk, white inner shirt, golden shoulder armor, muscular, dark trousers, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "rf_yuanshao_apose",
+   "init_image": "_out/k198/apose_src/rf_yuanshao.png",
+   "mask_image": "_out/k198/apose_src/rf_yuanshao_mask.png",
+   "denoise": 0.92,
+   "seed": 2026113018,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, messy black hair with long bangs, low ponytail, calm face, ornate gold and white armor, white robe, long robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "rf_yuanshu_apose",
+   "init_image": "_out/k198/apose_src/rf_yuanshu.png",
+   "mask_image": "_out/k198/apose_src/rf_yuanshu_mask.png",
+   "denoise": 0.92,
+   "seed": 2026113422,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, short dark brown hair, stern face, white collar, black armor with shoulder plates, dark robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "ru_geohae_apose",
+   "init_image": "_out/k198/apose_src/ru_geohae.png",
+   "mask_image": "_out/k198/apose_src/ru_geohae_mask.png",
+   "denoise": 0.92,
+   "seed": 2026114031,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black hair with long bangs covering one eye, blue eyes, sly smile, bare muscular shoulders, dark green fur mantle, leather straps, fur trousers, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "sg_caocao_apose",
+   "init_image": "_out/k198/apose_src/sg_caocao.png",
+   "mask_image": "_out/k198/apose_src/sg_caocao_mask.png",
+   "denoise": 0.92,
+   "seed": 2026112917,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, short black hair, stern face, golden crown with vertical bars, royal blue robe with gold shoulder ornaments, long robe, black boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "sg_ganning_apose",
+   "init_image": "_out/k198/apose_src/sg_ganning.png",
+   "mask_image": "_out/k198/apose_src/sg_ganning_mask.png",
+   "denoise": 0.92,
+   "seed": 2026112211,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, black hair in a small topknot, confident smirk, red brocade robe with gold embroidery, wide sleeves, sash belt, dark trousers, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "sg_huangzhong_apose",
+   "init_image": "_out/k198/apose_src/sg_huangzhong.png",
+   "mask_image": "_out/k198/apose_src/sg_huangzhong_mask.png",
+   "denoise": 0.92,
+   "seed": 2026111705,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, middle-aged veteran, short black hair with gray temples, gray mustache, broad grin, green armored vest over a white robe, dark trousers, boots, holding a bow, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "sg_liubei_apose",
+   "init_image": "_out/k198/apose_src/sg_liubei.png",
+   "mask_image": "_out/k198/apose_src/sg_liubei_mask.png",
+   "denoise": 0.92,
+   "seed": 2026111391,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, short dark hair, calm face, black and gold crown with vertical gold bars, green robe with gold shoulder trim, long robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "sg_lubu_apose",
+   "init_image": "_out/k198/apose_src/sg_lubu.png",
+   "mask_image": "_out/k198/apose_src/sg_lubu_mask.png",
+   "denoise": 0.92,
+   "seed": 2026111302,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, adult man, black hair, confident grin, silver steel helmet with wide round brim and red pointed top, dark lamellar armor over a red robe, armored boots, holding a long polearm, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "sg_sunquan_apose",
+   "init_image": "_out/k198/apose_src/sg_sunquan.png",
+   "mask_image": "_out/k198/apose_src/sg_sunquan_mask.png",
+   "denoise": 0.92,
+   "seed": 2026111494,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short black hair, stern face, black square official cap with gold pattern, red orange robe with black collar, gold shoulder ornaments, long robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "sg_taishici_apose",
+   "init_image": "_out/k198/apose_src/sg_taishici.png",
+   "mask_image": "_out/k198/apose_src/sg_taishici_mask.png",
+   "denoise": 0.92,
+   "seed": 2026111807,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black hair, smiling, silver steel helmet with wide brim and red pointed crest, red and dark brown armored robe, lamellar armor, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "sg_zhugeliang_apose",
+   "init_image": "_out/k198/apose_src/sg_zhugeliang.png",
+   "mask_image": "_out/k198/apose_src/sg_zhugeliang_mask.png",
+   "denoise": 0.92,
+   "seed": 2026111292,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, short dark hair, gentle smile, black square scholar cap, long green robe over white inner robe, holding a round feather hand fan, cloth shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "tb_baekgi_apose",
+   "init_image": "_out/k198/apose_src/tb_baekgi.png",
+   "mask_image": "_out/k198/apose_src/tb_baekgi_mask.png",
+   "denoise": 0.92,
+   "seed": 2026114129,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, black bob hair covering one eye, blue eye, smirk, golden round shoulder armor, blue cloak, blue armored robe, boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "wd_genghis_apose",
+   "init_image": "_out/k198/apose_src/wd_genghis.png",
+   "mask_image": "_out/k198/apose_src/wd_genghis_mask.png",
+   "denoise": 0.92,
+   "seed": 2026112009,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, young adult man, long light brown hair, brown fur hat, mustard yellow scarf, blue silk deel robe with yellow sash, leather riding boots, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "wd_ibnsina_apose",
+   "init_image": "_out/k198/apose_src/wd_ibnsina.png",
+   "mask_image": "_out/k198/apose_src/wd_ibnsina_mask.png",
+   "denoise": 0.92,
+   "seed": 2026112717,
+   "prompt": "masterpiece, high score, great score, absurdres, (1boy:1.15), male focus, middle-aged man, dark hair, kind stern face, dark brown turban cap, mustard yellow shawl over the shoulders, long deep blue robe with gold pattern, leather shoes, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  },
+  {
+   "id": "wd_shaka_apose",
+   "init_image": "_out/k198/apose_src/wd_shaka.png",
+   "mask_image": "_out/k198/apose_src/wd_shaka_mask.png",
+   "denoise": 0.92,
+   "seed": 2026113412,
+   "prompt": "masterpiece, high score, great score, absurdres, 1boy, male focus, adult man, dark skin, short curly dark hair, black headband, short beard, bare muscular shoulders, fur cloak over one shoulder, leather straps, hide skirt, holding an oval cowhide shield and a short spear, adult, tall, realistic body proportions, detailed face, arms at sides, feet visible, looking at viewer, front view, facing viewer, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light, (from behind:1.3), (back view:1.3), facing away from viewer, rear view, seen from the back, back of head, hands empty, full body, front view, (A-pose:1.5), (arms spread away from the body:1.4), (clear gap between arms and torso:1.3), hands apart from the torso, hands empty",
+   "negative": "arms crossed, hands on hips, arms behind back, arms touching the body, back view, weapon, polearm, text, watermark, black background, extra arms, extra limbs"
+  }
+ ]
+}

@@ -378,11 +378,12 @@
    "tool": "미상",
    "model": "",
    "license": "SIL Open Font License 1.1 (OFL.txt 동봉, 상업 허용·재배포 허용, 예약 글꼴 이름 없음)",
-   "count": 4,
+   "count": 6,
    "where": [
     "saga-assets/fonts/blackhansans",
     "saga-assets/fonts/hahmlet",
     "saga-web/saga-dungeon/assets/fonts",
+    "saga-web/saga-story/assets/fonts",
     "saga-web/shared/assets/fonts"
    ]
   },
@@ -451,7 +452,7 @@
    "tool": "k163_illust.py + gen.py (ComfyUI, Kaggle 원격)",
    "model": "animagine-xl-4.0-opt",
    "license": "saga 자체 생성 — 상업 허용 모델(animagine-xl-4.0-opt, CreativeML OpenRAIL++-M) · txt2img(밑그림 없음, 초상 보고 적은 묘사)",
-   "count": 614,
+   "count": 617,
    "where": [
     "saga-assets/illust/shared/ac_balgwang",
     "saga-assets/illust/shared/ac_choeumpa",

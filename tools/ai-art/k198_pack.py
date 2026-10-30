@@ -20,7 +20,7 @@ for rd in sorted(glob.glob(os.path.join(ROOT, 'tools', 'ai-art', '_out', 'k198',
     lic = json.load(open(os.path.join(out, 'rig.license.json'), encoding='utf-8'))
     lic.update({'id': 'cutout_' + pid + '_' + VIEW, 'ticket': 'K-0198', 'generator': src.get('generator'), 'model': src.get('model'), 'model_license': src.get('model_license'),
                 'commercial_use': src.get('commercial_use'), 'license': src.get('license'), 'note': src.get('note'),
-                'from': ('saga-assets/illust/shared/%s/stand.webp' % pid) if VIEW == 'front' else 'tools/ai-art/_out/k198/%s_back/back.png (K-0198 뒷모습 일러스트, 정면 stand.webp 외형 참조)' % pid, 'packed_by': 'K-0198 tools/ai-art/k198_front.sh + k198_pack.py'})
+                'from': ('tools/ai-art/_out/k198/%s_front/front.png (K-0198 A자세 정면 — saga-assets/illust/shared/%s/stand.webp 에서 팔만 인페인트, k198_apose.py)' % (pid, pid)) if VIEW == 'front' else 'tools/ai-art/_out/k198/%s_back/back.png (K-0198 뒷모습 일러스트, 정면 stand.webp 외형 참조)' % pid, 'packed_by': 'K-0198 tools/ai-art/k198_front.sh + k198_pack.py'})
     json.dump(lic, open(os.path.join(out, 'rig.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     dirs[pid] = sorted(set(dirs.get(pid, ['side'])) | {VIEW}, key=['side', 'front', 'back'].index)
     print('놓음', pid)

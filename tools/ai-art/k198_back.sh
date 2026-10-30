@@ -4,7 +4,7 @@ cd /c/swbins
 for A in "$@"; do
   ID=${A%%:*}; V=01; [ "$A" != "$ID" ] && V=$(printf %02d ${A##*:})
   D=tools/ai-art/_out/k198/${ID}_back; mkdir -p $D
-  SRC=tools/ai-art/_out/k198/back/${ID}_back_v$V.png
+  SRC=tools/ai-art/_out/k198/${BACKDIR:-back}/${ID}_back_v$V.png   # BACKDIR=back_a 면 A자세 정면에서 만든 뒷모습
   PYTHONIOENCODING=utf-8 py - "$SRC" "$D" <<'P' || continue
 import sys
 sys.path.insert(0, 'tools/ai-art')
@@ -15,6 +15,7 @@ cutout(Image.open(src).convert('RGB')).save(d + '/back.png')
 P
   cp ${SRC%.png}.license.json $D/back.license.json 2>/dev/null
   PYTHONIOENCODING=utf-8 py tools/ai-art/k188_cutout.py auto $D/back.png $D/joints.json $D/auto.jpg --view back >/dev/null
+  [ "$BACKDIR" = back_a ] && PYTHONIOENCODING=utf-8 py tools/ai-art/k198_apose.py joints_back $ID ${V#0}   # 벌어진 팔 관절을 그림 위에 놓는다
   PYTHONIOENCODING=utf-8 py tools/ai-art/k188_cutout.py cut $D/back.png $D/joints.json $D/rig --fill smear | tail -1
   PYTHONIOENCODING=utf-8 py tools/ai-art/k188_cutout.py preview $D/rig $D/prev --h 360 >/dev/null
 done
