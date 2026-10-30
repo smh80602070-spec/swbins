@@ -1,0 +1,131 @@
+{
+ "model": "z-image-turbo",
+ "out": "k202_icons_go_z1",
+ "defaults": {
+  "width": 768,
+  "height": 768,
+  "variants": 1
+ },
+ "items": [
+  {
+   "id": "ic_go_star",
+   "seed": 2926930927,
+   "prompt": "A flat vector game icon of five pointed star, gold star. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(★)"
+  },
+  {
+   "id": "ic_go_coin",
+   "seed": 188724932,
+   "prompt": "A flat vector game icon of gold coin, round coin with square hole. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🪙)"
+  },
+  {
+   "id": "ic_go_swords",
+   "seed": 3773095191,
+   "prompt": "A flat vector game icon of two crossed swords. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(⚔)"
+  },
+  {
+   "id": "ic_go_book",
+   "seed": 3835240729,
+   "prompt": "A flat vector game icon of open book, pages. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(📖)"
+  },
+  {
+   "id": "ic_go_sparkle",
+   "seed": 3924282902,
+   "prompt": "A flat vector game icon of three sparkles, glitter stars. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(✨)"
+  },
+  {
+   "id": "ic_go_robot",
+   "seed": 795618094,
+   "prompt": "A flat vector game icon of small robot head, antenna, boxy. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🤖)"
+  },
+  {
+   "id": "ic_go_herb",
+   "seed": 3039967748,
+   "prompt": "A flat vector game icon of green herb sprig, leaves. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🌿)"
+  },
+  {
+   "id": "ic_go_scroll",
+   "seed": 485586697,
+   "prompt": "A flat vector game icon of rolled scroll, paper. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(📜)"
+  },
+  {
+   "id": "ic_go_compass",
+   "seed": 2502012828,
+   "prompt": "A flat vector game icon of compass rose, round compass. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🧭)"
+  },
+  {
+   "id": "ic_go_rope",
+   "seed": 1132803659,
+   "prompt": "A flat vector game icon of rope knot, coiled rope. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🪢)"
+  },
+  {
+   "id": "ic_go_flame",
+   "seed": 381251950,
+   "prompt": "A flat vector game icon of flame, campfire fire. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🔥)"
+  },
+  {
+   "id": "ic_go_horse",
+   "seed": 2088842807,
+   "prompt": "A flat vector game icon of horse head, side view. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🐎)"
+  },
+  {
+   "id": "ic_go_rock",
+   "seed": 3574854842,
+   "prompt": "A flat vector game icon of gray boulder, rock. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🪨)"
+  },
+  {
+   "id": "ic_go_pawprint",
+   "seed": 3567418503,
+   "prompt": "A flat vector game icon of animal paw prints, two paws. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🐾)"
+  },
+  {
+   "id": "ic_go_whirl",
+   "seed": 783241750,
+   "prompt": "A flat vector game icon of whirlpool spiral, swirl. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🌀)"
+  },
+  {
+   "id": "ic_go_meat",
+   "seed": 3441397301,
+   "prompt": "A flat vector game icon of roasted meat on bone. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🍖)"
+  },
+  {
+   "id": "ic_go_crystal",
+   "seed": 1476677320,
+   "prompt": "A flat vector game icon of crystal ball, glass sphere. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🔮)"
+  },
+  {
+   "id": "ic_go_castle",
+   "seed": 2145230486,
+   "prompt": "A flat vector game icon of small castle with towers. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🏯)"
+  },
+  {
+   "id": "ic_go_gem_blue",
+   "seed": 715287412,
+   "prompt": "A flat vector game icon of blue diamond gem. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🔷)"
+  },
+  {
+   "id": "ic_go_shield",
+   "seed": 1129832452,
+   "prompt": "A flat vector game icon of round shield, metal rim. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🛡)"
+  }
+ ]
+}

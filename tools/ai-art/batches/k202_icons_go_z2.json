@@ -1,0 +1,131 @@
+{
+ "model": "z-image-turbo",
+ "out": "k202_icons_go_z2",
+ "defaults": {
+  "width": 768,
+  "height": 768,
+  "variants": 1
+ },
+ "items": [
+  {
+   "id": "ic_go_lantern",
+   "seed": 1550710460,
+   "prompt": "A flat vector game icon of paper lantern, red lantern. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🏮)"
+  },
+  {
+   "id": "ic_go_snow",
+   "seed": 4151192310,
+   "prompt": "A flat vector game icon of snowflake crystal. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(❄)"
+  },
+  {
+   "id": "ic_go_dagger",
+   "seed": 968787212,
+   "prompt": "A flat vector game icon of dagger, short blade. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🗡)"
+  },
+  {
+   "id": "ic_go_fish",
+   "seed": 3368245912,
+   "prompt": "A flat vector game icon of fish, side view. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🐟)"
+  },
+  {
+   "id": "ic_go_bow",
+   "seed": 2804604303,
+   "prompt": "A flat vector game icon of bow and arrow. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🏹)"
+  },
+  {
+   "id": "ic_go_clipboard",
+   "seed": 1019108418,
+   "prompt": "A flat vector game icon of clipboard with paper list. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(📋)"
+  },
+  {
+   "id": "ic_go_gear",
+   "seed": 1560327979,
+   "prompt": "A flat vector game icon of cog gear wheel. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(⚙)"
+  },
+  {
+   "id": "ic_go_speech",
+   "seed": 2346207953,
+   "prompt": "A flat vector game icon of speech bubble, empty. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(💬)"
+  },
+  {
+   "id": "ic_go_drop",
+   "seed": 644398312,
+   "prompt": "A flat vector game icon of water drop. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(💧)"
+  },
+  {
+   "id": "ic_go_wind",
+   "seed": 2592328253,
+   "prompt": "A flat vector game icon of wind swirl, gust lines. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(💨)"
+  },
+  {
+   "id": "ic_go_tower",
+   "seed": 4194391357,
+   "prompt": "A flat vector game icon of tall lookout tower. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🗼)"
+  },
+  {
+   "id": "ic_go_wave",
+   "seed": 529316770,
+   "prompt": "A flat vector game icon of ocean wave. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🌊)"
+  },
+  {
+   "id": "ic_go_handshake",
+   "seed": 867392481,
+   "prompt": "A flat vector game icon of two hands shaking. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🤝)"
+  },
+  {
+   "id": "ic_go_bolt",
+   "seed": 2547337355,
+   "prompt": "A flat vector game icon of lightning bolt. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(⚡)"
+  },
+  {
+   "id": "ic_go_person",
+   "seed": 578775485,
+   "prompt": "A flat vector game icon of person silhouette bust, plain head and shoulders. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(👤)"
+  },
+  {
+   "id": "ic_go_backpack",
+   "seed": 1777228984,
+   "prompt": "A flat vector game icon of travel backpack. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🎒)"
+  },
+  {
+   "id": "ic_go_moon",
+   "seed": 2418786913,
+   "prompt": "A flat vector game icon of crescent moon. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🌙)"
+  },
+  {
+   "id": "ic_go_blossom",
+   "seed": 2816054311,
+   "prompt": "A flat vector game icon of cherry blossom flower. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🌸)"
+  },
+  {
+   "id": "ic_go_map",
+   "seed": 1928506904,
+   "prompt": "A flat vector game icon of folded paper map. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🗺)"
+  },
+  {
+   "id": "ic_go_flag_black",
+   "seed": 1701147641,
+   "prompt": "A flat vector game icon of black flag on pole. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘(🏴)"
+  }
+ ]
+}

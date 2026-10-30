@@ -20,3 +20,4 @@
 - [ ] 10-30 · (K-0193) 배경 새 에셋 배선 — 4종횡 바닥 변주 `side-cand/floor`(mossy_stone·diag_brick, △ pale_cobble·diag_brick_b)·발판 투명 PNG `side-cand/plat_cut`(wood·stone 4) · 1만리 `tile/go_stone_b·c·d`(이끼·금·큰 판석)·3D 먼 산 띠 `sky/ridge_go_band.webp`(2048×256, farland3d rim 에 얹기) · 2나락 `sky_sunset_*`·5천하 `realm-ui/castle_s·m·l` 은 있는데 안 씀 · 웹(W-0415 ③) · 고돗도 같은 먼 산 띠 가능
 - [ ] 10-30 · (K-0202) UI 2차 A 로 정본 `saga-assets/ui/<판>`(부품 19×5) 교체 끝, 웹은 덮음 · 유니티: `Resources/UI/<판>` 다시 복사(`place --item ui-skin`, .meta 는 안 올림) · 고돗: `assets/ui_skin` 다시 복사 + .import · 웹: 판별 글꼴·모서리 CSS(W 줄) · 자체툴 끝
 - [ ] 10-30 · (K-0202) 4종횡 표시 글꼴 `fonts/BlackHanSans-saga.woff2`(웹 shared·종횡 폴더에 있음) — 종횡 `skin-ui.css` `SkinHead` 를 주아→Black Han Sans 로 · 웹
+- [ ] 10-30 · (K-0202) 1만리 UI 아이콘 60(`saga-assets/icons/glyph/go/<이름>_128·_64.png`) — js 의 이모지를 이 그림으로(★ 205·🪙 120·⚔ 102 …, 이름은 `tools/ai-art/make_k202_icons.py` LIST) · place 항목 새로(glyph 폴더는 아직 어디에도 안 감) · 웹 · 나머지 네 판은 자체툴이 뒤따라 만듦

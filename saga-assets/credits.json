@@ -402,6 +402,20 @@
    ]
   },
   {
+   "tool": "gen.py (ComfyUI)",
+   "model": "z-image-turbo",
+   "license": "Apache-2.0",
+   "count": 201,
+   "where": [
+    "saga-assets/icons/glyph/go",
+    "saga-assets/land-go",
+    "saga-assets/textures_real/brick",
+    "saga-assets/textures_real/concrete",
+    "saga-assets/textures_real/corrugated",
+    "saga-assets/textures_real/dirt"
+   ]
+  },
+  {
    "tool": "icon_pack.py",
    "model": "none",
    "license": "CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음)",
@@ -460,20 +474,6 @@
     "saga-assets/illust/shared/ac_haebit",
     "saga-assets/illust/shared/ac_haecho",
     "saga-assets/illust/shared/ac_haemun"
-   ]
-  },
-  {
-   "tool": "gen.py (ComfyUI)",
-   "model": "z-image-turbo",
-   "license": "Apache-2.0",
-   "count": 141,
-   "where": [
-    "saga-assets/land-go",
-    "saga-assets/textures_real/brick",
-    "saga-assets/textures_real/concrete",
-    "saga-assets/textures_real/corrugated",
-    "saga-assets/textures_real/dirt",
-    "saga-assets/textures_real/grass"
    ]
   },
   {

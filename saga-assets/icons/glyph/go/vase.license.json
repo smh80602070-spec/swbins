@@ -1,0 +1,19 @@
+{
+ "id": "glyph/go/vase",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of clay vase, ancient jar. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 2747759014,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 96.1,
+ "date": "2026-10-30",
+ "note": "K-0202 ④ UI 아이콘(go) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)"
+}

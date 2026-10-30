@@ -1,0 +1,47 @@
+{
+ "model": "z-image-turbo",
+ "out": "k202_icons_go_zr",
+ "defaults": {
+  "width": 768,
+  "height": 768,
+  "variants": 2
+ },
+ "items": [
+  {
+   "id": "ic_go_bow",
+   "seed": 3779283896,
+   "prompt": "A flat vector game icon of a wooden archery bow with an arrow nocked on the string, the arrow pointing to the right. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘 다시(bow)"
+  },
+  {
+   "id": "ic_go_fishing",
+   "seed": 1634457468,
+   "prompt": "A flat vector game icon of a fishing rod bent in an arc with a fishing line hanging down and a small hook at the end. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘 다시(fishing)"
+  },
+  {
+   "id": "ic_go_robot",
+   "seed": 4126550954,
+   "prompt": "A flat vector game icon of a cute round robot head with two big circle eyes, a small antenna on top, and a grille mouth, front view. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘 다시(robot)"
+  },
+  {
+   "id": "ic_go_rope",
+   "seed": 2594848649,
+   "prompt": "A flat vector game icon of a neat coil of rope lying in a spiral circle. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘 다시(rope)"
+  },
+  {
+   "id": "ic_go_statue",
+   "seed": 4211029738,
+   "prompt": "A flat vector game icon of an ancient moai stone head statue with a long nose and heavy brow, side view. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘 다시(statue)"
+  },
+  {
+   "id": "ic_go_warning",
+   "seed": 3524663823,
+   "prompt": "A flat vector game icon of a warning road sign, a triangle with a bold exclamation mark in the middle. Thick dark teal outline, flat solid colors with teal and warm red accents, simple bold shapes, one single object centered, plain white background, no text, no shadow, sticker style.",
+   "subject_ko": "go 아이콘 다시(warning)"
+  }
+ ]
+}
