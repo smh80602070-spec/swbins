@@ -410,6 +410,8 @@ from build_village_k141 import K141  # noqa: E402  K-0141 1만리 지역 2차 57
 VILLAGE.update(K141)
 from build_village_k195 import K195  # noqa: E402  K-0195 게임성 새 기능 대역 9
 VILLAGE.update(K195)
+from build_village_k209 import K209  # noqa: E402  K-0209 1만리 땅 퓨전 소품 18 자체판
+VILLAGE.update(K209)
 
 if __name__ == '__main__':
     BP.PROPS.clear()
