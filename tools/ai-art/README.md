@@ -9,6 +9,38 @@ py tools/ai-art/gen.py tools/ai-art/batches/<배치>.json                # 한 �
 powershell -ExecutionPolicy Bypass -File tools\ai-art\stop_sd.ps1      # 끝나면 반드시 끈다(VRAM·RAM 반환, 이 도구가 켠 프로세스만)
 ```
 
+## GeForce 실행 기준 (2026-10-30 확인)
+
+이 절은 **NVIDIA GeForce RTX 4060 8GB PC 전용**이다. Radeon은 다른 PC에서 작업하며 기존 Radeon 설정·실행 안내는 그대로 유지한다. 두 PC는 공통 지침과 `tasks/tools/QUEUE.md`의 분담에 따라 자체툴 생성을 병행한다. 같은 티켓·배치를 두 PC에서 동시에 실행하지 않는다.
+
+- 읽기 전용 확인: `nvidia-smi`에서 RTX 4060·8188MiB·드라이버 610.88, 실행 중 ComfyUI `/system_stats`에서 0.43.0·PyTorch `2.11.0+cu128`·장치 `cuda:0 NVIDIA GeForce RTX 4060`을 확인했다. CUDA 백엔드 인식은 정상이다.
+- `/object_info`에서 `gen.py`가 지정한 세 모델과 부속 파일이 모두 인식된다: `z-image-turbo-Q6_K.gguf`, `Qwen3-4B-Q8_0.gguf`, `ae.safetensors`, `animagine-xl-4.0-opt.safetensors`, `Illustrious-XL-v2.0.safetensors`, `sdxl-vae-fp16-fix.safetensors`. 파일 해시·생성 품질 검증을 뜻하지 않는다.
+- 실제 실행 옵션은 `--listen 127.0.0.1 --port 8188 --disable-auto-launch --use-pytorch-cross-attention --output-directory <ComfyUI 출력 폴더>`다. API는 `gen.py` 기본값 `http://127.0.0.1:8188`과 일치한다.
+- **상단 `start_sd.ps1` 안내와 아래 ROCm 최적화 기록은 RX 7600 기준이다.** 이 스크립트는 ROCm 환경 변수와 lowvram·fp32 VAE 옵션을 고정하며 현재 GeForce 실행 옵션과 다르다. GeForce 자동 감지·최적화가 구현된 것으로 간주하지 않는다. 실행 중 서버는 그대로 재사용하고, 재기동이 필요하면 해당 PC의 기존 CUDA 실행 절차·인터프리터를 확인한다. 이번 점검에서는 소스·실행 설정을 바꾸지 않았다.
+- 생성은 기존 한도(순차 1장, 기본 최대 24항목, 1.1MP, 시작 여유 RAM은 실행기 8GB/생성기 6GB)를 지킨다. Radeon 측정 시간을 GeForce 예상 시간으로 쓰거나 8GB GPU를 16GB 원격 GPU처럼 취급하지 않는다. GPU 작업·Unity·Blender 배치를 중복 기동하지 않는다.
+- 서버의 소유 세션과 실행 상태를 확인한다. 다른 세션이 사용하는 ComfyUI에 중단·종료 명령을 보내지 않는다. 이번에는 이미 GPU 작업이 진행 중이어서 추가 생성·재시작·종료를 하지 않았다.
+- 판정: **CUDA 연결·등록 모델 확인 완료 / 세 모델별 생성·속도·메모리 안정성·시각 품질은 이번 점검에서 미검증**. 다음 생성 티켓에서 필요한 모델의 대표 자산부터 검증한다. CUDA가 있다는 이유로 새 모델·원격 서비스·동결된 3D 인체 생성을 도입하거나 재개하지 않는다.
+
+### GeForce 세션 시작 전 확인
+
+아래 명령은 실행 중인 서버의 상태만 조회한다. 서버 시작·종료나 생성 요청을 보내지 않는다.
+
+```powershell
+nvidia-smi --query-gpu=name,memory.total,driver_version --format=csv,noheader
+$assetApi = if ($env:AI_ART_API) { $env:AI_ART_API.TrimEnd('/') } else { 'http://127.0.0.1:8188' }
+$assetStats = Invoke-RestMethod "$assetApi/system_stats" -TimeoutSec 10
+$assetStats.devices | Select-Object name,type,vram_total,vram_free
+$assetStats.system | Select-Object comfyui_version,pytorch_version
+$assetQueue = Invoke-RestMethod "$assetApi/queue" -TimeoutSec 10
+[pscustomobject]@{ Running = @($assetQueue.queue_running).Count; Pending = @($assetQueue.queue_pending).Count }
+```
+
+1. 장치가 해당 GeForce이고 백엔드가 `cuda`인지 확인한다. `AI_ART_API`가 지정돼 있으면 기본 로컬 주소를 검사한 결과로 대신하지 않는다.
+2. API 연결 실패는 생성 불가 상태로 기록하고 기존 실행 절차부터 확인한다. 다른 세션의 서버를 재시작하거나 새 서버를 중복 실행하지 않는다.
+3. 실행·대기 작업이 있으면 소유 티켓을 먼저 확인한다. 큐가 비었다는 사실만으로 GPU가 비었거나 다른 PC의 티켓을 가져와도 된다고 판단하지 않는다.
+4. 큐의 담당 PC, 기존 출력·라이선스, 배치의 모델·해상도·입력 경로를 확인한다. `gen.py <배치.json> --dry --only <id>`는 그래프 사전 검사이며 실제 추론·메모리·화질 검증이 아니다. 이미 출력이 있는 항목은 검사 대상에서 빠질 수 있으므로 대상 수 0건을 통과로 기록하지 않는다.
+5. 다음 생성 작업의 증거는 [GeForce 검증 기록](../../tasks/gameplay/asset-tool-validation.md#8-geforce-실행-검증-기록)을 사용한다. 이번 문서 점검을 근거로 대량 생성을 시작하지 않는다.
+
 ## 원격 GPU(Kaggle) — K-0140 (2026-10-18)
 
 로컬 AMD 8GB 사슬(장당 84~112초)이 막힐 때 같은 배치를 Kaggle 무료 GPU(T4 ×2)로 돌린다. 결과는 로컬과 같은 `_out/<배치 out>/`.

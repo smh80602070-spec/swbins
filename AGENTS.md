@@ -3,7 +3,7 @@
 작업 전 `SAGA_AI_COMMON.md` 를 **먼저 읽는다**(정본). 아래는 그 요약이며, 충돌하면 정본을 따른다.
 
 - 역할: Claude = 오케스트레이터, **Codex = 개발자**(Unity/Godot 코드·도구 스크립트·파이프라인 연결·검증 가능한 수정).
-- 머신: iMac(RX570) = 웹·Godot 만 / Windows PC(RX7600) = Unity·2D/3D 에셋 생성 / GeForce = 보류(전제로 삼지 않는다).
+- 머신: iMac(RX570) = 웹·Godot 만 / Windows PC(RX7600) = Unity·2D/3D 에셋 생성 / GeForce(RTX 4060 8GB 확인) = 자체툴 2D/3D 생성 병행(보류 해제). 티켓마다 한 PC만 맡고 `tasks/tools/QUEUE.md` 분담을 따른다. CUDA 환경 확인·실행 기준은 `tools/ai-art/README.md` 참조.
 - 에셋: 기존 것 재사용이 먼저. GPU 재생성은 꼭 필요한 대상만 좁혀서. 원본 덮어쓰기·대량 재생성·폴더 대이동 금지. 새 모델·외부 서비스 도입 금지(`tools/ai-art` 의 세 모델만).
 - 2D 모션: 컷아웃(`tools/ai-art/k188_cutout.py`) 기준, 피벗=실제 관절, 발 미끄러짐 금지, idle·walk·run·attack 네 모션을 **GIF/영상 프리뷰로 눈 확인**, 대표 캐릭터 1명 검증 뒤에만 확장. 검증 안 한 건 통과라고 쓰지 않는다.
 - 3D 인체 생성(char-forge)은 동결 — 승인 없이 재개 금지.
