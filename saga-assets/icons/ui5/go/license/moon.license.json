@@ -1,0 +1,22 @@
+{
+ "id": "ui5_go_moon",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crescent moon):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, one single object only, large, filling the frame, centered, simple plain light gray background, game item icon",
+ "negative_prompt": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality, set, collection, grid, group, multiple items, many, several, pattern of repeated, duplicates, two, three, pair",
+ "seed": 2026131308,
+ "steps": 28,
+ "cfg_scale": 6.0,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  1024,
+  1024
+ ],
+ "seconds": 18.3,
+ "date": "2026-10-30",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "ticket": "K-0202",
+ "packed_by": "tools/ai-art/k202_icons.py pack(배경 제거·알맹이 자르기·128/64)",
+ "from": "tools/ai-art/_out/k202/icons_b/go_moon_r2.png"
+}

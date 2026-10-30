@@ -1,0 +1,549 @@
+{
+ "size": 128,
+ "note": "K-0202 ④ 이모지 대신 쓸 UI 아이콘(판마다 A 시안 재료) — 웹 배선은 웹 몫",
+ "games": {
+  "go": [
+   "clipboard",
+   "coin",
+   "swords",
+   "scroll",
+   "wheat",
+   "book",
+   "target",
+   "flame",
+   "horse",
+   "sparkle",
+   "helmet",
+   "flag",
+   "golem",
+   "shield",
+   "herb",
+   "bow",
+   "dagger",
+   "map",
+   "whirl",
+   "castle",
+   "compass",
+   "wave",
+   "fish",
+   "person",
+   "orb",
+   "crate",
+   "crown",
+   "rock",
+   "handshake",
+   "speech",
+   "moneybag",
+   "skull",
+   "drop",
+   "trophy",
+   "gift",
+   "ice",
+   "paw",
+   "snow",
+   "whiteflag",
+   "signpost",
+   "pit",
+   "backpack",
+   "potion",
+   "house",
+   "moon",
+   "knot",
+   "gem",
+   "blossom",
+   "medal",
+   "idol",
+   "bolt",
+   "hammer",
+   "bricks",
+   "mountain",
+   "lantern",
+   "hall",
+   "shop",
+   "boat",
+   "star"
+  ],
+  "dungeon": [
+   "clipboard",
+   "coin",
+   "swords",
+   "scroll",
+   "wheat",
+   "book",
+   "target",
+   "flame",
+   "horse",
+   "sparkle",
+   "helmet",
+   "flag",
+   "golem",
+   "shield",
+   "herb",
+   "bow",
+   "dagger",
+   "map",
+   "whirl",
+   "castle",
+   "compass",
+   "wave",
+   "fish",
+   "person",
+   "orb",
+   "crate",
+   "crown",
+   "rock",
+   "handshake",
+   "speech",
+   "moneybag",
+   "skull",
+   "drop",
+   "trophy",
+   "gift",
+   "ice",
+   "paw",
+   "snow",
+   "whiteflag",
+   "signpost",
+   "pit",
+   "backpack",
+   "potion",
+   "house",
+   "moon",
+   "knot",
+   "gem",
+   "blossom",
+   "medal",
+   "idol",
+   "bolt",
+   "hammer",
+   "bricks",
+   "mountain",
+   "lantern",
+   "hall",
+   "shop",
+   "boat",
+   "star"
+  ],
+  "forest": [
+   "clipboard",
+   "coin",
+   "swords",
+   "scroll",
+   "wheat",
+   "book",
+   "target",
+   "flame",
+   "horse",
+   "sparkle",
+   "helmet",
+   "flag",
+   "golem",
+   "shield",
+   "herb",
+   "bow",
+   "dagger",
+   "map",
+   "whirl",
+   "castle",
+   "compass",
+   "wave",
+   "fish",
+   "person",
+   "orb",
+   "crate",
+   "crown",
+   "rock",
+   "handshake",
+   "speech",
+   "moneybag",
+   "skull",
+   "drop",
+   "trophy",
+   "gift",
+   "ice",
+   "paw",
+   "snow",
+   "whiteflag",
+   "signpost",
+   "pit",
+   "backpack",
+   "potion",
+   "house",
+   "moon",
+   "knot",
+   "gem",
+   "blossom",
+   "medal",
+   "idol",
+   "bolt",
+   "hammer",
+   "bricks",
+   "mountain",
+   "lantern",
+   "hall",
+   "shop",
+   "boat",
+   "star"
+  ],
+  "story": [
+   "clipboard",
+   "coin",
+   "swords",
+   "scroll",
+   "wheat",
+   "book",
+   "target",
+   "flame",
+   "horse",
+   "sparkle",
+   "helmet",
+   "flag",
+   "golem",
+   "shield",
+   "herb",
+   "bow",
+   "dagger",
+   "map",
+   "whirl",
+   "castle",
+   "compass",
+   "wave",
+   "fish",
+   "person",
+   "orb",
+   "crate",
+   "crown",
+   "rock",
+   "handshake",
+   "speech",
+   "moneybag",
+   "skull",
+   "drop",
+   "trophy",
+   "gift",
+   "ice",
+   "paw",
+   "snow",
+   "whiteflag",
+   "signpost",
+   "pit",
+   "backpack",
+   "potion",
+   "house",
+   "moon",
+   "knot",
+   "gem",
+   "blossom",
+   "medal",
+   "idol",
+   "bolt",
+   "hammer",
+   "bricks",
+   "mountain",
+   "lantern",
+   "hall",
+   "shop",
+   "boat",
+   "star"
+  ],
+  "realm": [
+   "clipboard",
+   "coin",
+   "swords",
+   "scroll",
+   "wheat",
+   "book",
+   "target",
+   "flame",
+   "horse",
+   "sparkle",
+   "helmet",
+   "flag",
+   "golem",
+   "shield",
+   "herb",
+   "bow",
+   "dagger",
+   "map",
+   "whirl",
+   "castle",
+   "compass",
+   "wave",
+   "fish",
+   "person",
+   "orb",
+   "crate",
+   "crown",
+   "rock",
+   "handshake",
+   "speech",
+   "moneybag",
+   "skull",
+   "drop",
+   "trophy",
+   "gift",
+   "ice",
+   "paw",
+   "snow",
+   "whiteflag",
+   "signpost",
+   "pit",
+   "backpack",
+   "potion",
+   "house",
+   "moon",
+   "knot",
+   "gem",
+   "blossom",
+   "medal",
+   "idol",
+   "bolt",
+   "hammer",
+   "bricks",
+   "mountain",
+   "lantern",
+   "hall",
+   "shop",
+   "boat",
+   "star"
+  ]
+ },
+ "concepts": {
+  "clipboard": {
+   "emoji": "📋",
+   "desc": "a clipboard with a checklist"
+  },
+  "coin": {
+   "emoji": "🪙",
+   "desc": "a single round coin"
+  },
+  "swords": {
+   "emoji": "⚔",
+   "desc": "two crossed swords"
+  },
+  "scroll": {
+   "emoji": "📜",
+   "desc": "a rolled scroll"
+  },
+  "wheat": {
+   "emoji": "🌾",
+   "desc": "a bundle of wheat ears"
+  },
+  "book": {
+   "emoji": "📖",
+   "desc": "an open book"
+  },
+  "target": {
+   "emoji": "🎯",
+   "desc": "an archery target with an arrow"
+  },
+  "flame": {
+   "emoji": "🔥",
+   "desc": "a flame"
+  },
+  "horse": {
+   "emoji": "🐎",
+   "desc": "a horse head"
+  },
+  "sparkle": {
+   "emoji": "✨",
+   "desc": "sparkles and stars"
+  },
+  "helmet": {
+   "emoji": "🪖",
+   "desc": "a soldier helmet"
+  },
+  "flag": {
+   "emoji": "🚩",
+   "desc": "a flag on a pole"
+  },
+  "golem": {
+   "emoji": "🤖",
+   "desc": "a small mechanical golem head"
+  },
+  "shield": {
+   "emoji": "🛡",
+   "desc": "a shield"
+  },
+  "herb": {
+   "emoji": "🌿",
+   "desc": "a leafy herb sprig"
+  },
+  "bow": {
+   "emoji": "🏹",
+   "desc": "a bow with an arrow"
+  },
+  "dagger": {
+   "emoji": "🗡",
+   "desc": "a dagger"
+  },
+  "map": {
+   "emoji": "🗺",
+   "desc": "a folded map"
+  },
+  "whirl": {
+   "emoji": "🌀",
+   "desc": "a swirling spiral"
+  },
+  "castle": {
+   "emoji": "🏯",
+   "desc": "a fortress castle"
+  },
+  "compass": {
+   "emoji": "🧭",
+   "desc": "a compass"
+  },
+  "wave": {
+   "emoji": "🌊",
+   "desc": "ocean waves"
+  },
+  "fish": {
+   "emoji": "🐟",
+   "desc": "a fish"
+  },
+  "person": {
+   "emoji": "👤",
+   "desc": "a plain person bust silhouette"
+  },
+  "orb": {
+   "emoji": "🔮",
+   "desc": "a crystal ball on a stand"
+  },
+  "crate": {
+   "emoji": "📦",
+   "desc": "a wooden crate"
+  },
+  "crown": {
+   "emoji": "👑",
+   "desc": "a crown"
+  },
+  "rock": {
+   "emoji": "🪨",
+   "desc": "a rock"
+  },
+  "handshake": {
+   "emoji": "🤝",
+   "desc": "two hands shaking"
+  },
+  "speech": {
+   "emoji": "💬",
+   "desc": "a speech bubble"
+  },
+  "moneybag": {
+   "emoji": "💰",
+   "desc": "a bag of money"
+  },
+  "skull": {
+   "emoji": "💀",
+   "desc": "a skull"
+  },
+  "drop": {
+   "emoji": "💧",
+   "desc": "a water drop"
+  },
+  "trophy": {
+   "emoji": "🏆",
+   "desc": "a trophy cup"
+  },
+  "gift": {
+   "emoji": "🎁",
+   "desc": "a wrapped gift box"
+  },
+  "ice": {
+   "emoji": "🧊",
+   "desc": "an ice cube"
+  },
+  "paw": {
+   "emoji": "🐾",
+   "desc": "an animal paw print"
+  },
+  "snow": {
+   "emoji": "❄",
+   "desc": "a snowflake"
+  },
+  "whiteflag": {
+   "emoji": "🏳",
+   "desc": "a plain flag of surrender"
+  },
+  "signpost": {
+   "emoji": "🪧",
+   "desc": "a wooden signpost"
+  },
+  "pit": {
+   "emoji": "🕳",
+   "desc": "a hole in the ground"
+  },
+  "backpack": {
+   "emoji": "🎒",
+   "desc": "a backpack"
+  },
+  "potion": {
+   "emoji": "🧪",
+   "desc": "a potion flask"
+  },
+  "house": {
+   "emoji": "🏠",
+   "desc": "a small house"
+  },
+  "moon": {
+   "emoji": "🌙",
+   "desc": "a crescent moon"
+  },
+  "knot": {
+   "emoji": "🪢",
+   "desc": "a rope knot"
+  },
+  "gem": {
+   "emoji": "💎",
+   "desc": "a cut gemstone"
+  },
+  "blossom": {
+   "emoji": "🌸",
+   "desc": "a blossom flower"
+  },
+  "medal": {
+   "emoji": "🎖",
+   "desc": "a military medal with ribbon"
+  },
+  "idol": {
+   "emoji": "🗿",
+   "desc": "a stone idol statue"
+  },
+  "bolt": {
+   "emoji": "⚡",
+   "desc": "a lightning bolt"
+  },
+  "hammer": {
+   "emoji": "🔨",
+   "desc": "a hammer"
+  },
+  "bricks": {
+   "emoji": "🧱",
+   "desc": "a brick wall piece"
+  },
+  "mountain": {
+   "emoji": "⛰",
+   "desc": "a mountain"
+  },
+  "lantern": {
+   "emoji": "🏮",
+   "desc": "a paper lantern"
+  },
+  "hall": {
+   "emoji": "🏛",
+   "desc": "a columned hall building"
+  },
+  "shop": {
+   "emoji": "🏪",
+   "desc": "a small market shop"
+  },
+  "boat": {
+   "emoji": "⛵",
+   "desc": "a sailing boat"
+  },
+  "star": {
+   "emoji": "★",
+   "desc": "a gold star"
+  }
+ }
+}

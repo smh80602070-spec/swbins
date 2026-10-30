@@ -1,0 +1,22 @@
+{
+ "id": "ui5_forest_mountain",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a mountain):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+ "negative_prompt": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+ "seed": 2026115371,
+ "steps": 28,
+ "cfg_scale": 6.0,
+ "sampler": "euler_ancestral/normal",
+ "size": [
+  1024,
+  1024
+ ],
+ "seconds": 18.3,
+ "date": "2026-10-30",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "ticket": "K-0202",
+ "packed_by": "tools/ai-art/k202_icons.py pack(배경 제거·알맹이 자르기·128/64)",
+ "from": "tools/ai-art/_out/k202/icons_b/forest_mountain.png"
+}

@@ -1,0 +1,2382 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "k202/icons_b",
+ "note": "K-0202 ④ UI 아이콘 상위 60 × 다섯 판(A 시안 재료)",
+ "kit": {
+  "spec": "icon",
+  "style": "C",
+  "style_name": "판별 재료"
+ },
+ "defaults": {
+  "prompt_prefix": "",
+  "width": 1024,
+  "height": 1024,
+  "steps": 28,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+  "variants": 2
+ },
+ "items": [
+  {
+   "id": "go_clipboard",
+   "seed": 2026113000,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a clipboard with a checklist):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_coin",
+   "seed": 2026113007,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a single round coin):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_swords",
+   "seed": 2026113014,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((two crossed swords):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_scroll",
+   "seed": 2026113021,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rolled scroll):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_wheat",
+   "seed": 2026113028,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bundle of wheat ears):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_book",
+   "seed": 2026113035,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an open book):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_target",
+   "seed": 2026113042,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an archery target with an arrow):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_flame",
+   "seed": 2026113049,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a flame):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_horse",
+   "seed": 2026113056,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a horse head):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_sparkle",
+   "seed": 2026113063,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((sparkles and stars):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_helmet",
+   "seed": 2026113070,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a soldier helmet):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_flag",
+   "seed": 2026113077,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a flag on a pole):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_golem",
+   "seed": 2026113084,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small mechanical golem head):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_shield",
+   "seed": 2026113091,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a shield):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_herb",
+   "seed": 2026113098,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a leafy herb sprig):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_bow",
+   "seed": 2026113105,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bow with an arrow):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_dagger",
+   "seed": 2026113112,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a dagger):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_map",
+   "seed": 2026113119,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a folded map):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_whirl",
+   "seed": 2026113126,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a swirling spiral):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_castle",
+   "seed": 2026113133,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a fortress castle):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_compass",
+   "seed": 2026113140,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a compass):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_wave",
+   "seed": 2026113147,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((ocean waves):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_fish",
+   "seed": 2026113154,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a fish):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_person",
+   "seed": 2026113161,
+   "prompt": "masterpiece, high score, great score, absurdres, ((a plain person bust silhouette):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_orb",
+   "seed": 2026113168,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crystal ball on a stand):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_crate",
+   "seed": 2026113175,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wooden crate):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_crown",
+   "seed": 2026113182,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crown):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_rock",
+   "seed": 2026113189,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rock):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_handshake",
+   "seed": 2026113196,
+   "prompt": "masterpiece, high score, great score, absurdres, ((two hands shaking):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_speech",
+   "seed": 2026113203,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a speech bubble):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_moneybag",
+   "seed": 2026113210,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bag of money):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_skull",
+   "seed": 2026113217,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a skull):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_drop",
+   "seed": 2026113224,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a water drop):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_trophy",
+   "seed": 2026113231,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a trophy cup):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_gift",
+   "seed": 2026113238,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wrapped gift box):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_ice",
+   "seed": 2026113245,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an ice cube):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_paw",
+   "seed": 2026113252,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an animal paw print):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_snow",
+   "seed": 2026113259,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a snowflake):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_whiteflag",
+   "seed": 2026113266,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a plain flag of surrender):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_signpost",
+   "seed": 2026113273,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wooden signpost):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_pit",
+   "seed": 2026113280,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a hole in the ground):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_backpack",
+   "seed": 2026113287,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a backpack):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_potion",
+   "seed": 2026113294,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a potion flask):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_house",
+   "seed": 2026113301,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small house):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_moon",
+   "seed": 2026113308,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crescent moon):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_knot",
+   "seed": 2026113315,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rope knot):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_gem",
+   "seed": 2026113322,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a cut gemstone):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_blossom",
+   "seed": 2026113329,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a blossom flower):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_medal",
+   "seed": 2026113336,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a military medal with ribbon):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_idol",
+   "seed": 2026113343,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a stone idol statue):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_bolt",
+   "seed": 2026113350,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a lightning bolt):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_hammer",
+   "seed": 2026113357,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a hammer):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_bricks",
+   "seed": 2026113364,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a brick wall piece):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_mountain",
+   "seed": 2026113371,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a mountain):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_lantern",
+   "seed": 2026113378,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a paper lantern):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_hall",
+   "seed": 2026113385,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a columned hall building):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_shop",
+   "seed": 2026113392,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small market shop):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_boat",
+   "seed": 2026113399,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a sailing boat):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "go_star",
+   "seed": 2026113406,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a gold star):1.4), topographic map badge icon, soft teal and cream pastel, thin contour lines, flat clean rounded shapes, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_clipboard",
+   "seed": 2026114000,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a clipboard with a checklist):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_coin",
+   "seed": 2026114007,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a single round coin):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_swords",
+   "seed": 2026114014,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((two crossed swords):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_scroll",
+   "seed": 2026114021,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rolled scroll):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_wheat",
+   "seed": 2026114028,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bundle of wheat ears):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_book",
+   "seed": 2026114035,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an open book):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_target",
+   "seed": 2026114042,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an archery target with an arrow):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_flame",
+   "seed": 2026114049,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a flame):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_horse",
+   "seed": 2026114056,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a horse head):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_sparkle",
+   "seed": 2026114063,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((sparkles and stars):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_helmet",
+   "seed": 2026114070,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a soldier helmet):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_flag",
+   "seed": 2026114077,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a flag on a pole):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_golem",
+   "seed": 2026114084,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small mechanical golem head):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_shield",
+   "seed": 2026114091,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a shield):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_herb",
+   "seed": 2026114098,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a leafy herb sprig):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_bow",
+   "seed": 2026114105,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bow with an arrow):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_dagger",
+   "seed": 2026114112,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a dagger):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_map",
+   "seed": 2026114119,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a folded map):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_whirl",
+   "seed": 2026114126,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a swirling spiral):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_castle",
+   "seed": 2026114133,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a fortress castle):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_compass",
+   "seed": 2026114140,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a compass):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_wave",
+   "seed": 2026114147,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((ocean waves):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_fish",
+   "seed": 2026114154,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a fish):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_person",
+   "seed": 2026114161,
+   "prompt": "masterpiece, high score, great score, absurdres, ((a plain person bust silhouette):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_orb",
+   "seed": 2026114168,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crystal ball on a stand):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_crate",
+   "seed": 2026114175,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wooden crate):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_crown",
+   "seed": 2026114182,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crown):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_rock",
+   "seed": 2026114189,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rock):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_handshake",
+   "seed": 2026114196,
+   "prompt": "masterpiece, high score, great score, absurdres, ((two hands shaking):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_speech",
+   "seed": 2026114203,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a speech bubble):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_moneybag",
+   "seed": 2026114210,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bag of money):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_skull",
+   "seed": 2026114217,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a skull):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_drop",
+   "seed": 2026114224,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a water drop):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_trophy",
+   "seed": 2026114231,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a trophy cup):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_gift",
+   "seed": 2026114238,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wrapped gift box):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_ice",
+   "seed": 2026114245,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an ice cube):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_paw",
+   "seed": 2026114252,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an animal paw print):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_snow",
+   "seed": 2026114259,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a snowflake):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_whiteflag",
+   "seed": 2026114266,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a plain flag of surrender):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_signpost",
+   "seed": 2026114273,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wooden signpost):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_pit",
+   "seed": 2026114280,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a hole in the ground):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_backpack",
+   "seed": 2026114287,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a backpack):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_potion",
+   "seed": 2026114294,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a potion flask):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_house",
+   "seed": 2026114301,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small house):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_moon",
+   "seed": 2026114308,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crescent moon):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_knot",
+   "seed": 2026114315,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rope knot):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_gem",
+   "seed": 2026114322,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a cut gemstone):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_blossom",
+   "seed": 2026114329,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a blossom flower):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_medal",
+   "seed": 2026114336,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a military medal with ribbon):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_idol",
+   "seed": 2026114343,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a stone idol statue):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_bolt",
+   "seed": 2026114350,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a lightning bolt):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_hammer",
+   "seed": 2026114357,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a hammer):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_bricks",
+   "seed": 2026114364,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a brick wall piece):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_mountain",
+   "seed": 2026114371,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a mountain):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_lantern",
+   "seed": 2026114378,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a paper lantern):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_hall",
+   "seed": 2026114385,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a columned hall building):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_shop",
+   "seed": 2026114392,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small market shop):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_boat",
+   "seed": 2026114399,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a sailing boat):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "dungeon_star",
+   "seed": 2026114406,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a gold star):1.4), dark forged iron plate relief icon, engraved rune grooves, tiny rivets, faint amber glow, heavy metal, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_clipboard",
+   "seed": 2026115000,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a clipboard with a checklist):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_coin",
+   "seed": 2026115007,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a single round coin):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_swords",
+   "seed": 2026115014,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((two crossed swords):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_scroll",
+   "seed": 2026115021,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rolled scroll):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_wheat",
+   "seed": 2026115028,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bundle of wheat ears):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_book",
+   "seed": 2026115035,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an open book):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_target",
+   "seed": 2026115042,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an archery target with an arrow):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_flame",
+   "seed": 2026115049,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a flame):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_horse",
+   "seed": 2026115056,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a horse head):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_sparkle",
+   "seed": 2026115063,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((sparkles and stars):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_helmet",
+   "seed": 2026115070,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a soldier helmet):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_flag",
+   "seed": 2026115077,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a flag on a pole):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_golem",
+   "seed": 2026115084,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small mechanical golem head):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_shield",
+   "seed": 2026115091,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a shield):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_herb",
+   "seed": 2026115098,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a leafy herb sprig):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_bow",
+   "seed": 2026115105,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bow with an arrow):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_dagger",
+   "seed": 2026115112,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a dagger):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_map",
+   "seed": 2026115119,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a folded map):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_whirl",
+   "seed": 2026115126,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a swirling spiral):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_castle",
+   "seed": 2026115133,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a fortress castle):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_compass",
+   "seed": 2026115140,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a compass):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_wave",
+   "seed": 2026115147,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((ocean waves):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_fish",
+   "seed": 2026115154,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a fish):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_person",
+   "seed": 2026115161,
+   "prompt": "masterpiece, high score, great score, absurdres, ((a plain person bust silhouette):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_orb",
+   "seed": 2026115168,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crystal ball on a stand):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_crate",
+   "seed": 2026115175,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wooden crate):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_crown",
+   "seed": 2026115182,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crown):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_rock",
+   "seed": 2026115189,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rock):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_handshake",
+   "seed": 2026115196,
+   "prompt": "masterpiece, high score, great score, absurdres, ((two hands shaking):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_speech",
+   "seed": 2026115203,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a speech bubble):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_moneybag",
+   "seed": 2026115210,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bag of money):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_skull",
+   "seed": 2026115217,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a skull):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_drop",
+   "seed": 2026115224,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a water drop):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_trophy",
+   "seed": 2026115231,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a trophy cup):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_gift",
+   "seed": 2026115238,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wrapped gift box):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_ice",
+   "seed": 2026115245,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an ice cube):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_paw",
+   "seed": 2026115252,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an animal paw print):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_snow",
+   "seed": 2026115259,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a snowflake):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_whiteflag",
+   "seed": 2026115266,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a plain flag of surrender):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_signpost",
+   "seed": 2026115273,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wooden signpost):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_pit",
+   "seed": 2026115280,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a hole in the ground):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_backpack",
+   "seed": 2026115287,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a backpack):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_potion",
+   "seed": 2026115294,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a potion flask):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_house",
+   "seed": 2026115301,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small house):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_moon",
+   "seed": 2026115308,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crescent moon):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_knot",
+   "seed": 2026115315,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rope knot):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_gem",
+   "seed": 2026115322,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a cut gemstone):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_blossom",
+   "seed": 2026115329,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a blossom flower):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_medal",
+   "seed": 2026115336,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a military medal with ribbon):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_idol",
+   "seed": 2026115343,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a stone idol statue):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_bolt",
+   "seed": 2026115350,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a lightning bolt):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_hammer",
+   "seed": 2026115357,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a hammer):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_bricks",
+   "seed": 2026115364,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a brick wall piece):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_mountain",
+   "seed": 2026115371,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a mountain):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_lantern",
+   "seed": 2026115378,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a paper lantern):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_hall",
+   "seed": 2026115385,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a columned hall building):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_shop",
+   "seed": 2026115392,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small market shop):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_boat",
+   "seed": 2026115399,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a sailing boat):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "forest_star",
+   "seed": 2026115406,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a gold star):1.4), embroidered cloth patch badge icon, the object stitched in colorful thread on a flat fabric patch, visible stitched border, pastel patchwork fabric, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_clipboard",
+   "seed": 2026116000,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a clipboard with a checklist):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_coin",
+   "seed": 2026116007,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a single round coin):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_swords",
+   "seed": 2026116014,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((two crossed swords):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_scroll",
+   "seed": 2026116021,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rolled scroll):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_wheat",
+   "seed": 2026116028,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bundle of wheat ears):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_book",
+   "seed": 2026116035,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an open book):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_target",
+   "seed": 2026116042,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an archery target with an arrow):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_flame",
+   "seed": 2026116049,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a flame):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_horse",
+   "seed": 2026116056,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a horse head):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_sparkle",
+   "seed": 2026116063,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((sparkles and stars):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_helmet",
+   "seed": 2026116070,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a soldier helmet):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_flag",
+   "seed": 2026116077,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a flag on a pole):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_golem",
+   "seed": 2026116084,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small mechanical golem head):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_shield",
+   "seed": 2026116091,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a shield):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_herb",
+   "seed": 2026116098,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a leafy herb sprig):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_bow",
+   "seed": 2026116105,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bow with an arrow):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_dagger",
+   "seed": 2026116112,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a dagger):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_map",
+   "seed": 2026116119,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a folded map):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_whirl",
+   "seed": 2026116126,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a swirling spiral):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_castle",
+   "seed": 2026116133,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a fortress castle):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_compass",
+   "seed": 2026116140,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a compass):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_wave",
+   "seed": 2026116147,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((ocean waves):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_fish",
+   "seed": 2026116154,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a fish):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_person",
+   "seed": 2026116161,
+   "prompt": "masterpiece, high score, great score, absurdres, ((a plain person bust silhouette):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_orb",
+   "seed": 2026116168,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crystal ball on a stand):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_crate",
+   "seed": 2026116175,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wooden crate):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_crown",
+   "seed": 2026116182,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crown):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_rock",
+   "seed": 2026116189,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rock):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_handshake",
+   "seed": 2026116196,
+   "prompt": "masterpiece, high score, great score, absurdres, ((two hands shaking):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_speech",
+   "seed": 2026116203,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a speech bubble):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_moneybag",
+   "seed": 2026116210,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bag of money):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_skull",
+   "seed": 2026116217,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a skull):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_drop",
+   "seed": 2026116224,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a water drop):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_trophy",
+   "seed": 2026116231,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a trophy cup):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_gift",
+   "seed": 2026116238,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wrapped gift box):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_ice",
+   "seed": 2026116245,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an ice cube):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_paw",
+   "seed": 2026116252,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an animal paw print):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_snow",
+   "seed": 2026116259,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a snowflake):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_whiteflag",
+   "seed": 2026116266,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a plain flag of surrender):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_signpost",
+   "seed": 2026116273,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wooden signpost):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_pit",
+   "seed": 2026116280,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a hole in the ground):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_backpack",
+   "seed": 2026116287,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a backpack):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_potion",
+   "seed": 2026116294,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a potion flask):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_house",
+   "seed": 2026116301,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small house):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_moon",
+   "seed": 2026116308,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crescent moon):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_knot",
+   "seed": 2026116315,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rope knot):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_gem",
+   "seed": 2026116322,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a cut gemstone):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_blossom",
+   "seed": 2026116329,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a blossom flower):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_medal",
+   "seed": 2026116336,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a military medal with ribbon):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_idol",
+   "seed": 2026116343,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a stone idol statue):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_bolt",
+   "seed": 2026116350,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a lightning bolt):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_hammer",
+   "seed": 2026116357,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a hammer):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_bricks",
+   "seed": 2026116364,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a brick wall piece):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_mountain",
+   "seed": 2026116371,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a mountain):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_lantern",
+   "seed": 2026116378,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a paper lantern):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_hall",
+   "seed": 2026116385,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a columned hall building):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_shop",
+   "seed": 2026116392,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small market shop):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_boat",
+   "seed": 2026116399,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a sailing boat):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "story_star",
+   "seed": 2026116406,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a gold star):1.4), bold comic book sticker icon, thick black ink outline, halftone dots, flat vivid colors, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_clipboard",
+   "seed": 2026117000,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a clipboard with a checklist):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_coin",
+   "seed": 2026117007,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a single round coin):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_swords",
+   "seed": 2026117014,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((two crossed swords):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_scroll",
+   "seed": 2026117021,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rolled scroll):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_wheat",
+   "seed": 2026117028,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bundle of wheat ears):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_book",
+   "seed": 2026117035,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an open book):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_target",
+   "seed": 2026117042,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an archery target with an arrow):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_flame",
+   "seed": 2026117049,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a flame):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_horse",
+   "seed": 2026117056,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a horse head):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_sparkle",
+   "seed": 2026117063,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((sparkles and stars):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_helmet",
+   "seed": 2026117070,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a soldier helmet):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_flag",
+   "seed": 2026117077,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a flag on a pole):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_golem",
+   "seed": 2026117084,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small mechanical golem head):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_shield",
+   "seed": 2026117091,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a shield):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_herb",
+   "seed": 2026117098,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a leafy herb sprig):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_bow",
+   "seed": 2026117105,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bow with an arrow):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_dagger",
+   "seed": 2026117112,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a dagger):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_map",
+   "seed": 2026117119,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a folded map):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_whirl",
+   "seed": 2026117126,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a swirling spiral):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_castle",
+   "seed": 2026117133,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a fortress castle):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_compass",
+   "seed": 2026117140,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a compass):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_wave",
+   "seed": 2026117147,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((ocean waves):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_fish",
+   "seed": 2026117154,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a fish):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_person",
+   "seed": 2026117161,
+   "prompt": "masterpiece, high score, great score, absurdres, ((a plain person bust silhouette):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_orb",
+   "seed": 2026117168,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crystal ball on a stand):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_crate",
+   "seed": 2026117175,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wooden crate):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_crown",
+   "seed": 2026117182,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crown):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_rock",
+   "seed": 2026117189,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rock):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_handshake",
+   "seed": 2026117196,
+   "prompt": "masterpiece, high score, great score, absurdres, ((two hands shaking):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_speech",
+   "seed": 2026117203,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a speech bubble):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_moneybag",
+   "seed": 2026117210,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a bag of money):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_skull",
+   "seed": 2026117217,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a skull):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_drop",
+   "seed": 2026117224,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a water drop):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_trophy",
+   "seed": 2026117231,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a trophy cup):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_gift",
+   "seed": 2026117238,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wrapped gift box):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_ice",
+   "seed": 2026117245,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an ice cube):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_paw",
+   "seed": 2026117252,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((an animal paw print):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_snow",
+   "seed": 2026117259,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a snowflake):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_whiteflag",
+   "seed": 2026117266,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a plain flag of surrender):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_signpost",
+   "seed": 2026117273,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a wooden signpost):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_pit",
+   "seed": 2026117280,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a hole in the ground):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_backpack",
+   "seed": 2026117287,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a backpack):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_potion",
+   "seed": 2026117294,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a potion flask):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_house",
+   "seed": 2026117301,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small house):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_moon",
+   "seed": 2026117308,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a crescent moon):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_knot",
+   "seed": 2026117315,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a rope knot):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_gem",
+   "seed": 2026117322,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a cut gemstone):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_blossom",
+   "seed": 2026117329,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a blossom flower):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_medal",
+   "seed": 2026117336,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a military medal with ribbon):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_idol",
+   "seed": 2026117343,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a stone idol statue):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_bolt",
+   "seed": 2026117350,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a lightning bolt):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_hammer",
+   "seed": 2026117357,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a hammer):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_bricks",
+   "seed": 2026117364,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a brick wall piece):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_mountain",
+   "seed": 2026117371,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a mountain):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_lantern",
+   "seed": 2026117378,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a paper lantern):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_hall",
+   "seed": 2026117385,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a columned hall building):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_shop",
+   "seed": 2026117392,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a small market shop):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_boat",
+   "seed": 2026117399,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a sailing boat):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  },
+  {
+   "id": "realm_star",
+   "seed": 2026117406,
+   "prompt": "masterpiece, high score, great score, absurdres, no humans, ((a gold star):1.4), woodblock print icon, carved black ink lines on aged paper, vermilion red seal accent, limited palette, single object, centered, simple plain light gray background, game item icon",
+   "negative": "text, letters, watermark, signature, frame, border, multiple objects, hands, human, face, ground shadow, cropped, blurry, lowres, worst quality",
+   "width": 1024,
+   "height": 1024
+  }
+ ]
+}

@@ -21,3 +21,4 @@
 - [ ] 10-30 · (K-0202) UI 2차 A 로 정본 `saga-assets/ui/<판>`(부품 19×5) 교체 끝, 웹은 덮음 · 유니티: `Resources/UI/<판>` 다시 복사(`place --item ui-skin`, .meta 는 안 올림) · 고돗: `assets/ui_skin` 다시 복사 + .import · 웹: 판별 글꼴·모서리 CSS(W 줄) · 자체툴 끝
 - [ ] 10-30 · (K-0202) 4종횡 표시 글꼴 `fonts/BlackHanSans-saga.woff2`(웹 shared·종횡 폴더에 있음) — 종횡 `skin-ui.css` `SkinHead` 를 주아→Black Han Sans 로 · 웹
 - [ ] 10-30 · (K-0202) 1만리 UI 아이콘 60(`saga-assets/icons/glyph/go/<이름>_128·_64.png`) — js 의 이모지를 이 그림으로(★ 205·🪙 120·⚔ 102 …, 이름은 `tools/ai-art/make_k202_icons.py` LIST) · place 항목 새로(glyph 폴더는 아직 어디에도 안 감) · 웹 · 나머지 네 판은 자체툴이 뒤따라 만듦
+- [ ] 10-30 · (K-0202 ④) 이모지 대신 쓸 UI 아이콘 59종 × 다섯 판 `saga-assets/icons/ui5/<판>/<개념>.png`(128)·`_64.png` + `index.json`(개념 → 이모지 짝) — 웹: 다섯 판 UI 의 이모지(📋🪙★⚔📜🌾…)를 판 폴더의 아이콘으로(판마다 결이 다름 — go 지도판·dungeon 철판·forest 천 패치·story 만화·realm 목판). 웹 shared 복사는 place 쪽, 아직 안 함 · 웹

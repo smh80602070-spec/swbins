@@ -431,14 +431,14 @@
    "tool": "gen.py (ComfyUI)",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 2119,
+   "count": 2414,
    "where": [
     "saga-assets/icons/license",
-    "saga-assets/portraits-expr",
-    "saga-assets/portraits-live/hl_mukhyang",
-    "saga-assets/portraits-monster",
-    "saga-assets/portraits-mount",
-    "saga-assets/web2d/bg"
+    "saga-assets/icons/ui5/dungeon/license",
+    "saga-assets/icons/ui5/forest/license",
+    "saga-assets/icons/ui5/go/license",
+    "saga-assets/icons/ui5/realm/license",
+    "saga-assets/icons/ui5/story/license"
    ]
   },
   {
