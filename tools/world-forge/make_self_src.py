@@ -1,6 +1,7 @@
 """K-0113 world-forge 재질 = 자체 PBR — Poly Haven 사진(fetch_sources.py) 대신.
 
   py tools/world-forge/make_self_src.py            # _src/self/ 를 만든다(자체 PBR PNG + id 별 바탕색 + index.json)
+  py tools/world-forge/make_self_src.py --toon-only    # 툰 GLB 만 굽는 PC(원본 생성 그림 없음) — 정본 textures_real 바탕색으로(법선·거칠기 없음)
   py tools/world-forge/make_self_src.py --gain     # 옛 사진(_src/polyhaven)이 있을 때만: id 별 색 배율을 다시 재서 self_sources.json 에 박는다
 
 `self_sources.json` items = {재질 id(빌더가 쓰는 옛 이름 그대로): {"set": 자체 세트, "gain": [r, g, b]}}.
@@ -35,6 +36,18 @@ def main():
     items = tab['items']
     sets = sorted({v['set'] for v in items.values()})
     missing = [s for s in sets if not os.path.exists(os.path.join(PNG, s, f'{s}_hi.png'))]
+    if '--toon-only' in sys.argv:   # K-0208 — 툰은 바탕색 한 장만 쓴다: 원본 생성 그림(_out/k93_pbr, 그 PC 로컬) 없이 정본 textures_real/<세트>/<세트>_color.png 로 만든다(법선·거칠기 없음 → real 스타일 불가)
+        canon = os.path.join(ROOT, 'saga-assets', 'textures_real')
+        os.makedirs(OUT, exist_ok=True)
+        idx = {}
+        for tid, v in items.items():
+            sset, g = v['set'], np.array(v.get('gain', [1, 1, 1]), np.float32)
+            px = np.asarray(Image.open(os.path.join(canon, sset, f'{sset}_color.png')).convert('RGB'), np.float32) * g
+            Image.fromarray(np.clip(px, 0, 255).astype(np.uint8)).save(os.path.join(OUT, f'{tid}_diff.png'))
+            idx[tid] = {'diff': f'{tid}_diff.png', 'set': sset}
+        json.dump(idx, open(os.path.join(OUT, 'index.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        print(f'SELF_SRC_OK(toon-only) {len(idx)} id → {OUT}')
+        return
     if missing:
         r = subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'ai-art', 'pbr_from_albedo.py'), '--sets', ','.join(sets), '--png', PNG], cwd=ROOT)
         if r.returncode:

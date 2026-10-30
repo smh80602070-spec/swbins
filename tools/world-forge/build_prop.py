@@ -94,6 +94,22 @@ def gable(M, base, size, rise, yaw, slot, tile=1.0):
     M.quad(a0, a3, a2, a1, slot, (0, 0), (0, ln), (size[0] / tile, ln), (size[0] / tile, 0))
 
 
+def frustum(M, base, bsize, tsize, h, slot, tile=1.0):
+    """K-0208 — 위가 좁아지는 사각 뿔대(닫힌 덩어리). base = 바닥 가운데, bsize·tsize = (x, y) 아래·위 크기. 모서리를 비스듬히 깎은 돌덩이·받침에 쓴다."""
+    b = Vector(base)
+    bx, by = bsize[0] / 2, bsize[1] / 2
+    tx, ty = tsize[0] / 2, tsize[1] / 2
+    lo = [b + Vector((-bx, -by, 0)), b + Vector((bx, -by, 0)), b + Vector((bx, by, 0)), b + Vector((-bx, by, 0))]
+    hi = [b + Vector((-tx, -ty, h)), b + Vector((tx, -ty, h)), b + Vector((tx, ty, h)), b + Vector((-tx, ty, h))]
+    sl = math.hypot(h, max(bx - tx, by - ty)) / tile
+    for k in range(4):
+        k2 = (k + 1) % 4
+        wd = (lo[k2] - lo[k]).length / tile
+        M.quad(lo[k], lo[k2], hi[k2], hi[k], slot, (0, 0), (wd, 0), (wd, sl), (0, sl))
+    M.quad(hi[0], hi[1], hi[2], hi[3], slot, (0, 0), (bsize[0] / tile, 0), (bsize[0] / tile, bsize[1] / tile), (0, bsize[1] / tile))
+    M.quad(lo[3], lo[2], lo[1], lo[0], slot, (0, 0), (bsize[0] / tile, 0), (bsize[0] / tile, bsize[1] / tile), (0, bsize[1] / tile))
+
+
 def annulus(M, c, r_in, r_out, h, slot, tile=1.0, n=14):
     """고리 기둥(우물 둘레). 닫힌 덩어리."""
     c = Vector(c)
@@ -255,12 +271,27 @@ def bamboo_clump_01(C):
 
 
 def stele_01(C):
+    """K-0208 — 비석: 계단 받침 + 위가 살짝 좁은 몸돌 + 글 새김 판(테두리·글줄 홈) + 처마 돌과 이끼. 크기 1.3 × 0.7 × 2.51 그대로."""
     M = C.M
     st = C.s('japanese_stone_wall', 1.2)
     dk = C.s('japanese_stone_wall', 1.2, '#8a8478')
-    obox(M, (0, 0, 0), (1.3, 0.7, 0.25), 0, dk, 1.2)                  # 받침
-    obox(M, (0, 0, 0.25), (0.95, 0.24, 2.0), 0, st, 1.2)
-    gable(M, (0, 0, 2.25), (1.05, 0.34), 0.26, 90, dk, 1.0)         # 갓
+    gr = C.s('japanese_stone_wall', 1.2, '#5c5a52')                    # 새김 홈(어두운 돌)
+    moss = C.s('japanese_stone_wall', 1.0, '#6b7a4e')
+    obox(M, (0, 0, 0), (1.3, 0.7, 0.2), 0, dk, 1.2)                    # 받침 아래 단
+    frustum(M, (0, 0, 0.2), (1.12, 0.58), (1.02, 0.5), 0.17, st, 1.2)  # 받침 위 단(깎인 옆)
+    frustum(M, (0, 0, 0.37), (0.95, 0.26), (0.86, 0.23), 1.75, st, 1.2)  # 몸돌 — 위로 갈수록 가늘다
+    obox(M, (0, -0.128, 0.62), (0.66, 0.02, 1.2), 0, gr, 1.0)          # 글 새김 판
+    for z in (0.62, 1.78):                                             # 판 테두리 가로
+        obox(M, (0, -0.138, z), (0.7, 0.014, 0.035), 0, dk, 1.0)
+    for x in (-0.34, 0.34):                                            # 판 테두리 세로
+        obox(M, (x, -0.138, 0.62), (0.035, 0.014, 1.2), 0, dk, 1.0)
+    for k in range(5):                                                 # 글줄 홈(글자는 없다 — 줄 느낌만)
+        obox(M, (0, -0.145, 0.78 + k * 0.2), (0.5 - (k % 2) * 0.1, 0.012, 0.04), 0, dk, 1.0)
+    frustum(M, (0, 0, 2.12), (1.0, 0.36), (0.9, 0.31), 0.13, dk, 1.2)  # 갓 밑단
+    gable(M, (0, 0, 2.25), (1.05, 0.34), 0.26, 90, dk, 1.0)            # 갓
+    obox(M, (0.36, -0.2, 0.2), (0.3, 0.12, 0.05), 0, moss, 1.0)        # 이끼(받침 위)
+    obox(M, (-0.42, 0.18, 0.37), (0.24, 0.1, 0.04), 0, moss, 1.0)
+    obox(M, (0.28, 0.1, 2.12), (0.26, 0.12, 0.03), 0, moss, 1.0)       # 이끼(갓 아래)
 
 
 def stone_lantern_01(C):
@@ -279,15 +310,32 @@ def stone_lantern_01(C):
 
 
 def banner_pole_01(C):
+    """K-0208 — 깃대: 두 단 돌 받침 + 깃대 끝 장식(구슬·뾰족) + 가로대 끝 마개 + 두 줄 띠 천·가운데 둥근 문양·술(글자·원작 무늬 없음). 받침 0.7 × 0.7, 높이 5.45 그대로."""
     M = C.M
     st = C.s('castle_wall_slates', 1.2)
     wd = C.s('black_painted_planks', 1.0)
     cloth = C.s('clay_roof_tiles', 1.0, '#8b1e2d', sat=0.9)
-    obox(M, (0, 0, 0), (0.7, 0.7, 0.3), 0, st, 1.2)
-    tube(M, (0, 0, 0.3), (0, 0, 5.2), 0.07, 0.05, wd, 1.0, 6)
+    gold = C.s('black_painted_planks', 1.0, '#c4993a')
+    dkred = C.s('clay_roof_tiles', 1.0, '#5e1320', sat=0.9)
+    obox(M, (0, 0, 0), (0.7, 0.7, 0.14), 0, st, 1.2)
+    frustum(M, (0, 0, 0.14), (0.52, 0.52), (0.4, 0.4), 0.16, st, 1.2)
+    tube(M, (0, 0, 0.3), (0, 0, 5.2), 0.07, 0.05, wd, 1.0, 8)
+    tube(M, (0, 0, 0.3), (0, 0, 0.42), 0.12, 0.08, gold, 1.0, 8)       # 깃대 뿌리 쇠
+    tube(M, (0, 0, 5.2), (0, 0, 5.3), 0.1, 0.09, gold, 1.0, 8)         # 끝 장식 — 받침 고리
+    tube(M, (0, 0, 5.3), (0, 0, 5.42), 0.09, 0.0, gold, 1.0, 8)        # 끝 장식 — 뾰족
     obox(M, (0.55, 0, 4.5), (1.1, 0.06, 0.06), 0, wd)                  # 가로대
-    obox(M, (0.55, 0, 2.6), (0.95, 0.025, 1.9), 0, cloth)             # 무늬 없는 천
-    tube(M, (0, 0, 5.2), (0, 0, 5.45), 0.09, 0.0, wd, 1.0, 5)
+    tube(M, (1.1, 0, 4.53), (1.16, 0, 4.53), 0.05, 0.05, gold, 1.0, 6) # 가로대 끝 마개
+    obox(M, (0.55, 0, 2.6), (0.95, 0.025, 1.9), 0, cloth)              # 천
+    for z in (4.28, 2.78):                                             # 위·아래 띠
+        obox(M, (0.55, 0, z), (0.95, 0.032, 0.1), 0, gold)
+    obox(M, (0.55, 0, 2.6), (0.95, 0.03, 0.14), 0, dkred)              # 가운데 줄
+    tube(M, (0.55, 0.0145, 3.55), (0.55, 0.028, 3.55), 0.2, 0.19, gold, 1.0, 10)    # 문양 — 둥근 판(앞)
+    tube(M, (0.55, -0.0145, 3.55), (0.55, -0.028, 3.55), 0.2, 0.19, gold, 1.0, 10)  # (뒤)
+    tube(M, (0.55, 0.028, 3.55), (0.55, 0.036, 3.55), 0.1, 0.09, dkred, 1.0, 8)
+    tube(M, (0.55, -0.028, 3.55), (0.55, -0.036, 3.55), 0.1, 0.09, dkred, 1.0, 8)
+    for k in range(6):                                                 # 아랫단 술
+        x = 0.14 + k * 0.82 / 5
+        tube(M, (x, 0, 2.62), (x, 0, 2.36), 0.022, 0.012, gold, 1.0, 5)
 
 
 def city_wall_segment_01(C):
