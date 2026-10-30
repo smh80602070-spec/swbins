@@ -2,7 +2,7 @@
 가장 큰 덩어리 말고 따로 떠 있는 덩어리가 몸 넓이의 0.4% 넘으면 「떨어짐」(부위 이음이 벌어졌거나 부위가 날아감).
 옷자락 인물(rig.clips 있음)은 팩의 <이름>~robe 를 쓴다(웹과 같은 규칙).
 
-  py tools/ai-art/k188/detach_check.py [id,id…|all] [--clips a,b|all] [--phases 6] [--h 160] [--sheet out.png] [--cut 시험폴더]
+  py tools/ai-art/k188/detach_check.py [id,id…|all] [--view side|front|back] [--clips a,b|all] [--phases 6] [--h 160] [--sheet out.png] [--cut 시험폴더]
   → 끝 줄 DETACH 떨어짐 n / 검사 m · _out/k199/detach.json(목록) · --sheet 이면 떨어진 장면 앞 40장 시트
 """
 import json
@@ -20,9 +20,14 @@ A = sys.argv[1:]
 opt = lambda k, d=None: A[A.index(k) + 1] if k in A else d
 CUT = os.path.join(K.ROOT, 'saga-assets', 'web2d', 'cutout')
 CUT_IN = opt('--cut', CUT)   # 시험 자름 폴더(<id>/rig.json) — 팩·index 는 정본에서
-pack = json.load(open(os.path.join(CUT, '_clips', 'side.json'), encoding='utf-8'))
-idx = json.load(open(os.path.join(CUT, 'index.json'), encoding='utf-8'))['pools']
-ids = sorted(set(idx.values())) if not A or A[0] in ('all',) or A[0].startswith('--') else A[0].split(',')
+VIEW = opt('--view', 'side')   # K-0199 ④ 앞·뒤 — front|back 이면 팩 <view>.json · rig <id>~<view>
+pack = json.load(open(os.path.join(CUT, '_clips', VIEW + '.json'), encoding='utf-8'))
+_ix = json.load(open(os.path.join(CUT, 'index.json'), encoding='utf-8'))
+idx = _ix['pools']
+if not A or A[0] in ('all',) or A[0].startswith('--'):
+    ids = sorted(set(idx.values())) if VIEW == 'side' else sorted(k + '~' + VIEW for k, v in _ix.get('dirs', {}).items() if VIEW in v)
+else:
+    ids = [x if VIEW == 'side' or '~' in x else x + '~' + VIEW for x in A[0].split(',')]
 names = [k for k in pack if not k.endswith('~robe')] if opt('--clips', 'all') == 'all' else opt('--clips').split(',')
 NP, H = int(opt('--phases', 6)), int(opt('--h', 160))
 TH = float(opt('--th', 0.004))
