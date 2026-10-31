@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/speaker",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of head speaking with sound waves. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 1052850228,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 96.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "8996e3f1e4840f64292a490574aada67dc9b32ad75d40bf0cb8cf1e10735f846",
+ "output_sha256": "3ee2f9dc4e95c103fa117992bb149cade30da70fb7d48d6ad29015856c03a036"
+}

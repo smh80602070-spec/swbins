@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/swords",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of two crossed swords. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 4012823237,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 94.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "b13c2b1f10782def8a41d626db8659a7c5641834a72fb14912d4abc649bbdb9b",
+ "output_sha256": "d3c050dc1ff7518d21ec0c501a6080cb50920ec678c59d79e0e08941bbf8d924"
+}

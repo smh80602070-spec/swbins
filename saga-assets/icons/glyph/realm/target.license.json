@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/target",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of archery target bullseye. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 1513796332,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 94.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "ba8e8a8ba7f6d353b1a61d6981c8e355934e61e3ab220f46d6f51ca25f937550",
+ "output_sha256": "0a82e709faee99408ceb9e7d272b2ff175e19771696310352be5a10aee634977"
+}

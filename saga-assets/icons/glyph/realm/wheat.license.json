@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/wheat",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of wheat ears. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 2622209931,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 96.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "a9196e3b1f25bc7e3e8190b55f6b40357d07c6b791f7928f925c19c33eb14058",
+ "output_sha256": "ede80531c72b395b5a020e65c0c8fecf62fc1f98becd9d171d2d121f950e3b21"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/fencer",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of fencing mask. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 2877686642,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 98.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "0a2a58b49afb7e909b1a79d38d2ba251fb74e08701474d822fec1abacc6b553f",
+ "output_sha256": "fd2d9f0a5649a15bd7445747d2109aaf4791e6608d1f3117b7f370c923bdf9b8"
+}

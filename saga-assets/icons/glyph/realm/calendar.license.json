@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/calendar",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of wall calendar. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 2496423934,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 94.2,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "5cfa4819e2c2179a773cf06c40c4d2a28f674f89d1b77ae3321e67fb8f44dc85",
+ "output_sha256": "9fd730112269ffc84fca2757a7c778e1cb0a85ba8d7080d88c0956a91e584cf9"
+}

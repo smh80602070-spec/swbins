@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/elephant",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of elephant head. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 2038368357,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 96.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "0ce34f3bfa116d21a0bcff894544ebe228f5f1e944c877e1a1e86017b97dfb6c",
+ "output_sha256": "e5751b78d2a7fb5d39e63f556d8331d75706bc22c8f5700c30c699c1571a7b3e"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/mountain",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of mountain peak. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 1418964432,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 96.2,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "2fbb0062a9ed0c95ff8dedf5aac70d3ced94ca9067f141ea7b66442d02462da5",
+ "output_sha256": "73ac38318c31bff167b0f4891a02ee892e231dba1070bb5f01f3772dd2d7c683"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/flame",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of campfire flame. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 3171988387,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 92.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "f6471a44367fa1dd8602297c9ccb81c62f02425ba424372849baf2a3d2ad0526",
+ "output_sha256": "d07f2dc1dcb34406acd1f0e490bb458839747b77fac0e5272af12b6b90d789a7"
+}

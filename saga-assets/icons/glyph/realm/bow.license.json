@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/bow",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of wooden archery bow with an arrow. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 3343723258,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 106.6,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "539517110ce0ef2129835339e889db222c65fb08ae15f8886a907b95bc7fa923",
+ "output_sha256": "f849cfa8390502c8bac653a58343fef724182d4869d97eab3ea8cdf9e6c51ca1"
+}

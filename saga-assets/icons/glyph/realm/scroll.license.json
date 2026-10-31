@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/scroll",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of rolled paper scroll tied with a ribbon. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 2870236514,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 98.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "bf59525919d27de3cc5441e7874c249a657790e43ff59963fd94f83dc4997cc8",
+ "output_sha256": "ca8c45f5d685c8c00cb12cf23f65b5f180cbb631a15145ec0708880ac8f5a290"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/pawn",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of chess pawn. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 1373497545,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 100.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "a83ae66c990047a3fdac26fdea080ac8772ad09d59ee3c2e57e994bb0b56be61",
+ "output_sha256": "d7daa8c6567f5a5ea4f5d47f1cd6ee062b446d7c0bae8c5f0cbc3aa89c1f02d8"
+}

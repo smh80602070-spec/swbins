@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/coffin",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of coffin. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 1837126577,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 98.2,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "af6036d94209b1a8f46ccc21690137b91d8eb7531274b8a972db205d14b9be48",
+ "output_sha256": "d8c5245504ec267bdb6adf0fbd211e3ee313f018fcfd61947a4d21197d5706c4"
+}

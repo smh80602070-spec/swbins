@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/clipboard",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of clipboard with a checklist. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 1543036013,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 108.2,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "e980902df4c833cf4f0006b3403db0d32843b6be50c236bfc21b7761dda3930f",
+ "output_sha256": "05dcbbb03e8410d31604ae1876e088ae015d1538a4a4a5800af7c3e636bdb18e"
+}

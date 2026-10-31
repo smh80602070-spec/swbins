@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/crystal",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of crystal ball on a stand. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 2719190318,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 94.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "c314e9acad4391e5be42796236da86846a0f2b6a1bca0bcd8a39ac7c11bc1a29",
+ "output_sha256": "23ec66691814a22851cddcd6be3d6bad8a4894ab44c3c741ec9bc38a07998f1d"
+}

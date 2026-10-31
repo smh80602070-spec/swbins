@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/trophy",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of golden trophy cup. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 868057150,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 98.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "f98266f5a0d6646cfb0dafed1223e3b19cd319f0e1e18ccfc9ec1630182bb580",
+ "output_sha256": "c1498932a8a46aa75a6d593a5c19df5d155a23214929679ac68934c3e7f36087"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/sparkle",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of three sparkles. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 1549651865,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 108.2,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "4a8b1568705d4dcb1b6829768b1fab21ec98e7fe40d32096879a3327d6cf7994",
+ "output_sha256": "1338c20bc93f793ca18b9deef6782ae2a354ae8b8997b01d1b4326e9d22f746c"
+}

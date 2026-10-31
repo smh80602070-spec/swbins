@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/map",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of folded paper map. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 3012183471,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 94.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "101a174cfcb541449b4fe0a2a7234fa0417293fb3d0dc3c40929ed47306b3629",
+ "output_sha256": "7ae7374e731df38bd0cdbc91c39c3818e996284fe282e7c73f78dfd09a4b8fa4"
+}

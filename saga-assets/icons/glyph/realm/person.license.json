@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/person",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of person bust silhouette, head and shoulders. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 317537177,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 98.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "36a9b6c9c8cb9ab29c8a82cffee425d73b693820175fa1fb05b04a912eff5163",
+ "output_sha256": "cf8b00ff06b4cb48d58fdb57914a2a0a282e0f74438825086df2ed66d4990be6"
+}

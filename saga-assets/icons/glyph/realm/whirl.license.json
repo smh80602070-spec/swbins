@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/whirl",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of whirlpool spiral. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 911408213,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 98.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "a8b705a38bfe848c570a4c7839524c2902290c2dd095740928350dec3ef9c6c7",
+ "output_sha256": "fa1e838d5c5e3998d6b239c5e3058cbb4c45e43a2b3aa79dcc2068a80be7634b"
+}

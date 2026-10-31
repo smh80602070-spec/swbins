@@ -1,0 +1,21 @@
+{
+ "id": "glyph/realm/star",
+ "generator": "tools/ai-art/gen.py (ComfyUI)",
+ "model": "z-image-turbo",
+ "model_license": "Apache-2.0",
+ "prompt": "A flat vector game icon of five pointed star. Woodblock print look, bold carved black outlines, flat vermilion red, black and ochre colors only, simple bold shapes. One single object centered, plain white background, no text, no shadow, sticker style.",
+ "negative_prompt": "",
+ "seed": 923719569,
+ "steps": 8,
+ "cfg_scale": 1.0,
+ "sampler": "res_multistep/simple",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 98.1,
+ "date": "2026-10-31",
+ "note": "K-0202 ④ UI 아이콘(realm) — 흰 배경 제거·정사각 128·64 (k202_icon_pack.py)",
+ "request_sha256": "8c76a3aafba3d8235c037aab700e1418a0c30c0e133831432dd601f6a4bd6e7b",
+ "output_sha256": "a26b12d67b42b7cb0c8c6ffe06ec9a2056db7dcd02088cfbcd851601a2da7df0"
+}
