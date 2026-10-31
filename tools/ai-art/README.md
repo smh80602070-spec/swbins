@@ -87,6 +87,7 @@ A1111 1.10.1(2025-02 멈춤) → **ComfyUI**(Windows ROCm 공식, 포트 8188). 
 - 켜기 플래그(`start_sd.ps1`): `--use-pytorch-cross-attention --disable-dynamic-vram --lowvram --disable-pinned-memory --fp32-vae`(실측으로 고름 — 동적 VRAM 은 모델을 프롬프트마다 갈아 끼우고, fp16 VAE 는 Z-Image 가 깨진다), `TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1`. MIOpen 은 ComfyUI 가 RDNA3 에서 스스로 끈다. 기동 5~6분.
 - 판정기(`asset-audit/judge/judge.sh`)도 `C:\swbins3\comfyui\venv` 파이썬으로 돈다.
 - 측정(RX 7600, 10-08): Z-Image 1024² 184초·768² 101초(샘플링은 40·19초, 나머지가 CPU 인코딩) · Illustrious 832×1216 86~150초·768² 64초. 상세·다음 최적화 후보는 swbins3 `SETUP_GUIDE.md` §6. 첫 그림 품질: Z-Image 아이콘(청동 호랑이 부적)은 사진급, Illustrious 초상은 애니 정상 — 사용자 눈 판정은 K-0082.
+- K-0210 실측(RX 7600, 10-31, Z-Image 768² 아이콘 5장 `_out/k210_*`): 기준선 장당 99.6초(샘플링 18·텍스트 인코딩 약 48·VAE/로드 약 33, 같은 씨앗 결과 픽셀 동일). 시도한 것 모두 기각 — VAE 타일 256/32: 장당 209~381초·그림 달라짐 / `--lowvram` 제거(인코더 GPU): 샘플링 21.6 s/it·장당 193~335초 / 인코딩만 GPU 에 올렸다 모두 내리는 자체 노드: 샘플링 55 s/it·장당 323~467초 / 판정기 fp16: 이미 GPU fp16(바꿀 것 없음). 8GB 에서 인코더를 GPU 에 한 번이라도 올리면 뒤 샘플링이 크게 느려진다. 이 PC·이 조건에서 99.6초가 최선, 남은 길은 인코더를 더 작은 양자화로 바꾸는 것뿐(모델 교체 금지라 보류).
 
 ## 새 배치는 키트로만 (K-0070, 2026-10-05)
 프롬프트는 손으로 쓰지 않는다. 소넷은 **주제(영어 태그 5~8개)** 만 적고 구도·배경·그림체·부정어·크기·씨앗은 `prompt_kit.py` 가 채운다. 입력은 `batches/_in/<이름>.json`:
