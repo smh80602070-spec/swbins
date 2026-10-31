@@ -181,6 +181,12 @@
     for (k in tjson.pairs) { if (!tjson.pairs.hasOwnProperty(k)) { continue; } P = tjson.pairs[k]; if (P.a === b1 && P.b === b2) { return { key: k, P: P, aFirst: true }; } if (P.a === b2 && P.b === b1) { return { key: k, P: P, aFirst: false }; } }
     return null;
   }
+  /** K-0193 돌바닥 변주(이끼·금·큰 판석) — 한 바탕만 있는 칸에서 좌표 해시로 섞는다(같은 칸 늘 같은 그림). 이음 칸(아틀라스)은 그대로. 손잡이 world.stoneVariants 0 = 옛 한 장 */
+  var STONE_V = { go_stone: ['go_stone', 'go_stone', 'go_stone_b', 'go_stone_c', 'go_stone_d'] };
+  function variantOf(base, x, y) {
+    var L = STONE_V[base], C = core(); if (!L || (C && C.tuned && !+C.tuned('world.stoneVariants', 1))) { return base; }
+    var n = (Math.imul(x | 0, 374761393) + Math.imul(y | 0, 668265263)) | 0; n = Math.imul(n ^ (n >>> 13), 1274126177); return L[((n ^ (n >>> 16)) >>> 0) % L.length];
+  }
   function dualIndex(nwA, neA, swA, seA) { return (nwA ? 1 : 0) + (neA ? 2 : 0) + (swA ? 4 : 0) + (seA ? 8 : 0); }
   /** 조각 캔버스에 이중 격자 바탕을 깐다 — 조각 원점 = 땅 칸 (cx*CH, cy*CH). 돌아온 값 = 그린 칸 수(그림 없으면 0) */
   function drawDual(g, cx, cy, T, b, terrainAt) {
@@ -192,7 +198,7 @@
       if (!b0) { continue; }
       px = Math.round(((x - cx * CH) + 0.5) * T); py = Math.round(((y - cy * CH) + 0.5) * T);
       var pw = Math.round(((x - cx * CH) + 1.5) * T) - px, ph = Math.round(((y - cy * CH) + 1.5) * T) - py;
-      if (b0 === b1 && b0 === b2 && b0 === b3) { img = timg(b0, TILE_BASE + b0 + '.webp'); if (img) { g.drawImage(img, px, py, pw, ph); n++; } continue; }
+      if (b0 === b1 && b0 === b2 && b0 === b3) { var vb = variantOf(b0, x, y); img = timg(vb, TILE_BASE + vb + '.webp'); if (img) { g.drawImage(img, px, py, pw, ph); n++; } continue; }
       var set = {}; set[b0] = 1; if (b1) { set[b1] = 1; } if (b2) { set[b2] = 1; } if (b3) { set[b3] = 1; }
       var keys = Object.keys(set); pr = keys.length === 2 ? pairFor(keys[0], keys[1]) : null;
       if (pr) {
@@ -340,5 +346,5 @@
   function npcMps(bodyM) { var C = core(), b = C && C.tuned ? +C.tuned('world.npc2dBps', 0.6) : 0.6; return bodyM > 0 && b > 0 ? b * bodyM : 0; }
   function strideMul() { var C = core(); return C && C.tuned ? Math.max(0.3, +C.tuned('world.stride2d', 1.45)) : 1.45; }
 
-  global.DG.field2d = { tall: function () { return tall; }, chunkStats: chunkStats, _chunkCells: chunkCells, paintTile: paintTile, autotile: { on: autotileOn, baseOf: baseOf, pairFor: pairFor, dualIndex: dualIndex, seamed: seamed, loaded: function () { return tLoaded; }, json: function () { return tjson; }, _set: function (j) { tjson = j; kindBase = null; tjTried = true; } }, treeRects: treeRects, TALL: TALL, walkMps: walkMps, strideMul: strideMul, wander: wander, npcMps: npcMps, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
+  global.DG.field2d = { variantOf: variantOf, tall: function () { return tall; }, chunkStats: chunkStats, _chunkCells: chunkCells, paintTile: paintTile, autotile: { on: autotileOn, baseOf: baseOf, pairFor: pairFor, dualIndex: dualIndex, seamed: seamed, loaded: function () { return tLoaded; }, json: function () { return tjson; }, _set: function (j) { tjson = j; kindBase = null; tjTried = true; } }, treeRects: treeRects, TALL: TALL, walkMps: walkMps, strideMul: strideMul, wander: wander, npcMps: npcMps, CELL: CELL, color: color, BASE: BASE, zoomMul: zoomMul, KCOL: KCOL, on: on, h01: h01, PROPS: PROPS, propsAt: propsAt, edgeColor: edgeColor, decorate: decorate, seasonRgb: seasonRgb };
 })(typeof window !== 'undefined' ? window : this);

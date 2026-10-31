@@ -17946,6 +17946,13 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var fresh = ['zp_traffic', 'zp_stop', 'zp_ac', 'zp_antenna', 'zp_propane', 'zp_solar', 'zp_solar_low', 'zp_capsule', 'zp_radar', 'zp_rover', 'zp_tank', 'zp_turret', 'zp_tree_float', 'zp_tree_light', 'zp_tree_lava', 'zp_tree_spiral', 'zp_cactus', 'zp_palm'].every(function (k) { return !!P[k]; });
       return (fresh && bad.length === 0 && ks.length >= 30) || ('실패 ' + fresh + ' ' + ks.length + ' ' + bad.join(','));
     });
+    t('K-0193 돌바닥 변주 — go_stone 칸이 좌표 해시로 네 그림(기본 둘 몫 + b·c·d)에 고르게 나뉘고 같은 칸은 늘 같으며 다른 바탕·손잡이 0 은 그대로', function () {
+      var F = DG.field2d, C = DG.core, seen = {}, i, j, r = [], again = true;
+      for (i = 0; i < 40; i++) { for (j = 0; j < 40; j++) { var v = F.variantOf('go_stone', i, j); seen[v] = (seen[v] || 0) + 1; if (F.variantOf('go_stone', i, j) !== v) { again = false; } } }
+      r.push(again, Object.keys(seen).length === 4, seen.go_stone > seen.go_stone_b && seen.go_stone_b > 100, F.variantOf('go_grass', 3, 4) === 'go_grass');
+      C.setTune('world.stoneVariants', 0); r.push(F.variantOf('go_stone', 5, 6) === 'go_stone'); C.setTune('world.stoneVariants', null);
+      return r.every(Boolean) || ('실패 ' + r.join(',') + ' ' + JSON.stringify(seen));
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
