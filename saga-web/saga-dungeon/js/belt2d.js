@@ -96,7 +96,28 @@
       if (dep) { kk = (ctx.getTransform && ctx.getTransform().a) || 1; oc = gOC || (gOC = document.createElement('canvas')); var ow = Math.ceil(cw * wd * kk), oh = Math.ceil((m.ch - m.top + 10) * kk); if (oc.width !== ow || oc.height !== oh) { oc.width = ow; oc.height = oh; } tx = oc.getContext('2d'); tx.setTransform(1, 0, 0, 1, 0, 0); tx.clearRect(0, 0, ow, oh); tx.save(); tx.setTransform(kk, 0, 0, kk, 0, 0); tx.translate(cw * (wd - 1) / 2, -m.top); }
       else { ctx.save(); ctx.beginPath(); ctx.rect(-10, m.top, cw + 20, m.ch - m.top + 10); ctx.clip(); }   // 땅 타일이 하늘을 덮지 않게
       var U = 220, wx0 = Math.floor((m.camX - wd * cw / (2 * s)) / U) * U - U, wy0 = Math.floor((m.y0 - 40) / U) * U, ww = wd * cw / s + U * 3, hh = (m.ch - m.top) / m.k + U * 3;
-      M.fillIso(tx, { id: (cfg.tile || {})[theme.name] || 'dungeon_grass', a: s, b: 0, c: 0, d: m.k, e: cw / 2 + (wx0 - m.camX) * s, f: m.top + (wy0 - m.y0) * m.k, W: ww, H: hh, tint: theme.floor, tintAlpha: 0.8, unit: U });   // 무늬는 옅게(이끼 돌 결이 시끄러웠다)
+      var WMf = global.DG.worldMap, Ff = global.DG.field3d, FT = cfg.fieldTile, CK = (Ff && Ff.CHUNK) || 200;
+      if (m.town && WMf && WMf.info && FT && +((core().tuned && core().tuned('dg.fieldTile2d', 1)) || 0) > 0) {   // W-0500 ② 칸(200)마다 땅 종류 타일 → 경계 그늘 (1만리 field2d 식, 손잡이 dg.fieldTile2d 0 = 옛 한 장)
+        var gx0 = Math.floor(wx0 / CK), gx1 = Math.floor((wx0 + ww) / CK), gy0 = Math.floor(wy0 / CK), gy1 = Math.floor((wy0 + hh) / CK), gx, gy, grid = {}, inf, kd, id0;
+        function tileOf(ix, iy) { var kk = ix + ',' + iy; if (grid[kk] === undefined) { inf = WMf.info(ix, iy, m.W, m.H); kd = inf ? inf.kind : 'forest'; grid[kk] = { id: FT[kd] || FT.forest || 'dungeon_grass', kind: kd }; } return grid[kk]; }
+        for (gy = gy0; gy <= gy1; gy++) { for (gx = gx0; gx <= gx1; gx++) {
+          id0 = tileOf(gx, gy);
+          M.fillIso(tx, { id: id0.id, a: s, b: 0, c: 0, d: m.k, e: cw / 2 + (gx * CK - m.camX) * s, f: m.top + (gy * CK - m.y0) * m.k, W: CK + 1, H: CK + 1, tint: theme.floor, tintAlpha: id0.id === 'dungeon_grass' ? 0.8 : 0.55, unit: U });
+        } }
+        tx.save(); tx.transform(s, 0, 0, m.k, cw / 2 - m.camX * s, m.top - m.y0 * m.k);   // 경계 그늘 — 종류가 바뀌는 칸 가장자리에 어두운 띠(들판 ③)
+        for (gy = gy0; gy <= gy1; gy++) { for (gx = gx0; gx <= gx1; gx++) {
+          id0 = tileOf(gx, gy);
+          [[1, 0], [0, 1]].forEach(function (d) {
+            var nb = tileOf(gx + d[0], gy + d[1]); if (nb.id === id0.id) { return; }
+            var bx = (gx + d[0]) * CK, by = (gy + d[1]) * CK, g2 = d[0] ? tx.createLinearGradient(bx - 26, 0, bx + 26, 0) : tx.createLinearGradient(0, by - 26, 0, by + 26);
+            g2.addColorStop(0, 'rgba(0,0,0,0)'); g2.addColorStop(0.5, 'rgba(0,0,0,0.22)'); g2.addColorStop(1, 'rgba(0,0,0,0)');
+            tx.fillStyle = g2; if (d[0]) { tx.fillRect(bx - 26, gy * CK, 52, CK); } else { tx.fillRect(gx * CK, by - 26, CK, 52); }
+          });
+        } }
+        tx.restore();
+      } else {
+      M.fillIso(tx, { id: (cfg.tile || {})[theme.name] || 'dungeon_grass', a: s, b: 0, c: 0, d: m.k, e: cw / 2 + (wx0 - m.camX) * s, f: m.top + (wy0 - m.y0) * m.k, W: ww, H: hh, tint: theme.floor, tintAlpha: 0.8, unit: U });
+      }   // 무늬는 옅게(이끼 돌 결이 시끄러웠다)
       if (dep) { tx.restore(); ctx.save(); ctx.beginPath(); ctx.rect(-10, m.top, cw + 20, m.ch - m.top + 10); ctx.clip(); for (var sy = Math.floor(m.top); sy < m.ch + 10; sy += 3) { var ff = m.fAt(sy + 1.5), sw = cw / ff; ctx.drawImage(oc, (oc.width / kk - sw) / 2 * kk, (sy - m.top) * kk, sw * kk, 3 * kk, 0, sy, cw, 3); } ctx.restore(); } else { ctx.restore(); }
     }
     var hz = ctx.createLinearGradient(0, m.top - 6, 0, m.top + (m.bot - m.top) * 0.3);

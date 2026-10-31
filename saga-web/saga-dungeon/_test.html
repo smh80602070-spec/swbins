@@ -9733,6 +9733,12 @@ window.requestAnimationFrame = function () { return 0; };
       var ok = a === null && /^sfx_step_grass_[12]$/.test(b) && /^sfx_hoof_hard_[123]$/.test(hoof) && /^sfx_hoof_soft_[123]$/.test(soft) && /^sfx_wing_flap_[123]$/.test(wing) && /^sfx_wing_heavy_[12]$/.test(heavy) && still === null && off === null && SS.count() === 5;
       SS._reset(); return ok ? [b, hoof, soft, wing, heavy].join(' · ') : ('실패 ' + JSON.stringify([a, b, hoof, soft, wing, heavy, still, off, SS.count()]));
     });
+    t('W-0500 ② 마을 바깥 땅 — 들판 칸 종류마다 타일 표(fieldTile)가 있고 표의 타일이 모두 실제 던전 타일이며 world-map 칸 종류를 다 덮는다', function () {
+      var FT = DG.cfg.mode2d.fieldTile, kinds = ['town', 'forest', 'rock', 'ruin', 'road', 'water', 'cave', 'altar', 'camp', 'swamp'];
+      var cover = FT && kinds.every(function (k) { return typeof FT[k] === 'string' && /^dungeon_[a-z]+$/.test(FT[k]); });
+      var varied = FT && Object.keys(FT).map(function (k) { return FT[k]; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).length >= 5;
+      return !!(cover && varied && DG.worldMap && DG.worldMap.info) || ('실패 ' + !!cover + ',' + !!varied);
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
