@@ -258,3 +258,55 @@ def bake_texture(verts, faces, uvs, observations, masks, views, K, size, texture
     img = (tex.view(texture_size, texture_size, 3).clamp(0, 1) * 255).byte().cpu().numpy()
     hole = (~has).view(texture_size, texture_size).cpu().numpy().astype(np.uint8)
     return cv2.inpaint(img, hole, 3, cv2.INPAINT_TELEA), has.float().mean().item()
+
+
+@torch.no_grad()
+def remove_invisible(verts, faces, nviews=200, res=512, fov=40, radius=2.0):
+    """바깥에서 한 번도 안 보이는 면(몸 속 껍질)을 지운다. 옛 fill_holes 의 mincut·meshfix(GPL·AGPL igraph·pymeshfix)는 쓰지 않는다."""
+    K = intrinsics_px(fov, res).to(verts.device)
+    seen = torch.zeros(faces.shape[0], dtype=torch.bool, device=verts.device)
+    for e in hammersley_views(nviews, radius):
+        r = rasterize(verts, faces, look_at_view(e).to(verts.device), K, res)
+        f = r['face']
+        seen[f[f >= 0].unique()] = True
+    keep = faces[seen]
+    used = torch.unique(keep)
+    remap = torch.full((verts.shape[0],), -1, dtype=torch.long, device=verts.device)
+    remap[used] = torch.arange(used.numel(), device=verts.device)
+    return verts[used], remap[keep]
+
+
+def to_glb_free(gaussian, mesh_verts, mesh_faces, simplify=0.95, texture_size=1024, nviews=100, res=1024, cull_views=200, verbose=True):
+    """TRELLIS 결과(가우시안 dict·메시) → 질감 GLB(trimesh). nvdiffrast·Inria 래스터·igraph·pymeshfix 없이."""
+    import pyvista as pv
+    import trimesh
+    import xatlas
+    from PIL import Image
+    dev = gaussian['xyz'].device
+    v = mesh_verts.cpu().numpy().astype(np.float64)
+    f = mesh_faces.cpu().numpy().astype(np.int64)
+    if simplify > 0:
+        m = pv.PolyData(v, np.concatenate([np.full((len(f), 1), 3), f], 1)).decimate(simplify)
+        v, f = np.asarray(m.points), m.faces.reshape(-1, 4)[:, 1:]
+    if cull_views:
+        V, F = remove_invisible(torch.tensor(v, dtype=torch.float32, device=dev), torch.tensor(f, dtype=torch.long, device=dev), cull_views)
+        v, f = V.cpu().numpy().astype(np.float64), F.cpu().numpy()
+    if verbose:
+        print('mesh', len(v), len(f), flush=True)
+    vm, idx, uvs = xatlas.parametrize(v.astype(np.float32), f.astype(np.uint32))
+    v = v[vm]
+    f = idx.astype(np.int64)
+    V = torch.tensor(v, dtype=torch.float32, device=dev)
+    F = torch.tensor(f, dtype=torch.long, device=dev)
+    UV = torch.tensor(uvs, dtype=torch.float32, device=dev)
+    K = intrinsics_px(40, res).to(dev)
+    views = [look_at_view(e).to(dev) for e in hammersley_views(nviews)]
+    obs = [torch.tensor(render_gaussians(gaussian, w, K, res) / 255.0, dtype=torch.float32, device=dev) for w in views]
+    masks = [o.sum(-1) > 0 for o in obs]
+    tex, cov = bake_texture(V, F, UV, obs, masks, views, K, res, texture_size=texture_size)
+    if verbose:
+        print('texture coverage', round(cov, 3), flush=True)
+    vv = v @ np.array([[1, 0, 0], [0, 0, -1], [0, 1, 0]])
+    mat = trimesh.visual.material.PBRMaterial(roughnessFactor=1.0, baseColorTexture=Image.fromarray(tex),
+                                              baseColorFactor=np.array([255, 255, 255, 255], dtype=np.uint8))
+    return trimesh.Trimesh(vv, f, visual=trimesh.visual.TextureVisuals(uv=uvs, material=mat))
