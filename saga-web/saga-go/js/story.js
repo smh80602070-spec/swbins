@@ -1392,6 +1392,11 @@
         x: q.x, y: q.y, walking: !!(fw || (n.runPath && chase && chase.npc === k && chase.run && !(chase.pause > 0))), phase: (tms || 0) / 480,
         ang: face ? Math.atan2(pp.y - q.y, pp.x - q.x) : (a ? Math.atan2(a.y - q.y, a.x - q.x) : 0), dist: d });
     }
+    var F2 = global.DG.field2d, cap = +global.DG.core.tuned('story.max2d', 2);   // W-0500 2D 는 목표·대화 상대 말고는 가까운 순 상한(사용자 10-31 「몹 수 줄여」) — 음수 = 옛
+    if (cap >= 0 && F2 && F2.on && F2.on() && !(global.DG.world3d && global.DG.world3d.active && global.DG.world3d.active())) {
+      var keep = out.filter(function (o) { return o.p.goal; }), rest = out.filter(function (o) { return !o.p.goal; }).sort(function (a, c) { return a.dist - c.dist; }).slice(0, cap);
+      out = keep.concat(rest);
+    }
     return out;
   }
   /** 미니맵 점 — 목표 하나(테두리에도) */
