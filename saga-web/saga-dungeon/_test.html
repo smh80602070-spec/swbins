@@ -9739,6 +9739,22 @@ window.requestAnimationFrame = function () { return 0; };
       var varied = FT && Object.keys(FT).map(function (k) { return FT[k]; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).length >= 5;
       return !!(cover && varied && DG.worldMap && DG.worldMap.info) || ('실패 ' + !!cover + ',' + !!varied);
     });
+    t('W-0497 2D 탈것 — 탈것 풀 5개 poolH·타면 탈것 풀을 먼저 그리고 주인공을 위에 얹음·내리면 옛 길·손잡이 0 이면 옛 길', function () {
+      var PH = DG.cfg.mode2d.poolH, ids = ['mt_farm', 'mt_brown', 'mt_white', 'mt_crane', 'mt_dragon'], r = [];
+      r.push(ids.every(function (k) { return PH[k] > 100 && PH[k] < 200; }));
+      var M = DG.mode2d, od = M.draw, calls = [], oc = DG.mount.current, C = DG.core, ref = { id: 'elf_001' };
+      try {
+        M.draw = function (ctx, o) { calls.push(o.pool + '@' + Math.round(o.y)); return true; };
+        DG.mount.current = function () { return DG.mount.def('mt_white'); };
+        DG.actor2d.draw(null, 'me', ref, 100, 300, 1, { facing: 1 });
+        r.push(calls.length === 2 && calls[0].indexOf('mt_white@') === 0 && calls[1].indexOf('mt_white') < 0 && +calls[1].split('@')[1] < 300);   // 탈것 먼저, 주인공은 위(y 작음)
+        calls.length = 0; C.setTune('mount2d.on', 0); DG.actor2d.draw(null, 'me', ref, 100, 300, 1, { facing: 1 }); C.setTune('mount2d.on', null);
+        r.push(calls.length === 1 && calls[0].indexOf('mt_') < 0);
+        calls.length = 0; DG.mount.current = function () { return null; }; DG.actor2d.draw(null, 'me', ref, 100, 300, 1, { facing: 1 });
+        r.push(calls.length === 1 && calls[0].indexOf('mt_') < 0);
+      } finally { M.draw = od; DG.mount.current = oc; C.setTune('mount2d.on', null); }
+      return r.every(Boolean) || ('실패 ' + r.join(','));
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

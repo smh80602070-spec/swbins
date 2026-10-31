@@ -7,13 +7,24 @@
 (function (global) {
   'use strict';
 
+  var MOUNT_K = { mt_dragon: 1.8 };   // 사람 키 1 로 본 탈것 높이(말·학 1.3 — 공용 표 horse) · W-0497
+
   /** role = 'me'|'ally'|'npc', ref = 도감 인물, (x,y) = 발 밑 가운데, s = 스탬프 배율, o = { facing(1|-1), walking, now, phase, wx, wy, ppu, pk(W-0203 보폭) } */
   function draw(ctx, role, ref, x, y, s, o) {
     var M = global.DG.mode2d;
     if (!M) { return false; }
     var pool = M.pick(role, (ref && (ref.id || ref.name)) || role);
     if (!pool) { return false; }
-    o = o || {}; if (+(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned("dg.footSink", 1) : 1) > 0) { y += 2.4 * s; }   // 10-29 발이 그림자 위로 떠 보인다(사용자) — 발 밑 가운데 기준을 몸 높이 5% 아래로(dg.footSink 0 = 옛)
+    o = o || {};
+    var MT = global.DG.mount, mt = role === 'me' && !o.mounted && MT && MT.current ? MT.current() : null, C0 = global.DG.core;
+    if (mt && C0 && C0.tuned && +C0.tuned('mount2d.on', 1) > 0) {   // W-0497 탈것 — 탈것 풀(mt_*)을 먼저 그리고 주인공을 안장 높이에 얹는다(내리면 이 길을 안 탄다)
+      var tH0 = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40, hs = s * 40 * 1.2 / tH0, big = MOUNT_K[mt.id] || 1.3, hp = hs * tH0, fl = mt.kind === 'fly' ? hp * 0.6 : 0, ms0 = (o.now || Date.now()) + (o.phase || 0) * 160;
+      if (M.draw(ctx, { pool: mt.id, clip: o.walking ? 'walk' : 'idle', facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: ms0, x: x, y: y - fl, scale: hs * big })) {
+        var o2 = {}, k2; for (k2 in o) { if (o.hasOwnProperty(k2)) { o2[k2] = o[k2]; } }
+        o2.mounted = true; o2.walking = false; o2.wx = null;   // 말 위에선 다리를 걷지 않는다(앉기 시트가 없어 서기로)
+        return draw(ctx, role, ref, x, y - fl - hp * big * 0.42 + hp * 0.05, s, o2);
+      }
+    } if (+(global.DG.core && global.DG.core.tuned ? global.DG.core.tuned("dg.footSink", 1) : 1) > 0) { y += 2.4 * s; }   // 10-29 발이 그림자 위로 떠 보인다(사용자) — 발 밑 가운데 기준을 몸 높이 5% 아래로(dg.footSink 0 = 옛)
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
     var key = role + ':' + ((ref && (ref.id || ref.name)) || ''), ht = M.actT ? M.actT(key + ':hit', o.hurt) : null, at = M.actT ? M.actT(key + ':atk', o.atk) : null;   // W-0073 단계 4
     var ai = at !== null && M.actInfo ? M.actInfo(key + ':atk') : null, atkClip = (o.cast || (ai && ai.dur >= 0.3)) ? 'heavy' : (ai && ai.n % 2 === 0 ? 'attack2' : 'attack');   // 강공격 0.38초·스킬 = heavy, 평타는 연타 번갈아
