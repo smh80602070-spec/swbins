@@ -151,6 +151,25 @@ namespace Saga.EditorTools
 
         private static bool CheckHuntWaveCore()
         {
+            // 경계에서 개별 clamp로 여러 적이 같은 자리에 서던 회귀 검사(대장 포함).
+            for (int wave = 0; wave < StoryHuntWave.Waves; wave++)
+            {
+                int count = StoryHuntWave.CountOf(wave) + (StoryHuntWave.IsLast(wave) ? 1 : 0);
+                for (float px = 1f; px <= FieldMapData.WidthM - 1f; px += 0.25f)
+                {
+                    var positions = new float[count];
+                    for (int i = 0; i < count; i++)
+                    {
+                        float x = StoryEnemySpawner.WaveSpawnX(px, wave, i);
+                        if (x < 0.999f || x > FieldMapData.WidthM - 0.999f)
+                        { Debug.LogError("[PlaytestStorySlice] huntwave 필드 경계 초과"); return false; }
+                        for (int j = 0; j < i; j++)
+                            if (Mathf.Abs(x - positions[j]) < StoryHuntWave.GapM - 0.001f)
+                            { Debug.LogError("[PlaytestStorySlice] huntwave 스폰 간격 부족"); return false; }
+                        positions[i] = x;
+                    }
+                }
+            }
             var sp = Object.FindFirstObjectByType<StoryEnemySpawner>();
             if (sp == null) { Debug.LogError("[PlaytestStorySlice] huntwave 스포너 없음"); return false; }
             StoryHuntWave.ResetForTest();
@@ -165,6 +184,18 @@ namespace Saga.EditorTools
             while (StoryHuntWave.Active && guard++ < 20)
             {
                 if (sp.WaveAlive() != counts[counts.Count - 1]) { Debug.LogError($"[PlaytestStorySlice] huntwave 파도 {StoryHuntWave.Wave} 살아 있음 {sp.WaveAlive()} ≠ {counts[counts.Count - 1]}"); return false; }
+                var spawnedX = new System.Collections.Generic.List<float>();
+                foreach (var e in sp.GetComponentsInChildren<StoryEnemy>())
+                {
+                    if (e.WaveId != StoryHuntWave.Id || e.IsDead) continue;
+                    float x = e.transform.localPosition.x;
+                    if (x < 0.999f || x > FieldMapData.WidthM - 0.999f)
+                    { Debug.LogError("[PlaytestStorySlice] huntwave 실제 스폰 경계 초과"); return false; }
+                    foreach (float other in spawnedX)
+                        if (Mathf.Abs(x - other) < StoryHuntWave.GapM - 0.001f)
+                        { Debug.LogError("[PlaytestStorySlice] huntwave 실제 스폰 겹침"); return false; }
+                    spawnedX.Add(x);
+                }
                 int killsBefore = StoryHuntWave.Kills;
                 foreach (var e in sp.GetComponentsInChildren<StoryEnemy>())
                     if (e.WaveId == StoryHuntWave.Id && !e.IsDead) e.TakeDamage(1e7f, false);

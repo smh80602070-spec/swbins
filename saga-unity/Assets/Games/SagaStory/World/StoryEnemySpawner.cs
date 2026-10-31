@@ -118,17 +118,16 @@ namespace Saga.Story.World
         public int SpawnWave()
         {
             int w = StoryHuntWave.Wave, n = StoryHuntWave.CountOf(w), made = 0;
-            float px = _player != null ? _player.position.x : FieldMapData.WidthM * 0.5f;
+            float px = _player != null ? transform.InverseTransformPoint(_player.position).x : FieldMapData.WidthM * 0.5f;
             var xs = FieldMapData.EnemyPositionsM();
             for (int k = 0; k < n; k++)
             {
-                float side = k % 2 == 1 ? 1f : -1f;
-                var e = SpawnWaveFoe(k % xs.Length, px + side * (StoryHuntWave.SideM + (k >> 1) * StoryHuntWave.GapM));
+                var e = SpawnWaveFoe(k % xs.Length, WaveSpawnX(px, w, k));
                 if (e != null) made++;
             }
             if (StoryHuntWave.IsLast(w))
             {
-                var boss = SpawnWaveFoe(xs.Length / 2, px + StoryHuntWave.SideM + 1.2f);
+                var boss = SpawnWaveFoe(xs.Length / 2, WaveSpawnX(px, w, n));
                 if (boss != null) { boss.MakeElite(false); made++; }
             }
             string line = StoryHuntWave.IsLast(w)
@@ -138,15 +137,29 @@ namespace Saga.Story.World
             return made;
         }
 
-        private StoryEnemy SpawnWaveFoe(int slot, float worldX)
+        /// <summary>필드 로컬 좌표. 편대 전체가 들어갈 시작점을 정해 경계에서도 간격 유지. 마지막 대장은 오른쪽 편대 끝.</summary>
+        public static float WaveSpawnX(float playerX, int wave, int index)
+        {
+            int count = StoryHuntWave.CountOf(wave);
+            bool boss = index == count && StoryHuntWave.IsLast(wave);
+            bool right = boss || index % 2 == 1;
+            int rank = boss ? count / 2 : index / 2;
+            int members = right ? count / 2 + (StoryHuntWave.IsLast(wave) ? 1 : 0) : (count + 1) / 2;
+            float span = (members - 1) * StoryHuntWave.GapM;
+            float min = right ? 1f : 1f + span;
+            float max = right ? FieldMapData.WidthM - 1f - span : FieldMapData.WidthM - 1f;
+            float start = System.Math.Max(min, System.Math.Min(max, playerX + (right ? StoryHuntWave.SideM : -StoryHuntWave.SideM)));
+            return start + (right ? 1f : -1f) * rank * StoryHuntWave.GapM;
+        }
+
+        private StoryEnemy SpawnWaveFoe(int slot, float localX)
         {
             var e = SpawnAt(slot);
             if (e == null) return null;
             e.FieldIndex = -1; // 되살기 자리 아님
             e.WaveId = StoryHuntWave.Id;
             var lp = e.transform.localPosition;
-            float x = transform.InverseTransformPoint(new Vector3(worldX, 0f, 0f)).x;
-            e.transform.localPosition = new Vector3(Mathf.Clamp(x, 1f, FieldMapData.WidthM - 1f), lp.y, lp.z);
+            e.transform.localPosition = new Vector3(localX, lp.y, lp.z);
             return e;
         }
 
