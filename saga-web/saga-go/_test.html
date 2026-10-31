@@ -9189,9 +9189,9 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var r = [shown.length === 3, ov === 0, L[4].y === 200 && L[4].alpha === 1, shown.filter(function (q) { return q.lead; }).length === 1, shown.every(function (q) { return q.oy === 200; })];
       return r.every(Boolean) && ('보임 ' + shown.length + '/5 · 겹침 0 · 선 1') || '실패 ' + r.join(',');
     });
-    t('2D 카메라 가까이(W-0204) — 들판 확대 2.0 을 몸도 따름: 나 1.25·48·min(2.5, 확대) = 120px(옛 60) 이 100~140', function () {
-      var zm = DG.field2d.zoomMul(), body = 1.25 * 48 * Math.min(2.5, Math.max(1, zm));
-      return zm === 2 && body >= 100 && body <= 140 && ('확대 ' + zm + ' · 몸 ' + Math.round(body) + 'px') || '실패 ' + zm + ' · ' + body;
+    t('2D 카메라 멀게(10-31, W-0204 2.0 → 1.2) — 들판 확대 1.2: 몸 높이 비 ≈ 3마을과 같은 화면 비(옛 2.0 의 0.6배)', function () {
+      var zm = DG.field2d.zoomMul(), rel = zm / 2.0;
+      return zm === 1.2 && rel > 0.55 && rel < 0.65 && ('확대 ' + zm + ' · 옛의 ' + rel.toFixed(2) + '배') || '실패 ' + zm + ' · ' + rel;
     });
     t('3D 땅 — 가까운 결은 18m 안 가득·46m 밖 0, 먼 산 고리 높이가 겹마다 범위 안·고리 둘레가 이어진다, 빈 들 풀 ×4·발밑 잔풀은 풀 칸 40m 안만 (W-0200)', function () {
       var G = DG.ground3d, w0 = G.weightAt(5, 0.45, 18, 46), w1 = G.weightAt(32, 0.45, 18, 46), w2 = G.weightAt(60, 0.45, 18, 46), i, lo = 1e9, hi = -1e9, hh;

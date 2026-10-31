@@ -15,7 +15,7 @@
   'use strict';
 
   var CELL = 48;
-  function zoomMul() { var C = core(); return C && C.tuned ? +C.tuned('world.field2dZoom', 2.0) : 2.0; }   // W-0204 1.7 → 2.0 (몸도 bodyK 로 이 확대를 따른다 — 몸 60 → ≈120px/720)
+  function zoomMul() { var C = core(); return C && C.tuned ? +C.tuned('world.field2dZoom', 1.2) : 1.2; }   // 10-31 사용자 「화면이 너무 가까워」 — 2.0 → 1.2(몸 218 → ≈131px, 2나락·3마을과 같은 화면 비) · W-0204 1.7 → 2.0 (몸도 bodyK 로 이 확대를 따른다 — 몸 60 → ≈120px/720)
   /** 땅 종류 대표 색(타일 평균 근사) — 경계 번짐에 쓴다 */
   var KCOL = { grass: [95, 159, 72], forest: [63, 110, 54], mount: [139, 134, 120], road: [202, 168, 119], town: [169, 166, 158], farm: [141, 108, 64], water: [62, 143, 178] };
   /** 땅 종류 바탕색 — 젤다 「신들의 트라이포스」 들판 팔레트(맑고 부드러운 중간 톤) */
