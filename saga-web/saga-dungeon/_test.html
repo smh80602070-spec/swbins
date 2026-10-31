@@ -9755,6 +9755,18 @@ window.requestAnimationFrame = function () { return 0; };
       } finally { M.draw = od; DG.mount.current = oc; C.setTune('mount2d.on', null); }
       return r.every(Boolean) || ('실패 ' + r.join(','));
     });
+    t('W-0498 꿀벌떼 — 새 몬스터가 body armabee·비행형(bird)이고 2D 에서 armabee 풀로 그려지며 기존 말벌떼(wasp)는 그대로', function () {
+      var E = DG.enemyData, bee = E.byName('꿀벌떼'), was = E.byName('말벌떼'), r = [];
+      r.push(!!bee && bee.body === 'armabee' && bee.form === 'bird' && bee.kind === 'beast', !!was && was.body === 'wasp', DG.cfg.mode2d.bodyPool.armabee === 'armabee', DG.cfg.mode2d.poolH.armabee > 50);
+      var M = DG.mode2d, od = M.draw, got = null, run = DG.dungeon.raw && DG.dungeon.raw();
+      try {
+        M.draw = function (ctx, o) { got = o.pool; return true; };
+        r.push(DG.foe2d.draw(null, { x: 10, y: 10, ref: bee, phase: 0 }, { x: 100, y: 100 }, 40, Date.now()) === true && got === 'armabee');
+        got = null; DG.foe2d.draw(null, { x: 10, y: 10, ref: was, phase: 0 }, { x: 100, y: 100 }, 40, Date.now());
+        r.push(got !== 'armabee');
+      } finally { M.draw = od; }
+      return r.every(Boolean) || ('실패 ' + r.join(','));
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

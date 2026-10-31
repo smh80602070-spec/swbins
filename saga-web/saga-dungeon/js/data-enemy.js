@@ -50,6 +50,7 @@
     { name: '원혼', emoji: '👻', kind: 'beast', color: '#d8d0e0', form: 'ogre', body: 'skeleton_solo', tier: 1, resist: { phys: 15 }, biome: 'shrine' },
     { name: '독사', emoji: '🐍', kind: 'beast', color: '#4a6a3a', form: 'serpent', body: 'snake', tier: 1, atkEl: 'pois', biome: 'swamp' },
     { name: '말벌떼', emoji: '🐝', kind: 'beast', color: '#d9c020', form: 'bird', body: 'wasp', tier: 1, atkEl: 'pois', biome: 'forest' },
+    { name: '꿀벌떼', emoji: '🍯', kind: 'beast', color: '#e0a820', form: 'bird', body: 'armabee', tier: 1, atkEl: 'pois', biome: 'forest' },   // W-0498 K-0206 비행 시트(Flying_Idle·Fast_Flying) — 말벌떼 wasp 와 별개
     { name: '들쥐떼', emoji: '🐀', kind: 'beast', color: '#8a7a6a', form: 'quad', body: 'rat', tier: 1, biome: 'ruins' },
     { name: '청개구리', emoji: '🐸', kind: 'beast', color: '#5a9a5a', form: 'toad', body: 'frog', tier: 1, biome: 'swamp' },
     { name: '홍슬라임', emoji: '🩷', kind: 'beast', color: '#d97a9a', form: 'quad', body: 'pink_slime', tier: 1, biome: 'mountain' },

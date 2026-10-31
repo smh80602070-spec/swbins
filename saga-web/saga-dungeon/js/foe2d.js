@@ -16,8 +16,9 @@
     var bz = ref.kind === 'beast' ? (M.beastOf ? M.beastOf(ref.name) : null) : null;
     /* W-0129 — 사람형이 아닌 적은 몬스터 2D 시트(K-0090 ③, 몸 id = 초상과 같은 monsterPortrait.idOf). 받기 전·없으면 옛 길 */
     var MP = global.DG.monsterPortrait, cid = ref.kind !== 'human' && MP && MP.sheetOf ? MP.sheetOf(ref, !!e.boss) : null,   /* W-0354 종 시트가 있으면 그것, 없으면 계열 */ crea = cid && M.creaPool ? M.creaPool(cid) : null;
-    if (ref.kind === 'beast' && !bz && !crea) { return false; }
-    var pool = crea || (bz ? bz.pool : M.pick('t' + (ref.tier || 1), ref.name));
+    var bp = ((global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.bodyPool) || {})[ref.body];   // W-0498 몸 id → 공장 시트 풀(꿀벌 armabee 등 — 몬스터 시트 폴더에 없는 풀)
+    if (ref.kind === 'beast' && !bz && !crea && !bp) { return false; }
+    var pool = bp || crea || (bz ? bz.pool : M.pick('t' + (ref.tier || 1), ref.name));
     if (!pool) { return false; }
     var run = global.DG.dungeon.raw && global.DG.dungeon.raw(), px = run && run.player ? run.player.x : e.x - 1;
     /* W-0122 — 적엔 atkAnim 이 없어(플레이어·동행만 쓴다) 공격 동작이 영영 안 나왔고, 피격은 e.hurt(0.08 에서 시작)를 0.3 기준으로 세어 끝 80ms 만 보였다.
