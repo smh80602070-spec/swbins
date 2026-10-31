@@ -172,10 +172,12 @@
    * 마을 좌표 → 화면 좌표. s 는 그 자리의 크기 배율(멀수록 작다).
    * a 는 원통 위의 각 — 음수면 앞(멀다), 양수면 뒤(가깝다).
    */
+  /** W-0500 ③ 평면 탑다운(구면 걷음)(사용자 10-31). 손잡이 village.flat2d 0 = 옛 구면 */ function flat() { return +core.tuned('village.flat2d', 1) > 0; }
   function project(wx, wy) {
     var dy = wy - cam.y;
     var a = dy / R;
     if (a > 1.2) { a = 1.2; }
+    if (flat()) { return { x: CX + (wx - cam.x) * ZOOM, y: CY + dy * ZOOM * TILT, s: 1, a: a }; }
     var s = 1 / (1 - a * 0.40);
     if (s < 0.42) { s = 0.42; } else if (s > 1.55) { s = 1.55; }
     var sx = CX + (wx - cam.x) * ZOOM * s;
@@ -189,6 +191,7 @@
    * 각(a)이 x 에 기대지 않으므로 반복 없이 한 번에 풀린다.
    */
   function unproject(sx, sy) {
+    if (flat()) { return { x: cam.x + (sx - CX) / ZOOM, y: cam.y + (sy - CY) / (ZOOM * TILT) }; }
     var d = sx - CX;
     var v = (sy - CY - d * d * BEND) / (R * ZOOM * TILT);
     v = core.clamp(v, -0.9999, 0.9999);
@@ -266,8 +269,7 @@
     cam.x = p.x; cam.y = p.y;
 
     ctx.clearRect(0, 0, W, H);
-    drawSky(ph, se, now);
-    drawFarShore(ph, se);
+    if (!flat()) { drawSky(ph, se, now); drawFarShore(ph, se); }   // W-0500 ③ 평면은 지평선·하늘 띠 없음 — 땅이 화면을 다 덮는다
     drawGround(T, se, now);
 
     /* 2026-09-09 — "클릭한 곳이 안 보인다"(사가나락와 같은 재신고). walkTo()
@@ -414,13 +416,13 @@
     for (ty = ty0; ty <= ty1; ty++) {
       var midA = (ty * T + T * 0.5 - cam.y) / R;
       if (midA < -A_MAX) { continue; }
-      var sMid = 1 / (1 - core.clamp(midA, -2, 1.2) * 0.40);
+      var sMid = flat() ? 1 : 1 / (1 - core.clamp(midA, -2, 1.2) * 0.40);
       if (sMid < 0.42) { sMid = 0.42; }
       var half = (W * 0.5 + T * 2) / (ZOOM * sMid);
       var tx0 = Math.floor((cam.x - half) / T) - 1;
       var tx1 = Math.floor((cam.x + half) / T) + 1;
       /* 먼 줄은 몇 픽셀로 뭉개진다 — 두 칸씩 건너뛰어도 눈에 띄지 않는다 */
-      var step = midA < -0.85 ? 2 : 1;
+      var step = midA < -0.85 && !flat() ? 2 : 1;
 
       for (tx = tx0; tx <= tx1; tx += step) {
         var kind = V.tileAt(tx, ty);

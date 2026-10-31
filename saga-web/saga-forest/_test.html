@@ -7869,12 +7869,12 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
         return { dx: q.x - o.x, top: top, rt: Math.abs(rt.x - cam.x - 37) + Math.abs(rt.y - cam.y + 55) };
       };
       try {
-        C.setTune({ 'village.cozyZoom': null, 'village.cozy2d': null });
+        C.setTune({ 'village.cozyZoom': null, 'village.cozy2d': null, 'village.flat2d': 0 });   // 지평선 자리는 옛 구면 몫 — 평면은 아래 W-0500 진단
         var z0 = Z.zoomMul(), a = probe();
         C.setTune('village.cozyZoom', 1.8); Z.sync(); var q0 = VV._project(cam.x, cam.y), q1 = VV._project(cam.x + 40, cam.y), dz = q1.x - q0.x; C.setTune('village.cozyZoom', null);   // 손잡이를 바꾸면 창 크기 그대로여도 곧바로(R-5)
         C.setTune('village.cozy2d', 0); var z1 = Z.zoomMul(), b = probe();
         r.push(z0 === 2.1, z1 === 1, Math.abs(dz / a.dx - 1.8 / 2.1) < 0.02, Math.abs(a.dx / b.dx - 2.1) < 0.01, Math.abs(a.top - b.top) < 1.5, a.rt < 0.01);
-      } finally { C.setTune({ 'village.cozyZoom': keepZ === '' ? null : keepZ, 'village.cozy2d': keepO === '' ? null : keepO }); VV.resize(); }
+      } finally { C.setTune({ 'village.cozyZoom': keepZ === '' ? null : keepZ, 'village.cozy2d': keepO === '' ? null : keepO, 'village.flat2d': null }); VV.resize(); }
       var rnd = Math.random, calls = 0; Math.random = function () { calls++; return rnd(); };
       try {
         var s1 = JSON.stringify(Z.specks('grass', 12, 7, 'summer')), s2 = JSON.stringify(Z.specks('grass', 12, 7, 'summer')), s3 = JSON.stringify(Z.specks('grass', 13, 7, 'summer'));
@@ -8128,6 +8128,17 @@ window.DG_NO_TUNE = true; window.DG_EMOJI_COMPAT_OFF = true;   // W-0135 — 진
       C.setTune('audio.steps', 0); var off = SS.tick('o', 5, { moving: true, sps: 2 }); C.setTune('audio.steps', null);
       var ok = a === null && /^sfx_step_grass_[12]$/.test(b) && /^sfx_hoof_hard_[123]$/.test(hoof) && /^sfx_hoof_soft_[123]$/.test(soft) && /^sfx_wing_flap_[123]$/.test(wing) && /^sfx_wing_heavy_[12]$/.test(heavy) && still === null && off === null && SS.count() === 5;
       SS._reset(); return ok ? [b, hoof, soft, wing, heavy].join(' · ') : ('실패 ' + JSON.stringify([a, b, hoof, soft, wing, heavy, still, off, SS.count()]));
+    });
+    t('W-0500 ③ 3마을 2D 평면 — project 가 평면(같은 줄 칸 간격 일정·가로 처짐 없음·크기 배율 1·지평선 없음) + unproject(project(p)) = p', function () {
+      var VV = DG.villageView, cam = VV._cam(), C = DG.core, r = [];
+      VV.resize();
+      var a = VV._project(cam.x - 400, cam.y + 100), b = VV._project(cam.x, cam.y + 100), c = VV._project(cam.x + 400, cam.y + 100), d = VV._project(cam.x + 40, cam.y - 300), e = VV._project(cam.x + 40, cam.y + 200);
+      r.push(Math.abs(a.y - b.y) < 1e-6 && Math.abs(c.y - b.y) < 1e-6, Math.abs((b.x - a.x) - (c.x - b.x)) < 1e-6, d.s === 1 && e.s === 1, Math.abs((d.x - e.x)) < 1e-6);
+      var q = VV._project(cam.x + 37, cam.y - 55), rt = VV._unproject(q.x, q.y);
+      r.push(Math.abs(rt.x - cam.x - 37) + Math.abs(rt.y - cam.y + 55) < 0.01);
+      C.setTune('village.flat2d', 0); var f = VV._project(cam.x + 400, cam.y + 100), g = VV._project(cam.x, cam.y + 100); C.setTune('village.flat2d', null);
+      r.push(Math.abs(f.y - g.y) > 1);   // 손잡이 0 이면 옛 구면(가장자리 처짐)
+      return r.every(Boolean) || ('실패 ' + r.join(','));
     });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
