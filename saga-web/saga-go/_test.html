@@ -17163,8 +17163,8 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var r = [a === 'assets/icons/icon64/ui_swords_g0.png', b === a, f === 'assets/icons/icon64/ui_flag_g0.png', n === null, drew === false, (miss['🦄'] || 0) >= 1, ln === 'assets/icons/icon64/ui_lantern_g0.png', M.mark(c, '이름만', 1, 1) === false];
       return r.every(Boolean) && ('⚔️ → ' + a.split('/').pop() + ' · 🦄 → 이모지(짝 없음) · 🏮 → ui_lantern(W-0391 25)') || '실패 ' + r.join(',');
     });
-    t('2D 몸 크기 한 기준(W-0349) — scaleOf 사람 1·곰 1.15·토끼 0.35, 판 설정이 덮음(1만리 집 2.2 < 공용 2.6 · 곰:id 덮기), 짐승 스탬프 배수 0.42~2 묶음, 그림자 한 꼴이 발밑을 칠함', function () {
-      var M = DG.mode2d, cf = DG.cfg.mode2d, sc0 = cf.scale, r = [M.scaleOf('human') === 1, M.scaleOf('beast', 'Bear') === 1.15, M.scaleOf('beast', 'Bunny') === 0.35, M.SCALE.house === 2.6, M.scaleOf('house') === 2.2];
+    t('2D 몸 크기 한 기준(W-0349) — scaleOf 사람 1·곰 1.15·토끼 0.35, 판 설정이 덮음(1만리 집·탑 = 공용 2.6·4 (W-0500) · 곰:id 덮기), 짐승 스탬프 배수 0.42~2 묶음, 그림자 한 꼴이 발밑을 칠함', function () {
+      var M = DG.mode2d, cf = DG.cfg.mode2d, sc0 = cf.scale, r = [M.scaleOf('human') === 1, M.scaleOf('beast', 'Bear') === 1.15, M.scaleOf('beast', 'Bunny') === 0.35, M.SCALE.house === 2.6, M.scaleOf('house') === 2.6 && M.scaleOf('tower') === 4];
       cf.scale = Object.assign({}, sc0, { 'beast:Bear': 2 }); r.push(M.scaleOf('beast', 'Bear') === 2); cf.scale = sc0;
       var S = DG.sprite, kb = S.beastK({ id: 'pt_x' }), lo = Math.max(0.42, 0.35) / 1.05;
       r.push(S.beastK({ id: 'an_zz' }) === 1, kb >= 0.42 / 1.05 - 1e-9 && kb <= 2 / 1.05 + 1e-9, lo < 0.5);

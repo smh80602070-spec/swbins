@@ -481,7 +481,7 @@
       'landmark:plain': { id: 'stone_tower_01', h: 57, cls: 'tower' }, 'landmark:bamboo': { id: 'bamboo_clump_01', h: 41, cls: 'tree' }, 'landmark:canyon': { id: 'rock_outcrop_01', h: 36, cls: 'boulder' },
       'landmark:marsh': { id: 'pond_01', h: 32, cls: 'pond' }, 'landmark:ruins': { id: 'stele_01', h: 45, cls: 'stele' }, 'landmark:home': { id: 'stone_tower_01', h: 57, cls: 'tower' }
     },
-    unitH: 50, scale: { house: 2.2, tower: 3 },   // W-0349 배율 1 의 사람 키(px, 주민 48×1.05) · 지도 판이라 집·탑은 공용(2.6·4)보다 낮게
+    unitH: 50,   // W-0349 배율 1 의 사람 키(px, 주민 48×1.05) · W-0500 집·탑 배율은 공용 표(2.6·4) 그대로 — 판 덮어쓰기 지움
     /** 땅 종류(world.js terrainAt) → 2D 바닥 타일(K-0020 `go_*`) — 없는 종류는 옛 사진·색 */
     tile: { grass: 'go_grass', forest: 'go_dirt', mount: 'go_stone', road: 'go_sand', town: 'go_stone', farm: 'go_dirt', water: 'go_water' },
     /** 2D 모드인가 — 3D 장면이 안 서 있을 때(평면·2.5D 캔버스) */
