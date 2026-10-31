@@ -7,7 +7,8 @@
    {"pair": "grass_sand",  "a": "go_grass", "b": "go_sand",  "edge": "path",  "kinds_a": ["grass"], "kinds_b": ["road"]},
    {"pair": "grass_stone", "a": "go_grass", "b": "go_stone", "edge": "path",  "kinds_a": ["grass"], "kinds_b": ["mount", "town"]},
    {"pair": "grass_water", "a": "go_grass", "b": "go_water", "edge": "shore", "kinds_a": ["grass"], "kinds_b": ["water"]},
-   {"pair": "sand_water",  "a": "go_sand",  "b": "go_water", "edge": "shore", "kinds_a": ["road"],  "kinds_b": ["water"]}
+   {"pair": "sand_water",  "a": "go_sand",  "b": "go_water", "edge": "shore", "kinds_a": ["road"],  "kinds_b": ["water"]},
+   {"pair": "sand_stone",  "a": "go_sand",  "b": "go_stone", "edge": "path",  "kinds_a": ["road"],  "kinds_b": ["mount", "town"]}
   ],
   "saga-dungeon": [
    {"pair": "moss_dirt",    "a": "dungeon_grass",   "b": "dungeon_gobun",    "edge": "grass", "kinds_a": ["(표 밖 기본 — 마을·들판)"], "kinds_b": ["고분(古墳)"]},

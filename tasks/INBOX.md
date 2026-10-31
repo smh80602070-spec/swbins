@@ -9,3 +9,4 @@
 - [ ] 10-25 · (W-0444) 3마을 자체 짝 없는 빌린 것(우주 집·기지·rover·solarPanel·mech·Kenney 초막 셋) · 자체판 · 자체툴
 - [ ] 10-26 · "5천하는 … 전략 시물 알피지 처럼" · 조조전식 장 흐름 · 웹 W-0450 끝(`tasks/web/done/W-0450.md`) · 고돗·유니티 같은 흐름으로(G·U 티켓 R-0)
 - [ ] 10-30 · (K-0187) 어린이 밑몸 38명 → 어른 키 정본 교체 끝(웹 GLB·2D 시트 올림) · 유니티: engine_characters 다시 + CharactersDex 38 복사(U 티켓) · 고돗: 인물 38 다시 가져오기(G 티켓) · 자체툴 끝
+- [ ] 11-01 · (W-0472) 1만리 모래↔돌바닥 이음 타일 `saga-assets/web2d/terrain/saga-go/sand_stone/` 올림 — 웹: place 후 core.js cfg.tile 의 road↔mount·town 경계에 사용(모래 띠 직선 해결)

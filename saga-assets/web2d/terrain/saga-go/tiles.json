@@ -75,6 +75,20 @@
     "water"
    ],
    "seam_excess": 1.98
+  },
+  "sand_stone": {
+   "atlas": "sand_stone/atlas.webp",
+   "a": "go_sand",
+   "b": "go_stone",
+   "edge": "path",
+   "kinds_a": [
+    "road"
+   ],
+   "kinds_b": [
+    "mount",
+    "town"
+   ],
+   "seam_excess": 2.37
   }
  }
 }
