@@ -462,7 +462,7 @@
     still: { rts_inf_ally: 1, rts_inf_enemy: 1, rts_arc_ally: 1, rts_arc_enemy: 1, rts_cav_ally: 1, rts_cav_enemy: 1, hero_m: 1, hero_f: 1 },   // 한 장 모드 풀(W-0043·W-0047) — RTS 유닛 몸: K-0061 AI 몸(팀별) + 영웅
     vroid2d: { kinds: ['human'], h: 85, foot: 0.89 },   // W-0227 — RTS 영웅은 제 VRoid 2D 시트(8등신 쪽, 1만리와 같은 값). 공용 에셋을 못 받으면 아래 한 장 hero_m/f
     tile: { plain: 'realm_grass', hill: 'realm_dirt', mount: 'realm_stone', river: 'realm_water' },
-    prop2d: { 'city:s': { id: 'silkroad_house_01', era: 'city_s_' }, 'city:m': { id: 'chinese_hall_01', era: 'city_m_' }, 'city:l': { id: 'stone_tower_01', era: 'city_l_' } },
+    prop2d: { 'city:s': { id: 'silkroad_house_01', era: 'city_s_', url: 'assets/realm-ui/castle_s.webp' }, 'city:m': { id: 'chinese_hall_01', era: 'city_m_', url: 'assets/realm-ui/castle_m.webp' }, 'city:l': { id: 'stone_tower_01', era: 'city_l_', url: 'assets/realm-ui/castle_l.webp' } },
     /* 성 그림 시대(W-0114, K-0083 ②) — 판 전체 시대 상태가 없어 성마다 정한다(퓨전: 과거·현대·미래가 한 지도에).
        균열 땅 미래 · 폐허 땅 현대 · 묘역 땅 과거, 나머지는 성 id 해시로 과거 6 : 현대 2.5 : 미래 1.5 */
     eraOf: function (d) {

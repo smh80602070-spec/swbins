@@ -7997,6 +7997,15 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         return ok ? ('하나 없음 · 돌격진 공격 23 · 원거리 계책 사거리 3 · 진군 이동 4') : ('실패 ' + JSON.stringify({ lone: lone, mj: mj, gs: gs, gj: gj }));
       } finally { R.state().officers = JSON.parse(keep); }
     });
+    t('K-0193 5천하 성 그림 셋 — city:s·m·l 이 realm-ui castle_* 주소를 가지고 castle() 이 그 주소를 쓰며 손잡이 realm.castleArt 0 이면 옛 시대 그림', function () {
+      var t = DG.cfg.prop2d || DG.cfg.mode2d.prop2d || {}, r = [], C = DG.core;
+      ['s', 'm', 'l'].forEach(function (k) { r.push(!!t['city:' + k] && t['city:' + k].url === 'assets/realm-ui/castle_' + k + '.webp'); });
+      var h = DG.map2d.castle({ x: 10, y: 10, prov: 'fu' }, 3.5);
+      r.push(h === '' || h.indexOf('castle_l.webp') > 0);
+      C.setTune('realm.castleArt', 0); var h0 = DG.map2d.castle({ x: 10, y: 10, prov: 'fu' }, 3.5); C.setTune('realm.castleArt', null);
+      r.push(h0.indexOf('castle_l.webp') < 0);
+      return r.every(Boolean) || ('실패 ' + r.join(','));
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
