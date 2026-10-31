@@ -17940,6 +17940,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var ok = a === null && /^sfx_step_grass_[12]$/.test(b) && /^sfx_hoof_hard_[123]$/.test(hoof) && /^sfx_hoof_soft_[123]$/.test(soft) && /^sfx_wing_flap_[123]$/.test(wing) && /^sfx_wing_heavy_[12]$/.test(heavy) && still === null && off === null && SS.count() === 5;
       SS._reset(); return ok ? [b, hoof, soft, wing, heavy].join(' · ') : ('실패 ' + JSON.stringify([a, b, hoof, soft, wing, heavy, still, off, SS.count()]));
     });
+    t('K-0209 퓨전 소품 18 — cfg.assets3d.prop 의 zp_* 가 모두 실제 world3d id 를 가리킴(새 자체판 18 포함)', function () {
+      var P = DG.cfg.assets3d.prop, ks = Object.keys(P).filter(function (k) { return k.indexOf('zp_') === 0; }), ids = DG.assets3dIds && DG.assets3dIds.world3d, flat = JSON.stringify(DG.assets3dIds || {}), bad = [];
+      ks.forEach(function (k) { P[k].forEach(function (id) { if (flat.indexOf('"' + id + '"') < 0) { bad.push(k + '→' + id); } }); });
+      var fresh = ['zp_traffic', 'zp_stop', 'zp_ac', 'zp_antenna', 'zp_propane', 'zp_solar', 'zp_solar_low', 'zp_capsule', 'zp_radar', 'zp_rover', 'zp_tank', 'zp_turret', 'zp_tree_float', 'zp_tree_light', 'zp_tree_lava', 'zp_tree_spiral', 'zp_cactus', 'zp_palm'].every(function (k) { return !!P[k]; });
+      return (fresh && bad.length === 0 && ks.length >= 30) || ('실패 ' + fresh + ' ' + ks.length + ' ' + bad.join(','));
+    });
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

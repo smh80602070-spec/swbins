@@ -487,9 +487,9 @@
     /** 2D 모드인가 — 3D 장면이 안 서 있을 때(평면·2.5D 캔버스) */
     on: function () { var W3 = global.DG.world3d; return !(W3 && W3.active && W3.active()); },
     poolH: { elf_001: 150, pool_f_human_139: 91, pool_g_human_147: 89, pool_e_demon_128: 86, pool_e_undead_127: 79 },   // 프레임 안 몸 높이(px, pw-sheet-bbox.mjs 로 잼)
-    vroid2d: { kinds: ['human'], h: 85, foot: 0.89 },   // 사람은 VRoid 2D 시트(W-0074, 사용자 10-06 "인물은 모두 VRoid") — 몸 높이 68~91px 평균·발 y≈114/128 실측. 없으면 아래 옛 풀
+    vroid2d: { kinds: ['human', 'me'], h: 85, foot: 0.89 },   // 사람은 VRoid 2D 시트(W-0074, 사용자 10-06 "인물은 모두 VRoid") — 몸 높이 68~91px 평균·발 y≈114/128 실측. 없으면 아래 옛 풀
     still: { villager_a: 1, villager_b: 1, villager_c: 1, hero_m: 1, hero_f: 1 },   // 한 장 모드 풀(W-0032, K-0056 정면·옆·뒤 3장)
-    pools: { human: ['villager_a', 'villager_b', 'villager_c'], me: ['elf_001'] }
+    pools: { human: ['villager_a', 'villager_b', 'villager_c'], me: ['hero_m', 'hero_f'] }
   };
 })(window);
 
@@ -509,6 +509,10 @@
       /* W-0443 — 남은 Quaternius 퓨전 소품 중 짝이 뚜렷한 열셋(안테나 접시는 격자 철탑과 어긋나 뺌)(짝 없는 것은 옛 그대로, 수신함 K) */
       zp_windmill: ['mill_01'], zp_hay: ['haystack_01'], zp_cart: ['handcart_01'], zp_tent: ['tent_small_01'], zp_wall: ['low_stone_wall_01'], zp_barrel: ['barrel_01'], zp_crate: ['crate_stack_01'],
       zp_streetlight: ['street_lamp_01'], zp_lamp2: ['street_lamp_01'], zp_dome: ['future_dome_01'], zp_pylon: ['steel_pylon_01'], zp_pine_snow: ['tree_pine_01_snow'], zp_rock_snow: ['rock_large_01'],
+      /* K-0209 — 퓨전 소품 18 자체판(zp_<키> → 새 id, 높이는 prop3d.js FUSION 그대로) */
+      zp_traffic: ['traffic_light_01'], zp_stop: ['stop_sign_01'], zp_ac: ['ac_unit_01'], zp_antenna: ['antenna_mast_01'], zp_propane: ['propane_tank_01'], zp_solar: ['solar_array_01'], zp_solar_low: ['solar_panel_low_01'],
+      zp_capsule: ['capsule_house_01'], zp_radar: ['radar_dish_01'], zp_rover: ['rover_01'], zp_tank: ['tank_01'], zp_turret: ['turret_01'],
+      zp_tree_float: ['tree_floating_01'], zp_tree_light: ['tree_glow_01'], zp_tree_lava: ['tree_lava_01'], zp_tree_spiral: ['tree_spiral_01'], zp_cactus: ['cactus_01'], zp_palm: ['palm_01'],
       cave: ['earth_lodge_01'], ruin: ['stone_arch_01'], temple: ['chinese_hall_01'] },   // W-0322 — 남은 셋도 자체(K-0126 짝: 땀집·로마 아치·청더 사원)
     /* W-0260 — asset3d 키(성채 등급·지역 랜드마크·역참·석등·솥·상자·채집물·제단) → 자체 world3d. 표에 없는 키(옛 Quaternius)는 그대로 */
     reg: { 'fort:t1': ['stone_tower_01'], 'fort:t2': ['dungeon_gate_01'], 'fort:t3': ['chinese_hall_01'], 'fort': ['stone_tower_01'], 'station': ['inn_01'],
