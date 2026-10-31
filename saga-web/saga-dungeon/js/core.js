@@ -490,7 +490,7 @@
     /** 층 테마 이름(data-dungeon THEMES) → 2D 바닥 타일 — 테마마다 한 장(K-0094, W-0191: 다진 흙·깨진 돌·풀흙·젖은 돌·검붉은 돌·구름 돌). 층 색은 타일 위에 얹힌다.
      *  마을·들판은 제 테마 이름(모루골 따위)이라 이 표에 없어 dungeon_grass 그대로(belt2d townStage) */
     /** W-0500 ② 마을 바깥 들판 칸(world-map kind) → 바닥 타일 — 던전 타일만(풀·숲·야영 = 풀). 손잡이 dg.fieldTile2d 0 = 옛 한 장 */
-    fieldTile: { forest: 'dungeon_grass', camp: 'dungeon_grass', town: 'dungeon_pyeseong', ruin: 'dungeon_pyeseong', road: 'dungeon_sanchae', water: 'dungeon_sugung', swamp: 'dungeon_sugung', rock: 'dungeon_gobun', cave: 'dungeon_jiokmun', altar: 'dungeon_cheongye' },
+    fieldTile: { forest: 'dungeon_grass', camp: 'dungeon_grass', town: 'dungeon_pyeseong', ruin: 'dungeon_pyeseong', road: 'dungeon_sanchae', water: 'dungeon_grass', swamp: 'dungeon_grass', rock: 'dungeon_grass', cave: 'dungeon_grass', altar: 'dungeon_pyeseong' },   // 10-31 사진: 물·바위 칸이 네모 덩어리로 튀어 풀로 되돌림 — 길·마을·유적만 다른 바닥
     tile: { '고분(古墳)': 'dungeon_gobun', '폐성(廢城)': 'dungeon_pyeseong', '산채(山寨)': 'dungeon_sanchae', '수궁(水宮)': 'dungeon_sugung', '지옥문(地獄門)': 'dungeon_jiokmun', '천계(天界)': 'dungeon_cheongye' },
     /** 층 테마 → 벨트 방 뒷벽 시차 배경(원·중·근, K-0094 `dg_<테마>`, W-0191) — belt2d 가 그림이 서면 벽색·줄눈 대신 이걸 그린다 */
     beltBg: { '고분(古墳)': 'dg_gobun', '폐성(廢城)': 'dg_pyeseong', '산채(山寨)': 'dg_sanchae', '수궁(水宮)': 'dg_sugung', '지옥문(地獄門)': 'dg_jiokmun', '천계(天界)': 'dg_cheongye' },
