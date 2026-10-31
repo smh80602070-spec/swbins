@@ -174,7 +174,7 @@ def workflow(item, model, d, seed, dry=False):
                                                         'denoise': float(item.get('hr_denoise', d.get('hr_denoise', 0.45)))}}
         last = ['13', 0]
     # 타일 디코드: 한 번에 풀면 1MP fp 디코드가 2~3GB 를 먹어 8GB 에서 UNet 이 쫓겨나고 다음 장에 다시 올라온다(장당 +60~70초, 10-08 실측)
-    g['14'] = {'class_type': 'VAEDecodeTiled', 'inputs': {'samples': last, 'vae': vae_ref, 'tile_size': 512, 'overlap': 64, 'temporal_size': 64, 'temporal_overlap': 8}}
+    g['14'] = {'class_type': 'VAEDecodeTiled', 'inputs': {'samples': last, 'vae': vae_ref, 'tile_size': int(os.environ.get('SAGA_VAE_TILE', 512)), 'overlap': int(os.environ.get('SAGA_VAE_OVERLAP', 64)), 'temporal_size': 64, 'temporal_overlap': 8}}
     out = ['14', 0]
     if init and item.get('mask_image'):
         g['20'] = {'class_type': 'ImageCompositeMasked', 'inputs': {'destination': ['9', 0], 'source': out, 'x': 0, 'y': 0, 'resize_source': False, 'mask': ['18', 0]}}
