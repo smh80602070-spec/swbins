@@ -8,7 +8,7 @@ param(
     [string]$Swbins3 = "C:\swbins3",
     [int]$WaitSeconds = 600,   # ROCm torch import + backend probing takes 5-6 min on this PC (measured 2026-10-07)
     [int]$Port = 8188,
-    [string]$VramFlag = "--lowvram"   # K-0210: try "--normalvram" so the text encoder runs on the GPU instead of the CPU
+    [string]$VramFlag = "--lowvram", [string]$Venv = "venv_721"   # K-0210: try "--normalvram" so the text encoder runs on the GPU instead of the CPU
 )
 $ErrorActionPreference = "Stop"
 $comfy = Join-Path $Swbins3 "comfyui"
@@ -28,7 +28,7 @@ if ($freeGb -lt 8) { Write-Output "ABORT: only $freeGb GB RAM free (need 8+). Cl
 
 $env:TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL = "1"
 $env:PYTHONIOENCODING = "utf-8"
-$py = Join-Path $comfy "venv\Scripts\python.exe"
+$py = Join-Path $comfy "$Venv\Scripts\python.exe"
 $args = @("main.py", "--listen", "127.0.0.1", "--port", "$Port", "--disable-auto-launch",
           "--use-pytorch-cross-attention", "--disable-dynamic-vram", $VramFlag, "--disable-pinned-memory", "--fp32-vae",
           "--output-directory", (Join-Path $comfy "output"))
