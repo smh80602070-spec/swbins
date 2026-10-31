@@ -46,7 +46,8 @@ radius = max((hi - lo).length / 2, 0.01)
 
 scene = bpy.context.scene
 scene.render.engine = 'CYCLES'
-scene.cycles.device = 'CPU'
+import os, sys; sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+import saga_cycles; saga_cycles.use(scene)
 scene.cycles.samples = 48
 scene.cycles.use_denoising = False
 scene.render.resolution_x = scene.render.resolution_y = size

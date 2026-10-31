@@ -819,7 +819,8 @@ def render_pano(path, w=4096, h=2048, samples=16):
     sc.camera = co
     sc.render.engine = 'CYCLES'
     sc.cycles.samples = samples
-    sc.cycles.device = 'CPU'
+    import os, sys; sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+    import saga_cycles; saga_cycles.use(sc)
     try:
         sc.cycles.use_denoising = False
     except Exception:

@@ -18,7 +18,8 @@ bpy.ops.wm.read_factory_settings(use_empty=True)
 bpy.ops.import_scene.gltf(filepath=SRC)
 sc = bpy.context.scene
 sc.render.engine = 'CYCLES'
-sc.cycles.device = 'CPU'
+import os, sys; sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+import saga_cycles; saga_cycles.use(sc)
 sc.cycles.samples = SAMPLES
 sc.render.bake.target = 'VERTEX_COLORS'
 sc.render.bake.use_clear = True

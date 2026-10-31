@@ -32,7 +32,8 @@ if act.slots and arm.animation_data.action_slot is None:
     arm.animation_data.action_slot = act.slots[0]
 f0, f1 = (int(round(x)) for x in act.frame_range)
 sc.render.engine = 'CYCLES'
-sc.cycles.device = 'CPU'
+import os, sys; sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+import saga_cycles; saga_cycles.use(sc)
 sc.cycles.samples = 8
 sc.render.film_transparent = True
 sc.render.resolution_x = sc.render.resolution_y = size
