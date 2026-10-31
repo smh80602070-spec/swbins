@@ -291,6 +291,11 @@
    * 지금 화면에 세울 사람들. LOD 로 다시 재는 주기를 거른다.
    * 돌아오는 것은 `{p, x, y, walking, phase, ang, dist, lod}` 의 배열.
    */
+  function cap2d(list, key, def) {
+    var W = global.DG.world, F2 = global.DG.field2d, n = +core().tuned(key, def);
+    if (!(n >= 0) || !(F2 && F2.on && F2.on()) || (global.DG.world3d && global.DG.world3d.active && global.DG.world3d.active()) || list.length <= n) { return list; }
+    return list.slice().sort(function (a, b) { return a.dist - b.dist; }).slice(0, n);
+  }
   function live(pos, t) {
     if (!on() || !land() || !land().on()) { return []; }
     t = t === undefined ? nowMs() : t;
@@ -315,7 +320,7 @@
         dist: dist, lod: lod(dist).tag
       });
     }
-    return out;
+    return cap2d(out, 'npc.max2d', 4);   // W-0500 2D 는 화면이 둘레를 다 담아 사람이 몰려 보인다(사용자 10-31 「몹 수 줄여」) — 가까운 순 상한
   }
 
   /* ── 말 ───────────────────────────────────────────────

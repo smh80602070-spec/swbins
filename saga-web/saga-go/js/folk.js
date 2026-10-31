@@ -131,6 +131,8 @@
         out.push({ p: ps[j], x: q.x, y: q.y, walking: q.walking, phase: q.phase, ang: q.ang, dist: d });
       }
     }
+    var F2 = global.DG.field2d, n = +K('max2d', 3);   // W-0500 2D 는 가까운 순 상한(손잡이 folk.max2d, 음수 = 옛)
+    if (n >= 0 && F2 && F2.on && F2.on() && !(global.DG.world3d && global.DG.world3d.active && global.DG.world3d.active()) && out.length > n) { out = out.sort(function (a, b) { return a.dist - b.dist; }).slice(0, n); }
     return out;
   }
 
